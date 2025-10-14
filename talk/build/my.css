@@ -1,0 +1,69 @@
+.reveal pre {
+  font-size: 0.7em;
+  padding: 5px;
+  box-shadow: unset;
+  border: 1px solid #efefef;
+  margin-left: 0;
+}
+  /*width: 960px;*/
+  /*color: #000;
+  background-color: #fff;*/
+
+p {
+    -webkit-hyphens: auto;
+       -moz-hyphens: auto;
+            hyphens: auto;
+
+    word-wrap: break-word;
+}
+
+code {
+  color: #0000CD;
+  font-size: .9em;
+}
+
+.mycode { color: #0000CD }
+
+/* Left-align */
+.reveal .slides .title { text-align: left; } /* Title slide */
+.reveal .slide h1 { text-align: left; } /* H1 title slides */
+.reveal .slide h2 { text-align: left; } /* H2 titles */
+.reveal .slide h3 { text-align: left; } /* H3 titles */
+.reveal .slide h4 { text-align: left; } /* H4 titles */
+
+/* Text */
+section  { text-align: left; }
+
+.reveal blockquote { 
+  margin-left 0px;
+  width: 100%;
+  border: none;
+  box-shadow: none;
+}
+
+
+.reveal .slide-number {
+
+  background-color: transparent;
+  color: #ababab;
+}
+
+.column {
+  vertical-align: middle;
+}
+
+.prelike {
+  display: block;
+  position: relative;
+  width: 90%;
+  margin: var(--r-block-margin) auto;
+  text-align: left;
+  font-size: 0.55em;
+  font-family: var(--r-code-font);
+  line-height: 1.2em;
+  word-wrap: break-word;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+
+  font-size: 0.7em;
+  padding: 5px;
+}
