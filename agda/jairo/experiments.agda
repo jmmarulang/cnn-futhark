@@ -1,7 +1,7 @@
 {-# OPTIONS --warn=noUserWarning #-}
 module jairo.experiments where
   open import Data.Nat as ℕ using (ℕ)
-  open import Data.Float as F using (_+_; _*_; _÷_; e^_; -_; fromℕ) renaming (Float to ℝ)
+  open import Data.Float as F using (_+_; _*_; _÷_; e^_; -_; fromℕ; sqrt) renaming (Float to ℝ)
   open import Data.List as L using (List; []; _∷_)
   open import Data.List.Relation.Unary.All as All using (All; []; _∷_)
   open import Data.Fin as F using (zero; suc; Fin; combine; remQuot; fromℕ<; inject+; splitAt)
@@ -69,11 +69,40 @@ module jairo.experiments where
          → ∀ i → linear x w i ≡ linear' x w i
       test {n} {m} x w (i ∷ []) = refl -}
 
-    {- converts a vector into a probability distribution -}
-    softmax : Ar (n ∷ []) ℝ → Ar (n ∷ []) ℝ
+    {- converts a vector into a probability distribution 
+      In microgpt the substract the max value of the vector to
+      prevent overflow of exp. Should we do the same?
+    -}
+    softmax : Ar s ℝ → Ar s ℝ
+    softmax {s} x  = let
+      exps : Ar s ℝ
+      exps = map e^_ x
 
-    {- rescales a vector so its values have unit root-mean-square -}
+      total : ℝ
+      total = sum _+_ 0.0 exps 
+
+      r = map (_÷ total) exps 
+      in r
+
+    {- number of data in an array
+      Not sure if this is how I should calculate the length of an array-}
+    flatLen : Ar s ℝ → ℝ 
+    flatLen {s} x = flatLen' s where
+      flatLen' : S → ℝ
+      flatLen' [] = 0.0
+      flatLen' (s ∷ ss) = fromℕ s + flatLen' ss
+
+    {- rescales a vector so its values have unit root-mean-square 
+      they add 0.0001 in one of the steps. I assume to avoid
+      overflow. Should we do the same?
+      -}
     rmsnorm : Ar s ℝ → Ar s ℝ
+    rmsnorm {s} x = let
+      scale : ℝ 
+      scale = sqrt ((sum _+_ 0.0 (zipWith _*_ x x)) ÷ flatLen x) 
+
+      r = map (_* scale) x
+      in r
 
     {- computes an attention block -}
     attention : Ar (3 ∷ n ∷ []) ℝ → Ar (n ∷ []) ℝ 
@@ -120,11 +149,8 @@ module jairo.experiments where
         → (wf2 : Ar (IS ⊗ (4 ∷ [] ⊗ IS)) ℝ) 
         → Ar IS ℝ
     gptLayer inp wqkv wo wf1 wf2 = let 
-      nInp : Ar (AH ∷ HD ∷ []) ℝ
-      nInp = rmsnorm inp
-
       qkv : Ar ((3 ∷ []) ⊗ IS) ℝ
-      qkv = linear wqkv nInp
+      qkv = linear wqkv (rmsnorm inp)
 
       c₁ : Ar IS ℝ
       c₁ = mattention qkv
