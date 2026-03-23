@@ -1,76 +1,54 @@
 {-# OPTIONS --warn=noUserWarning #-}
 module jairo.experiments where
   open import Data.Nat as ℕ using (ℕ)
-  open import Data.Float as F using (_+_; _*_; _÷_; e^_; -_; fromℕ; sqrt) renaming (Float to ℝ)
-  open import Data.List as L using (List; []; _∷_)
+  open import Data.Bool as B using (if_then_else_)
+  open import Data.Float as F using (_+_; _*_; _÷_; e^_; -_; fromℕ; sqrt; _≤ᵇ_) 
+    renaming (Float to ℝ)
+  open import Data.List as L using (List; []; _∷_; reverse)
+  open import Data.List.Properties
   open import Data.List.Relation.Unary.All as All using (All; []; _∷_)
-  open import Data.Fin as F using (zero; suc; Fin; combine; remQuot; fromℕ<; inject+; splitAt)
+  open import Data.Fin as F using (zero; suc; Fin; combine; remQuot; fromℕ<; 
+    inject+; splitAt)
   import Relation.Binary.PropositionalEquality as Eq
   open Eq using (_≡_; refl; trans; sym; cong; cong-app; subst)
   open Eq.≡-Reasoning using (begin_; step-≡; _∎)
   open import Function
+  open import Data.Product as Prod using (∃; _,_; _×_; proj₁; proj₂)
   
   infix 4 _⊡_
   _⊡_ = trans
 
   open import Ar
-  
-  module CNN where
-    conv : s + p ≈ r → Ar r ℝ → Ar s ℝ → suc p ≈ u → Ar u ℝ
-    conv sp a w su = 
-      sum (zipWith _+_) (K 0.0) λ i → map (w i *_) (slide i sp a su)
-
-    mconv : ⦃ s + p ≈ r ⦄ → (inp : Ar r ℝ) (w : Ar (u ⊗ s) ℝ) (b : Ar u ℝ)
-          → ⦃ suc p ≈ q ⦄ → Ar (u ⊗ q) ℝ
-    mconv ⦃ sp ⦄ inp w b ⦃ su ⦄ 
-      = unnest λ i → map (b i +_) (conv sp inp (nest w i) su)
-
-    logistic : Ar s ℝ → Ar s ℝ
-    logistic = map λ x → 1.0 ÷ (1.0 + e^ (- x))
-
-    avgp₂ : (m n : ℕ) → Ar (m ℕ.* 2 ∷ n ℕ.* 2 ∷ []) ℝ → Ar (m ∷ n ∷ []) ℝ
-    avgp₂ m n a = map ((_÷ fromℕ 4) ∘ sum _+_ 0.0) (selb a it)
-  
-    forward : 
-        (inp  :  Ar (28 ∷ 28 ∷ []) ℝ) → (k₁ : Ar (6 ∷ 5 ∷ 5 ∷ []) ℝ)
-      → (b₁   :  Ar (6  ∷ []) ℝ)      → (k₂ : Ar (12 ∷ 6 ∷ 5 ∷ 5 ∷ []) ℝ)
-      → (b₂   :  Ar (12 ∷ []) ℝ)      → (fc : Ar (10 ∷ 12 ∷ 1 ∷ 4 ∷ 4 ∷ []) ℝ)
-      → (b    :  Ar (10 ∷ []) ℝ)      → Ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ []) ℝ
-    forward inp k₁ b₁ k₂ b₂ fc b = let
-        c₁ : Ar (6 ∷ 24 ∷ 24 ∷ []) ℝ
-        c₁ = logistic $ mconv inp k₁ b₁ 
-
-        s₁ : Ar (6 ∷ 12 ∷ 12 ∷ []) ℝ
-        s₁ = unnest {s = 6 ∷ []} $ map (avgp₂ 12 12) (nest c₁)
-
-        c₂ : Ar (12 ∷ 1 ∷ 8 ∷ 8 ∷ []) ℝ
-        c₂ = logistic $ mconv  s₁ k₂ b₂ 
-
-        s₂ : Ar (12 ∷ 1 ∷ 4 ∷ 4 ∷ []) ℝ
-        s₂ = unnest {s = 12 ∷ 1 ∷ []} $ map (avgp₂ 4 4) (nest c₂)
-
-        r = logistic $ mconv s₂ fc b 
-      in r
 
   module microgpt where
 
-    {- split attention from the beggining, mantaining shapes. -}
-
     {- matrix-vector multiplication -}
-
     linear : Ar (u ⊗ s) ℝ → Ar s ℝ → Ar u ℝ
     linear w x i = sum _+_ 0.0 (zipWith _*_ (nest w i) x)
 
-    {-
-      linear' : Ar (n ∷ []) ℝ → Ar (m ∷ n ∷ []) ℝ → Ar (m ∷ []) ℝ
-      linear' x w i = sum _+_ 0.0 λ j → (nest w i j) * x j    
+    {- runs a batch of r linears -}
+    mlinear : Ar (r ⊗ (u ⊗ s)) ℝ → Ar s ℝ → Ar (r ⊗ u) ℝ
+    mlinear {r} w x = unnest (λ i → linear (nest {r} w i) x)
 
-      test : (x : Ar (n ∷ []) ℝ) → (w : Ar (m ∷ n ∷ []) ℝ) 
-         → ∀ i → linear x w i ≡ linear' x w i
-      test {n} {m} x w (i ∷ []) = refl -}
+    {- A transpose? -}
+    swap : Ar (u ⊗ s) ℝ → Ar (s ⊗ u) ℝ 
+    swap {u} {s} x = unnest {s} λ i j → nest x j i
+
+    {- matrix multiplication but the order is wrong?
+    matmulAux : Ar (u ⊗ s) ℝ → Ar (r ⊗ s) ℝ → Ar (r ⊗ u) ℝ
+    matmulAux {u} {s} {r} w x = unnest λ (i : P r) → linear w (nest x i)
+
+    matrix multiplication?
+    matmul : Ar (u ⊗ s) ℝ → Ar (s ⊗ r) ℝ → Ar (u ⊗ r) ℝ
+    matmul {u} {s} {r} w x = swap {r} (matmulAux {u} w (swap {s} x))
+    -}
+
+    {- matrix multiplication? -}
+    matmul : Ar (u ⊗ s) ℝ → Ar (s ⊗ r) ℝ → Ar (u ⊗ r) ℝ
+    matmul {u} {s} {r} w x = unnest {u} (λ i j → linear w (λ k → nest x k j) i)
 
     {- converts a vector into a probability distribution 
-      In microgpt the substract the max value of the vector to
+      In microgpt they substract the max value of the vector to
       prevent overflow of exp. Should we do the same?
     -}
     softmax : Ar s ℝ → Ar s ℝ
@@ -86,31 +64,81 @@ module jairo.experiments where
 
     {- number of data in an array
       Not sure if this is how I should calculate the length of an array-}
-    flatLen : Ar s ℝ → ℝ 
-    flatLen {s} x = flatLen' s where
-      flatLen' : S → ℝ
-      flatLen' [] = 0.0
-      flatLen' (s ∷ ss) = fromℕ s + flatLen' ss
+    lenS : S → ℕ
+    lenS s = L.foldl ℕ._*_ 1 s
 
-    {- rescales a vector so its values have unit root-mean-square 
-      they add 0.0001 in one of the steps. I assume to avoid
+    len : Ar s ℝ → ℕ
+    len {s} _ = lenS s
+
+    {- rescales a vector so its values have unit root-mean-square.
+      They add 0.0001 in one of the steps. I assume to avoid
       overflow. Should we do the same?
       -}
     rmsnorm : Ar s ℝ → Ar s ℝ
     rmsnorm {s} x = let
       scale : ℝ 
-      scale = sqrt ((sum _+_ 0.0 (zipWith _*_ x x)) ÷ flatLen x) 
+      scale = sqrt ((sum _+_ 0.0 (zipWith _*_ x x)) ÷ (fromℕ (len x))) 
 
       r = map (_* scale) x
       in r
+    
+    {- returns the maximum between two floats -}
+    maxℝ : ℝ → ℝ → ℝ
+    maxℝ a b = if a ≤ᵇ b then b else a
+
+    {- rectified linear unit -}
+    relu : Ar s ℝ → Ar s ℝ
+    relu = map (maxℝ 0.0)
+
+    {- returns the reverse of a shape.
+      I make my own implementation because the og uses fold
+      and idk how to define reverseP for that shape. -}
+    reverseS : S → S 
+    reverseS [] = []
+    reverseS (x ∷ xs) = (reverseS xs) ⊗ (x ∷ [])
+
+    {- returns the reverse of a position based onf reverseS -}
+    reverseP : P s → P (reverseS s)
+    reverseP {[]} [] = []
+    reverseP {s ∷ ss} (x ∷ xs) = reverseP xs ++ (x ∷ [])
+
+    {- from reverse to the original.
+       I need this to define transpose-}
+    unreverseP : P (reverseS s) → P s
+    unreverseP {[]} [] = []
+    unreverseP {s ∷ ss} x = x₁ ++ x₂ where
+      x₁ : P (s ∷ [])
+      x₁ = proj₂ (splitP x)
+
+      x₂ : P ss
+      x₂ = unreverseP (proj₁ (splitP x))
+
+    {- Transpose of an array? -}
+    transpose : Ar s ℝ → Ar (reverseS s) ℝ
+    transpose x i = x (unreverseP i)
 
     {- computes an attention block -}
-    attention : Ar (3 ∷ n ∷ []) ℝ → Ar (n ∷ []) ℝ 
+    attention : {u s r t : S} → Ar (u ⊗ s) ℝ → Ar (r ⊗ s) ℝ → Ar (r ⊗ t) ℝ 
+              → Ar (u ⊗ t) ℝ
+    attention {u} {s} {r} {t} q k v = let
+      {- Are len and swap correct here? -}
+      scale : ℝ 
+      scale = (sqrt (fromℕ (len v)))
 
-    mattention : Ar (3 ∷ m ∷ n ∷ []) ℝ → Ar (m ∷ n ∷ []) ℝ 
+      l : Ar (u ⊗ r) ℝ
+      l = map (_÷ scale) (matmul {u} q (swap {r} k))
 
-    {- computes a feed forward block -}
-    feedForward : Ar (u ⊗ s) ℝ → Ar (s ⊗ u) ℝ → Ar s ℝ → Ar s ℝ
+      w : Ar (u ⊗ t) ℝ
+      w = matmul {u} (softmax l) v
+      in w
+
+    {- multi headed attention-}
+    mattention : {h u s r t : S} 
+               → Ar (h ⊗ (u ⊗ s)) ℝ → Ar (h ⊗ (r ⊗ s)) ℝ → Ar (h ⊗ (r ⊗ t)) ℝ 
+               → Ar (h ⊗ (u ⊗ t)) ℝ
+    mattention {h} {u} q k v = 
+      unnest {h} λ i → attention {u} (nest q i) (nest k i) (nest v i)
+    
     {- embedding dimension (C) -}
     ED : ℕ
     ED = 16
@@ -131,16 +159,68 @@ module jairo.experiments where
     HD : ℕ
     HD = ED ℕ./ AH
 
-    {- sequence length (T) (mattention AH 4 q k v) 
-      does not seem to be used in microgpt after tokenization
-      perhaps we do not need it? -}
+    {- sequence length (T) 
+       A sequence is a list of tokens.
+       In microgpt tokens are letters and sequences names -}
     SL : ℕ
-    SL = {!   !}
+    SL = 16
 
+    {- The feed forward network projects into FDx-}
+    FD : ℕ
+    FD = 4
+
+    {- I chose this order to make it easy to pass into mattention-}
     IS : S
-    IS = AH ∷ HD ∷ []
+    IS = (AH ∷ []) ⊗  ((HD ∷ []) ⊗ (SL ∷ []))
 
     {- assuming a single layer -}
+    {- Following gpt2, with differences: 
+        layernorm -> rmsnorm
+        no biases
+        Gelu -> Relu
+        -}
+
+    gptLayer : 
+        {ah hd sl fd : S} → 
+        let is = (ah ⊗ (hd ⊗ sl)) in
+          (inp : Ar is ℝ) 
+        → (wqkv : Ar (3 ∷ [] ⊗ (is ⊗ is)) ℝ)  
+        → (wo : Ar (is ⊗ is) ℝ)
+        → (wf1 : Ar ((fd ⊗ is) ⊗ is) ℝ) 
+        → (wf2 : Ar (is ⊗ (fd ⊗ is)) ℝ) 
+        → Ar is ℝ
+    gptLayer {ah} {hd} {sl} {fd} inp wqkv wo wf1 wf2 = let 
+      is : S
+      is = ah ⊗ (hd ⊗ sl)
+
+      qkv : Ar (3 ∷ [] ⊗ is) ℝ
+      qkv = mlinear {3 ∷ []} wqkv (rmsnorm inp)
+
+      q : Ar is ℝ
+      q = nest qkv $ zero ∷ []
+
+      k : Ar is ℝ
+      k = nest qkv $ suc zero ∷ []
+
+      v : Ar is ℝ
+      v = nest qkv $ suc (suc zero) ∷ []
+
+      c₁ : Ar is ℝ
+      c₁ = mattention {ah} {hd} q k v
+
+      s₁ : Ar is ℝ
+      s₁ = zipWith _+_ (linear wo c₁) inp
+
+      s₂ : Ar (fd ⊗ is) ℝ 
+      s₂ = relu $ linear wf1 (rmsnorm s₁)
+
+      c₃ : Ar is ℝ 
+      c₃ = linear wf2 s₂
+
+      r = zipWith _+_ c₃ s₁
+      in r
+
+    {-
     gptLayer : 
           (inp : Ar IS ℝ) 
         → (wqkv : Ar (3 ∷ [] ⊗ (IS ⊗ IS)) ℝ)  
@@ -149,41 +229,30 @@ module jairo.experiments where
         → (wf2 : Ar (IS ⊗ (4 ∷ [] ⊗ IS)) ℝ) 
         → Ar IS ℝ
     gptLayer inp wqkv wo wf1 wf2 = let 
-      qkv : Ar ((3 ∷ []) ⊗ IS) ℝ
-      qkv = linear wqkv (rmsnorm inp)
+      qkv : Ar (3 ∷ [] ⊗ IS) ℝ
+      qkv = mlinear {3 ∷ []} wqkv (rmsnorm inp)
+
+      q : Ar IS ℝ
+      q = nest qkv $ zero ∷ []
+
+      k : Ar IS ℝ
+      k = nest qkv $ suc zero ∷ []
+
+      v : Ar IS ℝ
+      v = nest qkv $ suc (suc zero) ∷ []
 
       c₁ : Ar IS ℝ
-      c₁ = mattention qkv
+      c₁ = mattention {AH ∷ []} {HD ∷ []} {SL ∷ []} {HD ∷ []} q k v
 
       s₁ : Ar IS ℝ
       s₁ = zipWith _+_ (linear wo c₁) inp
 
-      c₂ : Ar IS ℝ
-      c₂ = feedForward wf1 wf2 (rmsnorm s₁)
+      s₂ : Ar (4 ∷ [] ⊗ IS) ℝ 
+      s₂ = relu $ linear wf1 (rmsnorm s₁)
 
-      r = zipWith _+_ c₂ s₁
+      c₃ : Ar IS ℝ 
+      c₃ = linear wf2 s₂
+
+      r = zipWith _+_ c₃ s₁
       in r
-
-      {-
-      q : Ar (ED ∷ []) ℝ
-      q = linear nInp wq
-
-      k : Ar (ED ∷ []) ℝ
-      k = linear nInp wk
-
-      v : Ar (ED ∷ []) ℝ
-      v = linear nInp wv
-      
-      c₁ : Ar (ED ∷ []) ℝ
-      c₁ = mattention AH 4 q k v
-
-      s₁ : Ar (ED ∷ []) ℝ
-      s₁ = zipWith _+_ (linear c₁ wo) inp
-        
-      c₂ : Ar (ED ∷ []) ℝ
-      c₂ = feedForward wf1 wf2 (rmsnorm s₁)
-
-      r = zipWith _+_ c₂ s₁
-      -}
-
-      
+    -}
