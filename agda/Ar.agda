@@ -6,7 +6,7 @@ open import Data.Fin.Properties using (suc-injective; toℕ<n; splitAt-inject+)
 open import Data.Sum using (_⊎_; inj₁; inj₂)
 open import Data.Product as Prod using (∃; _,_; _×_; proj₁; proj₂)
 
-open import Data.List as L using (List; []; _∷_)
+open import Data.List as L using (List; []; _∷_; foldl)
 open import Data.List.Properties using (∷ʳ-injective; ++-cancelʳ)
 open import Data.List.Relation.Unary.All as All using (All; []; _∷_)
 open import Relation.Binary.PropositionalEquality
@@ -340,7 +340,39 @@ module _ where
                → ∀ k → zipWith f a c k ≡ zipWith f b d k
   zipWith-cong f ab cd k = cong₂ f (ab k) (cd k)
 
+  -- Jairo
 
+  -- Two dimentional transpose
+  swap : Ar (u ⊗ s) X → Ar (s ⊗ u) X
+  swap {u} {s} x = unnest {s} λ i j → nest x j i
+
+  -- Length of a shape
+  len : S → ℕ
+  len s = foldl _*_ 1 s
+
+  -- Size of an array 
+  size : Ar s X →  ℕ
+  size {s} _ = len s
+
+  -- Reverses a shape 
+  reverse : S → S 
+  reverse [] = []
+  reverse (x ∷ xs) = (reverse xs) ⊗ (x ∷ [])
+
+  -- From a reversed position to the original
+  unreverseP : P (reverse s) → P s
+  unreverseP {[]} [] = []
+  unreverseP {s ∷ ss} x = x₁ ++ x₂ where
+    x₁ : P (s ∷ [])
+    x₁ = proj₂ (splitP x)
+
+    x₂ : P ss
+    x₂ = unreverseP (proj₁ (splitP x))
+
+  -- Transposes an array 
+  transpose : Ar s X → Ar (reverse s) X
+  transpose x i = x (unreverseP i)
+  
 module ArTests where
   imap : (s : S) → (P s → X) → Ar s X
   imap s f = f

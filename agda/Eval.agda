@@ -43,14 +43,14 @@ module Eval (r : Real) where
   eval (var x) ρ = lookup x ρ
   eval zero ρ = K (fromℕ 0)
   eval one ρ = K (fromℕ 1)
-  eval (imaps e) ρ i = eval e (ρ , i) [] 
+  eval (imaps e) ρ i = eval e (ρ , i) []
   eval (sels e e₁) ρ = K (eval e ρ (eval e₁ ρ))
   eval (imap e) ρ i = let i , j = splitP i in eval e (ρ , i) j
   eval (sel e e₁) ρ = nest (eval e ρ) (eval e₁ ρ)
   eval (E.imapb x e) ρ = Ar.imapb (λ i → eval e (ρ , i)) x
   eval (E.selb x e e₁) ρ = Ar.selb (eval e ρ) x (eval e₁ ρ)
   eval (E.sum e) ρ = Ar.sum (Ar.zipWith _+_) (Ar.K (fromℕ 0)) (λ i → eval e (ρ , i))
-  eval (zero-but e e₁ e₂) ρ = zb (eval e ρ) (eval e₁ ρ) (eval e₂ ρ) 
+  eval (zero-but e e₁ e₂) ρ = zb (eval e ρ) (eval e₁ ρ) (eval e₂ ρ)
   --with eval e ρ ≟ₚ eval e₁ ρ
   --... | yes _ = eval e₂ ρ
   --... | no  _ = Ar.K (fromℕ 0)
@@ -59,7 +59,7 @@ module Eval (r : Real) where
   eval (logistic e) ρ = Ar.map logisticʳ (eval e ρ)
   eval (e ⊞ e₁) ρ = Ar.zipWith _+_ (eval e ρ) (eval e₁ ρ)
   eval (e ⊠ e₁) ρ = Ar.zipWith _*_ (eval e ρ) (eval e₁ ρ)
-  eval (scaledown x e) ρ = Ar.map (_÷ fromℕ x) (eval e ρ) 
+  eval (scaledown x e) ρ = Ar.map (_÷ fromℕ x) (eval e ρ)
   eval (minus e) ρ = Ar.map -_ (eval e ρ)
   eval (let′ e e₁) ρ = eval e₁ (ρ , eval e ρ)
 

@@ -1,5 +1,6 @@
 {-# OPTIONS  --backtracking-instance-search #-}
-module _ where
+{-# OPTIONS --warn=noUserWarning #-}
+module jairo.JLang where
 module _ where
   open import Data.Nat using (ℕ; zero; suc)
   open import Data.List as L using (List; []; _∷_)
@@ -8,18 +9,21 @@ module _ where
   open import Relation.Nullary
   infixl 15 _▹_
 
+  -- Types
   data IS : Set where
     ix  : S → IS
     ar  : S → IS
-  
+
+  -- Contexts
   data Ctx : Set where
     ε    : Ctx
     _▹_  : Ctx → IS → Ctx
-  
+
   variable
     Γ Δ Ξ Ψ : Ctx
     is ip iq ir : IS
-  
+
+  -- Variable in context thingie
   data _∈_ : IS → Ctx → Set where
     here  : is ∈ (Γ ▹ is)
     there : is ∈ Γ → is ∈ (Γ ▹ ip)
@@ -37,9 +41,10 @@ module _ where
   pattern v₁₀ = there v₉
   pattern v₁₁ = there v₁₀
   pattern v₁₂ = there v₁₁
-  pattern v₁₃ = there v₁₂ 
+  pattern v₁₃ = there v₁₂
 
   -- We only use this for variable comparison.
+  -- Removes a variable from context?
   _/_ : (Γ : Ctx) → is ∈ Γ → Ctx
   (Γ ▹ x) / here = Γ
   (Γ ▹ x) / there v = (Γ / v) ▹ x
@@ -49,8 +54,11 @@ module _ where
   wkv-/ (there v) here = here
   wkv-/ (there v) (there w) = there (wkv-/ v w)
 
+  -- Equality of variables? Same index?
   data Eq : is ∈ Γ → ip ∈ Γ → Set where
+    -- equal?
     veq : {x : is ∈ Γ} → Eq x x
+    -- not equal?
     neq : (x : is ∈ Γ) → (y : ip ∈ (Γ / x)) → Eq x (wkv-/ x y)
 
   eq? : (x : is ∈ Γ) → (y : ip ∈ Γ) → Eq x y
@@ -60,7 +68,6 @@ module _ where
   eq? (there x) (there y) with eq? x y
   ... | veq = veq
   ... | neq .x y = neq (there x) (there y)
-
 
   unthere : {x y : is ∈ Γ} → there {ip = ip} x ≡ there y → x ≡ y
   unthere refl = refl
@@ -107,7 +114,6 @@ module _ where
 
   pattern _⊠_ a b = bin mul a b
   pattern _⊞_ a b = bin plus a b
-
 
 
 module WkSub where
@@ -167,11 +173,10 @@ module WkSub where
     ε   : Sub Γ ε
     _▹_ : Sub Γ Δ → E Γ is → Sub Γ (Δ ▹ is)
 
-  
   wks : Sub Γ Δ → Γ ⊆ Ψ → Sub Ψ Δ
   wks ε p = ε
   wks (s ▹ x) p = (wks s p) ▹ wk p x
-  
+
   sdrop : Sub Γ Δ → Sub (Γ ▹ is) Δ
   sdrop s = wks s (skip ⊆-eq)
 
@@ -181,11 +186,10 @@ module WkSub where
   subv : Sub Γ Δ → is ∈ Δ → E Γ is
   subv (s ▹ x) v₀ = x
   subv (s ▹ x) (there v) = subv s v
-  
+
   sub-id : Sub Γ Γ
   sub-id {ε} = ε
   sub-id {Γ ▹ x} = skeep sub-id
-
 
   sub : E Δ is → Sub Γ Δ → E Γ is
   sub (var x) s = subv s x
@@ -257,7 +261,7 @@ module WkSub where
 
   -- We are not really using this, but this is a useful function to have.
   open import Data.Maybe
-  strenv : (x : is ∈ Γ) (y : ip ∈ Γ) → Maybe (ip ∈ (Γ / x)) 
+  strenv : (x : is ∈ Γ) (y : ip ∈ Γ) → Maybe (ip ∈ (Γ / x))
   strenv v₀ v₀ = nothing
   strenv v₀ (there y) = just y
   strenv (there x) v₀ = just v₀
@@ -351,8 +355,6 @@ module WkSub where
   count-uses (minus e) v = count-uses e v
   count-uses (let′ e e₁) v = count-uses e v + count-uses e₁ (there v)
 
-
-
 module Syntax where
   open import Data.List as L using (List; []; _∷_)
   open import Ar hiding (sum; imapb)
@@ -378,10 +380,11 @@ module Syntax where
   V v ⦃ p = suc  ⦄ = there (V v)
 
   -- Use GE GVar and V to define HOAS-style imap, imaps, and impab
+  -- imap : (E (Γ ▹ ix s) (ix s) → E (Γ ▹ ix s) (ar p)) → E Γ (ar (s ⊗ p)) ??
   Imap : ∀ {Γ}
        → (GE (Γ ▹ ix s) (ix s) → E (Γ ▹ ix s) (ar p))
        → E Γ (ar (s ⊗ p))
-  --Imap f = imap (f λ {Δ} ⦃ p ⦄ → var (V v₀))
+  -- Imap f = imap (f λ {Δ} ⦃ p ⦄ → var (V v₀))
   Imap f = imap (f (var (V v₀)))
 
   Sum : ∀ {Γ}
@@ -395,8 +398,8 @@ module Syntax where
   Imaps f = imaps (f λ {Δ} ⦃ p ⦄ → var (V v₀))
 
   Imapb : ∀ {Γ}
-        → s * p ≈ q 
-        → (GE (Γ ▹ ix s) (ix s) → E (Γ ▹ ix s) (ar p)) 
+        → s * p ≈ q
+        → (GE (Γ ▹ ix s) (ix s) → E (Γ ▹ ix s) (ar p))
         → E Γ (ar q)
   Imapb p f = imapb p (f λ {Δ} ⦃ p ⦄ → var (V v₀))
 
@@ -405,7 +408,7 @@ module Syntax where
       → (GE (Γ ▹ (ar s)) (ar s) → E (Γ ▹ (ar s)) (ar p))
       → E Γ (ar p)
   Let-syntax x f = let′ x (f λ {Δ} ⦃ p ⦄ → var (V v₀))
-  
+
   infixl 3 Let-syntax
   syntax Let-syntax e (λ x → e') = Let x := e In e'
 
@@ -457,24 +460,24 @@ module Primitives where
   fromPrefix : Prefix Γ Δ → Γ ⊆ Δ
   fromPrefix zero = ⊆-eq
   fromPrefix (suc ⦃ p ⦄) = skip (fromPrefix p)
-  
+
   wkp : Prefix Γ Δ → E Γ is → E Δ is
   wkp p = wk (fromPrefix p)
 
   ⟨_⟩ : E Γ is → GE Γ is
   ⟨_⟩ t {Δ} ⦃ p ⦄ = wkp p t
- 
-  conv : ∀ {Γ} → E Γ (ar r) → ⦃ s + p ≈ r ⦄ → E Γ (ar s) → ⦃ suc p ≈ u ⦄ 
+
+  conv : ∀ {Γ} → E Γ (ar r) → ⦃ s + p ≈ r ⦄ → E Γ (ar s) → ⦃ suc p ≈ u ⦄
        → E Γ (ar u)
-  conv f ⦃ s+p ⦄ g ⦃ ss ⦄ 
+  conv f ⦃ s+p ⦄ g ⦃ ss ⦄
     = Sum λ i → (slide i s+p ⟨ f ⟩ ss) ⊠ Imaps λ j → sels ⟨ g ⟩ i
 
   mconv : ⦃ s + p ≈ r ⦄ → (inp : E Γ (ar r)) (ws : E Γ (ar (u ⊗ s)))
           (bᵥ : E Γ (ar u)) → ⦃ suc p ≈ w ⦄ → E Γ (ar (u ⊗ w))
-  mconv ⦃ sp ⦄ inp wᵥ bᵥ ⦃ su ⦄ = 
+  mconv ⦃ sp ⦄ inp wᵥ bᵥ ⦃ su ⦄ =
     Imap λ i → conv ⟨ inp ⟩ (sel ⟨ wᵥ ⟩ i) ⊞ Imaps λ _ → sels ⟨ bᵥ ⟩ i
 
-  avgp₂ : ∀ m n → (a : E Γ (ar (m ℕ.* 2 ∷ n ℕ.* 2 ∷ []))) 
+  avgp₂ : ∀ m n → (a : E Γ (ar (m ℕ.* 2 ∷ n ℕ.* 2 ∷ [])))
         → E Γ (ar (m ∷ n ∷ []))
   avgp₂ m n a =
     Imaps λ i → scaledown 4 $ Sum λ j → sels (selb it ⟨ a ⟩ i) j
@@ -483,18 +486,18 @@ module Primitives where
   sqerr r o = scaledown 2 ((r ⊞ (minus o)) ⊠ (r ⊞ (minus o)))
 
   meansqerr : (r o : E Γ (ar s)) → E Γ (ar [])
-  meansqerr r o = Sum λ i → sqerr (sels ⟨ r ⟩ i) (sels ⟨ o ⟩ i) 
+  meansqerr r o = Sum λ i → sqerr (sels ⟨ r ⟩ i) (sels ⟨ o ⟩ i)
 
   cnn : E _ _
   cnn = Lcon (  ar (28 ∷ 28 ∷ []) ∷ ar (6 ∷ 5 ∷ 5 ∷ [])
               ∷ ar (6 ∷ [])       ∷ ar (12 ∷ 6 ∷ 5 ∷ 5 ∷ [])
               ∷ ar (12 ∷ [])      ∷ ar (10 ∷ 12 ∷ 1 ∷ 4 ∷ 4 ∷ [])
-              ∷ ar (10 ∷ [])      ∷ ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ []) 
-              --∷ ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ []) 
+              ∷ ar (10 ∷ [])      ∷ ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])
+              --∷ ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])
               ∷ [])
              --(ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])) ε
              (ar ([])) ε
-        λ inp k₁ b₁ k₂ b₂ fc b target → 
+        λ inp k₁ b₁ k₂ b₂ fc b target →
         Let c₁₁ := mconv inp k₁ b₁  In
         Let c₁  := logistic c₁₁ In
         Let s₁  := (Imap {s = 6 ∷ []} λ i → avgp₂ 12 12 (sel c₁ i)) In
@@ -506,9 +509,108 @@ module Primitives where
         -- Mean squared error
         Let e   := meansqerr target o In
         e
+  ---------------------------------------------
+  -- microgpt
+
+  linear : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar s) → E Γ (ar u)
+  linear {u} {s} w x =
+    Imaps {u} λ i → Sum {s} λ j → sels (sel ⟨ w ⟩ i) j ⊠ sels ⟨ x ⟩ j
+
+  matmul : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ r)) → E Γ (ar (u ⊗ r))
+  matmul {u} {s} {r} w x = Imap {u} λ i →
+    Imaps (λ j → sels (linear ⟨ w ⟩ (Imaps λ k → sels (sel ⟨ x ⟩ k) j) ) i)
+
+  softmax : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
+  softmax = {!   !}
+
+  rmsnorm : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
+  rmsnorm = {!   !}
+
+  relu : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
+  relu = {!   !}
+
+  -- swap
+  switch : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ u))
+  switch {u} {s} x = Imap {s} λ i → Imaps λ j → sels (sel ⟨ x ⟩ j) i
+
+  attention : ∀ {u s r t Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (r ⊗ s))
+            → E Γ (ar (r ⊗ t)) → ℕ → E Γ (ar (u ⊗ t))
+  attention {u} {s} {r} {t} q k v n = {!   !}
+
+  mattention : ∀ {h u s r t Γ} → E Γ (ar (h ⊗ (u ⊗ s)))
+             → E Γ (ar (h ⊗ (r ⊗ s))) → E Γ (ar (h ⊗ (r ⊗ t)))
+             → E Γ (ar (h ⊗ (u ⊗ t)))
+  mattention {h} {u} q k v =
+    Imap {h} (λ i → attention {u} (sel ⟨ q ⟩ i) (sel ⟨ k ⟩ i) (sel ⟨ v ⟩ i) ?)
+
+  {-
+  layer : ∀ {ah hd sl fd Γ} →
+          let is = (ah ⊗ (hd ⊗ sl)) in
+          E Γ (ar is)
+          → E Γ (ar (4 ∷ [] ⊗ (is ⊗ is)))
+          → E Γ (ar (2 ∷ [] ⊗ ((fd ⊗ is) ⊗ is)))
+          → E Γ (ar is)
+  layer {ah} {hd} {sl} {fd} inp wa wf = let
+    is = ah ⊗ (hd ⊗ sl)
+
+    ninp = rmsnorm inp
+
+    q : E {!   !} (ar is)
+    q = linear (sel ⟨ wa ⟩ (var v₀)) ⟨ ninp ⟩
+
+    k : E {!   !} (ar is)
+    k = linear (sel ⟨ wa ⟩ (var v₀)) ⟨ ninp ⟩
+
+    r = {!   !}
+    in r
+-}
+
+  ED = 16 ; AH = 4 ; NL = 1 ; HD = ED ℕ./ AH ; SL = 16 ; FD = 4
+
+  I = (AH ∷ []) ⊗  ((HD ∷ []) ⊗ (SL ∷ []))
+
+  microgpt : E _ _
+  microgpt =  Lcon (  ar I
+                    ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I)
+                    ∷ ar ((FD ∷ [] ⊗ I) ⊗ I) ∷ ar (I ⊗ (FD ∷ [] ⊗ I))
+                    ∷ [])
+                  (ar I) ε
+              λ inp wq wk wv wo wf₁ wf₂ →
+              Let ninp := rmsnorm inp In
+              Let q := linear wq ninp In
+              Let k := linear wk ninp In
+              Let v := linear wv ninp In
+              Let c₁ :=
+                mattention {AH ∷ []} {HD ∷ []} {SL ∷ []} {HD ∷ []} q k v In
+              Let s₁₁ := linear wo c₁ In
+              Let s₁ := s₁₁ ⊞ inp In
+              Let s₂₁ := rmsnorm s₁ In
+              Let s₂₂ := linear wf₁ s₂₁ In
+              Let s₂ := relu s₂₂ In
+              Let c₃ := linear wf₂ s₂ In
+              Let r := c₃ ⊞ s₁ In r
+
+  {-
+  microgpt : E _ _
+  microgpt =  Lcon (  ar I
+                    ∷ ar (NL ∷ [] ⊗ (4 ∷ [] ⊗ (I ⊗ I)))
+                    ∷ ar (NL ∷ [] ⊗ (2 ∷ [] ⊗ ((FD ∷ [] ⊗ I) ⊗ I)))
+                    ∷ [])
+                  (ar I) ε
+              λ inp wa wf → {!   !}
+
+  layer : E _ _
+  layer = Lcon ( ar I
+               ∷ ar (4 ∷ [] ⊗ (I ⊗ I))
+               ∷ ar (2 ∷ [] ⊗ ((FD ∷ [] ⊗ I) ⊗ I))
+               ∷ [])
+              (ar I) ε
+          λ inp wa wf →
+          Let nimp := {!   !} In {!   !}
+  -}
 
 
-            
+
 
 module LangTest where
   open import Ar
@@ -517,14 +619,14 @@ module LangTest where
   open Syntax
 
   nested-inc : E (Γ ▹ ar (s ⊗ p) ▹ ar p) (ar (s ⊗ p))
-  nested-inc {s = s} = imap {s = s} ((var v₁) ⊞ sel (var v₂) (var v₀)) 
+  nested-inc {s = s} = imap {s = s} ((var v₁) ⊞ sel (var v₂) (var v₀))
 
   -- Test convenience
   _ : Prefix (Γ ▹ ar []) (Γ ▹ ar [] ▹ (ar (5 ∷ [])))
   _ = it
 
   _ : E Γ (ar (5 ∷ 5 ∷ []))
-  _ = Imaps λ iv → sels zero iv 
+  _ = Imaps λ iv → sels zero iv
 
   _ : E Γ (ar (5 ∷ 5 ∷ []))
   _ = Let x := zero In x ⊞ x
