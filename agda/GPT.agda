@@ -52,39 +52,41 @@ module GPT (real : Real) where
 
     -- Rectified Linear Unit
     relu : Ar s R → Ar s R
-    relu = map (0ᵣ ∧_)
+    relu = map (0ᵣ ⊔_)
 
     -- Attention block
-    attention : {u s r t : S} → Ar (u ⊗ s) R → Ar (r ⊗ s) R → Ar (r ⊗ t) R
-              → Ar (u ⊗ t) R
-    attention {u} {s} {r} {t} q k v = let
-      scale : R
-      scale = (sqrt fromℕ (size v))
+    {- I cheat by passing the scale sc as a parameter. It should be such that
+     sqrt (size v) =  sc.
+     For microgpt sc = 16.
+  -}
+    attention : {slq slk dk dv : S} → R
+              → Ar (slq ⊗ dk) R → Ar (slk ⊗ dk) R → Ar (slk ⊗ dv) R
+              → Ar (slq ⊗ dv) R
+    attention {slq} {slk} {dk} {dv} sc hq hk hv = let
+      l : Ar (slq ⊗ slk) R
+      l = map (_÷ sc) (matmul {slq} hq (swap {slk} hk))
 
-      l : Ar (u ⊗ r) R
-      l = map (_÷ scale) (matmul {u} q (swap {r} k))
-
-      w : Ar (u ⊗ t) R
-      w = matmul {u} (softmax l) v
+      w : Ar (slq ⊗ dv) R
+      w = matmul {slq} (softmax l) hv
       in w
 
     -- Multi-headed attention
-    mattention : {h u s r t : S}
-               → Ar (h ⊗ (u ⊗ s)) R → Ar (h ⊗ (r ⊗ s)) R → Ar (h ⊗ (r ⊗ t)) R
-               → Ar (h ⊗ (u ⊗ t)) R
-    mattention {h} {u} q k v =
-      unnest {h} λ i → attention {u} (nest q i) (nest k i) (nest v i)
+    mattention : {nh slq slk dk dv : S} → R
+               → Ar (nh ⊗ (slq ⊗ dk)) R → Ar (nh ⊗ (slk ⊗ dk)) R
+               → Ar (nh ⊗ (slk ⊗ dv)) R → Ar (nh ⊗ (slq ⊗ dv)) R
+    mattention {nh} {slq} {slk} sc q k v =
+      unnest {nh} λ i →
+        attention {slq} {slk} sc (nest q i) (nest k i) (nest v i)
 
     -- A single layer forward pass
-    layer :
-        {ah hd sl fd : S} →
-        let is = (ah ⊗ (hd ⊗ sl)) in
-          (inp : Ar is R)
-        → (wa : Ar (4 ∷ [] ⊗ (is ⊗ is)) R)
-        → (wf : Ar (2 ∷ [] ⊗ ((fd ⊗ is) ⊗ is)) R)
-        → Ar is R
-    layer {ah} {hd} {sl} {fd} inp wa wf = let
-      is = ah ⊗ (hd ⊗ sl)
+    layer : {nh sl dh df : S} → (sc : R) →
+            let is = nh ⊗ (sl ⊗ dh) in
+            (inp : Ar is R)
+          → (wa : Ar ((4 ∷ []) ⊗ (is ⊗ is)) R)
+          → (wf : Ar ((2 ∷ []) ⊗ ((df ⊗ is) ⊗ is)) R)
+          → Ar is R
+    layer {nh} {sl} {dh} {df} sc inp wa wf = let
+      is = nh ⊗ (sl ⊗ dh)
 
       ninp = rmsnorm inp
 
@@ -100,19 +102,19 @@ module GPT (real : Real) where
       wo : Ar (is ⊗ is) R
       wo = nest wa (suc (suc (suc zero)) ∷ [])
 
-      wf1 : Ar ((fd ⊗ is) ⊗ is) R
+      wf1 : Ar ((df ⊗ is) ⊗ is) R
       wf1 = nest wf (zero ∷ [])
 
-      wf2 : Ar (is ⊗ (fd ⊗ is)) R
-      wf2 = swap {fd ⊗ is} (nest wf (suc zero ∷ []))
+      wf2 : Ar (is ⊗ (df ⊗ is)) R
+      wf2 = swap {df ⊗ is} (nest wf (suc zero ∷ []))
 
       c₁ : Ar is R
-      c₁ = mattention {ah} {hd} q k v
+      c₁ = mattention {nh} {sl} sc q k v
 
       s₁ : Ar is R
       s₁ = zipWith _+_ (linear wo c₁) inp
 
-      s₂ : Ar (fd ⊗ is) R
+      s₂ : Ar (df ⊗ is) R
       s₂ = relu $ linear wf1 (rmsnorm s₁)
 
       c₃ : Ar is R
@@ -126,62 +128,37 @@ module GPT (real : Real) where
    With the following simplifications:
       1. RMSNorm instead of LayerNorm
       2. no biases
-      3. ReLU instaed of GeLU
+      3. ReLU instead of GeLU
     1. 2. could be potential be included. 3. is more difficult since
     it uses a probability density function.
       -}
-    gpt : {n : ℕ} {ah hd sl fd : S} →
-        let is = (ah ⊗ (hd ⊗ sl)) in
+    gpt : {n : ℕ} {nh sl dh df : S} → (sc : R) →
+        let is = (nh ⊗ (sl ⊗ dh)) in
           Ar is R
         → Ar (n ∷ [] ⊗ (4 ∷ [] ⊗ (is ⊗ is))) R
-        → Ar (n ∷ [] ⊗ (2 ∷ [] ⊗ ((fd ⊗ is) ⊗ is))) R
+        → Ar (n ∷ [] ⊗ (2 ∷ [] ⊗ ((df ⊗ is) ⊗ is))) R
         → Ar is R
-    gpt {n} {ah} {hd} {sl} {fd} inp wa wf =
-      sum’ (λ w' inp' → layer {ah} {hd} {fd = fd} inp' (proj₁ w') (proj₂ w'))
+    gpt {n} {nh} {hd} {sl} {df} sc inp wa wf =
+      sum’ (λ w' inp' → layer {nh} {hd} {df = df} sc inp' (proj₁ w') (proj₂ w'))
         inp λ (i : P (n ∷ [])) → Prod._,_ (nest wa i) (nest wf i)
 
 module Microgpt (real : Real) where
   open Real.Real real
   open GPT real
-  -- Embedding dimension
-  ED : ℕ
-  ED = 16
 
-  -- Number of attention heads
-  {- Must be such that ED/AH is a natural. Should we add this as a condition? -}
-  AH : ℕ
-  AH = 4
+  NL = 1 ; NH = 4 ; SL = 16  ; DH = 4 ; DF = 4
 
-  -- Number of layers
-  NL : ℕ
-  NL = 1
+  sc : R
+  sc = sqrt fromℕ DH
 
-  -- Size of each head
-  HD : ℕ
-  HD = ED ℕ./ AH
+  nh : S ; sl : S ; dh : S ; df : S
+  nh = NH ∷ [] ; sl = SL ∷ [] ; dh = DH ∷ [] ; df = DF ∷ []
 
-  -- Sequence length
-  {-
-  A sequence is a list of tokens.
-  In microgpt tokens are letters and sequences are names.
-  -}
-  SL : ℕ
-  SL = 16
+  is : S
+  is = nh ⊗ (sl ⊗ dh)
 
-  --  Input shape
-  {- This order makes it easy to pass into mattention -}
-  I : S
-  I = (AH ∷ []) ⊗  ((HD ∷ []) ⊗ (SL ∷ []))
-
-  -- The feedforward network projects into (FD x IS) x IS
-  FD : ℕ
-  FD = 4
-
-  microgpt :
-    (inp : Ar I R) →
-    Ar (NL ∷ [] ⊗ (4 ∷ [] ⊗ (I ⊗ I))) R
-    → Ar (NL ∷ [] ⊗ (2 ∷ [] ⊗ ((FD ∷ [] ⊗ I) ⊗ I))) R →
-    Ar I R
-  microgpt = gpt {ah = AH ∷ []} {hd = HD ∷ []} {fd = FD ∷ []}
-
-
+  microgpt : Ar is R
+            → Ar (NL ∷ [] ⊗ (4 ∷ [] ⊗ (is ⊗ is))) R
+            → Ar (NL ∷ [] ⊗ (2 ∷ [] ⊗ ((df ⊗ is) ⊗ is))) R
+            → Ar is R
+  microgpt inp wa wf = gpt {nh = nh} {sl = sl} {df = df} sc inp wa wf

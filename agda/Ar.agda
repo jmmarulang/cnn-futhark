@@ -51,19 +51,19 @@ module _ where
 
   Ar : S → Set → Set
   Ar s X = P s → X
-  
+
   K : X → Ar s X
   K x i = x
-  
+
   map : (X → Y) → Ar s X → Ar s Y
   map f a i = f (a i)
-  
+
   zipWith : (X → Y → Z) → Ar s X → Ar s Y → Ar s Z
   zipWith f a b i = f (a i) (b i)
 
   nest : Ar (s ⊗ p) X → Ar s (Ar p X)
   nest a i j = a (i ++ j)
-  
+
   splitP : P (s ⊗ p) → P s × P p
   splitP {s = []}    is = [] , is
   splitP {s = x ∷ s} (i ∷ is) = Prod.map₁ (i ∷_) (splitP is)
@@ -81,12 +81,12 @@ module _ where
   splitP-proj₂ {i = px ∷ i} = splitP-proj₂ {i = i}
 
   unnest : Ar s (Ar p X) → Ar (s ⊗ p) X
-  unnest a i = Prod.uncurry a (splitP i) 
+  unnest a i = Prod.uncurry a (splitP i)
 
   -- Ar is a monoidal functor
   -- F : S → (Set → Set)
   -- F s = Ar s
-  -- 
+  --
   -- Monoidal part
   -- F (s + p) = F s ∘ F p
   -- F [] = λ X → Ar [] X ≅ id, because Ar [] X ≅ X
@@ -99,7 +99,7 @@ module _ where
   xsum : (X → X → X) → X → Ar s X → X
   xsum {s = []} f e a = a []
   xsum {s = zero ∷ s} f e a = e
-  xsum {s = suc x ∷ s} f e a = f (xsum f e (nest a (zero ∷ []))) 
+  xsum {s = suc x ∷ s} f e a = f (xsum f e (nest a (zero ∷ [])))
                                  (xsum {s = x ∷ s} f e (unnest (nest a ∘ ιsuc)))
                                  --(λ { (i ∷ p) → a (suc i ∷ p)}))
 
@@ -111,16 +111,16 @@ module _ where
       where
         foldr' : (n : ℕ) → X → (Ar (n ∷ []) (Ar s X)) → X
         foldr' zero e a = e
-        foldr' (suc n) e a = go s (foldr' n e (unnest (nest a ∘ ιsuc))) (a (zero ∷ [])) 
+        foldr' (suc n) e a = go s (foldr' n e (unnest (nest a ∘ ιsuc))) (a (zero ∷ []))
 
-  --ysum-inv : (f : X → X → X) (e : X) → {a : Ar s (Ar p X)} 
+  --ysum-inv : (f : X → X → X) (e : X) → {a : Ar s (Ar p X)}
   --        → (∀ k → ysum (zipWith f) (K e) a k ≡ map (ysum f e) (λ i j → a j i) k)
 
 
   sum₁ : (X → X → X) → X → Ar (n ∷ []) X → X
   sum₁ {n = zero}   f ε a = ε
   sum₁ {n = suc n}  f ε a = f (a (zero ∷ [])) (sum₁ f ε (a ∘ ιsuc))
-  
+
   sum : (X → X → X) → X → Ar s X → X
   sum {s = []}    f ε a = a [] --f ε (a [])
   sum {s = x ∷ s} f ε a = sum₁ f ε $ map (sum f ε) (nest a)
@@ -129,14 +129,14 @@ module _ where
   sum’ : (X → Y → Y) → Y → Ar s X → Y
   sum’ f e a = sum _∘′_ id (map f a) e
 
-  sum₁-cong : (f : X → X → X) (e : X) → ∀ {a b : Ar (n ∷ []) X} → (∀ i → a i ≡ b i) 
-            → sum₁ f e a ≡ sum₁ f e b 
+  sum₁-cong : (f : X → X → X) (e : X) → ∀ {a b : Ar (n ∷ []) X} → (∀ i → a i ≡ b i)
+            → sum₁ f e a ≡ sum₁ f e b
   sum₁-cong {n = zero} f e pf = refl
   sum₁-cong {n = suc n} f e pf = cong₂ f (pf (zero ∷ [])) (sum₁-cong f e (λ i → pf (ιsuc i)))
 
-  sum-cong : (f : X → X → X) (e : X) → ∀ {a b : Ar s X} → (∀ i → a i ≡ b i) → sum f e a ≡ sum f e b 
+  sum-cong : (f : X → X → X) (e : X) → ∀ {a b : Ar s X} → (∀ i → a i ≡ b i) → sum f e a ≡ sum f e b
   sum-cong {s = []} f e pf = pf [] --cong (f e) (pf _)
-  sum-cong {s = x ∷ s} f e {a}{b} pf = sum₁-cong f e (λ j → sum-cong f e (λ i → pf (j ++ i))) 
+  sum-cong {s = x ∷ s} f e {a}{b} pf = sum₁-cong f e (λ j → sum-cong f e (λ i → pf (j ++ i)))
 
   sum-sum₁-agree : {a : Ar (n ∷ []) X} {f : X → X → X} {e : X} → sum₁ f e a ≡ sum f e a
   sum-sum₁-agree {n = zero} = refl
@@ -155,8 +155,8 @@ module _ where
   sum₁-xsum {n = zero} = refl
   sum₁-xsum {n = suc n} {f = f}{e}{a} = cong₂ f refl (sym $ trans (sym $ sum₁-xsum {a = unnest (nest a ∘ ιsuc)}) (sum₁-cong {n = n} _ _ λ { (i ∷ []) → refl }))
 
-  
-  sum-xsum-step : {f : X → X → X} {e : X} {a : Ar (n ∷ s) X} 
+
+  sum-xsum-step : {f : X → X → X} {e : X} {a : Ar (n ∷ s) X}
                 → sum₁ f e (map (xsum f e) (nest a)) ≡ xsum f e a
   sum-xsum-step {n = zero} {s = s} {f = f} {e} = refl
   sum-xsum-step {n = suc n} {s = s} {f = f} {e} {a} = cong₂ f refl
@@ -166,7 +166,7 @@ module _ where
   sum-xsum : {f : X → X → X} {e : X} {a : Ar s X} → sum f e a ≡ xsum f e a
   sum-xsum {s = []} = refl
   sum-xsum {s = zero ∷ s} = refl
-  sum-xsum {s = suc x ∷ s}{f = f}{e} 
+  sum-xsum {s = suc x ∷ s}{f = f}{e}
     = cong₂ f (sum-xsum {s = s})
               (sym $ trans (sym $ sum-xsum-step {n = x})
                            (sum₁-cong {n = x} f e λ { (i ∷ []) → (sym $ sum-xsum {s = s})}))
@@ -177,17 +177,17 @@ module _ where
   sum₁-inv {n = suc n} f e {a} k = cong (f (a (zero ∷ []) k)) (sum₁-inv f e {a ∘ ιsuc} k)
 
 
-  sum-inv : (f : X → X → X) (e : X) → {a : Ar s (Ar p X)} 
+  sum-inv : (f : X → X → X) (e : X) → {a : Ar s (Ar p X)}
           → (∀ k → sum (zipWith f) (K e) a k ≡ map (sum f e) (λ i j → a j i) k)
   sum-inv {s = []} f e {a} _ = refl
-  sum-inv {s = x ∷ s} f e {a} k = 
+  sum-inv {s = x ∷ s} f e {a} k =
     sum₁-inv f e {λ i → sum (zipWith f) (K e) (λ j → a (i ++ j))} k
-    ∙ sum₁-cong f e {(λ j → sum (zipWith f) (K e) (λ i → a (j ++ i)) k)} 
+    ∙ sum₁-cong f e {(λ j → sum (zipWith f) (K e) (λ i → a (j ++ i)) k)}
               (λ i → sum-inv f e {λ j → a (i ++ j)} k)
 
 
-  sum-map : (f : X → X → X) (e : X) → {a : Ar s (Ar p X)} 
-          → let 
+  sum-map : (f : X → X → X) (e : X) → {a : Ar s (Ar p X)}
+          → let
               σ : ∀ {q} → Ar q X → X
               σ = sum f e
             in σ (map σ a) ≡ σ (unnest a)
@@ -204,7 +204,7 @@ module _ where
 
   inject-left : Fin (suc m) → Fin (suc (n + m))
   inject-left {m} {n} i rewrite +-comm n m  = inject+ _ i
-  
+
   split-inj₁ : (i : Fin (m + n)) (k : Fin m) → splitAt m i ≡ inj₁ k → inject+ _ k ≡ i
   split-inj₁ {suc m} zero .zero refl = refl
   split-inj₁ {suc m} (suc i) zero p with splitAt m i | inspect (splitAt m) i
@@ -212,14 +212,14 @@ module _ where
   split-inj₁ {suc m} (suc i) zero () | inj₂ y | [ r ]
   split-inj₁ {suc m} (suc i) (suc k) p with splitAt m i | inspect (splitAt m) i
   split-inj₁ {suc m} (suc i) (suc .x) refl | inj₁ x | [ r ] = cong suc (split-inj₁ i x r)
-  
+
   inj₁₂ : {A B : Set}{x : A}{y : B} → inj₁ x ≡ inj₂ y → ⊥
   inj₁₂ ()
-  
+
   _⊕_ : Fin m → Fin (1 + n) → Fin (m + n)
   zero   ⊕ j = inject-left j
   suc i  ⊕ j = suc (i ⊕ j)
-  
+
   _⊝_ : (i : Fin (m + n)) (j : Fin m)
       → Dec (∃ λ k → j ⊕ k ≡ i)
   _⊝_ {suc m} {n} i zero rewrite +-comm m n with splitAt (suc n) i | inspect (splitAt (suc n)) i
@@ -231,7 +231,7 @@ module _ where
   zero ⊝ suc j = no λ { (k , ()) }
   suc i ⊝ suc j with i ⊝ j
   ... | yes (k , p) = yes (k , cong suc p)
-  ... | no ¬p = no λ { (k , p) → ¬p (k , suc-injective p) } 
+  ... | no ¬p = no λ { (k , p) → ¬p (k , suc-injective p) }
 
   inject-left-zero : inject-left {m} {n} zero ≡ zero
   inject-left-zero {m} {n} rewrite +-comm n m = refl
@@ -256,17 +256,17 @@ module _ where
 
   conv₁ : Vec (m + n) ℕ → Vec m ℕ → Vec (1 + n) ℕ
   conv₁ a w = sum₁ (zipWith _+_) (K 0) (λ i → map (w i *_) (slide₁ i a))
- 
+
   data Pointw₂ (R : (a b : ℕ) → Set) : (a b : S) → Set where
    instance
     []  : Pointw₂ R [] []
-    cons : ⦃ R m n ⦄ → ⦃ Pointw₂ R s p ⦄ → Pointw₂ R (m ∷ s) (n ∷ p) 
+    cons : ⦃ R m n ⦄ → ⦃ Pointw₂ R s p ⦄ → Pointw₂ R (m ∷ s) (n ∷ p)
 
   data Pointw₃ (R : (a b c : ℕ) → Set) : (a b c : S) → Set where
    instance
     []  : Pointw₃ R [] [] []
     cons : ⦃ R m n k ⦄ → ⦃ Pointw₃ R s p q ⦄ → Pointw₃ R (m ∷ s) (n ∷ p) (k ∷ q)
-  
+
   _+_≈_ : (s p q : S) → Set
   s + p ≈ q = Pointw₃ (λ x y z → x + y ≡ z) s p q
 
@@ -283,7 +283,7 @@ module _ where
 
   _⊝′_ : (i : P r) (j : P s) (su : suc p ≈ u) (sp : s + p ≈ r) → Dec (∃ λ k → (j ⊕′ k) su sp ≡ i)
   ([] ⊝′ j) [] [] = yes ([] , refl)
-  ((i ∷ is) ⊝′ (j ∷ js)) (cons ⦃ refl ⦄ ⦃ sp ⦄) (cons ⦃ refl ⦄ ⦃ s+p ⦄) 
+  ((i ∷ is) ⊝′ (j ∷ js)) (cons ⦃ refl ⦄ ⦃ sp ⦄) (cons ⦃ refl ⦄ ⦃ s+p ⦄)
         with i ⊝ j
   ... | no ¬p = no λ { ((k ∷ _) , refl) → ¬p (k , refl) }
   ... | yes (k , p) with (is ⊝′ js) sp s+p
@@ -300,7 +300,7 @@ module _ where
 
   ix-div : P q → s * p ≈ q → P s
   ix-div is [] = is
-  ix-div (i ∷ is) (cons ⦃ refl ⦄ ⦃ pf ⦄) 
+  ix-div (i ∷ is) (cons ⦃ refl ⦄ ⦃ pf ⦄)
     = Prod.proj₁ (F.remQuot _ i) ∷ ix-div is pf
 
   ix-mod : P q → s * p ≈ q → P p
@@ -310,9 +310,9 @@ module _ where
 
   ix-combine : P s → P p → s * p ≈ q → P q
   ix-combine i j [] = j
-  ix-combine (i ∷ is) (j ∷ js) (cons ⦃ refl ⦄ ⦃ ps ⦄) 
+  ix-combine (i ∷ is) (j ∷ js) (cons ⦃ refl ⦄ ⦃ ps ⦄)
     = F.combine i j ∷ ix-combine is js ps
-  
+
   selb : Ar q X → s * p ≈ q → P s → Ar p X
   selb a p i j = a (ix-combine i j p)
 
@@ -350,12 +350,12 @@ module _ where
   len : S → ℕ
   len s = foldl _*_ 1 s
 
-  -- Size of an array 
+  -- Size of an array
   size : Ar s X →  ℕ
   size {s} _ = len s
 
-  -- Reverses a shape 
-  reverse : S → S 
+  -- Reverses a shape
+  reverse : S → S
   reverse [] = []
   reverse (x ∷ xs) = (reverse xs) ⊗ (x ∷ [])
 
@@ -369,17 +369,17 @@ module _ where
     x₂ : P ss
     x₂ = unreverseP (proj₁ (splitP x))
 
-  -- Transposes an array 
+  -- Transposes an array
   transpose : Ar s X → Ar (reverse s) X
   transpose x i = x (unreverseP i)
-  
+
 module ArTests where
   imap : (s : S) → (P s → X) → Ar s X
   imap s f = f
 
   _ : sum _+_ 0 (imap (5 ∷ 6 ∷ []) (const 1)) ≡ 30
   _ = refl
-  
+
   -- Test auto-seatch
   _ : (3 ∷ 3 ∷ []) + (5 ∷ 5 ∷ []) ≈ (8 ∷ 8 ∷ [])
   _ = it
@@ -387,7 +387,7 @@ module ArTests where
   _ : suc (4 ∷ 4 ∷ []) ≈ (5 ∷ 5 ∷ [])
   _ = it
 
-  
+
   _ : {f : Y → Z} {g : X → Y} → ∀ (a : Ar s X) → map f (map g a) ≡ map (f ∘ g) a
   _ = λ _ → refl
 

@@ -5,13 +5,13 @@ record Real : Set₁ where
   field
     R : Set
     fromℕ : ℕ → R
-    _+_ _*_ _÷_ _∧_ : R → R → R
+    _+_ _*_ _÷_ _⊔_ : R → R → R
     -_ e^_ sqrt_ : R → R
 
-  infixl 10 _+_ 
-  infixl 15 _*_ 
-  infixl 15 _÷_ 
-  infixl 15 _∧_ 
+  infixl 10 _+_
+  infixl 15 _*_
+  infixl 15 _÷_
+  infixl 15 _⊔_
 
   0ᵣ : R
   0ᵣ = fromℕ 0

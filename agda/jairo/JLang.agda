@@ -453,7 +453,7 @@ module Primitives where
   open import Data.Nat as ℕ using (ℕ; zero; suc)
   open import Function using (_$_; it; _∋_)
   open import Relation.Binary.PropositionalEquality
-  open import Ar hiding (slide; selb)
+  open import Ar hiding (slide; selb; swap)
   open Syntax
   open WkSub
 
@@ -530,18 +530,27 @@ module Primitives where
   relu = {!   !}
 
   -- swap
-  switch : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ u))
-  switch {u} {s} x = Imap {s} λ i → Imaps λ j → sels (sel ⟨ x ⟩ j) i
+  swap : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ u))
+  swap {u} {s} x = Imap {s} λ i → Imaps λ j → sels (sel ⟨ x ⟩ j) i
 
+  {- I cheat by passing the scale sc as a parameter. It should be such that
+     sqrt (size v) =  sc
+     For microgpt sc = 16.
+  -}
   attention : ∀ {u s r t Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (r ⊗ s))
             → E Γ (ar (r ⊗ t)) → ℕ → E Γ (ar (u ⊗ t))
-  attention {u} {s} {r} {t} q k v n = {!   !}
+  attention {u} {s} {r} {t} q k v sc =
+    Let l₁ := matmul {u} {s} q (swap {r} k) In
+    Let l := scaledown sc l₁ In
+    Let w₁ := softmax l In
+    Let w := matmul {u} w₁ ⟨ v ⟩ In w
 
   mattention : ∀ {h u s r t Γ} → E Γ (ar (h ⊗ (u ⊗ s)))
              → E Γ (ar (h ⊗ (r ⊗ s))) → E Γ (ar (h ⊗ (r ⊗ t)))
+             → ℕ
              → E Γ (ar (h ⊗ (u ⊗ t)))
-  mattention {h} {u} q k v =
-    Imap {h} (λ i → attention {u} (sel ⟨ q ⟩ i) (sel ⟨ k ⟩ i) (sel ⟨ v ⟩ i) ?)
+  mattention {h} {u} q k v sc =
+    Imap {h} (λ i → attention {u} (sel ⟨ q ⟩ i) (sel ⟨ k ⟩ i) (sel ⟨ v ⟩ i) sc)
 
   {-
   layer : ∀ {ah hd sl fd Γ} →
@@ -565,7 +574,7 @@ module Primitives where
     in r
 -}
 
-  ED = 16 ; AH = 4 ; NL = 1 ; HD = ED ℕ./ AH ; SL = 16 ; FD = 4
+  ED = 16 ; AH = 4 ; NL = 1 ; HD = ED ℕ./ AH ; SL = 16 ; FD = 4 ; SC = 16
 
   I = (AH ∷ []) ⊗  ((HD ∷ []) ⊗ (SL ∷ []))
 
@@ -581,7 +590,7 @@ module Primitives where
               Let k := linear wk ninp In
               Let v := linear wv ninp In
               Let c₁ :=
-                mattention {AH ∷ []} {HD ∷ []} {SL ∷ []} {HD ∷ []} q k v In
+                mattention {AH ∷ []} {HD ∷ []} {SL ∷ []} {HD ∷ []} q k v SC In
               Let s₁₁ := linear wo c₁ In
               Let s₁ := s₁₁ ⊞ inp In
               Let s₂₁ := rmsnorm s₁ In

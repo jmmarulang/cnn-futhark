@@ -24,44 +24,45 @@ module jairo.experiments where
 
   record JReal : Set₁ where
     field
-      JR : Set
-      fromℕ : ℕ → JR
-      _+_ _*_ _÷_ _∧_ : JR → JR → JR
-      -_ e^_ sqrt_ : JR → JR
+      R : Set
+      fromℕ : ℕ → R
+      _+_ _*_ _÷_ _∧_ : R → R → R
+      -_ e^_ sqrt_ : R → R
 
     infixl 10 _+_
     infixl 15 _*_
     infixl 15 _÷_
     infixl 15 _∧_
 
-    0ᵣ : JR
+    0ᵣ : R
     0ᵣ = fromℕ 0
 
   module microgpt (jr : JReal) where
     open JReal jr
 
     {- matrix-vector multiplication -}
-    linear : Ar (u ⊗ s) JR → Ar s JR → Ar u JR
+    linear : Ar (u ⊗ s) R → Ar s R → Ar u R
     linear w x i = sum _+_ 0ᵣ (zipWith _*_ (nest w i) x)
 
-    {- A transpose? -}
-    swap : Ar (u ⊗ s) JR → Ar (s ⊗ u) JR
+    {-
+    swap : Ar (u ⊗ s) R → Ar (s ⊗ u) R
     swap {u} {s} x = unnest {s} λ i j → nest x j i
+    -}
 
     {- matrix multiplication -}
-    matmul : Ar (u ⊗ s) JR → Ar (s ⊗ r) JR → Ar (u ⊗ r) JR
+    matmul : Ar (u ⊗ s) R → Ar (s ⊗ r) R → Ar (u ⊗ r) R
     matmul {u} {s} {r} w x = unnest {u} (λ i j → linear w (λ k → nest x k j) i)
 
     {- converts a vector into a probability distribution
       In microgpt they substract the max value of the vector to
       prevent overflow of exp. Should we do the same?
     -}
-    softmax : Ar s JR → Ar s JR
+    softmax : Ar s R → Ar s R
     softmax {s} x  = let
-      exps : Ar s JR
+      exps : Ar s R
       exps = map e^_ x
 
-      total : JR
+      total : R
       total = sum _+_ 0ᵣ exps
 
       r = map (_÷ total) exps
@@ -72,18 +73,19 @@ module jairo.experiments where
     lenS : S → ℕ
     lenS s = L.foldl ℕ._*_ 1 s
 
-    {- rename to size -}
-    len : Ar s JR → ℕ
+    {- rename to size
+    len : Ar s R → ℕ
     len {s} _ = lenS s
+    -}
 
     {- rescales a vector so its values have unit root-mean-square.
       They add 0.0001 in one of the steps. I assume to avoid
       overflow. Should we do the same?
       -}
-    rmsnorm : Ar s JR → Ar s JR
+    rmsnorm : Ar s R → Ar s R
     rmsnorm {s} x = let
-      scale : JR
-      scale = sqrt ((sum _+_ 0ᵣ (zipWith _*_ x x)) ÷ (fromℕ (len x)))
+      scale : R
+      scale = sqrt ((sum _+_ 0ᵣ (zipWith _*_ x x)) ÷ (fromℕ (size x)))
 
       r = map (_* scale) x
       in r
@@ -92,7 +94,7 @@ module jairo.experiments where
         Maybe use Dec instead of Bool. -}
 
     {- rectified linear unit -}
-    relu : Ar s JR → Ar s JR
+    relu : Ar s R → Ar s R
     relu = map (0ᵣ ∧_)
 
     {- returns the reverse of a shape.
@@ -108,7 +110,7 @@ module jairo.experiments where
     reverseP {s ∷ ss} (x ∷ xs) = reverseP xs ++ (x ∷ [])
 
     {- from reverse to the original.
-       I need this to define transpose -}
+       I need this to define transpose
     unreverseP : P (reverseS s) → P s
     unreverseP {[]} [] = []
     unreverseP {s ∷ ss} x = x₁ ++ x₂ where
@@ -117,143 +119,97 @@ module jairo.experiments where
 
       x₂ : P ss
       x₂ = unreverseP (proj₁ (splitP x))
-
-    {- Transpose of an array? -}
-    transpose : Ar s JR → Ar (reverseS s) JR
+-}
+    {- Transpose of an array?
+    transpose : Ar s R → Ar (reverseS s) R
     transpose x i = x (unreverseP i)
-
+-}
     {- computes an attention block -}
-    attention : {u s r t : S} → Ar (u ⊗ s) JR → Ar (r ⊗ s) JR → Ar (r ⊗ t) JR
-              → Ar (u ⊗ t) JR
-    attention {u} {s} {r} {t} q k v = let
-      {- Are len and swap correct here? -}
-      scale : JR
-      scale = (sqrt (fromℕ (len v)))
+    attention : {slq slk dk dv : S} → R
+              → Ar (slq ⊗ dk) R → Ar (slk ⊗ dk) R → Ar (slk ⊗ dv) R
+              → Ar (slq ⊗ dv) R
+    attention {slq} {slk} {dk} {dv} sc hq hk hv = let
+      l : Ar (slq ⊗ slk) R
+      l = map (_÷ sc) (matmul {slq} hq (swap {slk} hk))
 
-      l : Ar (u ⊗ r) JR
-      l = map (_÷ scale) (matmul {u} q (swap {r} k))
-
-      w : Ar (u ⊗ t) JR
-      w = matmul {u} (softmax l) v
+      w : Ar (slq ⊗ dv) R
+      w = matmul {slq} (softmax l) hv
       in w
 
-    {- Multi-headed attention-}
-    mattention : {h u s r t : S}
-               → Ar (h ⊗ (u ⊗ s)) JR → Ar (h ⊗ (r ⊗ s)) JR → Ar (h ⊗ (r ⊗ t)) JR
-               → Ar (h ⊗ (u ⊗ t)) JR
-    mattention {h} {u} q k v =
-      unnest {h} λ i → attention {u} (nest q i) (nest k i) (nest v i)
+    mattention : {nh slq slk dk dv : S} → R
+               → Ar (nh ⊗ (slq ⊗ dk)) R → Ar (nh ⊗ (slk ⊗ dk)) R
+               → Ar (nh ⊗ (slk ⊗ dv)) R → Ar (nh ⊗ (slq ⊗ dv)) R
+    mattention {nh} {slq} {slk} sc q k v =
+      unnest {nh} λ i →
+        attention {slq} {slk} sc (nest q i) (nest k i) (nest v i)
 
-    {- A single layer forward pass. -}
-    gptLayer :
-        {ah hd sl fd : S} →
-        let is = (ah ⊗ (hd ⊗ sl)) in
-          (inp : Ar is JR)
-        → (wa : Ar (4 ∷ [] ⊗ (is ⊗ is)) JR)
-        → (wf : Ar (2 ∷ [] ⊗ ((fd ⊗ is) ⊗ is)) JR)
-        → Ar is JR
-    gptLayer {ah} {hd} {sl} {fd} inp wa wf = let
-      is = ah ⊗ (hd ⊗ sl)
+    layer : {nh sl dh df : S} → (sc : R) →
+            let is = nh ⊗ (sl ⊗ dh) in
+            (inp : Ar is R)
+          → (wa : Ar ((4 ∷ []) ⊗ (is ⊗ is)) R)
+          → (wf : Ar ((2 ∷ []) ⊗ ((df ⊗ is) ⊗ is)) R)
+          → Ar is R
+    layer {nh} {sl} {dh} {df} sc inp wa wf = let
+      is = nh ⊗ (sl ⊗ dh)
 
       ninp = rmsnorm inp
 
-      q : Ar is JR
+      q : Ar is R
       q = linear (nest wa (zero ∷ [])) ninp
 
-      k : Ar is JR
+      k : Ar is R
       k = linear (nest wa (suc zero ∷ [])) ninp
 
-      v : Ar is JR
+      v : Ar is R
       v = linear (nest wa (suc (suc zero) ∷ [])) ninp
 
-      wo : Ar (is ⊗ is) JR
+      wo : Ar (is ⊗ is) R
       wo = nest wa (suc (suc (suc zero)) ∷ [])
 
-      wf1 : Ar ((fd ⊗ is) ⊗ is) JR
+      wf1 : Ar ((df ⊗ is) ⊗ is) R
       wf1 = nest wf (zero ∷ [])
 
-      wf2 : Ar (is ⊗ (fd ⊗ is)) JR
-      wf2 = swap {fd ⊗ is} (nest wf (suc zero ∷ []))
+      wf2 : Ar (is ⊗ (df ⊗ is)) R
+      wf2 = swap {df ⊗ is} (nest wf (suc zero ∷ []))
 
-      c₁ : Ar is JR
-      c₁ = mattention {ah} {hd} q k v
+      c₁ : Ar is R
+      c₁ = mattention {nh} {sl} sc q k v
 
-      s₁ : Ar is JR
+      s₁ : Ar is R
       s₁ = zipWith _+_ (linear wo c₁) inp
 
-      s₂ : Ar (fd ⊗ is) JR
+      s₂ : Ar (df ⊗ is) R
       s₂ = relu $ linear wf1 (rmsnorm s₁)
 
-      c₃ : Ar is JR
+      c₃ : Ar is R
       c₃ = linear wf2 s₂
 
       r = zipWith _+_ c₃ s₁
       in r
 
-    sucP : P (n ∷ [] ⊗ s) → P (ℕ.suc n ∷ [] ⊗ s)
-    sucP (i ∷ is) = suc i ∷ is
-
-    tail : Ar (ℕ.suc n ∷ [] ⊗ s) X → Ar (n ∷ [] ⊗ s) X
-    tail x = x ∘ sucP
-
-    head : Ar (ℕ.suc n ∷ [] ⊗ s) X → Ar s X
-    head x is = x (zero ∷ is)
-
-    {-
-    GPT2 with the following simplifications:
-      1. RMSNorm instead of LayerNorm
-      2. no biases
-      3. ReLU instaed of GeLU
-    1. 2. could be potential be included. 3. is more difficult since
-    it uses a probability density function.
-      -}
-    gpt : {n : ℕ} {ah hd sl fd : S} →
-        let is = (ah ⊗ (hd ⊗ sl)) in
-          Ar is JR
-        → Ar (n ∷ [] ⊗ (4 ∷ [] ⊗ (is ⊗ is))) JR
-        → Ar (n ∷ [] ⊗ (2 ∷ [] ⊗ ((fd ⊗ is) ⊗ is))) JR
-        → Ar is JR
-    gpt {n} {ah} {hd} {sl} {fd} inp wa wf =
-      sum’ (λ w' inp' → gptLayer {ah} {hd} {fd = fd} inp' (proj₁ w') (proj₂ w'))
+    gpt : {n : ℕ} {nh sl dh df : S} → (sc : R) →
+        let is = (nh ⊗ (sl ⊗ dh)) in
+          Ar is R
+        → Ar (n ∷ [] ⊗ (4 ∷ [] ⊗ (is ⊗ is))) R
+        → Ar (n ∷ [] ⊗ (2 ∷ [] ⊗ ((df ⊗ is) ⊗ is))) R
+        → Ar is R
+    gpt {n} {nh} {hd} {sl} {df} sc inp wa wf =
+      sum’ (λ w' inp' → layer {nh} {hd} {df = df} sc inp' (proj₁ w') (proj₂ w'))
         inp λ (i : P (n ∷ [])) → Prod._,_ (nest wa i) (nest wf i)
 
-    {- embedding dimension (C) -}
-    ED : ℕ
-    ED = 16
+    NL = 1 ; NH = 4 ; SL = 16  ; DH = 4 ; DF = 4
 
-    {-
-    number of attention heads (H)
-    Must be such that ED/AH is a natural
-    -}
-    AH : ℕ
-    AH = 4
+    sc : R
+    sc = sqrt fromℕ DH
 
-    {- number of layers (N)
-      It is 1 microgpt so perhaps we do not need it? -}
-    NL : ℕ
-    NL = 1
+    nh : S ; sl : S ; dh : S ; df : S
+    nh = NH ∷ [] ; sl = SL ∷ [] ; dh = DH ∷ [] ; df = DF ∷ []
 
-    {- Dimension of each head -}
-    HD : ℕ
-    HD = ED ℕ./ AH
+    is : S
+    is = nh ⊗ (sl ⊗ dh)
 
-    {- sequence length (T)
-       A sequence is a list of tokens.
-       In microgpt tokens are letters and sequences names -}
-    SL : ℕ
-    SL = 16
-
-    {- The feed forward network projects into FDx-}
-    FD : ℕ
-    FD = 4
-
-    {- I chose this order to make it easy to pass into mattention-}
-    IS : S
-    IS = (AH ∷ []) ⊗  ((HD ∷ []) ⊗ (SL ∷ []))
-
-    agpt :
-          (inp : Ar IS JR)
-        → Ar (NL ∷ [] ⊗ (4 ∷ [] ⊗ (IS ⊗ IS))) JR
-        → Ar (NL ∷ [] ⊗ (2 ∷ [] ⊗((FD ∷ [] ⊗ IS) ⊗ IS))) JR
-        → Ar IS JR
-    agpt = gpt {NL} {AH ∷ []} {HD ∷ []} {SL ∷ []} {FD ∷ []}
+    microgpt : Ar is R
+             → Ar (NL ∷ [] ⊗ (4 ∷ [] ⊗ (is ⊗ is))) R
+             → Ar (NL ∷ [] ⊗ (2 ∷ [] ⊗ ((df ⊗ is) ⊗ is))) R
+             → Ar is R
+    microgpt inp wa wf = gpt {nh = nh} {sl = sl} {df = df} sc inp wa wf
