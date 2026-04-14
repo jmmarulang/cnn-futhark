@@ -1,6 +1,6 @@
-
+{-# OPTIONS --warn=noUserWarning #-}
 module _ where
- 
+
 module _ where
   open import Data.Product
   open import Data.Nat using (ℕ; zero; suc; _+_; _<_; s≤s)
@@ -10,7 +10,7 @@ module _ where
   open import Ar
   open import Lang
   open WkSub
-  
+
   -- Tel Γ Δ is a telescope where the first expression
   -- is in Γ variables.  Γ is always prefix of Δ
   data Tel : Ctx → Ctx → Set where
@@ -24,7 +24,7 @@ module _ where
 
   data EE : Ctx → Ctx → Set where
     env : Env Γ Δ → EE Γ Δ
-    let′ : E Δ (ar s) → EE Γ (Δ ▹ ar s) → EE Γ Δ 
+    let′ : E Δ (ar s) → EE Γ (Δ ▹ ar s) → EE Γ Δ
 
   -- Weaken all expressions in the Env enironment
   env-wk : Δ ⊆ Ψ → Env Γ Δ → Env Γ Ψ
@@ -58,7 +58,7 @@ module _ where
 
   -- Add zero to the end of EE (wrapper for ee-wk-zero)
   ee-push-zero : EE Γ Δ → EE (Γ ▹ ar s) Δ
-  ee-push-zero ρ = ee-wk-zero ρ (skip ⊆-eq) 
+  ee-push-zero ρ = ee-wk-zero ρ (skip ⊆-eq)
 
   zero-env : Env Γ Δ
   zero-env {ε} = ε
@@ -76,7 +76,7 @@ module _ where
   ee-update+ : EE Γ Δ → (v : ar s ∈ Γ) (t : E Δ (ar s)) → EE Γ Δ
   ee-update+ (env ρ) v t = env (env-update+ ρ v t)
   ee-update+ (let′ x ρ) v t = let′ x (ee-update+ ρ v (t ↑))
- 
+
   env-map-sum : Env Γ (Δ ▹ ix s) → Env Γ Δ
   env-map-sum ε = ε
   env-map-sum (skip ρ) = skip (env-map-sum ρ)
@@ -85,10 +85,10 @@ module _ where
   ee-fold : EE Γ Δ → Env Γ Δ
   ee-fold (env x) = x
   ee-fold {Δ = Δ} (let′ {s = s} x ρ) = map-let (ee-fold ρ)
-    where map-let : ∀ {Γ} → Env Γ (Δ ▹ ar s) → Env Γ Δ 
+    where map-let : ∀ {Γ} → Env Γ (Δ ▹ ar s) → Env Γ Δ
           map-let ε = ε
           map-let (skip ν) = skip (map-let ν)
-          map-let (ν ▹ e) = map-let ν ▹ let′ x e
+          map-let (ν ▹ e) =  map-let ν ▹ let′ x e
 
   ee-map-sum : EE Γ (Δ ▹ ix s) → EE Γ Δ
   ee-map-sum ρ = env (env-map-sum (ee-fold ρ))
@@ -109,14 +109,14 @@ module _ where
   let-depth : EE Γ Δ → ℕ
   let-depth (env x) = 0
   let-depth (let′ x ρ) = suc (let-depth ρ)
-  
+
   ee-wk-depth : (ρ : EE Γ Δ) → (w : Δ ⊆ Ψ) → let-depth ρ ≡ let-depth {Δ = Ψ} (ee-wk w ρ)
   ee-wk-depth (env x) w = refl
   ee-wk-depth (let′ x ρ) w = cong suc (ee-wk-depth ρ (keep w))
 
   sub-<₁ : ∀ {a b c} → a < b → a ≡ c → c < b
   sub-<₁ a<b refl = a<b
-  
+
   eep : (ρ ν : EE Γ Δ) → (l : ℕ) → (let-depth ρ + let-depth ν < l) → EE Γ Δ
   eep (env ρ) (env ν) l pf = env (env-plus ρ ν)
   eep (env ρ) (let′ x ν) (suc l) (s≤s pf) = let′ x (eep (ee-wk (skip ⊆-eq) (env ρ)) ν l pf)
@@ -124,8 +124,6 @@ module _ where
 
   ee-plus′ : (ρ ν : EE Γ Δ) → EE Γ Δ
   ee-plus′ ρ ν = eep ρ ν (suc (let-depth ρ + let-depth ν)) ≤-refl
-
-
 
   env-lookup : Env Γ Δ → ar s ∈ Γ → E Δ (ar s)
   env-lookup (ρ ▹ x) v₀ = x
@@ -144,9 +142,15 @@ module _ where
   glet-sub : (v : ar s ∈ Δ) → Sub ((Δ / v) ▹ ar s) Δ
   glet-sub v₀ = sub-id
   glet-sub (there v) = skeep (glet-sub v) ∙ˢ sub-swap
+-- Sub _Δ_530 (Γ ▹ ip)
+-- Sub (((Γ ▹ ip) / there v) ▹ ar s) _Δ_530
+-- Sub (((Γ ▹ ip) / there v) ▹ ar s) ((Γ / v) ▹ ar s ▹ ip)
 
   glet : (v : ar s ∈ Δ) → (x : E (Δ / v) (ar s)) → E Δ (ar p) → E (Δ / v) (ar p)
   glet v x e = let′ x $′ sub e (glet-sub v)
+
+  -- glet′ : (x : E Δ (ar s)) → E Δ (ar p) → E Δ (ar p)
+  -- glet′ x e = let′ x (wk (skip ⊆-eq) e)
 
   env-sub : Env Γ Δ → Sub Ψ Δ → Env Γ Ψ
   env-sub ε s = ε
@@ -161,7 +165,7 @@ module _ where
   env-let v x ρ = let′ x $′ env $′ env-sub ρ (glet-sub v)
 
   ee-let : (v : ar s ∈ Δ) (x : E (Δ / v) (ar s)) → EE Γ Δ → EE Γ (Δ / v)
-  ee-let v x ρ = let′ x $ ee-sub ρ (glet-sub v) 
+  ee-let v x ρ = let′ x $ ee-sub ρ (glet-sub v)
 
   {-# TERMINATING #-} -- See GradTerm.agda where this is fixed
   grad-last : E Γ (ar s) → EE (Γ ▹ ar s) Γ → EE Γ Γ
@@ -180,7 +184,7 @@ module _ where
   grad zero s δ = δ
   grad one s δ = δ
 
-  grad (imaps e)              s δ = grad-sum e (sels     (s ↑) (var v₀)) δ
+  grad (imaps e)              s δ = grad-sum e (sels     (s ↑) (var v₀)) δ -- why?
   grad (imap e)               s δ = grad-sum e (sel      (s ↑) (var v₀)) δ
   grad (E.imapb m e)          s δ = grad-sum e (E.selb m (s ↑) (var v₀)) δ
 
@@ -197,14 +201,21 @@ module _ where
   grad (e ⊞ e₁)               s   = grad e s ∘ grad e₁ s
   grad (e ⊠ e₁)               s   = grad e (s ⊠ e₁) ∘ grad e₁ (s ⊠ e)
   grad (scaledown x e)        s   = grad e (scaledown x s)
-  grad (minus e)              s   = grad e (minus s)
-  grad (logistic e)           s   = grad e (let′ (logistic e) ((s ↑) ⊠ var v₀ ⊠ (one ⊞ minus (var v₀))))
-  
+  grad (⊟ e)              s   = grad e (⊟ s)
+  grad (logi e)           s   = grad e (let′ (logi e) ((s ↑) ⊠ var v₀ ⊠ (one ⊞ ⊟ (var v₀))))
+
   grad (let′ e e₁) s δ =
     let
       r = grad e₁ (s ↑) (ee-push-zero $′ ee-wk (skip ⊆-eq) δ)
       t = grad-last e (let′ e r)
-    in t 
+    in t
+  -- Jairo made
+    -- is there a way to deal with the discontinuity?
+  grad (e ⊔ e₁) s = grad e (𝕀-< e₁ s) ∘ grad e₁ (𝕀-< e s) -- is this correct?
+  grad (𝕀-< e e₁) s  = grad e 𝟘 ∘ grad e₁ 𝟘 -- is this correct?
+  grad (𝕖^ e) s δ = grad e (𝕖^ s) δ
+  grad (sqrt e) s δ = grad e (𝟙/ (𝟚 ⊠ sqrt s)) δ
+  grad (𝟙/ e) s δ = grad e (⊟ 𝟙/ (s ⊠ s)) δ
 
   grad-last′ v e (env ρ) = let
     w = env-lookup ρ v
@@ -213,7 +224,6 @@ module _ where
     r = ee-rm-/ u v
     in r
   grad-last′ v e (let′ x ρ) = let′ x $′ ee-tail $′ grad-last′ (there v) (e ↑) (ee-push-zero ρ)
-
 
   grad-last e (env (ρ ▹ x)) = ee-tail $′ let′ x $′ grad (e ↑) (var v₀) (ee-push-zero $′ ee-wk (skip ⊆-eq) (env ρ))
   grad-last e (let′ x ρ) = let

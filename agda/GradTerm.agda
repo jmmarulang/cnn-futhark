@@ -1,6 +1,6 @@
 
 module _ where
- 
+
 module _ where
   open import Data.Product
   open import Data.Nat --using (ℕ; zero; suc; _+_; _<_; s≤s)
@@ -8,9 +8,9 @@ module _ where
   open import Relation.Binary.PropositionalEquality
   open import Function
   open import Ar
-  open import Lang
+  open import Lang hiding (_⊔_)
   open WkSub
-  
+
   -- Tel Γ Δ is a telescope where the first expression
   -- is in Γ variables.  Γ is always prefix of Δ
   data Tel : Ctx → Ctx → Set where
@@ -24,7 +24,7 @@ module _ where
 
   data EE : Ctx → Ctx → Set where
     env : Env Γ Δ → EE Γ Δ
-    let′ : E Δ (ar s) → EE Γ (Δ ▹ ar s) → EE Γ Δ 
+    let′ : E Δ (ar s) → EE Γ (Δ ▹ ar s) → EE Γ Δ
 
   -- Weaken all expressions in the Env enironment
   env-wk : Δ ⊆ Ψ → Env Γ Δ → Env Γ Ψ
@@ -58,7 +58,7 @@ module _ where
 
   -- Add zero to the end of EE (wrapper for ee-wk-zero)
   ee-push-zero : EE Γ Δ → EE (Γ ▹ ar s) Δ
-  ee-push-zero ρ = ee-wk-zero ρ (skip ⊆-eq) 
+  ee-push-zero ρ = ee-wk-zero ρ (skip ⊆-eq)
 
   zero-env : Env Γ Δ
   zero-env {ε} = ε
@@ -76,7 +76,7 @@ module _ where
   ee-update+ : EE Γ Δ → (v : ar s ∈ Γ) (t : E Δ (ar s)) → EE Γ Δ
   ee-update+ (env ρ) v t = env (env-update+ ρ v t)
   ee-update+ (let′ x ρ) v t = let′ x (ee-update+ ρ v (t ↑))
- 
+
   env-map-sum : Env Γ (Δ ▹ ix s) → Env Γ Δ
   env-map-sum ε = ε
   env-map-sum (skip ρ) = skip (env-map-sum ρ)
@@ -85,7 +85,7 @@ module _ where
   ee-fold : EE Γ Δ → Env Γ Δ
   ee-fold (env x) = x
   ee-fold {Δ = Δ} (let′ {s = s} x ρ) = map-let (ee-fold ρ)
-    where map-let : ∀ {Γ} → Env Γ (Δ ▹ ar s) → Env Γ Δ 
+    where map-let : ∀ {Γ} → Env Γ (Δ ▹ ar s) → Env Γ Δ
           map-let ε = ε
           map-let (skip ν) = skip (map-let ν)
           map-let (ν ▹ e) = map-let ν ▹ let′ x e
@@ -109,14 +109,14 @@ module _ where
   let-depth : EE Γ Δ → ℕ
   let-depth (env x) = 0
   let-depth (let′ x ρ) = suc (let-depth ρ)
-  
+
   ee-wk-depth : (ρ : EE Γ Δ) → (w : Δ ⊆ Ψ) → let-depth ρ ≡ let-depth {Δ = Ψ} (ee-wk w ρ)
   ee-wk-depth (env x) w = refl
   ee-wk-depth (let′ x ρ) w = cong suc (ee-wk-depth ρ (keep w))
 
   sub-<₁ : ∀ {a b c} → a < b → a ≡ c → c < b
   sub-<₁ a<b refl = a<b
-  
+
   eep : (ρ ν : EE Γ Δ) → (l : ℕ) → (let-depth ρ + let-depth ν < l) → EE Γ Δ
   eep (env ρ) (env ν) l pf = env (env-plus ρ ν)
   eep (env ρ) (let′ x ν) (suc l) (s≤s pf) = let′ x (eep (ee-wk (skip ⊆-eq) (env ρ)) ν l pf)
@@ -142,8 +142,6 @@ module _ where
   ee-sub (env x) s = env (env-sub x s)
   ee-sub (let′ x ρ) s = let′ (sub x s) (ee-sub ρ (skeep s))
 
-
-
   e-depth : E Γ is → ℕ
   e-depth (var x) = 0
   e-depth zero = 0
@@ -158,10 +156,10 @@ module _ where
   e-depth (zero-but e e₁ e₂) = e-depth e₂
   e-depth (E.slide e x e₁ x₁) = e-depth e₁
   e-depth (E.backslide e e₁ x x₁) = e-depth e₁
-  e-depth (logistic e) = e-depth e
+  e-depth (logi e) = e-depth e
   e-depth (bin x e e₁) = e-depth e ⊔ e-depth e₁
   e-depth (scaledown x e) = e-depth e
-  e-depth (minus e) = e-depth e
+  e-depth (⊟ e) = e-depth e
   e-depth (let′ e e₁) = 1 + (e-depth e ⊔ e-depth e₁)
 
   e-depth-wk : (e : E Γ is) (w : Γ ⊆ Δ) → e-depth (wk w e) ≡ e-depth e
@@ -178,10 +176,10 @@ module _ where
   e-depth-wk (zero-but e e₁ e₂) w = e-depth-wk e₂ w
   e-depth-wk (E.slide e x e₁ x₁) w = e-depth-wk e₁ w
   e-depth-wk (E.backslide e e₁ x x₁) w = e-depth-wk e₁ w
-  e-depth-wk (logistic e) w = e-depth-wk e w
+  e-depth-wk (logi e) w = e-depth-wk e w
   e-depth-wk (bin x e e₁) w = cong₂ _⊔_ (e-depth-wk e w) (e-depth-wk e₁ w)
   e-depth-wk (scaledown x e) w = e-depth-wk e w
-  e-depth-wk (minus e) w = e-depth-wk e w
+  e-depth-wk (⊟ e) w = e-depth-wk e w
   e-depth-wk (let′ e e₁) w = cong suc (cong₂ _⊔_ (e-depth-wk e w) (e-depth-wk e₁ (keep w)))
 
   a<b⇒0<b : ∀ {a b} → a < b → 0 < b
@@ -208,7 +206,7 @@ module _ where
   let-depth-wkz<l : (ρ : EE (Γ ▹ is) Δ) {ld : ℕ} → (let-depth ρ < ld) → let-depth (ee-wk-zero ρ (keep (skip {is = ip} ⊆-eq))) < ld
   let-depth-wkz<l {ip = ip} ρ ρ<l rewrite let-depth-wkz {ip = ip} ρ = ρ<l
 
-  --{-# TERMINATING #-} 
+  --{-# TERMINATING #-}
   -- There are two decreasing arguments happening here:
   --    e-depth e < l                      for grad e
   --    e-depth e < l                      for grad-sum e
@@ -242,14 +240,14 @@ module _ where
   grad′ (e ⊞ e₁)               s δ l e<l  = grad′ e s (grad′ e₁ s δ l (⊔-<₂ e<l)) l (⊔-<₁ e<l)
   grad′ (e ⊠ e₁)               s δ l e<l  = grad′ e (s ⊠ e₁) (grad′ e₁ (s ⊠ e) δ l (⊔-<₂ e<l)) l (⊔-<₁ e<l)
   grad′ (scaledown x e)        s   = grad′ e (scaledown x s)
-  grad′ (minus e)              s   = grad′ e (minus s)
-  grad′ (logistic e)           s   = grad′ e (let′ (logistic e) ((s ↑) ⊠ var v₀ ⊠ (one ⊞ minus (var v₀))))
-  
+  grad′ (⊟ e)              s   = grad′ e (⊟ s)
+  grad′ (logi e)           s   = grad′ e (let′ (logi e) ((s ↑) ⊠ var v₀ ⊠ (one ⊞ ⊟ (var v₀))))
+
   grad′ (let′ e e₁) s δ (suc l) (s≤s e<l) =
     let
       r = grad′ e₁ (s ↑) (ee-push-zero $′ ee-wk (skip ⊆-eq) δ) l (⊔-<₂ e<l)
       t = grad-last e (let′ e r) l (⊔-<₁ e<l) _ ≤-refl
-    in t 
+    in t
 
   grad-last e (env (ρ ▹ x)) l e<l _ _ = ee-tail $′ let′ x $′ grad′ (e ↑) (var v₀) (ee-push-zero $′ ee-wk (skip ⊆-eq) (env ρ)) l (e-depth-↑ e e<l)
   grad-last e (let′ x ρ) l e<l (suc ld) (s≤s ρ<ld) = let

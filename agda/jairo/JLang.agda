@@ -509,6 +509,7 @@ module Primitives where
         -- Mean squared error
         Let e   := meansqerr target o In
         e
+  
   ---------------------------------------------
   -- microgpt
 
@@ -617,9 +618,6 @@ module Primitives where
           λ inp wa wf →
           Let nimp := {!   !} In {!   !}
   -}
-
-
-
 
 module LangTest where
   open import Ar

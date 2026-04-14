@@ -68,6 +68,19 @@ module jairo.experiments where
       r = map (_÷ total) exps
       in r
 
+    logistic : Ar s R → Ar s R
+    logistic = map λ x → fromℕ 1 ÷ (fromℕ 1 + e^ (- x))
+
+    -- logistic derived from softmax
+    logistic' : Ar s R → Ar s R
+    logistic' x i = softmax a (zero ∷ []) where
+      a : Ar (2 ∷ []) R
+      a (zero ∷ []) = x i
+      a (suc zero ∷ []) = fromℕ 0
+
+    logistic'' : Ar s R → Ar s R
+    logistic'' {s} x = {!   !}
+
     {- number of data in an array
       Not sure if this is how I should calculate the length of an array-}
     lenS : S → ℕ

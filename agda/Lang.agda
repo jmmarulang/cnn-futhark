@@ -1,4 +1,5 @@
 {-# OPTIONS  --backtracking-instance-search #-}
+{-# OPTIONS --warn=noUserWarning #-}
 module _ where
 module _ where
   open import Data.Nat using (ℕ; zero; suc)
@@ -71,10 +72,21 @@ module _ where
   neq-wkv (there x) (there y) p = (neq-wkv x y) (unthere p)
 
   infixl 10 _⊞_
+  infixl 10 _⊟_
   infixl 15 _⊠_
+  infixl 15 _⊔_
 
   data Bop : Set where
-    plus mul : Bop
+    plus mul
+      max ind-less-than --Jairo made
+      : Bop
+
+  -- Jairo made
+  data Uop : Set where
+    logistic
+      exp neg -- Jairo made
+      squared inverse
+      : Uop
 
   unit : S
   unit = []
@@ -99,16 +111,39 @@ module _ where
     slide      : E Γ (ix s) → s + p ≈ r → E Γ (ar r) → suc p ≈ u → E Γ (ar u)
     backslide  : E Γ (ix s) → E Γ (ar u) → suc p ≈ u → s + p ≈ r → E Γ (ar r)
 
-    logistic   : E Γ (ar s) → E Γ (ar s)
+    -- logi   : E Γ (ar s) → E Γ (ar s)
     bin        : Bop → E Γ (ar s) → E Γ (ar s) → E Γ (ar s)
     scaledown  : ℕ → E Γ (ar s) → E Γ (ar s)
-    minus      : E Γ (ar s) → E Γ (ar s)
+    -- ⊟_      : E Γ (ar s) → E Γ (ar s)
     let′       : E Γ (ar s) → E (Γ ▹ ar s) (ar p) → E Γ (ar p)
+    -- Jairo made
+    un : Uop → E Γ (ar s) → E Γ (ar s)
 
-  pattern _⊠_ a b = bin mul a b
+  pattern 𝟙 = one
+  pattern 𝟘 = zero
+
+  pattern ⊟_ a = un neg a
+  pattern 𝕖^_ a = un exp a
+  pattern logi a = un logistic a
+  pattern sqrt a = un squared a
+  pattern 𝟙/ a = un inverse a
+
   pattern _⊞_ a b = bin plus a b
+  pattern _⊠_ a b = bin mul a b
+  pattern _⊔_ a b = bin max a b
+  pattern 𝕀-< a b = bin ind-less-than a b
 
+  -- infixl 5 𝕀-<
+  -- syntax 𝕀-< a b = 𝕀[ a < b ]
 
+  _⊟_ : ( a b : E Γ (ar s)) → E Γ (ar s)
+  _⊟_ a b = a ⊞ ⊟ b
+
+  _//_ : ( a b : E Γ (ar s)) → E Γ (ar s)
+  _//_ a b = a ⊠ (𝟙/ b)
+
+  𝟚 : E Γ (ar s)
+  𝟚 = 𝟙 ⊞ 𝟙
 
 module WkSub where
   open import Data.Nat using (ℕ; zero; suc; _+_)
@@ -139,11 +174,13 @@ module WkSub where
   wk s (zero-but e e₁ e₂) = zero-but (wk s e) (wk s e₁) (wk s e₂)
   wk s (slide e x e₁ x₁) = slide (wk s e) x (wk s e₁) x₁
   wk s (backslide e e₁ x x₁) = backslide (wk s e) (wk s e₁) x x₁
-  wk s (logistic e) = logistic (wk s e)
+  -- wk s (logi e) = logi (wk s e)
   wk s (bin x e e₁) = bin x (wk s e) (wk s e₁)
   wk s (scaledown x e) = scaledown x (wk s e)
-  wk s (minus e) = minus (wk s e)
+  -- wk s (⊟_ e) = ⊟_ (wk s e)
   wk s (let′ e e₁) = let′ (wk s e) (wk (keep s) e₁)
+  -- Jairo made
+  wk s (un x e) = un x (wk s e)
 
   _∙ʷ_ : Δ ⊆ Ψ → Γ ⊆ Δ → Γ ⊆ Ψ
   s ∙ʷ ε = s
@@ -166,7 +203,6 @@ module WkSub where
   data Sub (Γ : Ctx) : Ctx → Set where
     ε   : Sub Γ ε
     _▹_ : Sub Γ Δ → E Γ is → Sub Γ (Δ ▹ is)
-
 
   wks : Sub Γ Δ → Γ ⊆ Ψ → Sub Ψ Δ
   wks ε p = ε
@@ -200,11 +236,13 @@ module WkSub where
   sub (zero-but e e₁ e₂) s = zero-but (sub e s) (sub e₁ s) (sub e₂ s)
   sub (slide e x e₁ x₁) s = slide (sub e s) x (sub e₁ s) x₁
   sub (backslide e e₁ x x₁) s = backslide (sub e s) (sub e₁ s) x x₁
-  sub (logistic e) s = logistic (sub e s)
+  -- sub (logi e) s = logi (sub e s)
   sub (bin x e e₁) s = bin x (sub e s) (sub e₁ s)
   sub (scaledown x e) s = scaledown x (sub e s)
-  sub (minus e) s = minus (sub e s)
+  -- sub (⊟_ e) s = ⊟_ (sub e s)
   sub (let′ e e₁) s = let′ (sub e s) (sub e₁ (skeep s))
+  -- Jairo made
+  sub (un x e) s = un x (sub e s)
 
   _∙ˢ_ : Sub Δ Ψ → Sub Γ Δ → Sub Γ Ψ
   ε ∙ˢ t = ε
@@ -242,11 +280,13 @@ module WkSub where
   sub-at-id (zero-but e e₁ e₂) rewrite (sub-at-id e) | sub-at-id e₁ | sub-at-id e₂ = refl
   sub-at-id (slide e x e₁ x₁) rewrite sub-at-id e | sub-at-id e₁ = refl
   sub-at-id (backslide e e₁ x x₁) rewrite sub-at-id e | sub-at-id e₁ = refl
-  sub-at-id (logistic e) = cong logistic (sub-at-id e)
+  -- sub-at-id (logi e) = cong logi (sub-at-id e)
   sub-at-id (bin x e e₁) = cong₂ (bin x) (sub-at-id e) (sub-at-id e₁)
   sub-at-id (scaledown x e) = cong (scaledown x) (sub-at-id e)
-  sub-at-id (minus e) = cong minus (sub-at-id e)
+  -- sub-at-id (⊟_ e) = cong ⊟_ (sub-at-id e)
   sub-at-id (let′ e e₁) = cong₂ let′ (sub-at-id e) (sub-at-id e₁)
+  -- Jairo made
+  sub-at-id (un x e) = cong (un x) (sub-at-id e)
 
   sub-ε : (e : E ε is) → sub e ε ≡ e
   sub-ε e = sub-at-id e
@@ -295,17 +335,19 @@ module WkSub where
     a ← stren e v
     b ← stren e₁ v
     just (backslide a b x x₁)
-  stren (logistic e) v = map logistic (stren e v)
+  -- stren (logi e) v = map logi (stren e v)
   stren (bin x e e₁) v = do
     a ← stren e v
     b ← stren e₁ v
     just (bin x a b)
   stren (scaledown x e) v = map (scaledown x) (stren e v)
-  stren (minus e) v = map minus (stren e v)
+  stren (⊟ e) v = map ⊟_ (stren e v)
   stren (let′ e e₁) v = do
     a ← stren e v
     b ← stren e₁ (there v)
     just (let′ a b)
+  -- Jairo made
+  stren (un x e) v = map (un x) (stren e v)
 
   -- Get rid of lets that do not use their arguments.
   norm-lets : E Γ is → E Γ is
@@ -322,11 +364,13 @@ module WkSub where
   norm-lets (zero-but e e₁ e₂) = zero-but (norm-lets e) (norm-lets e₁) (norm-lets e₂)
   norm-lets (slide e x e₁ x₁) = slide (norm-lets e) x (norm-lets e₁) x₁
   norm-lets (backslide e e₁ x x₁) = backslide (norm-lets e) (norm-lets e₁) x x₁
-  norm-lets (logistic e) = logistic (norm-lets e)
+  -- norm-lets (logi e) = logi (norm-lets e)
   norm-lets (bin x e e₁) = bin x (norm-lets e) (norm-lets e₁)
   norm-lets (scaledown x e) = scaledown x (norm-lets e)
-  norm-lets (minus e) = minus (norm-lets e)
+  -- norm-lets (⊟_ e) = ⊟_ (norm-lets e)
   norm-lets (let′ e e₁) = maybe id (let′ (norm-lets e) (norm-lets e₁)) (stren (norm-lets e₁) v₀)
+  -- Jairo made
+  norm-lets (un x e) = un x (norm-lets e)
 
   count-uses : E Γ is → ip ∈ Γ → ℕ
   count-uses (var x) v with eq? x v
@@ -344,13 +388,13 @@ module WkSub where
   count-uses (zero-but e e₁ e₂) v = count-uses e v + count-uses e₁ v + count-uses e₂ v
   count-uses (slide e x e₁ x₁) v = count-uses e v + count-uses e₁ v
   count-uses (backslide e e₁ x x₁) v = count-uses e v + count-uses e₁ v
-  count-uses (logistic e) v = count-uses e v
+  -- count-uses (logi e) v = count-uses e v
   count-uses (bin x e e₁) v = count-uses e v + count-uses e₁ v
   count-uses (scaledown x e) v = count-uses e v
-  count-uses (minus e) v = count-uses e v
+  -- count-uses (⊟_ e) v = count-uses e v
   count-uses (let′ e e₁) v = count-uses e v + count-uses e₁ (there v)
-
-
+  -- Jairo made
+  count-uses (un x e) v = count-uses e v
 
 module Syntax where
   open import Data.List as L using (List; []; _∷_)
@@ -449,7 +493,7 @@ module Primitives where
   open import Data.Nat as ℕ using (ℕ; zero; suc)
   open import Function using (_$_; it; _∋_)
   open import Relation.Binary.PropositionalEquality
-  open import Ar hiding (slide; selb)
+  open import Ar hiding (slide; selb; swap; sum)
   open Syntax
   open WkSub
 
@@ -463,51 +507,121 @@ module Primitives where
   ⟨_⟩ : E Γ is → GE Γ is
   ⟨_⟩ t {Δ} ⦃ p ⦄ = wkp p t
 
-  conv : ∀ {Γ} → E Γ (ar r) → ⦃ s + p ≈ r ⦄ → E Γ (ar s) → ⦃ suc p ≈ u ⦄
-       → E Γ (ar u)
-  conv f ⦃ s+p ⦄ g ⦃ ss ⦄
-    = Sum λ i → (slide i s+p ⟨ f ⟩ ss) ⊠ Imaps λ j → sels ⟨ g ⟩ i
+  module Cnn where
 
-  mconv : ⦃ s + p ≈ r ⦄ → (inp : E Γ (ar r)) (ws : E Γ (ar (u ⊗ s)))
-          (bᵥ : E Γ (ar u)) → ⦃ suc p ≈ w ⦄ → E Γ (ar (u ⊗ w))
-  mconv ⦃ sp ⦄ inp wᵥ bᵥ ⦃ su ⦄ =
-    Imap λ i → conv ⟨ inp ⟩ (sel ⟨ wᵥ ⟩ i) ⊞ Imaps λ _ → sels ⟨ bᵥ ⟩ i
+    conv : ∀ {Γ} → E Γ (ar r) → ⦃ s + p ≈ r ⦄ → E Γ (ar s) → ⦃ suc p ≈ u ⦄
+        → E Γ (ar u)
+    conv f ⦃ s+p ⦄ g ⦃ ss ⦄
+      = Sum λ i → (slide i s+p ⟨ f ⟩ ss) ⊠ Imaps λ j → sels ⟨ g ⟩ i
 
-  avgp₂ : ∀ m n → (a : E Γ (ar (m ℕ.* 2 ∷ n ℕ.* 2 ∷ [])))
-        → E Γ (ar (m ∷ n ∷ []))
-  avgp₂ m n a =
-    Imaps λ i → scaledown 4 $ Sum λ j → sels (selb it ⟨ a ⟩ i) j
+    mconv : ⦃ s + p ≈ r ⦄ → (inp : E Γ (ar r)) (ws : E Γ (ar (u ⊗ s)))
+            (bᵥ : E Γ (ar u)) → ⦃ suc p ≈ w ⦄ → E Γ (ar (u ⊗ w))
+    mconv ⦃ sp ⦄ inp wᵥ bᵥ ⦃ su ⦄ =
+      Imap λ i → conv ⟨ inp ⟩ (sel ⟨ wᵥ ⟩ i) ⊞ Imaps λ _ → sels ⟨ bᵥ ⟩ i
 
-  sqerr : (r o : E Γ (ar [])) → E Γ (ar [])
-  sqerr r o = scaledown 2 ((r ⊞ (minus o)) ⊠ (r ⊞ (minus o)))
+    avgp₂ : ∀ m n → (a : E Γ (ar (m ℕ.* 2 ∷ n ℕ.* 2 ∷ [])))
+          → E Γ (ar (m ∷ n ∷ []))
+    avgp₂ m n a =
+      Imaps λ i → scaledown 4 $ Sum λ j → sels (selb it ⟨ a ⟩ i) j
 
-  meansqerr : (r o : E Γ (ar s)) → E Γ (ar [])
-  meansqerr r o = Sum λ i → sqerr (sels ⟨ r ⟩ i) (sels ⟨ o ⟩ i)
+    sqerr : (r o : E Γ (ar [])) → E Γ (ar [])
+    sqerr r o = scaledown 2 ((r ⊞ (⊟_ o)) ⊠ (r ⊞ (⊟_ o)))
 
-  cnn : E _ _
-  cnn = Lcon (  ar (28 ∷ 28 ∷ []) ∷ ar (6 ∷ 5 ∷ 5 ∷ [])
-              ∷ ar (6 ∷ [])       ∷ ar (12 ∷ 6 ∷ 5 ∷ 5 ∷ [])
-              ∷ ar (12 ∷ [])      ∷ ar (10 ∷ 12 ∷ 1 ∷ 4 ∷ 4 ∷ [])
-              ∷ ar (10 ∷ [])      ∷ ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])
-              --∷ ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])
-              ∷ [])
-             --(ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])) ε
-             (ar ([])) ε
-        λ inp k₁ b₁ k₂ b₂ fc b target →
-        Let c₁₁ := mconv inp k₁ b₁  In
-        Let c₁  := logistic c₁₁ In
-        Let s₁  := (Imap {s = 6 ∷ []} λ i → avgp₂ 12 12 (sel c₁ i)) In
-        Let c₂₁ := mconv s₁ k₂ b₂ In
-        Let c₂  := logistic c₂₁ In
-        Let s₂  := (Imap {s = 12 ∷ 1 ∷ []} λ i → avgp₂ 4 4 (sel c₂ i)) In
-        Let o₁  := mconv s₂ fc b In
-        Let o   := logistic o₁ In
-        -- Mean squared error
-        Let e   := meansqerr target o In
-        e
+    meansqerr : (r o : E Γ (ar s)) → E Γ (ar [])
+    meansqerr r o = Sum λ i → sqerr (sels ⟨ r ⟩ i) (sels ⟨ o ⟩ i)
 
+    cnn : E _ _
+    cnn = Lcon (  ar (28 ∷ 28 ∷ []) ∷ ar (6 ∷ 5 ∷ 5 ∷ [])
+                ∷ ar (6 ∷ [])       ∷ ar (12 ∷ 6 ∷ 5 ∷ 5 ∷ [])
+                ∷ ar (12 ∷ [])      ∷ ar (10 ∷ 12 ∷ 1 ∷ 4 ∷ 4 ∷ [])
+                ∷ ar (10 ∷ [])      ∷ ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])
+                --∷ ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])
+                ∷ [])
+              --(ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])) ε
+              (ar ([])) ε
+          λ inp k₁ b₁ k₂ b₂ fc b target →
+          Let c₁₁ := mconv inp k₁ b₁  In
+          Let c₁  := logi c₁₁ In
+          Let s₁  := (Imap {s = 6 ∷ []} λ i → avgp₂ 12 12 (sel c₁ i)) In
+          Let c₂₁ := mconv s₁ k₂ b₂ In
+          Let c₂  := logi c₂₁ In
+          Let s₂  := (Imap {s = 12 ∷ 1 ∷ []} λ i → avgp₂ 4 4 (sel c₂ i)) In
+          Let o₁  := mconv s₂ fc b In
+          Let o   := logi o₁ In
+          -- Mean squared error
+          Let e   := meansqerr target o In
+          e
+  module Microgpt where
 
+    linear : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar s) → E Γ (ar u)
+    linear {u} {s} w x =
+      Imaps {u} λ i → Sum {s} λ j → sels (sel ⟨ w ⟩ i) j ⊠ sels ⟨ x ⟩ j
 
+    matmul : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ r)) → E Γ (ar (u ⊗ r))
+    matmul {u} {s} {r} w x = Imap {u} λ i →
+      Imaps (λ j → sels (linear ⟨ w ⟩ (Imaps λ k → sels (sel ⟨ x ⟩ k) j) ) i)
+
+    -- Is this correct?
+    softmax : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
+    softmax {s = s} x =
+        Imaps (λ i → (𝕖^ (sels ⟨ x ⟩ i)) // Sum (λ j → 𝕖^ sels ⟨ x ⟩ j))
+
+    -- add a small number to avoid dividing by zero?
+    rmsnorm : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
+    rmsnorm {s = s} x =
+      x ⊠ 𝟙/ (sqrt (scaledown (len s) (sum {s = s} (⟨ x ⟩ ⊠ ⟨ x ⟩))))
+
+    relu : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
+    relu x = x ⊔ 𝟘
+
+    swap : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ u))
+    swap {u} {s} x = Imap {s} λ i → Imaps λ j → sels (sel ⟨ x ⟩ j) i
+
+    {- I cheat by passing the scale sc as a parameter. It should be such that
+      sqrt (size v) =  sc
+      For microgpt sc = 16.
+    -}
+    attention : ∀ {u s r t Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (r ⊗ s))
+              → E Γ (ar (r ⊗ t)) → ℕ → E Γ (ar (u ⊗ t))
+    attention {u} {s} {r} {t} q k v sc =
+      Let l₁ := matmul {u} {s} q (swap {r} k) In
+      Let l := scaledown sc l₁ In
+      Let w₁ := softmax l In
+      Let w := matmul {u} w₁ ⟨ v ⟩ In w
+
+    mattention : ∀ {h u s r t Γ} → E Γ (ar (h ⊗ (u ⊗ s)))
+              → E Γ (ar (h ⊗ (r ⊗ s))) → E Γ (ar (h ⊗ (r ⊗ t)))
+              → ℕ
+              → E Γ (ar (h ⊗ (u ⊗ t)))
+    mattention {h} {u} q k v sc =
+      Imap {h} (λ i →
+        attention {u} (sel ⟨ q ⟩ i) (sel ⟨ k ⟩ i) (sel ⟨ v ⟩ i) sc)
+
+    ED = 16 ; AH = 4 ; NL = 1 ; HD = ED ℕ./ AH ; SL = 16 ; FD = 4 ; SC = 16
+
+    I = (AH ∷ []) ⊗  ((HD ∷ []) ⊗ (SL ∷ []))
+
+    microgpt : E _ _
+    microgpt =  Lcon (  ar I
+                      ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I)
+                      ∷ ar ((FD ∷ [] ⊗ I) ⊗ I) ∷ ar (I ⊗ (FD ∷ [] ⊗ I))
+                      ∷ [])
+                    (ar I) ε
+                λ inp wq wk wv wo wf₁ wf₂ →
+                Let ninp := rmsnorm inp In
+                Let q := linear wq ninp In
+                Let k := linear wk ninp In
+                Let v := linear wv ninp In
+                Let c₁ :=
+                  mattention {AH ∷ []} {HD ∷ []} {SL ∷ []} {HD ∷ []}
+                  q k v SC In
+                Let s₁₁ := linear wo c₁ In
+                Let s₁ := s₁₁ ⊞ inp In
+                Let s₂₁ := rmsnorm s₁ In
+                Let s₂₂ := linear wf₁ s₂₁ In
+                Let s₂ := relu s₂₂ In
+                Let c₃ := linear wf₂ s₂ In
+                Let r := c₃ ⊞ s₁ In r
 
 module LangTest where
   open import Ar

@@ -45,14 +45,14 @@ module GPT (real : Real) where
     rmsnorm : Ar s R → Ar s R
     rmsnorm {s} x = let
       scale : R
-      scale = sqrt ((sum _+_ 0ᵣ (zipWith _*_ x x)) ÷ (fromℕ (size x)))
+      scale = √ ((sum _+_ 0ᵣ (zipWith _*_ x x)) ÷ (fromℕ (size x)))
 
       r = map (_* scale) x
       in r
 
     -- Rectified Linear Unit
     relu : Ar s R → Ar s R
-    relu = map (0ᵣ ⊔_)
+    relu = map (0ᵣ ∨_)
 
     -- Attention block
     {- I cheat by passing the scale sc as a parameter. It should be such that
@@ -149,7 +149,7 @@ module Microgpt (real : Real) where
   NL = 1 ; NH = 4 ; SL = 16  ; DH = 4 ; DF = 4
 
   sc : R
-  sc = sqrt fromℕ DH
+  sc = √ fromℕ DH
 
   nh : S ; sl : S ; dh : S ; df : S
   nh = NH ∷ [] ; sl = SL ∷ [] ; dh = DH ∷ [] ; df = DF ∷ []
