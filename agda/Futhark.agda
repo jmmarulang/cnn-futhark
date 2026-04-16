@@ -1,4 +1,5 @@
 {-# OPTIONS  --backtracking-instance-search #-} -- only needed for tests
+{-# OPTIONS --warn=noUserWarning #-}
 module _ where
 
 module _ where
@@ -19,13 +20,13 @@ module _ where
   open import Effect.Monad using (RawMonad)
   open RawMonadState {{...}} -- public
   open RawMonad {{...}} -- public
-  
+
   instance
     _ = monad
     _ = applicative
     _ = monadState
 
-  data Ix : S → Set where 
+  data Ix : S → Set where
     []  : Ix []
     _∷_ : String → Ix s → Ix (n ∷ s)
 
@@ -35,7 +36,7 @@ module _ where
 
   -- Here is a detailed explanation why the type for semantic
   -- arrays look so complicated.
-  -- 
+  --
   -- A first approximation is to use semantic type for arrays
   -- as `Sem (ar s) = Ix s → State ℕ String`.  That is, we have
   -- something indexable but after indexing it might need to
@@ -43,7 +44,7 @@ module _ where
   -- prevents us from compiling lets in the right way.
   -- Consider an example:
   --    Let z := zero in Imaps λ i → z
-  -- 
+  --
   -- The output of this function is an array, so the body
   -- of the let will have a type `Ix s → State ℕ String`,
   -- and it will look something like:
@@ -64,7 +65,7 @@ module _ where
   -- Just imagine that instead of zero we are precomputing
   -- an expensive array:
   --    Let z := (Imap expensive) in Imaps λ i → f (sels z i)
-  -- 
+  --
   -- by inlining this computation inside the Imaps we are going
   -- to repeat it for each iteration just to select one element.
   --
@@ -104,7 +105,7 @@ module _ where
 
   fresh-var : ℕ → String
   fresh-var n = "x" ++ show-nat n
-  
+
   fresh-ix : String → Ix s
   fresh-ix n = proj₂ (runState (go n) 0)
     where
@@ -122,7 +123,7 @@ module _ where
     modify suc
     return (fresh-ix (fresh-var c))
 
-  
+
   bop : Bop -> String
   bop plus = "F.+"
   bop mul = "F.*"
@@ -134,7 +135,7 @@ module _ where
   _⊗ⁱ_ : Ix s → Ix p → Ix (s Ar.⊗ p)
   [] ⊗ⁱ js = js
   (i ∷ is) ⊗ⁱ js = i ∷ (is ⊗ⁱ js)
-  
+
   splitⁱ : (ij : Ix (s Ar.⊗ p)) → Σ (Ix s) λ i → Σ (Ix p) λ j → i ⊗ⁱ j ≡ ij
   splitⁱ {[]} ij = [] , ij , refl
   splitⁱ {_ ∷ s} (x ∷ ij) with splitⁱ {s} ij
@@ -150,7 +151,7 @@ module _ where
   ix-map : (String → String) → Ix s → Ix s
   ix-map f [] = []
   ix-map f (x ∷ i) = f x ∷ ix-map f i
-  
+
   ix-zipwith : ((a b : String) → String) → Ix s → Ix s → Ix s
   ix-zipwith f [] [] = []
   ix-zipwith f (x ∷ i) (y ∷ j) = f x y ∷ ix-zipwith f i j
@@ -171,15 +172,15 @@ module _ where
 
 
   to-imap : (s : S) → (i : Ix s) → (e : String) → String
-  to-imap s i e = printf "(imap%u %s (\\ %s -> %s))" 
+  to-imap s i e = printf "(imap%u %s (\\ %s -> %s))"
                    (dim s) (shape-args s) (ix-join i " ")
                    e
   to-sum : (s : S) → (i : Ix s) → (e : String) → String
   to-sum [] i e = e
   to-sum s  i e = printf "(isum%u %s (\\ %s -> %s))" (dim s) (shape-args s)
-                         (ix-join i " ") e 
+                         (ix-join i " ") e
 
-  ix-plus : s + p ≈ r → (suc_≈_ p u) 
+  ix-plus : s + p ≈ r → (suc_≈_ p u)
           → (i : Ix s)
           → (j : Ix u)
           → Ix r
@@ -188,7 +189,7 @@ module _ where
     printf "(%s + %s)" i j ∷ ix-plus s+p sp is js
 
   ix-eq : (i j : Ix s) → String
-  ix-eq i j = ix-join (ix-zipwith (printf "(%s == %s)") i j) " && " 
+  ix-eq i j = ix-join (ix-zipwith (printf "(%s == %s)") i j) " && "
 
   ix-minus : s + p ≈ r → (suc_≈_ p u)
            → (i : Ix r)
@@ -199,8 +200,8 @@ module _ where
     printf "(%s - %s)" i j ∷ ix-minus s+p sp is js
 
 
-  to-div-mod : s * p ≈ q → Ix q 
-             → Ix s × Ix p 
+  to-div-mod : s * p ≈ q → Ix q
+             → Ix s × Ix p
   to-div-mod []   [] = [] , []
   to-div-mod (cons {n = n} ⦃ _ ⦄ ⦃ eq ⦄) (x ∷ i) =
     -- (i: Fin (m*n)) → [p,q] : Fin [m,n] => p=i/n q=i%n
@@ -208,12 +209,12 @@ module _ where
              (printf "(%s %% %s)" x (show-nat n) ∷_)
              (to-div-mod eq i)
 
-  from-div-mod : s * p ≈ q 
-               → Ix s → Ix p 
+  from-div-mod : s * p ≈ q
+               → Ix s → Ix p
                → Ix q
   from-div-mod [] [] [] = []
   from-div-mod (cons {n = n} ⦃ _ ⦄ ⦃ eq ⦄) (i ∷ is) (j ∷ js) =
-    -- (i : Fin m) (j : Fin n)  (k : Fin (m * n))  k = i * n + j  
+    -- (i : Fin m) (j : Fin n)  (k : Fin (m * n))  k = i * n + j
     printf "((%s * %s) + %s)" i (show-nat n) j
     ∷ from-div-mod eq is js
 
@@ -249,7 +250,7 @@ module _ where
        f , a′ ← a x
        return (f , a′)
      --return λ _ → f x
-  to-fut (imap {s = s} e) ρ = 
+  to-fut (imap {s = s} e) ρ =
     return $ ix-uncurry {s} λ i j → do
       b ← to-fut e (ρ , i)
       f , b′ ← b j
@@ -297,7 +298,7 @@ module _ where
     a ← to-fut e₁ ρ
     return λ j → do
       let j-i = ix-minus x₁ x j i
-      let j≥i = intersperse " && " (L.zipWith (printf "%s >= %s") (ix-to-list j) (ix-to-list i)) 
+      let j≥i = intersperse " && " (L.zipWith (printf "%s >= %s") (ix-to-list j) (ix-to-list i))
       let j-i<u = intersperse " && " (L.zipWith (printf "%s < %u") (ix-to-list j-i) u)
 
       f , a′ ← a j-i
@@ -306,7 +307,7 @@ module _ where
                      j≥i j-i<u (f a′)
 
       return (id , b)
-  to-fut (logistic e) ρ = do
+  to-fut (logi e) ρ = do
     a ← to-fut e ρ
     return λ i → do
       f , a′ ← a i
@@ -334,7 +335,7 @@ module _ where
       return (f ,  printf "(%s F./ fromi64 %s)" a′ (show-nat x))
 
 
-  to-fut (minus e) ρ = do
+  to-fut (⊟ e) ρ = do
     a ← to-fut e ρ
     return λ i → do
       f , a′ ← a i
@@ -343,7 +344,7 @@ module _ where
   to-fut (let′ e e₁) ρ = do
     c ← get
     modify suc
-    let n = fresh-var c 
+    let n = fresh-var c
     b ← to-fut e₁ (ρ , (mkar n))
     return λ i → do
       x ← to-str e ρ
@@ -387,24 +388,24 @@ module Test where
   loss-e : E _ _
   loss-e = Lcon (ar (5 ∷ []) ∷ ar (5 ∷ []) ∷ []) (ar (5 ∷ [])) ε
            λ inp out → Let r := inp ⊠ inp In
-                       {- err -} scaledown 2 ((r ⊞ (minus out)) ⊠ (r ⊞ (minus out)))
+                       {- err -} scaledown 2 ((r ⊞ (⊟ out)) ⊠ (r ⊞ (⊟ out)))
 
   loss-s : String
   loss-s = proj₂ (runState (to-str loss-e ((_ , mkar "inp") , mkar "out" )) 0)
 
   conv-e : E _ _
   conv-e = Lcon (ar (5 ∷ 5 ∷ []) ∷ ar (2 ∷ 2 ∷ []) ∷ []) (ar (4 ∷ 4 ∷ [])) ε
-           λ img k1 → Primitives.conv img k1
+           λ img k1 → Primitives.Cnn.conv img k1
 
-  
+
   conv-s : String
   conv-s = proj₂ (runState (to-str conv-e (_ ,, mkar "img" ,, mkar "k1")) 0)
 
 
   --λ inp k₁ b₁ k₂ b₂ fc b →
   cnn-s : String
-  cnn-s = proj₂ 
-        $ runState (to-str (Primitives.cnn)
+  cnn-s = proj₂
+        $ runState (to-str (Primitives.Cnn.cnn)
                            (_ ,, mkar "inp" ,, mkar "k1" ,, mkar "b1"
                               ,, mkar "k2"  ,, mkar "b2" ,, mkar "fc"
                               ,, mkar "b" ,, mkar "target"  )) 0

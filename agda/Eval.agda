@@ -64,8 +64,8 @@ module Eval (r : Real) where
   eval (⊟ e) ρ = Ar.map -_ (eval e ρ)
   eval (let′ e e₁) ρ = eval e₁ (ρ , eval e ρ)
   -- Jairo made
-  eval (e ⊔ e₁) ρ = Ar.zipWith _∨_ (eval e ρ) (eval e₁ ρ)
-  eval (𝕀-< e e₁) ρ = Ar.zipWith I-< (eval e ρ) (eval e₁ ρ)
+  eval (relu e) ρ = Ar.map (_∨_ 0ᵣ) (eval e ρ)
+  eval (𝕀+ e) ρ = Ar.map I+ (eval e ρ)
   eval (𝕖^ e) ρ = Ar.map e^_ (eval e ρ)
   eval (sqrt e) ρ = Ar.map √_ (eval e ρ)
   eval (𝟙/ e) ρ = Ar.map 1/_ (eval e ρ)
@@ -150,8 +150,8 @@ module Eval (r : Real) where
   eval-cong (⊟ e) eq i = cong (-_) (eval-cong e eq i)
   eval-cong (let′ e e₁) eq i = eval-cong e₁ (eq ▹ eval-cong e eq) i
   -- Jairo made
-  eval-cong (e ⊔ e₁) eq i = cong₂ _∨_ (eval-cong e eq i) (eval-cong e₁ eq i)
-  eval-cong (𝕀-< e e₁) eq i = cong₂ I-< (eval-cong e eq i) (eval-cong e₁ eq i)
+  eval-cong (relu e) eq i = cong (_∨_ 0ᵣ) (eval-cong e eq i)
+  eval-cong (𝕀+ e) eq i = cong I+ (eval-cong e eq i)
   eval-cong (𝕖^ e) eq i = cong e^_ (eval-cong e eq i)
   eval-cong (sqrt e) eq i = cong √_ (eval-cong e eq i)
   eval-cong (𝟙/ e) eq i = cong 1/_ (eval-cong e eq i)
@@ -211,12 +211,11 @@ module Eval (r : Real) where
   eval-wk w (let′ e e₁) ρ = eval-cong (wk (keep w) e₁){ν = ρ , eval e (wk-env w ρ)} (reflᶜ ▹ eval-wk w e ρ)
                             ∙ˢ eval-wk (keep w) e₁ _
   -- Jairo made
-  eval-wk w (e ⊔ e₁) ρ = zipWith-cong _∨_ (eval-wk w e ρ) (eval-wk w e₁ ρ)
-  eval-wk w (𝕀-< e e₁) ρ = zipWith-cong I-< (eval-wk w e ρ) (eval-wk w e₁ ρ)
+  eval-wk w (relu e) ρ = Ar.map-cong (_∨_ 0ᵣ) (eval-wk w e ρ)
+  eval-wk w (𝕀+ e) ρ = Ar.map-cong I+ (eval-wk w e ρ)
   eval-wk w (𝕖^ e) ρ = Ar.map-cong e^_ (eval-wk w e ρ)
   eval-wk w (sqrt e) ρ = Ar.map-cong √_ (eval-wk w e ρ)
   eval-wk w (𝟙/ e) ρ = Ar.map-cong 1/_ (eval-wk w e ρ)
-
 
   sub-env-wks : (s : Sub Γ Δ) → (w : Γ ⊆ Ψ) → ∀ ρ → sub-env (wks s w) ρ ≈ᶜ sub-env s (wk-env w ρ)
   sub-env-wks ε w _ = ε
@@ -292,8 +291,8 @@ module Eval (r : Real) where
                                ∙ eval-cong e₁ ((sub-env-wks s (skip ⊆-eq) (ρ , eval (sub e s) ρ)
                                                 ∙ᶜ sub-env-cong s wk-env-id) ▹ eval-sub e ρ s) i
   -- Jairo made
-  eval-sub (e ⊔ e₁) ρ s i = cong₂ _∨_ (eval-sub e ρ s i) (eval-sub e₁ ρ s i)
-  eval-sub (𝕀-< e e₁) ρ s i = cong₂ I-< (eval-sub e ρ s i) (eval-sub e₁ ρ s i)
+  eval-sub (relu e) ρ s i = cong (_∨_ 0ᵣ) (eval-sub e ρ s i)
+  eval-sub (𝕀+ e) ρ s i = cong I+ (eval-sub e ρ s i)
   eval-sub (𝕖^ e) ρ s i = cong e^_ (eval-sub e ρ s i)
   eval-sub (sqrt e) ρ s i = cong √_ (eval-sub e ρ s i)
   eval-sub (𝟙/ e) ρ s i = cong 1/_ (eval-sub e ρ s i)

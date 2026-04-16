@@ -77,15 +77,12 @@ module _ where
   infixl 15 _⊔_
 
   data Bop : Set where
-    plus mul
-      max ind-less-than --Jairo made
-      : Bop
+    plus mul : Bop
 
   -- Jairo made
   data Uop : Set where
-    logistic
-      exp neg -- Jairo made
-      squared inverse
+    logistic neg
+      exp rectifier squared inverse ind-positive -- Jairo made
       : Uop
 
   unit : S
@@ -127,17 +124,21 @@ module _ where
   pattern logi a = un logistic a
   pattern sqrt a = un squared a
   pattern 𝟙/ a = un inverse a
+  pattern relu a = un rectifier a
 
   pattern _⊞_ a b = bin plus a b
   pattern _⊠_ a b = bin mul a b
-  pattern _⊔_ a b = bin max a b
-  pattern 𝕀-< a b = bin ind-less-than a b
+  pattern 𝕀+ a = un ind-positive a
 
-  -- infixl 5 𝕀-<
-  -- syntax 𝕀-< a b = 𝕀[ a < b ]
+  -- infixl 5 𝕀+
+  -- syntax 𝕀+ a b = 𝕀[ a < b ]
 
   _⊟_ : ( a b : E Γ (ar s)) → E Γ (ar s)
   _⊟_ a b = a ⊞ ⊟ b
+
+  -- maximum
+  _⊔_ : ( a b : E Γ (ar s)) → E Γ (ar s)
+  a ⊔ b = a ⊞ (relu (b ⊟ a))
 
   _//_ : ( a b : E Γ (ar s)) → E Γ (ar s)
   _//_ a b = a ⊠ (𝟙/ b)
@@ -570,9 +571,6 @@ module Primitives where
     rmsnorm : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
     rmsnorm {s = s} x =
       x ⊠ 𝟙/ (sqrt (scaledown (len s) (sum {s = s} (⟨ x ⟩ ⊠ ⟨ x ⟩))))
-
-    relu : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
-    relu x = x ⊔ 𝟘
 
     swap : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ u))
     swap {u} {s} x = Imap {s} λ i → Imaps λ j → sels (sel ⟨ x ⟩ j) i

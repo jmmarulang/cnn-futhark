@@ -210,12 +210,11 @@ module _ where
       t = grad-last e (let′ e r)
     in t
   -- Jairo made
-    -- is there a way to deal with the discontinuity?
-  grad (e ⊔ e₁) s = grad e (𝕀-< e₁ s) ∘ grad e₁ (𝕀-< e s) -- is this correct?
-  grad (𝕀-< e e₁) s  = grad e 𝟘 ∘ grad e₁ 𝟘 -- is this correct?
-  grad (𝕖^ e) s δ = grad e (𝕖^ s) δ
-  grad (sqrt e) s δ = grad e (𝟙/ (𝟚 ⊠ sqrt s)) δ
-  grad (𝟙/ e) s δ = grad e (⊟ 𝟙/ (s ⊠ s)) δ
+  grad (relu e) s δ = grad e ((𝕀+ e) ⊠ s) δ -- is this correct?
+  grad (𝕀+ e) s δ = grad e 𝟘 δ -- is this correct?
+  grad (𝕖^ e) s δ = grad e ((𝕖^ e) ⊠ s) δ
+  grad (sqrt e) s δ = grad e (s // (𝟚 ⊠ sqrt s)) δ
+  grad (𝟙/ e) s δ = grad e (⊟ (s // (e ⊠ e))) δ
 
   grad-last′ v e (env ρ) = let
     w = env-lookup ρ v

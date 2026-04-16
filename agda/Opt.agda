@@ -272,7 +272,7 @@ module Opt (r : Real) (rp : RealProp r) where
   ... | a , p | b , q = a ⊠ b , λ ρ j → cong₂ _*_ (p ρ j) (q ρ j)
   opt (scaledown x e) with opt e
   ... | a , p = scaledown x a , λ ρ j → cong (_÷ fromℕ x) (p ρ j)
-  opt (minus e) with opt e
+  opt (⊟ e) with opt e
   ... | a , p = minus a , λ ρ j → cong -_ (p ρ j)
   opt (let′ e e₁) with opt e | opt e₁
   ... | a , p | b , q with isVar a

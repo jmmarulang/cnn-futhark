@@ -189,6 +189,8 @@ module _ where
   e-depth-wk (⊟ e) w = e-depth-wk e w
   e-depth-wk (sqrt e) w = e-depth-wk e w
   e-depth-wk (𝟙/ e) w = e-depth-wk e w
+  e-depth-wk (relu e) w = e-depth-wk e w
+  e-depth-wk (𝕀+ e) w = e-depth-wk e w
 
   a<b⇒0<b : ∀ {a b} → a < b → 0 < b
   a<b⇒0<b (s≤s a<b) = s≤s z≤n
@@ -257,10 +259,8 @@ module _ where
       t = grad-last e (let′ e r) l (⊔-<₁ e<l) _ ≤-refl
     in t
   -- Jairo made
-  grad′ (bin max e e₁) s δ l e<l = let
-      t = grad′ e (𝕀-< e₁ s) (grad′ e₁ (𝕀-< e s) δ l (⊔-<₂ e<l)) l (⊔-<₁ e<l)
-    in t
-  grad′ (𝕀-< e e₁) s δ l e<l = grad′ e 𝟘 (grad′ e₁ 𝟘 δ l (⊔-<₂ e<l)) l (⊔-<₁ e<l)
+  grad′ (relu e) s = grad′ e ((𝕀+ e) ⊠ s)
+  grad′ (𝕀+ e) s = grad′ e 𝟘
   grad′ (𝕖^ e) s = grad′ e (𝕖^ s)
   grad′ (sqrt e) s = grad′ e (𝟙/ (𝟚 ⊠ sqrt s))
   grad′ (𝟙/ e) s = grad′ e (s ⊠ s)

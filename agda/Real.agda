@@ -5,8 +5,8 @@ record Real : Set₁ where
   field
     R : Set
     fromℕ : ℕ → R
-    _+_ _*_ _∨_ _÷_ I-< : R → R → R
-    -_ e^_ √_ : R → R
+    _+_ _*_ _∨_ _÷_ : R → R → R
+    -_ e^_ √_ I+ : R → R
 
   infixl 10 _+_
   infixl 15 _*_
@@ -31,5 +31,4 @@ record RealProp (r : Real) : Set where
     +-neutʳ : ∀ {x} → x + fromℕ 0 ≡ x
     *-neutˡ : ∀ {x} → fromℕ 1 * x ≡ x
     *-neutʳ : ∀ {x} → x * fromℕ 1 ≡ x
-
 
