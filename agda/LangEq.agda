@@ -27,7 +27,57 @@ module _ where
   plus ≟ᵒ mul = no λ ()
   mul ≟ᵒ plus = no λ ()
   mul ≟ᵒ mul = yes refl
-  _≟ᵒ_ = {!   !}
+
+  _≟ᵘ_ : (a b : Uop) → Dec (a ≡ b)
+  logistic ≟ᵘ logistic = yes refl
+  logistic ≟ᵘ neg = no λ ()
+  logistic ≟ᵘ exp = no λ ()
+  logistic ≟ᵘ rectifier = no λ ()
+  logistic ≟ᵘ squared = no λ ()
+  logistic ≟ᵘ inverse = no λ ()
+  logistic ≟ᵘ ind-positive = no λ ()
+  neg ≟ᵘ logistic = no λ ()
+  neg ≟ᵘ neg = yes refl
+  neg ≟ᵘ exp = no λ ()
+  neg ≟ᵘ rectifier = no λ ()
+  neg ≟ᵘ squared = no λ ()
+  neg ≟ᵘ inverse = no λ ()
+  neg ≟ᵘ ind-positive = no λ ()
+  exp ≟ᵘ logistic = no λ ()
+  exp ≟ᵘ neg = no λ ()
+  exp ≟ᵘ exp = yes refl
+  exp ≟ᵘ rectifier = no λ ()
+  exp ≟ᵘ squared = no λ ()
+  exp ≟ᵘ inverse = no λ ()
+  exp ≟ᵘ ind-positive = no λ ()
+  rectifier ≟ᵘ logistic = no λ ()
+  rectifier ≟ᵘ neg = no λ ()
+  rectifier ≟ᵘ exp = no λ ()
+  rectifier ≟ᵘ rectifier = yes refl
+  rectifier ≟ᵘ squared = no λ ()
+  rectifier ≟ᵘ inverse = no λ ()
+  rectifier ≟ᵘ ind-positive = no λ ()
+  squared ≟ᵘ logistic = no λ ()
+  squared ≟ᵘ neg = no λ ()
+  squared ≟ᵘ exp = no λ ()
+  squared ≟ᵘ rectifier = no λ ()
+  squared ≟ᵘ squared = yes refl
+  squared ≟ᵘ inverse = no λ ()
+  squared ≟ᵘ ind-positive = no λ ()
+  inverse ≟ᵘ logistic = no λ ()
+  inverse ≟ᵘ neg = no λ ()
+  inverse ≟ᵘ exp = no λ ()
+  inverse ≟ᵘ rectifier = no λ ()
+  inverse ≟ᵘ squared = no λ ()
+  inverse ≟ᵘ inverse = yes refl
+  inverse ≟ᵘ ind-positive = no λ ()
+  ind-positive ≟ᵘ logistic = no λ ()
+  ind-positive ≟ᵘ neg = no λ ()
+  ind-positive ≟ᵘ exp = no λ ()
+  ind-positive ≟ᵘ rectifier = no λ ()
+  ind-positive ≟ᵘ squared = no λ ()
+  ind-positive ≟ᵘ inverse = no λ ()
+  ind-positive ≟ᵘ ind-positive = yes refl
 
   isVar : (e : E Γ is) → Dec (∃ λ v → e ≡ var v)
   isVar (var x) = yes (x , refl)
@@ -43,12 +93,13 @@ module _ where
   isVar (zero-but e e₁ e₂) = no λ ()
   isVar (slide e x e₁ x₁) = no λ ()
   isVar (backslide e e₁ x x₁) = no λ ()
-  isVar (logi e) = no λ ()
+  -- isVar (logi e) = no λ ()
   isVar (bin x e e₁) = no λ ()
   isVar (scaledown x e) = no λ ()
-  isVar (⊟ e) = no λ ()
+  -- isVar (⊟ e) = no λ ()
   isVar (let′ e e₁) = no λ ()
-  isVar = {!   !}
+  -- Jairo made
+  isVar (un x e) = no λ ()
 
   isZero : (e : E Γ (ar s)) → Dec (e ≡ zero)
   isZero zero = yes refl
@@ -64,12 +115,13 @@ module _ where
   isZero (zero-but e e₁ e₂) = no λ ()
   isZero (E.slide e x e₁ x₁) = no λ ()
   isZero (E.backslide e e₁ x x₁) = no λ ()
-  isZero (logi e) = no λ ()
+  -- isZero (logi e) = no λ ()
   isZero (bin x e e₁) = no λ ()
   isZero (scaledown x e) = no λ ()
-  isZero (⊟ e) = no λ ()
+  -- isZero (⊟ e) = no λ ()
   isZero (let′ e e₁) = no λ ()
-  isZero = {!   !}
+  -- Jairo made
+  isZero (un x e) = no λ ()
 
   isOne : (e : E Γ (ar s)) → Dec (e ≡ one)
   isOne zero = no λ ()
@@ -85,12 +137,12 @@ module _ where
   isOne (zero-but e e₁ e₂) = no λ ()
   isOne (E.slide e x e₁ x₁) = no λ ()
   isOne (E.backslide e e₁ x x₁) = no λ ()
-  isOne (logi e) = no λ ()
+  -- isOne (logi e) = no λ ()
   isOne (bin x e e₁) = no λ ()
   isOne (scaledown x e) = no λ ()
-  isOne (⊟ e) = no λ ()
+  -- isOne (⊟ e) = no λ ()
   isOne (let′ e e₁) = no λ ()
-  isOne = {!   !}
+  isOne (un x e) = no λ ()
 
   isImap : (e : E Γ (ar q))
          → Dec (∃₂ λ s p
@@ -108,12 +160,12 @@ module _ where
   isImap (zero-but e e₁ e₂) = no λ { (_ , _ , refl , _ , ()) }
   isImap (E.slide e x e₁ x₁) = no λ { (_ , _ , refl , _ , ()) }
   isImap (E.backslide e e₁ x x₁) = no λ { (_ , _ , refl , _ , ()) }
-  isImap (logi e) = no λ { (_ , _ , refl , _ , ()) }
+  -- isImap (logi e) = no λ { (_ , _ , refl , _ , ()) }
   isImap (bin x e e₁) = no λ { (_ , _ , refl , _ , ()) }
   isImap (scaledown x e) = no λ { (_ , _ , refl , _ , ()) }
-  isImap (⊟ e) = no λ { (_ , _ , refl , _ , ()) }
+  -- isImap (⊟ e) = no λ { (_ , _ , refl , _ , ()) }
   isImap (let′ e e₁) = no λ { (_ , _ , refl , _ , ()) }
-  isImap = {!   !}
+  isImap (un x e) = no λ { (_ , _ , refl , _ , ()) }
 
 
   isImaps : (e : E Γ (ar s)) → Dec (∃ λ u → e ≡ imaps u)
@@ -130,12 +182,12 @@ module _ where
   isImaps (zero-but e e₁ e₂) = no λ ()
   isImaps (E.slide e x e₁ x₁) = no λ ()
   isImaps (E.backslide e e₁ x x₁) = no λ ()
-  isImaps (logi e) = no λ ()
+  -- isImaps (logi e) = no λ ()
   isImaps (bin x e e₁) = no λ ()
   isImaps (scaledown x e) = no λ ()
-  isImaps (⊟ e) = no λ ()
+  -- isImaps (⊟ e) = no λ ()
   isImaps (let′ e e₁) = no λ ()
-  isImaps = {!   !}
+  isImaps (un x e) = no λ ()
 
   isZeroBut : (e : E Γ (ar p)) → Dec (∃₂ λ s i → ∃₂ λ j u → e ≡ zero-but {s = s} i j u)
   isZeroBut (var x) = no λ ()
@@ -151,12 +203,12 @@ module _ where
   isZeroBut (zero-but e e₁ e₂) = yes (_ , e , e₁ , e₂ , refl)
   isZeroBut (E.slide e x e₁ x₁) = no λ ()
   isZeroBut (E.backslide e e₁ x x₁) = no λ ()
-  isZeroBut (logi e) = no λ ()
+  -- isZeroBut (logi e) = no λ ()
   isZeroBut (bin x e e₁) = no λ ()
   isZeroBut (scaledown x e) = no λ ()
-  isZeroBut (⊟ e) = no λ ()
+  -- isZeroBut (⊟ e) = no λ ()
   isZeroBut (let′ e e₁) = no λ ()
-  isZeroBut = {!   !}
+  isZeroBut (un x e) = no λ ()
 
   isSels : (e : E Γ (ar p)) (s : S) → Dec (Σ (p ≡ []) λ eq → ∃₂ λ t u → subst (E Γ ∘ ar) eq e ≡ sels {s = s} t u)
   isSels (var x) s = no λ { (refl , _ , _ , ()) }
@@ -178,12 +230,12 @@ module _ where
   isSels (zero-but e e₁ e₂) s = no λ { (refl , _ , _ , ()) }
   isSels (E.slide e x e₁ x₁) s = no λ { (refl , _ , _ , ()) }
   isSels (E.backslide e e₁ x x₁) s = no λ { (refl , _ , _ , ()) }
-  isSels (logi e) s = no λ { (refl , _ , _ , ()) }
+  -- isSels (logi e) s = no λ { (refl , _ , _ , ()) }
   isSels (bin x e e₁) s = no λ { (refl , _ , _ , ()) }
   isSels (scaledown x e) s = no λ { (refl , _ , _ , ()) }
-  isSels (⊟ e) s = no λ { (refl , _ , _ , ()) }
+  -- isSels (⊟ e) s = no λ { (refl , _ , _ , ()) }
   isSels (let′ e e₁) s = no λ { (refl , _ , _ , ()) }
-  isSels = {!   !}
+  isSels (un x e) s = no λ { (refl , _ , _ , ()) }
 
   isSel :  (e : E Γ (ar p)) → Dec (∃ λ s → ∃₂ λ t u → e ≡ sel {s = s}{p} t u)
   isSel (var x) = no λ { (_ , _ , _ , ()) }
@@ -199,13 +251,12 @@ module _ where
   isSel (zero-but e e₁ e₂) = no λ { (_ , _ , _ , ()) }
   isSel (E.slide e x e₁ x₁) = no λ { (_ , _ , _ , ()) }
   isSel (E.backslide e e₁ x x₁) = no λ { (_ , _ , _ , ()) }
-  isSel (logi e) = no λ { (_ , _ , _ , ()) }
+  -- isSel (logi e) = no λ { (_ , _ , _ , ()) }
   isSel (bin x e e₁) = no λ { (_ , _ , _ , ()) }
   isSel (scaledown x e) = no λ { (_ , _ , _ , ()) }
-  isSel (⊟ e) = no λ { (_ , _ , _ , ()) }
+  -- isSel (⊟ e) = no λ { (_ , _ , _ , ()) }
   isSel (let′ e e₁) = no λ { (_ , _ , _ , ()) }
-  isSel = {!   !}
-
+  isSel (un x e) = no λ { (_ , _ , _ , ()) }
 
   isImapb : (e : E Γ (ar q)) → Dec (∃₂ λ s p → Σ (s * p ≈ q) λ pf → ∃ λ t → e ≡ E.imapb pf t)
   isImapb (var x) = no λ { (_ , _ , _ , _ , ()) }
@@ -221,12 +272,12 @@ module _ where
   isImapb (zero-but e e₁ e₂) = no λ { (_ , _ , _ , _ , ()) }
   isImapb (E.slide e x e₁ x₁) = no λ { (_ , _ , _ , _ , ()) }
   isImapb (E.backslide e e₁ x x₁) = no λ { (_ , _ , _ , _ , ()) }
-  isImapb (logi e) = no λ { (_ , _ , _ , _ , ()) }
+  -- isImapb (logi e) = no λ { (_ , _ , _ , _ , ()) }
   isImapb (bin x e e₁) = no λ { (_ , _ , _ , _ , ()) }
   isImapb (scaledown x e) = no λ { (_ , _ , _ , _ , ()) }
-  isImapb (⊟ e) = no λ { (_ , _ , _ , _ , ()) }
+  -- isImapb (⊟ e) = no λ { (_ , _ , _ , _ , ()) }
   isImapb (let′ e e₁) = no λ { (_ , _ , _ , _ , ()) }
-  isImapb = {!   !}
+  isImapb (un x e) = no λ { (_ , _ , _ , _ , ()) }
 
   isSelb : (e : E Γ (ar p)) → Dec (∃₂ λ s q → Σ (s * p ≈ q) λ pf → ∃₂ λ t u → e ≡ E.selb pf t u)
   isSelb (var x) = no λ { (_ , _ , _ , _ , _ , ()) }
@@ -242,12 +293,12 @@ module _ where
   isSelb (zero-but e e₁ e₂) = no λ { (_ , _ , _ , _ , _ , ()) }
   isSelb (E.slide e x e₁ x₁) = no λ { (_ , _ , _ , _ , _ , ()) }
   isSelb (E.backslide e e₁ x x₁) = no λ { (_ , _ , _ , _ , _ , ()) }
-  isSelb (logi e) = no λ { (_ , _ , _ , _ , _ , ()) }
+  -- isSelb (logi e) = no λ { (_ , _ , _ , _ , _ , ()) }
   isSelb (bin x e e₁) = no λ { (_ , _ , _ , _ , _ , ()) }
   isSelb (scaledown x e) = no λ { (_ , _ , _ , _ , _ , ()) }
-  isSelb (⊟ e) = no λ { (_ , _ , _ , _ , _ , ()) }
+  -- isSelb (⊟ e) = no λ { (_ , _ , _ , _ , _ , ()) }
   isSelb (let′ e e₁) = no λ { (_ , _ , _ , _ , _ , ()) }
-  isSelb = {!   !}
+  isSelb (un x e) = no λ { (_ , _ , _ , _ , _ , ()) }
 
   isSum : (e : E Γ (ar p)) → Dec (∃₂ λ s t → e ≡ E.sum {s = s} t)
   isSum (var x) = no λ ()
@@ -263,12 +314,12 @@ module _ where
   isSum (zero-but e e₁ e₂) = no λ ()
   isSum (E.slide e x e₁ x₁) = no λ ()
   isSum (E.backslide e e₁ x x₁) = no λ ()
-  isSum (logi e) = no λ ()
+  -- isSum (logi e) = no λ ()
   isSum (bin x e e₁) = no λ ()
   isSum (scaledown x e) = no λ ()
-  isSum (⊟ e) = no λ ()
+  -- isSum (⊟ e) = no λ ()
   isSum (let′ e e₁) = no λ ()
-  isSum = {!   !}
+  isSum (un x e) = no λ ()
 
   isSlide : (e : E Γ (ar u)) → Dec (∃₂ λ s′ p′ → ∃₂ λ r′ t → ∃₂ λ x′ t₁ → ∃ λ x₁ → e ≡ E.slide {s = s′}{p′}{r′} t x′ t₁ x₁)
   isSlide (var x) = no λ ()
@@ -289,7 +340,7 @@ module _ where
   isSlide (scaledown x e) = no λ ()
   isSlide (⊟ e) = no λ ()
   isSlide (let′ e e₁) = no λ ()
-  isSlide = {!   !}
+  isSlide (un x e) = no λ ()
 
   isBackslide : (e : E Γ (ar r))
               → Dec (∃₂ λ s′ u′ → ∃₂ λ p′ t → ∃₂ λ t₁ x → ∃ λ x₁
@@ -312,8 +363,9 @@ module _ where
   isBackslide (scaledown x e) = no λ ()
   isBackslide (⊟ e) = no λ ()
   isBackslide (let′ e e₁) = no λ ()
-  isBackslide = {!   !}
+  isBackslide (un x e) = no λ ()
 
+  {-
   isLogistic : (e : E Γ (ar s)) → Dec (∃ λ t → e ≡ logi t)
   isLogistic (var x) = no λ ()
   isLogistic zero = no λ ()
@@ -333,7 +385,27 @@ module _ where
   isLogistic (scaledown x e) = no λ ()
   isLogistic (⊟ e) = no λ ()
   isLogistic (let′ e e₁) = no λ ()
-  isLogistic = {!   !}
+  isLogistic (un x e) = {!   !}
+  -}
+
+  isUn : (e : E Γ (ar s)) → Dec (∃ λ t → ∃ λ t₁ → e ≡ un t t₁)
+  isUn (var x) = no λ ()
+  isUn 𝟘 = no λ ()
+  isUn 𝟙 = no λ ()
+  isUn (imaps e) = no λ ()
+  isUn (sels e e₁) = no λ ()
+  isUn (imap e) = no λ ()
+  isUn (sel e e₁) = no λ ()
+  isUn (E.imapb x e) = no λ ()
+  isUn (E.selb x e e₁) = no λ ()
+  isUn (E.sum e) = no λ ()
+  isUn (zero-but e e₁ e₂) = no λ ()
+  isUn (E.slide e x e₁ x₁) = no λ ()
+  isUn (E.backslide e e₁ x x₁) = no λ ()
+  isUn (bin x e e₁) = no λ ()
+  isUn (scaledown x e) = no λ ()
+  isUn (let′ e e₁) = no λ ()
+  isUn (un x e) = yes (x , e , refl)
 
   isBin : (e : E Γ (ar s)) → Dec (∃₂ λ o t → ∃ λ t₁ → e ≡ bin o t t₁)
   isBin (var x) = no λ ()
@@ -354,7 +426,7 @@ module _ where
   isBin (scaledown x e) = no λ ()
   isBin (⊟ e) = no λ ()
   isBin (let′ e e₁) = no λ ()
-  isBin = {!   !}
+  isBin (un x e) = no λ ()
 
   isScaledown : (e : E Γ (ar s)) → Dec (∃₂ λ x t  → e ≡ scaledown x t)
   isScaledown (var x) = no λ ()
@@ -375,8 +447,9 @@ module _ where
   isScaledown (scaledown x e) = yes (x , e , refl)
   isScaledown (⊟ e) = no λ ()
   isScaledown (let′ e e₁) = no λ ()
-  isScaledown = {!   !}
+  isScaledown (un x e) = no λ ()
 
+  {-
   isMinus : (e : E Γ (ar s)) → Dec (∃ λ t  → e ≡ ⊟ t)
   isMinus (var x) = no λ ()
   isMinus zero = no λ ()
@@ -397,6 +470,7 @@ module _ where
   isMinus (⊟ e) = yes (e , refl)
   isMinus (let′ e e₁) = no λ ()
   isMinus = {!   !}
+  -}
 
   isLet : (e : E Γ (ar p)) → Dec (∃₂ λ s′ t → ∃ λ t₁ → e ≡ let′ {s = s′} t t₁)
   isLet (var x) = no λ ()
@@ -417,7 +491,7 @@ module _ where
   isLet (scaledown x e) = no λ ()
   isLet (⊟ e) = no λ ()
   isLet (let′ e e₁) = yes (_ , e , e₁ , refl)
-  isLet = {!   !}
+  isLet (un x e) = no λ ()
 
   unvar : {x y : is ∈ Γ} → var x ≡ var y → x ≡ y
   unvar refl = refl
@@ -525,9 +599,9 @@ module _ where
     e₁t₁ ← e₁ ≟ᵉ t₁
     just (cong₂ (λ a b → E.backslide a b _ _ ) et e₁t₁)
   ... | _ | _ | _ = nothing
-  logi e ≟ᵉ u with isLogistic u
-  ... | no ¬p = nothing
-  ... | yes (t , refl) = e ≟ᵉ t >>= just ∘ (cong logi)
+  -- logi e ≟ᵉ u with isLogistic u
+  -- ... | no ¬p = nothing
+  -- ... | yes (t , refl) = e ≟ᵉ t >>= just ∘ (cong logi)
   bin x e e₁ ≟ᵉ u with isBin u
   ... | no ¬p = nothing
   ... | yes (o , t , t₁ , refl) with x ≟ᵒ o
@@ -541,9 +615,9 @@ module _ where
   ... | yes (x′ , t , refl) with x ≟ x′
   ... | no ¬p = nothing
   ... | yes refl = e ≟ᵉ t >>= just ∘ (cong (scaledown _))
-  (⊟ e) ≟ᵉ u with isMinus u
-  ... | no ¬p = nothing
-  ... | yes (t , refl) = e ≟ᵉ t >>= just ∘ (cong (⊟_))
+  -- (⊟ e) ≟ᵉ u with isMinus u
+  -- ... | no ¬p = nothing
+  -- ... | yes (t , refl) = e ≟ᵉ t >>= just ∘ (cong (⊟_))
   let′ {s = s} e e₁ ≟ᵉ u with isLet u
   ... | no ¬p = nothing
   ... | yes (s′ , t , t₁ , refl) with s ≟ˢ s′
@@ -552,6 +626,17 @@ module _ where
     et ← e ≟ᵉ t
     e₁t₁ ← e₁ ≟ᵉ t₁
     just (cong₂ let′ et e₁t₁)
+  -- Jairo made
+  un x e ≟ᵉ u with isUn u
+  ... | no ¬p = nothing
+  ... | yes (o , t , refl) with x ≟ᵘ o
+  ... | no ¬p = nothing
+  ... | yes refl with e ≟ᵉ t
+  ... | just refl = just (cong (un _) refl)
+  ... | nothing = nothing
+    -- do
+    -- et ← e ≟ᵉ t -- ???
+    -- just (cong (un o) et)
 
   e-eq? : (a : E Γ is) (b : E Γ ip) → Maybe (Σ (is ≡ ip) λ pp → subst (E Γ) pp a ≡ b)
   e-eq? {is = is}{ip} a b with is ≟ⁱ ip

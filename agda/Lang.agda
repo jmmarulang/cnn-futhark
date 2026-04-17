@@ -82,7 +82,8 @@ module _ where
   -- Jairo made
   data Uop : Set where
     logistic neg
-      exp rectifier squared inverse ind-positive -- Jairo made
+    -- Jairo made
+      exp rectifier squared inverse ind-positive -- What happends with undefined terms like squared -2?
       : Uop
 
   unit : S
