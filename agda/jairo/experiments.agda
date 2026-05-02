@@ -78,9 +78,6 @@ module jairo.experiments where
       a (zero ∷ []) = x i
       a (suc zero ∷ []) = fromℕ 0
 
-    logistic'' : Ar s R → Ar s R
-    logistic'' {s} x = {!   !}
-
     {- number of data in an array
       Not sure if this is how I should calculate the length of an array-}
     lenS : S → ℕ
@@ -226,3 +223,10 @@ module jairo.experiments where
              → Ar (NL ∷ [] ⊗ (2 ∷ [] ⊗ ((df ⊗ is) ⊗ is))) R
              → Ar is R
     microgpt inp wa wf = gpt {nh = nh} {sl = sl} {df = df} sc inp wa wf
+
+  module MyState where
+    data State (A B : Set) : Set where
+        state : (A → (A × B)) → State A B
+
+    runState : ∀  {a b : Set} → State a b → a → a × b
+    runState (state f) = f

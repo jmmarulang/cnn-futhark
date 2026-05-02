@@ -19,8 +19,8 @@ module Optimise where
   open import Opt r rp public
 
   doopt : E Γ is → E Γ is
-  doopt e = opt e .proj₁  
-  
+  doopt e = opt e .proj₁
+
   multiopt : E Γ is → ℕ → E Γ is
   multiopt e 0 = e
   multiopt e (suc n) = doopt (multiopt e n)
@@ -33,7 +33,7 @@ module Extract where
   open import Data.Nat using (ℕ; zero; suc; _+_)
   open import Data.List as L
   open import Relation.Binary.PropositionalEquality
-  
+
   open import Lang
   open import Ar hiding (r)
   open import Function
@@ -44,7 +44,7 @@ module Extract where
   open import Effect.Monad using (RawMonad)
   open RawMonadState {{...}} --public
   open RawMonad {{...}} --public
-  
+
   instance
     _ = monad
     _ = applicative
@@ -56,7 +56,7 @@ module Extract where
   open WkSub
 
   OPT = 10
-  
+
   -- Show Env (e.g. after running grad) where optimisations are applied
   -- to every expression in the list.
   env-opt : Env Γ Δ → Env Γ Δ
@@ -67,7 +67,7 @@ module Extract where
   ee-opt : EE Γ Δ → EE Γ Δ
   ee-opt (env ρ) = env (env-opt ρ)
   ee-opt (let′ x ρ) = let′ (multiopt x OPT) (ee-opt ρ)
-  
+
   env-count-uses : Env Γ Δ → is ∈ Δ → ℕ
   env-count-uses ε v = 0
   env-count-uses (skip ρ) v = env-count-uses ρ v
@@ -92,7 +92,7 @@ module Extract where
   ee-replace : EE Γ Δ → (a b : E Δ is) → EE Γ Δ
   ee-replace (env ρ) x y = env (env-replace ρ x y)
   ee-replace (let′ e e₁) x y = let′ (replace e x y) (ee-replace e₁ (x ↑) (y ↑))
-  
+
   ee-dedup : EE Γ Δ → EE Γ Δ
   ee-dedup (env x) = env x
   ee-dedup (let′ x e) = let′ x (ee-replace (ee-dedup e) (x ↑) (var v₀))
@@ -103,7 +103,7 @@ module Extract where
   data NamedEnv : Ctx → Set where
     ε : NamedEnv ε
     _▹_ : NamedEnv Γ → String → NamedEnv (Γ ▹ is)
-    
+
   from-named : NamedEnv Γ → FEnv Γ
   from-named ε = _
   from-named (_▹_ {is = ix s} ρ x) = from-named ρ , fresh-ix x
@@ -128,7 +128,7 @@ module Extract where
     let n = fresh-var c
     r ← ee-fut′ e ρ (ν ▹ n)
     return $ printf "let %s = %s\n%s" n v r
-  
+
   -- Apply optimisations and generate the code.
   ee-fut : EE Γ Γ → NamedEnv Γ → String
   ee-fut e ρ = proj₂ $ runState (ee-fut′ (ee-opt $ ee-dedup $ ee-opt e) ρ ρ) 0
@@ -152,7 +152,7 @@ module Extract where
   compc1 : E _ _
   compc1 =  Lcon (  ar (28 ∷ 28 ∷ []) ∷ ar (6 ∷ 5 ∷ 5 ∷ [])
                   ∷ ar (6 ∷ []) ∷ ar (12 ∷ 6 ∷ 5 ∷ 5 ∷ [])
-                  ∷ ar (12 ∷ []) ∷ []) 
+                  ∷ ar (12 ∷ []) ∷ [])
 
                   --(ar (12 ∷ 1 ∷ 8 ∷ 8 ∷ [])) ε
                   (ar (12 ∷ 1 ∷ 8 ∷ 8 ∷ [])) ε
@@ -162,15 +162,15 @@ module Extract where
             Let s₁  := (Imap {s = 6 ∷ []} λ i → avgp₂ 12 12 (sel c₁ i)) In
             Let c₂₁ := mconv s₁ k₂ b₂ In
             c₂₁
-            
+
   grad-compc1-e = ee-opt (grad compc1 one zero-ee)
   grad-compc1-s = pp compc1 (ε ▹ "inp" ▹ "k1" ▹ "b1" ▹ "k2" ▹ "b2")
 
   test-e : E _ _
   test-e = Lcon (ar ([]) ∷  ar [] ∷ []) (ar ([])) ε
-           λ a x  → (a ⊞ a) ⊠ x  
+           λ a x  → (a ⊞ a) ⊠ x
   test-s = pp test-e (ε ▹ "a" ▹ "x")
-           
+
   test-n = WkSub.norm-lets test-e
 
   sum-let : E _ _

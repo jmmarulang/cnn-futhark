@@ -85,7 +85,6 @@ module _ where
   -- that are needed to compute (sel e₁ i), there is no easy
   -- way to do this for all cases.
 
-
   FEnv : Ctx → Set
   FEnv ε = ⊤
   FEnv (Γ ▹ is) = FEnv Γ × Sem is
@@ -111,18 +110,18 @@ module _ where
     where
       go : String → State ℕ (Ix s)
       go {[]} n = return []
-      go {x ∷ s} n = do
+      go {x ∷ s} n = do -- why is x being igonred?
         c ← get
         modify suc
         is ← go {s} n
-        return (printf "%s_%u" n c ∷ is)
+        return ((printf "%s_%u" n c) ∷ is)
 
+  -- Indexes of a variable?
   iv : (s : S) → State ℕ (Ix s)
   iv s = do
     c ← get
     modify suc
     return (fresh-ix (fresh-var c))
-
 
   bop : Bop -> String
   bop plus = "F.+"
@@ -156,7 +155,6 @@ module _ where
   ix-zipwith f [] [] = []
   ix-zipwith f (x ∷ i) (y ∷ j) = f x y ∷ ix-zipwith f i j
 
-
   ix-join : Ix s → String → String
   ix-join [] d = ""
   ix-join (x ∷ []) d = x
@@ -166,15 +164,15 @@ module _ where
   ix-to-list [] = []
   ix-to-list (x ∷ xs) = x ∷ ix-to-list xs
 
-
+  -- first argument is an index i, second is a variable x. Gives you x[i]
   to-sel : Ix s → String → String
   to-sel i a = a ++ ix-join (ix-map (printf "[%s]") i) ""
-
 
   to-imap : (s : S) → (i : Ix s) → (e : String) → String
   to-imap s i e = printf "(imap%u %s (\\ %s -> %s))"
                    (dim s) (shape-args s) (ix-join i " ")
                    e
+
   to-sum : (s : S) → (i : Ix s) → (e : String) → String
   to-sum [] i e = e
   to-sum s  i e = printf "(isum%u %s (\\ %s -> %s))" (dim s) (shape-args s)
@@ -198,7 +196,6 @@ module _ where
   ix-minus []  [] [] [] = []
   ix-minus (cons ⦃ _ ⦄ ⦃ s+p ⦄) (cons ⦃ _ ⦄ ⦃ sp ⦄) (i ∷ is) (j ∷ js) =
     printf "(%s - %s)" i j ∷ ix-minus s+p sp is js
-
 
   to-div-mod : s * p ≈ q → Ix q
              → Ix s × Ix p
@@ -255,11 +252,12 @@ module _ where
       b ← to-fut e (ρ , i)
       f , b′ ← b j
       return (id , f b′)
+
   to-fut (sel e e₁) ρ = do
      a ← to-fut e ρ
      i ← to-fut e₁ ρ
      return λ j → do
-       f , a′ ← ix-curry a i j
+       f , a′ ← ix-curry a i j -- a′ is normalized a?
        return (f , a′)
   to-fut (E.imapb x e) ρ = return λ i → do
     let j , k = to-div-mod x i
@@ -328,19 +326,6 @@ module _ where
       g , r′ ← r i
       return (f ∘ g , printf "(%s F.* %s)" l′ r′)
 
-  to-fut (scaledown x e) ρ = do
-    a ← to-fut e ρ
-    return λ i → do
-      f , a′ ← a i
-      return (f ,  printf "(%s F./ fromi64 %s)" a′ (show-nat x))
-
-
-  to-fut (⊟ e) ρ = do
-    a ← to-fut e ρ
-    return λ i → do
-      f , a′ ← a i
-      return (f ,  printf "(F.neg %s)" a′)
-
   to-fut (let′ e e₁) ρ = do
     c ← get
     modify suc
@@ -351,6 +336,49 @@ module _ where
       f , b′ ← b i
       return (printf "(let %s = %s\nin %s)" n x ∘ f ,  b′)
 
+  to-fut (scaledown x e) ρ = do
+    a ← to-fut e ρ
+    return λ i → do
+      f , a′ ← a i
+      return (f ,  printf "(%s F./ fromi64 %s)" a′ (show-nat x))
+
+  to-fut (⊟ e) ρ = do
+    a ← to-fut e ρ
+    return λ i → do
+      f , a′ ← a i
+      return (f ,  printf "(F.neg %s)" a′)
+  -- jairo made
+
+  to-fut (𝟙/ e) ρ = do
+    a ← to-fut e ρ
+    return λ i → do
+      f , a′ ← a i
+      return (f , printf "(one F./ %s)" a′)
+
+  to-fut (𝕖^ e) ρ = do
+    a ← to-fut e ρ
+    return λ i → do
+      f , a′ ← a i
+      return (f , printf "(F.exp %s)" a′)
+
+  to-fut (relu e) ρ = do
+    a ← to-fut e ρ
+    return λ i → do
+      f , a′ ← a i
+      -- return (f , printf "(if (zero <= %s) then %s else zero)" a′ a′)
+      return (f , printf "F.max %s zero" a′)
+
+  to-fut (sqrt e) ρ = do
+    a ← to-fut e ρ
+    return λ i → do
+      f , a′ ← a i
+      return (f , printf "(F.sqrt %s)" a′)
+
+  to-fut (𝕀+ e) ρ = do
+    a ← to-fut e ρ
+    return λ i → do
+      f , a′ ← a i
+      return (f , printf "(if (zero <= %s) then one else zero)" a′)
 
 
 
@@ -400,7 +428,6 @@ module Test where
 
   conv-s : String
   conv-s = proj₂ (runState (to-str conv-e (_ ,, mkar "img" ,, mkar "k1")) 0)
-
 
   --λ inp k₁ b₁ k₂ b₂ fc b →
   cnn-s : String

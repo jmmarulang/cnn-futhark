@@ -576,6 +576,9 @@ module Primitives where
     swap : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ u))
     swap {u} {s} x = Imap {s} λ i → Imaps λ j → sels (sel ⟨ x ⟩ j) i
 
+    max : ∀ {Γ} → E Γ (ar s) → E Γ (ar s) → E Γ (ar s)
+    max x y = x ⊞ relu (y ⊟ x)
+
     {- I cheat by passing the scale sc as a parameter. It should be such that
       sqrt (size v) =  sc
       For microgpt sc = 16.
@@ -647,3 +650,4 @@ module LangTest where
               Let c := (Imaps λ i → sel a i ⊠ x) In
               c ⊞ c
 
+-- automatically from other frameworks into ours?

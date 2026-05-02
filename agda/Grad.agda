@@ -206,9 +206,15 @@ module _ where
 
   grad (let′ e e₁) s δ =
     let
+    r = grad e₁ (s ↑) (ee-push-zero $′ ee-wk (skip ⊆-eq) δ)
+    t = {!   !}
+    in t
+  {-
+    let
       r = grad e₁ (s ↑) (ee-push-zero $′ ee-wk (skip ⊆-eq) δ)
       t = grad-last e (let′ e r)
     in t
+  -}
   -- Jairo made
   grad (relu e) s δ = grad e ((𝕀+ e) ⊠ s) δ -- is this correct?
   grad (𝕀+ e) s δ = grad e 𝟘 δ -- is this correct?
@@ -224,7 +230,7 @@ module _ where
     in r
   grad-last′ v e (let′ x ρ) = let′ x $′ ee-tail $′ grad-last′ (there v) (e ↑) (ee-push-zero ρ)
 
-  grad-last e (env (ρ ▹ x)) = ee-tail $′ let′ x $′ grad (e ↑) (var v₀) (ee-push-zero $′ ee-wk (skip ⊆-eq) (env ρ))
+  grad-last e (env (ρ ▹ x)) = ee-tail $′ let′ x $′ grad (e ↑) (var v₀) (ee-push-zero $′ ee-wk (skip ⊆-eq) (env ρ)) -- ee-tail $′ let′ x $′ grad (e ↑) (x ↑) (ee-push-zero $′ ee-wk (skip ⊆-eq) (env ρ))
   grad-last e (let′ x ρ) = let
       t = let′ x $′ ee-tail $′ grad-last (e ↑) (ee-wk-zero ρ (keep (skip ⊆-eq)))
     in t
