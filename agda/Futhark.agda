@@ -365,8 +365,7 @@ module _ where
     a ← to-fut e ρ
     return λ i → do
       f , a′ ← a i
-      -- return (f , printf "(if (zero <= %s) then %s else zero)" a′ a′)
-      return (f , printf "F.max %s zero" a′)
+      return (f , printf "(if (zero <= %s) then %s else zero)" a′ a′) --use max?
 
   to-fut (sqrt e) ρ = do
     a ← to-fut e ρ
@@ -379,10 +378,6 @@ module _ where
     return λ i → do
       f , a′ ← a i
       return (f , printf "(if (zero <= %s) then one else zero)" a′)
-
-
-
-
 
 
 module Test where
@@ -409,7 +404,6 @@ module Test where
   test-e = Lcon (ar (5 ∷ 5 ∷ []) ∷ ix (5 ∷ 5 ∷ []) ∷ []) (ar ([])) ε
            λ a j → sel (Let x := a ⊞ a In x ⊞ a) j
 
-
   test-s : String
   test-s = proj₂ (runState (to-str test-e ((_ , mkar "a"), ("i1" ∷ "i2" ∷ []))) 0)
 
@@ -425,7 +419,6 @@ module Test where
   conv-e = Lcon (ar (5 ∷ 5 ∷ []) ∷ ar (2 ∷ 2 ∷ []) ∷ []) (ar (4 ∷ 4 ∷ [])) ε
            λ img k1 → Primitives.Cnn.conv img k1
 
-
   conv-s : String
   conv-s = proj₂ (runState (to-str conv-e (_ ,, mkar "img" ,, mkar "k1")) 0)
 
@@ -436,3 +429,9 @@ module Test where
                            (_ ,, mkar "inp" ,, mkar "k1" ,, mkar "b1"
                               ,, mkar "k2"  ,, mkar "b2" ,, mkar "fc"
                               ,, mkar "b" ,, mkar "target"  )) 0
+
+  microgpt-s : String
+  microgpt-s = proj₂
+            $ runState (to-str Primitives.Microgpt.microgpt
+                       (_ ,, mkar "inp" ,, mkar "wq" ,, mkar "wk" ,, mkar "wv"
+                          ,, mkar "wo" ,, mkar "wf1" ,, mkar "wf2")) 0

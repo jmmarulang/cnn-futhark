@@ -26,16 +26,22 @@ module jairo.experiments where
     field
       R : Set
       fromℕ : ℕ → R
-      _+_ _*_ _÷_ _∧_ : R → R → R
-      -_ e^_ sqrt_ : R → R
+      _+_ _*_ _∨_ _÷_ : R → R → R
+      -_ e^_ √_ I+ : R → R
 
     infixl 10 _+_
     infixl 15 _*_
     infixl 15 _÷_
-    infixl 15 _∧_
+    infixl 15 _∨_
 
     0ᵣ : R
     0ᵣ = fromℕ 0
+
+    logisticʳ : R → R
+    logisticʳ x = fromℕ 1 ÷ (fromℕ 1 + e^ (- x))
+
+    1/_ : R → R
+    1/_ = fromℕ 1 ÷_
 
   module microgpt (jr : JReal) where
     open JReal jr
@@ -95,7 +101,7 @@ module jairo.experiments where
     rmsnorm : Ar s R → Ar s R
     rmsnorm {s} x = let
       scale : R
-      scale = sqrt ((sum _+_ 0ᵣ (zipWith _*_ x x)) ÷ (fromℕ (size x)))
+      scale =  √ ((sum _+_ 0ᵣ (zipWith _*_ x x)) ÷ (fromℕ (size x)))
 
       r = map (_* scale) x
       in r
@@ -105,7 +111,7 @@ module jairo.experiments where
 
     {- rectified linear unit -}
     relu : Ar s R → Ar s R
-    relu = map (0ᵣ ∧_)
+    relu = map (0ᵣ ∨_)
 
     {- returns the reverse of a shape.
       I make my own implementation because the og uses fold
@@ -135,31 +141,32 @@ module jairo.experiments where
     transpose x i = x (unreverseP i)
 -}
     {- computes an attention block -}
-    attention : {slq slk dk dv : S} → R
+    attention : {slq slk dk dv : S}
               → Ar (slq ⊗ dk) R → Ar (slk ⊗ dk) R → Ar (slk ⊗ dv) R
               → Ar (slq ⊗ dv) R
-    attention {slq} {slk} {dk} {dv} sc hq hk hv = let
+    attention {slq} {slk} {dk} {dv} hq hk hv = let
       l : Ar (slq ⊗ slk) R
-      l = map (_÷ sc) (matmul {slq} hq (swap {slk} hk))
+      l = map (_÷ (fromℕ (size hk))) (matmul {slq} hq (swap {slk} hk))
 
       w : Ar (slq ⊗ dv) R
       w = matmul {slq} (softmax l) hv
       in w
 
-    mattention : {nh slq slk dk dv : S} → R
+    mattention : {nh slq slk dk dv : S}
                → Ar (nh ⊗ (slq ⊗ dk)) R → Ar (nh ⊗ (slk ⊗ dk)) R
                → Ar (nh ⊗ (slk ⊗ dv)) R → Ar (nh ⊗ (slq ⊗ dv)) R
-    mattention {nh} {slq} {slk} sc q k v =
+    mattention {nh} {slq} {slk} q k v =
       unnest {nh} λ i →
-        attention {slq} {slk} sc (nest q i) (nest k i) (nest v i)
+        attention {slq} {slk} (nest q i) (nest k i) (nest v i)
+        -- attention {slq} {slk} sc (nest q i) (nest k i) (nest v i)
 
-    layer : {nh sl dh df : S} → (sc : R) →
+    layer : {nh sl dh df : S} →
             let is = nh ⊗ (sl ⊗ dh) in
             (inp : Ar is R)
           → (wa : Ar ((4 ∷ []) ⊗ (is ⊗ is)) R)
           → (wf : Ar ((2 ∷ []) ⊗ ((df ⊗ is) ⊗ is)) R)
           → Ar is R
-    layer {nh} {sl} {dh} {df} sc inp wa wf = let
+    layer {nh} {sl} {dh} {df} inp wa wf = let
       is = nh ⊗ (sl ⊗ dh)
 
       ninp = rmsnorm inp
@@ -183,7 +190,7 @@ module jairo.experiments where
       wf2 = swap {df ⊗ is} (nest wf (suc zero ∷ []))
 
       c₁ : Ar is R
-      c₁ = mattention {nh} {sl} sc q k v
+      c₁ = mattention {nh} {sl} q k v
 
       s₁ : Ar is R
       s₁ = zipWith _+_ (linear wo c₁) inp
@@ -197,20 +204,17 @@ module jairo.experiments where
       r = zipWith _+_ c₃ s₁
       in r
 
-    gpt : {n : ℕ} {nh sl dh df : S} → (sc : R) →
+    gpt : {n : ℕ} {nh sl dh df : S} →
         let is = (nh ⊗ (sl ⊗ dh)) in
           Ar is R
         → Ar (n ∷ [] ⊗ (4 ∷ [] ⊗ (is ⊗ is))) R
         → Ar (n ∷ [] ⊗ (2 ∷ [] ⊗ ((df ⊗ is) ⊗ is))) R
         → Ar is R
-    gpt {n} {nh} {hd} {sl} {df} sc inp wa wf =
-      sum’ (λ w' inp' → layer {nh} {hd} {df = df} sc inp' (proj₁ w') (proj₂ w'))
+    gpt {n} {nh} {hd} {sl} {df} inp wa wf =
+      sum’ (λ w' inp' → layer {nh} {hd} {df = df} inp' (proj₁ w') (proj₂ w'))
         inp λ (i : P (n ∷ [])) → Prod._,_ (nest wa i) (nest wf i)
 
     NL = 1 ; NH = 4 ; SL = 16  ; DH = 4 ; DF = 4
-
-    sc : R
-    sc = sqrt fromℕ DH
 
     nh : S ; sl : S ; dh : S ; df : S
     nh = NH ∷ [] ; sl = SL ∷ [] ; dh = DH ∷ [] ; df = DF ∷ []
@@ -222,7 +226,7 @@ module jairo.experiments where
              → Ar (NL ∷ [] ⊗ (4 ∷ [] ⊗ (is ⊗ is))) R
              → Ar (NL ∷ [] ⊗ (2 ∷ [] ⊗ ((df ⊗ is) ⊗ is))) R
              → Ar is R
-    microgpt inp wa wf = gpt {nh = nh} {sl = sl} {df = df} sc inp wa wf
+    microgpt inp wa wf = gpt {nh = nh} {sl = sl} {df = df} inp wa wf
 
   module MyState where
     data State (A B : Set) : Set where

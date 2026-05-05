@@ -599,7 +599,7 @@ module Primitives where
       Imap {h} (λ i →
         attention {u} (sel ⟨ q ⟩ i) (sel ⟨ k ⟩ i) (sel ⟨ v ⟩ i) sc)
 
-    ED = 16 ; AH = 4 ; NL = 1 ; HD = ED ℕ./ AH ; SL = 16 ; FD = 4 ; SC = 16
+    ED = 16 ; AH = 4 ; HD = ED ℕ./ AH ; SL = 16 ; FD = 4 ; SC = 2 -- ; NL = 1
 
     I = (AH ∷ []) ⊗  ((HD ∷ []) ⊗ (SL ∷ []))
 
