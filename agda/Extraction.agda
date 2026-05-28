@@ -1,4 +1,5 @@
 {-# OPTIONS --backtracking-instance-search #-} -- only needed for tests
+{-# OPTIONS --warn=noUserWarning #-}
 module _ where
 
 open import Grad
@@ -80,8 +81,8 @@ module Extract where
   ee-inline : EE Γ Δ → EE Γ Δ
   ee-inline (env x) = env x
   ee-inline (let′ x ρ) with δ ← ee-inline ρ | ee-count-uses δ v₀
-  ... | 0 = ee-sub δ (sub-id ▹ x)
-  ... | 1 = ee-sub δ (sub-id ▹ x)
+  ... | 0 = ee-sub δ (sub-id ▹ x) -- does nothing?
+  ... | 1 = ee-sub δ (sub-id ▹ x) -- why only for 1?
   ... | _ = let′ x δ
 
   env-replace : Env Γ Δ → (a b : E Δ is) → Env Γ Δ
@@ -98,7 +99,7 @@ module Extract where
   ee-dedup (let′ x e) = let′ x (ee-replace (ee-dedup e) (x ↑) (var v₀))
 
   ee-OPT : EE Γ Δ → EE Γ Δ
-  ee-OPT ρ = ee-opt (ee-inline (ee-opt ρ))
+  ee-OPT ρ = ee-opt (ee-inline (ee-opt ρ)) --??
 
   data NamedEnv : Ctx → Set where
     ε : NamedEnv ε
@@ -108,7 +109,6 @@ module Extract where
   from-named ε = _
   from-named (_▹_ {is = ix s} ρ x) = from-named ρ , fresh-ix x
   from-named (_▹_ {is = ar s} ρ x) = from-named ρ , mkar x
-
 
   -- Show chain using SemFuthark
   env-fut′ : Env Γ Δ → NamedEnv Γ → NamedEnv Δ → State ℕ String
@@ -143,11 +143,27 @@ module Extract where
   -- ========
   conv-e : E _ _
   conv-e = Lcon (ar (5 ∷ 5 ∷ []) ∷ ar (2 ∷ 2 ∷ []) ∷ []) (ar (4 ∷ 4 ∷ [])) ε
-           λ img k1 → Let t := Primitives.conv img k1 In
-                      logistic t
+           λ img k1 → Let t := Primitives.Cnn.conv img k1 In
+                      logi t -- wrapped inside a logistic?
 
   grad-conv-e = pp conv-e (ε ▹ "img" ▹ "k1")
-  grad-conv-s = pp conv-e (ε ▹ "inp" ▹ "k1")
+  {-
+  "let x0 = (imap2 4 4 (\\ x2_0 x2_1 -> (isum2 2 2 (\\ x1_0 x1_1 -> (img[(x1_0 + x2_0)][(x1_1 + x2_1)] F.* k1[x1_0][x1_1])))))
+  let x3 = (let x4 = (imap2 4 4 (\\ x6_0 x6_1 -> (logistics x0[x6_0][x6_1])))
+  in (imap2 4 4 (\\ x5_0 x5_1 -> (x4[x5_0][x5_1] F.* (one F.+ (F.neg x4[x5_0][x5_1]))))))
+
+  let dimg = (imap2 5 5 (\\ x8_0 x8_1 -> (isum2 2 2 (\\ x7_0 x7_1 -> if (x8_0 >= x7_0 && x8_1 >= x7_1 && (x8_0 - x7_0) < 4 && (x8_1 - x7_1) < 4) then (x3[(x8_0 - x7_0)][(x8_1 - x7_1)] F.* k1[x7_0][x7_1]) else zero))))
+  let dk1 = (imap2 2 2 (\\ x9_0 x9_1 -> (isum2 4 4 (\\ x10_0 x10_1 -> (x3[x10_0][x10_1] F.* img[(x9_0 + x10_0)][(x9_1 + x10_1)])))))"
+  -}
+  grad-conv-s = pp conv-e (ε ▹ "inp" ▹ "k1") -- whats the difference?
+  {-
+  "let x0 = (imap2 4 4 (\\ x2_0 x2_1 -> (isum2 2 2 (\\ x1_0 x1_1 -> (inp[(x1_0 + x2_0)][(x1_1 + x2_1)] F.* k1[x1_0][x1_1])))))
+  let x3 = (let x4 = (imap2 4 4 (\\ x6_0 x6_1 -> (logistics x0[x6_0][x6_1])))
+  in (imap2 4 4 (\\ x5_0 x5_1 -> (x4[x5_0][x5_1] F.* (one F.+ (F.neg x4[x5_0][x5_1]))))))
+
+  let dinp = (imap2 5 5 (\\ x8_0 x8_1 -> (isum2 2 2 (\\ x7_0 x7_1 -> if (x8_0 >= x7_0 && x8_1 >= x7_1 && (x8_0 - x7_0) < 4 && (x8_1 - x7_1) < 4) then (x3[(x8_0 - x7_0)][(x8_1 - x7_1)] F.* k1[x7_0][x7_1]) else zero))))
+  let dk1 = (imap2 2 2 (\\ x9_0 x9_1 -> (isum2 4 4 (\\ x10_0 x10_1 -> (x3[x10_0][x10_1] F.* inp[(x9_0 + x10_0)][(x9_1 + x10_1)])))))"
+  -}
 
   compc1 : E _ _
   compc1 =  Lcon (  ar (28 ∷ 28 ∷ []) ∷ ar (6 ∷ 5 ∷ 5 ∷ [])
@@ -157,10 +173,10 @@ module Extract where
                   --(ar (12 ∷ 1 ∷ 8 ∷ 8 ∷ [])) ε
                   (ar (12 ∷ 1 ∷ 8 ∷ 8 ∷ [])) ε
             λ inp k₁ b₁ k₂ b₂ →
-            Let c₁₁ := mconv inp k₁ b₁  In
-            Let c₁ := logistic c₁₁ In
-            Let s₁  := (Imap {s = 6 ∷ []} λ i → avgp₂ 12 12 (sel c₁ i)) In
-            Let c₂₁ := mconv s₁ k₂ b₂ In
+            Let c₁₁ := Primitives.Cnn.mconv inp k₁ b₁  In
+            Let c₁ := logi c₁₁ In
+            Let s₁  := (Imap {s = 6 ∷ []} λ i → Primitives.Cnn.avgp₂ 12 12 (sel c₁ i)) In
+            Let c₂₁ := Primitives.Cnn.mconv s₁ k₂ b₂ In
             c₂₁
 
   grad-compc1-e = ee-opt (grad compc1 one zero-ee)
@@ -178,16 +194,42 @@ module Extract where
             λ a b → Sum λ i → (Let x := sels a i ⊞ sels b i In x ⊠ x)
   sum-let-s = pp sum-let (ε ▹ "a" ▹ "b")
 
-
   grad-test-e = ee-opt (grad test-e (var v₀) zero-ee)
   grad-test-s = ee-fut (grad test-e (var v₀) zero-ee) (ε ▹ "x" ▹ "s" )
 
-  grad-cnn-e = ee-OPT (grad Primitives.cnn one zero-ee)
+  grad-cnn-e = ee-OPT (grad Primitives.Cnn.cnn one zero-ee)
 
   -- This is our CNN example from the paper.
-  grad-cnn-s = pp Primitives.cnn (ε ▹ "inp" ▹ "k1" ▹ "b1" ▹ "k2" ▹ "b2" ▹ "fc" ▹ "b" ▹ "target" )
+  grad-cnn-s = pp Primitives.Cnn.cnn (ε ▹ "inp" ▹ "k1" ▹ "b1" ▹ "k2" ▹ "b2" ▹ "fc" ▹ "b" ▹ "target" )
 
+  -- Jairo made
+  test1-e : E _ _
+  test1-e = Lcon (ar [] ∷  ar [] ∷ []) ((ar [])) ε λ x y → (x ⊠ y)
 
+  test1-s : String
+  test1-s = proj₂ (runState (to-str test1-e (from-named (ε ▹ "x" ▹ "y"))) 0)
+
+  grad-test1-s : String
+  grad-test1-s = pp test1-e (ε ▹ "x" ▹ "y")
+
+  compc1-e : E _ _
+  compc1-e = multiopt compc1 10
+
+  compc1-s : String
+  compc1-s = proj₂ (runState (to-str compc1-e (from-named (ε ▹ "inp" ▹ "k1" ▹ "b1" ▹ "k2" ▹ "b2"))) 0)
+
+  grad-microgpt-s : String
+  grad-microgpt-s = pp Primitives.Microgpt.microgpt
+    (ε ▹ "inp" ▹ "wq" ▹ "wk" ▹ "wv" ▹ "wo" ▹ "wf1" ▹ "wf2")
+
+  attention-e : E _ _
+  attention-e = multiopt Primitives.Microgpt.attention-e 0
+
+  attention-s : String
+  attention-s = proj₂ (runState (to-str attention-e (from-named (ε ▹ "queries" ▹ "keys" ▹ "values"))) 0)
+
+  grad-attention-s : String
+  grad-attention-s = pp Primitives.Microgpt.attention-e (ε ▹ "queries" ▹ "keys" ▹ "values")
 
 open import Lang
 open Optimise
@@ -198,4 +240,7 @@ open import Data.List
 open import Data.Product
 open import Data.Fin
 open import Data.List.Relation.Unary.All
+
+
+
 

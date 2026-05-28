@@ -213,3 +213,23 @@ entry initial_state : state =
   let fc = imap4 10 12 4 4 (\_ _ _ _ -> 1.0 / 192.0)
   let b = imap1 10 (\_ -> 1.0 / 10.0)
   in {k1, b1, k2, b2, fc, b}
+
+entry make_state
+  (k1: [6][5][5]f32) (b1: [6]f32) (k2: [12][6][5][5]f32)
+  (b2: [12]f32) (fc: [10][12][4][4]f32) (b: [10]f32) : state =
+  { k1, b1, k2, b2, fc, b }
+
+-- entry iteration [n] (trainings: i64) (batchsize: i64) (rate: f32) (imgs: [n][28][28]f32) (lbls: [n]i8) (s: state) : (state, f32) =
+--   let k1 = imap3 6 5 5 (\_ _ _ -> 1.0 / 25.0)
+--   let b1 = imap1 6 (\_ -> 1.0 / 6.0)
+--   let k2 = imap4 12 6 5 5 (\_ _ _ _ -> 1.0 / 150.0)
+--   let b2 = imap1 12 (\_ -> 1.0 / 12.0)
+--   let fc = imap4 10 12 4 4 (\_ _ _ _ -> 1.0 / 192.0)
+--   let b = imap1 10 (\_ -> 1.0 / 10.0)
+--   let a = trainings
+--   let b' = batchsize
+--   let c = rate
+--   let d = imgs
+--   let e = lbls
+--   let f = s
+--   in ({k1, b1, k2, b2, fc, b}, f32.i64 trainings)

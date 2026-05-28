@@ -430,8 +430,11 @@ module Test where
                               ,, mkar "k2"  ,, mkar "b2" ,, mkar "fc"
                               ,, mkar "b" ,, mkar "target"  )) 0
 
+  -- Jairo made
+
   microgpt-s : String
   microgpt-s = proj₂
             $ runState (to-str Primitives.Microgpt.microgpt
                        (_ ,, mkar "inp" ,, mkar "wq" ,, mkar "wk" ,, mkar "wv"
                           ,, mkar "wo" ,, mkar "wf1" ,, mkar "wf2")) 0
+

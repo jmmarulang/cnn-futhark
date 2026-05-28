@@ -206,20 +206,15 @@ module _ where
 
   grad (let′ e e₁) s δ =
     let
-    r = grad e₁ (s ↑) (ee-push-zero $′ ee-wk (skip ⊆-eq) δ)
-    t = {!   !}
-    in t
-  {-
-    let
       r = grad e₁ (s ↑) (ee-push-zero $′ ee-wk (skip ⊆-eq) δ)
       t = grad-last e (let′ e r)
     in t
-  -}
+
   -- Jairo made
   grad (relu e) s δ = grad e ((𝕀+ e) ⊠ s) δ -- is this correct?
   grad (𝕀+ e) s δ = grad e 𝟘 δ -- is this correct?
   grad (𝕖^ e) s δ = grad e ((𝕖^ e) ⊠ s) δ
-  grad (sqrt e) s δ = grad e (s // (𝟚 ⊠ sqrt s)) δ
+  grad (sqrt e) s δ = grad e (s // (𝟚 ⊠ sqrt e)) δ
   grad (𝟙/ e) s δ = grad e (⊟ (s // (e ⊠ e))) δ
 
   grad-last′ v e (env ρ) = let
@@ -234,5 +229,22 @@ module _ where
   grad-last e (let′ x ρ) = let
       t = let′ x $′ ee-tail $′ grad-last (e ↑) (ee-wk-zero ρ (keep (skip ⊆-eq)))
     in t
+
+open import Lang
+open import Opt
+open import Real
+open import Ar
+open import Data.List
+open import Data.Product
+open import Data.Fin
+open import Data.List.Relation.Unary.All
+
+open import Data.List as L using (List; []; _∷_)
+
+test : EE (ε ▹ ar [] ▹ ar []) _
+test = grad (sqrt (var v₀)) one zero-ee
+{-
+env ((ε ▹ 𝟘) ▹ (𝟘 ⊞ 𝟙 ⊠ 𝟙/ ((𝟙 ⊞ 𝟙) ⊠ sqrt 𝟙)))
+-}
 
 

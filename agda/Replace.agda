@@ -1,4 +1,5 @@
 {-# OPTIONS  --backtracking-instance-search #-}
+{-# OPTIONS --warn=noUserWarning #-}
 
 module _ where
 module _ where
@@ -34,23 +35,26 @@ module _ where
   replace (zero-but e e₁ e₂) x y | nothing = zero-but (replace e x y) (replace e₁ x y) (replace e₂ x y)
   replace (E.slide e x₁ e₁ x₂) x y | nothing = E.slide (replace e x y) x₁ (replace e₁ x y) x₂
   replace (E.backslide e e₁ x₁ x₂) x y | nothing = E.backslide (replace e x y) (replace e₁ x y) x₁ x₂
-  replace (logistic e) x y | nothing = logistic (replace e x y)
+  -- replace (logistic e) x y | nothing = logistic (replace e x y)
   replace (bin x₁ e e₁) x y | nothing = bin x₁ (replace e x y) (replace e₁ x y)
   replace (scaledown x₁ e) x y | nothing = scaledown x₁ (replace e x y)
-  replace (minus e) x y | nothing = minus (replace e x y)
+  -- replace (minus e) x y | nothing = minus (replace e x y)
   replace (let′ e e₁) x y | nothing = let′ (replace e x y) (replace e₁ (x ↑) (y ↑))
-
+  -- Jairo made
+  replace (un x₁ e) x y | nothing = un x₁ (replace e x y)
 
 module Test where
   open import Data.List
 
   open import Lang
   open Syntax
-  
+
   ex₁ : E _ _
   ex₁ = Lcon (ar [] ∷ []) (ar []) ε
         λ a → Let x := (Let y := a ⊞ a In (y) ⊞ (y)) In x
+  -- let′ (let′ (var v₀ ⊞ var v₀) (var v₀ ⊞ var v₀)) (var v₀)
 
   ex-repl = replace ex₁ (var v₀ ⊞ var v₀) one
+  -- let′ (let′ 𝟙 (var v₀ ⊞ var v₀)) (var v₀)
 
 open import Lang

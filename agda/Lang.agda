@@ -83,7 +83,7 @@ module _ where
   data Uop : Set where
     logistic neg
     -- Jairo made
-      exp rectifier squared inverse ind-positive -- What happends with undefined terms like squared -2?
+      exp rectifier squared inverse ind-positive logarithm -- What happends with undefined terms like squared -2?
       : Uop
 
   unit : S
@@ -126,6 +126,7 @@ module _ where
   pattern sqrt a = un squared a
   pattern 𝟙/ a = un inverse a
   pattern relu a = un rectifier a
+  pattern ln a = un logarithm a
 
   pattern _⊞_ a b = bin plus a b
   pattern _⊠_ a b = bin mul a b
@@ -537,9 +538,9 @@ module Primitives where
                 ∷ ar (6 ∷ [])       ∷ ar (12 ∷ 6 ∷ 5 ∷ 5 ∷ [])
                 ∷ ar (12 ∷ [])      ∷ ar (10 ∷ 12 ∷ 1 ∷ 4 ∷ 4 ∷ [])
                 ∷ ar (10 ∷ [])      ∷ ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])
-                --∷ ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])
+                -- ∷ ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])
                 ∷ [])
-              --(ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])) ε
+              -- (ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])) ε
               (ar ([])) ε
           λ inp k₁ b₁ k₂ b₂ fc b target →
           Let c₁₁ := mconv inp k₁ b₁  In
@@ -582,14 +583,22 @@ module Primitives where
     {- I cheat by passing the scale sc as a parameter. It should be such that
       sqrt (size v) =  sc
       For microgpt sc = 16.
+      Unlike microgpt, WE DO NOT MASK
+      TODO : figure out how to mask
     -}
     attention : ∀ {u s r t Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (r ⊗ s))
               → E Γ (ar (r ⊗ t)) → ℕ → E Γ (ar (u ⊗ t))
     attention {u} {s} {r} {t} q k v sc =
-      Let l₁ := matmul {u} {s} q (swap {r} k) In
-      Let l := scaledown sc l₁ In
-      Let w₁ := softmax l In
-      Let w := matmul {u} w₁ ⟨ v ⟩ In w
+      matmul {u}
+        (softmax (scaledown sc ⟨ matmul {u} {s} q (swap {r} k) ⟩)) ⟨ v ⟩
+
+    -- attention : ∀ {u s r t Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (r ⊗ s))
+    --           → E Γ (ar (r ⊗ t)) → ℕ → E Γ (ar (u ⊗ t))
+    -- attention {u} {s} {r} {t} q k v sc =
+    --   Let l₁ := matmul {u} {s} q (swap {r} k) In
+    --   Let l := scaledown sc l₁ In
+    --   Let w₁ := softmax l In
+    --   Let w := matmul {u} w₁ ⟨ v ⟩ In w
 
     mattention : ∀ {h u s r t Γ} → E Γ (ar (h ⊗ (u ⊗ s)))
               → E Γ (ar (h ⊗ (r ⊗ s))) → E Γ (ar (h ⊗ (r ⊗ t)))
@@ -599,31 +608,114 @@ module Primitives where
       Imap {h} (λ i →
         attention {u} (sel ⟨ q ⟩ i) (sel ⟨ k ⟩ i) (sel ⟨ v ⟩ i) sc)
 
-    ED = 16 ; AH = 4 ; HD = ED ℕ./ AH ; SL = 16 ; FD = 4 ; SC = 2 -- ; NL = 1
-
-    I = (AH ∷ []) ⊗  ((HD ∷ []) ⊗ (SL ∷ []))
-
-    microgpt : E _ _
-    microgpt =  Lcon (  ar I
-                      ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I)
-                      ∷ ar ((FD ∷ [] ⊗ I) ⊗ I) ∷ ar (I ⊗ (FD ∷ [] ⊗ I))
-                      ∷ [])
-                    (ar I) ε
-                λ inp wq wk wv wo wf₁ wf₂ →
+    -- TODO: generalize to add biases and batch size
+    -- TODO: add masking
+    gpt-layer : ∀ {Γ ah hd sl fd} →
+                 let i = ah ⊗ (hd ⊗ sl) in
+                 (inp : E Γ (ar i)) (wq wk wv wo : E Γ (ar (i ⊗ i)))
+                 (wf₁ : E Γ (ar ((fd ⊗ i) ⊗ i)))
+                 (wf₂ : E Γ (ar (i ⊗ (fd ⊗ i))))
+                 (sc : ℕ)
+                 → E Γ (ar i)
+    gpt-layer {Γ} {ah} {hd} {sl} {fd} inp wq wk wv wo wf₁ wf₂ sc =
                 Let ninp := rmsnorm inp In
-                Let q := linear wq ninp In
-                Let k := linear wk ninp In
-                Let v := linear wv ninp In
+                Let q := linear ⟨ wq ⟩ ninp In
+                Let k := linear ⟨ wk ⟩ ninp In
+                Let v := linear ⟨ wv ⟩ ninp In
                 Let c₁ :=
-                  mattention {AH ∷ []} {HD ∷ []} {SL ∷ []} {HD ∷ []}
-                  q k v SC In
-                Let s₁₁ := linear wo c₁ In
-                Let s₁ := s₁₁ ⊞ inp In
+                  mattention {ah} {hd} {sl} {hd}
+                  q k v sc In
+                Let s₁₁ := linear ⟨ wo ⟩ c₁ In
+                Let s₁ := s₁₁ ⊞ ⟨ inp ⟩ In
                 Let s₂₁ := rmsnorm s₁ In
-                Let s₂₂ := linear wf₁ s₂₁ In
+                Let s₂₂ := linear ⟨ wf₁ ⟩ s₂₁ In
                 Let s₂ := relu s₂₂ In
-                Let c₃ := linear wf₂ s₂ In
+                Let c₃ := linear ⟨ wf₂ ⟩ s₂ In
                 Let r := c₃ ⊞ s₁ In r
+
+    avg : ∀ {Γ} → E Γ (ar s) → E Γ (ar [])
+    avg {s} x = scaledown (len s) (Sum λ i → sels ⟨ x ⟩ i)
+
+    cross-entropy : ∀ {Γ} (inp target : E Γ (ar s)) → (E Γ (ar []))
+    cross-entropy {s} inp target = ⊟ (Sum (λ i → sels ⟨ target ⟩ i ⊠ ln (sels ⟨ softmax inp ⟩ i)))
+
+    ED = 16 ; AH = 4 ; HD = ED ℕ./ AH ; SL = 16 ; FD = 4 ; SC = 2 ; VS = 27
+
+    W = (ι HD) ⊗ (ι SL)
+    I = (ι AH) ⊗ W
+
+    -- we calculate sequences in parallel (?)
+    microgpt : ∀ {Γ} →
+                 (inp : E Γ (ar I)) (wq wk wv wo : E Γ (ar (I ⊗ I)))
+                 (wf₁ : E Γ (ar ((ι FD ⊗ I) ⊗ I)))
+                 (wf₂ : E Γ (ar (I ⊗ (ι FD ⊗ I))))
+                 (sc : ℕ) (wvo : E Γ (ar (ι VS ⊗ I)))
+                 → E Γ (ar (ι VS))
+    microgpt inp wq wk wv wo wf₁ wf₂ sc wvo =
+      Let s := gpt-layer {ah = ι AH } {hd = ι HD} {fd = ι FD}
+        inp wq wk wv wo wf₁ wf₂ SC In
+      -- normalize?
+      Let r := matmul {ι VS} ⟨ wvo ⟩ s In r
+
+    microgpt-token-loss : ∀ {Γ} →
+                 (inp : E Γ (ar I)) (wq wk wv wo : E Γ (ar (I ⊗ I)))
+                 (wf₁ : E Γ (ar ((ι FD ⊗ I) ⊗ I)))
+                 (wf₂ : E Γ (ar (I ⊗ (ι FD ⊗ I))))
+                 (sc : ℕ) (wvo : E Γ (ar (ι VS ⊗ I)))
+                 (target : E Γ (ar (ι VS))) → E Γ (ar [])
+    microgpt-token-loss inp wq wk wv wo wf₁ wf₂ sc wvo target =
+      Let probs := microgpt inp wq wk wv wo wf₁ wf₂ sc wvo In
+      Let loss := cross-entropy probs ⟨ target ⟩ In loss
+
+    -- microgpt-loss : ∀ {Γ} →
+    --              (inp : E Γ (ar I)) (wq wk wv wo : E Γ (ar (I ⊗ I)))
+    --              (wf₁ : E Γ (ar ((ι FD ⊗ I) ⊗ I)))
+    --              (wf₂ : E Γ (ar (I ⊗ (ι FD ⊗ I))))
+    --              (sc : ℕ) (wvo : E Γ (ar (ι VS ⊗ I)))
+    --              (target_ix : E Γ (ix (ι VS))) → E Γ (ar [])
+    -- microgpt-loss inp wq wk wv wo wf₁ wf₂ sc wvo target_ix =
+    --   Let probs := microgpt inp wq wk wv wo wf₁ wf₂ sc wvo In
+    --   Let loss := cross-entropy probs ⟨ target_ix ⟩ In loss
+
+    -- microgpt : E _ _
+    -- microgpt =  Lcon (  ar I
+    --                   ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I)
+    --                   ∷ ar ((ι FD ⊗ I) ⊗ I) ∷ ar (I ⊗ (ι FD ⊗ I))
+    --                   ∷ ar ((ι VS) ⊗ (ι AH ⊗ ι HD)) ∷ [])
+    --                 (ar O) ε
+    --             λ inp wq wk wv wo wf₁ wf₂ wvo →
+    --             Let s := gpt-layer {ah = ι AH } {hd = ι HD} {fd = ι FD} inp wq wk wv wo wf₁ wf₂ SC In
+    --             -- normalize?
+    --             Let c := matmul {ι VS} {ι AH ⊗ ι HD} wvo s In
+    --             Let r := softmax c In r
+
+    -- microgpt : E _ _
+    -- microgpt =  Lcon (  ar I
+    --                   ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I)
+    --                   ∷ ar ((FD ∷ [] ⊗ I) ⊗ I) ∷ ar (I ⊗ (FD ∷ [] ⊗ I))
+    --                   ∷ [])
+    --                 (ar I) ε
+    --             λ inp wq wk wv wo wf₁ wf₂ →
+    --             Let ninp := rmsnorm inp In
+    --             Let q := linear wq ninp In
+    --             Let k := linear wk ninp In
+    --             Let v := linear wv ninp In
+    --             Let c₁ :=
+    --               mattention {AH ∷ []} {HD ∷ []} {SL ∷ []} {HD ∷ []}
+    --               q k v SC In
+    --             Let s₁₁ := linear wo c₁ In
+    --             Let s₁ := s₁₁ ⊞ inp In
+    --             Let s₂₁ := rmsnorm s₁ In
+    --             Let s₂₂ := linear wf₁ s₂₁ In
+    --             Let s₂ := relu s₂₂ In
+    --             Let c₃ := linear wf₂ s₂ In
+    -- --             Let r := c₃ ⊞ s₁ In r
+
+    -- attention-e : E _ _
+    -- attention-e =
+    --   Lcon (ar W ∷ ar W ∷ ar W ∷ []) (ar W) ε
+    --   λ q k v →
+    --     attention {HD ∷ []} {SL ∷ []} {HD ∷ []} q k v SC
 
 module LangTest where
   open import Ar

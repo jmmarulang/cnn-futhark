@@ -23,6 +23,9 @@ module _ where
   S = List ℕ
   P = All Fin
 
+  ι : ℕ → S
+  ι n = n ∷ []
+
   variable
     m n k : ℕ
     s p q r u w : S

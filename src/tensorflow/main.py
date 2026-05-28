@@ -18,12 +18,12 @@ te_accu = None
 class ZhangCNN (Model):
     def __init__ (self, cats):
         super (ZhangCNN, self).__init__()
-        init_w1 = tf.keras.initializers.Constant(1.0/25.0)
-        init_w2 = tf.keras.initializers.Constant(1.0/150.0)
-        init_w3 = tf.keras.initializers.Constant(1.0/192.0)
-        init_b1 = tf.keras.initializers.Constant(1.0/6.0)
-        init_b2 = tf.keras.initializers.Constant(1.0/12.0)
-        init_b3 = tf.keras.initializers.Constant(1.0/cats)
+        init_w1 = tf.keras.initializers.Constant(1.0/25.0) # k1
+        init_w2 = tf.keras.initializers.Constant(1.0/150.0) # k2
+        init_w3 = tf.keras.initializers.Constant(1.0/192.0) # fc
+        init_b1 = tf.keras.initializers.Constant(1.0/6.0) # b1
+        init_b2 = tf.keras.initializers.Constant(1.0/12.0) # b2
+        init_b3 = tf.keras.initializers.Constant(1.0/cats) # b?
         self.conv1 = Conv2D (filters=6, kernel_initializer=init_w1, kernel_size=(5,5), bias_initializer=init_b1, activation='sigmoid', input_shape=(28,28,1))
         self.avgp1 = AveragePooling2D (pool_size=(2,2))
         self.conv2 = Conv2D (filters=12, kernel_initializer=init_w2, kernel_size=(5,5), bias_initializer=init_b2, activation='sigmoid')

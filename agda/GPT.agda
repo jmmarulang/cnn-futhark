@@ -129,6 +129,7 @@ module GPT (real : Real) where
       1. RMSNorm instead of LayerNorm
       2. no biases
       3. ReLU instead of GeLU
+      4. Processes one token at a time (No batch dimension, no parallel time steps)
     1. 2. could be potential be included. 3. is more difficult since
     it uses a probability density function.
       -}
