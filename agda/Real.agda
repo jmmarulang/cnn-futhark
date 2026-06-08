@@ -6,7 +6,7 @@ record Real : Set₁ where
     R : Set
     fromℕ : ℕ → R
     _+_ _*_ _∨_ _÷_ : R → R → R
-    -_ e^_ √_ I+ : R → R
+    -_ e^_ √_ I+ log : R → R
 
   infixl 10 _+_
   infixl 15 _*_

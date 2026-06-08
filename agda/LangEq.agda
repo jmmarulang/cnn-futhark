@@ -1,4 +1,4 @@
-{-# OPTIONS --warn=noUserWarning #-}
+--{-# OPTIONS --warn=noUserWarning #-}
 module _ where
   open import Ar hiding (sum; slide; backslide; imapb; selb)
   open import Relation.Binary.PropositionalEquality
@@ -36,6 +36,7 @@ module _ where
   logistic ≟ᵘ squared = no λ ()
   logistic ≟ᵘ inverse = no λ ()
   logistic ≟ᵘ ind-positive = no λ ()
+  logistic ≟ᵘ logarithm = no λ ()
   neg ≟ᵘ logistic = no λ ()
   neg ≟ᵘ neg = yes refl
   neg ≟ᵘ exp = no λ ()
@@ -43,6 +44,7 @@ module _ where
   neg ≟ᵘ squared = no λ ()
   neg ≟ᵘ inverse = no λ ()
   neg ≟ᵘ ind-positive = no λ ()
+  neg ≟ᵘ logarithm = no λ ()
   exp ≟ᵘ logistic = no λ ()
   exp ≟ᵘ neg = no λ ()
   exp ≟ᵘ exp = yes refl
@@ -50,6 +52,7 @@ module _ where
   exp ≟ᵘ squared = no λ ()
   exp ≟ᵘ inverse = no λ ()
   exp ≟ᵘ ind-positive = no λ ()
+  exp ≟ᵘ logarithm = no λ ()
   rectifier ≟ᵘ logistic = no λ ()
   rectifier ≟ᵘ neg = no λ ()
   rectifier ≟ᵘ exp = no λ ()
@@ -57,6 +60,7 @@ module _ where
   rectifier ≟ᵘ squared = no λ ()
   rectifier ≟ᵘ inverse = no λ ()
   rectifier ≟ᵘ ind-positive = no λ ()
+  rectifier ≟ᵘ logarithm = no λ ()
   squared ≟ᵘ logistic = no λ ()
   squared ≟ᵘ neg = no λ ()
   squared ≟ᵘ exp = no λ ()
@@ -64,6 +68,7 @@ module _ where
   squared ≟ᵘ squared = yes refl
   squared ≟ᵘ inverse = no λ ()
   squared ≟ᵘ ind-positive = no λ ()
+  squared ≟ᵘ logarithm = no λ ()
   inverse ≟ᵘ logistic = no λ ()
   inverse ≟ᵘ neg = no λ ()
   inverse ≟ᵘ exp = no λ ()
@@ -71,6 +76,7 @@ module _ where
   inverse ≟ᵘ squared = no λ ()
   inverse ≟ᵘ inverse = yes refl
   inverse ≟ᵘ ind-positive = no λ ()
+  inverse ≟ᵘ logarithm = no λ ()
   ind-positive ≟ᵘ logistic = no λ ()
   ind-positive ≟ᵘ neg = no λ ()
   ind-positive ≟ᵘ exp = no λ ()
@@ -78,6 +84,15 @@ module _ where
   ind-positive ≟ᵘ squared = no λ ()
   ind-positive ≟ᵘ inverse = no λ ()
   ind-positive ≟ᵘ ind-positive = yes refl
+  ind-positive ≟ᵘ logarithm = no λ ()
+  logarithm ≟ᵘ logistic = no λ ()
+  logarithm ≟ᵘ neg = no λ ()
+  logarithm ≟ᵘ exp = no λ ()
+  logarithm ≟ᵘ rectifier = no λ ()
+  logarithm ≟ᵘ squared = no λ ()
+  logarithm ≟ᵘ inverse = no λ ()
+  logarithm ≟ᵘ ind-positive = no λ ()
+  logarithm ≟ᵘ logarithm = yes refl
 
   isVar : (e : E Γ is) → Dec (∃ λ v → e ≡ var v)
   isVar (var x) = yes (x , refl)

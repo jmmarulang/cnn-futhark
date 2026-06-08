@@ -1,4 +1,4 @@
-{-# OPTIONS --warn=noUserWarning #-}
+--{-# OPTIONS --warn=noUserWarning #-}
 module _ where
 
 module _ where
@@ -216,6 +216,7 @@ module _ where
   grad (𝕖^ e) s δ = grad e ((𝕖^ e) ⊠ s) δ
   grad (sqrt e) s δ = grad e (s // (𝟚 ⊠ sqrt e)) δ
   grad (𝟙/ e) s δ = grad e (⊟ (s // (e ⊠ e))) δ
+  grad (ln e) s δ = grad e (s // e) δ
 
   grad-last′ v e (env ρ) = let
     w = env-lookup ρ v

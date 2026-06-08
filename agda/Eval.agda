@@ -1,4 +1,4 @@
-{-# OPTIONS --warn=noUserWarning #-}
+--{-# OPTIONS --warn=noUserWarning #-}
 open import Data.Product
 open import Data.Unit
 open import Data.Empty
@@ -69,6 +69,7 @@ module Eval (r : Real) where
   eval (𝕖^ e) ρ = Ar.map e^_ (eval e ρ)
   eval (sqrt e) ρ = Ar.map √_ (eval e ρ)
   eval (𝟙/ e) ρ = Ar.map 1/_ (eval e ρ)
+  eval (ln e) ρ = Ar.map log (eval e ρ)
 
   _≈ᵃ_ : Ar s X → Ar s X → Set
   a ≈ᵃ b = ∀ i → a i ≡ b i
@@ -155,6 +156,7 @@ module Eval (r : Real) where
   eval-cong (𝕖^ e) eq i = cong e^_ (eval-cong e eq i)
   eval-cong (sqrt e) eq i = cong √_ (eval-cong e eq i)
   eval-cong (𝟙/ e) eq i = cong 1/_ (eval-cong e eq i)
+  eval-cong (ln e) eq i = cong log (eval-cong e eq i)
 
   open WkSub hiding (_∙ˢ_)
 
@@ -216,6 +218,7 @@ module Eval (r : Real) where
   eval-wk w (𝕖^ e) ρ = Ar.map-cong e^_ (eval-wk w e ρ)
   eval-wk w (sqrt e) ρ = Ar.map-cong √_ (eval-wk w e ρ)
   eval-wk w (𝟙/ e) ρ = Ar.map-cong 1/_ (eval-wk w e ρ)
+  eval-wk w (ln e) ρ = Ar.map-cong log (eval-wk w e ρ)
 
   sub-env-wks : (s : Sub Γ Δ) → (w : Γ ⊆ Ψ) → ∀ ρ → sub-env (wks s w) ρ ≈ᶜ sub-env s (wk-env w ρ)
   sub-env-wks ε w _ = ε
@@ -296,6 +299,7 @@ module Eval (r : Real) where
   eval-sub (𝕖^ e) ρ s i = cong e^_ (eval-sub e ρ s i)
   eval-sub (sqrt e) ρ s i = cong √_ (eval-sub e ρ s i)
   eval-sub (𝟙/ e) ρ s i = cong 1/_ (eval-sub e ρ s i)
+  eval-sub (ln e) ρ s i = cong log (eval-sub e ρ s i)
 
   eval-zb : (a : E Γ (ar s)) (i : E Γ (ix p)) → ∀ ρ → eval (zero-but i i a) ρ ≈ᵃ eval a ρ
   eval-zb a i ρ with eval i ρ ≟ₚ eval i ρ

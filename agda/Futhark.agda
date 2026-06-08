@@ -1,5 +1,5 @@
 {-# OPTIONS  --backtracking-instance-search #-} -- only needed for tests
-{-# OPTIONS --warn=noUserWarning #-}
+--{-# OPTIONS --warn=noUserWarning #-}
 module _ where
 
 module _ where
@@ -379,6 +379,12 @@ module _ where
       f , a′ ← a i
       return (f , printf "(if (zero <= %s) then one else zero)" a′)
 
+  to-fut (ln e) ρ = do
+    a ← to-fut e ρ
+    return λ i → do
+      f , a′ ← a i
+      return (f , printf "(F.log %s)" a′)
+
 
 module Test where
   open import Relation.Binary.PropositionalEquality
@@ -432,9 +438,9 @@ module Test where
 
   -- Jairo made
 
-  microgpt-s : String
-  microgpt-s = proj₂
-            $ runState (to-str Primitives.Microgpt.microgpt
-                       (_ ,, mkar "inp" ,, mkar "wq" ,, mkar "wk" ,, mkar "wv"
-                          ,, mkar "wo" ,, mkar "wf1" ,, mkar "wf2")) 0
+  -- microgpt-s : String
+  -- microgpt-s = proj₂
+  --           $ runState (to-str Primitives.Microgpt.microgpt
+  --                      (_ ,, mkar "inp" ,, mkar "wq" ,, mkar "wk" ,, mkar "wv"
+  --                         ,, mkar "wo" ,, mkar "wf1" ,, mkar "wf2")) 0
 

@@ -1,5 +1,5 @@
 {-# OPTIONS  --backtracking-instance-search #-}
-{-# OPTIONS --warn=noUserWarning #-}
+--{-# OPTIONS --warn=noUserWarning #-}
 
 module _ where
 module _ where

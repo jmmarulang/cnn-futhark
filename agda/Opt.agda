@@ -1,4 +1,4 @@
-{-# OPTIONS --warn=noUserWarning #-}
+--{-# OPTIONS --warn=noUserWarning #-}
 open import Data.Product
 open import Data.Unit
 open import Data.Empty
@@ -294,6 +294,8 @@ module Opt (r : Real) (rp : RealProp r) where
   ... | a , p = 𝟙/ a , (λ ρ i → cong 1/_ (p ρ i))
   opt (𝕀+ e) with opt e
   ... | a , p = 𝕀+ a , (λ ρ i → cong I+ (p ρ i))
+  opt (ln e) with opt e
+  ... | a , p = ln a , (λ ρ i → cong log (p ρ i))
 
 
 

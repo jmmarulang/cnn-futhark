@@ -1,5 +1,5 @@
 {-# OPTIONS --backtracking-instance-search #-} -- only needed for tests
-{-# OPTIONS --warn=noUserWarning #-}
+--{-# OPTIONS --warn=noUserWarning #-}
 module _ where
 
 open import Grad
@@ -56,7 +56,7 @@ module Extract where
   open Primitives
   open WkSub
 
-  OPT = 10
+  OPT = 0
 
   -- Show Env (e.g. after running grad) where optimisations are applied
   -- to every expression in the list.
@@ -182,20 +182,20 @@ module Extract where
   grad-compc1-e = ee-opt (grad compc1 one zero-ee)
   grad-compc1-s = pp compc1 (ε ▹ "inp" ▹ "k1" ▹ "b1" ▹ "k2" ▹ "b2")
 
-  test-e : E _ _
-  test-e = Lcon (ar ([]) ∷  ar [] ∷ []) (ar ([])) ε
-           λ a x  → (a ⊞ a) ⊠ x
-  test-s = pp test-e (ε ▹ "a" ▹ "x")
+  -- test-e : E _ _
+  -- test-e = Lcon (ar ([]) ∷  ar [] ∷ []) (ar ([])) ε
+  --          λ a x  → (a ⊞ a) ⊠ x
+  -- test-s = pp test-e (ε ▹ "a" ▹ "x")
 
-  test-n = WkSub.norm-lets test-e
+  -- test-n = WkSub.norm-lets test-e
 
   sum-let : E _ _
   sum-let = Lcon (ar (5 ∷ []) ∷ ar (5 ∷ []) ∷ []) (ar []) ε
             λ a b → Sum λ i → (Let x := sels a i ⊞ sels b i In x ⊠ x)
   sum-let-s = pp sum-let (ε ▹ "a" ▹ "b")
 
-  grad-test-e = ee-opt (grad test-e (var v₀) zero-ee)
-  grad-test-s = ee-fut (grad test-e (var v₀) zero-ee) (ε ▹ "x" ▹ "s" )
+  -- grad-test-e = ee-opt (grad test-e (var v₀) zero-ee)
+  -- grad-test-s = ee-fut (grad test-e (var v₀) zero-ee) (ε ▹ "x" ▹ "s" )
 
   grad-cnn-e = ee-OPT (grad Primitives.Cnn.cnn one zero-ee)
 
@@ -218,18 +218,28 @@ module Extract where
   compc1-s : String
   compc1-s = proj₂ (runState (to-str compc1-e (from-named (ε ▹ "inp" ▹ "k1" ▹ "b1" ▹ "k2" ▹ "b2"))) 0)
 
-  grad-microgpt-s : String
-  grad-microgpt-s = pp Primitives.Microgpt.microgpt
-    (ε ▹ "inp" ▹ "wq" ▹ "wk" ▹ "wv" ▹ "wo" ▹ "wf1" ▹ "wf2")
+  test-e : E _ _
+  test-e = Lcon (ar (ι 2) ∷ []) (ar []) (ε ▹ ix (ι 2) ▹ ix (ι 2))
+    λ x → (sels x (var (there v₀))) ⊞ sels x (var (there v₁))
 
-  attention-e : E _ _
-  attention-e = multiopt Primitives.Microgpt.attention-e 0
+  test-s : String
+  test-s = proj₂ (runState (to-str test-e (from-named (ε ▹ "v0" ▹ "v1" ▹ "x"))) 0)
 
-  attention-s : String
-  attention-s = proj₂ (runState (to-str attention-e (from-named (ε ▹ "queries" ▹ "keys" ▹ "values"))) 0)
+  -- grad-mgpt-loss-s : String
+  -- grad-mgpt-loss-s = pp Primitives.Microgpt.mgpt-loss-e
+  --   (ε ▹ "w-te" ▹ "w-pe" ▹ "w-qry" ▹ "w-key" ▹ "w-val" ▹ "w-out" ▹ "w-up" ▹ "w-down" ▹ "w-voc" ▹ "doc-id" ▹ "target")
+  -- grad-microgpt-s : String
+  -- grad-microgpt-s = pp Primitives.Microgpt.microgpt
+  --   (ε ▹ "inp" ▹ "wq" ▹ "wk" ▹ "wv" ▹ "wo" ▹ "wf1" ▹ "wf2")
 
-  grad-attention-s : String
-  grad-attention-s = pp Primitives.Microgpt.attention-e (ε ▹ "queries" ▹ "keys" ▹ "values")
+  -- attention-e : E _ _
+  -- attention-e = multiopt Primitives.Microgpt.attention-e 0
+
+  -- attention-s : String
+  -- attention-s = proj₂ (runState (to-str attention-e (from-named (ε ▹ "queries" ▹ "keys" ▹ "values"))) 0)
+
+  -- grad-attention-s : String
+  -- grad-attention-s = pp Primitives.Microgpt.attention-e (ε ▹ "queries" ▹ "keys" ▹ "values")
 
 open import Lang
 open Optimise
