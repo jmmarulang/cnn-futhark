@@ -56,7 +56,7 @@ module Extract where
   open Primitives
   open WkSub
 
-  OPT = 0
+  OPT = 20
 
   -- Show Env (e.g. after running grad) where optimisations are applied
   -- to every expression in the list.

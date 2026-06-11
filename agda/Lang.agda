@@ -1,5 +1,5 @@
 {-# OPTIONS  --backtracking-instance-search #-}
-{-# OPTIONS --warn=noUserWarning #-}
+-- {-# OPTIONS --warn=noUserWarning #-}
 module _ where
 module _ where
   open import Data.Nat using (ℕ; zero; suc)
@@ -561,25 +561,53 @@ module Primitives where
     open import Data.List.Properties
 
     variable
-      ah hd ed sl fd vs : S
+      ah hd ed sl vo pr fd : S
+
+    infixr 6 _⊡_
+    _⊡_ = trans
 
     subst-shape : ∀ {s p} → s ≡ p → E Γ (ar s) → E Γ (ar p)
     subst-shape refl b = b
 
-    subst-empr-l : ∀ {s} → E Γ (ar (s ⊗ [])) → E Γ (ar s)
-    subst-empr-l x = subst-shape (++-identityʳ _) x
+    subst-idrl : ∀ {s} → E Γ (ar (s ⊗ [])) → E Γ (ar s)
+    subst-idrl x = subst-shape (++-identityʳ _) x
 
-    subst-empr-r : ∀ {s} → E Γ (ar s) → E Γ (ar (s ⊗ []))
-    subst-empr-r {Γ} {s} x = subst-shape (sym (++-identityʳ _)) x
+    subst-idrr : ∀ {s} → E Γ (ar s) → E Γ (ar (s ⊗ []))
+    subst-idrr {Γ} {s} x = subst-shape (sym (++-identityʳ _)) x
 
-    subst-empl-l : ∀ {s} → E Γ (ar ([] ⊗ s)) → E Γ (ar s)
-    subst-empl-l x = subst-shape (++-identityˡ _) x
+    subst-idll : ∀ {s} → E Γ (ar ([] ⊗ s)) → E Γ (ar s)
+    subst-idll x = subst-shape (++-identityˡ _) x
 
-    subst-ass-l : ∀ {Γ} → E Γ (ar ((s ⊗ p) ⊗ q)) → E Γ (ar (s ⊗ (p ⊗ q)))
-    subst-ass-l {s} {p} {q} {Γ} x = subst-shape (++-assoc s p q) x
+    subst-assl : ∀ {Γ} → E Γ (ar ((s ⊗ p) ⊗ q)) → E Γ (ar (s ⊗ (p ⊗ q)))
+    subst-assl {s} {p} {q} {Γ} x = subst-shape (++-assoc s p q) x
 
-    subst-ass-r : ∀ {Γ} → E Γ (ar (s ⊗ (p ⊗ q))) → E Γ (ar ((s ⊗ p) ⊗ q))
-    subst-ass-r {s} {p} {q} {Γ} x = subst-shape (sym (++-assoc s p q)) x
+    subst-assr : ∀ {Γ} → E Γ (ar (s ⊗ (p ⊗ q))) → E Γ (ar ((s ⊗ p) ⊗ q))
+    subst-assr {s} {p} {q} {Γ} x = subst-shape (sym (++-assoc s p q)) x
+
+    pw3-eq : ∀ {R} {s1 s2 p1 p2 q1 q2 : S}
+                → (s1 ≡ s2) → (p1 ≡ p2) → (q1 ≡ q2)
+                → (Pointw₃ R s1 p1 q1) ≡ Pointw₃ R s2 p2 q2
+    pw3-eq refl refl refl = refl
+
+    pw3-subst : ∀ {R} {s1 s2 p1 p2 q1 q2 : S}
+                → (s1 ≡ s2) → (p1 ≡ p2) → (q1 ≡ q2)
+                → (Pointw₃ R s1 p1 q1) → Pointw₃ R s2 p2 q2
+    pw3-subst refl refl refl pw = pw
+
+    pw3-con : ∀ {s1 s2 p1 p2 q1 q2 : S} {R} → Pointw₃ R s1 p1 q1
+         → Pointw₃ R s2 p2 q2
+         → Pointw₃ R (s1 ⊗ s2) (p1 ⊗ p2) (q1 ⊗ q2)
+    pw3-con [] [] = []
+    pw3-con [] cons = cons
+    pw3-con cons [] =
+      pw3-subst (sym ++-neutʳ) (sym ++-neutʳ) (sym ++-neutʳ) cons
+    pw3-con {s1 ∷ s1s} {s2 ∷ s2s} {p1 ∷ p1s} {p2 ∷ p2s} {q1 ∷ q1s} {q2 ∷ q2s}
+      (cons ⦃ a1 ⦄ ⦃ b1 ⦄) (cons ⦃ a2 ⦄ ⦃ b2 ⦄) = cons ⦃ a1 ⦄ ⦃ g ⦄ where
+        g = pw3-con b1 (cons ⦃ a2 ⦄ ⦃ b2 ⦄)
+
+    pw3-dup : ∀ {R} {s p q : S} → Pointw₃ R s p q
+            → Pointw₃ R (s ⊗ s) (p ⊗ p) (q ⊗ q)
+    pw3-dup pw = pw3-con pw pw
 
     id : ∀ {Γ} → E Γ (ar (s ⊗ s))
     id {s} = Imap {s} λ i → Imaps {s} λ j → zero-but i j one
@@ -595,7 +623,12 @@ module Primitives where
 
     iswap-mid : ∀ {Γ} → E Γ (ar (p ⊗ (s ⊗ u))) → E Γ (ar (s ⊗ (p ⊗ u)))
     iswap-mid {p} {s} {u} x =
-      iswap-r {s} {u} {p} (subst-ass-l {s} {u} (iswap {p} {s ⊗ u} x))
+      iswap-r {s} {u} {p} (subst-assl {s} {u} (iswap {p} {s ⊗ u} x))
+
+    iswap-exr : ∀ {Γ} → E Γ (ar ((s ⊗ p) ⊗ (q ⊗ r)))
+              → E Γ (ar ((s ⊗ q) ⊗ (p ⊗ r)))
+    iswap-exr {s} {p} {q} {r} {Γ} x = subst-assr {s} $ Imap {s} λ i →
+      iswap-mid {p} {q} $ Imap {p} λ j → sel (sel (subst-assl {s} ⟨ x ⟩) i) j
 
     linear : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar s) → E Γ (ar u)
     linear {u} {s} w x =
@@ -622,7 +655,9 @@ module Primitives where
     -- add a small number to avoid dividing by zero?
     rmsnorm : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
     rmsnorm {s = s} x =
-      x ⊠ 𝟙/ (sqrt (scaledown (len s) (sum {s = s} (⟨ x ⟩ ⊠ ⟨ x ⟩))))
+      Let ms := scaledown (len s) (Sum (λ i → sels ⟨ x ⟩ i ⊠ sels ⟨ x ⟩ i)) In
+      Let scale := 𝟙/ (sqrt ms) In
+      Let r := Imaps (λ i → sels ⟨ x ⟩ i ⊠ scale) In r
 
     m-rmsnorm : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
     m-rmsnorm {s} {p} {Γ} x = Imap {s} λ i → rmsnorm (sel ⟨ x ⟩ i)
@@ -633,107 +668,128 @@ module Primitives where
     avg : ∀ {Γ} → E Γ (ar s) → E Γ (ar [])
     avg {s} x = scaledown (len s) (Sum λ i → sels ⟨ x ⟩ i)
 
-    record GPT-Params (Γ : Ctx) (ed sl fd vs : S) : Set₁ where
+    record GPT-Params (Γ : Ctx) (vo ed sl fd : S) : Set₁ where
       field
-        -- token embedding
-        wte : E Γ (ar (vs ⊗ ed))
         -- position embedding
         wpe : E Γ (ar (sl ⊗ ed))
         -- weights for queries, keys, values and outputs
         wqry wkey wval wout : E Γ (ar (ed ⊗ ed))
         -- up-projection
-        wup : E Γ (ar ((fd ⊗ ed) ⊗ ed))
+        wup : E Γ (ar (fd ⊗ ed))
         -- down projection
-        wdown : E Γ (ar (ed ⊗ (fd ⊗ ed)))
+        wdown : E Γ (ar (ed ⊗ fd))
         -- output projection into vocabulary size
-        wvoc : E Γ (ar (vs ⊗ ed))
+        wvoc : E Γ (ar (vo ⊗ ed))
+        -- token embedding
+        -- wte : E Γ (ar (vs ⊗ ed))
 
     open GPT-Params
 
-    wkgpt : ∀ {Γ Δ} → GPT-Params Γ ed sl fd vs → GPT-Params (Γ ▹ Δ) ed sl fd vs
-    wkgpt p .wte = ⟨ p .wte ⟩
-    wkgpt p .wpe = ⟨ p .wpe ⟩
-    wkgpt p .wqry = ⟨ p .wqry ⟩
-    wkgpt p .wkey = ⟨ p .wkey ⟩
-    wkgpt p .wval = ⟨ p .wval ⟩
-    wkgpt p .wout = ⟨ p .wout ⟩
-    wkgpt p .wup = ⟨ p .wup ⟩
-    wkgpt p .wdown = ⟨ p .wdown ⟩
-    wkgpt p .wvoc = ⟨ p .wvoc ⟩
+    wkgptp : ∀ {Γ Δ} → Prefix Γ Δ → GPT-Params Γ vo ed sl fd
+            → GPT-Params Δ vo ed sl fd
+    wkgptp pre p .wpe = wkp pre (wpe p)
+    wkgptp pre p .wqry = wkp pre (wqry p)
+    wkgptp pre p .wkey = wkp pre (wkey p)
+    wkgptp pre p .wval = wkp pre (wval p)
+    wkgptp pre p .wout = wkp pre (wout p)
+    wkgptp pre p .wup = wkp pre (wup p)
+    wkgptp pre p .wdown = wkp pre (wdown p)
+    wkgptp pre p .wvoc = wkp pre (wvoc p)
 
-    -- sel-id : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar s) → E Γ (ar p)
-    -- sel-id {s} {p} x id = matmul {u = []} id x
-
-    -- embed-tok : ∀ {Γ} (p : GPT-Params Γ ed sl fd vs) (pos-ix : E Γ (ix sl))
-    --             (tok-id : E Γ (ar vs)) → E Γ (ar ed)
-    -- embed-tok {ed} {sl} {fd} {vs} p pos-ix tok-id =
-    --   rmsnorm (sel (p .wpe) pos-ix ⊞ sel-id (p .wte) tok-id)
-
-    -- embed-doc : ∀ {Γ} (p : GPT-Params Γ ed sl fd vs)
-    --             (doc-id : E Γ (ar (sl ⊗ vs))) → E Γ (ar (sl ⊗ ed))
-    -- embed-doc {ed} {sl} p doc-id =
-    --   Imap {sl} λ i → embed-tok (wkgpt p) i (sel ⟨ doc-id ⟩ i)
+    to-gptp : ∀ {Γ}
+              (wpe : E Γ (ar (sl ⊗ ed)))
+              (wqry wkey wval wout : E Γ (ar (ed ⊗ ed)) )
+              (wup : E Γ (ar (fd ⊗ ed)))
+              (wdown : E Γ (ar (ed ⊗ fd)))
+              (wvoc : E Γ (ar (vo ⊗ ed)))
+              → GPT-Params Γ vo ed sl fd
+    to-gptp wpe wqry wkey wval wout wup wdown wvoc = record
+      { wpe = wpe
+      ; wqry = wqry
+      ; wkey = wkey
+      ; wval = wval
+      ; wout = wout
+      ; wup = wup
+      ; wdown = wdown
+      ; wvoc = wvoc
+      }
 
     attention : ∀ {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
                 (qs ks vs : E Γ (ar (sl ⊗ hd))) → E Γ (ar (sl ⊗ hd))
-    attention {sl} {hd} sc mask qs ks vs =
-      matmul {r = hd}
-      (softmax (scaledown sc ⟨ matmul {u = sl} qs (iswap {sl} ks) ⟩ ⊞ mask)) vs
+    attention {sl} {hd} sc mask qs ks vs = matmul {r = hd}
+      (m-softmax {sl} (
+        scaledown sc ⟨ matmul {u = sl} qs (iswap {sl} ks) ⟩ ⊞ mask)) vs
 
-    -- m-attention : ∀ {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
-    --               (qs ks vs : E Γ (ar (ah ⊗ (sl ⊗ hd))))
-    --               → E Γ (ar (ah ⊗ (sl ⊗ hd)))
-    -- m-attention {sl} {ah} {hd} sc mask qs ks vs = Imap {ah} λ i →
-    --   attention {sl} sc ⟨ mask ⟩ (sel ⟨ qs ⟩ i) (sel ⟨ ks ⟩ i) (sel ⟨ vs ⟩ i)
+    mh-attention : let ed = ah ⊗ hd in ∀ {Γ} (sc : ℕ)
+                   (mask : E Γ (ar (sl ⊗ sl)))
+                   (qs ks vs : E Γ (ar (sl ⊗ ed)))
+                  → E Γ (ar (sl ⊗ ed))
+    mh-attention {ah} {hd} {sl} {Γ} sc mask qs ks vs =
+        iswap-mid {ah} {sl} $ Imap {ah} λ i → attention {sl} sc ⟨ mask ⟩
+          (sel (iswap-mid {sl} {ah} ⟨ qs ⟩) i)
+          (sel (iswap-mid {sl} {ah} ⟨ ks ⟩) i)
+          (sel (iswap-mid {sl} {ah} ⟨ vs ⟩) i)
 
-    mh-attention : ∀ {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
-                  (qs ks vs : E Γ (ar (sl ⊗ (ah ⊗ hd))))
-                  → E Γ (ar (sl ⊗ (ah ⊗ hd)))
-    mh-attention {sl} {ah} {hd} sc mask qs ks vs =
-      iswap-mid {ah} {sl} (Imap {ah} (λ i → attention {sl} sc ⟨ mask ⟩
-        (sel (iswap-mid {sl} {ah} ⟨ qs ⟩) i)
-        (sel (iswap-mid {sl} {ah} ⟨ ks ⟩) i)
-        (sel (iswap-mid {sl} {ah} ⟨ vs ⟩) i)))
-
-    mlp : ∀ {Γ} (wup : E Γ (ar ((fd ⊗ ed) ⊗ ed)))
-          (wdown : E Γ (ar (ed ⊗ (fd ⊗ ed)))) (seq : E Γ (ar (sl ⊗ ed)))
+    mlp : ∀ {Γ} (wup : E Γ (ar (fd ⊗ ed)))
+          (wdown : E Γ (ar (ed ⊗ fd))) (seq : E Γ (ar (sl ⊗ ed)))
           → E Γ (ar (sl ⊗ ed))
-    mlp {fd} {ed} {sl} {Γ} wup wdown seq =
+    mlp {fd} {ed} {sl} wup wdown seq =
       Let nseq := m-rmsnorm {sl} seq In
       Let useq := m-linear {p = sl} ⟨ wup ⟩ nseq In
       Let aseq := relu useq In
       Let dseq := m-linear {u = ed} {p = sl} ⟨ wdown ⟩ aseq In
       Let cseq := dseq ⊞ ⟨ seq ⟩ In cseq
 
-    mgpt-layer : let ed = ah ⊗ hd in
-                 ∀ {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
-                 (p : GPT-Params Γ ed sl fd vs) (seq : E Γ (ar (sl ⊗ ed)))
+    mgpt-layer : let ed = ah ⊗ hd in ∀ {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
+                 (p : GPT-Params Γ vo ed sl fd) (seq : E Γ (ar (sl ⊗ ed)))
                  → E Γ (ar (sl ⊗ ed))
-    mgpt-layer {ah} {hd} {sl} {fd} {vs} {Γ} sc mask p seq = let ed = ah ⊗ hd in
+    mgpt-layer {ah} {hd} {sl} {vo} {fd} {Γ} sc mask p seq = let ed = ah ⊗ hd in
       Let nseq := m-rmsnorm {sl} seq In
       Let qs := m-linear {u = ed} {p = sl} ⟨ p .wqry ⟩ nseq In
       Let ks := m-linear {u = ed} {p = sl} ⟨ p .wkey ⟩ nseq In
       Let vs := m-linear {u = ed} {p = sl} ⟨ p .wval ⟩ nseq In
-      Let attn := mh-attention {sl} {ah} {hd} sc ⟨ mask ⟩ qs ks vs In
+      Let attn := mh-attention {hd = hd} {sl = sl} sc ⟨ mask ⟩ qs ks vs In
       Let oseq := m-linear {u = ed} {p = sl} ⟨ p .wout ⟩ attn In
       Let cseq := oseq ⊞ ⟨ seq ⟩ In
-      Let fseq := mlp {fd = fd} {sl = sl} ⟨ p .wup ⟩ ⟨ p .wdown ⟩ cseq In fseq
+      Let fseq := mlp {sl = sl} ⟨ p .wup ⟩ ⟨ p .wdown ⟩ cseq In fseq
 
-    embed-doc : ∀ {Γ} (p : GPT-Params Γ ed sl fd vs)
-                (doc-id : E Γ (ar (sl ⊗ vs))) → E Γ (ar (sl ⊗ ed))
-    embed-doc {ed} {sl} {fd} {vs} {Γ} p doc-id =
-      matmul {sl} doc-id ⟨ p .wte ⟩ ⊞  (p .wpe)
+    block-tok : ∀ {Γ} → E Γ (ar ed) → ah * hd ≈ ed → E Γ (ar (ah ⊗ hd))
+    block-tok {ed} {ah} {hd} {Γ} x pr = Imap {ah} λ i → selb pr ⟨ x ⟩ i
 
-    mgpt-forward : ∀ {Γ} (sc : ℕ) (att-mask : E Γ (ar (sl ⊗ sl)))
-                   (p : GPT-Params Γ (ah ⊗ hd) sl fd vs)
-                   (doc-id : E Γ (ar (sl ⊗ vs))) → E Γ (ar (sl ⊗ vs))
-    mgpt-forward {sl} {ah} {hd} {fd} {vs} sc att-mask p doc-id =
-      -- Embedding
-      Let seq := embed-doc p doc-id In
+    block-seq : ∀ {Γ} → E Γ (ar (sl ⊗ ed)) → ah * hd ≈ ed
+                → E Γ (ar (sl ⊗ (ah ⊗ hd)))
+    block-seq {sl} {ed} {ah} x pr = Imap {sl} λ i → block-tok (sel ⟨ x ⟩ i) pr
+
+    block-w : ∀ {Γ} → E Γ (ar (ed ⊗ ed)) → ah * hd ≈ ed
+                → E Γ (ar ((ah ⊗ hd) ⊗ (ah ⊗ hd)))
+    block-w {ed} {ah} {hd} {Γ} x pr = iswap-exr {ah} {ah} $
+      Imap {ah ⊗ ah} λ i → selb (pw3-dup pr) ⟨ x ⟩ i
+
+    block-param : ∀ {Γ} (p : GPT-Params Γ vo ed sl fd)
+                   → ah * hd ≈ ed → GPT-Params Γ vo (ah ⊗ hd) sl fd
+    block-param p pr .wpe = block-seq (wpe p) pr
+    block-param p pr .wqry = block-w (wqry p) pr
+    block-param p pr .wkey = block-w (wkey p) pr
+    block-param p pr .wval = block-w (wval p) pr
+    block-param p pr .wout = block-w (wout p) pr
+    block-param p pr .wup = block-seq (wup p) pr
+    block-param {ed = ed} {fd = fd} p pr .wdown =
+      iswap {fd} (block-seq (iswap {ed} (wdown p)) pr)
+    block-param p pr .wvoc = block-seq (wvoc p) pr
+
+    mgpt-forward : ∀ {ah hd : S} {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
+                   (p : GPT-Params Γ vo ed sl fd) (wseq : E Γ (ar (sl ⊗ ed)))
+                   → ah * hd ≈ ed → E Γ (ar (sl ⊗ vo))
+    mgpt-forward {sl} {vo} {ed} {fd} {ah} {hd} {Γ} sc mask p wseq pr =
+      let p' = block-param (wkgptp suc p) pr in
+      -- embed
+      Let seq := (p .wpe) ⊞ wseq In
+      -- block into heads
+      Let seq' := block-seq seq pr In
       -- layer pass
-      Let lseq := mgpt-layer {ah} sc ⟨ att-mask ⟩ (wkgpt p) seq In
-      -- project into vocabulary
-      Let logits := m-linear {u = vs} {p = sl} ⟨ p .wvoc ⟩ lseq In logits
+      Let lseq := mgpt-layer {ah = ah} sc ⟨ mask ⟩ p' seq' In
+      -- decode into vocabulary
+      Let logits := m-linear {u = vo} {p = sl} ⟨ p' .wvoc ⟩ lseq In logits
 
     cross-entropy : ∀ {Γ} (logits target : E Γ (ar s)) → (E Γ (ar []))
     cross-entropy {s} logits target =
@@ -743,543 +799,645 @@ module Primitives where
     m-cross-entropy {s} {p} logits target =
       Imaps λ i → cross-entropy {p} (sel ⟨ logits ⟩ i) (sel ⟨ target ⟩ i)
 
-    mgpt-loss : ∀ {Γ} (sc : ℕ) (at-mask : E Γ (ar (sl ⊗ sl)))
-                (p : GPT-Params Γ (ah ⊗ hd) sl fd vs)
-                (doc-id tar-id : E Γ (ar (sl ⊗ vs))) → E Γ (ar [])
-    mgpt-loss {sl} {ah} {hd} {fd} {vs} {Γ} sc at-mask p doc-id tar-id =
-      Let logits := mgpt-forward {ah = ah} sc at-mask p doc-id In
-      Let losses := m-cross-entropy {sl} logits ⟨ tar-id ⟩ In
+    mgpt-loss : ∀ {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
+                (p : GPT-Params Γ vo ed sl fd) (wseq : E Γ (ar (sl ⊗ ed)))
+                (target : E Γ (ar (sl ⊗ vo))) → ah * hd ≈ ed → E Γ (ar [])
+    mgpt-loss {sl} {vo} {ed} {fd} {ah} {hd} sc mask p wseq target pr =
+      Let logits := mgpt-forward sc mask p wseq pr In
+      Let losses := m-cross-entropy {sl} logits ⟨ target ⟩ In
       Let loss := avg losses In loss
 
-    AH = ι 4 ; HD = ι 4 ; SL = ι 16 ; FD = ι 4 ; SC = 2 ; VS = ι 27
-    ED = AH ⊗ HD ;  ED' = ι 16
+    ED = ι 16 ; AH = ι 4 ; HD = ι 4 ; SL = ι 16 ; FD = ι 64 ; SC = 2 ; VO = ι 27
 
-    -- test : ∀ {Γ} → E Γ (ar ED') → E Γ (ar ED)
-    -- test x = Imap {AH} λ i → selb cons ⟨ x ⟩ i
+    PR : AH * HD ≈ ED
+    PR = cons
+
+    -- mgpt-forward-e : E _ _
+    -- mgpt-forward-e = Lcon (ar (SL ⊗ SL) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+    --               ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+    --               ar ((FD ⊗ ED) ⊗ ED) ∷ ar (ED ⊗ (FD ⊗ ED)) ∷ ar (VO ⊗ ED) ∷
+    --               ar (SL ⊗ ED) ∷ ar (SL ⊗ VO) ∷ []) (ar []) ε {!   !}
 
     mgpt-loss-e : E _ _
-    mgpt-loss-e = Lcon (ar (SL ⊗ SL) ∷ ar (VS ⊗ ED) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+    mgpt-loss-e = Lcon (ar (SL ⊗ SL) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
                   ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
-                  ar ((FD ⊗ ED) ⊗ ED) ∷ ar (ED ⊗ (FD ⊗ ED)) ∷ ar (VS ⊗ ED) ∷
-                  ar (SL ⊗ VS) ∷ ar (SL ⊗ VS) ∷ []) (ar []) ε
-      λ at-mask wte wpe wqry wkey wval wout wup wdown wvoc doc-id tar-id →
-        mgpt-loss {SL} {AH} {fd = FD} SC at-mask (record
-           { wte = wte
-           ; wpe = wpe
-           ; wqry = wqry
-           ; wkey = wkey
-           ; wval = wval
-           ; wout = wout
-           ; wup = wup
-           ; wdown = wdown
-           ; wvoc = wvoc
-           }) doc-id tar-id
+                  ar ((FD ⊗ ED) ⊗ ED) ∷ ar (ED ⊗ (FD ⊗ ED)) ∷ ar (VO ⊗ ED) ∷
+                  ar (SL ⊗ ED) ∷ ar (SL ⊗ VO) ∷ []) (ar []) ε
+      λ mask wpe wqry wkey wval wout wup wdown wvoc wseq target →
+        mgpt-loss {sl = SL} SC mask
+          (to-gptp wpe wqry wkey wval wout wup wdown wvoc) wseq target PR
 
-    -- mgpt-loss-e = Lcon (ar (VS ⊗ ED) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
-    --               ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
-    --               ar ((FD ⊗ ED) ⊗ ED) ∷ ar (ED ⊗ (FD ⊗ ED)) ∷ ar (VS ⊗ ED) ∷
-    --               ar (SL ⊗ VS) ∷ ar (SL ⊗ VS) ∷ []) (ar []) ε
+--     mgpt-loss-e : E _ _
+--     mgpt-loss-e = Lcon (ar (SL ⊗ SL) ∷ ar (VS ⊗ ED) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+--                   ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+--                   ar ((FD ⊗ ED) ⊗ ED) ∷ ar (ED ⊗ (FD ⊗ ED)) ∷ ar (VS ⊗ ED) ∷
+--                   ar (SL ⊗ VS) ∷ ar (SL ⊗ VS) ∷ []) (ar []) ε
+--       λ at-mask wte wpe wqry wkey wval wout wup wdown wvoc doc-id tar-id →
+--         mgpt-loss {SL} {AH} {fd = FD} SC at-mask (record
+--            { wte = wte
+--            ; wpe = wpe
+--            ; wqry = wqry
+--            ; wkey = wkey
+--            ; wval = wval
+--            ; wout = wout
+--            ; wup = wup
+--            ; wdown = wdown
+--            ; wvoc = wvoc
+--            }) doc-id tar-id
 
-    -- mgpt-loss {ah} {hd} {sl} {fd} {vs} {Γ} sc p doc-id target =
-    --   Let logits := mgpt-forward {ah} sc p doc-id In
-    --   Let losses := m-cross-entropy {sl} logits ⟨ target ⟩ In
-    --   Let loss := avg losses In loss
+--     mgpt-loss : ∀ {Γ} (sc : ℕ) (at-mask : E Γ (ar (sl ⊗ sl)))
+--                 (p : GPT-Params Γ (ah ⊗ hd) sl fd vs)
+--                 (doc-id tar-id : E Γ (ar (sl ⊗ vs))) → E Γ (ar [])
+--     mgpt-loss {sl} {ah} {hd} {fd} {vs} {Γ} sc at-mask p doc-id tar-id =
+--       Let logits := mgpt-forward {ah = ah} sc at-mask p doc-id In
+--       Let losses := m-cross-entropy {sl} logits ⟨ tar-id ⟩ In
+--       Let loss := avg losses In loss
 
-    -- mgpt-forward : ∀ {Γ} (sc : ℕ) (p : GPT-Params Γ (ah ⊗ hd) sl fd vs)
-    --                (doc-id : E Γ (ar (sl ⊗ vs))) → E Γ (ar (sl ⊗ vs))
-    -- mgpt-forward {ah = ah} {hd = hd} {sl = sl} {vs = vs} sc p doc-ix =
-    --   -- layer pass
-    --   Let lseq := mgpt-layer {ah} sc p (embed-doc p doc-ix) In
-    --   -- project into vocabulary
-    --   Let logits := m-linear {u = vs} {p = sl} ⟨ p .wvoc ⟩ lseq In logits
 
-    -- mgpt-layer : let ed = ah ⊗ hd in
-    --              ∀ {Γ} (sc : ℕ) (p : GPT-Params Γ ed sl fd vs)
+    -- mgpt-layer : ∀ {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
+    --              (p : GPT-Params Γ {ah} {hd} {fd} vo ed sl pr)
     --              (seq : E Γ (ar (sl ⊗ ed))) → E Γ (ar (sl ⊗ ed))
-    -- mgpt-layer {ah} {hd} {sl} {fd} sc p seq = let ed = ah ⊗ hd in
-    --   -- Multi headed attention block
-    --   Let nseq := rmsnorm seq In --TODO: multiple norms
+    -- mgpt-layer {sl} {ah} {hd} {fd} {vo} {ed} {pr} sc mask p seq =
+    --   Let nseq := m-rmsnorm {sl} seq In
     --   Let qs := m-linear {u = ed} {p = sl} ⟨ p .wqry ⟩ nseq In
     --   Let ks := m-linear {u = ed} {p = sl} ⟨ p .wkey ⟩ nseq In
-    --   Let vs := m-linear {u = ed} {p = sl} ⟨ p .wval ⟩ nseq In
-    --   Let attn := m-attention {sl} {ah} sc qs ks vs In
-    --   Let oseq := m-linear {u = ed} {p = sl} ⟨ p .wout ⟩ attn In
-    --   Let cseq := oseq ⊞ ⟨ seq ⟩ In
-    --   -- MLP block
-    --   Let fseq := mlp {fd = fd} {sl = sl} ⟨ p .wup ⟩ ⟨ p .wdown ⟩ cseq In fseq
-
-    -- attention : ∀ {Γ} (sc : ℕ) (qs ks vs : E Γ (ar (sl ⊗ hd)))
-    --           → E Γ (ar (sl ⊗ hd))
-    -- attention {sl} {hd} sc qs ks vs = matmul {r = hd}
-    --   (softmax (scaledown sc ⟨ matmul {u = sl} qs (iswap {sl} ks) ⟩)) vs
-
-    -- m-attention : let i = (sl ⊗ (ah ⊗ hd)) in
-    --               ∀ {Γ} (sc : ℕ) (qs ks vs : E Γ (ar i)) → E Γ (ar i)
-    -- m-attention {sl} {ah} {hd} sc qs ks vs =
-    --   Imap {sl} λ i → Imap {ah} λ j →
-    --     attention {[]} sc
-    --       (sel (sel ⟨ qs ⟩ i) j)
-    --       (sel (sel ⟨ ks ⟩ i) j)
-    --       (sel (sel ⟨ vs ⟩ i) j)
-
-    -- mlp : ∀ {Γ} (wup : E Γ (ar ((fd ⊗ ed) ⊗ ed))) (wdown : E Γ (ar (ed ⊗ (fd ⊗ ed))))
-    --       (seq : E Γ (ar (sl ⊗ ed))) → E Γ (ar (sl ⊗ ed))
-    -- mlp {fd} {ed} {sl} wup wdown seq =
-    --   Let nseq := rmsnorm seq In
-    --   Let useq := m-linear {u = fd ⊗ ed} ⟨ wup ⟩ nseq In
-    --   Let aseq := relu useq In
-    --   Let dseq := m-linear {u = ed} {p = sl} ⟨ wdown ⟩ aseq In
-    --   Let cseq := dseq ⊞ ⟨ seq ⟩ In cseq
-
-    -- -- TODO: add biases and masking
-    -- mgpt-layer : let ed = ah ⊗ hd in
-    --              ∀ {Γ} (sc : ℕ) (p : GPT-Params Γ ed sl fd vs)
-    --              (seq : E Γ (ar (sl ⊗ ed))) → E Γ (ar (sl ⊗ ed))
-    -- mgpt-layer {ah} {hd} {sl} {fd} sc p seq = let ed = ah ⊗ hd in
-    --   -- Multi headed attention block
-    --   Let nseq := rmsnorm seq In --TODO: multiple norms
-    --   Let qs := m-linear {u = ed} {p = sl} ⟨ p .wqry ⟩ nseq In
-    --   Let ks := m-linear {u = ed} {p = sl} ⟨ p .wkey ⟩ nseq In
-    --   Let vs := m-linear {u = ed} {p = sl} ⟨ p .wval ⟩ nseq In
-    --   Let attn := m-attention {sl} {ah} sc qs ks vs In
-    --   Let oseq := m-linear {u = ed} {p = sl} ⟨ p .wout ⟩ attn In
-    --   Let cseq := oseq ⊞ ⟨ seq ⟩ In
-    --   -- MLP block
-    --   Let fseq := mlp {fd = fd} {sl = sl} ⟨ p .wup ⟩ ⟨ p .wdown ⟩ cseq In fseq
-
-    -- mgpt-forward : ∀ {Γ} (sc : ℕ) (p : GPT-Params Γ (ah ⊗ hd) sl fd vs)
-    --                (doc-id : E Γ (ar (sl ⊗ vs))) → E Γ (ar (sl ⊗ vs))
-    -- mgpt-forward {ah = ah} {hd = hd} {sl = sl} {vs = vs} sc p doc-ix =
-    --   -- layer pass
-    --   Let lseq := mgpt-layer {ah} sc p (embed-doc p doc-ix) In
-    --   -- project into vocabulary
-    --   Let logits := m-linear {u = vs} {p = sl} ⟨ p .wvoc ⟩ lseq In logits
-
-    -- cross-entropy : ∀ {Γ} (logits target : E Γ (ar s)) → (E Γ (ar []))
-    -- cross-entropy {s} logits target =
-    --   ⊟ Sum (λ i → (sels ⟨ target ⟩ i) ⊠ ln (softmax (sels ⟨ logits ⟩ i)))
-
-    -- m-cross-entropy : ∀ {Γ} (logits target : E Γ (ar (s ⊗ p))) → (E Γ (ar s))
-    -- m-cross-entropy {s} {p} logits target =
-    --   Imaps λ i → cross-entropy {p} (sel ⟨ logits ⟩ i) (sel ⟨ target ⟩ i)
-
-    -- mgpt-loss : ∀ {Γ} → (sc : ℕ) (p : GPT-Params Γ (ah ⊗ hd) sl fd vs)
-    --             (doc-id target : E Γ (ar (sl ⊗ vs))) → E Γ (ar [])
-    -- mgpt-loss {ah} {hd} {sl} {fd} {vs} {Γ} sc p doc-id target =
-    --   Let logits := mgpt-forward {ah} sc p doc-id In
-    --   Let losses := m-cross-entropy {sl} logits ⟨ target ⟩ In
-    --   Let loss := avg losses In loss
-
-    -- AH = ι 4 ; HD = ι 4 ; SL = ι 16 ; FD = ι 4 ; SC = 2 ; VS = ι 27
-    -- ED = AH ⊗ HD
-
-    -- mgpt-loss-e : E _ _
-    -- mgpt-loss-e = Lcon (ar (VS ⊗ ED) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
-    --               ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
-    --               ar ((FD ⊗ ED) ⊗ ED) ∷ ar (ED ⊗ (FD ⊗ ED)) ∷ ar (VS ⊗ ED) ∷
-    --               ar (SL ⊗ VS) ∷ ar (SL ⊗ VS) ∷ []) (ar []) ε
-    --   λ wte wpe wqry wkey wval wout wup wdown wvoc doc-id target →
-    --     mgpt-loss {ah = AH} {hd = HD} {sl = SL} {fd = FD} SC (record
-    --        { wte = wte
-    --        ; wpe = wpe
-    --        ; wqry = wqry
-    --        ; wkey = wkey
-    --        ; wval = wval
-    --        ; wout = wout
-    --        ; wup = wup
-    --        ; wdown = wdown
-    --        ; wvoc = wvoc
-    --        }) doc-id target
-
-    -- -- cross-entropy : ∀ {Γ} (inp target : E Γ (ar s)) → (E Γ (ar []))
-    -- -- cross-entropy {s} inp target =
-    -- --   ⊟ (Sum (λ i → sels ⟨ target ⟩ i ⊠ ln (sels ⟨ softmax inp ⟩ i)))
-
-    -- embed-doc : (p : GPT-Params Γ ed sl fd vs) (doc-ix : E Γ (ix (sl ⊗ vs)))
-    --             → E Γ (ar (sl ⊗ ed))
-    -- embed-doc {Γ} {ed} {sl} {fd} {vs} p doc-ix =
-    --   Imap {sl} λ i → rmsnorm (sel ⟨ p .wpe ⟩ i ⊞ sel wtes ⟨ doc-ix ⟩) where
-    --   -- inefficient?
-    --   wtes = subst-ass-r {s = sl} (tile {p = sl} ⟨ p .wte ⟩)
-    -- mgpt-loss : ∀ {Γ} → (sc : ℕ) (p : GPT-Params Γ (ah ⊗ hd) sl fd vs)
-    --             (doc-ix target-ix : E Γ (ix (sl ⊗ vs))) → E Γ (ar [])
-    -- mgpt-loss {ah} {hd} {sl} {fd} {vs} {Γ} sc p doc-ix target-ix =
-    --   Let logits := mgpt-forward {ah} sc p doc-ix In {!   !}
-
-    -- gpt-layer : let ed = ah ⊗ hd in
-    --             (p : GPT-Params Γ ed sl fd vs)
-    --             (seq : E Γ (ar (sl ⊗ ed))) (sc : ℕ) → E Γ (ar (sl ⊗ ed))
-    -- gpt-layer {ah} {hd} {Γ} {sl} {fd} {vs} p seq sc = let ed = ah ⊗ hd in
-    --   -- Multi headed attention block
-    --   Let nseq := rmsnorm seq In
-    --   Let qs := m-linear {u = ed} {p = sl} ⟨ p .wqry ⟩ nseq In
-    --   Let ks := m-linear {u = ed} {p = sl} ⟨ p .wkey ⟩ nseq In
-    --   Let vs := m-linear {u = ed} {p = sl} ⟨ p .wval ⟩ nseq In
-    --   Let attn1 := m-attention {ah} {sl} {hd} sc
-    --     (iswap3 {sl} {ah} qs) (iswap3 {sl} {ah} ks) (iswap3 {sl} {ah} vs) In
-    --   Let attn := iswap3 {ah} {sl} attn1 In
-    --   Let oseq := m-linear {u = ed} {p = sl} ⟨ p .wout ⟩ attn In
-    --   Let cseq := oseq ⊞ ⟨ seq ⟩ In
-    --   -- MLP block
-    --   Let out := mlp {fd = fd} {sl = sl} ⟨ p .wup ⟩ ⟨ p .wdown ⟩ cseq In out
-
-    -- gpt-layer : let ed = ah ⊗ hd in
-    --             (p : GPT-Params Γ ed sl fd vs)
-    --             (seq : E Γ (ar (sl ⊗ ed))) (sc : ℕ) → E Γ (ar ed)
-    -- gpt-layer {ah} {hd} {Γ} {sl} {fd} {vs} p seq sc = let ed = ah ⊗ hd in
-    --   -- Multi headed attention block
-    --   Let nseq := rmsnorm seq In
-    --   Let qs := m-linear {u = ed} {s = ed} {p = sl} ⟨ p .wqry ⟩ nseq In
-    --   Let ks := m-linear {u = ed} {s = ed} {p = sl} ⟨ p .wkey ⟩ nseq In
-    --   Let vs := m-linear {u = ed} {s = ed} {p = sl} ⟨ p .wval ⟩ nseq In {!   !}
-
-    -- embed-seq : ∀ {Γ ed sl fd vs}
-    --             (p : GPT-Params Γ ed sl fd vs)
-    --             -- is this equivalent to ix sl ⊗ vs?
-    --             (doc-ix : E (Γ ▹ ix sl) (ix vs))
-    --             → E Γ (ar (sl ⊗ ed))
-    -- embed-seq {sl = sl} p doc-ix =
-    --   -- valid?
-    --   Imap {sl} λ i → rmsnorm (sel ⟨ p .wpe ⟩ i ⊞ sel ⟨ p .wte ⟩ doc-ix)
-
-    -- embed-tok : ∀ {Γ ed sl fd vs}
-    --             (tok-ix : E Γ (ix vs)) (pos-ix : E Γ (ix sl))
-    --             (p : GPT-Params Γ ed sl fd vs)
-    --             → E Γ (ar ed)
-    -- embed-tok tok-ix pos-ix p =
-    --   rmsnorm ((sel (p .wte) tok-ix) ⊞ sel (p .wpe) pos-ix)
-
-    -- embed-seq : ∀ {Γ ed sl fd vs}
-    --             (p : GPT-Params Γ ed sl fd vs) (doc-ix : E (Γ ▹ ix sl) (ix vs))
-    --             → E Γ (ar (sl ⊗ ed))
-    -- embed-seq {Γ} {ed} {sl} {fd} {vs} p doc-ix =
-    --   Imap {sl} λ i → embed-tok i {!   !} {!   !}
-
-
-    -- gpt-layer : ∀ {Γ ah hd sl fd vs} → let i = ah ⊗ hd in
-    --             (p : GPT-Params Γ ah hd sl fd vs) (tok_ix : E Γ (ix vs))
-    --             (pos_ix : E Γ (ix sl)) (sc : ℕ)
-    --             (keys vals : E Γ (ar (sl ⊗ ed)))
-    --             → E Γ (ar ed) × (E Γ (ar (sl ⊗ ed)) × E Γ (ar (sl ⊗ ed)))
-
-    -- update keys and values
-    -- We assume olds starts as zero
-    -- update : ∀ {Γ ed sl} →
-    --          (pos_ix : E Γ (ix sl)) (olds : E Γ (ar (sl ⊗ ed)))
-    --          (new : E Γ (ar ed)) → E Γ (ar (sl ⊗ ed))
-    -- update pos_ix olds new = olds ⊞ Imap λ i → zero-but ⟨ pos_ix ⟩ i ⟨ new ⟩
-
-    -- gpt-layer : ∀ {Γ ah hd sl fd vs} → let ed = ah ⊗ hd in
-    --             (p : GPT-Params Γ ah hd sl fd vs) (tok_ix : E Γ (ix vs))
-    --             (pos_ix : E Γ (ix sl)) (sc : ℕ)
-    --             (keys vals : E Γ (ar (sl ⊗ ed)))
-    --             → E Γ (ar ed) × (E Γ (ar (sl ⊗ ed)) × E Γ (ar (sl ⊗ ed)))
-    -- gpt-layer {ah = ah} {hd = hd} p tok_ix pos_ix sc keys vals =
-    --   logits , update pos_ix keys key , update pos_ix vals key where
-
-    --   emb = embed tok_ix pos_ix (p .wte) (p .wpe)
-
-    --   nemb = rmsnorm emb
-
-    --   qry = linear {u = ed p} (p .wqry) nemb
-    --   key = linear {u = ed p} (p .wkey) nemb
-    --   val = linear {u = ed p} (p .wval) nemb
-
-    --   logits = {!   !}
-
-
-
-    -- gpt-layer : ∀ {Γ ah hd sl fd vs} → let ed = ah ⊗ hd in
-    --             (p : GPT-Params Γ ah hd sl fd vs) (tok_ix : E Γ (ix vs))
-    --             (pos_ix : E Γ (ix sl)) (sc : ℕ)
-    --             → E Γ (ar ed)
-    -- gpt-layer = {!   !}
-    -- TODO : add biases, batch size and masking
-    -- gpt-layer : ∀ {Γ ah hd sl fd vs} →
-    --             let ed = ah ⊗ hd in
-    --             (inp : E Γ (ar ed)) (p : GPT-Params Γ ah hd sl fd vs)
-    --             (keys vals : E Γ (ar ed))
-    --              → E Γ (ar ed)
-    -- gpt-layer = {!   !}
-    -- gpt-layer {Γ} {ah} {hd} {sl} {fd} inp p keys vals =
-    --   Let ninp := rmsnorm inp In
-    --   Let q := linear ⟨ p .wqry ⟩ ninp In
-    --   Let k := linear ⟨ p .wkey ⟩ ninp In
-    --   Let v := linear ⟨ p .wval ⟩ ninp In {!   !}
-
-    -- attention : ∀ {Γ u s r t} → E Γ (ar (u ⊗ s)) → E Γ (ar (r ⊗ s))
-    --           → E Γ (ar (r ⊗ t)) → ℕ → E Γ (ar (u ⊗ t))
-    -- attention {Γ} {u} {s} {r} {t} q k v sc =
-    --   matmul {u}
-    --     (softmax (scaledown sc ⟨ matmul {u} {s} q (iswap {r} k) ⟩)) ⟨ v ⟩
-
-    -- iswap3 : ∀ {Γ} → E Γ (ar (p ⊗ (s ⊗ u))) → E Γ (ar (u ⊗ (p ⊗ s)))
-    -- iswap3 {p} {s} {u} x = iswaps {(p ⊗ s)} {u} (subst-ass-r {s = p} x)
-
-    -- -- Is this correct?
-    -- m-attention : let i = (ah ⊗ (sl ⊗ hd)) in
-    --               (sc : ℕ) (qs ks vs : E Γ (ar i)) → E Γ (ar i)
-    -- m-attention {ah} {sl} {hd} {Γ} sc qs ks vs =
-    --   Imap {ah} λ i →
-    --     attention {sl} sc (sel ⟨ qs ⟩ i) (sel ⟨ ks ⟩ i) (sel ⟨ vs ⟩ i)
-
-    -- m-attention : let i = (sl ⊗ (ah ⊗ hd)) in
-    --               (qs ks vs : E Γ (ar i)) (sc : ℕ) → E Γ (ar i)
-    -- m-attention {sattn3l} {ah} {hd} {Γ} qs ks vs sc =
-    --   iswap3 {ah} {sl} (
-    --     Imap {ah} λ i → attention {sl} sc
-    --       (sel (iswap3 {sl} {ah} ⟨ qs ⟩) i)
-    --       (sel (iswap3 {sl} {ah} ⟨ qs ⟩) i)
-    --       (sel (iswap3 {sl} {ah} ⟨ qs ⟩) i))
-
-    -- m-attention : let i = (sl ⊗ (ah ⊗ hd)) in
-    --               (qs ks vs : E Γ (ar i)) (sc : ℕ) → E Γ (ar i)
-    -- m-attention {sl} {ah} {hd} {Γ} qs ks vs sc = let
-    --   qs' = iswap3 {sl} {hd} {ah} (iswap {sl} {ah} qs)
-    --   ks' = iswap3 {sl} {hd} {ah} (iswap {sl} {ah} ks)
-    --   vs' = iswap3 {sl} {hd} {ah} (iswap {sl} {ah} vs)
-
-    --   in iswap3 {ah} {hd} {sl} (iswap {ah} {sl} (
-    --     Imap {ah} λ i → attention {sl} sc (sel ⟨ qs' ⟩ i) (sel ⟨ ks' ⟩ i) (sel ⟨ vs' ⟩ i)))
-
-      -- (Imap {ah} λ i →
-      --     attention {sl} {hd} sc (sel ⟨ qs' ⟩ i) (sel ⟨ ks' ⟩ i) (sel ⟨ vs' ⟩ i))
-
-        -- ( iswap {ah} {sl} (
-        -- Imap {ah} λ i → attention {sl} sc (sel {! swa  !} i) {!   !} {!   !}))
-
-      -- subst-ass-l {sl} {hd} (iswaps {ah} (
-      --   Imap {ah} λ i → attention {sl}
-      --     (sel (iswap3 {sl} {hd} ⟨ qs ⟩) i)
-      --     (sel (iswap3 {sl} {hd} ⟨ ks ⟩) i)
-      --     (sel (iswap3 {sl} {hd} ⟨ vs ⟩) i) sc))
-
-      -- m-attention : ∀ {h u s r t Γ} → E Γ (ar (h ⊗ (u ⊗ s)))
-    --           → E Γ (ar (h ⊗ (r ⊗ s))) → E Γ (ar (h ⊗ (r ⊗ t)))
-    --           → ℕ
-    --           → E Γ (ar (h ⊗ (u ⊗ t)))
-    -- m-attention {h} {u} q k v sc =
-    --   Imap {h} (λ i →
-    --     attention {u = u} (sel ⟨ q ⟩ i) (sel ⟨ k ⟩ i) (sel ⟨ v ⟩ i) sc)
-
-    -- module Microgpt where
-
-  --   linear : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar s) → E Γ (ar u)
-  --   linear {u} {s} w x =
-  --     Imaps {u} λ i → Sum {s} λ j → sels (sel ⟨ w ⟩ i) j ⊠ sels ⟨ x ⟩ j
-
-  --   matmul : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ r)) → E Γ (ar (u ⊗ r))
-  --   matmul {u} {s} {r} w x = Imap {u} λ i →
-  --     Imaps (λ j → sels (linear ⟨ w ⟩ (Imaps λ k → sels (sel ⟨ x ⟩ k) j) ) i)
-
-  --   -- Is this correct?
-  --   softmax : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
-  --   softmax {s = s} x =
-  --       Imaps (λ i → (𝕖^ (sels ⟨ x ⟩ i)) // Sum (λ j → 𝕖^ sels ⟨ x ⟩ j))
-
-  --   -- add a small number to avoid dividing by zero?
-  --   rmsnorm : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
-  --   rmsnorm {s = s} x =
-  --     x ⊠ 𝟙/ (sqrt (scaledown (len s) (sum {s = s} (⟨ x ⟩ ⊠ ⟨ x ⟩))))
-
-  --   swap : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ u))
-  --   swap {u} {s} x = Imap {s} λ i → Imaps λ j → sels (sel ⟨ x ⟩ j) i
-
-  --   max : ∀ {Γ} → E Γ (ar s) → E Γ (ar s) → E Γ (ar s)
-  --   max x y = x ⊞ relu (y ⊟ x)
-
-  --   {- I cheat by passing the scale sc as a parameter. It should be such that
-  --     sqrt (size v) =  sc
-  --     For microgpt sc = 16.
-  --     Unlike microgpt, WE DO NOT MASK
-  --     TODO : figure out how to mask
-  --   -}
-  --   attention : ∀ {u s r t Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (r ⊗ s))
-  --             → E Γ (ar (r ⊗ t)) → ℕ → E Γ (ar (u ⊗ t))
-  --   attention {u} {s} {r} {t} q k v sc =
-  --     matmul {u}
-  --       (softmax (scaledown sc ⟨ matmul {u} {s} q (swap {r} k) ⟩)) ⟨ v ⟩
-
-  --   -- attention : ∀ {u s r t Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (r ⊗ s))
-  --   --           → E Γ (ar (r ⊗ t)) → ℕ → E Γ (ar (u ⊗ t))
-  --   -- attention {u} {s} {r} {t} q k v sc =
-  --   --   Let l₁ := matmul {u} {s} q (swap {r} k) In
-  --   --   Let l := scaledown sc l₁ In
-  --   --   Let w₁ := softmax l In
-  --   --   Let w := matmul {u} w₁ ⟨ v ⟩ In w
-
-  --   mattention : ∀ {h u s r t Γ} → E Γ (ar (h ⊗ (u ⊗ s)))
-  --             → E Γ (ar (h ⊗ (r ⊗ s))) → E Γ (ar (h ⊗ (r ⊗ t)))
-  --             → ℕ
-  --             → E Γ (ar (h ⊗ (u ⊗ t)))
-  --   mattention {h} {u} q k v sc =
-  --     Imap {h} (λ i →
-  --       attention {u} (sel ⟨ q ⟩ i) (sel ⟨ k ⟩ i) (sel ⟨ v ⟩ i) sc)
-
-  --   -- TODO: generalize to add biases and batch size
-  --   -- TODO: add masking
-  --   gpt-layer : ∀ {Γ ah hd sl fd} →
-  --                let i = ah ⊗ (hd ⊗ sl) in
-  --                (inp : E Γ (ar i)) (wq wk wv wo : E Γ (ar (i ⊗ i)))
-  --                (wf₁ : E Γ (ar ((fd ⊗ i) ⊗ i)))
-  --                (wf₂ : E Γ (ar (i ⊗ (fd ⊗ i))))
-  --                (sc : ℕ)
-  --                → E Γ (ar i)
-  --   gpt-layer {Γ} {ah} {hd} {sl} {fd} inp wq wk wv wo wf₁ wf₂ sc =
-  --               Let ninp := rmsnorm inp In
-  --               Let q := linear ⟨ wq ⟩ ninp In
-  --               Let k := linear ⟨ wk ⟩ ninp In
-  --               Let v := linear ⟨ wv ⟩ ninp In
-  --               Let c₁ :=
-  --                 mattention {ah} {hd} {sl} {hd}
-  --                 q k v sc In
-  --               Let s₁₁ := linear ⟨ wo ⟩ c₁ In
-  --               Let s₁ := s₁₁ ⊞ ⟨ inp ⟩ In
-  --               Let s₂₁ := rmsnorm s₁ In
-  --               Let s₂₂ := linear ⟨ wf₁ ⟩ s₂₁ In
-  --               Let s₂ := relu s₂₂ In
-  --               Let c₃ := linear ⟨ wf₂ ⟩ s₂ In
-  --               Let r := c₃ ⊞ s₁ In r
-
-  --   avg : ∀ {Γ} → E Γ (ar s) → E Γ (ar [])
-  --   avg {s} x = scaledown (len s) (Sum λ i → sels ⟨ x ⟩ i)
-
-  --   cross-entropy : ∀ {Γ} (inp target : E Γ (ar s)) → (E Γ (ar []))
-  --   cross-entropy {s} inp target =
-  --     ⊟ (Sum (λ i → sels ⟨ target ⟩ i ⊠ ln (sels ⟨ softmax inp ⟩ i)))
-
-  --   ED = 16 ; AH = 4 ; HD = ED ℕ./ AH ; SL = 16 ; FD = 4 ; SC = 2 ; VS = 27
-
-  --   W = (ι HD) ⊗ (ι SL)
-  --   I = (ι AH) ⊗ W
-
-  --   -- we calculate sequences in parallel (?)
-  --   microgpt : ∀ {Γ} →
-  --                (inp : E Γ (ar I)) (wq wk wv wo : E Γ (ar (I ⊗ I)))
-  --                (wf₁ : E Γ (ar ((ι FD ⊗ I) ⊗ I)))
-  --                (wf₂ : E Γ (ar (I ⊗ (ι FD ⊗ I))))
-  --                (sc : ℕ) (wvo : E Γ (ar (ι VS ⊗ I)))
-  --                → E Γ (ar (ι VS))
-  --   microgpt inp wq wk wv wo wf₁ wf₂ sc wvo =
-  --     Let s := gpt-layer {ah = ι AH } {hd = ι HD} {fd = ι FD}
-  --       inp wq wk wv wo wf₁ wf₂ SC In
-  --     -- normalize?
-  --     Let r := matmul {ι VS} ⟨ wvo ⟩ s In r
-
-  --   microgpt-token-loss : ∀ {Γ} →
-  --                (inp : E Γ (ar I)) (wq wk wv wo : E Γ (ar (I ⊗ I)))
-  --                (wf₁ : E Γ (ar ((ι FD ⊗ I) ⊗ I)))
-  --                (wf₂ : E Γ (ar (I ⊗ (ι FD ⊗ I))))
-  --                (sc : ℕ) (wvo : E Γ (ar (ι VS ⊗ I)))
-  --                (target : E Γ (ar (ι VS))) → E Γ (ar [])
-  --   microgpt-token-loss inp wq wk wv wo wf₁ wf₂ sc wvo target =
-  --     Let probs := microgpt inp wq wk wv wo wf₁ wf₂ sc wvo In
-  --     Let loss := cross-entropy probs ⟨ target ⟩ In loss
-
-    -- microgpt-loss : ∀ {Γ} →
-    --              (inp : E Γ (ar I)) (wq wk wv wo : E Γ (ar (I ⊗ I)))
-    --              (wf₁ : E Γ (ar ((ι FD ⊗ I) ⊗ I)))
-    --              (wf₂ : E Γ (ar (I ⊗ (ι FD ⊗ I))))
-    --              (sc : ℕ) (wvo : E Γ (ar (ι VS ⊗ I)))
-    --              (target_ix : E Γ (ix (ι VS))) → E Γ (ar [])
-    -- microgpt-loss inp wq wk wv wo wf₁ wf₂ sc wvo target_ix =
-    --   Let probs := microgpt inp wq wk wv wo wf₁ wf₂ sc wvo In
-    --   Let loss := cross-entropy probs ⟨ target_ix ⟩ In loss
-
-    -- microgpt : E _ _
-    -- microgpt =  Lcon (  ar I
-    --                   ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I)
-    --                   ∷ ar ((ι FD ⊗ I) ⊗ I) ∷ ar (I ⊗ (ι FD ⊗ I))
-    --                   ∷ ar ((ι VS) ⊗ (ι AH ⊗ ι HD)) ∷ [])
-    --                 (ar O) ε
-    --             λ inp wq wk wv wo wf₁ wf₂ wvo →
-    --             Let s := gpt-layer {ah = ι AH } {hd = ι HD} {fd = ι FD} inp wq wk wv wo wf₁ wf₂ SC In
-    --             -- normalize?
-    --             Let c := matmul {ι VS} {ι AH ⊗ ι HD} wvo s In
-    --             Let r := softmax c In r
-
-    -- microgpt : E _ _
-    -- microgpt =  Lcon (  ar I
-    --                   ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I)
-    --                   ∷ ar ((FD ∷ [] ⊗ I) ⊗ I) ∷ ar (I ⊗ (FD ∷ [] ⊗ I))
-    --                   ∷ [])
-    --                 (ar I) ε
-    --             λ inp wq wk wv wo wf₁ wf₂ →
-    --             Let ninp := rmsnorm inp In
-    --             Let q := linear wq ninp In
-    --             Let k := linear wk ninp In
-    --             Let v := linear wv ninp In
-    --             Let c₁ :=
-    --               mattention {AH ∷ []} {HD ∷ []} {SL ∷ []} {HD ∷ []}
-    --               q k v SC In
-    --             Let s₁₁ := linear wo c₁ In
-    --             Let s₁ := s₁₁ ⊞ inp In
-    --             Let s₂₁ := rmsnorm s₁ In
-    --             Let s₂₂ := linear wf₁ s₂₁ In
-    --             Let s₂ := relu s₂₂ In
-    --             Let c₃ := linear wf₂ s₂ In
-    -- --             Let r := c₃ ⊞ s₁ In r
-
-    -- attention-e : E _ _
-    -- attention-e =
-    --   Lcon (ar W ∷ ar W ∷ ar W ∷ []) (ar W) ε
-    --   λ q k v →
-    --     attention {HD ∷ []} {SL ∷ []} {HD ∷ []} q k v SC
-
-    -- triangular matrix experiment
-    -- id : ∀ {Γ} a → E Γ (ar (a ⊗ a))
-    -- id a = Imap {a} λ i → Imaps λ j → zero-but i j one
-
-    -- ex-id : ∀ {Γ} → E Γ (ar (ι 3 ⊗ ι 5))
-    -- ex-id = Imap {ι 3} λ i → E.backslide {p = ι 2} i (one {s = ι 3}) cons cons
-
-    -- c0=1 : ∀ {Γ} → E Γ (ar (ι 3 ⊗ ι 3))
-    -- c0=1 = Imap {ι 3} λ i → slide {p = ι 2} i cons (sel (ex-id) i) cons
-
-    -- r0=1 : ∀ {Γ} → E Γ (ar (ι 3 ⊗ ι 3))
-    -- r0=1 = swap {u = ι 3} c0=1
-
-    -- c1-2=1 : ∀ {Γ} → E Γ (ar (ι 3 ⊗ ι 3))
-    -- c1-2=1 = one ⊟ c0=1
-
-    -- r1-2=1 : ∀ {Γ} → E Γ (ar (ι 3 ⊗ ι 3))
-    -- r1-2=1 = swap {u = ι 3} c1-2=1
-
-    -- v-i : ∀ {Γ} → E Γ (ar (ι 3))
-    -- v-i = scaledown 3 (linear r0=1 one)
-
-    -- v1-2=1 : ∀ {Γ} → E Γ (ar (ι 3))
-    -- v1-2=1 = one ⊟ v-i
-
-    -- tile-r : ∀ {Γ s} → E Γ (ar s) → E Γ (ar (s ⊗ s))
-    -- tile-r {s = s} x = Imap {s} λ i → ⟨ x ⟩
-
-    -- triangular3 : ∀ {Γ} → E Γ (ar (ι 3 ⊗ ι 3))
-    -- triangular3 = c0=1 ⊞ {!   !}
-
-module LangTest where
-  open import Ar
-  open import Data.List as L using (List; []; _∷_)
-  open import Function
-  open Syntax
-
-  nested-inc : E (Γ ▹ ar (s ⊗ p) ▹ ar p) (ar (s ⊗ p))
-  nested-inc {s = s} = imap {s = s} ((var v₁) ⊞ sel (var v₂) (var v₀))
-
-  -- Test convenience
-  _ : Prefix (Γ ▹ ar []) (Γ ▹ ar [] ▹ (ar (5 ∷ [])))
-  _ = it
-
-  _ : E Γ (ar (5 ∷ 5 ∷ []))
-  _ = Imaps λ iv → sels zero iv
-
-  _ : E Γ (ar (5 ∷ 5 ∷ []))
-  _ = Let x := zero In x ⊞ x
-
-  _ : E _ _
-  _ = Lcon (ar (5 ∷ []) ∷ ar [] ∷ []) (ar (5 ∷ [])) ε
-      λ a x → Let b := a ⊞ a In
-              Let c := (Imaps λ i → sel a i ⊠ x) In
-              c ⊞ c
-
--- automatically from other frameworks into ours?
+    --   Let vs := m-linear {u = ed} {p = sl} ⟨ p .wval ⟩ nseq In {!   !}
+
+--     mgpt-layer : let ed = ah ⊗ hd in
+--                  ∀ {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
+--                  (p : GPT-Params Γ ed sl fd vs) (seq : E Γ (ar (sl ⊗ ed)))
+--                  → E Γ (ar (sl ⊗ ed))
+--     mgpt-layer {ah} {hd} {sl} {fd} {vs} {Γ} sc mask p seq = let ed = ah ⊗ hd in
+--       Let nseq := m-rmsnorm {sl} seq In
+--       Let qs := m-linear {u = ed} {p = sl} ⟨ p .wqry ⟩ nseq In
+--       Let ks := m-linear {u = ed} {p = sl} ⟨ p .wkey ⟩ nseq In
+--       Let vs := m-linear {u = ed} {p = sl} ⟨ p .wval ⟩ nseq In
+--       Let attn := mh-attention {sl} {ah} {hd} sc ⟨ mask ⟩ qs ks vs In
+--       Let oseq := m-linear {u = ed} {p = sl} ⟨ p .wout ⟩ attn In
+--       Let cseq := oseq ⊞ ⟨ seq ⟩ In
+--       Let fseq := mlp {fd = fd} {sl = sl} ⟨ p .wup ⟩ ⟨ p .wdown ⟩ cseq In fseq
+
+--     embed-doc : ∀ {Γ} (p : GPT-Params Γ ed sl fd vs)
+--                 (doc-id : E Γ (ar (sl ⊗ vs))) → E Γ (ar (sl ⊗ ed))
+--     embed-doc {ed} {sl} {fd} {vs} {Γ} p doc-id =
+--       matmul {sl} doc-id ⟨ p .wte ⟩ ⊞  (p .wpe)
+
+--     mgpt-forward : ∀ {Γ} (sc : ℕ) (att-mask : E Γ (ar (sl ⊗ sl)))
+--                    (p : GPT-Params Γ (ah ⊗ hd) sl fd vs)
+--                    (doc-id : E Γ (ar (sl ⊗ vs))) → E Γ (ar (sl ⊗ vs))
+--     mgpt-forward {sl} {ah} {hd} {fd} {vs} sc att-mask p doc-id =
+--       -- Embedding
+--       Let seq := embed-doc p doc-id In
+--       -- layer pass
+--       Let lseq := mgpt-layer {ah} sc ⟨ att-mask ⟩ (wkgptp p) seq In
+--       -- project into vocabulary
+--       Let logits := m-linear {u = vs} {p = sl} ⟨ p .wvoc ⟩ lseq In logits
+
+--     cross-entropy : ∀ {Γ} (logits target : E Γ (ar s)) → (E Γ (ar []))
+--     cross-entropy {s} logits target =
+--       ⊟ Sum (λ i → (sels ⟨ target ⟩ i) ⊠ ln (softmax (sels ⟨ logits ⟩ i)))
+
+--     m-cross-entropy : ∀ {Γ} (logits target : E Γ (ar (s ⊗ p))) → (E Γ (ar s))
+--     m-cross-entropy {s} {p} logits target =
+--       Imaps λ i → cross-entropy {p} (sel ⟨ logits ⟩ i) (sel ⟨ target ⟩ i)
+
+--     mgpt-loss : ∀ {Γ} (sc : ℕ) (at-mask : E Γ (ar (sl ⊗ sl)))
+--                 (p : GPT-Params Γ (ah ⊗ hd) sl fd vs)
+--                 (doc-id tar-id : E Γ (ar (sl ⊗ vs))) → E Γ (ar [])
+--     mgpt-loss {sl} {ah} {hd} {fd} {vs} {Γ} sc at-mask p doc-id tar-id =
+--       Let logits := mgpt-forward {ah = ah} sc at-mask p doc-id In
+--       Let losses := m-cross-entropy {sl} logits ⟨ tar-id ⟩ In
+--       Let loss := avg losses In loss
+
+--     AH = ι 4 ; HD = ι 4 ; SL = ι 16 ; FD = ι 4 ; SC = 2 ; VS = ι 27
+--     ED = AH ⊗ HD ;  ED' = ι 16
+
+--     -- test : ∀ {Γ} → E Γ (ar ED') → E Γ (ar ED)
+--     -- test x = Imap {AH} λ i → selb cons ⟨ x ⟩ i
+
+--     mgpt-loss-e : E _ _
+--     mgpt-loss-e = Lcon (ar (SL ⊗ SL) ∷ ar (VS ⊗ ED) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+--                   ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+--                   ar ((FD ⊗ ED) ⊗ ED) ∷ ar (ED ⊗ (FD ⊗ ED)) ∷ ar (VS ⊗ ED) ∷
+--                   ar (SL ⊗ VS) ∷ ar (SL ⊗ VS) ∷ []) (ar []) ε
+--       λ at-mask wte wpe wqry wkey wval wout wup wdown wvoc doc-id tar-id →
+--         mgpt-loss {SL} {AH} {fd = FD} SC at-mask (record
+--            { wte = wte
+--            ; wpe = wpe
+--            ; wqry = wqry
+--            ; wkey = wkey
+--            ; wval = wval
+--            ; wout = wout
+--            ; wup = wup
+--            ; wdown = wdown
+--            ; wvoc = wvoc
+--            }) doc-id tar-id
+
+--     -- mgpt-loss-e = Lcon (ar (VS ⊗ ED) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+--     --               ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+--     --               ar ((FD ⊗ ED) ⊗ ED) ∷ ar (ED ⊗ (FD ⊗ ED)) ∷ ar (VS ⊗ ED) ∷
+--     --               ar (SL ⊗ VS) ∷ ar (SL ⊗ VS) ∷ []) (ar []) ε
+
+--     -- mgpt-loss {ah} {hd} {sl} {fd} {vs} {Γ} sc p doc-id target =
+--     --   Let logits := mgpt-forward {ah} sc p doc-id In
+--     --   Let losses := m-cross-entropy {sl} logits ⟨ target ⟩ In
+--     --   Let loss := avg losses In loss
+
+--     -- mgpt-forward : ∀ {Γ} (sc : ℕ) (p : GPT-Params Γ (ah ⊗ hd) sl fd vs)
+--     --                (doc-id : E Γ (ar (sl ⊗ vs))) → E Γ (ar (sl ⊗ vs))
+--     -- mgpt-forward {ah = ah} {hd = hd} {sl = sl} {vs = vs} sc p doc-ix =
+--     --   -- layer pass
+--     --   Let lseq := mgpt-layer {ah} sc p (embed-doc p doc-ix) In
+--     --   -- project into vocabulary
+--     --   Let logits := m-linear {u = vs} {p = sl} ⟨ p .wvoc ⟩ lseq In logits
+
+--     -- mgpt-layer : let ed = ah ⊗ hd in
+--     --              ∀ {Γ} (sc : ℕ) (p : GPT-Params Γ ed sl fd vs)
+--     --              (seq : E Γ (ar (sl ⊗ ed))) → E Γ (ar (sl ⊗ ed))
+--     -- mgpt-layer {ah} {hd} {sl} {fd} sc p seq = let ed = ah ⊗ hd in
+--     --   -- Multi headed attention block
+--     --   Let nseq := rmsnorm seq In --TODO: multiple norms
+--     --   Let qs := m-linear {u = ed} {p = sl} ⟨ p .wqry ⟩ nseq In
+--     --   Let ks := m-linear {u = ed} {p = sl} ⟨ p .wkey ⟩ nseq In
+--     --   Let vs := m-linear {u = ed} {p = sl} ⟨ p .wval ⟩ nseq In
+--     --   Let attn := m-attention {sl} {ah} sc qs ks vs In
+--     --   Let oseq := m-linear {u = ed} {p = sl} ⟨ p .wout ⟩ attn In
+--     --   Let cseq := oseq ⊞ ⟨ seq ⟩ In
+--     --   -- MLP block
+--     --   Let fseq := mlp {fd = fd} {sl = sl} ⟨ p .wup ⟩ ⟨ p .wdown ⟩ cseq In fseq
+
+--     -- attention : ∀ {Γ} (sc : ℕ) (qs ks vs : E Γ (ar (sl ⊗ hd)))
+--     --           → E Γ (ar (sl ⊗ hd))
+--     -- attention {sl} {hd} sc qs ks vs = matmul {r = hd}
+--     --   (softmax (scaledown sc ⟨ matmul {u = sl} qs (iswap {sl} ks) ⟩)) vs
+
+--     -- m-attention : let i = (sl ⊗ (ah ⊗ hd)) in
+--     --               ∀ {Γ} (sc : ℕ) (qs ks vs : E Γ (ar i)) → E Γ (ar i)
+--     -- m-attention {sl} {ah} {hd} sc qs ks vs =
+--     --   Imap {sl} λ i → Imap {ah} λ j →
+--     --     attention {[]} sc
+--     --       (sel (sel ⟨ qs ⟩ i) j)
+--     --       (sel (sel ⟨ ks ⟩ i) j)
+--     --       (sel (sel ⟨ vs ⟩ i) j)
+
+--     -- mlp : ∀ {Γ} (wup : E Γ (ar ((fd ⊗ ed) ⊗ ed))) (wdown : E Γ (ar (ed ⊗ (fd ⊗ ed))))
+--     --       (seq : E Γ (ar (sl ⊗ ed))) → E Γ (ar (sl ⊗ ed))
+--     -- mlp {fd} {ed} {sl} wup wdown seq =
+--     --   Let nseq := rmsnorm seq In
+--     --   Let useq := m-linear {u = fd ⊗ ed} ⟨ wup ⟩ nseq In
+--     --   Let aseq := relu useq In
+--     --   Let dseq := m-linear {u = ed} {p = sl} ⟨ wdown ⟩ aseq In
+--     --   Let cseq := dseq ⊞ ⟨ seq ⟩ In cseq
+
+--     -- -- TODO: add biases and masking
+--     -- mgpt-layer : let ed = ah ⊗ hd in
+--     --              ∀ {Γ} (sc : ℕ) (p : GPT-Params Γ ed sl fd vs)
+--     --              (seq : E Γ (ar (sl ⊗ ed))) → E Γ (ar (sl ⊗ ed))
+--     -- mgpt-layer {ah} {hd} {sl} {fd} sc p seq = let ed = ah ⊗ hd in
+--     --   -- Multi headed attention block
+--     --   Let nseq := rmsnorm seq In --TODO: multiple norms
+--     --   Let qs := m-linear {u = ed} {p = sl} ⟨ p .wqry ⟩ nseq In
+--     --   Let ks := m-linear {u = ed} {p = sl} ⟨ p .wkey ⟩ nseq In
+--     --   Let vs := m-linear {u = ed} {p = sl} ⟨ p .wval ⟩ nseq In
+--     --   Let attn := m-attention {sl} {ah} sc qs ks vs In
+--     --   Let oseq := m-linear {u = ed} {p = sl} ⟨ p .wout ⟩ attn In
+--     --   Let cseq := oseq ⊞ ⟨ seq ⟩ In
+--     --   -- MLP block
+--     --   Let fseq := mlp {fd = fd} {sl = sl} ⟨ p .wup ⟩ ⟨ p .wdown ⟩ cseq In fseq
+
+--     -- mgpt-forward : ∀ {Γ} (sc : ℕ) (p : GPT-Params Γ (ah ⊗ hd) sl fd vs)
+--     --                (doc-id : E Γ (ar (sl ⊗ vs))) → E Γ (ar (sl ⊗ vs))
+--     -- mgpt-forward {ah = ah} {hd = hd} {sl = sl} {vs = vs} sc p doc-ix =
+--     --   -- layer pass
+--     --   Let lseq := mgpt-layer {ah} sc p (embed-doc p doc-ix) In
+--     --   -- project into vocabulary
+--     --   Let logits := m-linear {u = vs} {p = sl} ⟨ p .wvoc ⟩ lseq In logits
+
+--     -- cross-entropy : ∀ {Γ} (logits target : E Γ (ar s)) → (E Γ (ar []))
+--     -- cross-entropy {s} logits target =
+--     --   ⊟ Sum (λ i → (sels ⟨ target ⟩ i) ⊠ ln (softmax (sels ⟨ logits ⟩ i)))
+
+--     -- m-cross-entropy : ∀ {Γ} (logits target : E Γ (ar (s ⊗ p))) → (E Γ (ar s))
+--     -- m-cross-entropy {s} {p} logits target =
+--     --   Imaps λ i → cross-entropy {p} (sel ⟨ logits ⟩ i) (sel ⟨ target ⟩ i)
+
+--     -- mgpt-loss : ∀ {Γ} → (sc : ℕ) (p : GPT-Params Γ (ah ⊗ hd) sl fd vs)
+--     --             (doc-id target : E Γ (ar (sl ⊗ vs))) → E Γ (ar [])
+--     -- mgpt-loss {ah} {hd} {sl} {fd} {vs} {Γ} sc p doc-id target =
+--     --   Let logits := mgpt-forward {ah} sc p doc-id In
+--     --   Let losses := m-cross-entropy {sl} logits ⟨ target ⟩ In
+--     --   Let loss := avg losses In loss
+
+--     -- AH = ι 4 ; HD = ι 4 ; SL = ι 16 ; FD = ι 4 ; SC = 2 ; VS = ι 27
+--     -- ED = AH ⊗ HD
+
+--     -- mgpt-loss-e : E _ _
+--     -- mgpt-loss-e = Lcon (ar (VS ⊗ ED) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+--     --               ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+--     --               ar ((FD ⊗ ED) ⊗ ED) ∷ ar (ED ⊗ (FD ⊗ ED)) ∷ ar (VS ⊗ ED) ∷
+--     --               ar (SL ⊗ VS) ∷ ar (SL ⊗ VS) ∷ []) (ar []) ε
+--     --   λ wte wpe wqry wkey wval wout wup wdown wvoc doc-id target →
+--     --     mgpt-loss {ah = AH} {hd = HD} {sl = SL} {fd = FD} SC (record
+--     --        { wte = wte
+--     --        ; wpe = wpe
+--     --        ; wqry = wqry
+--     --        ; wkey = wkey
+--     --        ; wval = wval
+--     --        ; wout = wout
+--     --        ; wup = wup
+--     --        ; wdown = wdown
+--     --        ; wvoc = wvoc
+--     --        }) doc-id target
+
+--     -- -- cross-entropy : ∀ {Γ} (inp target : E Γ (ar s)) → (E Γ (ar []))
+--     -- -- cross-entropy {s} inp target =
+--     -- --   ⊟ (Sum (λ i → sels ⟨ target ⟩ i ⊠ ln (sels ⟨ softmax inp ⟩ i)))
+
+--     -- embed-doc : (p : GPT-Params Γ ed sl fd vs) (doc-ix : E Γ (ix (sl ⊗ vs)))
+--     --             → E Γ (ar (sl ⊗ ed))
+--     -- embed-doc {Γ} {ed} {sl} {fd} {vs} p doc-ix =
+--     --   Imap {sl} λ i → rmsnorm (sel ⟨ p .wpe ⟩ i ⊞ sel wtes ⟨ doc-ix ⟩) where
+--     --   -- inefficient?
+--     --   wtes = subst-assr {s = sl} (tile {p = sl} ⟨ p .wte ⟩)
+--     -- mgpt-loss : ∀ {Γ} → (sc : ℕ) (p : GPT-Params Γ (ah ⊗ hd) sl fd vs)
+--     --             (doc-ix target-ix : E Γ (ix (sl ⊗ vs))) → E Γ (ar [])
+--     -- mgpt-loss {ah} {hd} {sl} {fd} {vs} {Γ} sc p doc-ix target-ix =
+--     --   Let logits := mgpt-forward {ah} sc p doc-ix In {!   !}
+
+--     -- gpt-layer : let ed = ah ⊗ hd in
+--     --             (p : GPT-Params Γ ed sl fd vs)
+--     --             (seq : E Γ (ar (sl ⊗ ed))) (sc : ℕ) → E Γ (ar (sl ⊗ ed))
+--     -- gpt-layer {ah} {hd} {Γ} {sl} {fd} {vs} p seq sc = let ed = ah ⊗ hd in
+--     --   -- Multi headed attention block
+--     --   Let nseq := rmsnorm seq In
+--     --   Let qs := m-linear {u = ed} {p = sl} ⟨ p .wqry ⟩ nseq In
+--     --   Let ks := m-linear {u = ed} {p = sl} ⟨ p .wkey ⟩ nseq In
+--     --   Let vs := m-linear {u = ed} {p = sl} ⟨ p .wval ⟩ nseq In
+--     --   Let attn1 := m-attention {ah} {sl} {hd} sc
+--     --     (iswap3 {sl} {ah} qs) (iswap3 {sl} {ah} ks) (iswap3 {sl} {ah} vs) In
+--     --   Let attn := iswap3 {ah} {sl} attn1 In
+--     --   Let oseq := m-linear {u = ed} {p = sl} ⟨ p .wout ⟩ attn In
+--     --   Let cseq := oseq ⊞ ⟨ seq ⟩ In
+--     --   -- MLP block
+--     --   Let out := mlp {fd = fd} {sl = sl} ⟨ p .wup ⟩ ⟨ p .wdown ⟩ cseq In out
+
+--     -- gpt-layer : let ed = ah ⊗ hd in
+--     --             (p : GPT-Params Γ ed sl fd vs)
+--     --             (seq : E Γ (ar (sl ⊗ ed))) (sc : ℕ) → E Γ (ar ed)
+--     -- gpt-layer {ah} {hd} {Γ} {sl} {fd} {vs} p seq sc = let ed = ah ⊗ hd in
+--     --   -- Multi headed attention block
+--     --   Let nseq := rmsnorm seq In
+--     --   Let qs := m-linear {u = ed} {s = ed} {p = sl} ⟨ p .wqry ⟩ nseq In
+--     --   Let ks := m-linear {u = ed} {s = ed} {p = sl} ⟨ p .wkey ⟩ nseq In
+--     --   Let vs := m-linear {u = ed} {s = ed} {p = sl} ⟨ p .wval ⟩ nseq In {!   !}
+
+--     -- embed-seq : ∀ {Γ ed sl fd vs}
+--     --             (p : GPT-Params Γ ed sl fd vs)
+--     --             -- is this equivalent to ix sl ⊗ vs?
+--     --             (doc-ix : E (Γ ▹ ix sl) (ix vs))
+--     --             → E Γ (ar (sl ⊗ ed))
+--     -- embed-seq {sl = sl} p doc-ix =
+--     --   -- valid?
+--     --   Imap {sl} λ i → rmsnorm (sel ⟨ p .wpe ⟩ i ⊞ sel ⟨ p .wte ⟩ doc-ix)
+
+--     -- embed-tok : ∀ {Γ ed sl fd vs}
+--     --             (tok-ix : E Γ (ix vs)) (pos-ix : E Γ (ix sl))
+--     --             (p : GPT-Params Γ ed sl fd vs)
+--     --             → E Γ (ar ed)
+--     -- embed-tok tok-ix pos-ix p =
+--     --   rmsnorm ((sel (p .wte) tok-ix) ⊞ sel (p .wpe) pos-ix)
+
+--     -- embed-seq : ∀ {Γ ed sl fd vs}
+--     --             (p : GPT-Params Γ ed sl fd vs) (doc-ix : E (Γ ▹ ix sl) (ix vs))
+--     --             → E Γ (ar (sl ⊗ ed))
+--     -- embed-seq {Γ} {ed} {sl} {fd} {vs} p doc-ix =
+--     --   Imap {sl} λ i → embed-tok i {!   !} {!   !}
+
+
+--     -- gpt-layer : ∀ {Γ ah hd sl fd vs} → let i = ah ⊗ hd in
+--     --             (p : GPT-Params Γ ah hd sl fd vs) (tok_ix : E Γ (ix vs))
+--     --             (pos_ix : E Γ (ix sl)) (sc : ℕ)
+--     --             (keys vals : E Γ (ar (sl ⊗ ed)))
+--     --             → E Γ (ar ed) × (E Γ (ar (sl ⊗ ed)) × E Γ (ar (sl ⊗ ed)))
+
+--     -- update keys and values
+--     -- We assume olds starts as zero
+--     -- update : ∀ {Γ ed sl} →
+--     --          (pos_ix : E Γ (ix sl)) (olds : E Γ (ar (sl ⊗ ed)))
+--     --          (new : E Γ (ar ed)) → E Γ (ar (sl ⊗ ed))
+--     -- update pos_ix olds new = olds ⊞ Imap λ i → zero-but ⟨ pos_ix ⟩ i ⟨ new ⟩
+
+--     -- gpt-layer : ∀ {Γ ah hd sl fd vs} → let ed = ah ⊗ hd in
+--     --             (p : GPT-Params Γ ah hd sl fd vs) (tok_ix : E Γ (ix vs))
+--     --             (pos_ix : E Γ (ix sl)) (sc : ℕ)
+--     --             (keys vals : E Γ (ar (sl ⊗ ed)))
+--     --             → E Γ (ar ed) × (E Γ (ar (sl ⊗ ed)) × E Γ (ar (sl ⊗ ed)))
+--     -- gpt-layer {ah = ah} {hd = hd} p tok_ix pos_ix sc keys vals =
+--     --   logits , update pos_ix keys key , update pos_ix vals key where
+
+--     --   emb = embed tok_ix pos_ix (p .wte) (p .wpe)
+
+--     --   nemb = rmsnorm emb
+
+--     --   qry = linear {u = ed p} (p .wqry) nemb
+--     --   key = linear {u = ed p} (p .wkey) nemb
+--     --   val = linear {u = ed p} (p .wval) nemb
+
+--     --   logits = {!   !}
+
+
+
+--     -- gpt-layer : ∀ {Γ ah hd sl fd vs} → let ed = ah ⊗ hd in
+--     --             (p : GPT-Params Γ ah hd sl fd vs) (tok_ix : E Γ (ix vs))
+--     --             (pos_ix : E Γ (ix sl)) (sc : ℕ)
+--     --             → E Γ (ar ed)
+--     -- gpt-layer = {!   !}
+--     -- TODO : add biases, batch size and masking
+--     -- gpt-layer : ∀ {Γ ah hd sl fd vs} →
+--     --             let ed = ah ⊗ hd in
+--     --             (inp : E Γ (ar ed)) (p : GPT-Params Γ ah hd sl fd vs)
+--     --             (keys vals : E Γ (ar ed))
+--     --              → E Γ (ar ed)
+--     -- gpt-layer = {!   !}
+--     -- gpt-layer {Γ} {ah} {hd} {sl} {fd} inp p keys vals =
+--     --   Let ninp := rmsnorm inp In
+--     --   Let q := linear ⟨ p .wqry ⟩ ninp In
+--     --   Let k := linear ⟨ p .wkey ⟩ ninp In
+--     --   Let v := linear ⟨ p .wval ⟩ ninp In {!   !}
+
+--     -- attention : ∀ {Γ u s r t} → E Γ (ar (u ⊗ s)) → E Γ (ar (r ⊗ s))
+--     --           → E Γ (ar (r ⊗ t)) → ℕ → E Γ (ar (u ⊗ t))
+--     -- attention {Γ} {u} {s} {r} {t} q k v sc =
+--     --   matmul {u}
+--     --     (softmax (scaledown sc ⟨ matmul {u} {s} q (iswap {r} k) ⟩)) ⟨ v ⟩
+
+--     -- iswap3 : ∀ {Γ} → E Γ (ar (p ⊗ (s ⊗ u))) → E Γ (ar (u ⊗ (p ⊗ s)))
+--     -- iswap3 {p} {s} {u} x = iswaps {(p ⊗ s)} {u} (subst-assr {s = p} x)
+
+--     -- -- Is this correct?
+--     -- m-attention : let i = (ah ⊗ (sl ⊗ hd)) in
+--     --               (sc : ℕ) (qs ks vs : E Γ (ar i)) → E Γ (ar i)
+--     -- m-attention {ah} {sl} {hd} {Γ} sc qs ks vs =
+--     --   Imap {ah} λ i →
+--     --     attention {sl} sc (sel ⟨ qs ⟩ i) (sel ⟨ ks ⟩ i) (sel ⟨ vs ⟩ i)
+
+--     -- m-attention : let i = (sl ⊗ (ah ⊗ hd)) in
+--     --               (qs ks vs : E Γ (ar i)) (sc : ℕ) → E Γ (ar i)
+--     -- m-attention {sattn3l} {ah} {hd} {Γ} qs ks vs sc =
+--     --   iswap3 {ah} {sl} (
+--     --     Imap {ah} λ i → attention {sl} sc
+--     --       (sel (iswap3 {sl} {ah} ⟨ qs ⟩) i)
+--     --       (sel (iswap3 {sl} {ah} ⟨ qs ⟩) i)
+--     --       (sel (iswap3 {sl} {ah} ⟨ qs ⟩) i))
+
+--     -- m-attention : let i = (sl ⊗ (ah ⊗ hd)) in
+--     --               (qs ks vs : E Γ (ar i)) (sc : ℕ) → E Γ (ar i)
+--     -- m-attention {sl} {ah} {hd} {Γ} qs ks vs sc = let
+--     --   qs' = iswap3 {sl} {hd} {ah} (iswap {sl} {ah} qs)
+--     --   ks' = iswap3 {sl} {hd} {ah} (iswap {sl} {ah} ks)
+--     --   vs' = iswap3 {sl} {hd} {ah} (iswap {sl} {ah} vs)
+
+--     --   in iswap3 {ah} {hd} {sl} (iswap {ah} {sl} (
+--     --     Imap {ah} λ i → attention {sl} sc (sel ⟨ qs' ⟩ i) (sel ⟨ ks' ⟩ i) (sel ⟨ vs' ⟩ i)))
+
+--       -- (Imap {ah} λ i →
+--       --     attention {sl} {hd} sc (sel ⟨ qs' ⟩ i) (sel ⟨ ks' ⟩ i) (sel ⟨ vs' ⟩ i))
+
+--         -- ( iswap {ah} {sl} (
+--         -- Imap {ah} λ i → attention {sl} sc (sel {! swa  !} i) {!   !} {!   !}))
+
+--       -- subst-assl {sl} {hd} (iswaps {ah} (
+--       --   Imap {ah} λ i → attention {sl}
+--       --     (sel (iswap3 {sl} {hd} ⟨ qs ⟩) i)
+--       --     (sel (iswap3 {sl} {hd} ⟨ ks ⟩) i)
+--       --     (sel (iswap3 {sl} {hd} ⟨ vs ⟩) i) sc))
+
+--       -- m-attention : ∀ {h u s r t Γ} → E Γ (ar (h ⊗ (u ⊗ s)))
+--     --           → E Γ (ar (h ⊗ (r ⊗ s))) → E Γ (ar (h ⊗ (r ⊗ t)))
+--     --           → ℕ
+--     --           → E Γ (ar (h ⊗ (u ⊗ t)))
+--     -- m-attention {h} {u} q k v sc =
+--     --   Imap {h} (λ i →
+--     --     attention {u = u} (sel ⟨ q ⟩ i) (sel ⟨ k ⟩ i) (sel ⟨ v ⟩ i) sc)
+
+--     -- module Microgpt where
+
+--   --   linear : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar s) → E Γ (ar u)
+--   --   linear {u} {s} w x =
+--   --     Imaps {u} λ i → Sum {s} λ j → sels (sel ⟨ w ⟩ i) j ⊠ sels ⟨ x ⟩ j
+
+--   --   matmul : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ r)) → E Γ (ar (u ⊗ r))
+--   --   matmul {u} {s} {r} w x = Imap {u} λ i →
+--   --     Imaps (λ j → sels (linear ⟨ w ⟩ (Imaps λ k → sels (sel ⟨ x ⟩ k) j) ) i)
+
+--   --   -- Is this correct?
+--   --   softmax : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
+--   --   softmax {s = s} x =
+--   --       Imaps (λ i → (𝕖^ (sels ⟨ x ⟩ i)) // Sum (λ j → 𝕖^ sels ⟨ x ⟩ j))
+
+--   --   -- add a small number to avoid dividing by zero?
+--   --   rmsnorm : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
+--   --   rmsnorm {s = s} x =
+--   --     x ⊠ 𝟙/ (sqrt (scaledown (len s) (sum {s = s} (⟨ x ⟩ ⊠ ⟨ x ⟩))))
+
+--   --   swap : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ u))
+--   --   swap {u} {s} x = Imap {s} λ i → Imaps λ j → sels (sel ⟨ x ⟩ j) i
+
+--   --   max : ∀ {Γ} → E Γ (ar s) → E Γ (ar s) → E Γ (ar s)
+--   --   max x y = x ⊞ relu (y ⊟ x)
+
+--   --   {- I cheat by passing the scale sc as a parameter. It should be such that
+--   --     sqrt (size v) =  sc
+--   --     For microgpt sc = 16.
+--   --     Unlike microgpt, WE DO NOT MASK
+--   --     TODO : figure out how to mask
+--   --   -}
+--   --   attention : ∀ {u s r t Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (r ⊗ s))
+--   --             → E Γ (ar (r ⊗ t)) → ℕ → E Γ (ar (u ⊗ t))
+--   --   attention {u} {s} {r} {t} q k v sc =
+--   --     matmul {u}
+--   --       (softmax (scaledown sc ⟨ matmul {u} {s} q (swap {r} k) ⟩)) ⟨ v ⟩
+
+--   --   -- attention : ∀ {u s r t Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (r ⊗ s))
+--   --   --           → E Γ (ar (r ⊗ t)) → ℕ → E Γ (ar (u ⊗ t))
+--   --   -- attention {u} {s} {r} {t} q k v sc =
+--   --   --   Let l₁ := matmul {u} {s} q (swap {r} k) In
+--   --   --   Let l := scaledown sc l₁ In
+--   --   --   Let w₁ := softmax l In
+--   --   --   Let w := matmul {u} w₁ ⟨ v ⟩ In w
+
+--   --   mattention : ∀ {h u s r t Γ} → E Γ (ar (h ⊗ (u ⊗ s)))
+--   --             → E Γ (ar (h ⊗ (r ⊗ s))) → E Γ (ar (h ⊗ (r ⊗ t)))
+--   --             → ℕ
+--   --             → E Γ (ar (h ⊗ (u ⊗ t)))
+--   --   mattention {h} {u} q k v sc =
+--   --     Imap {h} (λ i →
+--   --       attention {u} (sel ⟨ q ⟩ i) (sel ⟨ k ⟩ i) (sel ⟨ v ⟩ i) sc)
+
+--   --   -- TODO: generalize to add biases and batch size
+--   --   -- TODO: add masking
+--   --   gpt-layer : ∀ {Γ ah hd sl fd} →
+--   --                let i = ah ⊗ (hd ⊗ sl) in
+--   --                (inp : E Γ (ar i)) (wq wk wv wo : E Γ (ar (i ⊗ i)))
+--   --                (wf₁ : E Γ (ar ((fd ⊗ i) ⊗ i)))
+--   --                (wf₂ : E Γ (ar (i ⊗ (fd ⊗ i))))
+--   --                (sc : ℕ)
+--   --                → E Γ (ar i)
+--   --   gpt-layer {Γ} {ah} {hd} {sl} {fd} inp wq wk wv wo wf₁ wf₂ sc =
+--   --               Let ninp := rmsnorm inp In
+--   --               Let q := linear ⟨ wq ⟩ ninp In
+--   --               Let k := linear ⟨ wk ⟩ ninp In
+--   --               Let v := linear ⟨ wv ⟩ ninp In
+--   --               Let c₁ :=
+--   --                 mattention {ah} {hd} {sl} {hd}
+--   --                 q k v sc In
+--   --               Let s₁₁ := linear ⟨ wo ⟩ c₁ In
+--   --               Let s₁ := s₁₁ ⊞ ⟨ inp ⟩ In
+--   --               Let s₂₁ := rmsnorm s₁ In
+--   --               Let s₂₂ := linear ⟨ wf₁ ⟩ s₂₁ In
+--   --               Let s₂ := relu s₂₂ In
+--   --               Let c₃ := linear ⟨ wf₂ ⟩ s₂ In
+--   --               Let r := c₃ ⊞ s₁ In r
+
+--   --   avg : ∀ {Γ} → E Γ (ar s) → E Γ (ar [])
+--   --   avg {s} x = scaledown (len s) (Sum λ i → sels ⟨ x ⟩ i)
+
+--   --   cross-entropy : ∀ {Γ} (inp target : E Γ (ar s)) → (E Γ (ar []))
+--   --   cross-entropy {s} inp target =
+--   --     ⊟ (Sum (λ i → sels ⟨ target ⟩ i ⊠ ln (sels ⟨ softmax inp ⟩ i)))
+
+--   --   ED = 16 ; AH = 4 ; HD = ED ℕ./ AH ; SL = 16 ; FD = 4 ; SC = 2 ; VS = 27
+
+--   --   W = (ι HD) ⊗ (ι SL)
+--   --   I = (ι AH) ⊗ W
+
+--   --   -- we calculate sequences in parallel (?)
+--   --   microgpt : ∀ {Γ} →
+--   --                (inp : E Γ (ar I)) (wq wk wv wo : E Γ (ar (I ⊗ I)))
+--   --                (wf₁ : E Γ (ar ((ι FD ⊗ I) ⊗ I)))
+--   --                (wf₂ : E Γ (ar (I ⊗ (ι FD ⊗ I))))
+--   --                (sc : ℕ) (wvo : E Γ (ar (ι VS ⊗ I)))
+--   --                → E Γ (ar (ι VS))
+--   --   microgpt inp wq wk wv wo wf₁ wf₂ sc wvo =
+--   --     Let s := gpt-layer {ah = ι AH } {hd = ι HD} {fd = ι FD}
+--   --       inp wq wk wv wo wf₁ wf₂ SC In
+--   --     -- normalize?
+--   --     Let r := matmul {ι VS} ⟨ wvo ⟩ s In r
+
+--   --   microgpt-token-loss : ∀ {Γ} →
+--   --                (inp : E Γ (ar I)) (wq wk wv wo : E Γ (ar (I ⊗ I)))
+--   --                (wf₁ : E Γ (ar ((ι FD ⊗ I) ⊗ I)))
+--   --                (wf₂ : E Γ (ar (I ⊗ (ι FD ⊗ I))))
+--   --                (sc : ℕ) (wvo : E Γ (ar (ι VS ⊗ I)))
+--   --                (target : E Γ (ar (ι VS))) → E Γ (ar [])
+--   --   microgpt-token-loss inp wq wk wv wo wf₁ wf₂ sc wvo target =
+--   --     Let probs := microgpt inp wq wk wv wo wf₁ wf₂ sc wvo In
+--   --     Let loss := cross-entropy probs ⟨ target ⟩ In loss
+
+--     -- microgpt-loss : ∀ {Γ} →
+--     --              (inp : E Γ (ar I)) (wq wk wv wo : E Γ (ar (I ⊗ I)))
+--     --              (wf₁ : E Γ (ar ((ι FD ⊗ I) ⊗ I)))
+--     --              (wf₂ : E Γ (ar (I ⊗ (ι FD ⊗ I))))
+--     --              (sc : ℕ) (wvo : E Γ (ar (ι VS ⊗ I)))
+--     --              (target_ix : E Γ (ix (ι VS))) → E Γ (ar [])
+--     -- microgpt-loss inp wq wk wv wo wf₁ wf₂ sc wvo target_ix =
+--     --   Let probs := microgpt inp wq wk wv wo wf₁ wf₂ sc wvo In
+--     --   Let loss := cross-entropy probs ⟨ target_ix ⟩ In loss
+
+--     -- microgpt : E _ _
+--     -- microgpt =  Lcon (  ar I
+--     --                   ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I)
+--     --                   ∷ ar ((ι FD ⊗ I) ⊗ I) ∷ ar (I ⊗ (ι FD ⊗ I))
+--     --                   ∷ ar ((ι VS) ⊗ (ι AH ⊗ ι HD)) ∷ [])
+--     --                 (ar O) ε
+--     --             λ inp wq wk wv wo wf₁ wf₂ wvo →
+--     --             Let s := gpt-layer {ah = ι AH } {hd = ι HD} {fd = ι FD} inp wq wk wv wo wf₁ wf₂ SC In
+--     --             -- normalize?
+--     --             Let c := matmul {ι VS} {ι AH ⊗ ι HD} wvo s In
+--     --             Let r := softmax c In r
+
+--     -- microgpt : E _ _
+--     -- microgpt =  Lcon (  ar I
+--     --                   ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I) ∷ ar (I ⊗ I)
+--     --                   ∷ ar ((FD ∷ [] ⊗ I) ⊗ I) ∷ ar (I ⊗ (FD ∷ [] ⊗ I))
+--     --                   ∷ [])
+--     --                 (ar I) ε
+--     --             λ inp wq wk wv wo wf₁ wf₂ →
+--     --             Let ninp := rmsnorm inp In
+--     --             Let q := linear wq ninp In
+--     --             Let k := linear wk ninp In
+--     --             Let v := linear wv ninp In
+--     --             Let c₁ :=
+--     --               mattention {AH ∷ []} {HD ∷ []} {SL ∷ []} {HD ∷ []}
+--     --               q k v SC In
+--     --             Let s₁₁ := linear wo c₁ In
+--     --             Let s₁ := s₁₁ ⊞ inp In
+--     --             Let s₂₁ := rmsnorm s₁ In
+--     --             Let s₂₂ := linear wf₁ s₂₁ In
+--     --             Let s₂ := relu s₂₂ In
+--     --             Let c₃ := linear wf₂ s₂ In
+--     -- --             Let r := c₃ ⊞ s₁ In r
+
+--     -- attention-e : E _ _
+--     -- attention-e =
+--     --   Lcon (ar W ∷ ar W ∷ ar W ∷ []) (ar W) ε
+--     --   λ q k v →
+--     --     attention {HD ∷ []} {SL ∷ []} {HD ∷ []} q k v SC
+
+--     -- triangular matrix experiment
+--     -- id : ∀ {Γ} a → E Γ (ar (a ⊗ a))
+--     -- id a = Imap {a} λ i → Imaps λ j → zero-but i j one
+
+--     -- ex-id : ∀ {Γ} → E Γ (ar (ι 3 ⊗ ι 5))
+--     -- ex-id = Imap {ι 3} λ i → E.backslide {p = ι 2} i (one {s = ι 3}) cons cons
+
+--     -- c0=1 : ∀ {Γ} → E Γ (ar (ι 3 ⊗ ι 3))
+--     -- c0=1 = Imap {ι 3} λ i → slide {p = ι 2} i cons (sel (ex-id) i) cons
+
+--     -- r0=1 : ∀ {Γ} → E Γ (ar (ι 3 ⊗ ι 3))
+--     -- r0=1 = swap {u = ι 3} c0=1
+
+--     -- c1-2=1 : ∀ {Γ} → E Γ (ar (ι 3 ⊗ ι 3))
+--     -- c1-2=1 = one ⊟ c0=1
+
+--     -- r1-2=1 : ∀ {Γ} → E Γ (ar (ι 3 ⊗ ι 3))
+--     -- r1-2=1 = swap {u = ι 3} c1-2=1
+
+--     -- v-i : ∀ {Γ} → E Γ (ar (ι 3))
+--     -- v-i = scaledown 3 (linear r0=1 one)
+
+--     -- v1-2=1 : ∀ {Γ} → E Γ (ar (ι 3))
+--     -- v1-2=1 = one ⊟ v-i
+
+--     -- tile-r : ∀ {Γ s} → E Γ (ar s) → E Γ (ar (s ⊗ s))
+--     -- tile-r {s = s} x = Imap {s} λ i → ⟨ x ⟩
+
+--     -- triangular3 : ∀ {Γ} → E Γ (ar (ι 3 ⊗ ι 3))
+--     -- triangular3 = c0=1 ⊞ {!   !}
+
+-- module LangTest where
+--   open import Ar
+--   open import Data.List as L using (List; []; _∷_)
+--   open import Function
+--   open Syntax
+
+--   nested-inc : E (Γ ▹ ar (s ⊗ p) ▹ ar p) (ar (s ⊗ p))
+--   nested-inc {s = s} = imap {s = s} ((var v₁) ⊞ sel (var v₂) (var v₀))
+
+--   -- Test convenience
+--   _ : Prefix (Γ ▹ ar []) (Γ ▹ ar [] ▹ (ar (5 ∷ [])))
+--   _ = it
+
+--   _ : E Γ (ar (5 ∷ 5 ∷ []))
+--   _ = Imaps λ iv → sels zero iv
+
+--   _ : E Γ (ar (5 ∷ 5 ∷ []))
+--   _ = Let x := zero In x ⊞ x
+
+--   _ : E _ _
+--   _ = Lcon (ar (5 ∷ []) ∷ ar [] ∷ []) (ar (5 ∷ [])) ε
+--       λ a x → Let b := a ⊞ a In
+--               Let c := (Imaps λ i → sel a i ⊠ x) In
+--               c ⊞ c
+
+-- -- automatically from other frameworks into ours?

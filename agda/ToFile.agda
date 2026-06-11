@@ -11,7 +11,8 @@ open import IO
 
 grad-mgpt-loss-s : String
 grad-mgpt-loss-s = pp Primitives.Microgpt.mgpt-loss-e
-    (ε ▹ "atmask" ▹ "wte" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "docid" ▹ "target")
+    (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup"
+       ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target")
 
 main : Main
 main = run (putStrLn grad-mgpt-loss-s)
