@@ -40,90 +40,84 @@ d_grad'45'mgpt'45'loss'45's_2
             (coe
                MAlonzo.Code.Lang.C_ar_10
                (coe
-                  MAlonzo.Code.Ar.d__'8855'__54 () erased MAlonzo.Code.Lang.d_SL_2320
-                  MAlonzo.Code.Lang.d_SL_2320))
+                  MAlonzo.Code.Ar.d__'8855'__54 () erased MAlonzo.Code.Lang.d_SL_2280
+                  MAlonzo.Code.Lang.d_SL_2280))
             (coe
                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                (coe
                   MAlonzo.Code.Lang.C_ar_10
                   (coe
-                     MAlonzo.Code.Ar.d__'8855'__54 () erased MAlonzo.Code.Lang.d_SL_2320
-                     MAlonzo.Code.Lang.d_ED_2314))
+                     MAlonzo.Code.Ar.d__'8855'__54 () erased MAlonzo.Code.Lang.d_SL_2280
+                     MAlonzo.Code.Lang.d_ED_2274))
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                   (coe
                      MAlonzo.Code.Lang.C_ar_10
                      (coe
-                        MAlonzo.Code.Ar.d__'8855'__54 () erased MAlonzo.Code.Lang.d_ED_2314
-                        MAlonzo.Code.Lang.d_ED_2314))
+                        MAlonzo.Code.Ar.d__'8855'__54 () erased MAlonzo.Code.Lang.d_ED_2274
+                        MAlonzo.Code.Lang.d_ED_2274))
                   (coe
                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                      (coe
                         MAlonzo.Code.Lang.C_ar_10
                         (coe
-                           MAlonzo.Code.Ar.d__'8855'__54 () erased MAlonzo.Code.Lang.d_ED_2314
-                           MAlonzo.Code.Lang.d_ED_2314))
+                           MAlonzo.Code.Ar.d__'8855'__54 () erased MAlonzo.Code.Lang.d_ED_2274
+                           MAlonzo.Code.Lang.d_ED_2274))
                      (coe
                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                         (coe
                            MAlonzo.Code.Lang.C_ar_10
                            (coe
-                              MAlonzo.Code.Ar.d__'8855'__54 () erased MAlonzo.Code.Lang.d_ED_2314
-                              MAlonzo.Code.Lang.d_ED_2314))
+                              MAlonzo.Code.Ar.d__'8855'__54 () erased MAlonzo.Code.Lang.d_ED_2274
+                              MAlonzo.Code.Lang.d_ED_2274))
                         (coe
                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                            (coe
                               MAlonzo.Code.Lang.C_ar_10
                               (coe
-                                 MAlonzo.Code.Ar.d__'8855'__54 () erased MAlonzo.Code.Lang.d_ED_2314
-                                 MAlonzo.Code.Lang.d_ED_2314))
+                                 MAlonzo.Code.Ar.d__'8855'__54 () erased MAlonzo.Code.Lang.d_ED_2274
+                                 MAlonzo.Code.Lang.d_ED_2274))
                            (coe
                               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                               (coe
                                  MAlonzo.Code.Lang.C_ar_10
                                  (coe
                                     MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                    (coe
-                                       MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                       MAlonzo.Code.Lang.d_FD_2322 MAlonzo.Code.Lang.d_ED_2314)
-                                    MAlonzo.Code.Lang.d_ED_2314))
+                                    MAlonzo.Code.Lang.d_FD_2282 MAlonzo.Code.Lang.d_ED_2274))
                               (coe
                                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                  (coe
                                     MAlonzo.Code.Lang.C_ar_10
                                     (coe
                                        MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                       MAlonzo.Code.Lang.d_ED_2314
-                                       (coe
-                                          MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                          MAlonzo.Code.Lang.d_FD_2322 MAlonzo.Code.Lang.d_ED_2314)))
+                                       MAlonzo.Code.Lang.d_ED_2274 MAlonzo.Code.Lang.d_FD_2282))
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                     (coe
                                        MAlonzo.Code.Lang.C_ar_10
                                        (coe
                                           MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                          MAlonzo.Code.Lang.d_VO_2326 MAlonzo.Code.Lang.d_ED_2314))
+                                          MAlonzo.Code.Lang.d_VO_2286 MAlonzo.Code.Lang.d_ED_2274))
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                        (coe
                                           MAlonzo.Code.Lang.C_ar_10
                                           (coe
                                              MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                             MAlonzo.Code.Lang.d_SL_2320
-                                             MAlonzo.Code.Lang.d_ED_2314))
+                                             MAlonzo.Code.Lang.d_SL_2280
+                                             MAlonzo.Code.Lang.d_ED_2274))
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                           (coe
                                              MAlonzo.Code.Lang.C_ar_10
                                              (coe
                                                 MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                MAlonzo.Code.Lang.d_SL_2320
-                                                MAlonzo.Code.Lang.d_VO_2326))
+                                                MAlonzo.Code.Lang.d_SL_2280
+                                                MAlonzo.Code.Lang.d_VO_2286))
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))
       (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
-      (coe MAlonzo.Code.Lang.d_mgpt'45'loss'45'e_2330)
+      (coe MAlonzo.Code.Lang.d_mgpt'45'loss'45'e_2316)
       (coe
          MAlonzo.Code.Extraction.C__'9657'__230
          (coe
@@ -169,4 +163,4 @@ d_main_4
       (coe
          MAlonzo.Code.IO.Finite.d_putStrLn_28
          (coe MAlonzo.Code.Level.d_0ℓ_22)
-         (coe d_grad'45'mgpt'45'loss'45's_2))
+         (coe MAlonzo.Code.Extraction.d_grad'45'cnn'45's_358))

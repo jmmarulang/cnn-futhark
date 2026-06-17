@@ -15,4 +15,7 @@ grad-mgpt-loss-s = pp Primitives.Microgpt.mgpt-loss-e
        ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target")
 
 main : Main
-main = run (putStrLn grad-mgpt-loss-s)
+-- main = run (putStrLn Extract.grad-avg-s)
+-- main = run (putStrLn Extract.mgpt-loss-s)
+-- main = run (putStrLn grad-mgpt-loss-s)
+-- main = run (putStrLn Extract.grad-cnn-s)

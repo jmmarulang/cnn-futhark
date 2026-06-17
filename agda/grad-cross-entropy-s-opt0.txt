@@ -1,0 +1,36 @@
+-- probs
+let x0 = 
+-- softmax
+(   -- exps
+    let x1 = (imap1 16 (\x5_0 -> (F.exp inp[x5_0])))
+    -- total
+    in (let x2 = (isum1 16 (\x6_0 -> x1[x6_0]))
+    -- softmax r
+    in (let x3 = (imap1 16 (\x7_0 -> (x1[x7_0] F.* (one F./ x2))))
+    in (imap1 16 (\x4_0 -> x3[x4_0]))))
+)
+-- ln probs
+let x8 = (imap1 16 (\x9_0 -> (F.log x0[x9_0])))
+-- r
+let x10 = (F.neg (isum1 16 (\x11_0 -> (x8[x11_0] F.* target[x11_0]))))
+-- adj r
+let x12 = (zero F.+ one)
+-- sum stuff?
+let x13 = (imap1 16 (\x15_0 -> (zero F.+ (isum1 16 (\x14_0 -> (zero F.+ (if ((x15_0 == x14_0)) then ((F.neg x12) F.* target[x14_0]) else zero)))))))
+-- adj lnprobs?
+let x16 = (imap1 16 (\x18_0 -> ((zero F.+ (isum1 16 (\x17_0 -> zero))) F.+ (x13[x18_0] F.* (one F./ x0[x18_0])))))
+-- exps
+let x19 = (imap1 16 (\x20_0 -> (F.exp inp[x20_0])))
+-- total
+let x21 = (isum1 16 (\x22_0 -> x19[x22_0]))
+-- softmax r 
+let x23 = (imap1 16 (\x24_0 -> (x19[x24_0] F.* (one F./ x21))))
+-- adj softmax r
+let x25 = (imap1 16 (\x26_0 -> (zero F.+ x16[x26_0])))
+-- adj total?
+let x27 = (zero F.+ (isum1 16 (\x28_0 -> (zero F.+ (F.neg ((x25[x28_0] F.* x19[x28_0]) F.* (one F./ (x21 F.* x21))))))))
+-- adj exps?
+let x29 = (imap1 16 (\x32_0 -> ((zero F.+ (isum1 16 (\x30_0 -> (zero F.+ (if ((x32_0 == x30_0)) then (x25[x30_0] F.* (one F./ x21)) else zero))))) F.+ (isum1 16 (\x31_0 -> (zero F.+ (if ((x32_0 == x31_0)) then x27 else zero)))))))
+
+let dinp = (imap1 16 (\x36_0 -> ((((zero F.+ (isum1 16 (\x33_0 -> zero))) F.+ (isum1 16 (\x34_0 -> zero))) F.+ (isum1 16 (\x35_0 -> zero))) F.+ (x19[x36_0] F.* x29[x36_0]))))
+let dtarget = (imap1 16 (\x40_0 -> (((zero F.+ (isum1 16 (\x37_0 -> (zero F.+ (if ((x40_0 == x37_0)) then ((F.neg x12) F.* x8[x37_0]) else zero))))) F.+ (isum1 16 (\x38_0 -> zero))) F.+ (isum1 16 (\x39_0 -> zero)))))

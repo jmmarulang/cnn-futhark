@@ -127,10 +127,10 @@ module _ where
   pattern 𝟙/ a = un inverse a
   pattern relu a = un rectifier a
   pattern ln a = un logarithm a
+  pattern 𝕀+ a = un ind-positive a
 
   pattern _⊞_ a b = bin plus a b
   pattern _⊠_ a b = bin mul a b
-  pattern 𝕀+ a = un ind-positive a
 
   -- infixl 5 𝕀+
   -- syntax 𝕀+ a b = 𝕀[ a < b ]
@@ -566,23 +566,24 @@ module Primitives where
     infixr 6 _⊡_
     _⊡_ = trans
 
-    subst-shape : ∀ {s p} → s ≡ p → E Γ (ar s) → E Γ (ar p)
-    subst-shape refl b = b
+    -- can i get rid of substitutions?
+    -- subst-shape : ∀ {s p} → s ≡ p → E Γ (ar s) → E Γ (ar p)
+    -- subst-shape refl b = b
 
-    subst-idrl : ∀ {s} → E Γ (ar (s ⊗ [])) → E Γ (ar s)
-    subst-idrl x = subst-shape (++-identityʳ _) x
+    -- subst-idrl : ∀ {s} → E Γ (ar (s ⊗ [])) → E Γ (ar s)
+    -- subst-idrl x = subst-shape (++-identityʳ _) x
 
-    subst-idrr : ∀ {s} → E Γ (ar s) → E Γ (ar (s ⊗ []))
-    subst-idrr {Γ} {s} x = subst-shape (sym (++-identityʳ _)) x
+    -- subst-idrr : ∀ {s} → E Γ (ar s) → E Γ (ar (s ⊗ []))
+    -- subst-idrr {Γ} {s} x = subst-shape (sym (++-identityʳ _)) x
 
-    subst-idll : ∀ {s} → E Γ (ar ([] ⊗ s)) → E Γ (ar s)
-    subst-idll x = subst-shape (++-identityˡ _) x
+    -- subst-idll : ∀ {s} → E Γ (ar ([] ⊗ s)) → E Γ (ar s)
+    -- subst-idll x = subst-shape (++-identityˡ _) x
 
-    subst-assl : ∀ {Γ} → E Γ (ar ((s ⊗ p) ⊗ q)) → E Γ (ar (s ⊗ (p ⊗ q)))
-    subst-assl {s} {p} {q} {Γ} x = subst-shape (++-assoc s p q) x
+    -- subst-assl : ∀ {Γ} → E Γ (ar ((s ⊗ p) ⊗ q)) → E Γ (ar (s ⊗ (p ⊗ q)))
+    -- subst-assl {s} {p} {q} {Γ} x = subst-shape (++-assoc s p q) x
 
-    subst-assr : ∀ {Γ} → E Γ (ar (s ⊗ (p ⊗ q))) → E Γ (ar ((s ⊗ p) ⊗ q))
-    subst-assr {s} {p} {q} {Γ} x = subst-shape (sym (++-assoc s p q)) x
+    -- subst-assr : ∀ {Γ} → E Γ (ar (s ⊗ (p ⊗ q))) → E Γ (ar ((s ⊗ p) ⊗ q))
+    -- subst-assr {s} {p} {q} {Γ} x = subst-shape (sym (++-assoc s p q)) x
 
     pw3-eq : ∀ {R} {s1 s2 p1 p2 q1 q2 : S}
                 → (s1 ≡ s2) → (p1 ≡ p2) → (q1 ≡ q2)
@@ -609,26 +610,34 @@ module Primitives where
             → Pointw₃ R (s ⊗ s) (p ⊗ p) (q ⊗ q)
     pw3-dup pw = pw3-con pw pw
 
-    id : ∀ {Γ} → E Γ (ar (s ⊗ s))
-    id {s} = Imap {s} λ i → Imaps {s} λ j → zero-but i j one
+    -- id : ∀ {Γ} → E Γ (ar (s ⊗ s))
+    -- id {s} = Imap {s} λ i → Imaps {s} λ j → zero-but i j one
 
-    tile : ∀ {Γ} → E Γ (ar s) → E Γ (ar (p ⊗ s))
-    tile {s} {p} x = Imap {p} λ _ → ⟨ x ⟩
+    -- tile : ∀ {Γ} → E Γ (ar s) → E Γ (ar (p ⊗ s))
+    -- tile {s} {p} x = Imap {p} λ _ → ⟨ x ⟩
 
-    iswap : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ u))
-    iswap {u} {s} x = Imap {s} λ i → Imaps λ j → sels (sel ⟨ x ⟩ j) i
+    icom : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ u))
+    icom {u} {s} x = Imap {s} λ i → Imaps λ j → sels (sel ⟨ x ⟩ j) i
 
-    iswap-r : ∀ {Γ} → E Γ (ar (p ⊗ (u ⊗ s))) → E Γ (ar (p ⊗ (s ⊗ u)))
-    iswap-r {p} {u} {s} x = Imap {p} λ i → iswap {u} (sel ⟨ x ⟩ i)
+    -- icom-r : ∀ {Γ} → E Γ (ar (p ⊗ (u ⊗ s))) → E Γ (ar (p ⊗ (s ⊗ u)))
+    -- icom-r {p} {u} {s} x = Imap {p} λ i → icom {u} (sel ⟨ x ⟩ i)
 
-    iswap-mid : ∀ {Γ} → E Γ (ar (p ⊗ (s ⊗ u))) → E Γ (ar (s ⊗ (p ⊗ u)))
-    iswap-mid {p} {s} {u} x =
-      iswap-r {s} {u} {p} (subst-assl {s} {u} (iswap {p} {s ⊗ u} x))
+    iswap3 : ∀ {Γ} → E Γ (ar (p ⊗ (s ⊗ u))) → E Γ (ar (s ⊗ (p ⊗ u)))
+    iswap3 {p} {s} {u} x = Imap {s} λ i → Imap {p} λ j → sel (sel ⟨ x ⟩ j) i
 
-    iswap-exr : ∀ {Γ} → E Γ (ar ((s ⊗ p) ⊗ (q ⊗ r)))
+    iass-r : ∀ {Γ} → E Γ (ar ((p ⊗ s) ⊗ u)) → E Γ (ar (p ⊗ (s ⊗ u)))
+    iass-r {p} {s} {u} {Γ} x = Imap {p} λ i → Imap {s} λ j → Imaps λ z → 
+      sels (sel (sel (icom {s = u} ⟨ x ⟩) z) i) j
+
+    iass-l : ∀ {Γ} → E Γ (ar (p ⊗ (s ⊗ u))) → E Γ (ar ((p ⊗ s) ⊗ u))
+    iass-l {p} {s} {u} {Γ} x = 
+      icom {u = u} $ Imap {u} λ i → Imap {p} λ j → Imaps λ z → 
+        sels (sel (sel ⟨ x ⟩ j) z) i
+    
+    iswap4in : ∀ {Γ} → E Γ (ar ((s ⊗ p) ⊗ (q ⊗ r)))
               → E Γ (ar ((s ⊗ q) ⊗ (p ⊗ r)))
-    iswap-exr {s} {p} {q} {r} {Γ} x = subst-assr {s} $ Imap {s} λ i →
-      iswap-mid {p} {q} $ Imap {p} λ j → sel (sel (subst-assl {s} ⟨ x ⟩) i) j
+    iswap4in {s} {p} {q} {r} {Γ} x = 
+      iass-l {s} $ Imap {s} λ i → iswap3 {p} {q} (sel (iass-r {s} ⟨ x ⟩) i)
 
     linear : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar s) → E Γ (ar u)
     linear {u} {s} w x =
@@ -647,7 +656,11 @@ module Primitives where
     -- Is this correct?
     softmax : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
     softmax {s = s} x =
-        Imaps (λ i → (𝕖^ (sels ⟨ x ⟩ i)) // Sum (λ j → 𝕖^ sels ⟨ x ⟩ j))
+      Let exps := 𝕖^ x In 
+      Let total := Sum {s} (λ i → sels exps i) In 
+      Let r := Imaps {s} (λ i → sels exps i // total) In r 
+      --Let s := Sum {s} (λ i → 𝕖^ (sels ⟨ x ⟩ {!   !})) In {!   !}
+       -- Imaps (λ i → (𝕖^ (sels ⟨ x ⟩ i)) // Sum (λ j → 𝕖^ sels ⟨ x ⟩ j))
 
     m-softmax : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
     m-softmax {s} {p} {Γ} x = Imap {s} λ i → softmax (sel ⟨ x ⟩ i)
@@ -718,17 +731,17 @@ module Primitives where
                 (qs ks vs : E Γ (ar (sl ⊗ hd))) → E Γ (ar (sl ⊗ hd))
     attention {sl} {hd} sc mask qs ks vs = matmul {r = hd}
       (m-softmax {sl} (
-        scaledown sc ⟨ matmul {u = sl} qs (iswap {sl} ks) ⟩ ⊞ mask)) vs
+        scaledown sc ⟨ matmul {u = sl} qs (icom {sl} ks) ⟩ ⊞ mask)) vs
 
     mh-attention : let ed = ah ⊗ hd in ∀ {Γ} (sc : ℕ)
                    (mask : E Γ (ar (sl ⊗ sl)))
                    (qs ks vs : E Γ (ar (sl ⊗ ed)))
                   → E Γ (ar (sl ⊗ ed))
     mh-attention {ah} {hd} {sl} {Γ} sc mask qs ks vs =
-        iswap-mid {ah} {sl} $ Imap {ah} λ i → attention {sl} sc ⟨ mask ⟩
-          (sel (iswap-mid {sl} {ah} ⟨ qs ⟩) i)
-          (sel (iswap-mid {sl} {ah} ⟨ ks ⟩) i)
-          (sel (iswap-mid {sl} {ah} ⟨ vs ⟩) i)
+        iswap3 {ah} {sl} $ Imap {ah} λ i → attention {sl} sc ⟨ mask ⟩
+          (sel (iswap3 {sl} {ah} ⟨ qs ⟩) i)
+          (sel (iswap3 {sl} {ah} ⟨ ks ⟩) i)
+          (sel (iswap3 {sl} {ah} ⟨ vs ⟩) i)
 
     mlp : ∀ {Γ} (wup : E Γ (ar (fd ⊗ ed)))
           (wdown : E Γ (ar (ed ⊗ fd))) (seq : E Γ (ar (sl ⊗ ed)))
@@ -753,6 +766,7 @@ module Primitives where
       Let cseq := oseq ⊞ ⟨ seq ⟩ In
       Let fseq := mlp {sl = sl} ⟨ p .wup ⟩ ⟨ p .wdown ⟩ cseq In fseq
 
+    -- make sure the order makes sense
     block-tok : ∀ {Γ} → E Γ (ar ed) → ah * hd ≈ ed → E Γ (ar (ah ⊗ hd))
     block-tok {ed} {ah} {hd} {Γ} x pr = Imap {ah} λ i → selb pr ⟨ x ⟩ i
 
@@ -762,7 +776,7 @@ module Primitives where
 
     block-w : ∀ {Γ} → E Γ (ar (ed ⊗ ed)) → ah * hd ≈ ed
                 → E Γ (ar ((ah ⊗ hd) ⊗ (ah ⊗ hd)))
-    block-w {ed} {ah} {hd} {Γ} x pr = iswap-exr {ah} {ah} $
+    block-w {ed} {ah} {hd} {Γ} x pr = iswap4in {ah} {ah} $
       Imap {ah ⊗ ah} λ i → selb (pw3-dup pr) ⟨ x ⟩ i
 
     block-param : ∀ {Γ} (p : GPT-Params Γ vo ed sl fd)
@@ -774,7 +788,7 @@ module Primitives where
     block-param p pr .wout = block-w (wout p) pr
     block-param p pr .wup = block-seq (wup p) pr
     block-param {ed = ed} {fd = fd} p pr .wdown =
-      iswap {fd} (block-seq (iswap {ed} (wdown p)) pr)
+      icom {fd} (block-seq (icom {ed} (wdown p)) pr)
     block-param p pr .wvoc = block-seq (wvoc p) pr
 
     mgpt-forward : ∀ {ah hd : S} {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
@@ -793,7 +807,9 @@ module Primitives where
 
     cross-entropy : ∀ {Γ} (logits target : E Γ (ar s)) → (E Γ (ar []))
     cross-entropy {s} logits target =
-      ⊟ Sum (λ i → (sels ⟨ target ⟩ i) ⊠ ln (softmax (sels ⟨ logits ⟩ i)))
+      Let probs := softmax logits In
+      Let lnprobs := ln probs In
+      Let r := ⊟ (Sum λ i → sels lnprobs i ⊠ sels ⟨ target ⟩ i) In r
 
     m-cross-entropy : ∀ {Γ} (logits target : E Γ (ar (s ⊗ p))) → (E Γ (ar s))
     m-cross-entropy {s} {p} logits target =
@@ -812,16 +828,49 @@ module Primitives where
     PR : AH * HD ≈ ED
     PR = cons
 
-    -- mgpt-forward-e : E _ _
-    -- mgpt-forward-e = Lcon (ar (SL ⊗ SL) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
-    --               ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
-    --               ar ((FD ⊗ ED) ⊗ ED) ∷ ar (ED ⊗ (FD ⊗ ED)) ∷ ar (VO ⊗ ED) ∷
-    --               ar (SL ⊗ ED) ∷ ar (SL ⊗ VO) ∷ []) (ar []) ε {!   !}
+    test-sels : ∀ {Γ} (inp : E Γ (ar [])) → (E Γ (ar []))
+    test-sels {s} inp = Imaps λ j → sels ⟨ inp ⟩ j
+
+    test-let : ∀ {Γ} (inp : E Γ (ar [])) → (E Γ (ar []))
+    test-let inp = Let a := (Let b := inp ⊞ one In b ⊞ one ⊞ one) In a ⊞ one ⊞ one ⊞ one 
+
+    test2-let : E ε (ar [])
+    test2-let = Let a := one {s = []} In zero
+
+    test3-let : ∀ {Γ} (inp : E Γ (ar [])) → (E Γ (ar []))
+    test3-let inp = Let a := (Let b := inp In b ⊠ b) In a ⊞ one
+    
+    test-sels-e : E _ _
+    test-sels-e = Lcon (ar [] ∷ []) (ar []) ε λ x → test-sels x
+
+    test-let-e : E _ _
+    test-let-e = Lcon (ar [] ∷ []) (ar []) ε λ x → test-let x
+
+    test3-let-e : E _ _
+    test3-let-e = Lcon (ar [] ∷ []) (ar []) ε λ x → test3-let x
+
+--     let′ (Lang.E.var Lang._∈_.here)
+--    (let′ Lang.E.one
+--    (let′ (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+--    (let′ (Lang.E.var (Lang._∈_.there Lang._∈_.here))
+--      (env (ε ▹ Lang.E.var Lang._∈_.here)))))
+
+    -- test2-let : ∀ {Γ} (inp : E Γ (ar [])) → (E Γ (ar []))
+    -- test2-let inp = {!   !}
+
+
+    avg-e : E _ _
+    avg-e = Lcon (ar SL ∷ []) (ar []) ε
+      λ x → avg x
+    
+    cross-entropy-e : E _ _
+    cross-entropy-e = Lcon (ar ED ∷ ar ED ∷ []) (ar []) ε
+      λ x y → cross-entropy x y
 
     mgpt-loss-e : E _ _
     mgpt-loss-e = Lcon (ar (SL ⊗ SL) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
                   ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
-                  ar ((FD ⊗ ED) ⊗ ED) ∷ ar (ED ⊗ (FD ⊗ ED)) ∷ ar (VO ⊗ ED) ∷
+                  ar (FD ⊗ ED) ∷ ar (ED ⊗ FD) ∷ ar (VO ⊗ ED) ∷
                   ar (SL ⊗ ED) ∷ ar (SL ⊗ VO) ∷ []) (ar []) ε
       λ mask wpe wqry wkey wval wout wup wdown wvoc wseq target →
         mgpt-loss {sl = SL} SC mask
@@ -969,7 +1018,7 @@ module Primitives where
 --     -- attention : ∀ {Γ} (sc : ℕ) (qs ks vs : E Γ (ar (sl ⊗ hd)))
 --     --           → E Γ (ar (sl ⊗ hd))
 --     -- attention {sl} {hd} sc qs ks vs = matmul {r = hd}
---     --   (softmax (scaledown sc ⟨ matmul {u = sl} qs (iswap {sl} ks) ⟩)) vs
+--     --   (softmax (scaledown sc ⟨ matmul {u = sl} qs (icom {sl} ks) ⟩)) vs
 
 --     -- m-attention : let i = (sl ⊗ (ah ⊗ hd)) in
 --     --               ∀ {Γ} (sc : ℕ) (qs ks vs : E Γ (ar i)) → E Γ (ar i)
@@ -1074,8 +1123,8 @@ module Primitives where
 --     --   Let ks := m-linear {u = ed} {p = sl} ⟨ p .wkey ⟩ nseq In
 --     --   Let vs := m-linear {u = ed} {p = sl} ⟨ p .wval ⟩ nseq In
 --     --   Let attn1 := m-attention {ah} {sl} {hd} sc
---     --     (iswap3 {sl} {ah} qs) (iswap3 {sl} {ah} ks) (iswap3 {sl} {ah} vs) In
---     --   Let attn := iswap3 {ah} {sl} attn1 In
+--     --     (icom3 {sl} {ah} qs) (icom3 {sl} {ah} ks) (icom3 {sl} {ah} vs) In
+--     --   Let attn := icom3 {ah} {sl} attn1 In
 --     --   Let oseq := m-linear {u = ed} {p = sl} ⟨ p .wout ⟩ attn In
 --     --   Let cseq := oseq ⊞ ⟨ seq ⟩ In
 --     --   -- MLP block
@@ -1169,10 +1218,10 @@ module Primitives where
 --     --           → E Γ (ar (r ⊗ t)) → ℕ → E Γ (ar (u ⊗ t))
 --     -- attention {Γ} {u} {s} {r} {t} q k v sc =
 --     --   matmul {u}
---     --     (softmax (scaledown sc ⟨ matmul {u} {s} q (iswap {r} k) ⟩)) ⟨ v ⟩
+--     --     (softmax (scaledown sc ⟨ matmul {u} {s} q (icom {r} k) ⟩)) ⟨ v ⟩
 
---     -- iswap3 : ∀ {Γ} → E Γ (ar (p ⊗ (s ⊗ u))) → E Γ (ar (u ⊗ (p ⊗ s)))
---     -- iswap3 {p} {s} {u} x = iswaps {(p ⊗ s)} {u} (subst-assr {s = p} x)
+--     -- icom3 : ∀ {Γ} → E Γ (ar (p ⊗ (s ⊗ u))) → E Γ (ar (u ⊗ (p ⊗ s)))
+--     -- icom3 {p} {s} {u} x = icoms {(p ⊗ s)} {u} (subst-assr {s = p} x)
 
 --     -- -- Is this correct?
 --     -- m-attention : let i = (ah ⊗ (sl ⊗ hd)) in
@@ -1184,33 +1233,33 @@ module Primitives where
 --     -- m-attention : let i = (sl ⊗ (ah ⊗ hd)) in
 --     --               (qs ks vs : E Γ (ar i)) (sc : ℕ) → E Γ (ar i)
 --     -- m-attention {sattn3l} {ah} {hd} {Γ} qs ks vs sc =
---     --   iswap3 {ah} {sl} (
+--     --   icom3 {ah} {sl} (
 --     --     Imap {ah} λ i → attention {sl} sc
---     --       (sel (iswap3 {sl} {ah} ⟨ qs ⟩) i)
---     --       (sel (iswap3 {sl} {ah} ⟨ qs ⟩) i)
---     --       (sel (iswap3 {sl} {ah} ⟨ qs ⟩) i))
+--     --       (sel (icom3 {sl} {ah} ⟨ qs ⟩) i)
+--     --       (sel (icom3 {sl} {ah} ⟨ qs ⟩) i)
+--     --       (sel (icom3 {sl} {ah} ⟨ qs ⟩) i))
 
 --     -- m-attention : let i = (sl ⊗ (ah ⊗ hd)) in
 --     --               (qs ks vs : E Γ (ar i)) (sc : ℕ) → E Γ (ar i)
 --     -- m-attention {sl} {ah} {hd} {Γ} qs ks vs sc = let
---     --   qs' = iswap3 {sl} {hd} {ah} (iswap {sl} {ah} qs)
---     --   ks' = iswap3 {sl} {hd} {ah} (iswap {sl} {ah} ks)
---     --   vs' = iswap3 {sl} {hd} {ah} (iswap {sl} {ah} vs)
+--     --   qs' = icom3 {sl} {hd} {ah} (icom {sl} {ah} qs)
+--     --   ks' = icom3 {sl} {hd} {ah} (icom {sl} {ah} ks)
+--     --   vs' = icom3 {sl} {hd} {ah} (icom {sl} {ah} vs)
 
---     --   in iswap3 {ah} {hd} {sl} (iswap {ah} {sl} (
+--     --   in icom3 {ah} {hd} {sl} (icom {ah} {sl} (
 --     --     Imap {ah} λ i → attention {sl} sc (sel ⟨ qs' ⟩ i) (sel ⟨ ks' ⟩ i) (sel ⟨ vs' ⟩ i)))
 
 --       -- (Imap {ah} λ i →
 --       --     attention {sl} {hd} sc (sel ⟨ qs' ⟩ i) (sel ⟨ ks' ⟩ i) (sel ⟨ vs' ⟩ i))
 
---         -- ( iswap {ah} {sl} (
+--         -- ( icom {ah} {sl} (
 --         -- Imap {ah} λ i → attention {sl} sc (sel {! swa  !} i) {!   !} {!   !}))
 
---       -- subst-assl {sl} {hd} (iswaps {ah} (
+--       -- subst-assl {sl} {hd} (icoms {ah} (
 --       --   Imap {ah} λ i → attention {sl}
---       --     (sel (iswap3 {sl} {hd} ⟨ qs ⟩) i)
---       --     (sel (iswap3 {sl} {hd} ⟨ ks ⟩) i)
---       --     (sel (iswap3 {sl} {hd} ⟨ vs ⟩) i) sc))
+--       --     (sel (icom3 {sl} {hd} ⟨ qs ⟩) i)
+--       --     (sel (icom3 {sl} {hd} ⟨ ks ⟩) i)
+--       --     (sel (icom3 {sl} {hd} ⟨ vs ⟩) i) sc))
 
 --       -- m-attention : ∀ {h u s r t Γ} → E Γ (ar (h ⊗ (u ⊗ s)))
 --     --           → E Γ (ar (h ⊗ (r ⊗ s))) → E Γ (ar (h ⊗ (r ⊗ t)))

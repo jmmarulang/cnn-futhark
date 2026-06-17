@@ -56,7 +56,7 @@ module Extract where
   open Primitives
   open WkSub
 
-  OPT = 20
+  OPT = 0
 
   -- Show Env (e.g. after running grad) where optimisations are applied
   -- to every expression in the list.
@@ -133,11 +133,17 @@ module Extract where
   ee-fut : EE Γ Γ → NamedEnv Γ → String
   ee-fut e ρ = proj₂ $ runState (ee-fut′ (ee-opt $ ee-dedup $ ee-opt e) ρ ρ) 0
 
+  nodedup-ee-fut : EE Γ Γ → NamedEnv Γ → String
+  nodedup-ee-fut e ρ = proj₂ $ runState (ee-fut′ (ee-opt $ ee-opt e) ρ ρ) 0
+
   -- This is the "entry point" that computes derivatives
   -- and generates the Futhark code for the variable names
   -- passed through NamedEnv
   pp : E Γ (ar s) → NamedEnv Γ → String
   pp e ρ = ee-fut ({- env-norm-lets $ -} grad e one zero-ee) ρ
+
+  nodedup-pp : E Γ (ar s) → NamedEnv Γ → String
+  nodedup-pp e ρ = nodedup-ee-fut ({- env-norm-lets $ -} grad e one zero-ee) ρ
 
   -- Examples
   -- ========
@@ -155,7 +161,9 @@ module Extract where
   let dimg = (imap2 5 5 (\\ x8_0 x8_1 -> (isum2 2 2 (\\ x7_0 x7_1 -> if (x8_0 >= x7_0 && x8_1 >= x7_1 && (x8_0 - x7_0) < 4 && (x8_1 - x7_1) < 4) then (x3[(x8_0 - x7_0)][(x8_1 - x7_1)] F.* k1[x7_0][x7_1]) else zero))))
   let dk1 = (imap2 2 2 (\\ x9_0 x9_1 -> (isum2 4 4 (\\ x10_0 x10_1 -> (x3[x10_0][x10_1] F.* img[(x9_0 + x10_0)][(x9_1 + x10_1)])))))"
   -}
+
   grad-conv-s = pp conv-e (ε ▹ "inp" ▹ "k1") -- whats the difference?
+
   {-
   "let x0 = (imap2 4 4 (\\ x2_0 x2_1 -> (isum2 2 2 (\\ x1_0 x1_1 -> (inp[(x1_0 + x2_0)][(x1_1 + x2_1)] F.* k1[x1_0][x1_1])))))
   let x3 = (let x4 = (imap2 4 4 (\\ x6_0 x6_1 -> (logistics x0[x6_0][x6_1])))
@@ -203,54 +211,35 @@ module Extract where
   grad-cnn-s = pp Primitives.Cnn.cnn (ε ▹ "inp" ▹ "k1" ▹ "b1" ▹ "k2" ▹ "b2" ▹ "fc" ▹ "b" ▹ "target" )
 
   -- Jairo made
-  test1-e : E _ _
-  test1-e = Lcon (ar [] ∷  ar [] ∷ []) ((ar [])) ε λ x y → (x ⊠ y)
+  grad-avg-ee : EE (ε ▹ ar Microgpt.SL) (ε ▹ ar Microgpt.SL)
+  grad-avg-ee = ee-opt $ ee-dedup $ grad Primitives.Microgpt.avg-e one zero-ee
 
-  test1-s : String
-  test1-s = proj₂ (runState (to-str test1-e (from-named (ε ▹ "x" ▹ "y"))) 0)
+  grad-avg-s : String
+  grad-avg-s = pp Primitives.Microgpt.avg-e (ε ▹ "inp")
 
-  grad-test1-s : String
-  grad-test1-s = pp test1-e (ε ▹ "x" ▹ "y")
+  grad-test-sels-s : String
+  grad-test-sels-s = pp Primitives.Microgpt.test-sels-e (ε ▹ "inp")
 
-  compc1-e : E _ _
-  compc1-e = multiopt compc1 10
+  grad-test-let-ee : EE _ _
+  grad-test-let-ee = ee-opt $ ee-dedup $ grad Primitives.Microgpt.test-let-e one zero-ee
 
-  compc1-s : String
-  compc1-s = proj₂ (runState (to-str compc1-e (from-named (ε ▹ "inp" ▹ "k1" ▹ "b1" ▹ "k2" ▹ "b2"))) 0)
+  grad-test2-let-s : String
+  grad-test2-let-s = pp Primitives.Microgpt.test2-let ε
+  
+  grad-test-let-s : String
+  grad-test-let-s = pp Primitives.Microgpt.test-let-e (ε ▹ "inp")
 
-  test-e : E _ _
-  test-e = Lcon (ar (ι 2) ∷ []) (ar []) (ε ▹ ix (ι 2) ▹ ix (ι 2))
-    λ x → (sels x (var (there v₀))) ⊞ sels x (var (there v₁))
+  grad-test3-let-s : String
+  grad-test3-let-s = pp Primitives.Microgpt.test3-let-e (ε ▹ "inp")
 
-  test-s : String
-  test-s = proj₂ (runState (to-str test-e (from-named (ε ▹ "v0" ▹ "v1" ▹ "x"))) 0)
+  grad-nodedup-test-let-s : String
+  grad-nodedup-test-let-s = nodedup-pp Primitives.Microgpt.test-let-e (ε ▹ "inp")
 
-  -- grad-mgpt-loss-s : String
-  -- grad-mgpt-loss-s = pp Primitives.Microgpt.mgpt-loss-e
-  --   (ε ▹ "w-te" ▹ "w-pe" ▹ "w-qry" ▹ "w-key" ▹ "w-val" ▹ "w-out" ▹ "w-up" ▹ "w-down" ▹ "w-voc" ▹ "doc-id" ▹ "target")
-  -- grad-microgpt-s : String
-  -- grad-microgpt-s = pp Primitives.Microgpt.microgpt
-  --   (ε ▹ "inp" ▹ "wq" ▹ "wk" ▹ "wv" ▹ "wo" ▹ "wf1" ▹ "wf2")
+  cross-entropy-s : String
+  cross-entropy-s = proj₂ (runState (to-str Primitives.Microgpt.cross-entropy-e (from-named (ε ▹ "inp" ▹ "target"))) 0)
 
-  -- attention-e : E _ _
-  -- attention-e = multiopt Primitives.Microgpt.attention-e 0
+  grad-cross-entropy-s : String
+  grad-cross-entropy-s = pp Primitives.Microgpt.cross-entropy-e (ε ▹ "inp" ▹ "target")
 
-  -- attention-s : String
-  -- attention-s = proj₂ (runState (to-str attention-e (from-named (ε ▹ "queries" ▹ "keys" ▹ "values"))) 0)
-
-  -- grad-attention-s : String
-  -- grad-attention-s = pp Primitives.Microgpt.attention-e (ε ▹ "queries" ▹ "keys" ▹ "values")
-
-open import Lang
-open Optimise
-open import Opt
-open import Real
-open import Ar
-open import Data.List
-open import Data.Product
-open import Data.Fin
-open import Data.List.Relation.Unary.All
-
-
-
-
+  mgpt-loss-s : String
+  mgpt-loss-s = proj₂ (runState (to-str Primitives.Microgpt.mgpt-loss-e (from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target"))) 0)

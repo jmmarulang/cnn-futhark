@@ -433,8 +433,8 @@ d_to'45'imap_286 ::
 d_to'45'imap_286 v0 v1 v2
   = coe
       MAlonzo.Code.Text.Printf.d_printf_26
-      ("(imap%u %s (\\ %s -> %s))" :: Data.Text.Text)
-      (d_dim_108 (coe v0)) (d_shape'45'args_104 (coe v0))
+      ("(imap%u %s (\\%s -> %s))" :: Data.Text.Text) (d_dim_108 (coe v0))
+      (d_shape'45'args_104 (coe v0))
       (d_ix'45'join_250 (coe v0) (coe v1) (coe (" " :: Data.Text.Text)))
       v2
 -- Futhark._.to-sum
@@ -447,8 +447,8 @@ d_to'45'sum_300 v0 v1 v2
   = let v3
           = coe
               MAlonzo.Code.Text.Printf.d_printf_26
-              ("(isum%u %s (\\ %s -> %s))" :: Data.Text.Text)
-              (d_dim_108 (coe v0)) (d_shape'45'args_104 (coe v0))
+              ("(isum%u %s (\\%s -> %s))" :: Data.Text.Text) (d_dim_108 (coe v0))
+              (d_shape'45'args_104 (coe v0))
               (d_ix'45'join_250 (coe v0) (coe v1) (coe (" " :: Data.Text.Text)))
               v2 in
     coe
@@ -1814,7 +1814,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                                                (coe v14)
                                                                (coe
                                                                   MAlonzo.Code.Text.Printf.d_printf_26
-                                                                  ("(if (zero <= %s) then %s else zero)"
+                                                                  ("(if (zero F.<= %s) then %s else zero)"
                                                                    ::
                                                                    Data.Text.Text)
                                                                   v15 v15))
@@ -1951,7 +1951,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                                                (coe v14)
                                                                (coe
                                                                   MAlonzo.Code.Text.Printf.d_printf_26
-                                                                  ("(if (zero <= %s) then one else zero)"
+                                                                  ("(if (zero F.< %s) then one else zero)"
                                                                    ::
                                                                    Data.Text.Text)
                                                                   v15))

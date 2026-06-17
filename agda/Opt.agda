@@ -284,6 +284,7 @@ module Opt (r : Real) (rp : RealProp r) where
                                         ∙ q (ρ , eval e ρ) j)
   ... | _ = let′ a b
           , λ ρ j → q (ρ , eval e ρ) j ∙ eval-cong b (reflᶜ ▹ p ρ) j
+  -- something may not be propagating properly
   opt (𝕖^ e) with opt e
   ... | a , p = 𝕖^ a , λ ρ i → cong e^_ (p ρ i)
   opt (relu e) with opt e

@@ -169,13 +169,13 @@ module _ where
   to-sel i a = a ++ ix-join (ix-map (printf "[%s]") i) ""
 
   to-imap : (s : S) → (i : Ix s) → (e : String) → String
-  to-imap s i e = printf "(imap%u %s (\\ %s -> %s))"
+  to-imap s i e = printf "(imap%u %s (\\%s -> %s))"
                    (dim s) (shape-args s) (ix-join i " ")
                    e
 
   to-sum : (s : S) → (i : Ix s) → (e : String) → String
   to-sum [] i e = e
-  to-sum s  i e = printf "(isum%u %s (\\ %s -> %s))" (dim s) (shape-args s)
+  to-sum s  i e = printf "(isum%u %s (\\%s -> %s))" (dim s) (shape-args s)
                          (ix-join i " ") e
 
   ix-plus : s + p ≈ r → (suc_≈_ p u)
@@ -365,7 +365,7 @@ module _ where
     a ← to-fut e ρ
     return λ i → do
       f , a′ ← a i
-      return (f , printf "(if (zero <= %s) then %s else zero)" a′ a′) --use max?
+      return (f , printf "(if (zero F.<= %s) then %s else zero)" a′ a′) --use max?
 
   to-fut (sqrt e) ρ = do
     a ← to-fut e ρ
@@ -377,7 +377,7 @@ module _ where
     a ← to-fut e ρ
     return λ i → do
       f , a′ ← a i
-      return (f , printf "(if (zero <= %s) then one else zero)" a′)
+      return (f , printf "(if (zero F.< %s) then one else zero)" a′)
 
   to-fut (ln e) ρ = do
     a ← to-fut e ρ
@@ -435,12 +435,4 @@ module Test where
                            (_ ,, mkar "inp" ,, mkar "k1" ,, mkar "b1"
                               ,, mkar "k2"  ,, mkar "b2" ,, mkar "fc"
                               ,, mkar "b" ,, mkar "target"  )) 0
-
-  -- Jairo made
-
-  -- microgpt-s : String
-  -- microgpt-s = proj₂
-  --           $ runState (to-str Primitives.Microgpt.microgpt
-  --                      (_ ,, mkar "inp" ,, mkar "wq" ,, mkar "wk" ,, mkar "wv"
-  --                         ,, mkar "wo" ,, mkar "wf1" ,, mkar "wf2")) 0
 

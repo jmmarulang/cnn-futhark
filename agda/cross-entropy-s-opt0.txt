@@ -1,0 +1,7 @@
+(let x0 = (let x3 = (imap1 16 (\\x7_0 -> (F.exp inp[x7_0])))
+in (let x4 = (isum1 16 (\\x8_0 -> x3[x8_0]))
+in (let x5 = (imap1 16 (\\x9_0 -> (x3[x9_0] F.* (one F./ x4))))
+in (imap1 16 (\\x6_0 -> x5[x6_0])))))
+in (let x1 = (imap1 16 (\\x10_0 -> (F.log x0[x10_0])))
+in (let x2 = (F.neg (isum1 16 (\\x11_0 -> (x1[x11_0] F.* target[x11_0]))))
+in x2)))

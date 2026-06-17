@@ -32,6 +32,7 @@ if __name__ == "__main__":
 
     # Process data
     train_images_raw, train_labels_raw = mndata.load_training()
+
     test_images_raw, test_labels_raw = mndata.load_testing()
     train_images = train_images_raw.astype(np.float32, copy=False).reshape(train_images_raw.shape[0], 28, 28)
     train_labels = train_labels_raw.astype(np.int8, copy=False)
