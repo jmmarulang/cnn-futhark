@@ -56,7 +56,7 @@ module Extract where
   open Primitives
   open WkSub
 
-  OPT = 0
+  OPT = 20
 
   -- Show Env (e.g. after running grad) where optimisations are applied
   -- to every expression in the list.
@@ -81,6 +81,13 @@ module Extract where
   ee-inline : EE Γ Δ → EE Γ Δ
   ee-inline (env x) = env x
   ee-inline (let′ x ρ) with δ ← ee-inline ρ | ee-count-uses δ v₀
+  ... | 0 = ee-sub δ (sub-id ▹ x) -- does nothing?
+  ... | 1 = ee-sub δ (sub-id ▹ x) -- why only for 1?
+  ... | _ = let′ x δ
+
+  ee-inline' : EE Γ Δ → EE Γ Δ
+  ee-inline' (env x) = env x
+  ee-inline' (let′ x ρ) with δ ← ee-inline ρ | ee-count-uses δ v₀
   ... | 0 = ee-sub δ (sub-id ▹ x) -- does nothing?
   ... | 1 = ee-sub δ (sub-id ▹ x) -- why only for 1?
   ... | _ = let′ x δ
@@ -131,10 +138,10 @@ module Extract where
 
   -- Apply optimisations and generate the code.
   ee-fut : EE Γ Γ → NamedEnv Γ → String
-  ee-fut e ρ = proj₂ $ runState (ee-fut′ (ee-opt $ ee-dedup $ ee-opt e) ρ ρ) 0
+  ee-fut e ρ = proj₂ $ runState (ee-fut′ (ee-OPT $ ee-dedup $ ee-OPT e) ρ ρ) 0
 
-  nodedup-ee-fut : EE Γ Γ → NamedEnv Γ → String
-  nodedup-ee-fut e ρ = proj₂ $ runState (ee-fut′ (ee-opt $ ee-opt e) ρ ρ) 0
+  -- nodedup-ee-fut : EE Γ Γ → NamedEnv Γ → String
+  -- nodedup-ee-fut e ρ = proj₂ $ runState (ee-fut′ (ee-opt $ ee-opt e) ρ ρ) 0
 
   -- This is the "entry point" that computes derivatives
   -- and generates the Futhark code for the variable names
@@ -142,8 +149,8 @@ module Extract where
   pp : E Γ (ar s) → NamedEnv Γ → String
   pp e ρ = ee-fut ({- env-norm-lets $ -} grad e one zero-ee) ρ
 
-  nodedup-pp : E Γ (ar s) → NamedEnv Γ → String
-  nodedup-pp e ρ = nodedup-ee-fut ({- env-norm-lets $ -} grad e one zero-ee) ρ
+  -- nodedup-pp : E Γ (ar s) → NamedEnv Γ → String
+  -- nodedup-pp e ρ = nodedup-ee-fut ({- env-norm-lets $ -} grad e one zero-ee) ρ
 
   -- Examples
   -- ========
@@ -232,8 +239,8 @@ module Extract where
   grad-test3-let-s : String
   grad-test3-let-s = pp Primitives.Microgpt.test3-let-e (ε ▹ "inp")
 
-  grad-nodedup-test-let-s : String
-  grad-nodedup-test-let-s = nodedup-pp Primitives.Microgpt.test-let-e (ε ▹ "inp")
+  -- grad-nodedup-test-let-s : String
+  -- grad-nodedup-test-let-s = nodedup-pp Primitives.Microgpt.test-let-e (ε ▹ "inp")
 
   cross-entropy-s : String
   cross-entropy-s = proj₂ (runState (to-str Primitives.Microgpt.cross-entropy-e (from-named (ε ▹ "inp" ▹ "target"))) 0)
@@ -241,5 +248,12 @@ module Extract where
   grad-cross-entropy-s : String
   grad-cross-entropy-s = pp Primitives.Microgpt.cross-entropy-e (ε ▹ "inp" ▹ "target")
 
+  m-softmax-s : String 
+  m-softmax-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.m-softmax-e OPT) (from-named (ε ▹ "inp"))) 0)
+
   mgpt-loss-s : String
   mgpt-loss-s = proj₂ (runState (to-str Primitives.Microgpt.mgpt-loss-e (from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target"))) 0)
+
+  mgpt-forward-s : String
+  mgpt-forward-s = proj₂ (runState (to-str Primitives.Microgpt.mgpt-forward-e (from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq"))) 0)
+

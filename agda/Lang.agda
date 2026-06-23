@@ -585,11 +585,6 @@ module Primitives where
     -- subst-assr : ∀ {Γ} → E Γ (ar (s ⊗ (p ⊗ q))) → E Γ (ar ((s ⊗ p) ⊗ q))
     -- subst-assr {s} {p} {q} {Γ} x = subst-shape (sym (++-assoc s p q)) x
 
-    pw3-eq : ∀ {R} {s1 s2 p1 p2 q1 q2 : S}
-                → (s1 ≡ s2) → (p1 ≡ p2) → (q1 ≡ q2)
-                → (Pointw₃ R s1 p1 q1) ≡ Pointw₃ R s2 p2 q2
-    pw3-eq refl refl refl = refl
-
     pw3-subst : ∀ {R} {s1 s2 p1 p2 q1 q2 : S}
                 → (s1 ≡ s2) → (p1 ≡ p2) → (q1 ≡ q2)
                 → (Pointw₃ R s1 p1 q1) → Pointw₃ R s2 p2 q2
@@ -610,17 +605,8 @@ module Primitives where
             → Pointw₃ R (s ⊗ s) (p ⊗ p) (q ⊗ q)
     pw3-dup pw = pw3-con pw pw
 
-    -- id : ∀ {Γ} → E Γ (ar (s ⊗ s))
-    -- id {s} = Imap {s} λ i → Imaps {s} λ j → zero-but i j one
-
-    -- tile : ∀ {Γ} → E Γ (ar s) → E Γ (ar (p ⊗ s))
-    -- tile {s} {p} x = Imap {p} λ _ → ⟨ x ⟩
-
     icom : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ u))
     icom {u} {s} x = Imap {s} λ i → Imaps λ j → sels (sel ⟨ x ⟩ j) i
-
-    -- icom-r : ∀ {Γ} → E Γ (ar (p ⊗ (u ⊗ s))) → E Γ (ar (p ⊗ (s ⊗ u)))
-    -- icom-r {p} {u} {s} x = Imap {p} λ i → icom {u} (sel ⟨ x ⟩ i)
 
     iswap3 : ∀ {Γ} → E Γ (ar (p ⊗ (s ⊗ u))) → E Γ (ar (s ⊗ (p ⊗ u)))
     iswap3 {p} {s} {u} x = Imap {s} λ i → Imap {p} λ j → sel (sel ⟨ x ⟩ j) i
@@ -647,20 +633,15 @@ module Primitives where
     matmul {u} {s} {r} w x = Imap {u} λ i →
       Imaps (λ j → sels (linear ⟨ w ⟩ (Imaps λ k → sels (sel ⟨ x ⟩ k) j) ) i)
 
-    -- is this just matrix multiplication with a transpose?
-    -- m-linear : ∀ {Γ} → E Γ (ar (s ⊗ u)) → E Γ (ar (p ⊗ s)) → E Γ (ar (p ⊗ u))
-    -- m-linear {s} {u} {p} w xs = matmul {p} {s} xs w
     m-linear : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (p ⊗ s)) → E Γ (ar (p ⊗ u))
     m-linear {u} {s} {p} w xs = Imap {p} λ i → linear ⟨ w ⟩ (sel ⟨ xs ⟩ i)
 
     -- Is this correct?
     softmax : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
     softmax {s = s} x =
-      Let exps := 𝕖^ x In 
+      Let exps := 𝕖^ (x) In -- subst one for stability
       Let total := Sum {s} (λ i → sels exps i) In 
-      Let r := Imaps {s} (λ i → sels exps i // total) In r 
-      --Let s := Sum {s} (λ i → 𝕖^ (sels ⟨ x ⟩ {!   !})) In {!   !}
-       -- Imaps (λ i → (𝕖^ (sels ⟨ x ⟩ i)) // Sum (λ j → 𝕖^ sels ⟨ x ⟩ j))
+      Let r := Imaps {s} (λ i → (sels exps i) // total) In r
 
     m-softmax : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
     m-softmax {s} {p} {Γ} x = Imap {s} λ i → softmax (sel ⟨ x ⟩ i)
@@ -668,15 +649,15 @@ module Primitives where
     -- add a small number to avoid dividing by zero?
     rmsnorm : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
     rmsnorm {s = s} x =
-      Let ms := scaledown (len s) (Sum (λ i → sels ⟨ x ⟩ i ⊠ sels ⟨ x ⟩ i)) In
-      Let scale := 𝟙/ (sqrt ms) In
+      Let ms := scaledown (len s) (Sum (λ i → sels ⟨ x ⟩ i ⊠ sels ⟨ x ⟩ i)) In -- always positive
+      Let scale := 𝟙/ (sqrt (ms ⊞ scaledown 100000 one)) In -- add a small number to avoid dividinx by zero
       Let r := Imaps (λ i → sels ⟨ x ⟩ i ⊠ scale) In r
 
     m-rmsnorm : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
     m-rmsnorm {s} {p} {Γ} x = Imap {s} λ i → rmsnorm (sel ⟨ x ⟩ i)
 
-    max : ∀ {Γ} → E Γ (ar s) → E Γ (ar s) → E Γ (ar s)
-    max x y = x ⊞ relu (y ⊟ x)
+    -- max : ∀ {Γ} → E Γ (ar s) → E Γ (ar s) → E Γ (ar s)
+    -- max x y = x ⊞ relu (y ⊟ x)
 
     avg : ∀ {Γ} → E Γ (ar s) → E Γ (ar [])
     avg {s} x = scaledown (len s) (Sum λ i → sels ⟨ x ⟩ i)
@@ -729,9 +710,15 @@ module Primitives where
 
     attention : ∀ {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
                 (qs ks vs : E Γ (ar (sl ⊗ hd))) → E Γ (ar (sl ⊗ hd))
-    attention {sl} {hd} sc mask qs ks vs = matmul {r = hd}
-      (m-softmax {sl} (
-        scaledown sc ⟨ matmul {u = sl} qs (icom {sl} ks) ⟩ ⊞ mask)) vs
+    attention {sl} {hd} sc mask qs ks vs = 
+      Let qks := matmul {u = sl} qs (icom {sl} ks) In 
+      Let scqks := scaledown sc qks In 
+      Let masked := scqks ⊞ ⟨ mask ⟩ In
+      Let sf := m-softmax {sl} masked In 
+      Let r := matmul {r = hd} sf ⟨ vs ⟩ In r
+      -- matmul {r = hd}
+      -- (m-softmax {sl} (
+      --   scaledown sc ⟨ matmul {u = sl} qs (icom {sl} ks) ⟩ ⊞ mask)) vs
 
     mh-attention : let ed = ah ⊗ hd in ∀ {Γ} (sc : ℕ)
                    (mask : E Γ (ar (sl ⊗ sl)))
@@ -797,7 +784,7 @@ module Primitives where
     mgpt-forward {sl} {vo} {ed} {fd} {ah} {hd} {Γ} sc mask p wseq pr =
       let p' = block-param (wkgptp suc p) pr in
       -- embed
-      Let seq := (p .wpe) ⊞ wseq In
+      Let seq := m-rmsnorm {sl} ((p .wpe) ⊞ wseq) In
       -- block into heads
       Let seq' := block-seq seq pr In
       -- layer pass
@@ -858,15 +845,27 @@ module Primitives where
     -- test2-let : ∀ {Γ} (inp : E Γ (ar [])) → (E Γ (ar []))
     -- test2-let inp = {!   !}
 
-
     avg-e : E _ _
     avg-e = Lcon (ar SL ∷ []) (ar []) ε
       λ x → avg x
+
+    m-softmax-e : E _ _
+    m-softmax-e = Lcon (ar (SL ⊗ ED) ∷ []) (ar (SL ⊗ ED)) ε 
+      λ x → m-softmax {SL} x
     
     cross-entropy-e : E _ _
     cross-entropy-e = Lcon (ar ED ∷ ar ED ∷ []) (ar []) ε
       λ x y → cross-entropy x y
 
+    mgpt-forward-e : E _ _
+    mgpt-forward-e = Lcon (ar (SL ⊗ SL) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+                  ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+                  ar (FD ⊗ ED) ∷ ar (ED ⊗ FD) ∷ ar (VO ⊗ ED) ∷
+                  ar (SL ⊗ ED) ∷ []) (ar (SL ⊗ VO)) ε
+      λ mask wpe wqry wkey wval wout wup wdown wvoc wseq  →
+        mgpt-forward {sl = SL} SC mask 
+          (to-gptp wpe wqry wkey wval wout wup wdown wvoc) wseq PR
+    
     mgpt-loss-e : E _ _
     mgpt-loss-e = Lcon (ar (SL ⊗ SL) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
                   ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷

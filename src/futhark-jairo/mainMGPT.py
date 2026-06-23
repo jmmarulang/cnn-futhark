@@ -1,67 +1,110 @@
-#!/usr/bin/env python3
-
-from mnist import MNIST
-import argparse
-import futhark_server
+import microgpt
 import numpy as np
-import time
-import logging
+import string
+import matplotlib.pyplot as plt
+import sys
+sys.path.insert(0,"/home/jmmg1c24/Documents/Github Repos/cnn-futhark/src/purePython")
+import microgptlib as mp
+import random
+seed = 42
+random.seed(seed)
+# import argparse
+# import os       # os.path.exists
+# import math     # math.log, math.exp
 
-if __name__ == "__main__":
-    logging.basicConfig()
-    logger = logging.getLogger('futhark')
-    logger.setLevel(logging.INFO)
+def softmax(logits):
+    max_val = max(val for val in logits)
+    exps = [np.exp(val - max_val) for val in logits]
+    total = np.sum(exps)
+    return [e / total for e in exps]
 
-    parser = argparse.ArgumentParser(description='Futhark implementation')
-    parser.add_argument('mnistpath', metavar='MNIST_PATH', type=str,
-                        help='path to where mnist data is located.')
-    parser.add_argument('-b', '--batch-size', type=int, default=1,
-                        help='batch size')
-    parser.add_argument('-t', '--training-size', type=int, default=1,
-                        help='training size (max 60000)')
-    parser.add_argument('-p', '--epoch', type=int, default=5,
-                        help='epochs to iterate')
-    parser.add_argument('-r', '--training-rate', type=float, default=0.05,
-                        help='rate to learn at')
-    parser.add_argument('--futhark', type=str, help='server-mode binary')
+# Futhark call
+mgpt = microgpt.microgpt()
 
-    args = parser.parse_args()
+alphabet = list(string.ascii_lowercase)
+assert len(alphabet) == 26
 
-    # Get data
-    mndata = MNIST(args.mnistpath, return_type='numpy')
+BOS = len(alphabet)
+vocab = alphabet + ["end"]
+vocab_size = len(alphabet) + 1 # total number of unique tokens, +1 is for BOS
 
-    # Process data
-    train_images_raw, train_labels_raw = mndata.load_training()
+# Initialize the parameters, to store the knowledge of the model
+ed = 16     # width of the network (embedding dimension)
+sl = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
+ah = 4      # number of attention heads
+hd = 4 # derived dimension of each head
+big_num = 700
 
-    test_images_raw, test_labels_raw = mndata.load_testing()
-    train_images = train_images_raw.astype(np.float32, copy=False).reshape(train_images_raw.shape[0], 28, 28)
-    train_labels = train_labels_raw.astype(np.int8, copy=False)
+# cau_mask = -np.ones((sl, sl))*big_num
+cau_mask = -np.triu(np.ones((sl,sl)))*big_num
 
-    logger.info(f'Parameters: epoch({args.epoch}), batch-size({args.batch_size}), training-rate({args.training_rate}), training-size({args.training_size})')
-    print(args.futhark)
-    with futhark_server.Server(args.futhark) as server:
-        server.put_value('batchsize', np.int64(args.batch_size))
-        server.put_value('rate', np.float32(args.training_rate))
-        server.put_value('trainings', np.int64(args.training_size))
-        server.put_value('imgs', train_images)
-        server.put_value('lbls', train_labels)
-        server.cmd_call('initial_state', 'state')
-        train_start = time.perf_counter ()
-        for epoch in range(args.epoch):
-            server.cmd_call('iteration',
-                            *['state_new_and_error'],
-                            *['trainings', 'batchsize', 'rate', 'imgs', 'lbls', 'state'])
-            state_new_and_error = server.get_value('state_new_and_error')
-            server.put_value('b', state_new_and_error[0])
-            server.put_value('b1', state_new_and_error[1])
-            server.put_value('b2', state_new_and_error[2])
-            server.put_value('fc', state_new_and_error[3])
-            server.put_value('k1', state_new_and_error[4])
-            server.put_value('k2', state_new_and_error[5])
-            server.cmd_free('state_new_and_error', 'state')
-            server.cmd_call('make_state', 'state', 'k1', 'b1', 'k2', 'b2','fc','b')
-            error =  state_new_and_error[6]
-            logger.info ('Epoch {}, Loss: {:f}'.format (epoch+1, error))
-            server.cmd_free('k1', 'b1', 'k2', 'b2','fc','b')
-        train_stop = time.perf_counter () - train_start
-        logger.info('Train: {:f}s'.format(train_stop))
+ran_matrix = lambda nout, nin, std=0.08: np.array([[(random.gauss(0, std)) for _ in range(nin)] for _ in range(nout)])
+fwdic = {'wte': ran_matrix(vocab_size, ed), 'wpe': ran_matrix(sl, ed), 'wvoc': ran_matrix(vocab_size, ed)}
+fwdic['wqry'] = ran_matrix(ed, ed)
+fwdic['wkey'] = ran_matrix(ed, ed)
+fwdic['wval'] = ran_matrix(ed, ed)
+fwdic['wout'] = ran_matrix(ed, ed)
+fwdic['wup'] = ran_matrix(4 * ed, ed)
+fwdic['wdown'] = ran_matrix(ed, 4 * ed)
+# params = [p for mat in fwdic.values() for row in mat for p in row] # flatten params into a single list[Value]
+# print(f"num params: {len(params)}")
+
+pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
+
+fparams = mgpt.make_params(fwdic['wte'], fwdic['wpe'], fwdic['wqry'], fwdic['wkey'], fwdic['wval'], fwdic['wout'], fwdic['wup'], fwdic['wdown'], fwdic['wvoc'])
+
+# input
+doc = list("wakuntchapinka")
+
+# doc = [alphabet[i] for i in random.sample(range(BOS), sl - 2)]
+
+seq_ids = np.array([BOS] + [alphabet.index(ch) for ch in doc] + [BOS])
+
+assert len(seq_ids) == 16
+
+pad_mask = np.zeros((sl,sl))
+
+mask = cau_mask + pad_mask
+
+mflogits = mgpt.main(fparams, seq_ids, mask)
+mfprobs = np.array([softmax(logits) for logits in mflogits])
+
+mplogits = mp.forward_seq(pwdic, seq_ids)
+mplogits = np.array([[val.data for val in logits] for logits in mplogits])
+mpprobs = np.array([softmax(logits) for logits in mplogits])
+
+barWidth = 0.25
+lfprobs = mfprobs[-1]
+lpprobs = mpprobs[-1]
+
+# br1 = np.arange(len(lfprobs))
+# br2 = [x + barWidth for x in br1]
+# plt.bar(br1, lfprobs, width=barWidth, label="futhark")
+# plt.bar(br2, lpprobs, width=barWidth, label="python")
+# plt.xticks([r + barWidth for r in range(len(lfprobs))], vocab)
+# plt.xlabel('next token probability', fontsize = 12)
+# plt.legend()
+# # plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+# plt.show()
+
+# mse = np.array([np.mean([np.pow(mplogits[i][j] - mflogits[i][j], 2) for j in range(ed)]) for i in range(sl)])
+
+# print(mse)
+
+# plt.plot(mse, '-o')
+# plt.xlabel('token position', fontsize = 12)
+# plt.ylabel('mean square error', fontsize = 12)
+# plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+# plt.show()
+
+# print(np.sum(np.isnan(flogits)))
+
+# print(logits)
+
+# print(mgpt.main((1,1,1,1,1,1,1,1,1), tok_ids, 1))
+
+# def main(): 
+#     print(BOS)
+#     mgpt = microgpt.microgpt()
+#     doc = "Wakuntchapinka"
+#     seq = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
