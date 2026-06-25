@@ -612,17 +612,17 @@ module Primitives where
     iswap3 {p} {s} {u} x = Imap {s} λ i → Imap {p} λ j → sel (sel ⟨ x ⟩ j) i
 
     iass-r : ∀ {Γ} → E Γ (ar ((p ⊗ s) ⊗ u)) → E Γ (ar (p ⊗ (s ⊗ u)))
-    iass-r {p} {s} {u} {Γ} x = Imap {p} λ i → Imap {s} λ j → Imaps λ z → 
+    iass-r {p} {s} {u} {Γ} x = Imap {p} λ i → Imap {s} λ j → Imaps λ z →
       sels (sel (sel (icom {s = u} ⟨ x ⟩) z) i) j
 
     iass-l : ∀ {Γ} → E Γ (ar (p ⊗ (s ⊗ u))) → E Γ (ar ((p ⊗ s) ⊗ u))
-    iass-l {p} {s} {u} {Γ} x = 
-      icom {u = u} $ Imap {u} λ i → Imap {p} λ j → Imaps λ z → 
+    iass-l {p} {s} {u} {Γ} x =
+      icom {u = u} $ Imap {u} λ i → Imap {p} λ j → Imaps λ z →
         sels (sel (sel ⟨ x ⟩ j) z) i
-    
+
     iswap4in : ∀ {Γ} → E Γ (ar ((s ⊗ p) ⊗ (q ⊗ r)))
               → E Γ (ar ((s ⊗ q) ⊗ (p ⊗ r)))
-    iswap4in {s} {p} {q} {r} {Γ} x = 
+    iswap4in {s} {p} {q} {r} {Γ} x =
       iass-l {s} $ Imap {s} λ i → iswap3 {p} {q} (sel (iass-r {s} ⟨ x ⟩) i)
 
     linear : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar s) → E Γ (ar u)
@@ -640,7 +640,7 @@ module Primitives where
     softmax : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
     softmax {s = s} x =
       Let exps := 𝕖^ (x) In -- subst one for stability
-      Let total := Sum {s} (λ i → sels exps i) In 
+      Let total := Sum {s} (λ i → sels exps i) In
       Let r := Imaps {s} (λ i → (sels exps i) // total) In r
 
     m-softmax : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
@@ -710,11 +710,11 @@ module Primitives where
 
     attention : ∀ {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
                 (qs ks vs : E Γ (ar (sl ⊗ hd))) → E Γ (ar (sl ⊗ hd))
-    attention {sl} {hd} sc mask qs ks vs = 
-      Let qks := matmul {u = sl} qs (icom {sl} ks) In 
-      Let scqks := scaledown sc qks In 
+    attention {sl} {hd} sc mask qs ks vs =
+      Let qks := matmul {u = sl} qs (icom {sl} ks) In
+      Let scqks := scaledown sc qks In
       Let masked := scqks ⊞ ⟨ mask ⟩ In
-      Let sf := m-softmax {sl} masked In 
+      Let sf := m-softmax {sl} masked In
       Let r := matmul {r = hd} sf ⟨ vs ⟩ In r
       -- matmul {r = hd}
       -- (m-softmax {sl} (
@@ -819,14 +819,14 @@ module Primitives where
     test-sels {s} inp = Imaps λ j → sels ⟨ inp ⟩ j
 
     test-let : ∀ {Γ} (inp : E Γ (ar [])) → (E Γ (ar []))
-    test-let inp = Let a := (Let b := inp ⊞ one In b ⊞ one ⊞ one) In a ⊞ one ⊞ one ⊞ one 
+    test-let inp = Let a := (Let b := inp ⊞ one In b ⊞ one ⊞ one) In a ⊞ one ⊞ one ⊞ one
 
     test2-let : E ε (ar [])
     test2-let = Let a := one {s = []} In zero
 
     test3-let : ∀ {Γ} (inp : E Γ (ar [])) → (E Γ (ar []))
     test3-let inp = Let a := (Let b := inp In b ⊠ b) In a ⊞ one
-    
+
     test-sels-e : E _ _
     test-sels-e = Lcon (ar [] ∷ []) (ar []) ε λ x → test-sels x
 
@@ -836,23 +836,14 @@ module Primitives where
     test3-let-e : E _ _
     test3-let-e = Lcon (ar [] ∷ []) (ar []) ε λ x → test3-let x
 
---     let′ (Lang.E.var Lang._∈_.here)
---    (let′ Lang.E.one
---    (let′ (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
---    (let′ (Lang.E.var (Lang._∈_.there Lang._∈_.here))
---      (env (ε ▹ Lang.E.var Lang._∈_.here)))))
-
-    -- test2-let : ∀ {Γ} (inp : E Γ (ar [])) → (E Γ (ar []))
-    -- test2-let inp = {!   !}
-
     avg-e : E _ _
     avg-e = Lcon (ar SL ∷ []) (ar []) ε
       λ x → avg x
 
     m-softmax-e : E _ _
-    m-softmax-e = Lcon (ar (SL ⊗ ED) ∷ []) (ar (SL ⊗ ED)) ε 
+    m-softmax-e = Lcon (ar (SL ⊗ ED) ∷ []) (ar (SL ⊗ ED)) ε
       λ x → m-softmax {SL} x
-    
+
     cross-entropy-e : E _ _
     cross-entropy-e = Lcon (ar ED ∷ ar ED ∷ []) (ar []) ε
       λ x y → cross-entropy x y
@@ -863,9 +854,9 @@ module Primitives where
                   ar (FD ⊗ ED) ∷ ar (ED ⊗ FD) ∷ ar (VO ⊗ ED) ∷
                   ar (SL ⊗ ED) ∷ []) (ar (SL ⊗ VO)) ε
       λ mask wpe wqry wkey wval wout wup wdown wvoc wseq  →
-        mgpt-forward {sl = SL} SC mask 
+        mgpt-forward {sl = SL} SC mask
           (to-gptp wpe wqry wkey wval wout wup wdown wvoc) wseq PR
-    
+
     mgpt-loss-e : E _ _
     mgpt-loss-e = Lcon (ar (SL ⊗ SL) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
                   ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷

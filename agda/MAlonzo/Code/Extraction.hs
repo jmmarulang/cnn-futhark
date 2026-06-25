@@ -104,7 +104,7 @@ d___96 ::
 d___96 v0 v1 = coe MAlonzo.Code.Effect.Monad.State.du_monadState_46
 -- Extraction.Extract.OPT
 d_OPT_98 :: Integer
-d_OPT_98 = coe (20 :: Integer)
+d_OPT_98 = coe (30 :: Integer)
 -- Extraction.Extract.env-opt
 d_env'45'opt_100 ::
   MAlonzo.Code.Lang.T_Ctx_12 ->

@@ -5,8 +5,9 @@ import matplotlib.pyplot as plt
 import sys
 sys.path.insert(0,"/home/jmmg1c24/Documents/Github Repos/cnn-futhark/src/purePython")
 import microgptlib as mp
+import time
 import random
-seed = 42
+seed = 40
 random.seed(seed)
 # import argparse
 # import os       # os.path.exists
@@ -35,23 +36,28 @@ ah = 4      # number of attention heads
 hd = 4 # derived dimension of each head
 big_num = 700
 
-# cau_mask = -np.ones((sl, sl))*big_num
-cau_mask = -np.triu(np.ones((sl,sl)))*big_num
+ones = np.ones((sl,sl))
+tri = (ones - np.tril(ones))
+cau_mask = -1 * tri * big_num
 
-ran_matrix = lambda nout, nin, std=0.08: np.array([[(random.gauss(0, std)) for _ in range(nin)] for _ in range(nout)])
-fwdic = {'wte': ran_matrix(vocab_size, ed), 'wpe': ran_matrix(sl, ed), 'wvoc': ran_matrix(vocab_size, ed)}
+ran_matrix = lambda nout, nin, std=0.08: np.array(
+    [[(random.gauss(0, std)) for _ in range(nin)] for _ in range(nout)])
+fwdic = {'wte': ran_matrix(vocab_size, ed), 'wpe': ran_matrix(sl, ed),
+         'wvoc': ran_matrix(vocab_size, ed)}
 fwdic['wqry'] = ran_matrix(ed, ed)
 fwdic['wkey'] = ran_matrix(ed, ed)
 fwdic['wval'] = ran_matrix(ed, ed)
 fwdic['wout'] = ran_matrix(ed, ed)
 fwdic['wup'] = ran_matrix(4 * ed, ed)
 fwdic['wdown'] = ran_matrix(ed, 4 * ed)
-# params = [p for mat in fwdic.values() for row in mat for p in row] # flatten params into a single list[Value]
+# pparams = [p for mat in fwdic.values() for row in mat for p in row] # flatten params into a single list[Value]
 # print(f"num params: {len(params)}")
 
 pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
 
-fparams = mgpt.make_params(fwdic['wte'], fwdic['wpe'], fwdic['wqry'], fwdic['wkey'], fwdic['wval'], fwdic['wout'], fwdic['wup'], fwdic['wdown'], fwdic['wvoc'])
+fparams = mgpt.make_params(fwdic['wte'], fwdic['wpe'], fwdic['wqry'],
+                           fwdic['wkey'], fwdic['wval'], fwdic['wout'],
+                           fwdic['wup'], fwdic['wdown'], fwdic['wvoc'])
 
 # input
 doc = list("wakuntchapinka")
@@ -59,23 +65,74 @@ doc = list("wakuntchapinka")
 # doc = [alphabet[i] for i in random.sample(range(BOS), sl - 2)]
 
 seq_ids = np.array([BOS] + [alphabet.index(ch) for ch in doc] + [BOS])
+asl = len(seq_ids)
+print("".join(doc))
 
-assert len(seq_ids) == 16
+assert asl == 16
 
 pad_mask = np.zeros((sl,sl))
 
 mask = cau_mask + pad_mask
 
-mflogits = mgpt.main(fparams, seq_ids, mask)
-mfprobs = np.array([softmax(logits) for logits in mflogits])
+# fmlogits = mgpt.forward_seq(fparams, seq_ids, mask)
+# mfprobs = np.array([softmax(logits) for logits in fmlogits])
 
-mplogits = mp.forward_seq(pwdic, seq_ids)
-mplogits = np.array([[val.data for val in logits] for logits in mplogits])
-mpprobs = np.array([softmax(logits) for logits in mplogits])
+# pmlogits = mp.forward_seq(pwdic, seq_ids)
+# pmlogits = np.array([[val.data for val in logits] for logits in pmlogits])
+# mpprobs = np.array([softmax(logits) for logits in pmlogits])
 
-barWidth = 0.25
-lfprobs = mfprobs[-1]
-lpprobs = mpprobs[-1]
+# mse = np.array([np.mean([np.pow(pmlogits[i][j] - fmlogits[i][j], 2) for j in range(ed)]) for i in range(sl)])
+# pos = 0
+# print(big_num, pos, mse[pos])
+
+ftarget_ids = np.array([seq_ids[pos_id + 1] for pos_id in range(asl - 1)])
+ftarget = np.array([[1 if (n < (asl - 1) and ftarget_ids[n] == m) else 0
+                     for m in range(vocab_size)]
+                     for n in range(sl)]).astype(np.float64)
+
+start = time.time()
+floss, flosses = mgpt.cal_loss(fparams, seq_ids, ftarget, mask)
+end = time.time()
+print("floss", end - start)
+# flosses = flosses[: asl - 1]
+
+# start = time.time()
+# ploss, plosses = mp.cal_loss(pwdic, seq_ids)
+# end = time.time()
+# print("ploss", end - start)
+# ploss.backward()
+# ploss, plosses = ploss.data, [aloss.data for aloss in plosses]
+
+# pdwdic = { k : np.vectorize(mp.to_grad)(v) for k, v in pwdic.items()}
+
+# print(pdwdic['wqry'][0][0])
+
+# grad = mgpt.grad_loss(asl, fparams, seq_ids, mask)
+
+# abse_loss = [np.abs(afloss - aploss) for (afloss , aploss) in zip(flosses, plosses)]
+
+
+#-----------------------------------------------------
+
+
+# plt.plot(abse_loss, '-o')
+# plt.xlabel('token position', fontsize = 12)
+# plt.ylabel('abs error', fontsize = 12)
+# # plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+# plt.show()
+
+
+# plt.plot(plosses, '-o')
+# plt.plot(flosses, '-o')
+# plt.xlabel('token position', fontsize = 12)
+# plt.ylabel('loss', fontsize = 12)
+# # plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+# plt.show()
+
+
+# barWidth = 0.25
+# lfprobs = mfprobs[0]
+# lpprobs = mpprobs[0]
 
 # br1 = np.arange(len(lfprobs))
 # br2 = [x + barWidth for x in br1]
@@ -87,24 +144,8 @@ lpprobs = mpprobs[-1]
 # # plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
 # plt.show()
 
-# mse = np.array([np.mean([np.pow(mplogits[i][j] - mflogits[i][j], 2) for j in range(ed)]) for i in range(sl)])
-
-# print(mse)
-
 # plt.plot(mse, '-o')
 # plt.xlabel('token position', fontsize = 12)
 # plt.ylabel('mean square error', fontsize = 12)
-# plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+# # plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
 # plt.show()
-
-# print(np.sum(np.isnan(flogits)))
-
-# print(logits)
-
-# print(mgpt.main((1,1,1,1,1,1,1,1,1), tok_ids, 1))
-
-# def main(): 
-#     print(BOS)
-#     mgpt = microgpt.microgpt()
-#     doc = "Wakuntchapinka"
-#     seq = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
