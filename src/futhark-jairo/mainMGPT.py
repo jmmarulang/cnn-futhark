@@ -90,16 +90,19 @@ ftarget = np.array([[1 if (n < (asl - 1) and ftarget_ids[n] == m) else 0
                      for m in range(vocab_size)]
                      for n in range(sl)]).astype(np.float64)
 
-start = time.time()
-floss, flosses = mgpt.cal_loss(fparams, seq_ids, ftarget, mask)
-end = time.time()
-print("floss", end - start)
+# start = time.time()
+# floss, flosses = mgpt.cal_loss(fparams, seq_ids, ftarget, mask)
+# end = time.time()
+# print("floss", end - start)
 # flosses = flosses[: asl - 1]
 
 # start = time.time()
 # ploss, plosses = mp.cal_loss(pwdic, seq_ids)
 # end = time.time()
 # print("ploss", end - start)
+# ploss, plosses = ploss.data, [aloss.data for aloss in plosses]
+# abse_loss = [np.abs(afloss - aploss) for (afloss , aploss) in zip(flosses, plosses)]
+
 # ploss.backward()
 # ploss, plosses = ploss.data, [aloss.data for aloss in plosses]
 
@@ -107,9 +110,10 @@ print("floss", end - start)
 
 # print(pdwdic['wqry'][0][0])
 
-# grad = mgpt.grad_loss(asl, fparams, seq_ids, mask)
-
-# abse_loss = [np.abs(afloss - aploss) for (afloss , aploss) in zip(flosses, plosses)]
+start = time.time()
+grad = mgpt.grad_loss(fparams, seq_ids, ftarget, mask)
+end = time.time()
+print("fgrad_loss", end - start)
 
 
 #-----------------------------------------------------

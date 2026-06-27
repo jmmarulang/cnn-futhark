@@ -56,7 +56,7 @@ module Extract where
   open Primitives
   open WkSub
 
-  OPT = 30
+  OPT = 20
 
   -- Show Env (e.g. after running grad) where optimisations are applied
   -- to every expression in the list.
@@ -218,38 +218,41 @@ module Extract where
   grad-cnn-s = pp Primitives.Cnn.cnn (ε ▹ "inp" ▹ "k1" ▹ "b1" ▹ "k2" ▹ "b2" ▹ "fc" ▹ "b" ▹ "target" )
 
   -- Jairo made
-  grad-avg-ee : EE (ε ▹ ar Microgpt.SL) (ε ▹ ar Microgpt.SL)
-  grad-avg-ee = ee-opt $ ee-dedup $ grad Primitives.Microgpt.avg-e one zero-ee
+  -- grad-avg-ee : EE (ε ▹ ar Microgpt.SL) (ε ▹ ar Microgpt.SL)
+  -- grad-avg-ee = ee-opt $ ee-dedup $ grad Primitives.Microgpt.avg-e one zero-ee
 
-  grad-avg-s : String
-  grad-avg-s = pp Primitives.Microgpt.avg-e (ε ▹ "inp")
+  -- grad-avg-s : String
+  -- grad-avg-s = pp Primitives.Microgpt.avg-e (ε ▹ "inp")
 
-  grad-test-sels-s : String
-  grad-test-sels-s = pp Primitives.Microgpt.test-sels-e (ε ▹ "inp")
+  -- grad-test-sels-s : String
+  -- grad-test-sels-s = pp Primitives.Microgpt.test-sels-e (ε ▹ "inp")
 
-  grad-test-let-ee : EE _ _
-  grad-test-let-ee = ee-opt $ ee-dedup $ grad Primitives.Microgpt.test-let-e one zero-ee
+  -- grad-test-let-ee : EE _ _
+  -- grad-test-let-ee = ee-opt $ ee-dedup $ grad Primitives.Microgpt.test-let-e one zero-ee
 
-  grad-test2-let-s : String
-  grad-test2-let-s = pp Primitives.Microgpt.test2-let ε
+  -- grad-test2-let-s : String
+  -- grad-test2-let-s = pp Primitives.Microgpt.test2-let ε
   
-  grad-test-let-s : String
-  grad-test-let-s = pp Primitives.Microgpt.test-let-e (ε ▹ "inp")
+  -- grad-test-let-s : String
+  -- grad-test-let-s = pp Primitives.Microgpt.test-let-e (ε ▹ "inp")
 
-  grad-test3-let-s : String
-  grad-test3-let-s = pp Primitives.Microgpt.test3-let-e (ε ▹ "inp")
+  -- grad-test3-let-s : String
+  -- grad-test3-let-s = pp Primitives.Microgpt.test3-let-e (ε ▹ "inp")
 
-  -- grad-nodedup-test-let-s : String
-  -- grad-nodedup-test-let-s = nodedup-pp Primitives.Microgpt.test-let-e (ε ▹ "inp")
+  -- -- grad-nodedup-test-let-s : String
+  -- -- grad-nodedup-test-let-s = nodedup-pp Primitives.Microgpt.test-let-e (ε ▹ "inp")
 
-  cross-entropy-s : String
-  cross-entropy-s = proj₂ (runState (to-str Primitives.Microgpt.cross-entropy-e (from-named (ε ▹ "inp" ▹ "target"))) 0)
+  -- cross-entropy-s : String
+  -- cross-entropy-s = proj₂ (runState (to-str Primitives.Microgpt.cross-entropy-e (from-named (ε ▹ "inp" ▹ "target"))) 0)
 
-  grad-cross-entropy-s : String
-  grad-cross-entropy-s = pp Primitives.Microgpt.cross-entropy-e (ε ▹ "inp" ▹ "target")
+  -- grad-cross-entropy-s : String
+  -- grad-cross-entropy-s = pp Primitives.Microgpt.cross-entropy-e (ε ▹ "inp" ▹ "target")
 
-  m-softmax-s : String 
-  m-softmax-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.m-softmax-e OPT) (from-named (ε ▹ "inp"))) 0)
+  -- m-softmax-s : String 
+  -- m-softmax-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.m-softmax-e OPT) (from-named (ε ▹ "inp"))) 0)
+
+  unblock-tok-s : String 
+  unblock-tok-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.unblock-tok-e OPT) (from-named (ε ▹ "inp"))) 0)
 
   mgpt-loss-s : String
   mgpt-loss-s = proj₂ (runState (to-str Primitives.Microgpt.mgpt-loss-e (from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target"))) 0)

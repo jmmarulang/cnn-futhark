@@ -1814,10 +1814,10 @@ d_to'45'fut_392 v0 v1 v2 v3
                                                                (coe v14)
                                                                (coe
                                                                   MAlonzo.Code.Text.Printf.d_printf_26
-                                                                  ("(if (zero F.<= %s) then %s else zero)"
+                                                                  ("F.max %s zero"
                                                                    ::
                                                                    Data.Text.Text)
-                                                                  v15 v15))
+                                                                  v15))
                                                      _ -> MAlonzo.RTE.mazUnreachableError)))
                                         v10
                                  _ -> MAlonzo.RTE.mazUnreachableError)))
@@ -1951,7 +1951,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                                                (coe v14)
                                                                (coe
                                                                   MAlonzo.Code.Text.Printf.d_printf_26
-                                                                  ("(if (zero F.< %s) then one else zero)"
+                                                                  ("indicatorp %s"
                                                                    ::
                                                                    Data.Text.Text)
                                                                   v15))

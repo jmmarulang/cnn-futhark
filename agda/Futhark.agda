@@ -365,7 +365,8 @@ module _ where
     a ← to-fut e ρ
     return λ i → do
       f , a′ ← a i
-      return (f , printf "(if (zero F.<= %s) then %s else zero)" a′ a′) --use max?
+      -- return (f , printf "(if (zero F.<= %s) then %s else zero)" a′ a′) --use max?
+      return (f , printf "F.max %s zero" a′)
 
   to-fut (sqrt e) ρ = do
     a ← to-fut e ρ
@@ -377,7 +378,8 @@ module _ where
     a ← to-fut e ρ
     return λ i → do
       f , a′ ← a i
-      return (f , printf "(if (zero F.< %s) then one else zero)" a′)
+      -- return (f , printf "(if (zero F.< %s) then one else zero)" a′)
+      return (f , printf "indicatorp %s" a′)
 
   to-fut (ln e) ρ = do
     a ← to-fut e ρ
