@@ -1,0 +1,4 @@
+(imap2 16 16 (\x0_0 x0_1 -> (isum1 4 (\x1_0 -> (isum1 16 (\x2_0 -> (if ((x0_0 == x2_0)) then 
+    (
+        if (((x0_1 / 4) == x1_0)) then inp[x0_0][(x0_1 / 4)][(x0_1 % 4)] else zero
+    ) else zero)))))))

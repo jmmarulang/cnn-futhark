@@ -1,4 +1,4 @@
---{-# OPTIONS --warn=noUserWarning #-}
+-- {-# OPTIONS --warn=noUserWarning #-}
 open import Data.Product
 open import Data.Unit
 open import Data.Empty
@@ -8,11 +8,16 @@ open import Data.List.Relation.Unary.All as All using (All; []; _∷_)
 open import Relation.Binary.PropositionalEquality
 open import Relation.Nullary
 open import Function
+open import Data.Nat.Properties using (_≟_)
 
 open import Ar
 open import Lang
 open import LangEq
 open import Real
+
+-- Jairo Made
+open import Data.Product as Prod hiding (_<*>_)
+open import Data.List.Properties
 
 module Opt (r : Real) (rp : RealProp r) where
 
@@ -34,7 +39,27 @@ module Opt (r : Real) (rp : RealProp r) where
   opt (var x) = var x , reflᵉ (var x)
   opt zero = zero , reflᵉ zero
   opt one = one , reflᵉ one
-  opt (imaps e) = let t , p = opt e in imaps t , λ ρ i → p (ρ , i) []
+  -- Jairo made
+  opt (imaps {s = s} e) with opt e
+  ... | c , p with isLet c
+  -- ... | yes (r , a , b , refl) = let′ (imap a) (imaps
+  --   (sub b ((skeep (sdrop sub-id)) ▹ sel (var v₁) (var v₀)))) , foo
+  --   where
+  --   foo : _
+  --   foo ρ i = (p _ [])
+  --     ∙ sym (eval-sub b _ _ _
+  --     ∙ eval-cong b
+  --       (sub-env-wks (sdrop sub-id) (skip ⊆-eq) _ ▹ refl ▹ λ _ → refl) []
+  --     ∙ eval-cong b (sub-env-sdrop sub-id ▹ refl ▹ λ _ → refl) []
+  --     ∙ eval-cong b (sub-env-id ▹ refl ▹ λ _ → refl) []
+  --     ∙ eval-cong b (wk-env-id ▹ refl ▹ λ _ → refl) []
+  --     ∙ eval-cong b (reflᶜ ▹ refl ▹ foo') [])
+  --     where
+  --     foo' : _
+  --     foo' l =
+  --       cong (eval a _) (splitP-proj₂ {i = i})
+  --       ∙ cong (λ x → eval a (_ , x) _) (splitP-proj₁ {i = i})
+  opt (imaps e) | t , p | _ = imaps t , λ ρ i → p (ρ , i) []
   opt (sels e e₁) with opt e | opt e₁
 
   --... | zero | i = zero
@@ -81,8 +106,29 @@ module Opt (r : Real) (rp : RealProp r) where
   -- ... | a | i = selₛ a i
   opt (sels e e₁) | (a , p) | (i , q) = sels a i , λ ρ j → p ρ (eval e₁ ρ) ∙ cong (eval a ρ) (q ρ)
 
-  -- opt (imap e) = imap (opt e)
-  opt (imap e) = let t , p = opt e in imap t , λ ρ i → p (ρ , splitP i .proj₁) (splitP i .proj₂)
+-- Jairo made
+  opt (imap {s = s} {p = p} e) with opt e
+  -- ... | (let′ {s = r} {p = .p} a b) , q =
+  --   let′ (imap a) (imap {s = s} {p = p}
+  --     (sub b (skeep (sdrop sub-id) ▹ sel (var v₁) (var v₀)))) , foo where
+  --   foo : _
+  --   foo ρ i = let j , k = splitP {s} i .proj₁ , splitP {s} i .proj₂ in
+  --     (q _ k)
+  --     ∙ sym (eval-sub b _ _ _
+  --     ∙ eval-cong b
+  --       (sub-env-wks (sdrop sub-id) (skip ⊆-eq) _ ▹ refl ▹ λ _ → refl) k
+  --     ∙ eval-cong b (sub-env-sdrop sub-id ▹ refl ▹ λ _ → refl) k
+  --     ∙ eval-cong b (sub-env-id ▹ refl ▹ λ _ → refl) k
+  --     ∙ eval-cong b (wk-env-id ▹ refl ▹ λ _ → refl) k
+  --     ∙ eval-cong b (reflᶜ ▹ refl ▹ foo') k)
+  --     where
+  --     foo' : _
+  --     foo' l = let j , k = splitP {s} i .proj₁ , splitP {s} i .proj₂ in
+  --       cong (eval a _) (splitP-proj₂ {i = j})
+  --       ∙ cong (λ x → eval a (_ , x) _) (splitP-proj₁ {i = j})
+
+  ... | t , p = imap t , λ ρ i → p (ρ , splitP i .proj₁) (splitP i .proj₂)
+    --let t , p = opt e in imap t , λ ρ i → p (ρ , splitP i .proj₁) (splitP i .proj₂)
   opt (sel {s = s}{p} e e₁) with opt e | opt e₁
   -- ... | zero | i = zero
   ... | a , pf | i , q with isZero a
@@ -113,7 +159,16 @@ module Opt (r : Real) (rp : RealProp r) where
                                      ∙ sym (eval-sub u ρ (sub-id ▹ i) j
                                             ∙ eval-cong u (sub-env-id ▹ (sym $ splitP-proj₁ {j = j})) j
                                             ∙ cong (eval u _) (sym $ splitP-proj₂ {i = eval i ρ}))
-  opt (sel {s = s} {p} e e₁) | a , pf | i , q | no _ | no _ | no _
+  -- Jairo Made
+  opt (sel {Γ = Γ} {s = s} {p} e e₁) | a , pf | i , q | no _ | no _ | no _ with isZeroBut a
+  ... | yes (s , j , k , e₂ , refl) = zero-but {Γ = Γ} j k (sel e₂ i) , go
+       where
+       go : (ρ : ⟦ Γ ⟧ᶜ) → ∀ u → eval e ρ (eval e₁ ρ ++ u) ≡ eval (zero-but j k (sel e₂ i)) ρ u
+       go ρ u with eval j ρ ≟ₚ eval k ρ | pf ρ (eval e₁ ρ ++ u)
+       ... | yes _ | p′ = p′ ∙ cong (λ x → eval e₂ ρ (x ++ u)) (q ρ)
+       ... | no _ | p′ = p′
+
+  opt (sel {s = s} {p} e e₁) | a , pf | i , q | no _ | no _ | no _ | no _
   -- ... | a | i = sel a i
     = sel a i , λ ρ j → pf ρ (eval e₁ ρ ++ j) ∙ cong (eval a ρ) (cong (_++ j) (q ρ))
 
@@ -125,6 +180,26 @@ module Opt (r : Real) (rp : RealProp r) where
                       , λ ρ j → p ρ (ix-combine (eval e₁ ρ) j x)
                                 ∙ cong (eval a ρ) (cong (λ t → ix-combine t j x ) (q ρ))
   opt (E.sum {s = s}{p} e) with opt e
+  -- Jairo made
+  ... | let′ {s = q} a b , pf = (let′ (imap a) (E.sum {s = s}
+    (sub b (skeep (sdrop sub-id) ▹ sel (var v₁) (var v₀))))) , foo where
+      foo : _
+      foo ρ i = let aux = skeep (sdrop sub-id) ▹ sel (var v₁) (var v₀) in
+        let aux1 = λ j → (((ρ , (λ i₁ → eval a (ρ , splitP i₁ .proj₁) (splitP i₁ .proj₂))) , j )) in
+        sum-inv {s = s} _+_ (fromℕ 0) i
+        ∙ sum-cong {s = s} _+_ (fromℕ 𝟘) (λ k → pf _ _)
+        ∙ sym ( sum-inv {s = s} _+_ (fromℕ 0) i
+        ∙ sum-cong {s = s} _+_ (fromℕ 𝟘) {λ j → eval (sub b _) (aux1 j) i}
+          (λ k →
+          (eval-sub b _ aux i)
+          ∙ eval-cong b (sub-env-wks (sdrop sub-id) (skip ⊆-eq) _ ▹ refl ▹ λ _ → refl) i
+          ∙ eval-cong b (sub-env-sdrop sub-id ▹ refl ▹ λ _ → refl) i
+          ∙ eval-cong b (sub-env-id ▹ refl ▹ λ _ → refl) i
+          ∙ eval-cong b (wk-env-id ▹ refl ▹ λ _ → refl) i
+          ∙ eval-cong b (reflᶜ ▹ refl ▹ λ z →
+            (cong (eval a _) (splitP-proj₂ {i = k}))
+            ∙ cong (λ x → eval a (_ , x) _) (splitP-proj₁ {i = k})) i
+          ))
   --... | zero = zero
   ... | zero , p = zero
                  , λ ρ j → sum-inv _+_ (fromℕ 0) {λ i → eval e (ρ , i)} j
@@ -205,7 +280,6 @@ module Opt (r : Real) (rp : RealProp r) where
                                       ∙ zbs-ext (lookup i′ ρ) (lookup j′ ρ) (λ z → eval a (ρ , z) j)
                                       ∙ sym (zb-zbs-k (lookup i′ ρ) _ j  (Ar.sum (Ar.zipWith _+_) (K (fromℕ 0)) (λ i₁ → eval a (ρ , i₁)))
                                              ∙ zbs-cong _ _ (λ _ → sum-inv _+_ (fromℕ 0){(λ i₂ → eval a (ρ , i₂))} j) (lookup i′ ρ) (lookup j′ ρ))
-
   opt (E.sum {s = s} e) | a , p = E.sum a
               , λ ρ j → sum-inv _+_ (fromℕ 0) {(λ i₁ → eval e (ρ , i₁))} j
                         ∙ sum-cong _+_ (fromℕ 0) {λ j₁ → eval e (ρ , j₁) j} (λ i → p (ρ , i) j)
@@ -268,10 +342,32 @@ module Opt (r : Real) (rp : RealProp r) where
   ... | _ | _ = zero-but (var i) (var j) x ⊞ zero-but (var i′) (var j′) x′ , λ ρ k → cong₂ _+_ (p ρ k) (q ρ k)
 
   opt (e ⊞ e₁) | a₁ , p | b₁ , q | no _ | no _ | no _ | no _ | a | b = a ⊞ b , λ ρ j → cong₂ _+_ (p ρ j) (q ρ j)
+  -- Jairo Made
   opt (e ⊠ e₁) with opt e | opt e₁
   ... | one , p | b , q = b , λ ρ j → cong₂ _*_ (p ρ j) (q ρ j) ∙ *-neutˡ
+  ... | (zero-but i j a) , p | b , q = zero-but i j (a ⊠ b) , foo
+       where
+       foo : _
+       foo ρ k with eval i ρ ≟ₚ eval j ρ | (p ρ k) | (q ρ k)
+       ... | yes _ | p′ | q′ rewrite p′ | q′ = refl
+       ... | no _ | p′ | q′ rewrite p′ = *-nulˡ
+
   ... | a , p | b , q = a ⊠ b , λ ρ j → cong₂ _*_ (p ρ j) (q ρ j) --what about b = 1?
   opt (scaledown x e) with opt e
+  -- Jairo Made
+  ... | (imaps {s = s} a) , q = imaps (scaledown x a)
+      , λ ρ i → cong (_÷ fromℕ x) (q ρ i)
+  ... | (imap {s = s} {p = p} a) , q = (imap {s = s} {p = p} (scaledown x a))
+    , λ ρ i → cong (_÷ fromℕ x) (q ρ i)
+  ... | (zero-but {s = s} {p = p} i j a) , q = foo where
+    foo : _
+    foo with (Data.Nat._≟_ x 0)
+    ... | yes _ = (scaledown x (zero-but i j a)) , λ ρ j → cong (_÷ fromℕ x) (q ρ j)
+    ... | no b = (zero-but i j (scaledown x a)) , foo' where
+      foo' : _
+      foo' ρ k with eval i ρ ≟ₚ eval j ρ | (cong (_÷ fromℕ x) (q ρ k))
+      ... | yes b | q' = q'
+      ... | no _ | q' rewrite q' = ÷-nul λ tt → b (fromℕ-inj tt)
   ... | a , p = scaledown x a , λ ρ j → cong (_÷ fromℕ x) (p ρ j)
   opt (⊟ e) with opt e
   ... | a , p = ⊟ a , λ ρ j → cong -_ (p ρ j)
@@ -282,9 +378,19 @@ module Opt (r : Real) (rp : RealProp r) where
                                  ∙ sym (eval-sub e₁ ρ (sub-id ▹ var v) j
                                         ∙ eval-cong e₁ (sub-env-id ▹ (λ i → sym $ p ρ i)) j
                                         ∙ q (ρ , eval e ρ) j)
+  -- jairo made
+  opt (let′ e e₁) | a , p | b , q | no _ with isLet a
+  ... | yes (_ , c , d , refl) = (let′ c (let′ d (wk (keep (skip ⊆-eq)) b)))
+      , foo where
+      foo : _
+      foo ρ i = (q (ρ , eval e ρ) i)
+                ∙ sym ((eval-wk (keep (skip ⊆-eq)) b _ i)
+                ∙ eval-cong b wk-env-id i
+                ∙ eval-cong b (reflᶜ ▹ λ j → sym (p _ j)) i
+                )
+
   ... | _ = let′ a b
           , λ ρ j → q (ρ , eval e ρ) j ∙ eval-cong b (reflᶜ ▹ p ρ) j
-  -- something may not be propagating properly
   opt (𝕖^ e) with opt e
   ... | a , p = 𝕖^ a , λ ρ i → cong e^_ (p ρ i)
   opt (relu e) with opt e
@@ -297,6 +403,58 @@ module Opt (r : Real) (rp : RealProp r) where
   ... | a , p = 𝕀+ a , (λ ρ i → cong I+ (p ρ i))
   opt (ln e) with opt e
   ... | a , p = ln a , (λ ρ i → cong log (p ρ i))
+
+  -- rm-zbs : ∀ {s Γ} → E Γ (ar s) → E Γ (ar s)
+  -- rm-zbs {s} (var x) = var x
+  -- rm-zbs {s} 𝟘 = 𝟘
+  -- rm-zbs {s} 𝟙 = 𝟙
+  -- rm-zbs {s} (imaps x) = foo where
+  --   foo : _
+  --   foo with isZeroBut x
+  --   ... | yes (p , var i , var j , e , refl) = foo1 where
+  --     foo1 : _
+  --     foo1 with eq? i here | eq? j here
+  --     ... | a = {!   !}
+  --   ... | no _  = imaps (rm-zbs x)
+  -- rm-zbs {s} (sels x x₁) = {!   !}
+  -- rm-zbs {s} (imap x) = {!   !}
+  -- rm-zbs {s} (sel x x₁) = {!   !}
+  -- rm-zbs {s} (E.imapb x x₁) = {!   !}
+  -- rm-zbs {s} (E.selb x x₁ x₂) = {!   !}
+  -- rm-zbs {s} (E.sum x) = {!   !}
+  -- rm-zbs {s} (zero-but x x₁ x₂) = {!   !}
+  -- rm-zbs {s} (E.slide x x₁ x₂ x₃) = {!   !}
+  -- rm-zbs {s} (E.backslide x x₁ x₂ x₃) = {!   !}
+  -- rm-zbs {s} (bin x x₁ x₂) = {!   !}
+  -- rm-zbs {s} (scaledown x x₁) = {!   !}
+  -- rm-zbs {s} (let′ x x₁) = {!   !}
+  -- rm-zbs {s} (un x x₁) = {!   !}
+
+  -- rm-zbs : ∀ {s p Γ} → E Γ (ix s) → E Γ (ar p) → E Γ (ar p)
+  -- rm-zbs {s} {p} {Γ} i (var x) = var x
+  -- rm-zbs {s} {p} {Γ} i 𝟘 = 𝟘
+  -- rm-zbs {s} {p} {Γ} i 𝟙 = 𝟙
+  -- rm-zbs {s} {p} {Γ} i (imaps x) = imaps (rm-zbs (wk (skip ⊆-eq) i) x)
+  -- rm-zbs {s} {p} {Γ} i (sels x x₁) = sels (rm-zbs i x) x₁
+  -- rm-zbs {s} {p} {Γ} i (imap x) = imap (rm-zbs (wk (skip ⊆-eq) i) x)
+  -- rm-zbs {s} {p} {Γ} i (sel x x₁) = sel (rm-zbs i x) x₁
+  -- rm-zbs {s} {p} {Γ} i (E.imapb x x₁) = E.imapb x (rm-zbs (wk (skip ⊆-eq) i) x₁)
+  -- rm-zbs {s} {p} {Γ} i (E.selb x x₁ x₂) = E.selb x (rm-zbs i x₁) x₂
+  -- rm-zbs {s} {p} {Γ} i (E.sum x) = E.sum (rm-zbs (wk (skip ⊆-eq) i) x)
+  -- rm-zbs {s} {p} {Γ} (var i) (zero-but {s = q} (var j) (var k) x) = foo
+  --   where
+  --   foo : _
+  --   foo with eq? i j | eq? i k
+  --   ... | veq | veq = rm-zbs (var i) x
+  --   ... | veq | neq .i y = subv {!   !} {!   !}
+  --   ... | neq .i y | veq = {!   !}
+  --   ... | neq .i y | neq .i y₁ = zero-but (var j) (var k) (rm-zbs (var i) x)
+  -- rm-zbs {s} {p} {Γ} i (E.slide x x₁ x₂ x₃) = {!   !}
+  -- rm-zbs {s} {p} {Γ} i (E.backslide x x₁ x₂ x₃) = {!   !}
+  -- rm-zbs {s} {p} {Γ} i (bin x x₁ x₂) = {!   !}
+  -- rm-zbs {s} {p} {Γ} i (scaledown x x₁) = {!   !}
+  -- rm-zbs {s} {p} {Γ} i (let′ x x₁) = {!   !}
+  -- rm-zbs {s} {p} {Γ} i (un x x₁) = {!   !}
 
 
 

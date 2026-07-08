@@ -563,52 +563,90 @@ module Primitives where
     variable
       ah hd ed sl vo pr fd : S
 
+    iswap : ∀ {Γ} → E Γ (ar (s ⊗ u)) → E Γ (ar (u ⊗ s))
+    iswap {s} {u} x = Imap {u} λ i → Imaps {s} λ j → sels (sel ⟨ x ⟩ j) i
+
     iswap3 : ∀ {Γ} → E Γ (ar (p ⊗ (s ⊗ u))) → E Γ (ar (s ⊗ (p ⊗ u)))
     iswap3 {p} {s} {u} x = Imap {s} λ i → Imap {p} λ j → sel (sel ⟨ x ⟩ j) i
 
     linear : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar s) → E Γ (ar u)
     linear {u} {s} w x =
-      Imaps {u} λ i → Sum {s} λ j → sels (sel ⟨ w ⟩ i) j ⊠ sels ⟨ x ⟩ j
+      Imaps {u} λ i → Sum {s} λ j → sels (sel ⟨ w ⟩ i ⊠ ⟨ x ⟩) j
+      -- Imaps {u} λ i → Sum {s} λ j → sels (sel ⟨ w ⟩ i) j ⊠ sels ⟨ x ⟩ j
 
     m-linear : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (p ⊗ s)) → E Γ (ar (p ⊗ u))
     m-linear {u} {s} {p} w xs = Imap {p} λ i → linear ⟨ w ⟩ (sel ⟨ xs ⟩ i)
 
-    matmul : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ r)) → E Γ (ar (u ⊗ r))
-    matmul {u} {s} {r} w1 w2 = Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
-      sels (sel ⟨ w1 ⟩ i) k ⊠ sels (sel ⟨ w2 ⟩ k) j
-
     matmult : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (r ⊗ s)) → E Γ (ar (u ⊗ r))
-    matmult {u} {s} {r} w1 w2 = Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
-      sels (sel ⟨ w1 ⟩ i) k ⊠ sels (sel ⟨ w2 ⟩ j) k
+    matmult {u} {s} {r} w1 w2 =
+      -- m-linear {r} w2 w1
+
+      -- Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
+      -- sels (sel ⟨ w1 ⟩ i) k ⊠ sels (sel ⟨ w2 ⟩ j) k
+
+      Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
+      sels ((sel ⟨ w1 ⟩ i) ⊠ (sel ⟨ w2 ⟩ j)) k
+
+    matmul : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ r)) → E Γ (ar (u ⊗ r))
+    matmul {u} {s} {r} w1 w2 =
+      -- m-linear {r} (iswap {s} w2) w1
+      -- Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
+      --   sels (sel ⟨ w1 ⟩ i ⊠ sel (iswap {s} ⟨ w2 ⟩) j) k
+      -- Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
+      -- sel {!   !} k
+      Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
+      sels (sel ⟨ w1 ⟩ i) k ⊠ sels (sel ⟨ w2 ⟩ k) j
 
     -- Is this correct?
     softmax : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
-    softmax {s = s} x = x
+    softmax {s = s} x =
+      -- Let exps := 𝕖^ (x) In
+      -- Let total := Imaps {s} (λ i → Sum {s} (λ i → sels exps i)) In
+      -- Let r := exps // total In r
+
+      -- Let exps := 𝕖^ (x) In
+      -- Let total := Sum {s} (λ i → sels exps i) In
+      -- Let r := exps // (Imaps λ _ → total) In r
+
+      Let exps := 𝕖^ (x) In
+      Let total := Sum {s} (λ i → sels exps i) In
+      Let r := Imaps (λ i → sels exps i // total) In r
+
       -- Imaps λ i →
       -- (sels ⟨ 𝕖^ (x) ⟩ i) // Sum {s} (λ i → sels ⟨ 𝕖^ (x) ⟩ i)
 
-      -- Let exps := 𝕖^ (x) In -- subst one for stability
-      -- Let total := Sum {s} (λ i → sels exps i) In
-      -- Let r := Imaps {s} (λ i → (sels exps i) // total) In r
-
     m-softmax : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
     m-softmax {s} {p} {Γ} x = Imap {s} λ i → softmax (sel ⟨ x ⟩ i)
+      -- Let m-exps := Imap {s} (λ i → 𝕖^ (sel ⟨ x ⟩ i)) In
+      -- Let m-total := Imap {s} (λ i → Sum {p} (λ j → sels (sel m-exps i) j)) In
+      -- Let r := Imap {s} (λ i → Imaps {p} (λ j →
+        -- (sels (sel m-exps i) j) // sel m-total i)) In r
 
     rmsnorm : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
-    rmsnorm {s = s} x = x
+    rmsnorm {s = s} x =
       -- Imaps λ i →
-      --   (sels ⟨ x ⟩ i)
-      --   ⊠
-      --   𝟙/ (
-      --     sqrt (
-      --       scaledown (len s) (Sum (λ i → sels ⟨ x ⟩ i ⊠ sels ⟨ x ⟩ i))
-      --       ⊞
-      --       (scaledown 100000 one)
-      --          )
-      --       )
+        -- (sels ⟨ x ⟩ i)
+        -- ⊠
+        -- 𝟙/ (
+        --   sqrt (
+        --     scaledown (len s) (Sum (λ i → sels ⟨ x ⟩ i ⊠ sels ⟨ x ⟩ i))
+        --     ⊞
+        --     (scaledown 100000 one)
+        --        )
+        --     )
+
+      Let ms := scaledown (len s) (Sum (λ i → sels ⟨ x ⊠ x ⟩ i)) In
+      Let scale := sqrt (ms ⊞ (scaledown 100000 one)) In
+      Let r := ⟨ x ⟩ // Imaps (λ _ → scale) In r
 
     m-rmsnorm : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
     m-rmsnorm {s} {p} {Γ} x = Imap {s} λ i → rmsnorm (sel ⟨ x ⟩ i)
+      -- Let m-ms := Imap {s} (λ i → scaledown (len s)
+      --   (Sum (λ j → (sels (sel ⟨ x ⟩ i) j) ⊠ sels (sel ⟨ x ⟩ i) j))) In
+      -- Let m-scale := Imap {s} (λ i → sqrt
+      --   (sel m-ms i ⊞ (scaledown 100000 one))) In
+      -- Let r := Imap {s} (λ i → Imaps (λ j →
+      --   sels (sel ⟨ x ⟩ i) j // sel m-scale i)) In r
 
     avg : ∀ {Γ} → E Γ (ar s) → E Γ (ar [])
     avg {s} x = scaledown (len s) (Sum λ i → sels ⟨ x ⟩ i)
@@ -652,8 +690,12 @@ module Primitives where
                    (mask : E Γ (ar (sl ⊗ sl)))
                    (qs ks vs : E Γ (ar (sl ⊗ hd)))
                   → E Γ (ar (sl ⊗ hd))
-    attention {sl} {hd} {Γ} sc mask hqs hks hvs = matmul {sl}
-      (m-softmax {sl} (scaledown sc (matmult {sl} hqs hks) ⊞ mask)) hvs
+    attention {sl} {hd} {Γ} sc mask hqs hks hvs =
+      -- matmul {sl} (m-softmax {sl} ((scaledown sc (matmult {sl} hqs hks)) ⊞ mask)) hvs
+      Let hqks := matmult {sl} hqs hks In
+      Let masked := (scaledown sc hqks) ⊞ ⟨ mask ⟩ In
+      Let sf := m-softmax {sl} masked In
+      Let r := matmul {sl} sf ⟨ hvs ⟩ In r
 
     mh-attention : ∀ {Γ} (sc : ℕ)
                    (mask : E Γ (ar (sl ⊗ sl)))
@@ -708,12 +750,25 @@ module Primitives where
 
     cross-entropy : ∀ {Γ} (logits target : E Γ (ar s)) → (E Γ (ar []))
     cross-entropy {s} logits target =
-      ⊟ (Sum λ i → sels (ln (softmax ⟨ logits ⟩)) i)
-      -- ⊟ (Sum λ i → sels (ln (softmax ⟨ logits ⟩)) i ⊠ sels ⟨ target ⟩ i)
+      (⊟ (Sum λ i → sels (ln (softmax ⟨ logits ⟩)) i ⊠ sels ⟨ target ⟩ i))
+      -- Let lnsf := ln (softmax logits) In
+      -- (⊟ (Sum λ i → sels lnsf i ⊠ sels ⟨ target ⟩ i))
 
     m-cross-entropy : ∀ {Γ} (logits target : E Γ (ar (s ⊗ p))) → (E Γ (ar s))
     m-cross-entropy {s} {p} logits target =
       Imaps λ i → cross-entropy {p} (sel ⟨ logits ⟩ i) (sel ⟨ target ⟩ i)
+      -- Let m-sf := Imap {s} (λ i → softmax (sel ⟨ logits ⟩ i)) In
+      -- Let m-ln := ln m-sf In
+      -- Let m-mul := m-ln ⊠ ⟨ target ⟩ In
+      -- Let m-s := Imaps (λ i → Sum (λ j → sels (sel m-mul i) j)) In m-s
+
+    -- mgpt-loss : ∀ {ah hd : S} {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
+    --                (p : GPT-Params Γ vo ed sl fd) (wseq : E Γ (ar (sl ⊗ ed)))
+    --                (target : E Γ (ar (sl ⊗ vo))) → ah * hd ≈ ed → E Γ (ar [])
+    -- mgpt-loss {sl} {vo} {ed} {fd} {ah} {hd} {Γ} sc mask p wseq target pr =
+    --   Let logits := mgpt-forward sc mask p wseq pr In
+    --   Let losses := m-cross-entropy {sl} logits ⟨ target ⟩ In
+    --   Let loss := avg losses In loss
 
     mgpt-loss : ∀ {ah hd : S} {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
                    (p : GPT-Params Γ vo ed sl fd) (wseq : E Γ (ar (sl ⊗ ed)))
@@ -769,9 +824,54 @@ module Primitives where
         mgpt-loss {sl = SL} SC mask
           (to-gptp wpe wqry wkey wval wout wup wdown wvoc) wseq target PR
 
-    unblock-tok-e : E _ _
-    unblock-tok-e = Lcon (ar (AH ⊗ HD) ∷ []) (ar ED) ε λ x → unblock-tok x PR
-    
+    let-test : ∀ {Γ} → E Γ (ar SL) → E Γ (ar [])
+    let-test x =
+      Let a := (Let b := Imaps (λ i → sels ⟨ x ⟩ i) In scaledown 2 b) In Sum (λ i → sel a i)
+
+    -- let-test-e : E _ _
+    -- let-test-e = Lcon (ar _ ∷ []) (ar _) ε λ x → let-test x
+
+    -- sel-zb : ∀ {Γ} → E Γ (ar SL) → E Γ (ar (SL ⊗ SL))
+    -- sel-zb x = Imap {SL} λ i → Imap {SL} λ j → Sum {SL} λ k → sel (zero-but j k ⟨ x ⟩) i
+
+    -- -- x64 : ∀ {Γ} → E Γ (ar (AH ⊗ HD)) → E Γ (ar (SL ⊗ SL))
+    -- -- x64 x = Imap {SL} λ i → Imapb PR λ j →
+    -- --   Sum {SL} λ l → sel (zero-but i l ⟨ x ⟩) j
+
+    -- -- x64-e : E _ _
+    -- -- x64-e = Lcon (ar _ ∷ []) (ar _) ε λ x → x64 x
+
+    -- sel-zb-e : E _ _
+    -- sel-zb-e = Lcon (ar _ ∷ []) (ar _) ε λ x → sel-zb x
+
+    -- -- test : E _ (ix SL) → E _ _
+    -- -- test i = sel {s = SL} (Imap {[]} (λ j → {!   !})) i
+
+    -- unblock-tok-e : E _ _
+    -- unblock-tok-e = Lcon (ar (AH ⊗ HD) ∷ []) (ar ED) ε λ x → unblock-tok x PR
+
+    -- sum-imap-imapb-zerobut : ∀ {Γ} → E Γ (ar (SL ⊗ (AH ⊗ HD))) → E Γ (ar (SL ⊗ SL))
+    -- sum-imap-imapb-zerobut x = Sum {AH} λ k → Sum {SL} λ l → Imap {SL} λ i → Imapb PR λ j → zero-but i l (zero-but j k (sel (sel ⟨ x ⟩ i) j))
+
+    -- imap-imapb-sum-zerobut : ∀ {Γ} → E Γ (ar _) → E Γ (ar (SL ⊗ SL))
+    -- imap-imapb-sum-zerobut x = Imap {SL} λ i → Imapb PR λ j → Sum {AH} λ k → Sum {SL} λ l →
+    --   zero-but i l (zero-but j k (sel (sel ⟨ x ⟩ i) j))
+    --   -- Imap {SL} λ i → Imap {SL} λ j → Sum {AH} λ k → Sum {SL} λ l → zero-but i l ⟨ x ⟩
+
+    -- x30 : ∀ {Γ} → E Γ (ar _) → E Γ (ar _)
+    -- x30 x = Imap {SL} λ i → Imap {VO} λ j → Sum {VO} λ k →
+    --   zero-but j k (⊟ scaledown 16 one) ⊠
+    --   (𝟙/ (Sum {SL} λ l → sels (sel ⟨ x ⟩ i) l))
+
+    -- x30-e : E _ _
+    -- x30-e = Lcon (ar _ ∷ []) (ar _) ε λ x → x30 x
+
+    -- imap-imapb-sum-zerobut-e : E _ _
+    -- imap-imapb-sum-zerobut-e = Lcon (ar _ ∷ []) (ar _) ε λ x → imap-imapb-sum-zerobut x
+
+    -- sum-imap-imapb-zerobut-e : E _ _
+    -- sum-imap-imapb-zerobut-e = Lcon (ar _ ∷ []) (ar _) ε λ x → sum-imap-imapb-zerobut x
+
     -- attention : ∀ {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
     --             (qs ks vs : E Γ (ar (sl ⊗ hd))) → E Γ (ar (sl ⊗ hd))
     -- attention {sl} {hd} sc mask qs ks vs =

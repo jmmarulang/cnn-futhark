@@ -74,12 +74,18 @@ pad_mask = np.zeros((sl,sl))
 
 mask = cau_mask + pad_mask
 
+# start = time.time()
 # fmlogits = mgpt.forward_seq(fparams, seq_ids, mask)
 # mfprobs = np.array([softmax(logits) for logits in fmlogits])
+# end = time.time()
+# print("mfprobs", end - start)
 
+# start = time.time()
 # pmlogits = mp.forward_seq(pwdic, seq_ids)
 # pmlogits = np.array([[val.data for val in logits] for logits in pmlogits])
 # mpprobs = np.array([softmax(logits) for logits in pmlogits])
+# end = time.time()
+# print("mpprobs", end - start)
 
 # mse = np.array([np.mean([np.pow(pmlogits[i][j] - fmlogits[i][j], 2) for j in range(ed)]) for i in range(sl)])
 # pos = 0
@@ -96,29 +102,58 @@ ftarget = np.array([[1 if (n < (asl - 1) and ftarget_ids[n] == m) else 0
 # print("floss", end - start)
 # flosses = flosses[: asl - 1]
 
-# start = time.time()
-# ploss, plosses = mp.cal_loss(pwdic, seq_ids)
-# end = time.time()
-# print("ploss", end - start)
-# ploss, plosses = ploss.data, [aloss.data for aloss in plosses]
-# abse_loss = [np.abs(afloss - aploss) for (afloss , aploss) in zip(flosses, plosses)]
-
-# ploss.backward()
-# ploss, plosses = ploss.data, [aloss.data for aloss in plosses]
-
-# pdwdic = { k : np.vectorize(mp.to_grad)(v) for k, v in pwdic.items()}
-
-# print(pdwdic['wqry'][0][0])
-
 start = time.time()
-grad = mgpt.grad_loss(fparams, seq_ids, ftarget, mask)
+ploss, plosses = mp.cal_loss(pwdic, seq_ids)
+end1 = time.time()
+print("ploss", end1 - start)
+
+ploss.backward()
 end = time.time()
-print("fgrad_loss", end - start)
+print("pgrad_loss", end - start)
+
+ploss, plosses = ploss.data, [aloss.data for aloss in plosses]
+
+pdwdic = { k : np.vectorize(mp.to_grad)(v) for k, v in pwdic.items()}
+# print(pdwdic['wvoc'])
+
+# start = time.time()
+# fgrad = mgpt.grad_loss(fparams, seq_ids, ftarget, mask)
+# end = time.time()
+# print("fgrad_loss", end - start)
+
+# fdwdic = {}
+# fdwdic['wpe'] = fgrad[0]
+# fdwdic['wqry'] = fgrad[1]
+# fdwdic['wkey'] = fgrad[2]
+# fdwdic['wval'] = fgrad[3]
+# fdwdic['wout'] = fgrad[4]
+# fdwdic['wup'] = fgrad[5]
+# fdwdic['wdown'] = fgrad[6]
+# fdwdic['wvoc'] = fgrad[7]
+# fdwdic['wseq'] = fgrad[8]
+
+try:
+    np.save("fdwdic.npy", fdwdic, allow_pickle=True)
+    np.save("pdwdic.npy", pdwdic, allow_pickle=True)
+    file = open('fdwdic.txt', 'wt')
+    file.write(str(fdwdic))
+    file.close()
+    file = open('pdwdic.txt', 'wt')
+    file.write(str(pdwdic))
+    file.close()
+except :
+    print("It refused")
+
+fdwdic = np.load("fdwdic.npy", allow_pickle=True).item()
+pdwdic = np.load("pdwdic.npy", allow_pickle=True).item()
+
+fdwdic_flat = { k : v.flatten() for k, v in fdwdic.items()}
+pdwdic_flat = { k : v.flatten() for k, v in pdwdic.items()}
 
 
 #-----------------------------------------------------
 
-
+# abse_loss = [np.abs(afloss - aploss) for (afloss , aploss) in zip(flosses, plosses)]
 # plt.plot(abse_loss, '-o')
 # plt.xlabel('token position', fontsize = 12)
 # plt.ylabel('abs error', fontsize = 12)
@@ -153,3 +188,13 @@ print("fgrad_loss", end - start)
 # plt.ylabel('mean square error', fontsize = 12)
 # # plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
 # plt.show()
+
+key = "wpe"
+fdata = fdwdic[key]
+pdata = pdwdic[key]
+mse = np.array([np.mean([np.pow(fdata[i][j] - pdata[i][j], 2) for j in range(fdata.shape[1])]) for i in range(fdata.shape[0])])
+plt.plot(mse, '-o')
+plt.xlabel(key + ' weight position', fontsize = 12)
+plt.ylabel('mse', fontsize = 12)
+# plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+plt.show()

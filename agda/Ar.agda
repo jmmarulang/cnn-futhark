@@ -52,6 +52,9 @@ module _ where
   ++-neutʳ {[]} = refl
   ++-neutʳ {x ∷ s} = cong (x ∷_) ++-neutʳ
 
+  -- p-++-neutʳ : ∀ {px : P s} → px ++ [] ≡ {!   !}
+  -- p-++-neutʳ = {!   !}
+
   Ar : S → Set → Set
   Ar s X = P s → X
 
@@ -119,7 +122,6 @@ module _ where
   --ysum-inv : (f : X → X → X) (e : X) → {a : Ar s (Ar p X)}
   --        → (∀ k → ysum (zipWith f) (K e) a k ≡ map (ysum f e) (λ i j → a j i) k)
 
-
   sum₁ : (X → X → X) → X → Ar (n ∷ []) X → X
   sum₁ {n = zero}   f ε a = ε
   sum₁ {n = suc n}  f ε a = f (a (zero ∷ [])) (sum₁ f ε (a ∘ ιsuc))
@@ -145,8 +147,6 @@ module _ where
   sum-sum₁-agree {n = zero} = refl
   sum-sum₁-agree {n = suc n} {f = f} = cong₂ f refl (sum₁-cong {n = n} _ _ λ { (i ∷ []) → refl })
 
-
-
   xsum-cong : {f : X → X → X} {e : X} {a b : Ar s X} → (∀ i → a i ≡ b i)
             → xsum f e a ≡ xsum f e b
   xsum-cong {s = []} p = p []
@@ -157,7 +157,6 @@ module _ where
   sum₁-xsum : {f : X → X → X} {e : X} {a : Ar (n ∷ []) X} → sum₁ f e a ≡ xsum f e a
   sum₁-xsum {n = zero} = refl
   sum₁-xsum {n = suc n} {f = f}{e}{a} = cong₂ f refl (sym $ trans (sym $ sum₁-xsum {a = unnest (nest a ∘ ιsuc)}) (sum₁-cong {n = n} _ _ λ { (i ∷ []) → refl }))
-
 
   sum-xsum-step : {f : X → X → X} {e : X} {a : Ar (n ∷ s) X}
                 → sum₁ f e (map (xsum f e) (nest a)) ≡ xsum f e a
@@ -187,7 +186,6 @@ module _ where
     sum₁-inv f e {λ i → sum (zipWith f) (K e) (λ j → a (i ++ j))} k
     ∙ sum₁-cong f e {(λ j → sum (zipWith f) (K e) (λ i → a (j ++ i)) k)}
               (λ i → sum-inv f e {λ j → a (i ++ j)} k)
-
 
   sum-map : (f : X → X → X) (e : X) → {a : Ar s (Ar p X)}
           → let

@@ -18,6 +18,7 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
 import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Equality
+import qualified MAlonzo.Code.Data.Irrelevant
 
 -- Real.Real
 d_Real_2 = ()
@@ -107,7 +108,7 @@ d_1'47'__54 v0
   = coe d__'247'__36 v0 (coe d_fromℕ_28 v0 (1 :: Integer))
 -- Real.RealProp
 d_RealProp_62 a0 = ()
-data T_RealProp_62 = C_constructor_158
+data T_RealProp_62 = C_constructor_194
 -- Real._._*_
 d__'42'__68 :: T_Real_2 -> AgdaAny -> AgdaAny -> AgdaAny
 d__'42'__68 v0 = coe d__'42'__32 (coe v0)
@@ -151,95 +152,121 @@ d_logistic'691'_92 v0 = coe d_logistic'691'_50 (coe v0)
 d_'8730'__94 :: T_Real_2 -> AgdaAny -> AgdaAny
 d_'8730'__94 v0 = coe d_'8730'__42 (coe v0)
 -- Real.RealProp._._*_
-d__'42'__114 ::
+d__'42'__132 ::
   T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'42'__114 v0 ~v1 = du__'42'__114 v0
-du__'42'__114 :: T_Real_2 -> AgdaAny -> AgdaAny -> AgdaAny
-du__'42'__114 v0 = coe d__'42'__32 (coe v0)
+d__'42'__132 v0 ~v1 = du__'42'__132 v0
+du__'42'__132 :: T_Real_2 -> AgdaAny -> AgdaAny -> AgdaAny
+du__'42'__132 v0 = coe d__'42'__32 (coe v0)
 -- Real.RealProp._._+_
-d__'43'__116 ::
+d__'43'__134 ::
   T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'43'__116 v0 ~v1 = du__'43'__116 v0
-du__'43'__116 :: T_Real_2 -> AgdaAny -> AgdaAny -> AgdaAny
-du__'43'__116 v0 = coe d__'43'__30 (coe v0)
+d__'43'__134 v0 ~v1 = du__'43'__134 v0
+du__'43'__134 :: T_Real_2 -> AgdaAny -> AgdaAny -> AgdaAny
+du__'43'__134 v0 = coe d__'43'__30 (coe v0)
 -- Real.RealProp._._÷_
-d__'247'__118 ::
+d__'247'__136 ::
   T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'247'__118 v0 ~v1 = du__'247'__118 v0
-du__'247'__118 :: T_Real_2 -> AgdaAny -> AgdaAny -> AgdaAny
-du__'247'__118 v0 = coe d__'247'__36 (coe v0)
+d__'247'__136 v0 ~v1 = du__'247'__136 v0
+du__'247'__136 :: T_Real_2 -> AgdaAny -> AgdaAny -> AgdaAny
+du__'247'__136 v0 = coe d__'247'__36 (coe v0)
 -- Real.RealProp._._∨_
-d__'8744'__120 ::
+d__'8744'__138 ::
   T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'8744'__120 v0 ~v1 = du__'8744'__120 v0
-du__'8744'__120 :: T_Real_2 -> AgdaAny -> AgdaAny -> AgdaAny
-du__'8744'__120 v0 = coe d__'8744'__34 (coe v0)
+d__'8744'__138 v0 ~v1 = du__'8744'__138 v0
+du__'8744'__138 :: T_Real_2 -> AgdaAny -> AgdaAny -> AgdaAny
+du__'8744'__138 v0 = coe d__'8744'__34 (coe v0)
 -- Real.RealProp._.-_
-d_'45'__122 :: T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny
-d_'45'__122 v0 ~v1 = du_'45'__122 v0
-du_'45'__122 :: T_Real_2 -> AgdaAny -> AgdaAny
-du_'45'__122 v0 = coe d_'45'__38 (coe v0)
+d_'45'__140 :: T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny
+d_'45'__140 v0 ~v1 = du_'45'__140 v0
+du_'45'__140 :: T_Real_2 -> AgdaAny -> AgdaAny
+du_'45'__140 v0 = coe d_'45'__38 (coe v0)
 -- Real.RealProp._.0ᵣ
-d_0'7523'_124 :: T_Real_2 -> T_RealProp_62 -> AgdaAny
-d_0'7523'_124 v0 ~v1 = du_0'7523'_124 v0
-du_0'7523'_124 :: T_Real_2 -> AgdaAny
-du_0'7523'_124 v0 = coe d_0'7523'_48 (coe v0)
+d_0'7523'_142 :: T_Real_2 -> T_RealProp_62 -> AgdaAny
+d_0'7523'_142 v0 ~v1 = du_0'7523'_142 v0
+du_0'7523'_142 :: T_Real_2 -> AgdaAny
+du_0'7523'_142 v0 = coe d_0'7523'_48 (coe v0)
 -- Real.RealProp._.1/_
-d_1'47'__126 :: T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny
-d_1'47'__126 v0 ~v1 = du_1'47'__126 v0
-du_1'47'__126 :: T_Real_2 -> AgdaAny -> AgdaAny
-du_1'47'__126 v0 = coe d_1'47'__54 (coe v0)
+d_1'47'__144 :: T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny
+d_1'47'__144 v0 ~v1 = du_1'47'__144 v0
+du_1'47'__144 :: T_Real_2 -> AgdaAny -> AgdaAny
+du_1'47'__144 v0 = coe d_1'47'__54 (coe v0)
 -- Real.RealProp._.I+
-d_I'43'_128 :: T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny
-d_I'43'_128 v0 ~v1 = du_I'43'_128 v0
-du_I'43'_128 :: T_Real_2 -> AgdaAny -> AgdaAny
-du_I'43'_128 v0 = coe d_I'43'_44 (coe v0)
+d_I'43'_146 :: T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny
+d_I'43'_146 v0 ~v1 = du_I'43'_146 v0
+du_I'43'_146 :: T_Real_2 -> AgdaAny -> AgdaAny
+du_I'43'_146 v0 = coe d_I'43'_44 (coe v0)
 -- Real.RealProp._.R
-d_R_130 :: T_Real_2 -> T_RealProp_62 -> ()
-d_R_130 = erased
+d_R_148 :: T_Real_2 -> T_RealProp_62 -> ()
+d_R_148 = erased
 -- Real.RealProp._.e^_
-d_e'94'__132 :: T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny
-d_e'94'__132 v0 ~v1 = du_e'94'__132 v0
-du_e'94'__132 :: T_Real_2 -> AgdaAny -> AgdaAny
-du_e'94'__132 v0 = coe d_e'94'__40 (coe v0)
+d_e'94'__150 :: T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny
+d_e'94'__150 v0 ~v1 = du_e'94'__150 v0
+du_e'94'__150 :: T_Real_2 -> AgdaAny -> AgdaAny
+du_e'94'__150 v0 = coe d_e'94'__40 (coe v0)
 -- Real.RealProp._.fromℕ
-d_fromℕ_134 :: T_Real_2 -> T_RealProp_62 -> Integer -> AgdaAny
-d_fromℕ_134 v0 ~v1 = du_fromℕ_134 v0
-du_fromℕ_134 :: T_Real_2 -> Integer -> AgdaAny
-du_fromℕ_134 v0 = coe d_fromℕ_28 (coe v0)
+d_fromℕ_152 :: T_Real_2 -> T_RealProp_62 -> Integer -> AgdaAny
+d_fromℕ_152 v0 ~v1 = du_fromℕ_152 v0
+du_fromℕ_152 :: T_Real_2 -> Integer -> AgdaAny
+du_fromℕ_152 v0 = coe d_fromℕ_28 (coe v0)
 -- Real.RealProp._.log
-d_log_136 :: T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny
-d_log_136 v0 ~v1 = du_log_136 v0
-du_log_136 :: T_Real_2 -> AgdaAny -> AgdaAny
-du_log_136 v0 = coe d_log_46 (coe v0)
+d_log_154 :: T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny
+d_log_154 v0 ~v1 = du_log_154 v0
+du_log_154 :: T_Real_2 -> AgdaAny -> AgdaAny
+du_log_154 v0 = coe d_log_46 (coe v0)
 -- Real.RealProp._.logisticʳ
-d_logistic'691'_138 ::
+d_logistic'691'_156 ::
   T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny
-d_logistic'691'_138 v0 ~v1 = du_logistic'691'_138 v0
-du_logistic'691'_138 :: T_Real_2 -> AgdaAny -> AgdaAny
-du_logistic'691'_138 v0 = coe d_logistic'691'_50 (coe v0)
+d_logistic'691'_156 v0 ~v1 = du_logistic'691'_156 v0
+du_logistic'691'_156 :: T_Real_2 -> AgdaAny -> AgdaAny
+du_logistic'691'_156 v0 = coe d_logistic'691'_50 (coe v0)
 -- Real.RealProp._.√_
-d_'8730'__140 :: T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny
-d_'8730'__140 v0 ~v1 = du_'8730'__140 v0
-du_'8730'__140 :: T_Real_2 -> AgdaAny -> AgdaAny
-du_'8730'__140 v0 = coe d_'8730'__42 (coe v0)
+d_'8730'__158 :: T_Real_2 -> T_RealProp_62 -> AgdaAny -> AgdaAny
+d_'8730'__158 v0 ~v1 = du_'8730'__158 v0
+du_'8730'__158 :: T_Real_2 -> AgdaAny -> AgdaAny
+du_'8730'__158 v0 = coe d_'8730'__42 (coe v0)
 -- Real.RealProp.+-neutˡ
-d_'43''45'neut'737'_144 ::
+d_'43''45'neut'737'_162 ::
   T_RealProp_62 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'43''45'neut'737'_144 = erased
+d_'43''45'neut'737'_162 = erased
 -- Real.RealProp.+-neutʳ
-d_'43''45'neut'691'_148 ::
+d_'43''45'neut'691'_166 ::
   T_RealProp_62 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'43''45'neut'691'_148 = erased
+d_'43''45'neut'691'_166 = erased
 -- Real.RealProp.*-neutˡ
-d_'42''45'neut'737'_152 ::
+d_'42''45'neut'737'_170 ::
   T_RealProp_62 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'42''45'neut'737'_152 = erased
+d_'42''45'neut'737'_170 = erased
 -- Real.RealProp.*-neutʳ
-d_'42''45'neut'691'_156 ::
+d_'42''45'neut'691'_174 ::
   T_RealProp_62 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'42''45'neut'691'_156 = erased
+d_'42''45'neut'691'_174 = erased
+-- Real.RealProp.*-nulˡ
+d_'42''45'nul'737'_178 ::
+  T_RealProp_62 ->
+  AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_'42''45'nul'737'_178 = erased
+-- Real.RealProp.*-nulʳ
+d_'42''45'nul'691'_182 ::
+  T_RealProp_62 ->
+  AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_'42''45'nul'691'_182 = erased
+-- Real.RealProp.÷-nul
+d_'247''45'nul_186 ::
+  T_RealProp_62 ->
+  AgdaAny ->
+  (MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_'247''45'nul_186 = erased
+-- Real.RealProp.fromℕ-inj
+d_fromℕ'45'inj_192 ::
+  T_RealProp_62 ->
+  Integer ->
+  Integer ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_fromℕ'45'inj_192 = erased

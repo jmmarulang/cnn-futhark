@@ -26,7 +26,6 @@ module Optimise where
   multiopt e 0 = e
   multiopt e (suc n) = doopt (multiopt e n)
 
-
 module Extract where
   open import Data.String
   open import Text.Printf
@@ -78,12 +77,17 @@ module Extract where
   ee-count-uses (env ρ) = env-count-uses ρ
   ee-count-uses (let′ x ρ) v = count-uses x v + ee-count-uses ρ (there v)
 
+  env-norm-lets : Env Γ Δ → Env Γ Δ
+  env-norm-lets ε = ε
+  env-norm-lets (skip x) = skip (env-norm-lets x)
+  env-norm-lets (xs ▹ x) = env-norm-lets xs ▹ norm-lets x
+
   ee-inline : EE Γ Δ → EE Γ Δ
-  ee-inline (env x) = env x
+  ee-inline (env x) = env (env-norm-lets x)
   ee-inline (let′ x ρ) with δ ← ee-inline ρ | ee-count-uses δ v₀
-  ... | 0 = ee-sub δ (sub-id ▹ x) -- does nothing?
-  ... | 1 = ee-sub δ (sub-id ▹ x) -- why only for 1?
-  ... | _ = let′ x δ
+  ... | 0 = ee-sub δ (sub-id ▹ norm-lets x) -- does nothing?
+  ... | 1 = ee-sub δ (sub-id ▹ norm-lets x) -- why only for 1?
+  ... | _ = let′ (norm-lets x) δ
 
   ee-inline' : EE Γ Δ → EE Γ Δ
   ee-inline' (env x) = env x
@@ -106,7 +110,7 @@ module Extract where
   ee-dedup (let′ x e) = let′ x (ee-replace (ee-dedup e) (x ↑) (var v₀))
 
   ee-OPT : EE Γ Δ → EE Γ Δ
-  ee-OPT ρ = ee-opt (ee-inline (ee-opt ρ)) --??
+  ee-OPT ρ = ee-inline $ ee-opt (ee-inline (ee-opt $ ee-inline ρ)) --??
 
   data NamedEnv : Ctx → Set where
     ε : NamedEnv ε
@@ -251,12 +255,36 @@ module Extract where
   -- m-softmax-s : String 
   -- m-softmax-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.m-softmax-e OPT) (from-named (ε ▹ "inp"))) 0)
 
-  unblock-tok-s : String 
-  unblock-tok-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.unblock-tok-e OPT) (from-named (ε ▹ "inp"))) 0)
+  -- sel-zb-s : String
+  -- sel-zb-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.sel-zb-e OPT) (from-named (ε ▹ "inp"))) 0)
+  
+  -- x64-s : String
+  -- x64-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.x64-e OPT) (from-named (ε ▹ "inp"))) 0)
+
+  -- imap-imapb-sum-zerobut-s : String
+  -- imap-imapb-sum-zerobut-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.imap-imapb-sum-zerobut-e OPT) (from-named (ε ▹ "inp"))) 0)
+
+  -- sum-imap-imapb-zerobut-s : String
+  -- sum-imap-imapb-zerobut-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.sum-imap-imapb-zerobut-e OPT) (from-named (ε ▹ "inp"))) 0)
+
+  -- unblock-tok-s : String
+  -- unblock-tok-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.unblock-tok-e OPT) (from-named (ε ▹ "inp"))) 0)
+
+  -- let-test-s : String
+  -- let-test-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.let-test-e OPT) (from-named (ε ▹ "inp"))) 0)
+
+  grad-mgpt-loss-e = ee-OPT $ ee-dedup $ ee-opt (grad Primitives.Microgpt.mgpt-loss-e one zero-ee)
 
   mgpt-loss-s : String
-  mgpt-loss-s = proj₂ (runState (to-str Primitives.Microgpt.mgpt-loss-e (from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target"))) 0)
+  mgpt-loss-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.mgpt-loss-e OPT) ((from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target")))) 0)
+
+  -- mgpt-loss-s : String
+  -- mgpt-loss-s = proj₂ (runState (to-str Primitives.Microgpt.mgpt-loss-e (from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target"))) 0)
 
   mgpt-forward-s : String
-  mgpt-forward-s = proj₂ (runState (to-str Primitives.Microgpt.mgpt-forward-e (from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq"))) 0)
+  mgpt-forward-s = proj₂ (runState (to-str ( multiopt Primitives.Microgpt.mgpt-forward-e OPT) (from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq"))) 0)
 
+  grad-mgpt-loss-s : String
+  grad-mgpt-loss-s = pp Primitives.Microgpt.mgpt-loss-e
+    (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup"
+       ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target")

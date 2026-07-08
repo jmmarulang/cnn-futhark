@@ -1,5 +1,6 @@
 import os       # os.path.exists
 import math     # math.log, math.exp
+import numpy as np
 
 # Let there be Autograd to recursively apply the chain rule through a computation graph
 class Value:
