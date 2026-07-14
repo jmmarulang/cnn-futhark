@@ -6,6 +6,7 @@ record Real : Set₁ where
   field
     R : Set
     fromℕ : ℕ → R
+    ∞ᵣ : R
     _+_ _*_ _∨_ _÷_ : R → R → R
     -_ e^_ √_ I+ log : R → R
 
@@ -16,6 +17,9 @@ record Real : Set₁ where
 
   0ᵣ : R
   0ᵣ = fromℕ 0
+
+  -∞ᵣ : R
+  -∞ᵣ = - ∞ᵣ
 
   logisticʳ : R → R
   logisticʳ x = fromℕ 1 ÷ (fromℕ 1 + e^ (- x))

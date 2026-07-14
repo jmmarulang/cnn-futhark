@@ -109,13 +109,12 @@ module _ where
     slide      : E Γ (ix s) → s + p ≈ r → E Γ (ar r) → suc p ≈ u → E Γ (ar u)
     backslide  : E Γ (ix s) → E Γ (ar u) → suc p ≈ u → s + p ≈ r → E Γ (ar r)
 
-    -- logi   : E Γ (ar s) → E Γ (ar s)
     bin        : Bop → E Γ (ar s) → E Γ (ar s) → E Γ (ar s)
     scaledown  : ℕ → E Γ (ar s) → E Γ (ar s)
-    -- ⊟_      : E Γ (ar s) → E Γ (ar s)
     let′       : E Γ (ar s) → E (Γ ▹ ar s) (ar p) → E Γ (ar p)
     -- Jairo made
-    un : Uop → E Γ (ar s) → E Γ (ar s)
+    un         : Uop → E Γ (ar s) → E Γ (ar s)
+    maximum    : E (Γ ▹ ix s) (ar p) → E Γ (ar p)
 
   pattern 𝟙 = one
   pattern 𝟘 = zero
@@ -144,6 +143,12 @@ module _ where
 
   _//_ : ( a b : E Γ (ar s)) → E Γ (ar s)
   _//_ a b = a ⊠ (𝟙/ b)
+
+  𝕀0- : (E Γ (ar s)) → E Γ (ar s)
+  𝕀0- a = 𝟙 ⊟ 𝕀+ a
+
+  𝕀0+ : (E Γ (ar s)) → E Γ (ar s)
+  𝕀0+ a = 𝕀0- (⊟ a)
 
   𝟚 : E Γ (ar s)
   𝟚 = 𝟙 ⊞ 𝟙
@@ -177,13 +182,12 @@ module WkSub where
   wk s (zero-but e e₁ e₂) = zero-but (wk s e) (wk s e₁) (wk s e₂)
   wk s (slide e x e₁ x₁) = slide (wk s e) x (wk s e₁) x₁
   wk s (backslide e e₁ x x₁) = backslide (wk s e) (wk s e₁) x x₁
-  -- wk s (logi e) = logi (wk s e)
   wk s (bin x e e₁) = bin x (wk s e) (wk s e₁)
   wk s (scaledown x e) = scaledown x (wk s e)
-  -- wk s (⊟_ e) = ⊟_ (wk s e)
   wk s (let′ e e₁) = let′ (wk s e) (wk (keep s) e₁)
   -- Jairo made
   wk s (un x e) = un x (wk s e)
+  wk s (maximum e) = maximum (wk (keep s) e)
 
   _∙ʷ_ : Δ ⊆ Ψ → Γ ⊆ Δ → Γ ⊆ Ψ
   s ∙ʷ ε = s
@@ -239,13 +243,12 @@ module WkSub where
   sub (zero-but e e₁ e₂) s = zero-but (sub e s) (sub e₁ s) (sub e₂ s)
   sub (slide e x e₁ x₁) s = slide (sub e s) x (sub e₁ s) x₁
   sub (backslide e e₁ x x₁) s = backslide (sub e s) (sub e₁ s) x x₁
-  -- sub (logi e) s = logi (sub e s)
   sub (bin x e e₁) s = bin x (sub e s) (sub e₁ s)
   sub (scaledown x e) s = scaledown x (sub e s)
-  -- sub (⊟_ e) s = ⊟_ (sub e s)
   sub (let′ e e₁) s = let′ (sub e s) (sub e₁ (skeep s))
   -- Jairo made
   sub (un x e) s = un x (sub e s)
+  sub (maximum e) s = maximum (sub e (skeep s))
 
   _∙ˢ_ : Sub Δ Ψ → Sub Γ Δ → Sub Γ Ψ
   ε ∙ˢ t = ε
@@ -283,13 +286,12 @@ module WkSub where
   sub-at-id (zero-but e e₁ e₂) rewrite (sub-at-id e) | sub-at-id e₁ | sub-at-id e₂ = refl
   sub-at-id (slide e x e₁ x₁) rewrite sub-at-id e | sub-at-id e₁ = refl
   sub-at-id (backslide e e₁ x x₁) rewrite sub-at-id e | sub-at-id e₁ = refl
-  -- sub-at-id (logi e) = cong logi (sub-at-id e)
   sub-at-id (bin x e e₁) = cong₂ (bin x) (sub-at-id e) (sub-at-id e₁)
   sub-at-id (scaledown x e) = cong (scaledown x) (sub-at-id e)
-  -- sub-at-id (⊟_ e) = cong ⊟_ (sub-at-id e)
   sub-at-id (let′ e e₁) = cong₂ let′ (sub-at-id e) (sub-at-id e₁)
   -- Jairo made
   sub-at-id (un x e) = cong (un x) (sub-at-id e)
+  sub-at-id (maximum e) = cong maximum (sub-at-id e)
 
   sub-ε : (e : E ε is) → sub e ε ≡ e
   sub-ε e = sub-at-id e
@@ -338,7 +340,6 @@ module WkSub where
     a ← stren e v
     b ← stren e₁ v
     just (backslide a b x x₁)
-  -- stren (logi e) v = map logi (stren e v)
   stren (bin x e e₁) v = do
     a ← stren e v
     b ← stren e₁ v
@@ -351,6 +352,7 @@ module WkSub where
     just (let′ a b)
   -- Jairo made
   stren (un x e) v = map (un x) (stren e v)
+  stren (maximum e) v = map maximum (stren e (there v))
 
   -- Get rid of lets that do not use their arguments.
   norm-lets : E Γ is → E Γ is
@@ -367,13 +369,12 @@ module WkSub where
   norm-lets (zero-but e e₁ e₂) = zero-but (norm-lets e) (norm-lets e₁) (norm-lets e₂)
   norm-lets (slide e x e₁ x₁) = slide (norm-lets e) x (norm-lets e₁) x₁
   norm-lets (backslide e e₁ x x₁) = backslide (norm-lets e) (norm-lets e₁) x x₁
-  -- norm-lets (logi e) = logi (norm-lets e)
   norm-lets (bin x e e₁) = bin x (norm-lets e) (norm-lets e₁)
   norm-lets (scaledown x e) = scaledown x (norm-lets e)
-  -- norm-lets (⊟_ e) = ⊟_ (norm-lets e)
   norm-lets (let′ e e₁) = maybe id (let′ (norm-lets e) (norm-lets e₁)) (stren (norm-lets e₁) v₀)
   -- Jairo made
   norm-lets (un x e) = un x (norm-lets e)
+  norm-lets (maximum e) = maximum (norm-lets e)
 
   count-uses : E Γ is → ip ∈ Γ → ℕ
   count-uses (var x) v with eq? x v
@@ -391,13 +392,12 @@ module WkSub where
   count-uses (zero-but e e₁ e₂) v = count-uses e v + count-uses e₁ v + count-uses e₂ v
   count-uses (slide e x e₁ x₁) v = count-uses e v + count-uses e₁ v
   count-uses (backslide e e₁ x x₁) v = count-uses e v + count-uses e₁ v
-  -- count-uses (logi e) v = count-uses e v
   count-uses (bin x e e₁) v = count-uses e v + count-uses e₁ v
   count-uses (scaledown x e) v = count-uses e v
-  -- count-uses (⊟_ e) v = count-uses e v
   count-uses (let′ e e₁) v = count-uses e v + count-uses e₁ (there v)
   -- Jairo made
   count-uses (un x e) v = count-uses e v
+  count-uses (maximum e) v = count-uses e (there v)
 
 module Syntax where
   open import Data.List as L using (List; []; _∷_)
@@ -434,6 +434,11 @@ module Syntax where
        → (GE (Γ ▹ ix s) (ix s) → E (Γ ▹ ix s) (ar p))
        → E Γ (ar p)
   Sum f = sum (f λ {Δ} ⦃ p ⦄ → var (V v₀))
+
+  Max : ∀ {Γ}
+       → (GE (Γ ▹ ix s) (ix s) → E (Γ ▹ ix s) (ar p))
+       → E Γ (ar p)
+  Max f = maximum (f λ {Δ} ⦃ p ⦄ → var (V v₀))
 
   Imaps : ∀ {Γ}
         → (GE (Γ ▹ ix s) (ix s) → E (Γ ▹ ix s) (ar unit))
@@ -563,6 +568,9 @@ module Primitives where
     variable
       ah hd ed sl vo pr fd : S
 
+    tiles : ∀ {Γ} → E Γ (ar []) → E Γ (ar s)
+    tiles x = Imaps (λ _ → ⟨ x ⟩)
+
     iswap : ∀ {Γ} → E Γ (ar (s ⊗ u)) → E Γ (ar (u ⊗ s))
     iswap {s} {u} x = Imap {u} λ i → Imaps {s} λ j → sels (sel ⟨ x ⟩ j) i
 
@@ -607,8 +615,8 @@ module Primitives where
       -- Let exps := 𝕖^ (x) In
       -- Let total := Sum {s} (λ i → sels exps i) In
       -- Let r := exps // (Imaps λ _ → total) In r
-
-      Let exps := 𝕖^ (x) In
+      Let maxs := Max {s} (λ i → sels ⟨ x ⟩ i) In
+      Let exps := 𝕖^ (⟨ x ⟩ ⊟ tiles maxs) In
       Let total := Sum {s} (λ i → sels exps i) In
       Let r := Imaps (λ i → sels exps i // total) In r
 

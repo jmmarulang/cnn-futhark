@@ -6,6 +6,7 @@ module _ where
   open import Data.Nat using (ℕ; zero; suc; _+_; _<_; s≤s)
   open import Data.Nat.Properties
   open import Relation.Binary.PropositionalEquality
+  open import Data.List as L using (List; []; _∷_)
   open import Function
   open import Ar
   open import Lang
@@ -67,6 +68,14 @@ module _ where
 
   zero-ee : EE Γ Δ
   zero-ee = env (zero-env)
+
+  -- one-env : Env Γ Δ
+  -- one-env {ε} = ε
+  -- one-env {Γ ▹ ix x} = skip one-env
+  -- one-env {Γ ▹ ar x} = one-env ▹ one
+
+  -- one-ee : EE Γ Δ
+  -- one-ee = env (one-env)
 
   env-update+ : Env Γ Δ → (v : ar s ∈ Γ) → (t : E Δ (ar s)) → Env Γ Δ
   env-update+ (ρ ▹ x) v₀ t = ρ ▹ (x ⊞ t)
@@ -179,6 +188,47 @@ module _ where
   grad-sum : (e s : E (Γ ▹ ix s) (ar p)) → EE Γ Γ → EE Γ Γ
   grad-sum e s δ = ee-plus δ $ ee-tail $ ee-map-sum (grad e s zero-ee)
 
+  -- jairo made
+  -- env-tile : E Δ (ar []) → Env (Γ) Δ
+  -- env-tile {Δ} {ε} e = ε
+  -- env-tile {Δ} {Γ ▹ ix x} e = skip (env-tile e)
+  -- env-tile {Δ} {Γ ▹ ar x} e = (env-tile e) ▹ imaps (e ↑)
+
+  -- ee-tile : E Δ (ar []) → EE (Γ) Δ
+  -- ee-tile e = let′ e (ee-tile (var v₀))
+
+  -- env-map-𝕀-≥ : Env Γ (Δ ▹ ix s) → Env Γ (Δ ▹ ix s)
+  -- env-map-𝕀-≥ ε = ε
+  -- env-map-𝕀-≥ (skip ρ) = skip (env-map-𝕀-≥ ρ)
+  -- env-map-𝕀-≥ (ρ ▹ x) = (env-map-𝕀-≥ ρ) ▹ (𝕀0- (x ⊟ imaps (maximum (sels (wk (skip (skip ⊆-eq)) x) (var v₀)))))
+
+  -- ee-map-𝕀-≥ : EE Γ (Δ ▹ ix s) → EE Γ (Δ ▹ ix s)
+  -- ee-map-𝕀-≥ ρ = env (env-map-𝕀-≥ (ee-fold ρ))
+
+  -- env-mul : (ρ ν : Env Γ Δ) → Env Γ Δ
+  -- env-mul ε ν = ν
+  -- env-mul (skip ρ) (skip ν) = skip (env-mul ρ ν)
+  -- env-mul (ρ ▹ x) (ν ▹ y) = env-mul ρ ν ▹ (x ⊠ y)
+
+  -- {-# TERMINATING #-}  -- See GradTerm.agda where this is fixed
+  -- ee-mul : (ρ ν : EE Γ Δ) → EE Γ Δ
+  -- ee-mul (env ρ) (env ν) = env (env-mul ρ ν)
+  -- ee-mul (env ρ) (let′ x ν) = let′ x (ee-mul (ee-wk (skip ⊆-eq) (env ρ)) ν)
+  -- ee-mul (let′ x ρ) ν = let′ x (ee-mul ρ (ee-wk (skip ⊆-eq) ν))
+
+  -- test1 : ∀ {Γ : Ctx} → Env Γ Γ
+  -- test1 {ε} = ε
+  -- test1 {Γ ▹ ix x} = skip (env-wk (skip ⊆-eq) test1)
+  -- test1 {Γ ▹ ar x} = env-wk (skip ⊆-eq) test1 ▹ var v₀
+
+  -- test2 : ∀ {Γ : Ctx} → EE Γ Γ
+  -- test2 = env test1
+
+  -- grad-max : (e s : E (Γ ▹ ix q) (ar p)) → EE Γ Γ → EE Γ Γ
+  -- grad-max e s δ = ee-plus δ $ ee-tail $ ee-map-sum (ee-mul (grad e s zero-ee) (ee-map-𝕀-≥ test2))
+  -- grad-max e s δ = ee-plus δ $ ee-tail $ ee-map-sum (ee-mul (grad e s zero-ee) (ee-map-𝕀-≥ (ee-wk (skip ⊆-eq) (env (skip (ee-fold δ))))))
+
+  -- maximum (sels (e ↑) (var v₀))
   grad {is = ix _} (var x) s δ = δ
   grad {is = ar _} (var x) s δ = ee-update+ δ x s
   grad zero s δ = δ
@@ -201,8 +251,8 @@ module _ where
   grad (e ⊞ e₁)               s   = grad e s ∘ grad e₁ s
   grad (e ⊠ e₁)               s   = grad e (s ⊠ e₁) ∘ grad e₁ (s ⊠ e)
   grad (scaledown x e)        s   = grad e (scaledown x s)
-  grad (⊟ e)              s   = grad e (⊟ s)
-  grad (logi e)           s   = grad e (let′ (logi e) ((s ↑) ⊠ var v₀ ⊠ (one ⊞ ⊟ (var v₀))))
+  grad (⊟ e)                  s   = grad e (⊟ s)
+  grad (logi e)               s   = grad e (let′ (logi e) ((s ↑) ⊠ var v₀ ⊠ (one ⊞ ⊟ (var v₀))))
 
   grad (let′ e e₁) s δ =
     let
@@ -211,12 +261,17 @@ module _ where
     in t
 
   -- Jairo made
-  grad (relu e) s δ = grad e ((𝕀+ e) ⊠ s) δ -- is this correct?
-  grad (𝕀+ e) s δ = grad e 𝟘 δ -- is this correct?
-  grad (𝕖^ e) s δ = grad e ((𝕖^ e) ⊠ s) δ
-  grad (sqrt e) s δ = grad e (s // (𝟚 ⊠ sqrt e)) δ
-  grad (𝟙/ e) s δ = grad e (⊟ (s // (e ⊠ e))) δ
-  grad (ln e) s δ = grad e (s // e) δ
+  grad (relu e)               s δ = grad e ((𝕀+ e) ⊠ s) δ -- is this correct?
+  grad (𝕀+ e)                 s δ = grad e 𝟘 δ -- is this correct?
+  grad (𝕖^ e)                 s δ = grad e ((𝕖^ e) ⊠ s) δ
+  grad (sqrt e)               s δ = grad e (s // (𝟚 ⊠ sqrt e)) δ
+  grad (𝟙/ e)                 s δ = grad e (⊟ (s // (e ⊠ e))) δ
+  grad (ln e)                 s δ = grad e (s // e) δ
+  grad (maximum {s = p} e)    s δ = let′ (maximum {s = p} e) (ee-tail (grad-sum (wk (keep (skip ⊆-eq)) e)
+    ((wk (skip (skip ⊆-eq)) s) ⊠ 𝕀0- (wk (keep (skip ⊆-eq)) e ⊟ var (there v₀))) (ee-wk (skip ⊆-eq) (ee-wk-zero δ (skip ⊆-eq)))))
+  -- grad (maximum {s = p} e)    s δ = grad-sum e
+  --   (let′ (maximum {s = p} (e ↑)) ((wk (skip (skip ⊆-eq)) s) ⊠ 𝕀0- ((e ↑) ⊟ var v₀))) δ
+  -- grad (maximum {s = p} e)    s δ = grad-sum e ((s ↑) ⊠ 𝕀0- (e ⊟ maximum {s = p} (e ↑))) δ
 
   grad-last′ v e (env ρ) = let
     w = env-lookup ρ v
@@ -242,10 +297,18 @@ open import Data.List.Relation.Unary.All
 
 open import Data.List as L using (List; []; _∷_)
 
-test : EE (ε ▹ ar [] ▹ ar []) _
-test = grad (sqrt (var v₀)) one zero-ee
+test : EE (ε ▹ ar (2 ∷ []) ▹ ar (2 ∷ [])) _
+test = grad (maximum {s = 2 ∷ []} (relu (var (there v₀)))) one zero-ee
+
+
 {-
-env ((ε ▹ 𝟘) ▹ (𝟘 ⊞ 𝟙 ⊠ 𝟙/ ((𝟙 ⊞ 𝟙) ⊠ sqrt 𝟙)))
+env
+((ε ▹ (𝟘 ⊞ E.sum 𝟘)) ▹
+ (𝟘 ⊞
+  E.sum
+  (𝟘 ⊞
+   (𝕖^ var v₁) ⊠
+   (𝟙 ⊠ (𝟙 ⊞ (⊟ 𝕀+ ((𝕖^ var v₁) ⊞ (⊟ maximum (𝕖^ var v₂)))))))))
 -}
 
 

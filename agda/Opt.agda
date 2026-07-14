@@ -403,6 +403,11 @@ module Opt (r : Real) (rp : RealProp r) where
   ... | a , p = 𝕀+ a , (λ ρ i → cong I+ (p ρ i))
   opt (ln e) with opt e
   ... | a , p = ln a , (λ ρ i → cong log (p ρ i))
+  opt (maximum {s = s} e) with opt e
+  ... | a , p = maximum a
+              , λ ρ j → sum-inv _∨_ -∞ᵣ {(λ i₁ → eval e (ρ , i₁))} j
+                        ∙ sum-cong _∨_ -∞ᵣ {λ j₁ → eval e (ρ , j₁) j} (λ i → p (ρ , i) j)
+                        ∙ (sym (sum-inv _∨_ -∞ᵣ {λ i → eval a (ρ , i)} j))
 
   -- rm-zbs : ∀ {s Γ} → E Γ (ar s) → E Γ (ar s)
   -- rm-zbs {s} (var x) = var x
