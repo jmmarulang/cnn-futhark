@@ -236,7 +236,7 @@ module Extract where
 
   -- grad-test2-let-s : String
   -- grad-test2-let-s = pp Primitives.Microgpt.test2-let ε
-  
+
   -- grad-test-let-s : String
   -- grad-test-let-s = pp Primitives.Microgpt.test-let-e (ε ▹ "inp")
 

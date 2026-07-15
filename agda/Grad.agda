@@ -267,11 +267,27 @@ module _ where
   grad (sqrt e)               s δ = grad e (s // (𝟚 ⊠ sqrt e)) δ
   grad (𝟙/ e)                 s δ = grad e (⊟ (s // (e ⊠ e))) δ
   grad (ln e)                 s δ = grad e (s // e) δ
-  grad (maximum {s = p} e)    s δ = let′ (maximum {s = p} e) (ee-tail (grad-sum (wk (keep (skip ⊆-eq)) e)
-    ((wk (skip (skip ⊆-eq)) s) ⊠ 𝕀0- (wk (keep (skip ⊆-eq)) e ⊟ var (there v₀))) (ee-wk (skip ⊆-eq) (ee-wk-zero δ (skip ⊆-eq)))))
+  grad (maximum {s = p} e)    s δ =
+    let t = skip (skip ⊆-eq) in
+    let′ (maximum {s = p} e) (let′ (𝟙/ (E.sum (𝕀0+ (wk (keep (skip ⊆-eq)) e ⊟ var (there v₀)))))
+      (ee-tail (ee-tail (grad-sum
+        (wk (keep t) e)
+        (
+          wk (skip t) s ⊠
+          𝕀0+ (
+            wk (keep t) e ⊟
+            var (there (there v₀))
+            ) ⊠
+          var (there v₀)
+        )
+        (ee-wk t (ee-wk-zero δ t))))))
+
+    -- let′ (maximum {s = p} e) (ee-tail (grad-sum (wk (keep (skip ⊆-eq)) e)
+    -- ((wk (skip (skip ⊆-eq)) s) ⊠ 𝕀0+ (wk (keep (skip ⊆-eq)) e ⊟ var (there v₀))) (ee-wk (skip ⊆-eq) (ee-wk-zero δ (skip ⊆-eq)))))
   -- grad (maximum {s = p} e)    s δ = grad-sum e
-  --   (let′ (maximum {s = p} (e ↑)) ((wk (skip (skip ⊆-eq)) s) ⊠ 𝕀0- ((e ↑) ⊟ var v₀))) δ
-  -- grad (maximum {s = p} e)    s δ = grad-sum e ((s ↑) ⊠ 𝕀0- (e ⊟ maximum {s = p} (e ↑))) δ
+  --   (let′ (maximum {s = p} (e ↑)) ((wk (skip (skip ⊆-eq)) s) ⊠ 𝕀0+ ((e ↑) ⊟ var v₀))) δ
+  -- grad (maximum {s = p} e)    s δ =
+  --   grad-sum e ((s ↑) ⊠ (𝕀0+ (e ⊟ maximum {s = p} (e ↑))) ⊠ 𝟙/ (E.sum {s = p} ((e ↑) ⊟ maximum (wk (keep (skip (skip ⊆-eq))) e)))) δ
 
   grad-last′ v e (env ρ) = let
     w = env-lookup ρ v
@@ -297,8 +313,8 @@ open import Data.List.Relation.Unary.All
 
 open import Data.List as L using (List; []; _∷_)
 
-test : EE (ε ▹ ar (2 ∷ []) ▹ ar (2 ∷ [])) _
-test = grad (maximum {s = 2 ∷ []} (relu (var (there v₀)))) one zero-ee
+test : EE (ε ▹ ar (2 ∷ [])) _
+test = grad (Lang.Primitives.Microgpt.softmax {s = 2 ∷ []} ((var (v₀)))) one zero-ee
 
 
 {-
@@ -307,8 +323,9 @@ env
  (𝟘 ⊞
   E.sum
   (𝟘 ⊞
-   (𝕖^ var v₁) ⊠
-   (𝟙 ⊠ (𝟙 ⊞ (⊟ 𝕀+ ((𝕖^ var v₁) ⊞ (⊟ maximum (𝕖^ var v₂)))))))))
+   𝟙 ⊠ (𝟙 ⊞ (⊟ 𝕀+ (ln (var v₁) ⊞ (⊟ maximum (ln (var v₂)))))) ⊠
+   𝟙/ (E.sum (ln (var v₂) ⊞ (⊟ maximum (ln (var v₃)))))
+   ⊠ 𝟙/ (var v₁))))
 -}
 
 

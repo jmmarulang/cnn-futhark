@@ -455,15 +455,33 @@ d_to'45'sum_300 v0 v1 v2
       (case coe v0 of
          [] -> coe v2
          _ -> coe v3)
+-- Futhark._.to-maximum
+d_to'45'maximum_318 ::
+  [Integer] ->
+  T_Ix_74 ->
+  MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
+  MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_to'45'maximum_318 v0 v1 v2
+  = let v3
+          = coe
+              MAlonzo.Code.Text.Printf.d_printf_26
+              ("(imaximum%u %s (\\%s -> %s))" :: Data.Text.Text)
+              (d_dim_108 (coe v0)) (d_shape'45'args_104 (coe v0))
+              (d_ix'45'join_250 (coe v0) (coe v1) (coe (" " :: Data.Text.Text)))
+              v2 in
+    coe
+      (case coe v0 of
+         [] -> coe v2
+         _ -> coe v3)
 -- Futhark._.ix-plus
-d_ix'45'plus_316 ::
+d_ix'45'plus_334 ::
   [Integer] ->
   [Integer] ->
   [Integer] ->
   [Integer] ->
   MAlonzo.Code.Ar.T_Pointw'8323'_990 ->
   MAlonzo.Code.Ar.T_Pointw'8322'_968 -> T_Ix_74 -> T_Ix_74 -> T_Ix_74
-d_ix'45'plus_316 v0 v1 v2 v3 v4 v5 v6 v7
+d_ix'45'plus_334 v0 v1 v2 v3 v4 v5 v6 v7
   = case coe v4 of
       MAlonzo.Code.Ar.C_'91''93'_994
         -> coe
@@ -490,7 +508,7 @@ d_ix'45'plus_316 v0 v1 v2 v3 v4 v5 v6 v7
                                                                  MAlonzo.Code.Text.Printf.d_printf_26
                                                                  ("(%s + %s)" :: Data.Text.Text) v32
                                                                  v36)
-                                                              (d_ix'45'plus_316
+                                                              (d_ix'45'plus_334
                                                                  (coe v17) (coe v19) (coe v21)
                                                                  (coe v29) (coe v15) (coe v27)
                                                                  (coe v33) (coe v37))
@@ -503,10 +521,10 @@ d_ix'45'plus_316 v0 v1 v2 v3 v4 v5 v6 v7
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Futhark._.ix-eq
-d_ix'45'eq_334 ::
+d_ix'45'eq_352 ::
   [Integer] ->
   T_Ix_74 -> T_Ix_74 -> MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_ix'45'eq_334 v0 v1 v2
+d_ix'45'eq_352 v0 v1 v2
   = coe
       d_ix'45'join_250 (coe v0)
       (coe
@@ -517,14 +535,14 @@ d_ix'45'eq_334 v0 v1 v2
          (coe v1) (coe v2))
       (coe (" && " :: Data.Text.Text))
 -- Futhark._.ix-minus
-d_ix'45'minus_344 ::
+d_ix'45'minus_362 ::
   [Integer] ->
   [Integer] ->
   [Integer] ->
   [Integer] ->
   MAlonzo.Code.Ar.T_Pointw'8323'_990 ->
   MAlonzo.Code.Ar.T_Pointw'8322'_968 -> T_Ix_74 -> T_Ix_74 -> T_Ix_74
-d_ix'45'minus_344 v0 v1 v2 v3 v4 v5 v6 v7
+d_ix'45'minus_362 v0 v1 v2 v3 v4 v5 v6 v7
   = case coe v4 of
       MAlonzo.Code.Ar.C_'91''93'_994
         -> coe
@@ -551,7 +569,7 @@ d_ix'45'minus_344 v0 v1 v2 v3 v4 v5 v6 v7
                                                                  MAlonzo.Code.Text.Printf.d_printf_26
                                                                  ("(%s - %s)" :: Data.Text.Text) v32
                                                                  v36)
-                                                              (d_ix'45'minus_344
+                                                              (d_ix'45'minus_362
                                                                  (coe v17) (coe v19) (coe v21)
                                                                  (coe v29) (coe v15) (coe v27)
                                                                  (coe v33) (coe v37))
@@ -564,13 +582,13 @@ d_ix'45'minus_344 v0 v1 v2 v3 v4 v5 v6 v7
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Futhark._.to-div-mod
-d_to'45'div'45'mod_358 ::
+d_to'45'div'45'mod_376 ::
   [Integer] ->
   [Integer] ->
   [Integer] ->
   MAlonzo.Code.Ar.T_Pointw'8323'_990 ->
   T_Ix_74 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_to'45'div'45'mod_358 v0 v1 v2 v3 v4
+d_to'45'div'45'mod_376 v0 v1 v2 v3 v4
   = case coe v3 of
       MAlonzo.Code.Ar.C_'91''93'_994
         -> coe
@@ -605,7 +623,7 @@ d_to'45'div'45'mod_358 v0 v1 v2 v3 v4
                                                     (coe
                                                        MAlonzo.Code.Data.Nat.Show.d_show_56 v15))))
                                          (coe
-                                            d_to'45'div'45'mod_358 (coe v14) (coe v16) (coe v18)
+                                            d_to'45'div'45'mod_376 (coe v14) (coe v16) (coe v18)
                                             (coe v12) (coe v22))
                                   _ -> MAlonzo.RTE.mazUnreachableError
                            _ -> MAlonzo.RTE.mazUnreachableError
@@ -613,12 +631,12 @@ d_to'45'div'45'mod_358 v0 v1 v2 v3 v4
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Futhark._.from-div-mod
-d_from'45'div'45'mod_372 ::
+d_from'45'div'45'mod_390 ::
   [Integer] ->
   [Integer] ->
   [Integer] ->
   MAlonzo.Code.Ar.T_Pointw'8323'_990 -> T_Ix_74 -> T_Ix_74 -> T_Ix_74
-d_from'45'div'45'mod_372 v0 v1 v2 v3 v4 v5
+d_from'45'div'45'mod_390 v0 v1 v2 v3 v4 v5
   = case coe v3 of
       MAlonzo.Code.Ar.C_'91''93'_994
         -> coe seq (coe v4) (coe seq (coe v5) (coe C_'91''93'_76))
@@ -640,7 +658,7 @@ d_from'45'div'45'mod_372 v0 v1 v2 v3 v4 v5
                                                    ("((%s * %s) + %s)" :: Data.Text.Text) v22
                                                    (coe MAlonzo.Code.Data.Nat.Show.d_show_56 v16)
                                                    v26)
-                                                (d_from'45'div'45'mod_372
+                                                (d_from'45'div'45'mod_390
                                                    (coe v15) (coe v17) (coe v19) (coe v13) (coe v23)
                                                    (coe v27))
                                          _ -> MAlonzo.RTE.mazUnreachableError
@@ -650,12 +668,12 @@ d_from'45'div'45'mod_372 v0 v1 v2 v3 v4 v5
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Futhark._.mkar
-d_mkar_386 ::
+d_mkar_404 ::
   [Integer] ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
   T_Ix_74 ->
   MAlonzo.Code.Effect.Monad.State.Transformer.Base.T_StateT_58
-d_mkar_386 v0 v1 v2
+d_mkar_404 v0 v1 v2
   = coe
       MAlonzo.Code.Effect.Applicative.du_return_68
       (coe
@@ -665,13 +683,13 @@ d_mkar_386 v0 v1 v2
          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe (\ v3 -> v3))
          (coe d_to'45'sel_274 (coe v0) (coe v2) (coe v1)))
 -- Futhark._.to-fut
-d_to'45'fut_392 ::
+d_to'45'fut_410 ::
   MAlonzo.Code.Lang.T_Ctx_12 ->
   MAlonzo.Code.Lang.T_IS_6 ->
   MAlonzo.Code.Lang.T_E_182 ->
   AgdaAny ->
   MAlonzo.Code.Effect.Monad.State.Transformer.Base.T_StateT_58
-d_to'45'fut_392 v0 v1 v2 v3
+d_to'45'fut_410 v0 v1 v2 v3
   = case coe v2 of
       MAlonzo.Code.Lang.C_var_184 v6
         -> coe
@@ -720,7 +738,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                        coe
                          MAlonzo.Code.Effect.Monad.d__'62''62''61'__34
                          (coe d___68 () erased) erased erased
-                         (d_to'45'fut_392
+                         (d_to'45'fut_410
                             (coe
                                MAlonzo.Code.Lang.C__'9657'__16 (coe v0)
                                (coe MAlonzo.Code.Lang.C_ix_8 (coe v7)))
@@ -757,7 +775,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                         MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v9))
                      (coe
                         MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                        (d_to'45'fut_392
+                        (d_to'45'fut_410
                            (coe v0) (coe MAlonzo.Code.Lang.C_ar_10 (coe v5)) (coe v6)
                            (coe v3))
                         v8)
@@ -769,7 +787,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                  (coe
                                     MAlonzo.Code.Effect.Monad.d__'62''62''61'__34
                                     (coe d___68 () erased) erased erased
-                                    (d_to'45'fut_392
+                                    (d_to'45'fut_410
                                        (coe v0) (coe MAlonzo.Code.Lang.C_ix_8 (coe v5)) (coe v7)
                                        (coe v3))
                                     (\ v12 ->
@@ -814,7 +832,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                    MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v11))
                                 (coe
                                    MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                                   (d_to'45'fut_392
+                                   (d_to'45'fut_410
                                       (coe
                                          MAlonzo.Code.Lang.C__'9657'__16 (coe v0)
                                          (coe MAlonzo.Code.Lang.C_ix_8 (coe v5)))
@@ -860,7 +878,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v11))
                             (coe
                                MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                               (d_to'45'fut_392
+                               (d_to'45'fut_410
                                   (coe v0)
                                   (coe
                                      MAlonzo.Code.Lang.C_ar_10
@@ -875,7 +893,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                         (coe
                                            MAlonzo.Code.Effect.Monad.d__'62''62''61'__34
                                            (coe d___68 () erased) erased erased
-                                           (d_to'45'fut_392
+                                           (d_to'45'fut_410
                                               (coe v0) (coe MAlonzo.Code.Lang.C_ix_8 (coe v5))
                                               (coe v8) (coe v3))
                                            (\ v14 ->
@@ -923,7 +941,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                     MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v13))
                                  (coe
                                     MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                                    (d_to'45'fut_392
+                                    (d_to'45'fut_410
                                        (coe
                                           MAlonzo.Code.Lang.C__'9657'__16 (coe v0)
                                           (coe MAlonzo.Code.Lang.C_ix_8 (coe v4)))
@@ -933,7 +951,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                              (coe
-                                                d_to'45'div'45'mod_358 (coe v4) (coe v5) (coe v10)
+                                                d_to'45'div'45'mod_376 (coe v4) (coe v5) (coe v10)
                                                 (coe v8) (coe v11)))))
                                     v12)
                                  (\ v13 ->
@@ -948,7 +966,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                                    v15
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                       (coe
-                                                         d_to'45'div'45'mod_358 (coe v4) (coe v5)
+                                                         d_to'45'div'45'mod_376 (coe v4) (coe v5)
                                                          (coe v10) (coe v8) (coe v11))))
                                                 (\ v16 ->
                                                    case coe v16 of
@@ -980,7 +998,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v13))
                             (coe
                                MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                               (d_to'45'fut_392
+                               (d_to'45'fut_410
                                   (coe v0) (coe MAlonzo.Code.Lang.C_ar_10 (coe v6)) (coe v9)
                                   (coe v3))
                                v12)
@@ -992,7 +1010,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                         (coe
                                            MAlonzo.Code.Effect.Monad.d__'62''62''61'__34
                                            (coe d___68 () erased) erased erased
-                                           (d_to'45'fut_392
+                                           (d_to'45'fut_410
                                               (coe v0) (coe MAlonzo.Code.Lang.C_ix_8 (coe v4))
                                               (coe v10) (coe v3))
                                            (\ v16 ->
@@ -1006,7 +1024,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                                      (coe d___68 () erased) erased erased
                                                      (coe
                                                         v15
-                                                        (d_from'45'div'45'mod_372
+                                                        (d_from'45'div'45'mod_390
                                                            (coe v4) (coe v11) (coe v6) (coe v8)
                                                            (coe v16) (coe v17)))
                                                      (\ v18 ->
@@ -1043,7 +1061,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                  (coe
                                     MAlonzo.Code.Effect.Monad.d__'62''62''61'__34
                                     (coe d___68 () erased) erased erased
-                                    (d_to'45'fut_392
+                                    (d_to'45'fut_410
                                        (coe
                                           MAlonzo.Code.Lang.C__'9657'__16 (coe v0)
                                           (coe MAlonzo.Code.Lang.C_ix_8 (coe v5)))
@@ -1090,7 +1108,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                         MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v11))
                      (coe
                         MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                        (d_to'45'fut_392
+                        (d_to'45'fut_410
                            (coe v0) (coe MAlonzo.Code.Lang.C_ix_8 (coe v5)) (coe v7) (coe v3))
                         v10)
                      (\ v11 ->
@@ -1101,14 +1119,14 @@ d_to'45'fut_392 v0 v1 v2 v3
                                  (coe
                                     MAlonzo.Code.Effect.Monad.d__'62''62''61'__34
                                     (coe d___68 () erased) erased erased
-                                    (d_to'45'fut_392
+                                    (d_to'45'fut_410
                                        (coe v0) (coe MAlonzo.Code.Lang.C_ix_8 (coe v5)) (coe v8)
                                        (coe v3))
                                     (\ v14 ->
                                        coe
                                          MAlonzo.Code.Effect.Monad.d__'62''62''61'__34
                                          (coe d___68 () erased) erased erased
-                                         (d_to'45'fut_392 (coe v0) (coe v1) (coe v9) (coe v3))
+                                         (d_to'45'fut_410 (coe v0) (coe v1) (coe v9) (coe v3))
                                          (\ v15 ->
                                             coe
                                               MAlonzo.Code.Effect.Applicative.du_return_68
@@ -1136,7 +1154,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                                                      ("(if (%s) then %s else zero)"
                                                                       ::
                                                                       Data.Text.Text)
-                                                                     (d_ix'45'eq_334
+                                                                     (d_ix'45'eq_352
                                                                         (coe v5) (coe v13)
                                                                         (coe v14))
                                                                      (coe v18 v19)))
@@ -1157,7 +1175,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v15))
                             (coe
                                MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                               (d_to'45'fut_392
+                               (d_to'45'fut_410
                                   (coe v0) (coe MAlonzo.Code.Lang.C_ix_8 (coe v5)) (coe v9)
                                   (coe v3))
                                v14)
@@ -1169,7 +1187,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                         (coe
                                            MAlonzo.Code.Effect.Monad.d__'62''62''61'__34
                                            (coe d___68 () erased) erased erased
-                                           (d_to'45'fut_392
+                                           (d_to'45'fut_410
                                               (coe v0) (coe MAlonzo.Code.Lang.C_ar_10 (coe v7))
                                               (coe v11) (coe v3))
                                            (\ v18 ->
@@ -1183,7 +1201,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                                      (coe d___68 () erased) erased erased
                                                      (coe
                                                         v18
-                                                        (d_ix'45'plus_316
+                                                        (d_ix'45'plus_334
                                                            (coe v5) (coe v6) (coe v7) (coe v13)
                                                            (coe v10) (coe v12) (coe v17) (coe v19)))
                                                      (\ v20 ->
@@ -1213,7 +1231,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v15))
                             (coe
                                MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                               (d_to'45'fut_392
+                               (d_to'45'fut_410
                                   (coe v0) (coe MAlonzo.Code.Lang.C_ix_8 (coe v5)) (coe v9)
                                   (coe v3))
                                v14)
@@ -1225,7 +1243,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                         (coe
                                            MAlonzo.Code.Effect.Monad.d__'62''62''61'__34
                                            (coe d___68 () erased) erased erased
-                                           (d_to'45'fut_392
+                                           (d_to'45'fut_410
                                               (coe v0) (coe MAlonzo.Code.Lang.C_ar_10 (coe v6))
                                               (coe v10) (coe v3))
                                            (\ v18 ->
@@ -1239,7 +1257,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                                      (coe d___68 () erased) erased erased
                                                      (coe
                                                         v18
-                                                        (d_ix'45'minus_344
+                                                        (d_ix'45'minus_362
                                                            (coe v5) (coe v7) (coe v13) (coe v6)
                                                            (coe v12) (coe v11) (coe v19) (coe v17)))
                                                      (\ v20 ->
@@ -1292,7 +1310,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                                                                 d_ix'45'to'45'list_268
                                                                                 (coe v6)
                                                                                 (coe
-                                                                                   d_ix'45'minus_344
+                                                                                   d_ix'45'minus_362
                                                                                    (coe v5) (coe v7)
                                                                                    (coe v13)
                                                                                    (coe v6)
@@ -1320,7 +1338,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v10))
                             (coe
                                MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                               (d_to'45'fut_392 (coe v0) (coe v1) (coe v7) (coe v3)) v9)
+                               (d_to'45'fut_410 (coe v0) (coe v1) (coe v7) (coe v3)) v9)
                             (\ v10 ->
                                case coe v10 of
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v11 v12
@@ -1329,7 +1347,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                         (coe
                                            MAlonzo.Code.Effect.Monad.d__'62''62''61'__34
                                            (coe d___68 () erased) erased erased
-                                           (d_to'45'fut_392 (coe v0) (coe v1) (coe v8) (coe v3))
+                                           (d_to'45'fut_410 (coe v0) (coe v1) (coe v8) (coe v3))
                                            (\ v13 ->
                                               coe
                                                 MAlonzo.Code.Effect.Applicative.du_return_68
@@ -1405,7 +1423,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v10))
                             (coe
                                MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                               (d_to'45'fut_392 (coe v0) (coe v1) (coe v7) (coe v3)) v9)
+                               (d_to'45'fut_410 (coe v0) (coe v1) (coe v7) (coe v3)) v9)
                             (\ v10 ->
                                case coe v10 of
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v11 v12
@@ -1414,7 +1432,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                         (coe
                                            MAlonzo.Code.Effect.Monad.d__'62''62''61'__34
                                            (coe d___68 () erased) erased erased
-                                           (d_to'45'fut_392 (coe v0) (coe v1) (coe v8) (coe v3))
+                                           (d_to'45'fut_410 (coe v0) (coe v1) (coe v8) (coe v3))
                                            (\ v13 ->
                                               coe
                                                 MAlonzo.Code.Effect.Applicative.du_return_68
@@ -1491,7 +1509,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                         MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v9))
                      (coe
                         MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                        (d_to'45'fut_392 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
+                        (d_to'45'fut_410 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
                      (\ v9 ->
                         case coe v9 of
                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v10 v11
@@ -1570,7 +1588,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                                     (coe v14))
                                                (coe
                                                   MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                                                  (d_to'45'fut_392
+                                                  (d_to'45'fut_410
                                                      (coe
                                                         MAlonzo.Code.Lang.C__'9657'__16 (coe v0)
                                                         (coe MAlonzo.Code.Lang.C_ar_10 (coe v5)))
@@ -1579,7 +1597,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                         (coe v3)
                                                         (coe
-                                                           d_mkar_386 (coe v5)
+                                                           d_mkar_404 (coe v5)
                                                            (coe d_fresh'45'var_112 (coe v12)))))
                                                   v13)
                                                (\ v14 ->
@@ -1596,7 +1614,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                                                    MAlonzo.Code.Effect.Monad.d__'62''62''61'__34
                                                                    (coe d___68 () erased) erased
                                                                    erased
-                                                                   (d_to'45'str_394
+                                                                   (d_to'45'str_412
                                                                       (coe v0) (coe v5) (coe v7)
                                                                       (coe v3))
                                                                    (\ v18 ->
@@ -1649,7 +1667,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v9))
                             (coe
                                MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                               (d_to'45'fut_392 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
+                               (d_to'45'fut_410 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
                             (\ v9 ->
                                case coe v9 of
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v10 v11
@@ -1696,7 +1714,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v9))
                             (coe
                                MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                               (d_to'45'fut_392 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
+                               (d_to'45'fut_410 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
                             (\ v9 ->
                                case coe v9 of
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v10 v11
@@ -1741,7 +1759,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v9))
                             (coe
                                MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                               (d_to'45'fut_392 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
+                               (d_to'45'fut_410 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
                             (\ v9 ->
                                case coe v9 of
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v10 v11
@@ -1786,7 +1804,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v9))
                             (coe
                                MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                               (d_to'45'fut_392 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
+                               (d_to'45'fut_410 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
                             (\ v9 ->
                                case coe v9 of
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v10 v11
@@ -1833,7 +1851,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v9))
                             (coe
                                MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                               (d_to'45'fut_392 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
+                               (d_to'45'fut_410 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
                             (\ v9 ->
                                case coe v9 of
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v10 v11
@@ -1878,7 +1896,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v9))
                             (coe
                                MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                               (d_to'45'fut_392 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
+                               (d_to'45'fut_410 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
                             (\ v9 ->
                                case coe v9 of
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v10 v11
@@ -1923,7 +1941,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v9))
                             (coe
                                MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                               (d_to'45'fut_392 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
+                               (d_to'45'fut_410 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
                             (\ v9 ->
                                case coe v9 of
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v10 v11
@@ -1951,7 +1969,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                                                (coe v14)
                                                                (coe
                                                                   MAlonzo.Code.Text.Printf.d_printf_26
-                                                                  ("indicatorp %s"
+                                                                  ("(indicatorp %s)"
                                                                    ::
                                                                    Data.Text.Text)
                                                                   v15))
@@ -1970,7 +1988,7 @@ d_to'45'fut_392 v0 v1 v2 v3
                                MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v9))
                             (coe
                                MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                               (d_to'45'fut_392 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
+                               (d_to'45'fut_410 (coe v0) (coe v1) (coe v7) (coe v3)) v8)
                             (\ v9 ->
                                case coe v9 of
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v10 v11
@@ -2004,15 +2022,71 @@ d_to'45'fut_392 v0 v1 v2 v3
                                         v10
                                  _ -> MAlonzo.RTE.mazUnreachableError)))
              _ -> MAlonzo.RTE.mazUnreachableError
+      MAlonzo.Code.Lang.C_maximum_218 v5 v7
+        -> coe
+             MAlonzo.Code.Effect.Monad.State.Transformer.Base.C_mkStateT_70
+             (coe
+                (\ v8 ->
+                   coe
+                     MAlonzo.Code.Function.Base.du__'8728''8242'__216
+                     (coe MAlonzo.Code.Function.Base.du__'124''62''8242'__232)
+                     (\ v9 ->
+                        MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v9))
+                     (coe
+                        MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
+                        (d_iv_140 (coe v5)) v8)
+                     (\ v9 ->
+                        case coe v9 of
+                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v10 v11
+                            -> coe
+                                 MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
+                                 (coe
+                                    MAlonzo.Code.Effect.Monad.d__'62''62''61'__34
+                                    (coe d___68 () erased) erased erased
+                                    (d_to'45'fut_410
+                                       (coe
+                                          MAlonzo.Code.Lang.C__'9657'__16 (coe v0)
+                                          (coe MAlonzo.Code.Lang.C_ix_8 (coe v5)))
+                                       (coe v1) (coe v7)
+                                       (coe
+                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v3)
+                                          (coe v11)))
+                                    (\ v12 ->
+                                       coe
+                                         MAlonzo.Code.Effect.Applicative.du_return_68
+                                         (MAlonzo.Code.Effect.Monad.d_rawApplicative_32
+                                            (coe d___68 () erased))
+                                         (\ v13 ->
+                                            coe
+                                              MAlonzo.Code.Effect.Monad.d__'62''62''61'__34
+                                              (coe d___68 () erased) erased erased (coe v12 v13)
+                                              (\ v14 ->
+                                                 case coe v14 of
+                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v15 v16
+                                                     -> coe
+                                                          MAlonzo.Code.Effect.Applicative.du_return_68
+                                                          (coe
+                                                             MAlonzo.Code.Effect.Monad.State.Transformer.du_applicative_48
+                                                             (coe
+                                                                MAlonzo.Code.Effect.Monad.Identity.du_monad_36))
+                                                          (coe
+                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                             (coe (\ v17 -> v17))
+                                                             (coe
+                                                                d_to'45'maximum_318 (coe v5)
+                                                                (coe v11) (coe v15 v16)))
+                                                   _ -> MAlonzo.RTE.mazUnreachableError))))
+                                 v10
+                          _ -> MAlonzo.RTE.mazUnreachableError)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Futhark._.to-str
-d_to'45'str_394 ::
+d_to'45'str_412 ::
   MAlonzo.Code.Lang.T_Ctx_12 ->
   [Integer] ->
   MAlonzo.Code.Lang.T_E_182 ->
   AgdaAny ->
   MAlonzo.Code.Effect.Monad.State.Transformer.Base.T_StateT_58
-d_to'45'str_394 v0 v1 v2 v3
+d_to'45'str_412 v0 v1 v2 v3
   = let v4
           = coe
               MAlonzo.Code.Effect.Monad.State.Transformer.Base.C_mkStateT_70
@@ -2025,7 +2099,7 @@ d_to'45'str_394 v0 v1 v2 v3
                          MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v5))
                       (coe
                          MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                         (d_to'45'fut_392
+                         (d_to'45'fut_410
                             (coe v0) (coe MAlonzo.Code.Lang.C_ar_10 (coe v1)) (coe v2)
                             (coe v3))
                          v4)
@@ -2071,7 +2145,7 @@ d_to'45'str_394 v0 v1 v2 v3
                            MAlonzo.Code.Effect.Monad.Identity.d_runIdentity_20 (coe v6))
                         (coe
                            MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                           (d_to'45'fut_392
+                           (d_to'45'fut_410
                               (coe v0) (coe MAlonzo.Code.Lang.C_ar_10 (coe v1)) (coe v2)
                               (coe v3))
                            v5)
@@ -2099,18 +2173,18 @@ d_to'45'str_394 v0 v1 v2 v3
                              _ -> MAlonzo.RTE.mazUnreachableError)))
          _ -> coe v4)
 -- Futhark.Test._,,_
-d__'44''44'__846 ::
+d__'44''44'__882 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d__'44''44'__846 v0 v1 v2 v3
+d__'44''44'__882 v0 v1 v2 v3
   = coe MAlonzo.Code.Data.Product.Base.du__'44''8242'__84
 -- Futhark.Test.test-e
-d_test'45'e_848 :: MAlonzo.Code.Lang.T_E_182
-d_test'45'e_848
+d_test'45'e_884 :: MAlonzo.Code.Lang.T_E_182
+d_test'45'e_884
   = coe
-      MAlonzo.Code.Lang.du_Lcon_1272
+      MAlonzo.Code.Lang.du_Lcon_1312
       (coe
          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
          (coe
@@ -2140,7 +2214,7 @@ d_test'45'e_848
                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (5 :: Integer))
                     (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
               (coe
-                 MAlonzo.Code.Lang.du_Let'45'syntax_1198
+                 MAlonzo.Code.Lang.du_Let'45'syntax_1238
                  (coe
                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (5 :: Integer))
                     (coe
@@ -2150,7 +2224,7 @@ d_test'45'e_848
                     MAlonzo.Code.Lang.C_bin_210 (coe MAlonzo.Code.Lang.C_plus_158)
                     (coe
                        v0
-                       (MAlonzo.Code.Lang.d_ext_1208
+                       (MAlonzo.Code.Lang.d_ext_1248
                           (coe MAlonzo.Code.Lang.C_ε_14)
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -2174,10 +2248,10 @@ d_test'45'e_848
                                          (coe (5 :: Integer))
                                          (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                                 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                       (coe MAlonzo.Code.Lang.C_zero_1130))
+                       (coe MAlonzo.Code.Lang.C_zero_1160))
                     (coe
                        v0
-                       (MAlonzo.Code.Lang.d_ext_1208
+                       (MAlonzo.Code.Lang.d_ext_1248
                           (coe MAlonzo.Code.Lang.C_ε_14)
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -2201,7 +2275,7 @@ d_test'45'e_848
                                          (coe (5 :: Integer))
                                          (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                                 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                       (coe MAlonzo.Code.Lang.C_zero_1130)))
+                       (coe MAlonzo.Code.Lang.C_zero_1160)))
                  (coe
                     (\ v2 ->
                        coe
@@ -2211,7 +2285,7 @@ d_test'45'e_848
                             (coe
                                MAlonzo.Code.Lang.C__'9657'__16
                                (coe
-                                  MAlonzo.Code.Lang.d_ext_1208 (coe MAlonzo.Code.Lang.C_ε_14)
+                                  MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
                                   (coe
                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                      (coe
@@ -2245,13 +2319,13 @@ d_test'45'e_848
                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                         (coe (5 :: Integer))
                                         (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
-                            (coe MAlonzo.Code.Lang.C_zero_1130))
+                            (coe MAlonzo.Code.Lang.C_zero_1160))
                          (coe
                             v0
                             (coe
                                MAlonzo.Code.Lang.C__'9657'__16
                                (coe
-                                  MAlonzo.Code.Lang.d_ext_1208 (coe MAlonzo.Code.Lang.C_ε_14)
+                                  MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
                                   (coe
                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                      (coe
@@ -2286,11 +2360,11 @@ d_test'45'e_848
                                         (coe (5 :: Integer))
                                         (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                             (coe
-                               MAlonzo.Code.Lang.C_suc_1132
-                               (coe MAlonzo.Code.Lang.C_zero_1130))))))
+                               MAlonzo.Code.Lang.C_suc_1162
+                               (coe MAlonzo.Code.Lang.C_zero_1160))))))
               (coe
                  v1
-                 (MAlonzo.Code.Lang.d_ext_1208
+                 (MAlonzo.Code.Lang.d_ext_1248
                     (coe MAlonzo.Code.Lang.C_ε_14)
                     (coe
                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -2311,18 +2385,18 @@ d_test'45'e_848
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (5 :: Integer))
                                    (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                           (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                 (coe MAlonzo.Code.Lang.C_zero_1130))))
+                 (coe MAlonzo.Code.Lang.C_zero_1160))))
 -- Futhark.Test.test-s
-d_test'45's_856 :: MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_test'45's_856
+d_test'45's_892 :: MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_test'45's_892
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
       (coe
          MAlonzo.Code.Effect.Monad.State.du_runState_20
          (coe
-            d_to'45'str_394
+            d_to'45'str_412
             (coe
-               MAlonzo.Code.Lang.d_ext_1208 (coe MAlonzo.Code.Lang.C_ε_14)
+               MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                   (coe
@@ -2343,14 +2417,14 @@ d_test'45's_856
                               (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                      (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
-            (coe d_test'45'e_848)
+            (coe d_test'45'e_884)
             (coe
                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                (coe
                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                   (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                   (coe
-                     d_mkar_386
+                     d_mkar_404
                      (coe
                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (5 :: Integer))
                         (coe
@@ -2362,10 +2436,10 @@ d_test'45's_856
                   (coe C__'8759'__78 ("i2" :: Data.Text.Text) (coe C_'91''93'_76)))))
          (coe (0 :: Integer)))
 -- Futhark.Test.loss-e
-d_loss'45'e_858 :: MAlonzo.Code.Lang.T_E_182
-d_loss'45'e_858
+d_loss'45'e_894 :: MAlonzo.Code.Lang.T_E_182
+d_loss'45'e_894
   = coe
-      MAlonzo.Code.Lang.du_Lcon_1272
+      MAlonzo.Code.Lang.du_Lcon_1312
       (coe
          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
          (coe
@@ -2384,7 +2458,7 @@ d_loss'45'e_858
       (coe
          (\ v0 v1 ->
             coe
-              MAlonzo.Code.Lang.du_Let'45'syntax_1198
+              MAlonzo.Code.Lang.du_Let'45'syntax_1238
               (coe
                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (5 :: Integer))
                  (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
@@ -2392,7 +2466,7 @@ d_loss'45'e_858
                  MAlonzo.Code.Lang.C_bin_210 (coe MAlonzo.Code.Lang.C_mul_160)
                  (coe
                     v0
-                    (MAlonzo.Code.Lang.d_ext_1208
+                    (MAlonzo.Code.Lang.d_ext_1248
                        (coe MAlonzo.Code.Lang.C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -2409,10 +2483,10 @@ d_loss'45'e_858
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (5 :: Integer))
                                    (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
                              (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                    (coe MAlonzo.Code.Lang.C_zero_1130))
+                    (coe MAlonzo.Code.Lang.C_zero_1160))
                  (coe
                     v0
-                    (MAlonzo.Code.Lang.d_ext_1208
+                    (MAlonzo.Code.Lang.d_ext_1248
                        (coe MAlonzo.Code.Lang.C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -2429,7 +2503,7 @@ d_loss'45'e_858
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (5 :: Integer))
                                    (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
                              (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                    (coe MAlonzo.Code.Lang.C_zero_1130)))
+                    (coe MAlonzo.Code.Lang.C_zero_1160)))
               (coe
                  (\ v2 ->
                     coe
@@ -2443,7 +2517,7 @@ d_loss'45'e_858
                                (coe
                                   MAlonzo.Code.Lang.C__'9657'__16
                                   (coe
-                                     MAlonzo.Code.Lang.d_ext_1208 (coe MAlonzo.Code.Lang.C_ε_14)
+                                     MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
                                      (coe
                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                         (coe
@@ -2468,7 +2542,7 @@ d_loss'45'e_858
                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                         (coe (5 :: Integer))
                                         (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                               (coe MAlonzo.Code.Lang.C_zero_1130))
+                               (coe MAlonzo.Code.Lang.C_zero_1160))
                             (coe
                                MAlonzo.Code.Lang.C_un_216 (coe MAlonzo.Code.Lang.C_neg_166)
                                (coe
@@ -2476,7 +2550,7 @@ d_loss'45'e_858
                                   (coe
                                      MAlonzo.Code.Lang.C__'9657'__16
                                      (coe
-                                        MAlonzo.Code.Lang.d_ext_1208 (coe MAlonzo.Code.Lang.C_ε_14)
+                                        MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
                                         (coe
                                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                            (coe
@@ -2503,8 +2577,8 @@ d_loss'45'e_858
                                            (coe (5 :: Integer))
                                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                                   (coe
-                                     MAlonzo.Code.Lang.C_suc_1132
-                                     (coe MAlonzo.Code.Lang.C_zero_1130)))))
+                                     MAlonzo.Code.Lang.C_suc_1162
+                                     (coe MAlonzo.Code.Lang.C_zero_1160)))))
                          (coe
                             MAlonzo.Code.Lang.C_bin_210 (coe MAlonzo.Code.Lang.C_plus_158)
                             (coe
@@ -2512,7 +2586,7 @@ d_loss'45'e_858
                                (coe
                                   MAlonzo.Code.Lang.C__'9657'__16
                                   (coe
-                                     MAlonzo.Code.Lang.d_ext_1208 (coe MAlonzo.Code.Lang.C_ε_14)
+                                     MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
                                      (coe
                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                         (coe
@@ -2537,7 +2611,7 @@ d_loss'45'e_858
                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                         (coe (5 :: Integer))
                                         (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                               (coe MAlonzo.Code.Lang.C_zero_1130))
+                               (coe MAlonzo.Code.Lang.C_zero_1160))
                             (coe
                                MAlonzo.Code.Lang.C_un_216 (coe MAlonzo.Code.Lang.C_neg_166)
                                (coe
@@ -2545,7 +2619,7 @@ d_loss'45'e_858
                                   (coe
                                      MAlonzo.Code.Lang.C__'9657'__16
                                      (coe
-                                        MAlonzo.Code.Lang.d_ext_1208 (coe MAlonzo.Code.Lang.C_ε_14)
+                                        MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
                                         (coe
                                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                            (coe
@@ -2572,19 +2646,19 @@ d_loss'45'e_858
                                            (coe (5 :: Integer))
                                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                                   (coe
-                                     MAlonzo.Code.Lang.C_suc_1132
-                                     (coe MAlonzo.Code.Lang.C_zero_1130))))))))))
+                                     MAlonzo.Code.Lang.C_suc_1162
+                                     (coe MAlonzo.Code.Lang.C_zero_1160))))))))))
 -- Futhark.Test.loss-s
-d_loss'45's_866 :: MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_loss'45's_866
+d_loss'45's_902 :: MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_loss'45's_902
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
       (coe
          MAlonzo.Code.Effect.Monad.State.du_runState_20
          (coe
-            d_to'45'str_394
+            d_to'45'str_412
             (coe
-               MAlonzo.Code.Lang.d_ext_1208 (coe MAlonzo.Code.Lang.C_ε_14)
+               MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                   (coe
@@ -2603,30 +2677,30 @@ d_loss'45's_866
             (coe
                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (5 :: Integer))
                (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
-            (coe d_loss'45'e_858)
+            (coe d_loss'45'e_894)
             (coe
                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                (coe
                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                   (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                   (coe
-                     d_mkar_386
+                     d_mkar_404
                      (coe
                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (5 :: Integer))
                         (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
                      (coe ("inp" :: Data.Text.Text))))
                (coe
-                  d_mkar_386
+                  d_mkar_404
                   (coe
                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (5 :: Integer))
                      (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
                   (coe ("out" :: Data.Text.Text)))))
          (coe (0 :: Integer)))
 -- Futhark.Test.conv-e
-d_conv'45'e_868 :: MAlonzo.Code.Lang.T_E_182
-d_conv'45'e_868
+d_conv'45'e_904 :: MAlonzo.Code.Lang.T_E_182
+d_conv'45'e_904
   = coe
-      MAlonzo.Code.Lang.du_Lcon_1272
+      MAlonzo.Code.Lang.du_Lcon_1312
       (coe
          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
          (coe
@@ -2648,7 +2722,7 @@ d_conv'45'e_868
             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
       (coe
          (\ v0 v1 ->
-            MAlonzo.Code.Lang.d_conv_1312
+            MAlonzo.Code.Lang.d_conv_1352
               (coe
                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (5 :: Integer))
                  (coe
@@ -2670,7 +2744,7 @@ d_conv'45'e_868
                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (4 :: Integer))
                     (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
               (coe
-                 MAlonzo.Code.Lang.d_ext_1208 (coe MAlonzo.Code.Lang.C_ε_14)
+                 MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
                  (coe
                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                     (coe
@@ -2692,7 +2766,7 @@ d_conv'45'e_868
                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
               (coe
                  v0
-                 (MAlonzo.Code.Lang.d_ext_1208
+                 (MAlonzo.Code.Lang.d_ext_1248
                     (coe MAlonzo.Code.Lang.C_ε_14)
                     (coe
                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -2713,7 +2787,7 @@ d_conv'45'e_868
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (2 :: Integer))
                                    (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                           (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                 (coe MAlonzo.Code.Lang.C_zero_1130))
+                 (coe MAlonzo.Code.Lang.C_zero_1160))
               (coe
                  MAlonzo.Code.Ar.C_cons_996 erased
                  (coe
@@ -2721,7 +2795,7 @@ d_conv'45'e_868
                     (coe MAlonzo.Code.Ar.C_'91''93'_994)))
               (coe
                  v1
-                 (MAlonzo.Code.Lang.d_ext_1208
+                 (MAlonzo.Code.Lang.d_ext_1248
                     (coe MAlonzo.Code.Lang.C_ε_14)
                     (coe
                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -2742,23 +2816,23 @@ d_conv'45'e_868
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (2 :: Integer))
                                    (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                           (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                 (coe MAlonzo.Code.Lang.C_zero_1130))
+                 (coe MAlonzo.Code.Lang.C_zero_1160))
               (coe
                  MAlonzo.Code.Ar.C_cons_974 erased
                  (coe
                     MAlonzo.Code.Ar.C_cons_974 erased
                     (coe MAlonzo.Code.Ar.C_'91''93'_972)))))
 -- Futhark.Test.conv-s
-d_conv'45's_874 :: MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_conv'45's_874
+d_conv'45's_910 :: MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_conv'45's_910
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
       (coe
          MAlonzo.Code.Effect.Monad.State.du_runState_20
          (coe
-            d_to'45'str_394
+            d_to'45'str_412
             (coe
-               MAlonzo.Code.Lang.d_ext_1208 (coe MAlonzo.Code.Lang.C_ε_14)
+               MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                   (coe
@@ -2783,20 +2857,20 @@ d_conv'45's_874
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (4 :: Integer))
                   (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
-            (coe d_conv'45'e_868)
+            (coe d_conv'45'e_904)
             (coe
-               d__'44''44'__846 () erased () erased
+               d__'44''44'__882 () erased () erased
                (coe
-                  d__'44''44'__846 () erased () erased
+                  d__'44''44'__882 () erased () erased
                   (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
-                  (d_mkar_386
+                  (d_mkar_404
                      (coe
                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (5 :: Integer))
                         (coe
                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (5 :: Integer))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
                      (coe ("img" :: Data.Text.Text))))
-               (d_mkar_386
+               (d_mkar_404
                   (coe
                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (2 :: Integer))
                      (coe
@@ -2805,16 +2879,16 @@ d_conv'45's_874
                   (coe ("k1" :: Data.Text.Text)))))
          (coe (0 :: Integer)))
 -- Futhark.Test.cnn-s
-d_cnn'45's_876 :: MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_cnn'45's_876
+d_cnn'45's_912 :: MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_cnn'45's_912
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
       (coe
          MAlonzo.Code.Effect.Monad.State.du_runState_20
          (coe
-            d_to'45'str_394
+            d_to'45'str_412
             (coe
-               MAlonzo.Code.Lang.d_ext_1208 (coe MAlonzo.Code.Lang.C_ε_14)
+               MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                   (coe
@@ -2918,25 +2992,25 @@ d_cnn'45's_876
                                                             MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))
             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
-            (coe MAlonzo.Code.Lang.d_cnn_1388)
+            (coe MAlonzo.Code.Lang.d_cnn_1428)
             (coe
-               d__'44''44'__846 () erased () erased
+               d__'44''44'__882 () erased () erased
                (coe
-                  d__'44''44'__846 () erased () erased
+                  d__'44''44'__882 () erased () erased
                   (coe
-                     d__'44''44'__846 () erased () erased
+                     d__'44''44'__882 () erased () erased
                      (coe
-                        d__'44''44'__846 () erased () erased
+                        d__'44''44'__882 () erased () erased
                         (coe
-                           d__'44''44'__846 () erased () erased
+                           d__'44''44'__882 () erased () erased
                            (coe
-                              d__'44''44'__846 () erased () erased
+                              d__'44''44'__882 () erased () erased
                               (coe
-                                 d__'44''44'__846 () erased () erased
+                                 d__'44''44'__882 () erased () erased
                                  (coe
-                                    d__'44''44'__846 () erased () erased
+                                    d__'44''44'__882 () erased () erased
                                     (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
-                                    (d_mkar_386
+                                    (d_mkar_404
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                           (coe (28 :: Integer))
@@ -2945,7 +3019,7 @@ d_cnn'45's_876
                                              (coe (28 :: Integer))
                                              (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
                                        (coe ("inp" :: Data.Text.Text))))
-                                 (d_mkar_386
+                                 (d_mkar_404
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                        (coe (6 :: Integer))
@@ -2957,13 +3031,13 @@ d_cnn'45's_876
                                              (coe (5 :: Integer))
                                              (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                                     (coe ("k1" :: Data.Text.Text))))
-                              (d_mkar_386
+                              (d_mkar_404
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                     (coe (6 :: Integer))
                                     (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
                                  (coe ("b1" :: Data.Text.Text))))
-                           (d_mkar_386
+                           (d_mkar_404
                               (coe
                                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (12 :: Integer))
                                  (coe
@@ -2977,12 +3051,12 @@ d_cnn'45's_876
                                           (coe (5 :: Integer))
                                           (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                               (coe ("k2" :: Data.Text.Text))))
-                        (d_mkar_386
+                        (d_mkar_404
                            (coe
                               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (12 :: Integer))
                               (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
                            (coe ("b2" :: Data.Text.Text))))
-                     (d_mkar_386
+                     (d_mkar_404
                         (coe
                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (10 :: Integer))
                            (coe
@@ -2997,12 +3071,12 @@ d_cnn'45's_876
                                        (coe (4 :: Integer))
                                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
                         (coe ("fc" :: Data.Text.Text))))
-                  (d_mkar_386
+                  (d_mkar_404
                      (coe
                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (10 :: Integer))
                         (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
                      (coe ("b" :: Data.Text.Text))))
-               (d_mkar_386
+               (d_mkar_404
                   (coe
                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (10 :: Integer))
                      (coe

@@ -42,6 +42,7 @@ module _ where
   replace (let′ e e₁) x y | nothing = let′ (replace e x y) (replace e₁ (x ↑) (y ↑))
   -- Jairo made
   replace (un x₁ e) x y | nothing = un x₁ (replace e x y)
+  replace (maximum e) x y | nothing = maximum (replace e (x ↑) (y ↑))
 
 module Test where
   open import Data.List

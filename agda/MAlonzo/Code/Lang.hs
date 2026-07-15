@@ -154,62 +154,76 @@ data T_E_182
     C_bin_210 T_Bop_156 T_E_182 T_E_182 |
     C_scaledown_212 Integer T_E_182 |
     C_let'8242'_214 [Integer] T_E_182 T_E_182 |
-    C_un_216 T_Uop_162 T_E_182
+    C_un_216 T_Uop_162 T_E_182 | C_maximum_218 [Integer] T_E_182
 -- Lang._._⊟_
-d__'8863'__270 ::
+d__'8863'__272 ::
   T_Ctx_12 -> [Integer] -> T_E_182 -> T_E_182 -> T_E_182
-d__'8863'__270 ~v0 ~v1 v2 v3 = du__'8863'__270 v2 v3
-du__'8863'__270 :: T_E_182 -> T_E_182 -> T_E_182
-du__'8863'__270 v0 v1
+d__'8863'__272 ~v0 ~v1 v2 v3 = du__'8863'__272 v2 v3
+du__'8863'__272 :: T_E_182 -> T_E_182 -> T_E_182
+du__'8863'__272 v0 v1
   = coe
       C_bin_210 (coe C_plus_158) v0 (coe C_un_216 (coe C_neg_166) v1)
 -- Lang._._⊔_
-d__'8852'__280 ::
+d__'8852'__282 ::
   T_Ctx_12 -> [Integer] -> T_E_182 -> T_E_182 -> T_E_182
-d__'8852'__280 ~v0 ~v1 v2 v3 = du__'8852'__280 v2 v3
-du__'8852'__280 :: T_E_182 -> T_E_182 -> T_E_182
-du__'8852'__280 v0 v1
+d__'8852'__282 ~v0 ~v1 v2 v3 = du__'8852'__282 v2 v3
+du__'8852'__282 :: T_E_182 -> T_E_182 -> T_E_182
+du__'8852'__282 v0 v1
   = coe
       C_bin_210 (coe C_plus_158) v0
       (coe
          C_un_216 (coe C_rectifier_170)
-         (coe du__'8863'__270 (coe v1) (coe v0)))
+         (coe du__'8863'__272 (coe v1) (coe v0)))
 -- Lang._._//_
-d__'47''47'__290 ::
+d__'47''47'__292 ::
   T_Ctx_12 -> [Integer] -> T_E_182 -> T_E_182 -> T_E_182
-d__'47''47'__290 ~v0 ~v1 v2 v3 = du__'47''47'__290 v2 v3
-du__'47''47'__290 :: T_E_182 -> T_E_182 -> T_E_182
-du__'47''47'__290 v0 v1
+d__'47''47'__292 ~v0 ~v1 v2 v3 = du__'47''47'__292 v2 v3
+du__'47''47'__292 :: T_E_182 -> T_E_182 -> T_E_182
+du__'47''47'__292 v0 v1
   = coe
       C_bin_210 (coe C_mul_160) v0 (coe C_un_216 (coe C_inverse_174) v1)
+-- Lang._.𝕀0-
+d_𝕀0'45'_298 :: T_Ctx_12 -> [Integer] -> T_E_182 -> T_E_182
+d_𝕀0'45'_298 ~v0 ~v1 v2 = du_𝕀0'45'_298 v2
+du_𝕀0'45'_298 :: T_E_182 -> T_E_182
+du_𝕀0'45'_298 v0
+  = coe
+      du__'8863'__272 (coe C_one_188)
+      (coe C_un_216 (coe C_ind'45'positive_176) v0)
+-- Lang._.𝕀0+
+d_𝕀0'43'_302 :: T_Ctx_12 -> [Integer] -> T_E_182 -> T_E_182
+d_𝕀0'43'_302 ~v0 ~v1 v2 = du_𝕀0'43'_302 v2
+du_𝕀0'43'_302 :: T_E_182 -> T_E_182
+du_𝕀0'43'_302 v0
+  = coe du_𝕀0'45'_298 (coe C_un_216 (coe C_neg_166) v0)
 -- Lang._.𝟚
-d_𝟚_296 :: T_Ctx_12 -> [Integer] -> T_E_182
-d_𝟚_296 ~v0 ~v1 = du_𝟚_296
-du_𝟚_296 :: T_E_182
-du_𝟚_296
+d_𝟚_306 :: T_Ctx_12 -> [Integer] -> T_E_182
+d_𝟚_306 ~v0 ~v1 = du_𝟚_306
+du_𝟚_306 :: T_E_182
+du_𝟚_306
   = coe C_bin_210 (coe C_plus_158) (coe C_one_188) (coe C_one_188)
 -- Lang.WkSub._⊆_
-d__'8838'__300 a0 a1 = ()
-data T__'8838'__300
-  = C_ε_302 | C_skip_304 T__'8838'__300 | C_keep_306 T__'8838'__300
+d__'8838'__310 a0 a1 = ()
+data T__'8838'__310
+  = C_ε_312 | C_skip_314 T__'8838'__310 | C_keep_316 T__'8838'__310
 -- Lang.WkSub.wkv
-d_wkv_308 ::
+d_wkv_318 ::
   T_Ctx_12 ->
   T_Ctx_12 ->
-  T_IS_6 -> T__'8838'__300 -> T__'8712'__34 -> T__'8712'__34
-d_wkv_308 v0 v1 ~v2 v3 v4 = du_wkv_308 v0 v1 v3 v4
-du_wkv_308 ::
+  T_IS_6 -> T__'8838'__310 -> T__'8712'__34 -> T__'8712'__34
+d_wkv_318 v0 v1 ~v2 v3 v4 = du_wkv_318 v0 v1 v3 v4
+du_wkv_318 ::
   T_Ctx_12 ->
-  T_Ctx_12 -> T__'8838'__300 -> T__'8712'__34 -> T__'8712'__34
-du_wkv_308 v0 v1 v2 v3
+  T_Ctx_12 -> T__'8838'__310 -> T__'8712'__34 -> T__'8712'__34
+du_wkv_318 v0 v1 v2 v3
   = case coe v2 of
-      C_skip_304 v7
+      C_skip_314 v7
         -> case coe v1 of
              C__'9657'__16 v8 v9
                -> coe
-                    C_there_38 (coe du_wkv_308 (coe v0) (coe v8) (coe v7) (coe v3))
+                    C_there_38 (coe du_wkv_318 (coe v0) (coe v8) (coe v7) (coe v3))
              _ -> MAlonzo.RTE.mazUnreachableError
-      C_keep_306 v7
+      C_keep_316 v7
         -> case coe v0 of
              C__'9657'__16 v8 v9
                -> case coe v1 of
@@ -218,20 +232,20 @@ du_wkv_308 v0 v1 v2 v3
                            C_here_36 -> coe C_here_36
                            C_there_38 v15
                              -> coe
-                                  C_there_38 (coe du_wkv_308 (coe v8) (coe v10) (coe v7) (coe v15))
+                                  C_there_38 (coe du_wkv_318 (coe v8) (coe v10) (coe v7) (coe v15))
                            _ -> MAlonzo.RTE.mazUnreachableError
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.WkSub.wk
-d_wk_320 ::
+d_wk_330 ::
   T_Ctx_12 ->
-  T_Ctx_12 -> T_IS_6 -> T__'8838'__300 -> T_E_182 -> T_E_182
-d_wk_320 v0 v1 v2 v3 v4
+  T_Ctx_12 -> T_IS_6 -> T__'8838'__310 -> T_E_182 -> T_E_182
+d_wk_330 v0 v1 v2 v3 v4
   = case coe v4 of
       C_var_184 v7
         -> coe
-             C_var_184 (coe du_wkv_308 (coe v0) (coe v1) (coe v3) (coe v7))
+             C_var_184 (coe du_wkv_318 (coe v0) (coe v1) (coe v3) (coe v7))
       C_zero_186 -> coe C_zero_186
       C_one_188 -> coe C_one_188
       C_imaps_190 v7
@@ -239,156 +253,163 @@ d_wk_320 v0 v1 v2 v3 v4
              C_ar_10 v8
                -> coe
                     C_imaps_190
-                    (d_wk_320
+                    (d_wk_330
                        (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v8)))
                        (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v8)))
-                       (coe C_ar_10 (coe d_unit_180)) (coe C_keep_306 v3) (coe v7))
+                       (coe C_ar_10 (coe d_unit_180)) (coe C_keep_316 v3) (coe v7))
              _ -> MAlonzo.RTE.mazUnreachableError
       C_sels_192 v6 v7 v8
         -> coe
              C_sels_192 v6
-             (d_wk_320
+             (d_wk_330
                 (coe v0) (coe v1) (coe C_ar_10 (coe v6)) (coe v3) (coe v7))
-             (d_wk_320
+             (d_wk_330
                 (coe v0) (coe v1) (coe C_ix_8 (coe v6)) (coe v3) (coe v8))
       C_imap_194 v6 v7 v8
         -> coe
              C_imap_194 v6 v7
-             (d_wk_320
+             (d_wk_330
                 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v6)))
                 (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v6)))
-                (coe C_ar_10 (coe v7)) (coe C_keep_306 v3) (coe v8))
+                (coe C_ar_10 (coe v7)) (coe C_keep_316 v3) (coe v8))
       C_sel_196 v6 v8 v9
         -> case coe v2 of
              C_ar_10 v10
                -> coe
                     C_sel_196 v6
-                    (d_wk_320
+                    (d_wk_330
                        (coe v0) (coe v1)
                        (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v6 v10))
                        (coe v3) (coe v8))
-                    (d_wk_320
+                    (d_wk_330
                        (coe v0) (coe v1) (coe C_ix_8 (coe v6)) (coe v3) (coe v9))
              _ -> MAlonzo.RTE.mazUnreachableError
       C_imapb_198 v5 v6 v9 v10
         -> coe
              C_imapb_198 v5 v6 v9
-             (d_wk_320
+             (d_wk_330
                 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v5)))
                 (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v5)))
-                (coe C_ar_10 (coe v6)) (coe C_keep_306 v3) (coe v10))
+                (coe C_ar_10 (coe v6)) (coe C_keep_316 v3) (coe v10))
       C_selb_200 v5 v7 v9 v10 v11
         -> coe
              C_selb_200 v5 v7 v9
-             (d_wk_320
+             (d_wk_330
                 (coe v0) (coe v1) (coe C_ar_10 (coe v7)) (coe v3) (coe v10))
-             (d_wk_320
+             (d_wk_330
                 (coe v0) (coe v1) (coe C_ix_8 (coe v5)) (coe v3) (coe v11))
       C_sum_202 v6 v8
         -> coe
              C_sum_202 v6
-             (d_wk_320
+             (d_wk_330
                 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v6)))
                 (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v6))) (coe v2)
-                (coe C_keep_306 v3) (coe v8))
+                (coe C_keep_316 v3) (coe v8))
       C_zero'45'but_204 v6 v8 v9 v10
         -> coe
              C_zero'45'but_204 v6
-             (d_wk_320
+             (d_wk_330
                 (coe v0) (coe v1) (coe C_ix_8 (coe v6)) (coe v3) (coe v8))
-             (d_wk_320
+             (d_wk_330
                 (coe v0) (coe v1) (coe C_ix_8 (coe v6)) (coe v3) (coe v9))
-             (d_wk_320 (coe v0) (coe v1) (coe v2) (coe v3) (coe v10))
+             (d_wk_330 (coe v0) (coe v1) (coe v2) (coe v3) (coe v10))
       C_slide_206 v6 v7 v8 v10 v11 v12 v13
         -> coe
              C_slide_206 v6 v7 v8
-             (d_wk_320
+             (d_wk_330
                 (coe v0) (coe v1) (coe C_ix_8 (coe v6)) (coe v3) (coe v10))
              v11
-             (d_wk_320
+             (d_wk_330
                 (coe v0) (coe v1) (coe C_ar_10 (coe v8)) (coe v3) (coe v12))
              v13
       C_backslide_208 v6 v7 v8 v10 v11 v12 v13
         -> coe
              C_backslide_208 v6 v7 v8
-             (d_wk_320
+             (d_wk_330
                 (coe v0) (coe v1) (coe C_ix_8 (coe v6)) (coe v3) (coe v10))
-             (d_wk_320
+             (d_wk_330
                 (coe v0) (coe v1) (coe C_ar_10 (coe v7)) (coe v3) (coe v11))
              v12 v13
       C_bin_210 v7 v8 v9
         -> coe
              C_bin_210 v7
-             (d_wk_320 (coe v0) (coe v1) (coe v2) (coe v3) (coe v8))
-             (d_wk_320 (coe v0) (coe v1) (coe v2) (coe v3) (coe v9))
+             (d_wk_330 (coe v0) (coe v1) (coe v2) (coe v3) (coe v8))
+             (d_wk_330 (coe v0) (coe v1) (coe v2) (coe v3) (coe v9))
       C_scaledown_212 v7 v8
         -> coe
              C_scaledown_212 v7
-             (d_wk_320 (coe v0) (coe v1) (coe v2) (coe v3) (coe v8))
+             (d_wk_330 (coe v0) (coe v1) (coe v2) (coe v3) (coe v8))
       C_let'8242'_214 v6 v8 v9
         -> coe
              C_let'8242'_214 v6
-             (d_wk_320
+             (d_wk_330
                 (coe v0) (coe v1) (coe C_ar_10 (coe v6)) (coe v3) (coe v8))
-             (d_wk_320
+             (d_wk_330
                 (coe C__'9657'__16 (coe v0) (coe C_ar_10 (coe v6)))
                 (coe C__'9657'__16 (coe v1) (coe C_ar_10 (coe v6))) (coe v2)
-                (coe C_keep_306 v3) (coe v9))
+                (coe C_keep_316 v3) (coe v9))
       C_un_216 v7 v8
         -> coe
-             C_un_216 v7 (d_wk_320 (coe v0) (coe v1) (coe v2) (coe v3) (coe v8))
+             C_un_216 v7 (d_wk_330 (coe v0) (coe v1) (coe v2) (coe v3) (coe v8))
+      C_maximum_218 v6 v8
+        -> coe
+             C_maximum_218 v6
+             (d_wk_330
+                (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v6)))
+                (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v6))) (coe v2)
+                (coe C_keep_316 v3) (coe v8))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.WkSub._∙ʷ_
-d__'8729''695'__422 ::
+d__'8729''695'__436 ::
   T_Ctx_12 ->
   T_Ctx_12 ->
-  T_Ctx_12 -> T__'8838'__300 -> T__'8838'__300 -> T__'8838'__300
-d__'8729''695'__422 v0 v1 v2 v3 v4
+  T_Ctx_12 -> T__'8838'__310 -> T__'8838'__310 -> T__'8838'__310
+d__'8729''695'__436 v0 v1 v2 v3 v4
   = case coe v4 of
-      C_ε_302 -> coe v3
-      C_skip_304 v8
+      C_ε_312 -> coe v3
+      C_skip_314 v8
         -> case coe v0 of
              C__'9657'__16 v9 v10
                -> case coe v3 of
-                    C_skip_304 v14
+                    C_skip_314 v14
                       -> case coe v1 of
                            C__'9657'__16 v15 v16
                              -> coe
-                                  C_skip_304
-                                  (d__'8729''695'__422
-                                     (coe v0) (coe v15) (coe v2) (coe v14) (coe C_skip_304 v8))
+                                  C_skip_314
+                                  (d__'8729''695'__436
+                                     (coe v0) (coe v15) (coe v2) (coe v14) (coe C_skip_314 v8))
                            _ -> MAlonzo.RTE.mazUnreachableError
-                    C_keep_306 v14
+                    C_keep_316 v14
                       -> case coe v1 of
                            C__'9657'__16 v15 v16
                              -> coe
-                                  d__'8729''695'__422 (coe v9)
+                                  d__'8729''695'__436 (coe v9)
                                   (coe C__'9657'__16 (coe v15) (coe v10)) (coe v2)
-                                  (coe C_skip_304 v14) (coe v8)
+                                  (coe C_skip_314 v14) (coe v8)
                            _ -> MAlonzo.RTE.mazUnreachableError
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
-      C_keep_306 v8
+      C_keep_316 v8
         -> case coe v0 of
              C__'9657'__16 v9 v10
                -> case coe v2 of
                     C__'9657'__16 v11 v12
                       -> case coe v3 of
-                           C_skip_304 v16
+                           C_skip_314 v16
                              -> case coe v1 of
                                   C__'9657'__16 v17 v18
                                     -> coe
-                                         C_skip_304
-                                         (d__'8729''695'__422
+                                         C_skip_314
+                                         (d__'8729''695'__436
                                             (coe C__'9657'__16 (coe v9) (coe v12)) (coe v17)
-                                            (coe v2) (coe v16) (coe C_keep_306 v8))
+                                            (coe v2) (coe v16) (coe C_keep_316 v8))
                                   _ -> MAlonzo.RTE.mazUnreachableError
-                           C_keep_306 v16
+                           C_keep_316 v16
                              -> case coe v1 of
                                   C__'9657'__16 v17 v18
                                     -> coe
-                                         C_keep_306
-                                         (d__'8729''695'__422
+                                         C_keep_316
+                                         (d__'8729''695'__436
                                             (coe v9) (coe v17) (coe v11) (coe v16) (coe v8))
                                   _ -> MAlonzo.RTE.mazUnreachableError
                            _ -> MAlonzo.RTE.mazUnreachableError
@@ -396,29 +417,29 @@ d__'8729''695'__422 v0 v1 v2 v3 v4
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.WkSub.⊆-eq
-d_'8838''45'eq_442 :: T_Ctx_12 -> T__'8838'__300
-d_'8838''45'eq_442 v0
+d_'8838''45'eq_456 :: T_Ctx_12 -> T__'8838'__310
+d_'8838''45'eq_456 v0
   = case coe v0 of
-      C_ε_14 -> coe C_ε_302
-      C__'9657'__16 v1 v2 -> coe C_keep_306 (d_'8838''45'eq_442 (coe v1))
+      C_ε_14 -> coe C_ε_312
+      C__'9657'__16 v1 v2 -> coe C_keep_316 (d_'8838''45'eq_456 (coe v1))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.WkSub._↑
-d__'8593'_448 :: T_Ctx_12 -> T_IS_6 -> T_IS_6 -> T_E_182 -> T_E_182
-d__'8593'_448 v0 v1 v2
+d__'8593'_462 :: T_Ctx_12 -> T_IS_6 -> T_IS_6 -> T_E_182 -> T_E_182
+d__'8593'_462 v0 v1 v2
   = coe
-      d_wk_320 (coe v0) (coe C__'9657'__16 (coe v0) (coe v2)) (coe v1)
-      (coe C_skip_304 (d_'8838''45'eq_442 (coe v0)))
+      d_wk_330 (coe v0) (coe C__'9657'__16 (coe v0) (coe v2)) (coe v1)
+      (coe C_skip_314 (d_'8838''45'eq_456 (coe v0)))
 -- Lang.WkSub.wk-/
-d_wk'45''47'_452 ::
-  T_IS_6 -> T_Ctx_12 -> T__'8712'__34 -> T__'8838'__300
-d_wk'45''47'_452 v0 v1 v2
+d_wk'45''47'_466 ::
+  T_IS_6 -> T_Ctx_12 -> T__'8712'__34 -> T__'8838'__310
+d_wk'45''47'_466 v0 v1 v2
   = case coe v2 of
       C_here_36
         -> case coe v1 of
              C__'9657'__16 v5 v6
                -> coe
-                    C_skip_304
-                    (d_'8838''45'eq_442
+                    C_skip_314
+                    (d_'8838''45'eq_456
                        (coe
                           du__'47'__70 (coe C__'9657'__16 (coe v5) (coe v0))
                           (coe C_here_36)))
@@ -426,75 +447,75 @@ d_wk'45''47'_452 v0 v1 v2
       C_there_38 v6
         -> case coe v1 of
              C__'9657'__16 v7 v8
-               -> coe C_keep_306 (d_wk'45''47'_452 (coe v0) (coe v7) (coe v6))
+               -> coe C_keep_316 (d_wk'45''47'_466 (coe v0) (coe v7) (coe v6))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.WkSub.Sub
-d_Sub_458 a0 a1 = ()
-data T_Sub_458 = C_ε_462 | C__'9657'__464 T_Sub_458 T_E_182
+d_Sub_472 a0 a1 = ()
+data T_Sub_472 = C_ε_476 | C__'9657'__478 T_Sub_472 T_E_182
 -- Lang.WkSub.wks
-d_wks_466 ::
+d_wks_480 ::
   T_Ctx_12 ->
-  T_Ctx_12 -> T_Ctx_12 -> T_Sub_458 -> T__'8838'__300 -> T_Sub_458
-d_wks_466 v0 v1 v2 v3 v4
+  T_Ctx_12 -> T_Ctx_12 -> T_Sub_472 -> T__'8838'__310 -> T_Sub_472
+d_wks_480 v0 v1 v2 v3 v4
   = case coe v3 of
-      C_ε_462 -> coe v3
-      C__'9657'__464 v7 v8
+      C_ε_476 -> coe v3
+      C__'9657'__478 v7 v8
         -> case coe v1 of
              C__'9657'__16 v9 v10
                -> coe
-                    C__'9657'__464
-                    (d_wks_466 (coe v0) (coe v9) (coe v2) (coe v7) (coe v4))
-                    (d_wk_320 (coe v0) (coe v2) (coe v10) (coe v4) (coe v8))
+                    C__'9657'__478
+                    (d_wks_480 (coe v0) (coe v9) (coe v2) (coe v7) (coe v4))
+                    (d_wk_330 (coe v0) (coe v2) (coe v10) (coe v4) (coe v8))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.WkSub.sdrop
-d_sdrop_476 ::
-  T_Ctx_12 -> T_Ctx_12 -> T_IS_6 -> T_Sub_458 -> T_Sub_458
-d_sdrop_476 v0 v1 v2 v3
+d_sdrop_490 ::
+  T_Ctx_12 -> T_Ctx_12 -> T_IS_6 -> T_Sub_472 -> T_Sub_472
+d_sdrop_490 v0 v1 v2 v3
   = coe
-      d_wks_466 (coe v0) (coe v1) (coe C__'9657'__16 (coe v0) (coe v2))
-      (coe v3) (coe C_skip_304 (d_'8838''45'eq_442 (coe v0)))
+      d_wks_480 (coe v0) (coe v1) (coe C__'9657'__16 (coe v0) (coe v2))
+      (coe v3) (coe C_skip_314 (d_'8838''45'eq_456 (coe v0)))
 -- Lang.WkSub.skeep
-d_skeep_480 ::
-  T_Ctx_12 -> T_Ctx_12 -> T_IS_6 -> T_Sub_458 -> T_Sub_458
-d_skeep_480 v0 v1 v2 v3
+d_skeep_494 ::
+  T_Ctx_12 -> T_Ctx_12 -> T_IS_6 -> T_Sub_472 -> T_Sub_472
+d_skeep_494 v0 v1 v2 v3
   = coe
-      C__'9657'__464 (d_sdrop_476 (coe v0) (coe v1) (coe v2) (coe v3))
+      C__'9657'__478 (d_sdrop_490 (coe v0) (coe v1) (coe v2) (coe v3))
       (coe C_var_184 (coe C_here_36))
 -- Lang.WkSub.subv
-d_subv_484 ::
+d_subv_498 ::
   T_Ctx_12 ->
-  T_Ctx_12 -> T_IS_6 -> T_Sub_458 -> T__'8712'__34 -> T_E_182
-d_subv_484 ~v0 v1 ~v2 v3 v4 = du_subv_484 v1 v3 v4
-du_subv_484 :: T_Ctx_12 -> T_Sub_458 -> T__'8712'__34 -> T_E_182
-du_subv_484 v0 v1 v2
+  T_Ctx_12 -> T_IS_6 -> T_Sub_472 -> T__'8712'__34 -> T_E_182
+d_subv_498 ~v0 v1 ~v2 v3 v4 = du_subv_498 v1 v3 v4
+du_subv_498 :: T_Ctx_12 -> T_Sub_472 -> T__'8712'__34 -> T_E_182
+du_subv_498 v0 v1 v2
   = case coe v1 of
-      C__'9657'__464 v5 v6
+      C__'9657'__478 v5 v6
         -> case coe v0 of
              C__'9657'__16 v7 v8
                -> case coe v2 of
                     C_here_36 -> coe v6
-                    C_there_38 v12 -> coe du_subv_484 (coe v7) (coe v5) (coe v12)
+                    C_there_38 v12 -> coe du_subv_498 (coe v7) (coe v5) (coe v12)
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.WkSub.sub-id
-d_sub'45'id_496 :: T_Ctx_12 -> T_Sub_458
-d_sub'45'id_496 v0
+d_sub'45'id_510 :: T_Ctx_12 -> T_Sub_472
+d_sub'45'id_510 v0
   = case coe v0 of
-      C_ε_14 -> coe C_ε_462
+      C_ε_14 -> coe C_ε_476
       C__'9657'__16 v1 v2
         -> coe
-             d_skeep_480 (coe v1) (coe v1) (coe v2)
-             (coe d_sub'45'id_496 (coe v1))
+             d_skeep_494 (coe v1) (coe v1) (coe v2)
+             (coe d_sub'45'id_510 (coe v1))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.WkSub.sub
-d_sub_502 ::
-  T_Ctx_12 -> T_IS_6 -> T_Ctx_12 -> T_E_182 -> T_Sub_458 -> T_E_182
-d_sub_502 v0 v1 v2 v3 v4
+d_sub_516 ::
+  T_Ctx_12 -> T_IS_6 -> T_Ctx_12 -> T_E_182 -> T_Sub_472 -> T_E_182
+d_sub_516 v0 v1 v2 v3 v4
   = case coe v3 of
-      C_var_184 v7 -> coe du_subv_484 (coe v0) (coe v4) (coe v7)
+      C_var_184 v7 -> coe du_subv_498 (coe v0) (coe v4) (coe v7)
       C_zero_186 -> coe C_zero_186
       C_one_188 -> coe C_one_188
       C_imaps_190 v7
@@ -502,191 +523,198 @@ d_sub_502 v0 v1 v2 v3 v4
              C_ar_10 v8
                -> coe
                     C_imaps_190
-                    (d_sub_502
+                    (d_sub_516
                        (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v8)))
                        (coe C_ar_10 (coe d_unit_180))
                        (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v8))) (coe v7)
-                       (coe d_skeep_480 (coe v2) (coe v0) (coe C_ix_8 (coe v8)) (coe v4)))
+                       (coe d_skeep_494 (coe v2) (coe v0) (coe C_ix_8 (coe v8)) (coe v4)))
              _ -> MAlonzo.RTE.mazUnreachableError
       C_sels_192 v6 v7 v8
         -> coe
              C_sels_192 v6
-             (d_sub_502
+             (d_sub_516
                 (coe v0) (coe C_ar_10 (coe v6)) (coe v2) (coe v7) (coe v4))
-             (d_sub_502
+             (d_sub_516
                 (coe v0) (coe C_ix_8 (coe v6)) (coe v2) (coe v8) (coe v4))
       C_imap_194 v6 v7 v8
         -> coe
              C_imap_194 v6 v7
-             (d_sub_502
+             (d_sub_516
                 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v6)))
                 (coe C_ar_10 (coe v7))
                 (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v6))) (coe v8)
-                (coe d_skeep_480 (coe v2) (coe v0) (coe C_ix_8 (coe v6)) (coe v4)))
+                (coe d_skeep_494 (coe v2) (coe v0) (coe C_ix_8 (coe v6)) (coe v4)))
       C_sel_196 v6 v8 v9
         -> case coe v1 of
              C_ar_10 v10
                -> coe
                     C_sel_196 v6
-                    (d_sub_502
+                    (d_sub_516
                        (coe v0)
                        (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v6 v10))
                        (coe v2) (coe v8) (coe v4))
-                    (d_sub_502
+                    (d_sub_516
                        (coe v0) (coe C_ix_8 (coe v6)) (coe v2) (coe v9) (coe v4))
              _ -> MAlonzo.RTE.mazUnreachableError
       C_imapb_198 v5 v6 v9 v10
         -> coe
              C_imapb_198 v5 v6 v9
-             (d_sub_502
+             (d_sub_516
                 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v5)))
                 (coe C_ar_10 (coe v6))
                 (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v5))) (coe v10)
-                (coe d_skeep_480 (coe v2) (coe v0) (coe C_ix_8 (coe v5)) (coe v4)))
+                (coe d_skeep_494 (coe v2) (coe v0) (coe C_ix_8 (coe v5)) (coe v4)))
       C_selb_200 v5 v7 v9 v10 v11
         -> coe
              C_selb_200 v5 v7 v9
-             (d_sub_502
+             (d_sub_516
                 (coe v0) (coe C_ar_10 (coe v7)) (coe v2) (coe v10) (coe v4))
-             (d_sub_502
+             (d_sub_516
                 (coe v0) (coe C_ix_8 (coe v5)) (coe v2) (coe v11) (coe v4))
       C_sum_202 v6 v8
         -> coe
              C_sum_202 v6
-             (d_sub_502
+             (d_sub_516
                 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v6))) (coe v1)
                 (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v6))) (coe v8)
-                (coe d_skeep_480 (coe v2) (coe v0) (coe C_ix_8 (coe v6)) (coe v4)))
+                (coe d_skeep_494 (coe v2) (coe v0) (coe C_ix_8 (coe v6)) (coe v4)))
       C_zero'45'but_204 v6 v8 v9 v10
         -> coe
              C_zero'45'but_204 v6
-             (d_sub_502
+             (d_sub_516
                 (coe v0) (coe C_ix_8 (coe v6)) (coe v2) (coe v8) (coe v4))
-             (d_sub_502
+             (d_sub_516
                 (coe v0) (coe C_ix_8 (coe v6)) (coe v2) (coe v9) (coe v4))
-             (d_sub_502 (coe v0) (coe v1) (coe v2) (coe v10) (coe v4))
+             (d_sub_516 (coe v0) (coe v1) (coe v2) (coe v10) (coe v4))
       C_slide_206 v6 v7 v8 v10 v11 v12 v13
         -> coe
              C_slide_206 v6 v7 v8
-             (d_sub_502
+             (d_sub_516
                 (coe v0) (coe C_ix_8 (coe v6)) (coe v2) (coe v10) (coe v4))
              v11
-             (d_sub_502
+             (d_sub_516
                 (coe v0) (coe C_ar_10 (coe v8)) (coe v2) (coe v12) (coe v4))
              v13
       C_backslide_208 v6 v7 v8 v10 v11 v12 v13
         -> coe
              C_backslide_208 v6 v7 v8
-             (d_sub_502
+             (d_sub_516
                 (coe v0) (coe C_ix_8 (coe v6)) (coe v2) (coe v10) (coe v4))
-             (d_sub_502
+             (d_sub_516
                 (coe v0) (coe C_ar_10 (coe v7)) (coe v2) (coe v11) (coe v4))
              v12 v13
       C_bin_210 v7 v8 v9
         -> coe
              C_bin_210 v7
-             (d_sub_502 (coe v0) (coe v1) (coe v2) (coe v8) (coe v4))
-             (d_sub_502 (coe v0) (coe v1) (coe v2) (coe v9) (coe v4))
+             (d_sub_516 (coe v0) (coe v1) (coe v2) (coe v8) (coe v4))
+             (d_sub_516 (coe v0) (coe v1) (coe v2) (coe v9) (coe v4))
       C_scaledown_212 v7 v8
         -> coe
              C_scaledown_212 v7
-             (d_sub_502 (coe v0) (coe v1) (coe v2) (coe v8) (coe v4))
+             (d_sub_516 (coe v0) (coe v1) (coe v2) (coe v8) (coe v4))
       C_let'8242'_214 v6 v8 v9
         -> coe
              C_let'8242'_214 v6
-             (d_sub_502
+             (d_sub_516
                 (coe v0) (coe C_ar_10 (coe v6)) (coe v2) (coe v8) (coe v4))
-             (d_sub_502
+             (d_sub_516
                 (coe C__'9657'__16 (coe v0) (coe C_ar_10 (coe v6))) (coe v1)
                 (coe C__'9657'__16 (coe v2) (coe C_ar_10 (coe v6))) (coe v9)
                 (coe
-                   d_skeep_480 (coe v2) (coe v0) (coe C_ar_10 (coe v6)) (coe v4)))
+                   d_skeep_494 (coe v2) (coe v0) (coe C_ar_10 (coe v6)) (coe v4)))
       C_un_216 v7 v8
         -> coe
              C_un_216 v7
-             (d_sub_502 (coe v0) (coe v1) (coe v2) (coe v8) (coe v4))
+             (d_sub_516 (coe v0) (coe v1) (coe v2) (coe v8) (coe v4))
+      C_maximum_218 v6 v8
+        -> coe
+             C_maximum_218 v6
+             (d_sub_516
+                (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v6))) (coe v1)
+                (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v6))) (coe v8)
+                (coe d_skeep_494 (coe v2) (coe v0) (coe C_ix_8 (coe v6)) (coe v4)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.WkSub._∙ˢ_
-d__'8729''738'__604 ::
+d__'8729''738'__622 ::
   T_Ctx_12 ->
-  T_Ctx_12 -> T_Ctx_12 -> T_Sub_458 -> T_Sub_458 -> T_Sub_458
-d__'8729''738'__604 v0 v1 v2 v3 v4
+  T_Ctx_12 -> T_Ctx_12 -> T_Sub_472 -> T_Sub_472 -> T_Sub_472
+d__'8729''738'__622 v0 v1 v2 v3 v4
   = case coe v3 of
-      C_ε_462 -> coe v3
-      C__'9657'__464 v7 v8
+      C_ε_476 -> coe v3
+      C__'9657'__478 v7 v8
         -> case coe v1 of
              C__'9657'__16 v9 v10
                -> coe
-                    C__'9657'__464
-                    (d__'8729''738'__604 (coe v0) (coe v9) (coe v2) (coe v7) (coe v4))
-                    (d_sub_502 (coe v0) (coe v10) (coe v2) (coe v8) (coe v4))
+                    C__'9657'__478
+                    (d__'8729''738'__622 (coe v0) (coe v9) (coe v2) (coe v7) (coe v4))
+                    (d_sub_516 (coe v0) (coe v10) (coe v2) (coe v8) (coe v4))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.WkSub.wkv-at-eq
-d_wkv'45'at'45'eq_616 ::
+d_wkv'45'at'45'eq_634 ::
   T_IS_6 ->
   T_Ctx_12 ->
   T__'8712'__34 -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_wkv'45'at'45'eq_616 = erased
+d_wkv'45'at'45'eq_634 = erased
 -- Lang.WkSub.subv-wks
-d_subv'45'wks_626 ::
+d_subv'45'wks_644 ::
   T_IS_6 ->
   T_Ctx_12 ->
   T_Ctx_12 ->
   T_Ctx_12 ->
   T__'8712'__34 ->
-  T_Sub_458 ->
-  T__'8838'__300 -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_subv'45'wks_626 = erased
+  T_Sub_472 ->
+  T__'8838'__310 -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_subv'45'wks_644 = erased
 -- Lang.WkSub.subv-sdrop
-d_subv'45'sdrop_646 ::
+d_subv'45'sdrop_664 ::
   T_IS_6 ->
   T_Ctx_12 ->
   T_Ctx_12 ->
   T_IS_6 ->
   T__'8712'__34 ->
-  T_Sub_458 -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_subv'45'sdrop_646 = erased
+  T_Sub_472 -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_subv'45'sdrop_664 = erased
 -- Lang.WkSub.subv-at-id
-d_subv'45'at'45'id_660 ::
+d_subv'45'at'45'id_678 ::
   T_IS_6 ->
   T_Ctx_12 ->
   T__'8712'__34 -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_subv'45'at'45'id_660 = erased
+d_subv'45'at'45'id_678 = erased
 -- Lang.WkSub.sub-at-id
-d_sub'45'at'45'id_680 ::
+d_sub'45'at'45'id_698 ::
   T_Ctx_12 ->
   T_IS_6 ->
   T_E_182 -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_sub'45'at'45'id_680 = erased
+d_sub'45'at'45'id_698 = erased
 -- Lang.WkSub.sub-ε
-d_sub'45'ε_778 ::
+d_sub'45'ε_798 ::
   T_IS_6 ->
   T_E_182 -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_sub'45'ε_778 = erased
+d_sub'45'ε_798 = erased
 -- Lang.WkSub.sub-swap
-d_sub'45'swap_782 :: T_Ctx_12 -> T_IS_6 -> T_IS_6 -> T_Sub_458
-d_sub'45'swap_782 v0 v1 v2
+d_sub'45'swap_802 :: T_Ctx_12 -> T_IS_6 -> T_IS_6 -> T_Sub_472
+d_sub'45'swap_802 v0 v1 v2
   = coe
-      C__'9657'__464
+      C__'9657'__478
       (coe
-         C__'9657'__464
-         (d_sdrop_476
+         C__'9657'__478
+         (d_sdrop_490
             (coe C__'9657'__16 (coe v0) (coe v1)) (coe v0) (coe v2)
             (coe
-               d_sdrop_476 (coe v0) (coe v0) (coe v1)
-               (coe d_sub'45'id_496 (coe v0))))
+               d_sdrop_490 (coe v0) (coe v0) (coe v1)
+               (coe d_sub'45'id_510 (coe v0))))
          (coe C_var_184 (coe C_here_36)))
       (coe C_var_184 (coe C_there_38 (coe C_here_36)))
 -- Lang.WkSub.strenv
-d_strenv_788 ::
+d_strenv_808 ::
   T_IS_6 ->
   T_Ctx_12 ->
   T_IS_6 -> T__'8712'__34 -> T__'8712'__34 -> Maybe T__'8712'__34
-d_strenv_788 ~v0 v1 ~v2 v3 v4 = du_strenv_788 v1 v3 v4
-du_strenv_788 ::
+d_strenv_808 ~v0 v1 ~v2 v3 v4 = du_strenv_808 v1 v3 v4
+du_strenv_808 ::
   T_Ctx_12 -> T__'8712'__34 -> T__'8712'__34 -> Maybe T__'8712'__34
-du_strenv_788 v0 v1 v2
+du_strenv_808 v0 v1 v2
   = case coe v1 of
       C_here_36
         -> case coe v2 of
@@ -703,23 +731,23 @@ du_strenv_788 v0 v1 v2
                     C_there_38 v12
                       -> coe
                            MAlonzo.Code.Data.Maybe.Base.du_map_64 (coe C_there_38)
-                           (coe du_strenv_788 (coe v7) (coe v6) (coe v12))
+                           (coe du_strenv_808 (coe v7) (coe v6) (coe v12))
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.WkSub.stren
-d_stren_800 ::
+d_stren_820 ::
   T_Ctx_12 ->
   T_IS_6 -> T_IS_6 -> T_E_182 -> T__'8712'__34 -> Maybe T_E_182
-d_stren_800 v0 v1 ~v2 v3 v4 = du_stren_800 v0 v1 v3 v4
-du_stren_800 ::
+d_stren_820 v0 v1 ~v2 v3 v4 = du_stren_820 v0 v1 v3 v4
+du_stren_820 ::
   T_Ctx_12 -> T_IS_6 -> T_E_182 -> T__'8712'__34 -> Maybe T_E_182
-du_stren_800 v0 v1 v2 v3
+du_stren_820 v0 v1 v2 v3
   = case coe v2 of
       C_var_184 v6
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du_map_64 (coe C_var_184)
-             (coe du_strenv_788 (coe v0) (coe v3) (coe v6))
+             (coe du_strenv_808 (coe v0) (coe v3) (coe v6))
       C_zero_186
         -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 (coe C_zero_186)
       C_one_188
@@ -730,19 +758,19 @@ du_stren_800 v0 v1 v2 v3
                -> coe
                     MAlonzo.Code.Data.Maybe.Base.du_map_64 (coe C_imaps_190)
                     (coe
-                       du_stren_800 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v7)))
+                       du_stren_820 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v7)))
                        (coe C_ar_10 (coe d_unit_180)) (coe v6) (coe C_there_38 v3))
              _ -> MAlonzo.RTE.mazUnreachableError
       C_sels_192 v5 v6 v7
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
              (coe
-                du_stren_800 (coe v0) (coe C_ar_10 (coe v5)) (coe v6) (coe v3))
+                du_stren_820 (coe v0) (coe C_ar_10 (coe v5)) (coe v6) (coe v3))
              (coe
                 (\ v8 ->
                    coe
                      MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
-                     (coe du_stren_800 (coe v0) (coe C_ix_8 (coe v5)) (coe v7) (coe v3))
+                     (coe du_stren_820 (coe v0) (coe C_ix_8 (coe v5)) (coe v7) (coe v3))
                      (coe
                         (\ v9 ->
                            coe
@@ -753,7 +781,7 @@ du_stren_800 v0 v1 v2 v3
              MAlonzo.Code.Data.Maybe.Base.du_map_64
              (coe C_imap_194 (coe v5) (coe v6))
              (coe
-                du_stren_800 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v5)))
+                du_stren_820 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v5)))
                 (coe C_ar_10 (coe v6)) (coe v7) (coe C_there_38 v3))
       C_sel_196 v5 v7 v8
         -> case coe v1 of
@@ -761,14 +789,14 @@ du_stren_800 v0 v1 v2 v3
                -> coe
                     MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
                     (coe
-                       du_stren_800 (coe v0)
+                       du_stren_820 (coe v0)
                        (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v5 v9))
                        (coe v7) (coe v3))
                     (coe
                        (\ v10 ->
                           coe
                             MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
-                            (coe du_stren_800 (coe v0) (coe C_ix_8 (coe v5)) (coe v8) (coe v3))
+                            (coe du_stren_820 (coe v0) (coe C_ix_8 (coe v5)) (coe v8) (coe v3))
                             (coe
                                (\ v11 ->
                                   coe
@@ -779,19 +807,19 @@ du_stren_800 v0 v1 v2 v3
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du_map_64 (coe C_imapb_198 v4 v5 v8)
              (coe
-                du_stren_800 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v4)))
+                du_stren_820 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v4)))
                 (coe C_ar_10 (coe v5)) (coe v9) (coe C_there_38 v3))
       C_selb_200 v4 v6 v8 v9 v10
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
              (coe
-                du_stren_800 (coe v0) (coe C_ar_10 (coe v6)) (coe v9) (coe v3))
+                du_stren_820 (coe v0) (coe C_ar_10 (coe v6)) (coe v9) (coe v3))
              (coe
                 (\ v11 ->
                    coe
                      MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
                      (coe
-                        du_stren_800 (coe v0) (coe C_ix_8 (coe v4)) (coe v10) (coe v3))
+                        du_stren_820 (coe v0) (coe C_ix_8 (coe v4)) (coe v10) (coe v3))
                      (coe
                         (\ v12 ->
                            coe
@@ -801,22 +829,22 @@ du_stren_800 v0 v1 v2 v3
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du_map_64 (coe C_sum_202 v5)
              (coe
-                du_stren_800 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v5)))
+                du_stren_820 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v5)))
                 (coe v1) (coe v7) (coe C_there_38 v3))
       C_zero'45'but_204 v5 v7 v8 v9
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
-             (coe du_stren_800 (coe v0) (coe C_ix_8 (coe v5)) (coe v7) (coe v3))
+             (coe du_stren_820 (coe v0) (coe C_ix_8 (coe v5)) (coe v7) (coe v3))
              (coe
                 (\ v10 ->
                    coe
                      MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
-                     (coe du_stren_800 (coe v0) (coe C_ix_8 (coe v5)) (coe v8) (coe v3))
+                     (coe du_stren_820 (coe v0) (coe C_ix_8 (coe v5)) (coe v8) (coe v3))
                      (coe
                         (\ v11 ->
                            coe
                              MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
-                             (coe du_stren_800 (coe v0) (coe v1) (coe v9) (coe v3))
+                             (coe du_stren_820 (coe v0) (coe v1) (coe v9) (coe v3))
                              (coe
                                 (\ v12 ->
                                    coe
@@ -825,13 +853,13 @@ du_stren_800 v0 v1 v2 v3
       C_slide_206 v5 v6 v7 v9 v10 v11 v12
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
-             (coe du_stren_800 (coe v0) (coe C_ix_8 (coe v5)) (coe v9) (coe v3))
+             (coe du_stren_820 (coe v0) (coe C_ix_8 (coe v5)) (coe v9) (coe v3))
              (coe
                 (\ v13 ->
                    coe
                      MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
                      (coe
-                        du_stren_800 (coe v0) (coe C_ar_10 (coe v7)) (coe v11) (coe v3))
+                        du_stren_820 (coe v0) (coe C_ar_10 (coe v7)) (coe v11) (coe v3))
                      (coe
                         (\ v14 ->
                            coe
@@ -840,13 +868,13 @@ du_stren_800 v0 v1 v2 v3
       C_backslide_208 v5 v6 v7 v9 v10 v11 v12
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
-             (coe du_stren_800 (coe v0) (coe C_ix_8 (coe v5)) (coe v9) (coe v3))
+             (coe du_stren_820 (coe v0) (coe C_ix_8 (coe v5)) (coe v9) (coe v3))
              (coe
                 (\ v13 ->
                    coe
                      MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
                      (coe
-                        du_stren_800 (coe v0) (coe C_ar_10 (coe v6)) (coe v10) (coe v3))
+                        du_stren_820 (coe v0) (coe C_ar_10 (coe v6)) (coe v10) (coe v3))
                      (coe
                         (\ v14 ->
                            coe
@@ -855,12 +883,12 @@ du_stren_800 v0 v1 v2 v3
       C_bin_210 v6 v7 v8
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
-             (coe du_stren_800 (coe v0) (coe v1) (coe v7) (coe v3))
+             (coe du_stren_820 (coe v0) (coe v1) (coe v7) (coe v3))
              (coe
                 (\ v9 ->
                    coe
                      MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
-                     (coe du_stren_800 (coe v0) (coe v1) (coe v8) (coe v3))
+                     (coe du_stren_820 (coe v0) (coe v1) (coe v8) (coe v3))
                      (coe
                         (\ v10 ->
                            coe
@@ -869,18 +897,18 @@ du_stren_800 v0 v1 v2 v3
       C_scaledown_212 v6 v7
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du_map_64 (coe C_scaledown_212 v6)
-             (coe du_stren_800 (coe v0) (coe v1) (coe v7) (coe v3))
+             (coe du_stren_820 (coe v0) (coe v1) (coe v7) (coe v3))
       C_let'8242'_214 v5 v7 v8
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
              (coe
-                du_stren_800 (coe v0) (coe C_ar_10 (coe v5)) (coe v7) (coe v3))
+                du_stren_820 (coe v0) (coe C_ar_10 (coe v5)) (coe v7) (coe v3))
              (coe
                 (\ v9 ->
                    coe
                      MAlonzo.Code.Data.Maybe.Base.du__'62''62''61'__72
                      (coe
-                        du_stren_800 (coe C__'9657'__16 (coe v0) (coe C_ar_10 (coe v5)))
+                        du_stren_820 (coe C__'9657'__16 (coe v0) (coe C_ar_10 (coe v5)))
                         (coe v1) (coe v8) (coe C_there_38 v3))
                      (coe
                         (\ v10 ->
@@ -891,18 +919,24 @@ du_stren_800 v0 v1 v2 v3
         -> let v8
                  = coe
                      MAlonzo.Code.Data.Maybe.Base.du_map_64 (coe C_un_216 v6)
-                     (coe du_stren_800 (coe v0) (coe v1) (coe v7) (coe v3)) in
+                     (coe du_stren_820 (coe v0) (coe v1) (coe v7) (coe v3)) in
            coe
              (case coe v6 of
                 C_neg_166
                   -> coe
                        MAlonzo.Code.Data.Maybe.Base.du_map_64 (coe C_un_216 v6)
-                       (coe du_stren_800 (coe v0) (coe v1) (coe v7) (coe v3))
+                       (coe du_stren_820 (coe v0) (coe v1) (coe v7) (coe v3))
                 _ -> coe v8)
+      C_maximum_218 v5 v7
+        -> coe
+             MAlonzo.Code.Data.Maybe.Base.du_map_64 (coe C_maximum_218 v5)
+             (coe
+                du_stren_820 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v5)))
+                (coe v1) (coe v7) (coe C_there_38 v3))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.WkSub.norm-lets
-d_norm'45'lets_940 :: T_Ctx_12 -> T_IS_6 -> T_E_182 -> T_E_182
-d_norm'45'lets_940 v0 v1 v2
+d_norm'45'lets_964 :: T_Ctx_12 -> T_IS_6 -> T_E_182 -> T_E_182
+d_norm'45'lets_964 v0 v1 v2
   = case coe v2 of
       C_var_184 v5 -> coe C_var_184 v5
       C_zero_186 -> coe C_zero_186
@@ -912,19 +946,19 @@ d_norm'45'lets_940 v0 v1 v2
              C_ar_10 v6
                -> coe
                     C_imaps_190
-                    (d_norm'45'lets_940
+                    (d_norm'45'lets_964
                        (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v6)))
                        (coe C_ar_10 (coe d_unit_180)) (coe v5))
              _ -> MAlonzo.RTE.mazUnreachableError
       C_sels_192 v4 v5 v6
         -> coe
              C_sels_192 v4
-             (d_norm'45'lets_940 (coe v0) (coe C_ar_10 (coe v4)) (coe v5))
-             (d_norm'45'lets_940 (coe v0) (coe C_ix_8 (coe v4)) (coe v6))
+             (d_norm'45'lets_964 (coe v0) (coe C_ar_10 (coe v4)) (coe v5))
+             (d_norm'45'lets_964 (coe v0) (coe C_ix_8 (coe v4)) (coe v6))
       C_imap_194 v4 v5 v6
         -> coe
              C_imap_194 v4 v5
-             (d_norm'45'lets_940
+             (d_norm'45'lets_964
                 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v4)))
                 (coe C_ar_10 (coe v5)) (coe v6))
       C_sel_196 v4 v6 v7
@@ -932,81 +966,87 @@ d_norm'45'lets_940 v0 v1 v2
              C_ar_10 v8
                -> coe
                     C_sel_196 v4
-                    (d_norm'45'lets_940
+                    (d_norm'45'lets_964
                        (coe v0)
                        (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v4 v8))
                        (coe v6))
-                    (d_norm'45'lets_940 (coe v0) (coe C_ix_8 (coe v4)) (coe v7))
+                    (d_norm'45'lets_964 (coe v0) (coe C_ix_8 (coe v4)) (coe v7))
              _ -> MAlonzo.RTE.mazUnreachableError
       C_imapb_198 v3 v4 v7 v8
         -> coe
              C_imapb_198 v3 v4 v7
-             (d_norm'45'lets_940
+             (d_norm'45'lets_964
                 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v3)))
                 (coe C_ar_10 (coe v4)) (coe v8))
       C_selb_200 v3 v5 v7 v8 v9
         -> coe
              C_selb_200 v3 v5 v7
-             (d_norm'45'lets_940 (coe v0) (coe C_ar_10 (coe v5)) (coe v8))
-             (d_norm'45'lets_940 (coe v0) (coe C_ix_8 (coe v3)) (coe v9))
+             (d_norm'45'lets_964 (coe v0) (coe C_ar_10 (coe v5)) (coe v8))
+             (d_norm'45'lets_964 (coe v0) (coe C_ix_8 (coe v3)) (coe v9))
       C_sum_202 v4 v6
         -> coe
              C_sum_202 v4
-             (d_norm'45'lets_940
+             (d_norm'45'lets_964
                 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v4))) (coe v1)
                 (coe v6))
       C_zero'45'but_204 v4 v6 v7 v8
         -> coe
              C_zero'45'but_204 v4
-             (d_norm'45'lets_940 (coe v0) (coe C_ix_8 (coe v4)) (coe v6))
-             (d_norm'45'lets_940 (coe v0) (coe C_ix_8 (coe v4)) (coe v7))
-             (d_norm'45'lets_940 (coe v0) (coe v1) (coe v8))
+             (d_norm'45'lets_964 (coe v0) (coe C_ix_8 (coe v4)) (coe v6))
+             (d_norm'45'lets_964 (coe v0) (coe C_ix_8 (coe v4)) (coe v7))
+             (d_norm'45'lets_964 (coe v0) (coe v1) (coe v8))
       C_slide_206 v4 v5 v6 v8 v9 v10 v11
         -> coe
              C_slide_206 v4 v5 v6
-             (d_norm'45'lets_940 (coe v0) (coe C_ix_8 (coe v4)) (coe v8)) v9
-             (d_norm'45'lets_940 (coe v0) (coe C_ar_10 (coe v6)) (coe v10)) v11
+             (d_norm'45'lets_964 (coe v0) (coe C_ix_8 (coe v4)) (coe v8)) v9
+             (d_norm'45'lets_964 (coe v0) (coe C_ar_10 (coe v6)) (coe v10)) v11
       C_backslide_208 v4 v5 v6 v8 v9 v10 v11
         -> coe
              C_backslide_208 v4 v5 v6
-             (d_norm'45'lets_940 (coe v0) (coe C_ix_8 (coe v4)) (coe v8))
-             (d_norm'45'lets_940 (coe v0) (coe C_ar_10 (coe v5)) (coe v9)) v10
+             (d_norm'45'lets_964 (coe v0) (coe C_ix_8 (coe v4)) (coe v8))
+             (d_norm'45'lets_964 (coe v0) (coe C_ar_10 (coe v5)) (coe v9)) v10
              v11
       C_bin_210 v5 v6 v7
         -> coe
-             C_bin_210 v5 (d_norm'45'lets_940 (coe v0) (coe v1) (coe v6))
-             (d_norm'45'lets_940 (coe v0) (coe v1) (coe v7))
+             C_bin_210 v5 (d_norm'45'lets_964 (coe v0) (coe v1) (coe v6))
+             (d_norm'45'lets_964 (coe v0) (coe v1) (coe v7))
       C_scaledown_212 v5 v6
         -> coe
-             C_scaledown_212 v5 (d_norm'45'lets_940 (coe v0) (coe v1) (coe v6))
+             C_scaledown_212 v5 (d_norm'45'lets_964 (coe v0) (coe v1) (coe v6))
       C_let'8242'_214 v4 v6 v7
         -> coe
              MAlonzo.Code.Data.Maybe.Base.du_maybe_32 (coe (\ v8 -> v8))
              (coe
                 C_let'8242'_214 v4
-                (d_norm'45'lets_940 (coe v0) (coe C_ar_10 (coe v4)) (coe v6))
-                (d_norm'45'lets_940
+                (d_norm'45'lets_964 (coe v0) (coe C_ar_10 (coe v4)) (coe v6))
+                (d_norm'45'lets_964
                    (coe C__'9657'__16 (coe v0) (coe C_ar_10 (coe v4))) (coe v1)
                    (coe v7)))
              (coe
-                du_stren_800 (coe C__'9657'__16 (coe v0) (coe C_ar_10 (coe v4)))
+                du_stren_820 (coe C__'9657'__16 (coe v0) (coe C_ar_10 (coe v4)))
                 (coe v1)
                 (coe
-                   d_norm'45'lets_940
+                   d_norm'45'lets_964
                    (coe C__'9657'__16 (coe v0) (coe C_ar_10 (coe v4))) (coe v1)
                    (coe v7))
                 (coe C_here_36))
       C_un_216 v5 v6
-        -> coe C_un_216 v5 (d_norm'45'lets_940 (coe v0) (coe v1) (coe v6))
+        -> coe C_un_216 v5 (d_norm'45'lets_964 (coe v0) (coe v1) (coe v6))
+      C_maximum_218 v4 v6
+        -> coe
+             C_maximum_218 v4
+             (d_norm'45'lets_964
+                (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v4))) (coe v1)
+                (coe v6))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.WkSub.count-uses
-d_count'45'uses_1008 ::
+d_count'45'uses_1034 ::
   T_Ctx_12 -> T_IS_6 -> T_IS_6 -> T_E_182 -> T__'8712'__34 -> Integer
-d_count'45'uses_1008 v0 v1 ~v2 v3 v4
-  = du_count'45'uses_1008 v0 v1 v3 v4
-du_count'45'uses_1008 ::
+d_count'45'uses_1034 v0 v1 ~v2 v3 v4
+  = du_count'45'uses_1034 v0 v1 v3 v4
+du_count'45'uses_1034 ::
   T_Ctx_12 -> T_IS_6 -> T_E_182 -> T__'8712'__34 -> Integer
-du_count'45'uses_1008 v0 v1 v2 v3
+du_count'45'uses_1034 v0 v1 v2 v3
   = case coe v2 of
       C_var_184 v6
         -> let v7 = coe du_eq'63'_110 (coe v0) (coe v6) (coe v3) in
@@ -1020,7 +1060,7 @@ du_count'45'uses_1008 v0 v1 v2 v3
         -> case coe v1 of
              C_ar_10 v7
                -> coe
-                    du_count'45'uses_1008
+                    du_count'45'uses_1034
                     (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v7)))
                     (coe C_ar_10 (coe d_unit_180)) (coe v6) (coe C_there_38 v3)
              _ -> MAlonzo.RTE.mazUnreachableError
@@ -1028,14 +1068,14 @@ du_count'45'uses_1008 v0 v1 v2 v3
         -> coe
              addInt
              (coe
-                du_count'45'uses_1008 (coe v0) (coe C_ar_10 (coe v5)) (coe v6)
+                du_count'45'uses_1034 (coe v0) (coe C_ar_10 (coe v5)) (coe v6)
                 (coe v3))
              (coe
-                du_count'45'uses_1008 (coe v0) (coe C_ix_8 (coe v5)) (coe v7)
+                du_count'45'uses_1034 (coe v0) (coe C_ix_8 (coe v5)) (coe v7)
                 (coe v3))
       C_imap_194 v5 v6 v7
         -> coe
-             du_count'45'uses_1008
+             du_count'45'uses_1034
              (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v5)))
              (coe C_ar_10 (coe v6)) (coe v7) (coe C_there_38 v3)
       C_sel_196 v5 v7 v8
@@ -1044,30 +1084,30 @@ du_count'45'uses_1008 v0 v1 v2 v3
                -> coe
                     addInt
                     (coe
-                       du_count'45'uses_1008 (coe v0)
+                       du_count'45'uses_1034 (coe v0)
                        (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v5 v9))
                        (coe v7) (coe v3))
                     (coe
-                       du_count'45'uses_1008 (coe v0) (coe C_ix_8 (coe v5)) (coe v8)
+                       du_count'45'uses_1034 (coe v0) (coe C_ix_8 (coe v5)) (coe v8)
                        (coe v3))
              _ -> MAlonzo.RTE.mazUnreachableError
       C_imapb_198 v4 v5 v8 v9
         -> coe
-             du_count'45'uses_1008
+             du_count'45'uses_1034
              (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v4)))
              (coe C_ar_10 (coe v5)) (coe v9) (coe C_there_38 v3)
       C_selb_200 v4 v6 v8 v9 v10
         -> coe
              addInt
              (coe
-                du_count'45'uses_1008 (coe v0) (coe C_ar_10 (coe v6)) (coe v9)
+                du_count'45'uses_1034 (coe v0) (coe C_ar_10 (coe v6)) (coe v9)
                 (coe v3))
              (coe
-                du_count'45'uses_1008 (coe v0) (coe C_ix_8 (coe v4)) (coe v10)
+                du_count'45'uses_1034 (coe v0) (coe C_ix_8 (coe v4)) (coe v10)
                 (coe v3))
       C_sum_202 v5 v7
         -> coe
-             du_count'45'uses_1008
+             du_count'45'uses_1034
              (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v5))) (coe v1)
              (coe v7) (coe C_there_38 v3)
       C_zero'45'but_204 v5 v7 v8 v9
@@ -1076,235 +1116,257 @@ du_count'45'uses_1008 v0 v1 v2 v3
              (coe
                 addInt
                 (coe
-                   du_count'45'uses_1008 (coe v0) (coe C_ix_8 (coe v5)) (coe v7)
+                   du_count'45'uses_1034 (coe v0) (coe C_ix_8 (coe v5)) (coe v7)
                    (coe v3))
                 (coe
-                   du_count'45'uses_1008 (coe v0) (coe C_ix_8 (coe v5)) (coe v8)
+                   du_count'45'uses_1034 (coe v0) (coe C_ix_8 (coe v5)) (coe v8)
                    (coe v3)))
-             (coe du_count'45'uses_1008 (coe v0) (coe v1) (coe v9) (coe v3))
+             (coe du_count'45'uses_1034 (coe v0) (coe v1) (coe v9) (coe v3))
       C_slide_206 v5 v6 v7 v9 v10 v11 v12
         -> coe
              addInt
              (coe
-                du_count'45'uses_1008 (coe v0) (coe C_ar_10 (coe v7)) (coe v11)
+                du_count'45'uses_1034 (coe v0) (coe C_ar_10 (coe v7)) (coe v11)
                 (coe v3))
              (coe
-                du_count'45'uses_1008 (coe v0) (coe C_ix_8 (coe v5)) (coe v9)
+                du_count'45'uses_1034 (coe v0) (coe C_ix_8 (coe v5)) (coe v9)
                 (coe v3))
       C_backslide_208 v5 v6 v7 v9 v10 v11 v12
         -> coe
              addInt
              (coe
-                du_count'45'uses_1008 (coe v0) (coe C_ar_10 (coe v6)) (coe v10)
+                du_count'45'uses_1034 (coe v0) (coe C_ar_10 (coe v6)) (coe v10)
                 (coe v3))
              (coe
-                du_count'45'uses_1008 (coe v0) (coe C_ix_8 (coe v5)) (coe v9)
+                du_count'45'uses_1034 (coe v0) (coe C_ix_8 (coe v5)) (coe v9)
                 (coe v3))
       C_bin_210 v6 v7 v8
         -> coe
              addInt
-             (coe du_count'45'uses_1008 (coe v0) (coe v1) (coe v7) (coe v3))
-             (coe du_count'45'uses_1008 (coe v0) (coe v1) (coe v8) (coe v3))
+             (coe du_count'45'uses_1034 (coe v0) (coe v1) (coe v7) (coe v3))
+             (coe du_count'45'uses_1034 (coe v0) (coe v1) (coe v8) (coe v3))
       C_scaledown_212 v6 v7
-        -> coe du_count'45'uses_1008 (coe v0) (coe v1) (coe v7) (coe v3)
+        -> coe du_count'45'uses_1034 (coe v0) (coe v1) (coe v7) (coe v3)
       C_let'8242'_214 v5 v7 v8
         -> coe
              addInt
              (coe
-                du_count'45'uses_1008
+                du_count'45'uses_1034
                 (coe C__'9657'__16 (coe v0) (coe C_ar_10 (coe v5))) (coe v1)
                 (coe v8) (coe C_there_38 v3))
              (coe
-                du_count'45'uses_1008 (coe v0) (coe C_ar_10 (coe v5)) (coe v7)
+                du_count'45'uses_1034 (coe v0) (coe C_ar_10 (coe v5)) (coe v7)
                 (coe v3))
       C_un_216 v6 v7
-        -> coe du_count'45'uses_1008 (coe v0) (coe v1) (coe v7) (coe v3)
+        -> coe du_count'45'uses_1034 (coe v0) (coe v1) (coe v7) (coe v3)
+      C_maximum_218 v5 v7
+        -> coe
+             du_count'45'uses_1034
+             (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v5))) (coe v1)
+             (coe v7) (coe C_there_38 v3)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.Syntax.Prefix
-d_Prefix_1128 a0 a1 = ()
-data T_Prefix_1128 = C_zero_1130 | C_suc_1132 T_Prefix_1128
+d_Prefix_1158 a0 a1 = ()
+data T_Prefix_1158 = C_zero_1160 | C_suc_1162 T_Prefix_1158
 -- Lang.Syntax.GE
-d_GE_1134 :: T_Ctx_12 -> T_IS_6 -> ()
-d_GE_1134 = erased
+d_GE_1164 :: T_Ctx_12 -> T_IS_6 -> ()
+d_GE_1164 = erased
 -- Lang.Syntax.GVar
-d_GVar_1142 :: T_Ctx_12 -> T_IS_6 -> ()
-d_GVar_1142 = erased
+d_GVar_1172 :: T_Ctx_12 -> T_IS_6 -> ()
+d_GVar_1172 = erased
 -- Lang.Syntax.V
-d_V_1152 ::
+d_V_1182 ::
   T_IS_6 ->
   T_Ctx_12 ->
-  T__'8712'__34 -> T_Ctx_12 -> T_Prefix_1128 -> T__'8712'__34
-d_V_1152 ~v0 ~v1 v2 v3 v4 = du_V_1152 v2 v3 v4
-du_V_1152 ::
-  T__'8712'__34 -> T_Ctx_12 -> T_Prefix_1128 -> T__'8712'__34
-du_V_1152 v0 v1 v2
+  T__'8712'__34 -> T_Ctx_12 -> T_Prefix_1158 -> T__'8712'__34
+d_V_1182 ~v0 ~v1 v2 v3 v4 = du_V_1182 v2 v3 v4
+du_V_1182 ::
+  T__'8712'__34 -> T_Ctx_12 -> T_Prefix_1158 -> T__'8712'__34
+du_V_1182 v0 v1 v2
   = case coe v2 of
-      C_zero_1130 -> coe v0
-      C_suc_1132 v6
+      C_zero_1160 -> coe v0
+      C_suc_1162 v6
         -> case coe v1 of
              C__'9657'__16 v7 v8
-               -> coe C_there_38 (coe du_V_1152 (coe v0) (coe v7) (coe v6))
+               -> coe C_there_38 (coe du_V_1182 (coe v0) (coe v7) (coe v6))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.Syntax.Imap
-d_Imap_1160 ::
+d_Imap_1190 ::
   [Integer] ->
   [Integer] ->
   T_Ctx_12 ->
-  ((T_Ctx_12 -> T_Prefix_1128 -> T_E_182) -> T_E_182) -> T_E_182
-d_Imap_1160 v0 v1 ~v2 v3 = du_Imap_1160 v0 v1 v3
-du_Imap_1160 ::
+  ((T_Ctx_12 -> T_Prefix_1158 -> T_E_182) -> T_E_182) -> T_E_182
+d_Imap_1190 v0 v1 ~v2 v3 = du_Imap_1190 v0 v1 v3
+du_Imap_1190 ::
   [Integer] ->
   [Integer] ->
-  ((T_Ctx_12 -> T_Prefix_1128 -> T_E_182) -> T_E_182) -> T_E_182
-du_Imap_1160 v0 v1 v2
+  ((T_Ctx_12 -> T_Prefix_1158 -> T_E_182) -> T_E_182) -> T_E_182
+du_Imap_1190 v0 v1 v2
   = coe
       C_imap_194 v0 v1
       (coe
          v2
          (\ v3 v4 ->
-            coe C_var_184 (coe du_V_1152 (coe C_here_36) (coe v3) (coe v4))))
+            coe C_var_184 (coe du_V_1182 (coe C_here_36) (coe v3) (coe v4))))
 -- Lang.Syntax.Sum
-d_Sum_1166 ::
+d_Sum_1196 ::
   [Integer] ->
   [Integer] ->
   T_Ctx_12 ->
-  ((T_Ctx_12 -> T_Prefix_1128 -> T_E_182) -> T_E_182) -> T_E_182
-d_Sum_1166 v0 ~v1 ~v2 v3 = du_Sum_1166 v0 v3
-du_Sum_1166 ::
+  ((T_Ctx_12 -> T_Prefix_1158 -> T_E_182) -> T_E_182) -> T_E_182
+d_Sum_1196 v0 ~v1 ~v2 v3 = du_Sum_1196 v0 v3
+du_Sum_1196 ::
   [Integer] ->
-  ((T_Ctx_12 -> T_Prefix_1128 -> T_E_182) -> T_E_182) -> T_E_182
-du_Sum_1166 v0 v1
+  ((T_Ctx_12 -> T_Prefix_1158 -> T_E_182) -> T_E_182) -> T_E_182
+du_Sum_1196 v0 v1
   = coe
       C_sum_202 v0
       (coe
          v1
          (\ v2 v3 ->
-            coe C_var_184 (coe du_V_1152 (coe C_here_36) (coe v2) (coe v3))))
--- Lang.Syntax.Imaps
-d_Imaps_1176 ::
+            coe C_var_184 (coe du_V_1182 (coe C_here_36) (coe v2) (coe v3))))
+-- Lang.Syntax.Max
+d_Max_1206 ::
+  [Integer] ->
   [Integer] ->
   T_Ctx_12 ->
-  ((T_Ctx_12 -> T_Prefix_1128 -> T_E_182) -> T_E_182) -> T_E_182
-d_Imaps_1176 ~v0 ~v1 v2 = du_Imaps_1176 v2
-du_Imaps_1176 ::
-  ((T_Ctx_12 -> T_Prefix_1128 -> T_E_182) -> T_E_182) -> T_E_182
-du_Imaps_1176 v0
+  ((T_Ctx_12 -> T_Prefix_1158 -> T_E_182) -> T_E_182) -> T_E_182
+d_Max_1206 v0 ~v1 ~v2 v3 = du_Max_1206 v0 v3
+du_Max_1206 ::
+  [Integer] ->
+  ((T_Ctx_12 -> T_Prefix_1158 -> T_E_182) -> T_E_182) -> T_E_182
+du_Max_1206 v0 v1
+  = coe
+      C_maximum_218 v0
+      (coe
+         v1
+         (\ v2 v3 ->
+            coe C_var_184 (coe du_V_1182 (coe C_here_36) (coe v2) (coe v3))))
+-- Lang.Syntax.Imaps
+d_Imaps_1216 ::
+  [Integer] ->
+  T_Ctx_12 ->
+  ((T_Ctx_12 -> T_Prefix_1158 -> T_E_182) -> T_E_182) -> T_E_182
+d_Imaps_1216 ~v0 ~v1 v2 = du_Imaps_1216 v2
+du_Imaps_1216 ::
+  ((T_Ctx_12 -> T_Prefix_1158 -> T_E_182) -> T_E_182) -> T_E_182
+du_Imaps_1216 v0
   = coe
       C_imaps_190
       (coe
          v0
          (\ v1 v2 ->
-            coe C_var_184 (coe du_V_1152 (coe C_here_36) (coe v1) (coe v2))))
+            coe C_var_184 (coe du_V_1182 (coe C_here_36) (coe v1) (coe v2))))
 -- Lang.Syntax.Imapb
-d_Imapb_1186 ::
+d_Imapb_1226 ::
   [Integer] ->
   [Integer] ->
   [Integer] ->
   T_Ctx_12 ->
   MAlonzo.Code.Ar.T_Pointw'8323'_990 ->
-  ((T_Ctx_12 -> T_Prefix_1128 -> T_E_182) -> T_E_182) -> T_E_182
-d_Imapb_1186 v0 v1 ~v2 ~v3 v4 v5 = du_Imapb_1186 v0 v1 v4 v5
-du_Imapb_1186 ::
+  ((T_Ctx_12 -> T_Prefix_1158 -> T_E_182) -> T_E_182) -> T_E_182
+d_Imapb_1226 v0 v1 ~v2 ~v3 v4 v5 = du_Imapb_1226 v0 v1 v4 v5
+du_Imapb_1226 ::
   [Integer] ->
   [Integer] ->
   MAlonzo.Code.Ar.T_Pointw'8323'_990 ->
-  ((T_Ctx_12 -> T_Prefix_1128 -> T_E_182) -> T_E_182) -> T_E_182
-du_Imapb_1186 v0 v1 v2 v3
+  ((T_Ctx_12 -> T_Prefix_1158 -> T_E_182) -> T_E_182) -> T_E_182
+du_Imapb_1226 v0 v1 v2 v3
   = coe
       C_imapb_198 v0 v1 v2
       (coe
          v3
          (\ v4 v5 ->
-            coe C_var_184 (coe du_V_1152 (coe C_here_36) (coe v4) (coe v5))))
+            coe C_var_184 (coe du_V_1182 (coe C_here_36) (coe v4) (coe v5))))
 -- Lang.Syntax.Let-syntax
-d_Let'45'syntax_1198 ::
+d_Let'45'syntax_1238 ::
   [Integer] ->
   [Integer] ->
   T_Ctx_12 ->
   T_E_182 ->
-  ((T_Ctx_12 -> T_Prefix_1128 -> T_E_182) -> T_E_182) -> T_E_182
-d_Let'45'syntax_1198 v0 ~v1 ~v2 v3 v4
-  = du_Let'45'syntax_1198 v0 v3 v4
-du_Let'45'syntax_1198 ::
+  ((T_Ctx_12 -> T_Prefix_1158 -> T_E_182) -> T_E_182) -> T_E_182
+d_Let'45'syntax_1238 v0 ~v1 ~v2 v3 v4
+  = du_Let'45'syntax_1238 v0 v3 v4
+du_Let'45'syntax_1238 ::
   [Integer] ->
   T_E_182 ->
-  ((T_Ctx_12 -> T_Prefix_1128 -> T_E_182) -> T_E_182) -> T_E_182
-du_Let'45'syntax_1198 v0 v1 v2
+  ((T_Ctx_12 -> T_Prefix_1158 -> T_E_182) -> T_E_182) -> T_E_182
+du_Let'45'syntax_1238 v0 v1 v2
   = coe
       C_let'8242'_214 v0 v1
       (coe
          v2
          (\ v3 v4 ->
-            coe C_var_184 (coe du_V_1152 (coe C_here_36) (coe v3) (coe v4))))
+            coe C_var_184 (coe du_V_1182 (coe C_here_36) (coe v3) (coe v4))))
 -- Lang.Syntax.ext
-d_ext_1208 :: T_Ctx_12 -> [T_IS_6] -> T_Ctx_12
-d_ext_1208 v0 v1
+d_ext_1248 :: T_Ctx_12 -> [T_IS_6] -> T_Ctx_12
+d_ext_1248 v0 v1
   = case coe v1 of
       [] -> coe v0
       (:) v2 v3
-        -> coe d_ext_1208 (coe C__'9657'__16 (coe v0) (coe v2)) (coe v3)
+        -> coe d_ext_1248 (coe C__'9657'__16 (coe v0) (coe v2)) (coe v3)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.Syntax.lfunh
-d_lfunh_1224 :: [T_IS_6] -> () -> T_Ctx_12 -> ()
-d_lfunh_1224 = erased
+d_lfunh_1264 :: [T_IS_6] -> () -> T_Ctx_12 -> ()
+d_lfunh_1264 = erased
 -- Lang.Syntax.lfun
-d_lfun_1244 :: [T_IS_6] -> T_Ctx_12 -> T_IS_6 -> ()
-d_lfun_1244 = erased
+d_lfun_1284 :: [T_IS_6] -> T_Ctx_12 -> T_IS_6 -> ()
+d_lfun_1284 = erased
 -- Lang.Syntax.lvar
-d_lvar_1254 ::
+d_lvar_1294 ::
   T_IS_6 ->
   T_Ctx_12 ->
-  [T_IS_6] -> T__'8712'__34 -> T_Ctx_12 -> T_Prefix_1128 -> T_E_182
-d_lvar_1254 ~v0 ~v1 v2 v3 v4 v5 = du_lvar_1254 v2 v3 v4 v5
-du_lvar_1254 ::
-  [T_IS_6] -> T__'8712'__34 -> T_Ctx_12 -> T_Prefix_1128 -> T_E_182
-du_lvar_1254 v0 v1 v2 v3
+  [T_IS_6] -> T__'8712'__34 -> T_Ctx_12 -> T_Prefix_1158 -> T_E_182
+d_lvar_1294 ~v0 ~v1 v2 v3 v4 v5 = du_lvar_1294 v2 v3 v4 v5
+du_lvar_1294 ::
+  [T_IS_6] -> T__'8712'__34 -> T_Ctx_12 -> T_Prefix_1158 -> T_E_182
+du_lvar_1294 v0 v1 v2 v3
   = case coe v0 of
-      [] -> coe C_var_184 (coe du_V_1152 (coe v1) (coe v2) (coe v3))
+      [] -> coe C_var_184 (coe du_V_1182 (coe v1) (coe v2) (coe v3))
       (:) v4 v5
-        -> coe du_lvar_1254 (coe v5) (coe C_there_38 v1) (coe v2) (coe v3)
+        -> coe du_lvar_1294 (coe v5) (coe C_there_38 v1) (coe v2) (coe v3)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.Syntax.Lcon
-d_Lcon_1272 :: [T_IS_6] -> T_IS_6 -> T_Ctx_12 -> AgdaAny -> T_E_182
-d_Lcon_1272 v0 ~v1 ~v2 v3 = du_Lcon_1272 v0 v3
-du_Lcon_1272 :: [T_IS_6] -> AgdaAny -> T_E_182
-du_Lcon_1272 v0 v1
+d_Lcon_1312 :: [T_IS_6] -> T_IS_6 -> T_Ctx_12 -> AgdaAny -> T_E_182
+d_Lcon_1312 v0 ~v1 ~v2 v3 = du_Lcon_1312 v0 v3
+du_Lcon_1312 :: [T_IS_6] -> AgdaAny -> T_E_182
+du_Lcon_1312 v0 v1
   = case coe v0 of
       [] -> coe v1
       (:) v2 v3
         -> coe
-             du_Lcon_1272 (coe v3)
-             (coe v1 (coe du_lvar_1254 (coe v3) (coe C_here_36)))
+             du_Lcon_1312 (coe v3)
+             (coe v1 (coe du_lvar_1294 (coe v3) (coe C_here_36)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.Primitives.fromPrefix
-d_fromPrefix_1292 ::
-  T_Ctx_12 -> T_Ctx_12 -> T_Prefix_1128 -> T__'8838'__300
-d_fromPrefix_1292 v0 v1 v2
+d_fromPrefix_1332 ::
+  T_Ctx_12 -> T_Ctx_12 -> T_Prefix_1158 -> T__'8838'__310
+d_fromPrefix_1332 v0 v1 v2
   = case coe v2 of
-      C_zero_1130 -> coe d_'8838''45'eq_442 (coe v0)
-      C_suc_1132 v6
+      C_zero_1160 -> coe d_'8838''45'eq_456 (coe v0)
+      C_suc_1162 v6
         -> case coe v1 of
              C__'9657'__16 v7 v8
-               -> coe C_skip_304 (d_fromPrefix_1292 (coe v0) (coe v7) (coe v6))
+               -> coe C_skip_314 (d_fromPrefix_1332 (coe v0) (coe v7) (coe v6))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.Primitives.wkp
-d_wkp_1296 ::
+d_wkp_1336 ::
   T_Ctx_12 ->
-  T_Ctx_12 -> T_IS_6 -> T_Prefix_1128 -> T_E_182 -> T_E_182
-d_wkp_1296 v0 v1 v2 v3
+  T_Ctx_12 -> T_IS_6 -> T_Prefix_1158 -> T_E_182 -> T_E_182
+d_wkp_1336 v0 v1 v2 v3
   = coe
-      d_wk_320 (coe v0) (coe v1) (coe v2)
-      (coe d_fromPrefix_1292 (coe v0) (coe v1) (coe v3))
+      d_wk_330 (coe v0) (coe v1) (coe v2)
+      (coe d_fromPrefix_1332 (coe v0) (coe v1) (coe v3))
 -- Lang.Primitives.⟨_⟩
-d_'10216'_'10217'_1300 ::
+d_'10216'_'10217'_1340 ::
   T_Ctx_12 ->
-  T_IS_6 -> T_E_182 -> T_Ctx_12 -> T_Prefix_1128 -> T_E_182
-d_'10216'_'10217'_1300 v0 v1 v2 v3 v4
-  = coe d_wkp_1296 v0 v3 v1 v4 v2
+  T_IS_6 -> T_E_182 -> T_Ctx_12 -> T_Prefix_1158 -> T_E_182
+d_'10216'_'10217'_1340 v0 v1 v2 v3 v4
+  = coe d_wkp_1336 v0 v3 v1 v4 v2
 -- Lang.Primitives.Cnn.conv
-d_conv_1312 ::
+d_conv_1352 ::
   [Integer] ->
   [Integer] ->
   [Integer] ->
@@ -1313,9 +1375,9 @@ d_conv_1312 ::
   T_E_182 ->
   MAlonzo.Code.Ar.T_Pointw'8323'_990 ->
   T_E_182 -> MAlonzo.Code.Ar.T_Pointw'8322'_968 -> T_E_182
-d_conv_1312 v0 v1 v2 v3 v4 v5 v6 v7 v8
+d_conv_1352 v0 v1 v2 v3 v4 v5 v6 v7 v8
   = coe
-      du_Sum_1166 (coe v1)
+      du_Sum_1196 (coe v1)
       (coe
          (\ v9 ->
             coe
@@ -1324,33 +1386,33 @@ d_conv_1312 v0 v1 v2 v3 v4 v5 v6 v7 v8
                  C_slide_206 v1 v2 v0
                  (coe
                     v9 (coe C__'9657'__16 (coe v4) (coe C_ix_8 (coe v1)))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  v6
-                 (d_'10216'_'10217'_1300
+                 (d_'10216'_'10217'_1340
                     (coe v4) (coe C_ar_10 (coe v0)) (coe v5)
                     (coe C__'9657'__16 (coe v4) (coe C_ix_8 (coe v1)))
-                    (coe C_suc_1132 (coe C_zero_1130)))
+                    (coe C_suc_1162 (coe C_zero_1160)))
                  v8)
               (coe
-                 du_Imaps_1176
+                 du_Imaps_1216
                  (coe
                     (\ v10 ->
                        coe
                          C_sels_192 v1
-                         (d_'10216'_'10217'_1300
+                         (d_'10216'_'10217'_1340
                             (coe v4) (coe C_ar_10 (coe v1)) (coe v7)
                             (coe
                                C__'9657'__16 (coe C__'9657'__16 (coe v4) (coe C_ix_8 (coe v1)))
                                (coe C_ix_8 (coe v3)))
-                            (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130))))
+                            (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160))))
                          (coe
                             v9
                             (coe
                                C__'9657'__16 (coe C__'9657'__16 (coe v4) (coe C_ix_8 (coe v1)))
                                (coe C_ix_8 (coe v3)))
-                            (coe C_suc_1132 (coe C_zero_1130))))))))
+                            (coe C_suc_1162 (coe C_zero_1160))))))))
 -- Lang.Primitives.Cnn.mconv
-d_mconv_1332 ::
+d_mconv_1372 ::
   [Integer] ->
   [Integer] ->
   [Integer] ->
@@ -1360,62 +1422,62 @@ d_mconv_1332 ::
   MAlonzo.Code.Ar.T_Pointw'8323'_990 ->
   T_E_182 ->
   T_E_182 -> T_E_182 -> MAlonzo.Code.Ar.T_Pointw'8322'_968 -> T_E_182
-d_mconv_1332 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
+d_mconv_1372 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
   = coe
-      du_Imap_1160 (coe v4) (coe v5)
+      du_Imap_1190 (coe v4) (coe v5)
       (coe
          (\ v11 ->
             coe
               C_bin_210 (coe C_plus_158)
-              (d_conv_1312
+              (d_conv_1352
                  (coe v2) (coe v0) (coe v1) (coe v5)
                  (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v4)))
                  (coe
-                    d_'10216'_'10217'_1300 (coe v3) (coe C_ar_10 (coe v2)) (coe v7)
+                    d_'10216'_'10217'_1340 (coe v3) (coe C_ar_10 (coe v2)) (coe v7)
                     (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v4)))
-                    (coe C_suc_1132 (coe C_zero_1130)))
+                    (coe C_suc_1162 (coe C_zero_1160)))
                  (coe v6)
                  (coe
                     C_sel_196 v4
-                    (d_'10216'_'10217'_1300
+                    (d_'10216'_'10217'_1340
                        (coe v3)
                        (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v4 v0))
                        (coe v8) (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v4)))
-                       (coe C_suc_1132 (coe C_zero_1130)))
+                       (coe C_suc_1162 (coe C_zero_1160)))
                     (coe
                        v11 (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v4)))
-                       (coe C_zero_1130)))
+                       (coe C_zero_1160)))
                  (coe v10))
               (coe
-                 du_Imaps_1176
+                 du_Imaps_1216
                  (coe
                     (\ v12 ->
                        coe
                          C_sels_192 v4
-                         (d_'10216'_'10217'_1300
+                         (d_'10216'_'10217'_1340
                             (coe v3) (coe C_ar_10 (coe v4)) (coe v9)
                             (coe
                                C__'9657'__16 (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v4)))
                                (coe C_ix_8 (coe v5)))
-                            (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130))))
+                            (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160))))
                          (coe
                             v11
                             (coe
                                C__'9657'__16 (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v4)))
                                (coe C_ix_8 (coe v5)))
-                            (coe C_suc_1132 (coe C_zero_1130))))))))
+                            (coe C_suc_1162 (coe C_zero_1160))))))))
 -- Lang.Primitives.Cnn.avgp₂
-d_avgp'8322'_1354 ::
+d_avgp'8322'_1394 ::
   T_Ctx_12 -> Integer -> Integer -> T_E_182 -> T_E_182
-d_avgp'8322'_1354 v0 v1 v2 v3
+d_avgp'8322'_1394 v0 v1 v2 v3
   = coe
-      du_Imaps_1176
+      du_Imaps_1216
       (coe
          (\ v4 ->
             coe
               C_scaledown_212 (4 :: Integer)
               (coe
-                 du_Sum_1166
+                 du_Sum_1196
                  (coe
                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (2 :: Integer))
                     (coe
@@ -1449,7 +1511,7 @@ d_avgp'8322'_1354 v0 v1 v2 v3
                                (coe
                                   MAlonzo.Code.Ar.C_cons_996 erased
                                   (coe MAlonzo.Code.Ar.C_'91''93'_994)))
-                            (d_'10216'_'10217'_1300
+                            (d_'10216'_'10217'_1340
                                (coe v0)
                                (coe
                                   C_ar_10
@@ -1481,7 +1543,7 @@ d_avgp'8322'_1354 v0 v1 v2 v3
                                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                            (coe (2 :: Integer))
                                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
-                               (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130))))
+                               (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160))))
                             (coe
                                v4
                                (coe
@@ -1504,7 +1566,7 @@ d_avgp'8322'_1354 v0 v1 v2 v3
                                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                            (coe (2 :: Integer))
                                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
-                               (coe C_suc_1132 (coe C_zero_1130))))
+                               (coe C_suc_1162 (coe C_zero_1160))))
                          (coe
                             v5
                             (coe
@@ -1527,12 +1589,12 @@ d_avgp'8322'_1354 v0 v1 v2 v3
                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                         (coe (2 :: Integer))
                                         (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
-                            (coe C_zero_1130)))))))
+                            (coe C_zero_1160)))))))
 -- Lang.Primitives.Cnn.sqerr
-d_sqerr_1370 :: T_Ctx_12 -> T_E_182 -> T_E_182 -> T_E_182
-d_sqerr_1370 ~v0 v1 v2 = du_sqerr_1370 v1 v2
-du_sqerr_1370 :: T_E_182 -> T_E_182 -> T_E_182
-du_sqerr_1370 v0 v1
+d_sqerr_1410 :: T_Ctx_12 -> T_E_182 -> T_E_182 -> T_E_182
+d_sqerr_1410 ~v0 v1 v2 = du_sqerr_1410 v1 v2
+du_sqerr_1410 :: T_E_182 -> T_E_182 -> T_E_182
+du_sqerr_1410 v0 v1
   = coe
       C_scaledown_212 (2 :: Integer)
       (coe
@@ -1542,38 +1604,38 @@ du_sqerr_1370 v0 v1
          (coe
             C_bin_210 (coe C_plus_158) v0 (coe C_un_216 (coe C_neg_166) v1)))
 -- Lang.Primitives.Cnn.meansqerr
-d_meansqerr_1380 ::
+d_meansqerr_1420 ::
   T_Ctx_12 -> [Integer] -> T_E_182 -> T_E_182 -> T_E_182
-d_meansqerr_1380 v0 v1 v2 v3
+d_meansqerr_1420 v0 v1 v2 v3
   = coe
-      du_Sum_1166 (coe v1)
+      du_Sum_1196 (coe v1)
       (coe
          (\ v4 ->
             coe
-              du_sqerr_1370
+              du_sqerr_1410
               (coe
                  C_sels_192 v1
-                 (d_'10216'_'10217'_1300
+                 (d_'10216'_'10217'_1340
                     (coe v0) (coe C_ar_10 (coe v1)) (coe v2)
                     (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v1)))
-                    (coe C_suc_1132 (coe C_zero_1130)))
+                    (coe C_suc_1162 (coe C_zero_1160)))
                  (coe
                     v4 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v1)))
-                    (coe C_zero_1130)))
+                    (coe C_zero_1160)))
               (coe
                  C_sels_192 v1
-                 (d_'10216'_'10217'_1300
+                 (d_'10216'_'10217'_1340
                     (coe v0) (coe C_ar_10 (coe v1)) (coe v3)
                     (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v1)))
-                    (coe C_suc_1132 (coe C_zero_1130)))
+                    (coe C_suc_1162 (coe C_zero_1160)))
                  (coe
                     v4 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe v1)))
-                    (coe C_zero_1130)))))
+                    (coe C_zero_1160)))))
 -- Lang.Primitives.Cnn.cnn
-d_cnn_1388 :: T_E_182
-d_cnn_1388
+d_cnn_1428 :: T_E_182
+d_cnn_1428
   = coe
-      du_Lcon_1272
+      du_Lcon_1312
       (coe
          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
          (coe
@@ -1671,7 +1733,7 @@ d_cnn_1388
       (coe
          (\ v0 v1 v2 v3 v4 v5 v6 v7 ->
             coe
-              du_Let'45'syntax_1198
+              du_Let'45'syntax_1238
               (coe
                  MAlonzo.Code.Ar.d__'8855'__54 () erased
                  (coe
@@ -1685,7 +1747,7 @@ d_cnn_1388
                        (coe mulInt (coe (12 :: Integer)) (coe (2 :: Integer)))
                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
               (coe
-                 d_mconv_1332
+                 d_mconv_1372
                  (coe
                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (5 :: Integer))
                     (coe
@@ -1702,7 +1764,7 @@ d_cnn_1388
                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (28 :: Integer))
                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
                  (coe
-                    d_ext_1208 (coe C_ε_14)
+                    d_ext_1248 (coe C_ε_14)
                     (coe
                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                        (coe
@@ -1826,7 +1888,7 @@ d_cnn_1388
                        (coe MAlonzo.Code.Ar.C_'91''93'_994)))
                  (coe
                     v0
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -1938,10 +2000,10 @@ d_cnn_1388
                                                                     MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v1
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -2053,10 +2115,10 @@ d_cnn_1388
                                                                     MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v2
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -2168,7 +2230,7 @@ d_cnn_1388
                                                                     MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     MAlonzo.Code.Ar.C_cons_974 erased
                     (coe
@@ -2177,7 +2239,7 @@ d_cnn_1388
               (coe
                  (\ v8 ->
                     coe
-                      du_Let'45'syntax_1198
+                      du_Let'45'syntax_1238
                       (coe
                          MAlonzo.Code.Ar.d__'8855'__54 () erased
                          (coe
@@ -2197,7 +2259,7 @@ d_cnn_1388
                             (coe
                                C__'9657'__16
                                (coe
-                                  d_ext_1208 (coe C_ε_14)
+                                  d_ext_1248 (coe C_ε_14)
                                   (coe
                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                      (coe
@@ -2328,11 +2390,11 @@ d_cnn_1388
                                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                            (coe mulInt (coe (12 :: Integer)) (coe (2 :: Integer)))
                                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
-                            (coe C_zero_1130)))
+                            (coe C_zero_1160)))
                       (coe
                          (\ v9 ->
                             coe
-                              du_Let'45'syntax_1198
+                              du_Let'45'syntax_1238
                               (coe
                                  MAlonzo.Code.Ar.d__'8855'__54 () erased
                                  (coe
@@ -2347,7 +2409,7 @@ d_cnn_1388
                                        (coe (12 :: Integer))
                                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                               (coe
-                                 du_Imap_1160
+                                 du_Imap_1190
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                     (coe (6 :: Integer))
@@ -2361,7 +2423,7 @@ d_cnn_1388
                                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
                                  (coe
                                     (\ v10 ->
-                                       d_avgp'8322'_1354
+                                       d_avgp'8322'_1394
                                          (coe
                                             C__'9657'__16
                                             (coe
@@ -2369,7 +2431,7 @@ d_cnn_1388
                                                (coe
                                                   C__'9657'__16
                                                   (coe
-                                                     d_ext_1208 (coe C_ε_14)
+                                                     d_ext_1248 (coe C_ε_14)
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                         (coe
@@ -2569,7 +2631,7 @@ d_cnn_1388
                                                      (coe
                                                         C__'9657'__16
                                                         (coe
-                                                           d_ext_1208 (coe C_ε_14)
+                                                           d_ext_1248 (coe C_ε_14)
                                                            (coe
                                                               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                               (coe
@@ -2763,7 +2825,7 @@ d_cnn_1388
                                                         (coe (6 :: Integer))
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                                               (coe C_suc_1132 (coe C_zero_1130)))
+                                               (coe C_suc_1162 (coe C_zero_1160)))
                                             (coe
                                                v10
                                                (coe
@@ -2773,7 +2835,7 @@ d_cnn_1388
                                                      (coe
                                                         C__'9657'__16
                                                         (coe
-                                                           d_ext_1208 (coe C_ε_14)
+                                                           d_ext_1248 (coe C_ε_14)
                                                            (coe
                                                               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                               (coe
@@ -2967,11 +3029,11 @@ d_cnn_1388
                                                         (coe (6 :: Integer))
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                                               (coe C_zero_1130))))))
+                                               (coe C_zero_1160))))))
                               (coe
                                  (\ v10 ->
                                     coe
-                                      du_Let'45'syntax_1198
+                                      du_Let'45'syntax_1238
                                       (coe
                                          MAlonzo.Code.Ar.d__'8855'__54 () erased
                                          (coe
@@ -2997,7 +3059,7 @@ d_cnn_1388
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
                                       (coe
-                                         d_mconv_1332
+                                         d_mconv_1372
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe (6 :: Integer))
@@ -3041,7 +3103,7 @@ d_cnn_1388
                                                (coe
                                                   C__'9657'__16
                                                   (coe
-                                                     d_ext_1208 (coe C_ε_14)
+                                                     d_ext_1248 (coe C_ε_14)
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                         (coe
@@ -3273,7 +3335,7 @@ d_cnn_1388
                                                   (coe
                                                      C__'9657'__16
                                                      (coe
-                                                        d_ext_1208 (coe C_ε_14)
+                                                        d_ext_1248 (coe C_ε_14)
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                            (coe
@@ -3472,7 +3534,7 @@ d_cnn_1388
                                                            (coe (12 :: Integer))
                                                            (coe
                                                               MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
-                                            (coe C_zero_1130))
+                                            (coe C_zero_1160))
                                          (coe
                                             v3
                                             (coe
@@ -3482,7 +3544,7 @@ d_cnn_1388
                                                   (coe
                                                      C__'9657'__16
                                                      (coe
-                                                        d_ext_1208 (coe C_ε_14)
+                                                        d_ext_1248 (coe C_ε_14)
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                            (coe
@@ -3682,8 +3744,8 @@ d_cnn_1388
                                                            (coe
                                                               MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
                                             (coe
-                                               C_suc_1132
-                                               (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130)))))
+                                               C_suc_1162
+                                               (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160)))))
                                          (coe
                                             v4
                                             (coe
@@ -3693,7 +3755,7 @@ d_cnn_1388
                                                   (coe
                                                      C__'9657'__16
                                                      (coe
-                                                        d_ext_1208 (coe C_ε_14)
+                                                        d_ext_1248 (coe C_ε_14)
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                            (coe
@@ -3893,8 +3955,8 @@ d_cnn_1388
                                                            (coe
                                                               MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
                                             (coe
-                                               C_suc_1132
-                                               (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130)))))
+                                               C_suc_1162
+                                               (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160)))))
                                          (coe
                                             MAlonzo.Code.Ar.C_cons_974 erased
                                             (coe
@@ -3905,7 +3967,7 @@ d_cnn_1388
                                       (coe
                                          (\ v11 ->
                                             coe
-                                              du_Let'45'syntax_1198
+                                              du_Let'45'syntax_1238
                                               (coe
                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased
                                                  (coe
@@ -3945,7 +4007,7 @@ d_cnn_1388
                                                              (coe
                                                                 C__'9657'__16
                                                                 (coe
-                                                                   d_ext_1208 (coe C_ε_14)
+                                                                   d_ext_1248 (coe C_ε_14)
                                                                    (coe
                                                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                       (coe
@@ -4193,11 +4255,11 @@ d_cnn_1388
                                                                             (coe (2 :: Integer)))
                                                                          (coe
                                                                             MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))
-                                                    (coe C_zero_1130)))
+                                                    (coe C_zero_1160)))
                                               (coe
                                                  (\ v12 ->
                                                     coe
-                                                      du_Let'45'syntax_1198
+                                                      du_Let'45'syntax_1238
                                                       (coe
                                                          MAlonzo.Code.Ar.d__'8855'__54 () erased
                                                          (coe
@@ -4217,7 +4279,7 @@ d_cnn_1388
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                                                       (coe
-                                                         du_Imap_1160
+                                                         du_Imap_1190
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                             (coe (12 :: Integer))
@@ -4236,7 +4298,7 @@ d_cnn_1388
                                                                   MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
                                                          (coe
                                                             (\ v13 ->
-                                                               d_avgp'8322'_1354
+                                                               d_avgp'8322'_1394
                                                                  (coe
                                                                     C__'9657'__16
                                                                     (coe
@@ -4250,7 +4312,7 @@ d_cnn_1388
                                                                                 (coe
                                                                                    C__'9657'__16
                                                                                    (coe
-                                                                                      d_ext_1208
+                                                                                      d_ext_1248
                                                                                       (coe C_ε_14)
                                                                                       (coe
                                                                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -4624,7 +4686,7 @@ d_cnn_1388
                                                                                       (coe
                                                                                          C__'9657'__16
                                                                                          (coe
-                                                                                            d_ext_1208
+                                                                                            d_ext_1248
                                                                                             (coe
                                                                                                C_ε_14)
                                                                                             (coe
@@ -4981,8 +5043,8 @@ d_cnn_1388
                                                                                    (coe
                                                                                       MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                                                                        (coe
-                                                                          C_suc_1132
-                                                                          (coe C_zero_1130)))
+                                                                          C_suc_1162
+                                                                          (coe C_zero_1160)))
                                                                     (coe
                                                                        v13
                                                                        (coe
@@ -4998,7 +5060,7 @@ d_cnn_1388
                                                                                       (coe
                                                                                          C__'9657'__16
                                                                                          (coe
-                                                                                            d_ext_1208
+                                                                                            d_ext_1248
                                                                                             (coe
                                                                                                C_ε_14)
                                                                                             (coe
@@ -5354,11 +5416,11 @@ d_cnn_1388
                                                                                          Integer))
                                                                                    (coe
                                                                                       MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
-                                                                       (coe C_zero_1130))))))
+                                                                       (coe C_zero_1160))))))
                                                       (coe
                                                          (\ v13 ->
                                                             coe
-                                                              du_Let'45'syntax_1198
+                                                              du_Let'45'syntax_1238
                                                               (coe
                                                                  MAlonzo.Code.Ar.d__'8855'__54 ()
                                                                  erased
@@ -5382,7 +5444,7 @@ d_cnn_1388
                                                                              (coe
                                                                                 MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
                                                               (coe
-                                                                 d_mconv_1332
+                                                                 d_mconv_1372
                                                                  (coe
                                                                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                     (coe (12 :: Integer))
@@ -5443,7 +5505,7 @@ d_cnn_1388
                                                                                 (coe
                                                                                    C__'9657'__16
                                                                                    (coe
-                                                                                      d_ext_1208
+                                                                                      d_ext_1248
                                                                                       (coe C_ε_14)
                                                                                       (coe
                                                                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
@@ -5849,7 +5911,7 @@ d_cnn_1388
                                                                                    (coe
                                                                                       C__'9657'__16
                                                                                       (coe
-                                                                                         d_ext_1208
+                                                                                         d_ext_1248
                                                                                          (coe
                                                                                             C_ε_14)
                                                                                          (coe
@@ -6217,7 +6279,7 @@ d_cnn_1388
                                                                                          Integer))
                                                                                    (coe
                                                                                       MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
-                                                                    (coe C_zero_1130))
+                                                                    (coe C_zero_1160))
                                                                  (coe
                                                                     v5
                                                                     (coe
@@ -6233,7 +6295,7 @@ d_cnn_1388
                                                                                    (coe
                                                                                       C__'9657'__16
                                                                                       (coe
-                                                                                         d_ext_1208
+                                                                                         d_ext_1248
                                                                                          (coe
                                                                                             C_ε_14)
                                                                                          (coe
@@ -6602,19 +6664,19 @@ d_cnn_1388
                                                                                    (coe
                                                                                       MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
                                                                     (coe
-                                                                       C_suc_1132
+                                                                       C_suc_1162
                                                                        (coe
-                                                                          C_suc_1132
+                                                                          C_suc_1162
                                                                           (coe
-                                                                             C_suc_1132
+                                                                             C_suc_1162
                                                                              (coe
-                                                                                C_suc_1132
+                                                                                C_suc_1162
                                                                                 (coe
-                                                                                   C_suc_1132
+                                                                                   C_suc_1162
                                                                                    (coe
-                                                                                      C_suc_1132
+                                                                                      C_suc_1162
                                                                                       (coe
-                                                                                         C_zero_1130))))))))
+                                                                                         C_zero_1160))))))))
                                                                  (coe
                                                                     v6
                                                                     (coe
@@ -6630,7 +6692,7 @@ d_cnn_1388
                                                                                    (coe
                                                                                       C__'9657'__16
                                                                                       (coe
-                                                                                         d_ext_1208
+                                                                                         d_ext_1248
                                                                                          (coe
                                                                                             C_ε_14)
                                                                                          (coe
@@ -6999,19 +7061,19 @@ d_cnn_1388
                                                                                    (coe
                                                                                       MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
                                                                     (coe
-                                                                       C_suc_1132
+                                                                       C_suc_1162
                                                                        (coe
-                                                                          C_suc_1132
+                                                                          C_suc_1162
                                                                           (coe
-                                                                             C_suc_1132
+                                                                             C_suc_1162
                                                                              (coe
-                                                                                C_suc_1132
+                                                                                C_suc_1162
                                                                                 (coe
-                                                                                   C_suc_1132
+                                                                                   C_suc_1162
                                                                                    (coe
-                                                                                      C_suc_1132
+                                                                                      C_suc_1162
                                                                                       (coe
-                                                                                         C_zero_1130))))))))
+                                                                                         C_zero_1160))))))))
                                                                  (coe
                                                                     MAlonzo.Code.Ar.C_cons_974
                                                                     erased
@@ -7029,7 +7091,7 @@ d_cnn_1388
                                                               (coe
                                                                  (\ v14 ->
                                                                     coe
-                                                                      du_Let'45'syntax_1198
+                                                                      du_Let'45'syntax_1238
                                                                       (coe
                                                                          MAlonzo.Code.Ar.d__'8855'__54
                                                                          () erased
@@ -7075,7 +7137,7 @@ d_cnn_1388
                                                                                               (coe
                                                                                                  C__'9657'__16
                                                                                                  (coe
-                                                                                                    d_ext_1208
+                                                                                                    d_ext_1248
                                                                                                     (coe
                                                                                                        C_ε_14)
                                                                                                     (coe
@@ -7483,15 +7545,15 @@ d_cnn_1388
                                                                                                        Integer))
                                                                                                  (coe
                                                                                                     MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))
-                                                                            (coe C_zero_1130)))
+                                                                            (coe C_zero_1160)))
                                                                       (coe
                                                                          (\ v15 ->
                                                                             coe
-                                                                              du_Let'45'syntax_1198
+                                                                              du_Let'45'syntax_1238
                                                                               (coe
                                                                                  MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                                                                               (coe
-                                                                                 d_meansqerr_1380
+                                                                                 d_meansqerr_1420
                                                                                  (coe
                                                                                     C__'9657'__16
                                                                                     (coe
@@ -7509,7 +7571,7 @@ d_cnn_1388
                                                                                                       (coe
                                                                                                          C__'9657'__16
                                                                                                          (coe
-                                                                                                            d_ext_1208
+                                                                                                            d_ext_1248
                                                                                                             (coe
                                                                                                                C_ε_14)
                                                                                                             (coe
@@ -8000,7 +8062,7 @@ d_cnn_1388
                                                                                                          (coe
                                                                                                             C__'9657'__16
                                                                                                             (coe
-                                                                                                               d_ext_1208
+                                                                                                               d_ext_1248
                                                                                                                (coe
                                                                                                                   C_ε_14)
                                                                                                                (coe
@@ -8447,23 +8509,23 @@ d_cnn_1388
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))
                                                                                     (coe
-                                                                                       C_suc_1132
+                                                                                       C_suc_1162
                                                                                        (coe
-                                                                                          C_suc_1132
+                                                                                          C_suc_1162
                                                                                           (coe
-                                                                                             C_suc_1132
+                                                                                             C_suc_1162
                                                                                              (coe
-                                                                                                C_suc_1132
+                                                                                                C_suc_1162
                                                                                                 (coe
-                                                                                                   C_suc_1132
+                                                                                                   C_suc_1162
                                                                                                    (coe
-                                                                                                      C_suc_1132
+                                                                                                      C_suc_1162
                                                                                                       (coe
-                                                                                                         C_suc_1132
+                                                                                                         C_suc_1162
                                                                                                          (coe
-                                                                                                            C_suc_1132
+                                                                                                            C_suc_1162
                                                                                                             (coe
-                                                                                                               C_zero_1130))))))))))
+                                                                                                               C_zero_1160))))))))))
                                                                                  (coe
                                                                                     v15
                                                                                     (coe
@@ -8483,7 +8545,7 @@ d_cnn_1388
                                                                                                          (coe
                                                                                                             C__'9657'__16
                                                                                                             (coe
-                                                                                                               d_ext_1208
+                                                                                                               d_ext_1248
                                                                                                                (coe
                                                                                                                   C_ε_14)
                                                                                                                (coe
@@ -8930,7 +8992,7 @@ d_cnn_1388
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))
                                                                                     (coe
-                                                                                       C_zero_1130)))
+                                                                                       C_zero_1160)))
                                                                               (coe
                                                                                  (\ v16 ->
                                                                                     coe
@@ -8954,7 +9016,7 @@ d_cnn_1388
                                                                                                               (coe
                                                                                                                  C__'9657'__16
                                                                                                                  (coe
-                                                                                                                    d_ext_1208
+                                                                                                                    d_ext_1248
                                                                                                                     (coe
                                                                                                                        C_ε_14)
                                                                                                                     (coe
@@ -9405,62 +9467,74 @@ d_cnn_1388
                                                                                             (coe
                                                                                                MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
                                                                                       (coe
-                                                                                         C_zero_1130)))))))))))))))))))))
--- Lang.Primitives.Microgpt.iswap
-d_iswap_1446 ::
-  [Integer] -> [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182
-d_iswap_1446 v0 v1 v2 v3
+                                                                                         C_zero_1160)))))))))))))))))))))
+-- Lang.Primitives.Microgpt.tiles
+d_tiles_1486 :: [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182
+d_tiles_1486 v0 v1 v2
   = coe
-      du_Imap_1160 (coe v1) (coe v0)
+      du_Imaps_1216
+      (coe
+         (\ v3 ->
+            d_'10216'_'10217'_1340
+              (coe v1)
+              (coe C_ar_10 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
+              (coe v2) (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v0)))
+              (coe C_suc_1162 (coe C_zero_1160))))
+-- Lang.Primitives.Microgpt.iswap
+d_iswap_1494 ::
+  [Integer] -> [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182
+d_iswap_1494 v0 v1 v2 v3
+  = coe
+      du_Imap_1190 (coe v1) (coe v0)
       (coe
          (\ v4 ->
             coe
-              du_Imaps_1176
+              du_Imaps_1216
               (coe
                  (\ v5 ->
                     coe
                       C_sels_192 v1
                       (coe
                          C_sel_196 v0
-                         (d_'10216'_'10217'_1300
+                         (d_'10216'_'10217'_1340
                             (coe v2)
                             (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v1))
                             (coe v3)
                             (coe
                                C__'9657'__16 (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v1)))
                                (coe C_ix_8 (coe v0)))
-                            (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130))))
+                            (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160))))
                          (coe
                             v5
                             (coe
                                C__'9657'__16 (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v1)))
                                (coe C_ix_8 (coe v0)))
-                            (coe C_zero_1130)))
+                            (coe C_zero_1160)))
                       (coe
                          v4
                          (coe
                             C__'9657'__16 (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v1)))
                             (coe C_ix_8 (coe v0)))
-                         (coe C_suc_1132 (coe C_zero_1130)))))))
+                         (coe C_suc_1162 (coe C_zero_1160)))))))
 -- Lang.Primitives.Microgpt.iswap3
-d_iswap3_1460 ::
+d_iswap3_1508 ::
   [Integer] ->
   [Integer] -> [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182
-d_iswap3_1460 v0 v1 v2 v3 v4
+d_iswap3_1508 v0 v1 v2 v3 v4
   = coe
-      du_Imap_1160 (coe v1)
+      du_Imap_1190 (coe v1)
       (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)
       (coe
          (\ v5 ->
             coe
-              du_Imap_1160 (coe v0) (coe v2)
+              du_Imap_1190 (coe v0) (coe v2)
               (coe
                  (\ v6 ->
                     coe
                       C_sel_196 v1
                       (coe
                          C_sel_196 v0
-                         (d_'10216'_'10217'_1300
+                         (d_'10216'_'10217'_1340
                             (coe v3)
                             (coe
                                C_ar_10
@@ -9471,29 +9545,29 @@ d_iswap3_1460 v0 v1 v2 v3 v4
                             (coe
                                C__'9657'__16 (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v1)))
                                (coe C_ix_8 (coe v0)))
-                            (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130))))
+                            (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160))))
                          (coe
                             v6
                             (coe
                                C__'9657'__16 (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v1)))
                                (coe C_ix_8 (coe v0)))
-                            (coe C_zero_1130)))
+                            (coe C_zero_1160)))
                       (coe
                          v5
                          (coe
                             C__'9657'__16 (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v1)))
                             (coe C_ix_8 (coe v0)))
-                         (coe C_suc_1132 (coe C_zero_1130)))))))
+                         (coe C_suc_1162 (coe C_zero_1160)))))))
 -- Lang.Primitives.Microgpt.linear
-d_linear_1476 ::
+d_linear_1524 ::
   [Integer] -> [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182 -> T_E_182
-d_linear_1476 v0 v1 v2 v3 v4
+d_linear_1524 v0 v1 v2 v3 v4
   = coe
-      du_Imaps_1176
+      du_Imaps_1216
       (coe
          (\ v5 ->
             coe
-              du_Sum_1166 (coe v1)
+              du_Sum_1196 (coe v1)
               (coe
                  (\ v6 ->
                     coe
@@ -9502,74 +9576,74 @@ d_linear_1476 v0 v1 v2 v3 v4
                          C_bin_210 (coe C_mul_160)
                          (coe
                             C_sel_196 v0
-                            (d_'10216'_'10217'_1300
+                            (d_'10216'_'10217'_1340
                                (coe v2)
                                (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v1))
                                (coe v3)
                                (coe
                                   C__'9657'__16 (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
                                   (coe C_ix_8 (coe v1)))
-                               (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130))))
+                               (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160))))
                             (coe
                                v5
                                (coe
                                   C__'9657'__16 (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
                                   (coe C_ix_8 (coe v1)))
-                               (coe C_suc_1132 (coe C_zero_1130))))
-                         (d_'10216'_'10217'_1300
+                               (coe C_suc_1162 (coe C_zero_1160))))
+                         (d_'10216'_'10217'_1340
                             (coe v2) (coe C_ar_10 (coe v1)) (coe v4)
                             (coe
                                C__'9657'__16 (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
                                (coe C_ix_8 (coe v1)))
-                            (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130)))))
+                            (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160)))))
                       (coe
                          v6
                          (coe
                             C__'9657'__16 (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
                             (coe C_ix_8 (coe v1)))
-                         (coe C_zero_1130))))))
+                         (coe C_zero_1160))))))
 -- Lang.Primitives.Microgpt.m-linear
-d_m'45'linear_1492 ::
+d_m'45'linear_1540 ::
   [Integer] ->
   [Integer] -> [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182 -> T_E_182
-d_m'45'linear_1492 v0 v1 v2 v3 v4 v5
+d_m'45'linear_1540 v0 v1 v2 v3 v4 v5
   = coe
-      du_Imap_1160 (coe v2) (coe v0)
+      du_Imap_1190 (coe v2) (coe v0)
       (coe
          (\ v6 ->
-            d_linear_1476
+            d_linear_1524
               (coe v0) (coe v1)
               (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v2)))
               (coe
-                 d_'10216'_'10217'_1300 (coe v3)
+                 d_'10216'_'10217'_1340 (coe v3)
                  (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v1))
                  (coe v4) (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v2)))
-                 (coe C_suc_1132 (coe C_zero_1130)))
+                 (coe C_suc_1162 (coe C_zero_1160)))
               (coe
                  C_sel_196 v2
-                 (d_'10216'_'10217'_1300
+                 (d_'10216'_'10217'_1340
                     (coe v3)
                     (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v2 v1))
                     (coe v5) (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v2)))
-                    (coe C_suc_1132 (coe C_zero_1130)))
+                    (coe C_suc_1162 (coe C_zero_1160)))
                  (coe
                     v6 (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v2)))
-                    (coe C_zero_1130)))))
+                    (coe C_zero_1160)))))
 -- Lang.Primitives.Microgpt.matmult
-d_matmult_1508 ::
+d_matmult_1556 ::
   [Integer] ->
   [Integer] -> [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182 -> T_E_182
-d_matmult_1508 v0 v1 v2 v3 v4 v5
+d_matmult_1556 v0 v1 v2 v3 v4 v5
   = coe
-      du_Imap_1160 (coe v0) (coe v2)
+      du_Imap_1190 (coe v0) (coe v2)
       (coe
          (\ v6 ->
             coe
-              du_Imaps_1176
+              du_Imaps_1216
               (coe
                  (\ v7 ->
                     coe
-                      du_Sum_1166 (coe v1)
+                      du_Sum_1196 (coe v1)
                       (coe
                          (\ v8 ->
                             coe
@@ -9578,7 +9652,7 @@ d_matmult_1508 v0 v1 v2 v3 v4 v5
                                  C_bin_210 (coe C_mul_160)
                                  (coe
                                     C_sel_196 v0
-                                    (d_'10216'_'10217'_1300
+                                    (d_'10216'_'10217'_1340
                                        (coe v3)
                                        (coe
                                           C_ar_10
@@ -9592,8 +9666,8 @@ d_matmult_1508 v0 v1 v2 v3 v4 v5
                                              (coe C_ix_8 (coe v2)))
                                           (coe C_ix_8 (coe v1)))
                                        (coe
-                                          C_suc_1132
-                                          (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130)))))
+                                          C_suc_1162
+                                          (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160)))))
                                     (coe
                                        v6
                                        (coe
@@ -9603,10 +9677,10 @@ d_matmult_1508 v0 v1 v2 v3 v4 v5
                                              (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v0)))
                                              (coe C_ix_8 (coe v2)))
                                           (coe C_ix_8 (coe v1)))
-                                       (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130)))))
+                                       (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160)))))
                                  (coe
                                     C_sel_196 v2
-                                    (d_'10216'_'10217'_1300
+                                    (d_'10216'_'10217'_1340
                                        (coe v3)
                                        (coe
                                           C_ar_10
@@ -9620,8 +9694,8 @@ d_matmult_1508 v0 v1 v2 v3 v4 v5
                                              (coe C_ix_8 (coe v2)))
                                           (coe C_ix_8 (coe v1)))
                                        (coe
-                                          C_suc_1132
-                                          (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130)))))
+                                          C_suc_1162
+                                          (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160)))))
                                     (coe
                                        v7
                                        (coe
@@ -9631,7 +9705,7 @@ d_matmult_1508 v0 v1 v2 v3 v4 v5
                                              (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v0)))
                                              (coe C_ix_8 (coe v2)))
                                           (coe C_ix_8 (coe v1)))
-                                       (coe C_suc_1132 (coe C_zero_1130)))))
+                                       (coe C_suc_1162 (coe C_zero_1160)))))
                               (coe
                                  v8
                                  (coe
@@ -9641,22 +9715,22 @@ d_matmult_1508 v0 v1 v2 v3 v4 v5
                                        (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v0)))
                                        (coe C_ix_8 (coe v2)))
                                     (coe C_ix_8 (coe v1)))
-                                 (coe C_zero_1130))))))))
+                                 (coe C_zero_1160))))))))
 -- Lang.Primitives.Microgpt.matmul
-d_matmul_1528 ::
+d_matmul_1576 ::
   [Integer] ->
   [Integer] -> [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182 -> T_E_182
-d_matmul_1528 v0 v1 v2 v3 v4 v5
+d_matmul_1576 v0 v1 v2 v3 v4 v5
   = coe
-      du_Imap_1160 (coe v0) (coe v2)
+      du_Imap_1190 (coe v0) (coe v2)
       (coe
          (\ v6 ->
             coe
-              du_Imaps_1176
+              du_Imaps_1216
               (coe
                  (\ v7 ->
                     coe
-                      du_Sum_1166 (coe v1)
+                      du_Sum_1196 (coe v1)
                       (coe
                          (\ v8 ->
                             coe
@@ -9665,7 +9739,7 @@ d_matmul_1528 v0 v1 v2 v3 v4 v5
                                  C_sels_192 v1
                                  (coe
                                     C_sel_196 v0
-                                    (d_'10216'_'10217'_1300
+                                    (d_'10216'_'10217'_1340
                                        (coe v3)
                                        (coe
                                           C_ar_10
@@ -9679,8 +9753,8 @@ d_matmul_1528 v0 v1 v2 v3 v4 v5
                                              (coe C_ix_8 (coe v2)))
                                           (coe C_ix_8 (coe v1)))
                                        (coe
-                                          C_suc_1132
-                                          (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130)))))
+                                          C_suc_1162
+                                          (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160)))))
                                     (coe
                                        v6
                                        (coe
@@ -9690,7 +9764,7 @@ d_matmul_1528 v0 v1 v2 v3 v4 v5
                                              (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v0)))
                                              (coe C_ix_8 (coe v2)))
                                           (coe C_ix_8 (coe v1)))
-                                       (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130)))))
+                                       (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160)))))
                                  (coe
                                     v8
                                     (coe
@@ -9700,12 +9774,12 @@ d_matmul_1528 v0 v1 v2 v3 v4 v5
                                           (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v0)))
                                           (coe C_ix_8 (coe v2)))
                                        (coe C_ix_8 (coe v1)))
-                                    (coe C_zero_1130)))
+                                    (coe C_zero_1160)))
                               (coe
                                  C_sels_192 v2
                                  (coe
                                     C_sel_196 v1
-                                    (d_'10216'_'10217'_1300
+                                    (d_'10216'_'10217'_1340
                                        (coe v3)
                                        (coe
                                           C_ar_10
@@ -9719,8 +9793,8 @@ d_matmul_1528 v0 v1 v2 v3 v4 v5
                                              (coe C_ix_8 (coe v2)))
                                           (coe C_ix_8 (coe v1)))
                                        (coe
-                                          C_suc_1132
-                                          (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130)))))
+                                          C_suc_1162
+                                          (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160)))))
                                     (coe
                                        v8
                                        (coe
@@ -9730,7 +9804,7 @@ d_matmul_1528 v0 v1 v2 v3 v4 v5
                                              (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v0)))
                                              (coe C_ix_8 (coe v2)))
                                           (coe C_ix_8 (coe v1)))
-                                       (coe C_zero_1130)))
+                                       (coe C_zero_1160)))
                                  (coe
                                     v7
                                     (coe
@@ -9740,156 +9814,217 @@ d_matmul_1528 v0 v1 v2 v3 v4 v5
                                           (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v0)))
                                           (coe C_ix_8 (coe v2)))
                                        (coe C_ix_8 (coe v1)))
-                                    (coe C_suc_1132 (coe C_zero_1130))))))))))
+                                    (coe C_suc_1162 (coe C_zero_1160))))))))))
 -- Lang.Primitives.Microgpt.softmax
-d_softmax_1548 :: [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182
-d_softmax_1548 v0 v1 v2
+d_softmax_1596 :: [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182
+d_softmax_1596 v0 v1 v2
   = coe
-      du_Let'45'syntax_1198 (coe v0) (coe C_un_216 (coe C_exp_168) v2)
+      du_Let'45'syntax_1238 (coe d_unit_180)
+      (coe
+         du_Max_1206 (coe v0)
+         (coe
+            (\ v3 ->
+               coe
+                 C_sels_192 v0
+                 (d_'10216'_'10217'_1340
+                    (coe v1) (coe C_ar_10 (coe v0)) (coe v2)
+                    (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v0)))
+                    (coe C_suc_1162 (coe C_zero_1160)))
+                 (coe
+                    v3 (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v0)))
+                    (coe C_zero_1160)))))
       (coe
          (\ v3 ->
             coe
-              du_Let'45'syntax_1198 (coe d_unit_180)
+              du_Let'45'syntax_1238 (coe v0)
               (coe
-                 du_Sum_1166 (coe v0)
+                 C_un_216 (coe C_exp_168)
                  (coe
-                    (\ v4 ->
-                       coe
-                         C_sels_192 v0
-                         (coe
-                            v3
-                            (coe
-                               C__'9657'__16 (coe C__'9657'__16 (coe v1) (coe C_ar_10 (coe v0)))
-                               (coe C_ix_8 (coe v0)))
-                            (coe C_suc_1132 (coe C_zero_1130)))
-                         (coe
-                            v4
-                            (coe
-                               C__'9657'__16 (coe C__'9657'__16 (coe v1) (coe C_ar_10 (coe v0)))
-                               (coe C_ix_8 (coe v0)))
-                            (coe C_zero_1130)))))
+                    du__'8863'__272
+                    (coe
+                       d_'10216'_'10217'_1340 (coe v1) (coe C_ar_10 (coe v0)) (coe v2)
+                       (coe C__'9657'__16 (coe v1) (coe C_ar_10 (coe d_unit_180)))
+                       (coe C_suc_1162 (coe C_zero_1160)))
+                    (coe
+                       d_tiles_1486 (coe v0)
+                       (coe C__'9657'__16 (coe v1) (coe C_ar_10 (coe d_unit_180)))
+                       (coe
+                          v3 (coe C__'9657'__16 (coe v1) (coe C_ar_10 (coe d_unit_180)))
+                          (coe C_zero_1160)))))
               (coe
                  (\ v4 ->
                     coe
-                      du_Let'45'syntax_1198 (coe v0)
+                      du_Let'45'syntax_1238 (coe d_unit_180)
                       (coe
-                         du_Imaps_1176
+                         du_Sum_1196 (coe v0)
                          (coe
                             (\ v5 ->
                                coe
-                                 du__'47''47'__290
-                                 (coe
-                                    C_sels_192 v0
-                                    (coe
-                                       v3
-                                       (coe
-                                          C__'9657'__16
-                                          (coe
-                                             C__'9657'__16
-                                             (coe C__'9657'__16 (coe v1) (coe C_ar_10 (coe v0)))
-                                             (coe C_ar_10 (coe d_unit_180)))
-                                          (coe C_ix_8 (coe v0)))
-                                       (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130))))
-                                    (coe
-                                       v5
-                                       (coe
-                                          C__'9657'__16
-                                          (coe
-                                             C__'9657'__16
-                                             (coe C__'9657'__16 (coe v1) (coe C_ar_10 (coe v0)))
-                                             (coe C_ar_10 (coe d_unit_180)))
-                                          (coe C_ix_8 (coe v0)))
-                                       (coe C_zero_1130)))
+                                 C_sels_192 v0
                                  (coe
                                     v4
                                     (coe
                                        C__'9657'__16
                                        (coe
                                           C__'9657'__16
-                                          (coe C__'9657'__16 (coe v1) (coe C_ar_10 (coe v0)))
-                                          (coe C_ar_10 (coe d_unit_180)))
+                                          (coe
+                                             C__'9657'__16 (coe v1) (coe C_ar_10 (coe d_unit_180)))
+                                          (coe C_ar_10 (coe v0)))
                                        (coe C_ix_8 (coe v0)))
-                                    (coe C_suc_1132 (coe C_zero_1130))))))
+                                    (coe C_suc_1162 (coe C_zero_1160)))
+                                 (coe
+                                    v5
+                                    (coe
+                                       C__'9657'__16
+                                       (coe
+                                          C__'9657'__16
+                                          (coe
+                                             C__'9657'__16 (coe v1) (coe C_ar_10 (coe d_unit_180)))
+                                          (coe C_ar_10 (coe v0)))
+                                       (coe C_ix_8 (coe v0)))
+                                    (coe C_zero_1160)))))
                       (coe
                          (\ v5 ->
                             coe
-                              v5
+                              du_Let'45'syntax_1238 (coe v0)
                               (coe
-                                 C__'9657'__16
+                                 du_Imaps_1216
                                  (coe
-                                    C__'9657'__16
-                                    (coe C__'9657'__16 (coe v1) (coe C_ar_10 (coe v0)))
-                                    (coe C_ar_10 (coe d_unit_180)))
-                                 (coe C_ar_10 (coe v0)))
-                              (coe C_zero_1130)))))))
+                                    (\ v6 ->
+                                       coe
+                                         du__'47''47'__292
+                                         (coe
+                                            C_sels_192 v0
+                                            (coe
+                                               v4
+                                               (coe
+                                                  C__'9657'__16
+                                                  (coe
+                                                     C__'9657'__16
+                                                     (coe
+                                                        C__'9657'__16
+                                                        (coe
+                                                           C__'9657'__16 (coe v1)
+                                                           (coe C_ar_10 (coe d_unit_180)))
+                                                        (coe C_ar_10 (coe v0)))
+                                                     (coe C_ar_10 (coe d_unit_180)))
+                                                  (coe C_ix_8 (coe v0)))
+                                               (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160))))
+                                            (coe
+                                               v6
+                                               (coe
+                                                  C__'9657'__16
+                                                  (coe
+                                                     C__'9657'__16
+                                                     (coe
+                                                        C__'9657'__16
+                                                        (coe
+                                                           C__'9657'__16 (coe v1)
+                                                           (coe C_ar_10 (coe d_unit_180)))
+                                                        (coe C_ar_10 (coe v0)))
+                                                     (coe C_ar_10 (coe d_unit_180)))
+                                                  (coe C_ix_8 (coe v0)))
+                                               (coe C_zero_1160)))
+                                         (coe
+                                            v5
+                                            (coe
+                                               C__'9657'__16
+                                               (coe
+                                                  C__'9657'__16
+                                                  (coe
+                                                     C__'9657'__16
+                                                     (coe
+                                                        C__'9657'__16 (coe v1)
+                                                        (coe C_ar_10 (coe d_unit_180)))
+                                                     (coe C_ar_10 (coe v0)))
+                                                  (coe C_ar_10 (coe d_unit_180)))
+                                               (coe C_ix_8 (coe v0)))
+                                            (coe C_suc_1162 (coe C_zero_1160))))))
+                              (coe
+                                 (\ v6 ->
+                                    coe
+                                      v6
+                                      (coe
+                                         C__'9657'__16
+                                         (coe
+                                            C__'9657'__16
+                                            (coe
+                                               C__'9657'__16
+                                               (coe
+                                                  C__'9657'__16 (coe v1)
+                                                  (coe C_ar_10 (coe d_unit_180)))
+                                               (coe C_ar_10 (coe v0)))
+                                            (coe C_ar_10 (coe d_unit_180)))
+                                         (coe C_ar_10 (coe v0)))
+                                      (coe C_zero_1160)))))))))
 -- Lang.Primitives.Microgpt.m-softmax
-d_m'45'softmax_1566 ::
+d_m'45'softmax_1618 ::
   [Integer] -> [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182
-d_m'45'softmax_1566 v0 v1 v2 v3
+d_m'45'softmax_1618 v0 v1 v2 v3
   = coe
-      du_Imap_1160 (coe v0) (coe v1)
+      du_Imap_1190 (coe v0) (coe v1)
       (coe
          (\ v4 ->
-            d_softmax_1548
+            d_softmax_1596
               (coe v1) (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
               (coe
                  C_sel_196 v0
-                 (d_'10216'_'10217'_1300
+                 (d_'10216'_'10217'_1340
                     (coe v2)
                     (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v1))
                     (coe v3) (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
-                    (coe C_suc_1132 (coe C_zero_1130)))
+                    (coe C_suc_1162 (coe C_zero_1160)))
                  (coe
                     v4 (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
-                    (coe C_zero_1130)))))
+                    (coe C_zero_1160)))))
 -- Lang.Primitives.Microgpt.rmsnorm
-d_rmsnorm_1580 :: [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182
-d_rmsnorm_1580 v0 v1 v2
+d_rmsnorm_1632 :: [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182
+d_rmsnorm_1632 v0 v1 v2
   = coe
-      du_Let'45'syntax_1198 (coe d_unit_180)
+      du_Let'45'syntax_1238 (coe d_unit_180)
       (coe
          C_scaledown_212 (MAlonzo.Code.Ar.d_len_1450 (coe v0))
          (coe
-            du_Sum_1166 (coe v0)
+            du_Sum_1196 (coe v0)
             (coe
                (\ v3 ->
                   coe
                     C_sels_192 v0
-                    (d_'10216'_'10217'_1300
+                    (d_'10216'_'10217'_1340
                        (coe v1) (coe C_ar_10 (coe v0))
                        (coe C_bin_210 (coe C_mul_160) v2 v2)
                        (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v0)))
-                       (coe C_suc_1132 (coe C_zero_1130)))
+                       (coe C_suc_1162 (coe C_zero_1160)))
                     (coe
                        v3 (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v0)))
-                       (coe C_zero_1130))))))
+                       (coe C_zero_1160))))))
       (coe
          (\ v3 ->
             coe
-              du_Let'45'syntax_1198 (coe d_unit_180)
+              du_Let'45'syntax_1238 (coe d_unit_180)
               (coe
                  C_un_216 (coe C_squared_172)
                  (coe
                     C_bin_210 (coe C_plus_158)
                     (coe
                        v3 (coe C__'9657'__16 (coe v1) (coe C_ar_10 (coe d_unit_180)))
-                       (coe C_zero_1130))
+                       (coe C_zero_1160))
                     (coe C_scaledown_212 (100000 :: Integer) (coe C_one_188))))
               (coe
                  (\ v4 ->
                     coe
-                      du_Let'45'syntax_1198 (coe v0)
+                      du_Let'45'syntax_1238 (coe v0)
                       (coe
-                         du__'47''47'__290
+                         du__'47''47'__292
                          (coe
-                            d_'10216'_'10217'_1300 (coe v1) (coe C_ar_10 (coe v0)) (coe v2)
+                            d_'10216'_'10217'_1340 (coe v1) (coe C_ar_10 (coe v0)) (coe v2)
                             (coe
                                C__'9657'__16
                                (coe C__'9657'__16 (coe v1) (coe C_ar_10 (coe d_unit_180)))
                                (coe C_ar_10 (coe d_unit_180)))
-                            (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130))))
+                            (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160))))
                          (coe
-                            du_Imaps_1176
+                            du_Imaps_1216
                             (coe
                                (\ v5 ->
                                   coe
@@ -9902,7 +10037,7 @@ d_rmsnorm_1580 v0 v1 v2
                                              C__'9657'__16 (coe v1) (coe C_ar_10 (coe d_unit_180)))
                                           (coe C_ar_10 (coe d_unit_180)))
                                        (coe C_ix_8 (coe v0)))
-                                    (coe C_suc_1132 (coe C_zero_1130))))))
+                                    (coe C_suc_1162 (coe C_zero_1160))))))
                       (coe
                          (\ v5 ->
                             coe
@@ -9914,100 +10049,100 @@ d_rmsnorm_1580 v0 v1 v2
                                     (coe C__'9657'__16 (coe v1) (coe C_ar_10 (coe d_unit_180)))
                                     (coe C_ar_10 (coe d_unit_180)))
                                  (coe C_ar_10 (coe v0)))
-                              (coe C_zero_1130)))))))
+                              (coe C_zero_1160)))))))
 -- Lang.Primitives.Microgpt.m-rmsnorm
-d_m'45'rmsnorm_1598 ::
+d_m'45'rmsnorm_1650 ::
   [Integer] -> [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182
-d_m'45'rmsnorm_1598 v0 v1 v2 v3
+d_m'45'rmsnorm_1650 v0 v1 v2 v3
   = coe
-      du_Imap_1160 (coe v0) (coe v1)
+      du_Imap_1190 (coe v0) (coe v1)
       (coe
          (\ v4 ->
-            d_rmsnorm_1580
+            d_rmsnorm_1632
               (coe v1) (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
               (coe
                  C_sel_196 v0
-                 (d_'10216'_'10217'_1300
+                 (d_'10216'_'10217'_1340
                     (coe v2)
                     (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v1))
                     (coe v3) (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
-                    (coe C_suc_1132 (coe C_zero_1130)))
+                    (coe C_suc_1162 (coe C_zero_1160)))
                  (coe
                     v4 (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
-                    (coe C_zero_1130)))))
+                    (coe C_zero_1160)))))
 -- Lang.Primitives.Microgpt.avg
-d_avg_1612 :: [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182
-d_avg_1612 v0 v1 v2
+d_avg_1664 :: [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182
+d_avg_1664 v0 v1 v2
   = coe
       C_scaledown_212 (MAlonzo.Code.Ar.d_len_1450 (coe v0))
       (coe
-         du_Sum_1166 (coe v0)
+         du_Sum_1196 (coe v0)
          (coe
             (\ v3 ->
                coe
                  C_sels_192 v0
-                 (d_'10216'_'10217'_1300
+                 (d_'10216'_'10217'_1340
                     (coe v1) (coe C_ar_10 (coe v0)) (coe v2)
                     (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v0)))
-                    (coe C_suc_1132 (coe C_zero_1130)))
+                    (coe C_suc_1162 (coe C_zero_1160)))
                  (coe
                     v3 (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v0)))
-                    (coe C_zero_1130)))))
+                    (coe C_zero_1160)))))
 -- Lang.Primitives.Microgpt.GPT-Params
-d_GPT'45'Params_1630 a0 a1 a2 a3 a4 = ()
-data T_GPT'45'Params_1630
-  = C_constructor_1674 T_E_182 T_E_182 T_E_182 T_E_182 T_E_182
+d_GPT'45'Params_1682 a0 a1 a2 a3 a4 = ()
+data T_GPT'45'Params_1682
+  = C_constructor_1726 T_E_182 T_E_182 T_E_182 T_E_182 T_E_182
                        T_E_182 T_E_182 T_E_182
 -- Lang.Primitives.Microgpt.GPT-Params.wpe
-d_wpe_1658 :: T_GPT'45'Params_1630 -> T_E_182
-d_wpe_1658 v0
+d_wpe_1710 :: T_GPT'45'Params_1682 -> T_E_182
+d_wpe_1710 v0
   = case coe v0 of
-      C_constructor_1674 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v1
+      C_constructor_1726 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.Primitives.Microgpt.GPT-Params.wqry
-d_wqry_1660 :: T_GPT'45'Params_1630 -> T_E_182
-d_wqry_1660 v0
+d_wqry_1712 :: T_GPT'45'Params_1682 -> T_E_182
+d_wqry_1712 v0
   = case coe v0 of
-      C_constructor_1674 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v2
+      C_constructor_1726 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.Primitives.Microgpt.GPT-Params.wkey
-d_wkey_1662 :: T_GPT'45'Params_1630 -> T_E_182
-d_wkey_1662 v0
+d_wkey_1714 :: T_GPT'45'Params_1682 -> T_E_182
+d_wkey_1714 v0
   = case coe v0 of
-      C_constructor_1674 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v3
+      C_constructor_1726 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.Primitives.Microgpt.GPT-Params.wval
-d_wval_1664 :: T_GPT'45'Params_1630 -> T_E_182
-d_wval_1664 v0
+d_wval_1716 :: T_GPT'45'Params_1682 -> T_E_182
+d_wval_1716 v0
   = case coe v0 of
-      C_constructor_1674 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v4
+      C_constructor_1726 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.Primitives.Microgpt.GPT-Params.wout
-d_wout_1666 :: T_GPT'45'Params_1630 -> T_E_182
-d_wout_1666 v0
+d_wout_1718 :: T_GPT'45'Params_1682 -> T_E_182
+d_wout_1718 v0
   = case coe v0 of
-      C_constructor_1674 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v5
+      C_constructor_1726 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.Primitives.Microgpt.GPT-Params.wup
-d_wup_1668 :: T_GPT'45'Params_1630 -> T_E_182
-d_wup_1668 v0
+d_wup_1720 :: T_GPT'45'Params_1682 -> T_E_182
+d_wup_1720 v0
   = case coe v0 of
-      C_constructor_1674 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v6
+      C_constructor_1726 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.Primitives.Microgpt.GPT-Params.wdown
-d_wdown_1670 :: T_GPT'45'Params_1630 -> T_E_182
-d_wdown_1670 v0
+d_wdown_1722 :: T_GPT'45'Params_1682 -> T_E_182
+d_wdown_1722 v0
   = case coe v0 of
-      C_constructor_1674 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v7
+      C_constructor_1726 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.Primitives.Microgpt.GPT-Params.wvoc
-d_wvoc_1672 :: T_GPT'45'Params_1630 -> T_E_182
-d_wvoc_1672 v0
+d_wvoc_1724 :: T_GPT'45'Params_1682 -> T_E_182
+d_wvoc_1724 v0
   = case coe v0 of
-      C_constructor_1674 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v8
+      C_constructor_1726 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v8
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Lang.Primitives.Microgpt.to-gptp
-d_to'45'gptp_1694 ::
+d_to'45'gptp_1746 ::
   [Integer] ->
   [Integer] ->
   [Integer] ->
@@ -10017,36 +10152,36 @@ d_to'45'gptp_1694 ::
   T_E_182 ->
   T_E_182 ->
   T_E_182 ->
-  T_E_182 -> T_E_182 -> T_E_182 -> T_E_182 -> T_GPT'45'Params_1630
-d_to'45'gptp_1694 ~v0 ~v1 ~v2 ~v3 ~v4 v5 v6 v7 v8 v9 v10 v11 v12
-  = du_to'45'gptp_1694 v5 v6 v7 v8 v9 v10 v11 v12
-du_to'45'gptp_1694 ::
+  T_E_182 -> T_E_182 -> T_E_182 -> T_E_182 -> T_GPT'45'Params_1682
+d_to'45'gptp_1746 ~v0 ~v1 ~v2 ~v3 ~v4 v5 v6 v7 v8 v9 v10 v11 v12
+  = du_to'45'gptp_1746 v5 v6 v7 v8 v9 v10 v11 v12
+du_to'45'gptp_1746 ::
   T_E_182 ->
   T_E_182 ->
   T_E_182 ->
   T_E_182 ->
-  T_E_182 -> T_E_182 -> T_E_182 -> T_E_182 -> T_GPT'45'Params_1630
-du_to'45'gptp_1694 v0 v1 v2 v3 v4 v5 v6 v7
+  T_E_182 -> T_E_182 -> T_E_182 -> T_E_182 -> T_GPT'45'Params_1682
+du_to'45'gptp_1746 v0 v1 v2 v3 v4 v5 v6 v7
   = coe
-      C_constructor_1674 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4)
+      C_constructor_1726 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4)
       (coe v5) (coe v6) (coe v7)
 -- Lang.Primitives.Microgpt.attention
-d_attention_1724 ::
+d_attention_1776 ::
   [Integer] ->
   [Integer] ->
   T_Ctx_12 ->
   Integer -> T_E_182 -> T_E_182 -> T_E_182 -> T_E_182 -> T_E_182
-d_attention_1724 v0 v1 v2 v3 v4 v5 v6 v7
+d_attention_1776 v0 v1 v2 v3 v4 v5 v6 v7
   = coe
-      du_Let'45'syntax_1198
+      du_Let'45'syntax_1238
       (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v0)
       (coe
-         d_matmult_1508 (coe v0) (coe v1) (coe v0) (coe v2) (coe v5)
+         d_matmult_1556 (coe v0) (coe v1) (coe v0) (coe v2) (coe v5)
          (coe v6))
       (coe
          (\ v8 ->
             coe
-              du_Let'45'syntax_1198
+              du_Let'45'syntax_1238
               (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v0)
               (coe
                  C_bin_210 (coe C_plus_158)
@@ -10057,22 +10192,22 @@ d_attention_1724 v0 v1 v2 v3 v4 v5 v6 v7
                        (coe
                           C__'9657'__16 (coe v2)
                           (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v0)))
-                       (coe C_zero_1130)))
-                 (d_'10216'_'10217'_1300
+                       (coe C_zero_1160)))
+                 (d_'10216'_'10217'_1340
                     (coe v2)
                     (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v0))
                     (coe v4)
                     (coe
                        C__'9657'__16 (coe v2)
                        (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v0)))
-                    (coe C_suc_1132 (coe C_zero_1130))))
+                    (coe C_suc_1162 (coe C_zero_1160))))
               (coe
                  (\ v9 ->
                     coe
-                      du_Let'45'syntax_1198
+                      du_Let'45'syntax_1238
                       (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v0)
                       (coe
-                         d_m'45'softmax_1566 (coe v0) (coe v0)
+                         d_m'45'softmax_1618 (coe v0) (coe v0)
                          (coe
                             C__'9657'__16
                             (coe
@@ -10087,14 +10222,14 @@ d_attention_1724 v0 v1 v2 v3 v4 v5 v6 v7
                                   C__'9657'__16 (coe v2)
                                   (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v0)))
                                (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v0)))
-                            (coe C_zero_1130)))
+                            (coe C_zero_1160)))
                       (coe
                          (\ v10 ->
                             coe
-                              du_Let'45'syntax_1198
+                              du_Let'45'syntax_1238
                               (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v1)
                               (coe
-                                 d_matmul_1528 (coe v0) (coe v0) (coe v1)
+                                 d_matmul_1576 (coe v0) (coe v0) (coe v1)
                                  (coe
                                     C__'9657'__16
                                     (coe
@@ -10127,9 +10262,9 @@ d_attention_1724 v0 v1 v2 v3 v4 v5 v6 v7
                                        (coe
                                           C_ar_10
                                           (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v0)))
-                                    (coe C_zero_1130))
+                                    (coe C_zero_1160))
                                  (coe
-                                    d_'10216'_'10217'_1300 (coe v2)
+                                    d_'10216'_'10217'_1340 (coe v2)
                                     (coe
                                        C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v1))
                                     (coe v7)
@@ -10150,8 +10285,8 @@ d_attention_1724 v0 v1 v2 v3 v4 v5 v6 v7
                                           C_ar_10
                                           (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v0)))
                                     (coe
-                                       C_suc_1132
-                                       (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130))))))
+                                       C_suc_1162
+                                       (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160))))))
                               (coe
                                  (\ v11 ->
                                     coe
@@ -10180,31 +10315,31 @@ d_attention_1724 v0 v1 v2 v3 v4 v5 v6 v7
                                          (coe
                                             C_ar_10
                                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v1)))
-                                      (coe C_zero_1130)))))))))
+                                      (coe C_zero_1160)))))))))
 -- Lang.Primitives.Microgpt.mh-attention
-d_mh'45'attention_1762 ::
+d_mh'45'attention_1814 ::
   [Integer] ->
   [Integer] ->
   [Integer] ->
   T_Ctx_12 ->
   Integer -> T_E_182 -> T_E_182 -> T_E_182 -> T_E_182 -> T_E_182
-d_mh'45'attention_1762 v0 v1 v2 v3 v4 v5 v6 v7 v8
+d_mh'45'attention_1814 v0 v1 v2 v3 v4 v5 v6 v7 v8
   = coe
-      du_Imap_1160 (coe v1)
+      du_Imap_1190 (coe v1)
       (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)
       (coe
          (\ v9 ->
-            d_attention_1724
+            d_attention_1776
               (coe v0) (coe v2)
               (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v1))) (coe v4)
               (coe
-                 d_'10216'_'10217'_1300 (coe v3)
+                 d_'10216'_'10217'_1340 (coe v3)
                  (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v0))
                  (coe v5) (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v1)))
-                 (coe C_suc_1132 (coe C_zero_1130)))
+                 (coe C_suc_1162 (coe C_zero_1160)))
               (coe
                  C_sel_196 v1
-                 (d_'10216'_'10217'_1300
+                 (d_'10216'_'10217'_1340
                     (coe v3)
                     (coe
                        C_ar_10
@@ -10212,13 +10347,13 @@ d_mh'45'attention_1762 v0 v1 v2 v3 v4 v5 v6 v7 v8
                           MAlonzo.Code.Ar.d__'8855'__54 () erased v1
                           (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                     (coe v6) (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v1)))
-                    (coe C_suc_1132 (coe C_zero_1130)))
+                    (coe C_suc_1162 (coe C_zero_1160)))
                  (coe
                     v9 (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v1)))
-                    (coe C_zero_1130)))
+                    (coe C_zero_1160)))
               (coe
                  C_sel_196 v1
-                 (d_'10216'_'10217'_1300
+                 (d_'10216'_'10217'_1340
                     (coe v3)
                     (coe
                        C_ar_10
@@ -10226,13 +10361,13 @@ d_mh'45'attention_1762 v0 v1 v2 v3 v4 v5 v6 v7 v8
                           MAlonzo.Code.Ar.d__'8855'__54 () erased v1
                           (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                     (coe v7) (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v1)))
-                    (coe C_suc_1132 (coe C_zero_1130)))
+                    (coe C_suc_1162 (coe C_zero_1160)))
                  (coe
                     v9 (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v1)))
-                    (coe C_zero_1130)))
+                    (coe C_zero_1160)))
               (coe
                  C_sel_196 v1
-                 (d_'10216'_'10217'_1300
+                 (d_'10216'_'10217'_1340
                     (coe v3)
                     (coe
                        C_ar_10
@@ -10240,126 +10375,126 @@ d_mh'45'attention_1762 v0 v1 v2 v3 v4 v5 v6 v7 v8
                           MAlonzo.Code.Ar.d__'8855'__54 () erased v1
                           (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                     (coe v8) (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v1)))
-                    (coe C_suc_1132 (coe C_zero_1130)))
+                    (coe C_suc_1162 (coe C_zero_1160)))
                  (coe
                     v9 (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v1)))
-                    (coe C_zero_1130)))))
+                    (coe C_zero_1160)))))
 -- Lang.Primitives.Microgpt.block-tok
-d_block'45'tok_1786 ::
+d_block'45'tok_1838 ::
   [Integer] ->
   [Integer] ->
   [Integer] ->
   T_Ctx_12 ->
   T_E_182 -> MAlonzo.Code.Ar.T_Pointw'8323'_990 -> T_E_182
-d_block'45'tok_1786 v0 v1 v2 v3 v4 v5
+d_block'45'tok_1838 v0 v1 v2 v3 v4 v5
   = coe
-      du_Imap_1160 (coe v1) (coe v2)
+      du_Imap_1190 (coe v1) (coe v2)
       (coe
          (\ v6 ->
             coe
               C_selb_200 v1 v0 v5
-              (d_'10216'_'10217'_1300
+              (d_'10216'_'10217'_1340
                  (coe v3) (coe C_ar_10 (coe v0)) (coe v4)
                  (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v1)))
-                 (coe C_suc_1132 (coe C_zero_1130)))
+                 (coe C_suc_1162 (coe C_zero_1160)))
               (coe
                  v6 (coe C__'9657'__16 (coe v3) (coe C_ix_8 (coe v1)))
-                 (coe C_zero_1130))))
+                 (coe C_zero_1160))))
 -- Lang.Primitives.Microgpt.unblock-tok
-d_unblock'45'tok_1804 ::
+d_unblock'45'tok_1856 ::
   [Integer] ->
   [Integer] ->
   [Integer] ->
   T_Ctx_12 ->
   T_E_182 -> MAlonzo.Code.Ar.T_Pointw'8323'_990 -> T_E_182
-d_unblock'45'tok_1804 v0 v1 ~v2 v3 v4 v5
-  = du_unblock'45'tok_1804 v0 v1 v3 v4 v5
-du_unblock'45'tok_1804 ::
+d_unblock'45'tok_1856 v0 v1 ~v2 v3 v4 v5
+  = du_unblock'45'tok_1856 v0 v1 v3 v4 v5
+du_unblock'45'tok_1856 ::
   [Integer] ->
   [Integer] ->
   T_Ctx_12 ->
   T_E_182 -> MAlonzo.Code.Ar.T_Pointw'8323'_990 -> T_E_182
-du_unblock'45'tok_1804 v0 v1 v2 v3 v4
+du_unblock'45'tok_1856 v0 v1 v2 v3 v4
   = coe
-      du_Imapb_1186 (coe v0) (coe v1) (coe v4)
+      du_Imapb_1226 (coe v0) (coe v1) (coe v4)
       (coe
          (\ v5 ->
             coe
               C_sel_196 v0
-              (d_'10216'_'10217'_1300
+              (d_'10216'_'10217'_1340
                  (coe v2)
                  (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v1))
                  (coe v3) (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
-                 (coe C_suc_1132 (coe C_zero_1130)))
+                 (coe C_suc_1162 (coe C_zero_1160)))
               (coe
                  v5 (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
-                 (coe C_zero_1130))))
+                 (coe C_zero_1160))))
 -- Lang.Primitives.Microgpt.block-vec
-d_block'45'vec_1822 ::
+d_block'45'vec_1874 ::
   [Integer] ->
   [Integer] ->
   [Integer] ->
   [Integer] ->
   T_Ctx_12 ->
   T_E_182 -> MAlonzo.Code.Ar.T_Pointw'8323'_990 -> T_E_182
-d_block'45'vec_1822 v0 v1 v2 v3 v4 v5 v6
+d_block'45'vec_1874 v0 v1 v2 v3 v4 v5 v6
   = coe
-      d_iswap3_1460 (coe v0) (coe v2) (coe v3) (coe v4)
+      d_iswap3_1508 (coe v0) (coe v2) (coe v3) (coe v4)
       (coe
-         du_Imap_1160 (coe v0)
+         du_Imap_1190 (coe v0)
          (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v2 v3)
          (coe
             (\ v7 ->
-               d_block'45'tok_1786
+               d_block'45'tok_1838
                  (coe v1) (coe v2) (coe v3)
                  (coe C__'9657'__16 (coe v4) (coe C_ix_8 (coe v0)))
                  (coe
                     C_sel_196 v0
-                    (d_'10216'_'10217'_1300
+                    (d_'10216'_'10217'_1340
                        (coe v4)
                        (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v1))
                        (coe v5) (coe C__'9657'__16 (coe v4) (coe C_ix_8 (coe v0)))
-                       (coe C_suc_1132 (coe C_zero_1130)))
+                       (coe C_suc_1162 (coe C_zero_1160)))
                     (coe
                        v7 (coe C__'9657'__16 (coe v4) (coe C_ix_8 (coe v0)))
-                       (coe C_zero_1130)))
+                       (coe C_zero_1160)))
                  (coe v6))))
 -- Lang.Primitives.Microgpt.unblock-vec
-d_unblock'45'vec_1838 ::
+d_unblock'45'vec_1890 ::
   [Integer] ->
   [Integer] ->
   [Integer] ->
   [Integer] ->
   T_Ctx_12 ->
   T_E_182 -> MAlonzo.Code.Ar.T_Pointw'8323'_990 -> T_E_182
-d_unblock'45'vec_1838 v0 v1 v2 v3 v4 v5 v6
+d_unblock'45'vec_1890 v0 v1 v2 v3 v4 v5 v6
   = coe
-      du_Imap_1160 (coe v1) (coe v3)
+      du_Imap_1190 (coe v1) (coe v3)
       (coe
          (\ v7 ->
             coe
-              du_unblock'45'tok_1804 (coe v0) (coe v2)
+              du_unblock'45'tok_1856 (coe v0) (coe v2)
               (coe C__'9657'__16 (coe v4) (coe C_ix_8 (coe v1)))
               (coe
                  C_sel_196 v1
-                 (d_iswap3_1460
+                 (d_iswap3_1508
                     (coe v0) (coe v1) (coe v2)
                     (coe C__'9657'__16 (coe v4) (coe C_ix_8 (coe v1)))
                     (coe
-                       d_'10216'_'10217'_1300 (coe v4)
+                       d_'10216'_'10217'_1340 (coe v4)
                        (coe
                           C_ar_10
                           (coe
                              MAlonzo.Code.Ar.d__'8855'__54 () erased v0
                              (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v1 v2)))
                        (coe v5) (coe C__'9657'__16 (coe v4) (coe C_ix_8 (coe v1)))
-                       (coe C_suc_1132 (coe C_zero_1130))))
+                       (coe C_suc_1162 (coe C_zero_1160))))
                  (coe
                     v7 (coe C__'9657'__16 (coe v4) (coe C_ix_8 (coe v1)))
-                    (coe C_zero_1130)))
+                    (coe C_zero_1160)))
               (coe v6)))
 -- Lang.Primitives.Microgpt.mgpt-forward
-d_mgpt'45'forward_1870 ::
+d_mgpt'45'forward_1922 ::
   [Integer] ->
   [Integer] ->
   [Integer] ->
@@ -10369,22 +10504,22 @@ d_mgpt'45'forward_1870 ::
   T_Ctx_12 ->
   Integer ->
   T_E_182 ->
-  T_GPT'45'Params_1630 ->
+  T_GPT'45'Params_1682 ->
   T_E_182 -> MAlonzo.Code.Ar.T_Pointw'8323'_990 -> T_E_182
-d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
+d_mgpt'45'forward_1922 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
   = coe
-      du_Let'45'syntax_1198
+      du_Let'45'syntax_1238
       (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)
       (coe
-         d_m'45'rmsnorm_1598 (coe v0) (coe v2) (coe v6)
-         (coe C_bin_210 (coe C_plus_158) (d_wpe_1658 (coe v9)) v10))
+         d_m'45'rmsnorm_1650 (coe v0) (coe v2) (coe v6)
+         (coe C_bin_210 (coe C_plus_158) (d_wpe_1710 (coe v9)) v10))
       (coe
          (\ v12 ->
             coe
-              du_Let'45'syntax_1198
+              du_Let'45'syntax_1238
               (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)
               (coe
-                 d_m'45'rmsnorm_1598 (coe v0) (coe v2)
+                 d_m'45'rmsnorm_1650 (coe v0) (coe v2)
                  (coe
                     C__'9657'__16 (coe v6)
                     (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
@@ -10393,14 +10528,14 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                     (coe
                        C__'9657'__16 (coe v6)
                        (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
-                    (coe C_zero_1130)))
+                    (coe C_zero_1160)))
               (coe
                  (\ v13 ->
                     coe
-                      du_Let'45'syntax_1198
+                      du_Let'45'syntax_1238
                       (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)
                       (coe
-                         d_m'45'linear_1492 (coe v2) (coe v2) (coe v0)
+                         d_m'45'linear_1540 (coe v2) (coe v2) (coe v0)
                          (coe
                             C__'9657'__16
                             (coe
@@ -10408,16 +10543,16 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                             (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                          (coe
-                            d_'10216'_'10217'_1300 (coe v6)
+                            d_'10216'_'10217'_1340 (coe v6)
                             (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v2 v2))
-                            (coe d_wqry_1660 (coe v9))
+                            (coe d_wqry_1712 (coe v9))
                             (coe
                                C__'9657'__16
                                (coe
                                   C__'9657'__16 (coe v6)
                                   (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                                (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
-                            (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130))))
+                            (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160))))
                          (coe
                             v13
                             (coe
@@ -10426,14 +10561,14 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                   C__'9657'__16 (coe v6)
                                   (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                                (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
-                            (coe C_zero_1130)))
+                            (coe C_zero_1160)))
                       (coe
                          (\ v14 ->
                             coe
-                              du_Let'45'syntax_1198
+                              du_Let'45'syntax_1238
                               (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)
                               (coe
-                                 d_m'45'linear_1492 (coe v2) (coe v2) (coe v0)
+                                 d_m'45'linear_1540 (coe v2) (coe v2) (coe v0)
                                  (coe
                                     C__'9657'__16
                                     (coe
@@ -10449,10 +10584,10 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                     (coe
                                        C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                                  (coe
-                                    d_'10216'_'10217'_1300 (coe v6)
+                                    d_'10216'_'10217'_1340 (coe v6)
                                     (coe
                                        C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v2 v2))
-                                    (coe d_wkey_1662 (coe v9))
+                                    (coe d_wkey_1714 (coe v9))
                                     (coe
                                        C__'9657'__16
                                        (coe
@@ -10470,8 +10605,8 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                           C_ar_10
                                           (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                                     (coe
-                                       C_suc_1132
-                                       (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130)))))
+                                       C_suc_1162
+                                       (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160)))))
                                  (coe
                                     v13
                                     (coe
@@ -10490,14 +10625,14 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                        (coe
                                           C_ar_10
                                           (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
-                                    (coe C_suc_1132 (coe C_zero_1130))))
+                                    (coe C_suc_1162 (coe C_zero_1160))))
                               (coe
                                  (\ v15 ->
                                     coe
-                                      du_Let'45'syntax_1198
+                                      du_Let'45'syntax_1238
                                       (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)
                                       (coe
-                                         d_m'45'linear_1492 (coe v2) (coe v2) (coe v0)
+                                         d_m'45'linear_1540 (coe v2) (coe v2) (coe v0)
                                          (coe
                                             C__'9657'__16
                                             (coe
@@ -10525,11 +10660,11 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                C_ar_10
                                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                                          (coe
-                                            d_'10216'_'10217'_1300 (coe v6)
+                                            d_'10216'_'10217'_1340 (coe v6)
                                             (coe
                                                C_ar_10
                                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v2 v2))
-                                            (coe d_wval_1664 (coe v9))
+                                            (coe d_wval_1716 (coe v9))
                                             (coe
                                                C__'9657'__16
                                                (coe
@@ -10559,12 +10694,12 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased v0
                                                      v2)))
                                             (coe
-                                               C_suc_1132
+                                               C_suc_1162
                                                (coe
-                                                  C_suc_1132
+                                                  C_suc_1162
                                                   (coe
-                                                     C_suc_1132
-                                                     (coe C_suc_1132 (coe C_zero_1130))))))
+                                                     C_suc_1162
+                                                     (coe C_suc_1162 (coe C_zero_1160))))))
                                          (coe
                                             v13
                                             (coe
@@ -10595,17 +10730,17 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased v0
                                                      v2)))
-                                            (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130)))))
+                                            (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160)))))
                                       (coe
                                          (\ v16 ->
                                             coe
-                                              du_Let'45'syntax_1198
+                                              du_Let'45'syntax_1238
                                               (coe
                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased v4
                                                  (coe
                                                     MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v5))
                                               (coe
-                                                 d_block'45'vec_1822 (coe v0) (coe v2) (coe v4)
+                                                 d_block'45'vec_1874 (coe v0) (coe v2) (coe v4)
                                                  (coe v5)
                                                  (coe
                                                     C__'9657'__16
@@ -10680,20 +10815,20 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                              MAlonzo.Code.Ar.d__'8855'__54 () erased
                                                              v0 v2)))
                                                     (coe
-                                                       C_suc_1132
-                                                       (coe C_suc_1132 (coe C_zero_1130))))
+                                                       C_suc_1162
+                                                       (coe C_suc_1162 (coe C_zero_1160))))
                                                  (coe v11))
                                               (coe
                                                  (\ v17 ->
                                                     coe
-                                                      du_Let'45'syntax_1198
+                                                      du_Let'45'syntax_1238
                                                       (coe
                                                          MAlonzo.Code.Ar.d__'8855'__54 () erased v4
                                                          (coe
                                                             MAlonzo.Code.Ar.d__'8855'__54 () erased
                                                             v0 v5))
                                                       (coe
-                                                         d_block'45'vec_1822 (coe v0) (coe v2)
+                                                         d_block'45'vec_1874 (coe v0) (coe v2)
                                                          (coe v4) (coe v5)
                                                          (coe
                                                             C__'9657'__16
@@ -10789,13 +10924,13 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                         MAlonzo.Code.Ar.d__'8855'__54
                                                                         () erased v0 v5))))
                                                             (coe
-                                                               C_suc_1132
-                                                               (coe C_suc_1132 (coe C_zero_1130))))
+                                                               C_suc_1162
+                                                               (coe C_suc_1162 (coe C_zero_1160))))
                                                          (coe v11))
                                                       (coe
                                                          (\ v18 ->
                                                             coe
-                                                              du_Let'45'syntax_1198
+                                                              du_Let'45'syntax_1238
                                                               (coe
                                                                  MAlonzo.Code.Ar.d__'8855'__54 ()
                                                                  erased v4
@@ -10803,7 +10938,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                     MAlonzo.Code.Ar.d__'8855'__54 ()
                                                                     erased v0 v5))
                                                               (coe
-                                                                 d_block'45'vec_1822 (coe v0)
+                                                                 d_block'45'vec_1874 (coe v0)
                                                                  (coe v2) (coe v4) (coe v5)
                                                                  (coe
                                                                     C__'9657'__16
@@ -10934,15 +11069,15 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                 MAlonzo.Code.Ar.d__'8855'__54
                                                                                 () erased v0 v5))))
                                                                     (coe
-                                                                       C_suc_1132
+                                                                       C_suc_1162
                                                                        (coe
-                                                                          C_suc_1132
-                                                                          (coe C_zero_1130))))
+                                                                          C_suc_1162
+                                                                          (coe C_zero_1160))))
                                                                  (coe v11))
                                                               (coe
                                                                  (\ v19 ->
                                                                     coe
-                                                                      du_Let'45'syntax_1198
+                                                                      du_Let'45'syntax_1238
                                                                       (coe
                                                                          MAlonzo.Code.Ar.d__'8855'__54
                                                                          () erased v4
@@ -10950,7 +11085,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                             MAlonzo.Code.Ar.d__'8855'__54
                                                                             () erased v0 v5))
                                                                       (coe
-                                                                         d_mh'45'attention_1762
+                                                                         d_mh'45'attention_1814
                                                                          (coe v0) (coe v4) (coe v5)
                                                                          (coe
                                                                             C__'9657'__16
@@ -11037,7 +11172,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                      v5))))
                                                                          (coe v7)
                                                                          (coe
-                                                                            d_'10216'_'10217'_1300
+                                                                            d_'10216'_'10217'_1340
                                                                             (coe v6)
                                                                             (coe
                                                                                C_ar_10
@@ -11134,23 +11269,23 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                         () erased v0
                                                                                         v5))))
                                                                             (coe
-                                                                               C_suc_1132
+                                                                               C_suc_1162
                                                                                (coe
-                                                                                  C_suc_1132
+                                                                                  C_suc_1162
                                                                                   (coe
-                                                                                     C_suc_1132
+                                                                                     C_suc_1162
                                                                                      (coe
-                                                                                        C_suc_1132
+                                                                                        C_suc_1162
                                                                                         (coe
-                                                                                           C_suc_1132
+                                                                                           C_suc_1162
                                                                                            (coe
-                                                                                              C_suc_1132
+                                                                                              C_suc_1162
                                                                                               (coe
-                                                                                                 C_suc_1132
+                                                                                                 C_suc_1162
                                                                                                  (coe
-                                                                                                    C_suc_1132
+                                                                                                    C_suc_1162
                                                                                                     (coe
-                                                                                                       C_zero_1130))))))))))
+                                                                                                       C_zero_1160))))))))))
                                                                          (coe
                                                                             v17
                                                                             (coe
@@ -11242,11 +11377,11 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                         () erased v0
                                                                                         v5))))
                                                                             (coe
-                                                                               C_suc_1132
+                                                                               C_suc_1162
                                                                                (coe
-                                                                                  C_suc_1132
+                                                                                  C_suc_1162
                                                                                   (coe
-                                                                                     C_zero_1130))))
+                                                                                     C_zero_1160))))
                                                                          (coe
                                                                             v18
                                                                             (coe
@@ -11338,8 +11473,8 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                         () erased v0
                                                                                         v5))))
                                                                             (coe
-                                                                               C_suc_1132
-                                                                               (coe C_zero_1130)))
+                                                                               C_suc_1162
+                                                                               (coe C_zero_1160)))
                                                                          (coe
                                                                             v19
                                                                             (coe
@@ -11430,16 +11565,16 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                         MAlonzo.Code.Ar.d__'8855'__54
                                                                                         () erased v0
                                                                                         v5))))
-                                                                            (coe C_zero_1130)))
+                                                                            (coe C_zero_1160)))
                                                                       (coe
                                                                          (\ v20 ->
                                                                             coe
-                                                                              du_Let'45'syntax_1198
+                                                                              du_Let'45'syntax_1238
                                                                               (coe
                                                                                  MAlonzo.Code.Ar.d__'8855'__54
                                                                                  () erased v0 v2)
                                                                               (coe
-                                                                                 d_unblock'45'vec_1838
+                                                                                 d_unblock'45'vec_1890
                                                                                  (coe v4) (coe v0)
                                                                                  (coe v5) (coe v2)
                                                                                  (coe
@@ -11668,18 +11803,18 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                 v0
                                                                                                 v5))))
                                                                                     (coe
-                                                                                       C_zero_1130))
+                                                                                       C_zero_1160))
                                                                                  (coe v11))
                                                                               (coe
                                                                                  (\ v21 ->
                                                                                     coe
-                                                                                      du_Let'45'syntax_1198
+                                                                                      du_Let'45'syntax_1238
                                                                                       (coe
                                                                                          MAlonzo.Code.Ar.d__'8855'__54
                                                                                          () erased
                                                                                          v0 v2)
                                                                                       (coe
-                                                                                         d_m'45'linear_1492
+                                                                                         d_m'45'linear_1540
                                                                                          (coe v2)
                                                                                          (coe v2)
                                                                                          (coe v0)
@@ -11806,7 +11941,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                   v0
                                                                                                   v2)))
                                                                                          (coe
-                                                                                            d_'10216'_'10217'_1300
+                                                                                            d_'10216'_'10217'_1340
                                                                                             (coe v6)
                                                                                             (coe
                                                                                                C_ar_10
@@ -11817,7 +11952,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                   v2
                                                                                                   v2))
                                                                                             (coe
-                                                                                               d_wout_1666
+                                                                                               d_wout_1718
                                                                                                (coe
                                                                                                   v9))
                                                                                             (coe
@@ -11943,27 +12078,27 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                      v0
                                                                                                      v2)))
                                                                                             (coe
-                                                                                               C_suc_1132
+                                                                                               C_suc_1162
                                                                                                (coe
-                                                                                                  C_suc_1132
+                                                                                                  C_suc_1162
                                                                                                   (coe
-                                                                                                     C_suc_1132
+                                                                                                     C_suc_1162
                                                                                                      (coe
-                                                                                                        C_suc_1132
+                                                                                                        C_suc_1162
                                                                                                         (coe
-                                                                                                           C_suc_1132
+                                                                                                           C_suc_1162
                                                                                                            (coe
-                                                                                                              C_suc_1132
+                                                                                                              C_suc_1162
                                                                                                               (coe
-                                                                                                                 C_suc_1132
+                                                                                                                 C_suc_1162
                                                                                                                  (coe
-                                                                                                                    C_suc_1132
+                                                                                                                    C_suc_1162
                                                                                                                     (coe
-                                                                                                                       C_suc_1132
+                                                                                                                       C_suc_1162
                                                                                                                        (coe
-                                                                                                                          C_suc_1132
+                                                                                                                          C_suc_1162
                                                                                                                           (coe
-                                                                                                                             C_zero_1130))))))))))))
+                                                                                                                             C_zero_1160))))))))))))
                                                                                          (coe
                                                                                             v21
                                                                                             (coe
@@ -12089,11 +12224,11 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                      v0
                                                                                                      v2)))
                                                                                             (coe
-                                                                                               C_zero_1130)))
+                                                                                               C_zero_1160)))
                                                                                       (coe
                                                                                          (\ v22 ->
                                                                                             coe
-                                                                                              du_Let'45'syntax_1198
+                                                                                              du_Let'45'syntax_1238
                                                                                               (coe
                                                                                                  MAlonzo.Code.Ar.d__'8855'__54
                                                                                                  ()
@@ -12239,7 +12374,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                              v0
                                                                                                              v2)))
                                                                                                     (coe
-                                                                                                       C_zero_1130))
+                                                                                                       C_zero_1160))
                                                                                                  (coe
                                                                                                     v12
                                                                                                     (coe
@@ -12375,31 +12510,31 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                              v0
                                                                                                              v2)))
                                                                                                     (coe
-                                                                                                       C_suc_1132
+                                                                                                       C_suc_1162
                                                                                                        (coe
-                                                                                                          C_suc_1132
+                                                                                                          C_suc_1162
                                                                                                           (coe
-                                                                                                             C_suc_1132
+                                                                                                             C_suc_1162
                                                                                                              (coe
-                                                                                                                C_suc_1132
+                                                                                                                C_suc_1162
                                                                                                                 (coe
-                                                                                                                   C_suc_1132
+                                                                                                                   C_suc_1162
                                                                                                                    (coe
-                                                                                                                      C_suc_1132
+                                                                                                                      C_suc_1162
                                                                                                                       (coe
-                                                                                                                         C_suc_1132
+                                                                                                                         C_suc_1162
                                                                                                                          (coe
-                                                                                                                            C_suc_1132
+                                                                                                                            C_suc_1162
                                                                                                                             (coe
-                                                                                                                               C_suc_1132
+                                                                                                                               C_suc_1162
                                                                                                                                (coe
-                                                                                                                                  C_suc_1132
+                                                                                                                                  C_suc_1162
                                                                                                                                   (coe
-                                                                                                                                     C_zero_1130)))))))))))))
+                                                                                                                                     C_zero_1160)))))))))))))
                                                                                               (coe
                                                                                                  (\ v23 ->
                                                                                                     coe
-                                                                                                      du_Let'45'syntax_1198
+                                                                                                      du_Let'45'syntax_1238
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ar.d__'8855'__54
                                                                                                          ()
@@ -12407,7 +12542,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                          v0
                                                                                                          v2)
                                                                                                       (coe
-                                                                                                         d_m'45'rmsnorm_1598
+                                                                                                         d_m'45'rmsnorm_1650
                                                                                                          (coe
                                                                                                             v0)
                                                                                                          (coe
@@ -12699,11 +12834,11 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                      v0
                                                                                                                      v2)))
                                                                                                             (coe
-                                                                                                               C_zero_1130)))
+                                                                                                               C_zero_1160)))
                                                                                                       (coe
                                                                                                          (\ v24 ->
                                                                                                             coe
-                                                                                                              du_Let'45'syntax_1198
+                                                                                                              du_Let'45'syntax_1238
                                                                                                               (coe
                                                                                                                  MAlonzo.Code.Ar.d__'8855'__54
                                                                                                                  ()
@@ -12711,7 +12846,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                  v0
                                                                                                                  v3)
                                                                                                               (coe
-                                                                                                                 d_m'45'linear_1492
+                                                                                                                 d_m'45'linear_1540
                                                                                                                  (coe
                                                                                                                     v3)
                                                                                                                  (coe
@@ -12871,7 +13006,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                           v0
                                                                                                                           v2)))
                                                                                                                  (coe
-                                                                                                                    d_'10216'_'10217'_1300
+                                                                                                                    d_'10216'_'10217'_1340
                                                                                                                     (coe
                                                                                                                        v6)
                                                                                                                     (coe
@@ -12883,7 +13018,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                           v3
                                                                                                                           v2))
                                                                                                                     (coe
-                                                                                                                       d_wup_1668
+                                                                                                                       d_wup_1720
                                                                                                                        (coe
                                                                                                                           v9))
                                                                                                                     (coe
@@ -13039,33 +13174,33 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                              v0
                                                                                                                              v2)))
                                                                                                                     (coe
-                                                                                                                       C_suc_1132
+                                                                                                                       C_suc_1162
                                                                                                                        (coe
-                                                                                                                          C_suc_1132
+                                                                                                                          C_suc_1162
                                                                                                                           (coe
-                                                                                                                             C_suc_1132
+                                                                                                                             C_suc_1162
                                                                                                                              (coe
-                                                                                                                                C_suc_1132
+                                                                                                                                C_suc_1162
                                                                                                                                 (coe
-                                                                                                                                   C_suc_1132
+                                                                                                                                   C_suc_1162
                                                                                                                                    (coe
-                                                                                                                                      C_suc_1132
+                                                                                                                                      C_suc_1162
                                                                                                                                       (coe
-                                                                                                                                         C_suc_1132
+                                                                                                                                         C_suc_1162
                                                                                                                                          (coe
-                                                                                                                                            C_suc_1132
+                                                                                                                                            C_suc_1162
                                                                                                                                             (coe
-                                                                                                                                               C_suc_1132
+                                                                                                                                               C_suc_1162
                                                                                                                                                (coe
-                                                                                                                                                  C_suc_1132
+                                                                                                                                                  C_suc_1162
                                                                                                                                                   (coe
-                                                                                                                                                     C_suc_1132
+                                                                                                                                                     C_suc_1162
                                                                                                                                                      (coe
-                                                                                                                                                        C_suc_1132
+                                                                                                                                                        C_suc_1162
                                                                                                                                                         (coe
-                                                                                                                                                           C_suc_1132
+                                                                                                                                                           C_suc_1162
                                                                                                                                                            (coe
-                                                                                                                                                              C_zero_1130)))))))))))))))
+                                                                                                                                                              C_zero_1160)))))))))))))))
                                                                                                                  (coe
                                                                                                                     v24
                                                                                                                     (coe
@@ -13221,11 +13356,11 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                              v0
                                                                                                                              v2)))
                                                                                                                     (coe
-                                                                                                                       C_zero_1130)))
+                                                                                                                       C_zero_1160)))
                                                                                                               (coe
                                                                                                                  (\ v25 ->
                                                                                                                     coe
-                                                                                                                      du_Let'45'syntax_1198
+                                                                                                                      du_Let'45'syntax_1238
                                                                                                                       (coe
                                                                                                                          MAlonzo.Code.Ar.d__'8855'__54
                                                                                                                          ()
@@ -13401,11 +13536,11 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                                      v0
                                                                                                                                      v3)))
                                                                                                                             (coe
-                                                                                                                               C_zero_1130)))
+                                                                                                                               C_zero_1160)))
                                                                                                                       (coe
                                                                                                                          (\ v26 ->
                                                                                                                             coe
-                                                                                                                              du_Let'45'syntax_1198
+                                                                                                                              du_Let'45'syntax_1238
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ar.d__'8855'__54
                                                                                                                                  ()
@@ -13413,7 +13548,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                                  v0
                                                                                                                                  v2)
                                                                                                                               (coe
-                                                                                                                                 d_m'45'linear_1492
+                                                                                                                                 d_m'45'linear_1540
                                                                                                                                  (coe
                                                                                                                                     v2)
                                                                                                                                  (coe
@@ -13593,7 +13728,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                                           v0
                                                                                                                                           v3)))
                                                                                                                                  (coe
-                                                                                                                                    d_'10216'_'10217'_1300
+                                                                                                                                    d_'10216'_'10217'_1340
                                                                                                                                     (coe
                                                                                                                                        v6)
                                                                                                                                     (coe
@@ -13605,7 +13740,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                                           v2
                                                                                                                                           v3))
                                                                                                                                     (coe
-                                                                                                                                       d_wdown_1670
+                                                                                                                                       d_wdown_1722
                                                                                                                                        (coe
                                                                                                                                           v9))
                                                                                                                                     (coe
@@ -13781,37 +13916,37 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                                              v0
                                                                                                                                              v3)))
                                                                                                                                     (coe
-                                                                                                                                       C_suc_1132
+                                                                                                                                       C_suc_1162
                                                                                                                                        (coe
-                                                                                                                                          C_suc_1132
+                                                                                                                                          C_suc_1162
                                                                                                                                           (coe
-                                                                                                                                             C_suc_1132
+                                                                                                                                             C_suc_1162
                                                                                                                                              (coe
-                                                                                                                                                C_suc_1132
+                                                                                                                                                C_suc_1162
                                                                                                                                                 (coe
-                                                                                                                                                   C_suc_1132
+                                                                                                                                                   C_suc_1162
                                                                                                                                                    (coe
-                                                                                                                                                      C_suc_1132
+                                                                                                                                                      C_suc_1162
                                                                                                                                                       (coe
-                                                                                                                                                         C_suc_1132
+                                                                                                                                                         C_suc_1162
                                                                                                                                                          (coe
-                                                                                                                                                            C_suc_1132
+                                                                                                                                                            C_suc_1162
                                                                                                                                                             (coe
-                                                                                                                                                               C_suc_1132
+                                                                                                                                                               C_suc_1162
                                                                                                                                                                (coe
-                                                                                                                                                                  C_suc_1132
+                                                                                                                                                                  C_suc_1162
                                                                                                                                                                   (coe
-                                                                                                                                                                     C_suc_1132
+                                                                                                                                                                     C_suc_1162
                                                                                                                                                                      (coe
-                                                                                                                                                                        C_suc_1132
+                                                                                                                                                                        C_suc_1162
                                                                                                                                                                         (coe
-                                                                                                                                                                           C_suc_1132
+                                                                                                                                                                           C_suc_1162
                                                                                                                                                                            (coe
-                                                                                                                                                                              C_suc_1132
+                                                                                                                                                                              C_suc_1162
                                                                                                                                                                               (coe
-                                                                                                                                                                                 C_suc_1132
+                                                                                                                                                                                 C_suc_1162
                                                                                                                                                                                  (coe
-                                                                                                                                                                                    C_zero_1130)))))))))))))))))
+                                                                                                                                                                                    C_zero_1160)))))))))))))))))
                                                                                                                                  (coe
                                                                                                                                     v26
                                                                                                                                     (coe
@@ -13987,11 +14122,11 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                                              v0
                                                                                                                                              v3)))
                                                                                                                                     (coe
-                                                                                                                                       C_zero_1130)))
+                                                                                                                                       C_zero_1160)))
                                                                                                                               (coe
                                                                                                                                  (\ v27 ->
                                                                                                                                     coe
-                                                                                                                                      du_Let'45'syntax_1198
+                                                                                                                                      du_Let'45'syntax_1238
                                                                                                                                       (coe
                                                                                                                                          MAlonzo.Code.Ar.d__'8855'__54
                                                                                                                                          ()
@@ -14187,7 +14322,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                                                      v0
                                                                                                                                                      v2)))
                                                                                                                                             (coe
-                                                                                                                                               C_zero_1130))
+                                                                                                                                               C_zero_1160))
                                                                                                                                          (coe
                                                                                                                                             v23
                                                                                                                                             (coe
@@ -14373,19 +14508,19 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                                                      v0
                                                                                                                                                      v2)))
                                                                                                                                             (coe
-                                                                                                                                               C_suc_1132
+                                                                                                                                               C_suc_1162
                                                                                                                                                (coe
-                                                                                                                                                  C_suc_1132
+                                                                                                                                                  C_suc_1162
                                                                                                                                                   (coe
-                                                                                                                                                     C_suc_1132
+                                                                                                                                                     C_suc_1162
                                                                                                                                                      (coe
-                                                                                                                                                        C_suc_1132
+                                                                                                                                                        C_suc_1162
                                                                                                                                                         (coe
-                                                                                                                                                           C_zero_1130)))))))
+                                                                                                                                                           C_zero_1160)))))))
                                                                                                                                       (coe
                                                                                                                                          (\ v28 ->
                                                                                                                                             coe
-                                                                                                                                              du_Let'45'syntax_1198
+                                                                                                                                              du_Let'45'syntax_1238
                                                                                                                                               (coe
                                                                                                                                                  MAlonzo.Code.Ar.d__'8855'__54
                                                                                                                                                  ()
@@ -14393,7 +14528,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                                                  v0
                                                                                                                                                  v1)
                                                                                                                                               (coe
-                                                                                                                                                 d_m'45'linear_1492
+                                                                                                                                                 d_m'45'linear_1540
                                                                                                                                                  (coe
                                                                                                                                                     v1)
                                                                                                                                                  (coe
@@ -14593,7 +14728,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                                                           v0
                                                                                                                                                           v2)))
                                                                                                                                                  (coe
-                                                                                                                                                    d_'10216'_'10217'_1300
+                                                                                                                                                    d_'10216'_'10217'_1340
                                                                                                                                                     (coe
                                                                                                                                                        v6)
                                                                                                                                                     (coe
@@ -14605,7 +14740,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                                                           v1
                                                                                                                                                           v2))
                                                                                                                                                     (coe
-                                                                                                                                                       d_wvoc_1672
+                                                                                                                                                       d_wvoc_1724
                                                                                                                                                        (coe
                                                                                                                                                           v9))
                                                                                                                                                     (coe
@@ -14801,41 +14936,41 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                                                              v0
                                                                                                                                                              v2)))
                                                                                                                                                     (coe
-                                                                                                                                                       C_suc_1132
+                                                                                                                                                       C_suc_1162
                                                                                                                                                        (coe
-                                                                                                                                                          C_suc_1132
+                                                                                                                                                          C_suc_1162
                                                                                                                                                           (coe
-                                                                                                                                                             C_suc_1132
+                                                                                                                                                             C_suc_1162
                                                                                                                                                              (coe
-                                                                                                                                                                C_suc_1132
+                                                                                                                                                                C_suc_1162
                                                                                                                                                                 (coe
-                                                                                                                                                                   C_suc_1132
+                                                                                                                                                                   C_suc_1162
                                                                                                                                                                    (coe
-                                                                                                                                                                      C_suc_1132
+                                                                                                                                                                      C_suc_1162
                                                                                                                                                                       (coe
-                                                                                                                                                                         C_suc_1132
+                                                                                                                                                                         C_suc_1162
                                                                                                                                                                          (coe
-                                                                                                                                                                            C_suc_1132
+                                                                                                                                                                            C_suc_1162
                                                                                                                                                                             (coe
-                                                                                                                                                                               C_suc_1132
+                                                                                                                                                                               C_suc_1162
                                                                                                                                                                                (coe
-                                                                                                                                                                                  C_suc_1132
+                                                                                                                                                                                  C_suc_1162
                                                                                                                                                                                   (coe
-                                                                                                                                                                                     C_suc_1132
+                                                                                                                                                                                     C_suc_1162
                                                                                                                                                                                      (coe
-                                                                                                                                                                                        C_suc_1132
+                                                                                                                                                                                        C_suc_1162
                                                                                                                                                                                         (coe
-                                                                                                                                                                                           C_suc_1132
+                                                                                                                                                                                           C_suc_1162
                                                                                                                                                                                            (coe
-                                                                                                                                                                                              C_suc_1132
+                                                                                                                                                                                              C_suc_1162
                                                                                                                                                                                               (coe
-                                                                                                                                                                                                 C_suc_1132
+                                                                                                                                                                                                 C_suc_1162
                                                                                                                                                                                                  (coe
-                                                                                                                                                                                                    C_suc_1132
+                                                                                                                                                                                                    C_suc_1162
                                                                                                                                                                                                     (coe
-                                                                                                                                                                                                       C_suc_1132
+                                                                                                                                                                                                       C_suc_1162
                                                                                                                                                                                                        (coe
-                                                                                                                                                                                                          C_zero_1130)))))))))))))))))))
+                                                                                                                                                                                                          C_zero_1160)))))))))))))))))))
                                                                                                                                                  (coe
                                                                                                                                                     v28
                                                                                                                                                     (coe
@@ -15031,7 +15166,7 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                                                              v0
                                                                                                                                                              v2)))
                                                                                                                                                     (coe
-                                                                                                                                                       C_zero_1130)))
+                                                                                                                                                       C_zero_1160)))
                                                                                                                                               (coe
                                                                                                                                                  (\ v29 ->
                                                                                                                                                     coe
@@ -15239,15 +15374,15 @@ d_mgpt'45'forward_1870 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11
                                                                                                                                                                v0
                                                                                                                                                                v1)))
                                                                                                                                                       (coe
-                                                                                                                                                         C_zero_1130)))))))))))))))))))))))))))))))))))))
+                                                                                                                                                         C_zero_1160)))))))))))))))))))))))))))))))))))))
 -- Lang.Primitives.Microgpt.cross-entropy
-d_cross'45'entropy_1938 ::
+d_cross'45'entropy_1990 ::
   [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182 -> T_E_182
-d_cross'45'entropy_1938 v0 v1 v2 v3
+d_cross'45'entropy_1990 v0 v1 v2 v3
   = coe
       C_un_216 (coe C_neg_166)
       (coe
-         du_Sum_1166 (coe v0)
+         du_Sum_1196 (coe v0)
          (coe
             (\ v4 ->
                coe
@@ -15256,56 +15391,56 @@ d_cross'45'entropy_1938 v0 v1 v2 v3
                     C_sels_192 v0
                     (coe
                        C_un_216 (coe C_logarithm_178)
-                       (d_softmax_1548
+                       (d_softmax_1596
                           (coe v0) (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v0)))
                           (coe
-                             d_'10216'_'10217'_1300 (coe v1) (coe C_ar_10 (coe v0)) (coe v2)
+                             d_'10216'_'10217'_1340 (coe v1) (coe C_ar_10 (coe v0)) (coe v2)
                              (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v0)))
-                             (coe C_suc_1132 (coe C_zero_1130)))))
+                             (coe C_suc_1162 (coe C_zero_1160)))))
                     (coe
                        v4 (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v0)))
-                       (coe C_zero_1130)))
+                       (coe C_zero_1160)))
                  (coe
                     C_sels_192 v0
-                    (d_'10216'_'10217'_1300
+                    (d_'10216'_'10217'_1340
                        (coe v1) (coe C_ar_10 (coe v0)) (coe v3)
                        (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v0)))
-                       (coe C_suc_1132 (coe C_zero_1130)))
+                       (coe C_suc_1162 (coe C_zero_1160)))
                     (coe
                        v4 (coe C__'9657'__16 (coe v1) (coe C_ix_8 (coe v0)))
-                       (coe C_zero_1130))))))
+                       (coe C_zero_1160))))))
 -- Lang.Primitives.Microgpt.m-cross-entropy
-d_m'45'cross'45'entropy_1954 ::
+d_m'45'cross'45'entropy_2006 ::
   [Integer] -> [Integer] -> T_Ctx_12 -> T_E_182 -> T_E_182 -> T_E_182
-d_m'45'cross'45'entropy_1954 v0 v1 v2 v3 v4
+d_m'45'cross'45'entropy_2006 v0 v1 v2 v3 v4
   = coe
-      du_Imaps_1176
+      du_Imaps_1216
       (coe
          (\ v5 ->
-            d_cross'45'entropy_1938
+            d_cross'45'entropy_1990
               (coe v1) (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
               (coe
                  C_sel_196 v0
-                 (d_'10216'_'10217'_1300
+                 (d_'10216'_'10217'_1340
                     (coe v2)
                     (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v1))
                     (coe v3) (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
-                    (coe C_suc_1132 (coe C_zero_1130)))
+                    (coe C_suc_1162 (coe C_zero_1160)))
                  (coe
                     v5 (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
-                    (coe C_zero_1130)))
+                    (coe C_zero_1160)))
               (coe
                  C_sel_196 v0
-                 (d_'10216'_'10217'_1300
+                 (d_'10216'_'10217'_1340
                     (coe v2)
                     (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v1))
                     (coe v4) (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
-                    (coe C_suc_1132 (coe C_zero_1130)))
+                    (coe C_suc_1162 (coe C_zero_1160)))
                  (coe
                     v5 (coe C__'9657'__16 (coe v2) (coe C_ix_8 (coe v0)))
-                    (coe C_zero_1130)))))
+                    (coe C_zero_1160)))))
 -- Lang.Primitives.Microgpt.mgpt-loss
-d_mgpt'45'loss_1982 ::
+d_mgpt'45'loss_2034 ::
   [Integer] ->
   [Integer] ->
   [Integer] ->
@@ -15315,22 +15450,22 @@ d_mgpt'45'loss_1982 ::
   T_Ctx_12 ->
   Integer ->
   T_E_182 ->
-  T_GPT'45'Params_1630 ->
+  T_GPT'45'Params_1682 ->
   T_E_182 -> T_E_182 -> MAlonzo.Code.Ar.T_Pointw'8323'_990 -> T_E_182
-d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
+d_mgpt'45'loss_2034 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
   = coe
-      du_Let'45'syntax_1198
+      du_Let'45'syntax_1238
       (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)
       (coe
-         d_m'45'rmsnorm_1598 (coe v0) (coe v2) (coe v6)
-         (coe C_bin_210 (coe C_plus_158) (d_wpe_1658 (coe v9)) v10))
+         d_m'45'rmsnorm_1650 (coe v0) (coe v2) (coe v6)
+         (coe C_bin_210 (coe C_plus_158) (d_wpe_1710 (coe v9)) v10))
       (coe
          (\ v13 ->
             coe
-              du_Let'45'syntax_1198
+              du_Let'45'syntax_1238
               (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)
               (coe
-                 d_m'45'rmsnorm_1598 (coe v0) (coe v2)
+                 d_m'45'rmsnorm_1650 (coe v0) (coe v2)
                  (coe
                     C__'9657'__16 (coe v6)
                     (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
@@ -15339,14 +15474,14 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                     (coe
                        C__'9657'__16 (coe v6)
                        (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
-                    (coe C_zero_1130)))
+                    (coe C_zero_1160)))
               (coe
                  (\ v14 ->
                     coe
-                      du_Let'45'syntax_1198
+                      du_Let'45'syntax_1238
                       (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)
                       (coe
-                         d_m'45'linear_1492 (coe v2) (coe v2) (coe v0)
+                         d_m'45'linear_1540 (coe v2) (coe v2) (coe v0)
                          (coe
                             C__'9657'__16
                             (coe
@@ -15354,16 +15489,16 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                             (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                          (coe
-                            d_'10216'_'10217'_1300 (coe v6)
+                            d_'10216'_'10217'_1340 (coe v6)
                             (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v2 v2))
-                            (coe d_wqry_1660 (coe v9))
+                            (coe d_wqry_1712 (coe v9))
                             (coe
                                C__'9657'__16
                                (coe
                                   C__'9657'__16 (coe v6)
                                   (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                                (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
-                            (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130))))
+                            (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160))))
                          (coe
                             v14
                             (coe
@@ -15372,14 +15507,14 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                   C__'9657'__16 (coe v6)
                                   (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                                (coe C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
-                            (coe C_zero_1130)))
+                            (coe C_zero_1160)))
                       (coe
                          (\ v15 ->
                             coe
-                              du_Let'45'syntax_1198
+                              du_Let'45'syntax_1238
                               (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)
                               (coe
-                                 d_m'45'linear_1492 (coe v2) (coe v2) (coe v0)
+                                 d_m'45'linear_1540 (coe v2) (coe v2) (coe v0)
                                  (coe
                                     C__'9657'__16
                                     (coe
@@ -15395,10 +15530,10 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                     (coe
                                        C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                                  (coe
-                                    d_'10216'_'10217'_1300 (coe v6)
+                                    d_'10216'_'10217'_1340 (coe v6)
                                     (coe
                                        C_ar_10 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v2 v2))
-                                    (coe d_wkey_1662 (coe v9))
+                                    (coe d_wkey_1714 (coe v9))
                                     (coe
                                        C__'9657'__16
                                        (coe
@@ -15416,8 +15551,8 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                           C_ar_10
                                           (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                                     (coe
-                                       C_suc_1132
-                                       (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130)))))
+                                       C_suc_1162
+                                       (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160)))))
                                  (coe
                                     v14
                                     (coe
@@ -15436,14 +15571,14 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                        (coe
                                           C_ar_10
                                           (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
-                                    (coe C_suc_1132 (coe C_zero_1130))))
+                                    (coe C_suc_1162 (coe C_zero_1160))))
                               (coe
                                  (\ v16 ->
                                     coe
-                                      du_Let'45'syntax_1198
+                                      du_Let'45'syntax_1238
                                       (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)
                                       (coe
-                                         d_m'45'linear_1492 (coe v2) (coe v2) (coe v0)
+                                         d_m'45'linear_1540 (coe v2) (coe v2) (coe v0)
                                          (coe
                                             C__'9657'__16
                                             (coe
@@ -15471,11 +15606,11 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                C_ar_10
                                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v2)))
                                          (coe
-                                            d_'10216'_'10217'_1300 (coe v6)
+                                            d_'10216'_'10217'_1340 (coe v6)
                                             (coe
                                                C_ar_10
                                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v2 v2))
-                                            (coe d_wval_1664 (coe v9))
+                                            (coe d_wval_1716 (coe v9))
                                             (coe
                                                C__'9657'__16
                                                (coe
@@ -15505,12 +15640,12 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased v0
                                                      v2)))
                                             (coe
-                                               C_suc_1132
+                                               C_suc_1162
                                                (coe
-                                                  C_suc_1132
+                                                  C_suc_1162
                                                   (coe
-                                                     C_suc_1132
-                                                     (coe C_suc_1132 (coe C_zero_1130))))))
+                                                     C_suc_1162
+                                                     (coe C_suc_1162 (coe C_zero_1160))))))
                                          (coe
                                             v14
                                             (coe
@@ -15541,17 +15676,17 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased v0
                                                      v2)))
-                                            (coe C_suc_1132 (coe C_suc_1132 (coe C_zero_1130)))))
+                                            (coe C_suc_1162 (coe C_suc_1162 (coe C_zero_1160)))))
                                       (coe
                                          (\ v17 ->
                                             coe
-                                              du_Let'45'syntax_1198
+                                              du_Let'45'syntax_1238
                                               (coe
                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased v4
                                                  (coe
                                                     MAlonzo.Code.Ar.d__'8855'__54 () erased v0 v5))
                                               (coe
-                                                 d_block'45'vec_1822 (coe v0) (coe v2) (coe v4)
+                                                 d_block'45'vec_1874 (coe v0) (coe v2) (coe v4)
                                                  (coe v5)
                                                  (coe
                                                     C__'9657'__16
@@ -15626,20 +15761,20 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                              MAlonzo.Code.Ar.d__'8855'__54 () erased
                                                              v0 v2)))
                                                     (coe
-                                                       C_suc_1132
-                                                       (coe C_suc_1132 (coe C_zero_1130))))
+                                                       C_suc_1162
+                                                       (coe C_suc_1162 (coe C_zero_1160))))
                                                  (coe v12))
                                               (coe
                                                  (\ v18 ->
                                                     coe
-                                                      du_Let'45'syntax_1198
+                                                      du_Let'45'syntax_1238
                                                       (coe
                                                          MAlonzo.Code.Ar.d__'8855'__54 () erased v4
                                                          (coe
                                                             MAlonzo.Code.Ar.d__'8855'__54 () erased
                                                             v0 v5))
                                                       (coe
-                                                         d_block'45'vec_1822 (coe v0) (coe v2)
+                                                         d_block'45'vec_1874 (coe v0) (coe v2)
                                                          (coe v4) (coe v5)
                                                          (coe
                                                             C__'9657'__16
@@ -15735,13 +15870,13 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                         MAlonzo.Code.Ar.d__'8855'__54
                                                                         () erased v0 v5))))
                                                             (coe
-                                                               C_suc_1132
-                                                               (coe C_suc_1132 (coe C_zero_1130))))
+                                                               C_suc_1162
+                                                               (coe C_suc_1162 (coe C_zero_1160))))
                                                          (coe v12))
                                                       (coe
                                                          (\ v19 ->
                                                             coe
-                                                              du_Let'45'syntax_1198
+                                                              du_Let'45'syntax_1238
                                                               (coe
                                                                  MAlonzo.Code.Ar.d__'8855'__54 ()
                                                                  erased v4
@@ -15749,7 +15884,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                     MAlonzo.Code.Ar.d__'8855'__54 ()
                                                                     erased v0 v5))
                                                               (coe
-                                                                 d_block'45'vec_1822 (coe v0)
+                                                                 d_block'45'vec_1874 (coe v0)
                                                                  (coe v2) (coe v4) (coe v5)
                                                                  (coe
                                                                     C__'9657'__16
@@ -15880,15 +16015,15 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                 MAlonzo.Code.Ar.d__'8855'__54
                                                                                 () erased v0 v5))))
                                                                     (coe
-                                                                       C_suc_1132
+                                                                       C_suc_1162
                                                                        (coe
-                                                                          C_suc_1132
-                                                                          (coe C_zero_1130))))
+                                                                          C_suc_1162
+                                                                          (coe C_zero_1160))))
                                                                  (coe v12))
                                                               (coe
                                                                  (\ v20 ->
                                                                     coe
-                                                                      du_Let'45'syntax_1198
+                                                                      du_Let'45'syntax_1238
                                                                       (coe
                                                                          MAlonzo.Code.Ar.d__'8855'__54
                                                                          () erased v4
@@ -15896,7 +16031,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                             MAlonzo.Code.Ar.d__'8855'__54
                                                                             () erased v0 v5))
                                                                       (coe
-                                                                         d_mh'45'attention_1762
+                                                                         d_mh'45'attention_1814
                                                                          (coe v0) (coe v4) (coe v5)
                                                                          (coe
                                                                             C__'9657'__16
@@ -15983,7 +16118,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                      v5))))
                                                                          (coe v7)
                                                                          (coe
-                                                                            d_'10216'_'10217'_1300
+                                                                            d_'10216'_'10217'_1340
                                                                             (coe v6)
                                                                             (coe
                                                                                C_ar_10
@@ -16080,23 +16215,23 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                         () erased v0
                                                                                         v5))))
                                                                             (coe
-                                                                               C_suc_1132
+                                                                               C_suc_1162
                                                                                (coe
-                                                                                  C_suc_1132
+                                                                                  C_suc_1162
                                                                                   (coe
-                                                                                     C_suc_1132
+                                                                                     C_suc_1162
                                                                                      (coe
-                                                                                        C_suc_1132
+                                                                                        C_suc_1162
                                                                                         (coe
-                                                                                           C_suc_1132
+                                                                                           C_suc_1162
                                                                                            (coe
-                                                                                              C_suc_1132
+                                                                                              C_suc_1162
                                                                                               (coe
-                                                                                                 C_suc_1132
+                                                                                                 C_suc_1162
                                                                                                  (coe
-                                                                                                    C_suc_1132
+                                                                                                    C_suc_1162
                                                                                                     (coe
-                                                                                                       C_zero_1130))))))))))
+                                                                                                       C_zero_1160))))))))))
                                                                          (coe
                                                                             v18
                                                                             (coe
@@ -16188,11 +16323,11 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                         () erased v0
                                                                                         v5))))
                                                                             (coe
-                                                                               C_suc_1132
+                                                                               C_suc_1162
                                                                                (coe
-                                                                                  C_suc_1132
+                                                                                  C_suc_1162
                                                                                   (coe
-                                                                                     C_zero_1130))))
+                                                                                     C_zero_1160))))
                                                                          (coe
                                                                             v19
                                                                             (coe
@@ -16284,8 +16419,8 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                         () erased v0
                                                                                         v5))))
                                                                             (coe
-                                                                               C_suc_1132
-                                                                               (coe C_zero_1130)))
+                                                                               C_suc_1162
+                                                                               (coe C_zero_1160)))
                                                                          (coe
                                                                             v20
                                                                             (coe
@@ -16376,16 +16511,16 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                         MAlonzo.Code.Ar.d__'8855'__54
                                                                                         () erased v0
                                                                                         v5))))
-                                                                            (coe C_zero_1130)))
+                                                                            (coe C_zero_1160)))
                                                                       (coe
                                                                          (\ v21 ->
                                                                             coe
-                                                                              du_Let'45'syntax_1198
+                                                                              du_Let'45'syntax_1238
                                                                               (coe
                                                                                  MAlonzo.Code.Ar.d__'8855'__54
                                                                                  () erased v0 v2)
                                                                               (coe
-                                                                                 d_unblock'45'vec_1838
+                                                                                 d_unblock'45'vec_1890
                                                                                  (coe v4) (coe v0)
                                                                                  (coe v5) (coe v2)
                                                                                  (coe
@@ -16614,18 +16749,18 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                 v0
                                                                                                 v5))))
                                                                                     (coe
-                                                                                       C_zero_1130))
+                                                                                       C_zero_1160))
                                                                                  (coe v12))
                                                                               (coe
                                                                                  (\ v22 ->
                                                                                     coe
-                                                                                      du_Let'45'syntax_1198
+                                                                                      du_Let'45'syntax_1238
                                                                                       (coe
                                                                                          MAlonzo.Code.Ar.d__'8855'__54
                                                                                          () erased
                                                                                          v0 v2)
                                                                                       (coe
-                                                                                         d_m'45'linear_1492
+                                                                                         d_m'45'linear_1540
                                                                                          (coe v2)
                                                                                          (coe v2)
                                                                                          (coe v0)
@@ -16752,7 +16887,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                   v0
                                                                                                   v2)))
                                                                                          (coe
-                                                                                            d_'10216'_'10217'_1300
+                                                                                            d_'10216'_'10217'_1340
                                                                                             (coe v6)
                                                                                             (coe
                                                                                                C_ar_10
@@ -16763,7 +16898,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                   v2
                                                                                                   v2))
                                                                                             (coe
-                                                                                               d_wout_1666
+                                                                                               d_wout_1718
                                                                                                (coe
                                                                                                   v9))
                                                                                             (coe
@@ -16889,27 +17024,27 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                      v0
                                                                                                      v2)))
                                                                                             (coe
-                                                                                               C_suc_1132
+                                                                                               C_suc_1162
                                                                                                (coe
-                                                                                                  C_suc_1132
+                                                                                                  C_suc_1162
                                                                                                   (coe
-                                                                                                     C_suc_1132
+                                                                                                     C_suc_1162
                                                                                                      (coe
-                                                                                                        C_suc_1132
+                                                                                                        C_suc_1162
                                                                                                         (coe
-                                                                                                           C_suc_1132
+                                                                                                           C_suc_1162
                                                                                                            (coe
-                                                                                                              C_suc_1132
+                                                                                                              C_suc_1162
                                                                                                               (coe
-                                                                                                                 C_suc_1132
+                                                                                                                 C_suc_1162
                                                                                                                  (coe
-                                                                                                                    C_suc_1132
+                                                                                                                    C_suc_1162
                                                                                                                     (coe
-                                                                                                                       C_suc_1132
+                                                                                                                       C_suc_1162
                                                                                                                        (coe
-                                                                                                                          C_suc_1132
+                                                                                                                          C_suc_1162
                                                                                                                           (coe
-                                                                                                                             C_zero_1130))))))))))))
+                                                                                                                             C_zero_1160))))))))))))
                                                                                          (coe
                                                                                             v22
                                                                                             (coe
@@ -17035,11 +17170,11 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                      v0
                                                                                                      v2)))
                                                                                             (coe
-                                                                                               C_zero_1130)))
+                                                                                               C_zero_1160)))
                                                                                       (coe
                                                                                          (\ v23 ->
                                                                                             coe
-                                                                                              du_Let'45'syntax_1198
+                                                                                              du_Let'45'syntax_1238
                                                                                               (coe
                                                                                                  MAlonzo.Code.Ar.d__'8855'__54
                                                                                                  ()
@@ -17185,7 +17320,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                              v0
                                                                                                              v2)))
                                                                                                     (coe
-                                                                                                       C_zero_1130))
+                                                                                                       C_zero_1160))
                                                                                                  (coe
                                                                                                     v13
                                                                                                     (coe
@@ -17321,31 +17456,31 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                              v0
                                                                                                              v2)))
                                                                                                     (coe
-                                                                                                       C_suc_1132
+                                                                                                       C_suc_1162
                                                                                                        (coe
-                                                                                                          C_suc_1132
+                                                                                                          C_suc_1162
                                                                                                           (coe
-                                                                                                             C_suc_1132
+                                                                                                             C_suc_1162
                                                                                                              (coe
-                                                                                                                C_suc_1132
+                                                                                                                C_suc_1162
                                                                                                                 (coe
-                                                                                                                   C_suc_1132
+                                                                                                                   C_suc_1162
                                                                                                                    (coe
-                                                                                                                      C_suc_1132
+                                                                                                                      C_suc_1162
                                                                                                                       (coe
-                                                                                                                         C_suc_1132
+                                                                                                                         C_suc_1162
                                                                                                                          (coe
-                                                                                                                            C_suc_1132
+                                                                                                                            C_suc_1162
                                                                                                                             (coe
-                                                                                                                               C_suc_1132
+                                                                                                                               C_suc_1162
                                                                                                                                (coe
-                                                                                                                                  C_suc_1132
+                                                                                                                                  C_suc_1162
                                                                                                                                   (coe
-                                                                                                                                     C_zero_1130)))))))))))))
+                                                                                                                                     C_zero_1160)))))))))))))
                                                                                               (coe
                                                                                                  (\ v24 ->
                                                                                                     coe
-                                                                                                      du_Let'45'syntax_1198
+                                                                                                      du_Let'45'syntax_1238
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ar.d__'8855'__54
                                                                                                          ()
@@ -17353,7 +17488,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                          v0
                                                                                                          v2)
                                                                                                       (coe
-                                                                                                         d_m'45'rmsnorm_1598
+                                                                                                         d_m'45'rmsnorm_1650
                                                                                                          (coe
                                                                                                             v0)
                                                                                                          (coe
@@ -17645,11 +17780,11 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                      v0
                                                                                                                      v2)))
                                                                                                             (coe
-                                                                                                               C_zero_1130)))
+                                                                                                               C_zero_1160)))
                                                                                                       (coe
                                                                                                          (\ v25 ->
                                                                                                             coe
-                                                                                                              du_Let'45'syntax_1198
+                                                                                                              du_Let'45'syntax_1238
                                                                                                               (coe
                                                                                                                  MAlonzo.Code.Ar.d__'8855'__54
                                                                                                                  ()
@@ -17657,7 +17792,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                  v0
                                                                                                                  v3)
                                                                                                               (coe
-                                                                                                                 d_m'45'linear_1492
+                                                                                                                 d_m'45'linear_1540
                                                                                                                  (coe
                                                                                                                     v3)
                                                                                                                  (coe
@@ -17817,7 +17952,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                           v0
                                                                                                                           v2)))
                                                                                                                  (coe
-                                                                                                                    d_'10216'_'10217'_1300
+                                                                                                                    d_'10216'_'10217'_1340
                                                                                                                     (coe
                                                                                                                        v6)
                                                                                                                     (coe
@@ -17829,7 +17964,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                           v3
                                                                                                                           v2))
                                                                                                                     (coe
-                                                                                                                       d_wup_1668
+                                                                                                                       d_wup_1720
                                                                                                                        (coe
                                                                                                                           v9))
                                                                                                                     (coe
@@ -17985,33 +18120,33 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                              v0
                                                                                                                              v2)))
                                                                                                                     (coe
-                                                                                                                       C_suc_1132
+                                                                                                                       C_suc_1162
                                                                                                                        (coe
-                                                                                                                          C_suc_1132
+                                                                                                                          C_suc_1162
                                                                                                                           (coe
-                                                                                                                             C_suc_1132
+                                                                                                                             C_suc_1162
                                                                                                                              (coe
-                                                                                                                                C_suc_1132
+                                                                                                                                C_suc_1162
                                                                                                                                 (coe
-                                                                                                                                   C_suc_1132
+                                                                                                                                   C_suc_1162
                                                                                                                                    (coe
-                                                                                                                                      C_suc_1132
+                                                                                                                                      C_suc_1162
                                                                                                                                       (coe
-                                                                                                                                         C_suc_1132
+                                                                                                                                         C_suc_1162
                                                                                                                                          (coe
-                                                                                                                                            C_suc_1132
+                                                                                                                                            C_suc_1162
                                                                                                                                             (coe
-                                                                                                                                               C_suc_1132
+                                                                                                                                               C_suc_1162
                                                                                                                                                (coe
-                                                                                                                                                  C_suc_1132
+                                                                                                                                                  C_suc_1162
                                                                                                                                                   (coe
-                                                                                                                                                     C_suc_1132
+                                                                                                                                                     C_suc_1162
                                                                                                                                                      (coe
-                                                                                                                                                        C_suc_1132
+                                                                                                                                                        C_suc_1162
                                                                                                                                                         (coe
-                                                                                                                                                           C_suc_1132
+                                                                                                                                                           C_suc_1162
                                                                                                                                                            (coe
-                                                                                                                                                              C_zero_1130)))))))))))))))
+                                                                                                                                                              C_zero_1160)))))))))))))))
                                                                                                                  (coe
                                                                                                                     v25
                                                                                                                     (coe
@@ -18167,11 +18302,11 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                              v0
                                                                                                                              v2)))
                                                                                                                     (coe
-                                                                                                                       C_zero_1130)))
+                                                                                                                       C_zero_1160)))
                                                                                                               (coe
                                                                                                                  (\ v26 ->
                                                                                                                     coe
-                                                                                                                      du_Let'45'syntax_1198
+                                                                                                                      du_Let'45'syntax_1238
                                                                                                                       (coe
                                                                                                                          MAlonzo.Code.Ar.d__'8855'__54
                                                                                                                          ()
@@ -18347,11 +18482,11 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                      v0
                                                                                                                                      v3)))
                                                                                                                             (coe
-                                                                                                                               C_zero_1130)))
+                                                                                                                               C_zero_1160)))
                                                                                                                       (coe
                                                                                                                          (\ v27 ->
                                                                                                                             coe
-                                                                                                                              du_Let'45'syntax_1198
+                                                                                                                              du_Let'45'syntax_1238
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ar.d__'8855'__54
                                                                                                                                  ()
@@ -18359,7 +18494,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                  v0
                                                                                                                                  v2)
                                                                                                                               (coe
-                                                                                                                                 d_m'45'linear_1492
+                                                                                                                                 d_m'45'linear_1540
                                                                                                                                  (coe
                                                                                                                                     v2)
                                                                                                                                  (coe
@@ -18539,7 +18674,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                           v0
                                                                                                                                           v3)))
                                                                                                                                  (coe
-                                                                                                                                    d_'10216'_'10217'_1300
+                                                                                                                                    d_'10216'_'10217'_1340
                                                                                                                                     (coe
                                                                                                                                        v6)
                                                                                                                                     (coe
@@ -18551,7 +18686,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                           v2
                                                                                                                                           v3))
                                                                                                                                     (coe
-                                                                                                                                       d_wdown_1670
+                                                                                                                                       d_wdown_1722
                                                                                                                                        (coe
                                                                                                                                           v9))
                                                                                                                                     (coe
@@ -18727,37 +18862,37 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                              v0
                                                                                                                                              v3)))
                                                                                                                                     (coe
-                                                                                                                                       C_suc_1132
+                                                                                                                                       C_suc_1162
                                                                                                                                        (coe
-                                                                                                                                          C_suc_1132
+                                                                                                                                          C_suc_1162
                                                                                                                                           (coe
-                                                                                                                                             C_suc_1132
+                                                                                                                                             C_suc_1162
                                                                                                                                              (coe
-                                                                                                                                                C_suc_1132
+                                                                                                                                                C_suc_1162
                                                                                                                                                 (coe
-                                                                                                                                                   C_suc_1132
+                                                                                                                                                   C_suc_1162
                                                                                                                                                    (coe
-                                                                                                                                                      C_suc_1132
+                                                                                                                                                      C_suc_1162
                                                                                                                                                       (coe
-                                                                                                                                                         C_suc_1132
+                                                                                                                                                         C_suc_1162
                                                                                                                                                          (coe
-                                                                                                                                                            C_suc_1132
+                                                                                                                                                            C_suc_1162
                                                                                                                                                             (coe
-                                                                                                                                                               C_suc_1132
+                                                                                                                                                               C_suc_1162
                                                                                                                                                                (coe
-                                                                                                                                                                  C_suc_1132
+                                                                                                                                                                  C_suc_1162
                                                                                                                                                                   (coe
-                                                                                                                                                                     C_suc_1132
+                                                                                                                                                                     C_suc_1162
                                                                                                                                                                      (coe
-                                                                                                                                                                        C_suc_1132
+                                                                                                                                                                        C_suc_1162
                                                                                                                                                                         (coe
-                                                                                                                                                                           C_suc_1132
+                                                                                                                                                                           C_suc_1162
                                                                                                                                                                            (coe
-                                                                                                                                                                              C_suc_1132
+                                                                                                                                                                              C_suc_1162
                                                                                                                                                                               (coe
-                                                                                                                                                                                 C_suc_1132
+                                                                                                                                                                                 C_suc_1162
                                                                                                                                                                                  (coe
-                                                                                                                                                                                    C_zero_1130)))))))))))))))))
+                                                                                                                                                                                    C_zero_1160)))))))))))))))))
                                                                                                                                  (coe
                                                                                                                                     v27
                                                                                                                                     (coe
@@ -18933,11 +19068,11 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                              v0
                                                                                                                                              v3)))
                                                                                                                                     (coe
-                                                                                                                                       C_zero_1130)))
+                                                                                                                                       C_zero_1160)))
                                                                                                                               (coe
                                                                                                                                  (\ v28 ->
                                                                                                                                     coe
-                                                                                                                                      du_Let'45'syntax_1198
+                                                                                                                                      du_Let'45'syntax_1238
                                                                                                                                       (coe
                                                                                                                                          MAlonzo.Code.Ar.d__'8855'__54
                                                                                                                                          ()
@@ -19133,7 +19268,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                                      v0
                                                                                                                                                      v2)))
                                                                                                                                             (coe
-                                                                                                                                               C_zero_1130))
+                                                                                                                                               C_zero_1160))
                                                                                                                                          (coe
                                                                                                                                             v24
                                                                                                                                             (coe
@@ -19319,19 +19454,19 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                                      v0
                                                                                                                                                      v2)))
                                                                                                                                             (coe
-                                                                                                                                               C_suc_1132
+                                                                                                                                               C_suc_1162
                                                                                                                                                (coe
-                                                                                                                                                  C_suc_1132
+                                                                                                                                                  C_suc_1162
                                                                                                                                                   (coe
-                                                                                                                                                     C_suc_1132
+                                                                                                                                                     C_suc_1162
                                                                                                                                                      (coe
-                                                                                                                                                        C_suc_1132
+                                                                                                                                                        C_suc_1162
                                                                                                                                                         (coe
-                                                                                                                                                           C_zero_1130)))))))
+                                                                                                                                                           C_zero_1160)))))))
                                                                                                                                       (coe
                                                                                                                                          (\ v29 ->
                                                                                                                                             coe
-                                                                                                                                              du_Let'45'syntax_1198
+                                                                                                                                              du_Let'45'syntax_1238
                                                                                                                                               (coe
                                                                                                                                                  MAlonzo.Code.Ar.d__'8855'__54
                                                                                                                                                  ()
@@ -19339,7 +19474,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                                  v0
                                                                                                                                                  v1)
                                                                                                                                               (coe
-                                                                                                                                                 d_m'45'linear_1492
+                                                                                                                                                 d_m'45'linear_1540
                                                                                                                                                  (coe
                                                                                                                                                     v1)
                                                                                                                                                  (coe
@@ -19539,7 +19674,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                                           v0
                                                                                                                                                           v2)))
                                                                                                                                                  (coe
-                                                                                                                                                    d_'10216'_'10217'_1300
+                                                                                                                                                    d_'10216'_'10217'_1340
                                                                                                                                                     (coe
                                                                                                                                                        v6)
                                                                                                                                                     (coe
@@ -19551,7 +19686,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                                           v1
                                                                                                                                                           v2))
                                                                                                                                                     (coe
-                                                                                                                                                       d_wvoc_1672
+                                                                                                                                                       d_wvoc_1724
                                                                                                                                                        (coe
                                                                                                                                                           v9))
                                                                                                                                                     (coe
@@ -19747,41 +19882,41 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                                              v0
                                                                                                                                                              v2)))
                                                                                                                                                     (coe
-                                                                                                                                                       C_suc_1132
+                                                                                                                                                       C_suc_1162
                                                                                                                                                        (coe
-                                                                                                                                                          C_suc_1132
+                                                                                                                                                          C_suc_1162
                                                                                                                                                           (coe
-                                                                                                                                                             C_suc_1132
+                                                                                                                                                             C_suc_1162
                                                                                                                                                              (coe
-                                                                                                                                                                C_suc_1132
+                                                                                                                                                                C_suc_1162
                                                                                                                                                                 (coe
-                                                                                                                                                                   C_suc_1132
+                                                                                                                                                                   C_suc_1162
                                                                                                                                                                    (coe
-                                                                                                                                                                      C_suc_1132
+                                                                                                                                                                      C_suc_1162
                                                                                                                                                                       (coe
-                                                                                                                                                                         C_suc_1132
+                                                                                                                                                                         C_suc_1162
                                                                                                                                                                          (coe
-                                                                                                                                                                            C_suc_1132
+                                                                                                                                                                            C_suc_1162
                                                                                                                                                                             (coe
-                                                                                                                                                                               C_suc_1132
+                                                                                                                                                                               C_suc_1162
                                                                                                                                                                                (coe
-                                                                                                                                                                                  C_suc_1132
+                                                                                                                                                                                  C_suc_1162
                                                                                                                                                                                   (coe
-                                                                                                                                                                                     C_suc_1132
+                                                                                                                                                                                     C_suc_1162
                                                                                                                                                                                      (coe
-                                                                                                                                                                                        C_suc_1132
+                                                                                                                                                                                        C_suc_1162
                                                                                                                                                                                         (coe
-                                                                                                                                                                                           C_suc_1132
+                                                                                                                                                                                           C_suc_1162
                                                                                                                                                                                            (coe
-                                                                                                                                                                                              C_suc_1132
+                                                                                                                                                                                              C_suc_1162
                                                                                                                                                                                               (coe
-                                                                                                                                                                                                 C_suc_1132
+                                                                                                                                                                                                 C_suc_1162
                                                                                                                                                                                                  (coe
-                                                                                                                                                                                                    C_suc_1132
+                                                                                                                                                                                                    C_suc_1162
                                                                                                                                                                                                     (coe
-                                                                                                                                                                                                       C_suc_1132
+                                                                                                                                                                                                       C_suc_1162
                                                                                                                                                                                                        (coe
-                                                                                                                                                                                                          C_zero_1130)))))))))))))))))))
+                                                                                                                                                                                                          C_zero_1160)))))))))))))))))))
                                                                                                                                                  (coe
                                                                                                                                                     v29
                                                                                                                                                     (coe
@@ -19977,15 +20112,15 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                                              v0
                                                                                                                                                              v2)))
                                                                                                                                                     (coe
-                                                                                                                                                       C_zero_1130)))
+                                                                                                                                                       C_zero_1160)))
                                                                                                                                               (coe
                                                                                                                                                  (\ v30 ->
                                                                                                                                                     coe
-                                                                                                                                                      du_Let'45'syntax_1198
+                                                                                                                                                      du_Let'45'syntax_1238
                                                                                                                                                       (coe
                                                                                                                                                          v0)
                                                                                                                                                       (coe
-                                                                                                                                                         d_m'45'cross'45'entropy_1954
+                                                                                                                                                         d_m'45'cross'45'entropy_2006
                                                                                                                                                          (coe
                                                                                                                                                             v0)
                                                                                                                                                          (coe
@@ -20397,9 +20532,9 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                                                      v0
                                                                                                                                                                      v1)))
                                                                                                                                                             (coe
-                                                                                                                                                               C_zero_1130))
+                                                                                                                                                               C_zero_1160))
                                                                                                                                                          (coe
-                                                                                                                                                            d_'10216'_'10217'_1300
+                                                                                                                                                            d_'10216'_'10217'_1340
                                                                                                                                                             (coe
                                                                                                                                                                v6)
                                                                                                                                                             (coe
@@ -20615,51 +20750,51 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                                                      v0
                                                                                                                                                                      v1)))
                                                                                                                                                             (coe
-                                                                                                                                                               C_suc_1132
+                                                                                                                                                               C_suc_1162
                                                                                                                                                                (coe
-                                                                                                                                                                  C_suc_1132
+                                                                                                                                                                  C_suc_1162
                                                                                                                                                                   (coe
-                                                                                                                                                                     C_suc_1132
+                                                                                                                                                                     C_suc_1162
                                                                                                                                                                      (coe
-                                                                                                                                                                        C_suc_1132
+                                                                                                                                                                        C_suc_1162
                                                                                                                                                                         (coe
-                                                                                                                                                                           C_suc_1132
+                                                                                                                                                                           C_suc_1162
                                                                                                                                                                            (coe
-                                                                                                                                                                              C_suc_1132
+                                                                                                                                                                              C_suc_1162
                                                                                                                                                                               (coe
-                                                                                                                                                                                 C_suc_1132
+                                                                                                                                                                                 C_suc_1162
                                                                                                                                                                                  (coe
-                                                                                                                                                                                    C_suc_1132
+                                                                                                                                                                                    C_suc_1162
                                                                                                                                                                                     (coe
-                                                                                                                                                                                       C_suc_1132
+                                                                                                                                                                                       C_suc_1162
                                                                                                                                                                                        (coe
-                                                                                                                                                                                          C_suc_1132
+                                                                                                                                                                                          C_suc_1162
                                                                                                                                                                                           (coe
-                                                                                                                                                                                             C_suc_1132
+                                                                                                                                                                                             C_suc_1162
                                                                                                                                                                                              (coe
-                                                                                                                                                                                                C_suc_1132
+                                                                                                                                                                                                C_suc_1162
                                                                                                                                                                                                 (coe
-                                                                                                                                                                                                   C_suc_1132
+                                                                                                                                                                                                   C_suc_1162
                                                                                                                                                                                                    (coe
-                                                                                                                                                                                                      C_suc_1132
+                                                                                                                                                                                                      C_suc_1162
                                                                                                                                                                                                       (coe
-                                                                                                                                                                                                         C_suc_1132
+                                                                                                                                                                                                         C_suc_1162
                                                                                                                                                                                                          (coe
-                                                                                                                                                                                                            C_suc_1132
+                                                                                                                                                                                                            C_suc_1162
                                                                                                                                                                                                             (coe
-                                                                                                                                                                                                               C_suc_1132
+                                                                                                                                                                                                               C_suc_1162
                                                                                                                                                                                                                (coe
-                                                                                                                                                                                                                  C_suc_1132
+                                                                                                                                                                                                                  C_suc_1162
                                                                                                                                                                                                                   (coe
-                                                                                                                                                                                                                     C_zero_1130)))))))))))))))))))))
+                                                                                                                                                                                                                     C_zero_1160)))))))))))))))))))))
                                                                                                                                                       (coe
                                                                                                                                                          (\ v31 ->
                                                                                                                                                             coe
-                                                                                                                                                              du_Let'45'syntax_1198
+                                                                                                                                                              du_Let'45'syntax_1238
                                                                                                                                                               (coe
                                                                                                                                                                  MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
                                                                                                                                                               (coe
-                                                                                                                                                                 d_avg_1612
+                                                                                                                                                                 d_avg_1664
                                                                                                                                                                  (coe
                                                                                                                                                                     v0)
                                                                                                                                                                  (coe
@@ -21081,7 +21216,7 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                                                           (coe
                                                                                                                                                                              v0)))
                                                                                                                                                                     (coe
-                                                                                                                                                                       C_zero_1130)))
+                                                                                                                                                                       C_zero_1160)))
                                                                                                                                                               (coe
                                                                                                                                                                  (\ v32 ->
                                                                                                                                                                     coe
@@ -21301,97 +21436,97 @@ d_mgpt'45'loss_1982 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
                                                                                                                                                                             (coe
                                                                                                                                                                                MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
                                                                                                                                                                       (coe
-                                                                                                                                                                         C_zero_1130)))))))))))))))))))))))))))))))))))))))))
+                                                                                                                                                                         C_zero_1160)))))))))))))))))))))))))))))))))))))))))
 -- Lang.Primitives.Microgpt.ED
-d_ED_2050 :: [Integer]
-d_ED_2050 = coe MAlonzo.Code.Ar.d_ι_26 (coe (16 :: Integer))
+d_ED_2102 :: [Integer]
+d_ED_2102 = coe MAlonzo.Code.Ar.d_ι_26 (coe (16 :: Integer))
 -- Lang.Primitives.Microgpt.AH
-d_AH_2052 :: [Integer]
-d_AH_2052 = coe MAlonzo.Code.Ar.d_ι_26 (coe (4 :: Integer))
+d_AH_2104 :: [Integer]
+d_AH_2104 = coe MAlonzo.Code.Ar.d_ι_26 (coe (4 :: Integer))
 -- Lang.Primitives.Microgpt.HD
-d_HD_2054 :: [Integer]
-d_HD_2054 = coe MAlonzo.Code.Ar.d_ι_26 (coe (4 :: Integer))
+d_HD_2106 :: [Integer]
+d_HD_2106 = coe MAlonzo.Code.Ar.d_ι_26 (coe (4 :: Integer))
 -- Lang.Primitives.Microgpt.SL
-d_SL_2056 :: [Integer]
-d_SL_2056 = coe MAlonzo.Code.Ar.d_ι_26 (coe (16 :: Integer))
+d_SL_2108 :: [Integer]
+d_SL_2108 = coe MAlonzo.Code.Ar.d_ι_26 (coe (16 :: Integer))
 -- Lang.Primitives.Microgpt.FD
-d_FD_2058 :: [Integer]
-d_FD_2058 = coe MAlonzo.Code.Ar.d_ι_26 (coe (64 :: Integer))
+d_FD_2110 :: [Integer]
+d_FD_2110 = coe MAlonzo.Code.Ar.d_ι_26 (coe (64 :: Integer))
 -- Lang.Primitives.Microgpt.SC
-d_SC_2060 :: Integer
-d_SC_2060 = coe (2 :: Integer)
+d_SC_2112 :: Integer
+d_SC_2112 = coe (2 :: Integer)
 -- Lang.Primitives.Microgpt.VO
-d_VO_2062 :: [Integer]
-d_VO_2062 = coe MAlonzo.Code.Ar.d_ι_26 (coe (27 :: Integer))
+d_VO_2114 :: [Integer]
+d_VO_2114 = coe MAlonzo.Code.Ar.d_ι_26 (coe (27 :: Integer))
 -- Lang.Primitives.Microgpt.PR
-d_PR_2064 :: MAlonzo.Code.Ar.T_Pointw'8323'_990
-d_PR_2064
+d_PR_2116 :: MAlonzo.Code.Ar.T_Pointw'8323'_990
+d_PR_2116
   = coe
       MAlonzo.Code.Ar.C_cons_996 erased
       (coe MAlonzo.Code.Ar.C_'91''93'_994)
 -- Lang.Primitives.Microgpt.mgpt-forward-e
-d_mgpt'45'forward'45'e_2066 :: T_E_182
-d_mgpt'45'forward'45'e_2066
+d_mgpt'45'forward'45'e_2118 :: T_E_182
+d_mgpt'45'forward'45'e_2118
   = coe
-      du_Lcon_1272
+      du_Lcon_1312
       (coe
          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
          (coe
             C_ar_10
-            (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+            (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
          (coe
             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
             (coe
                C_ar_10
-               (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+               (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
             (coe
                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                (coe
                   C_ar_10
-                  (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                  (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                   (coe
                      C_ar_10
-                     (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                     (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                   (coe
                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                      (coe
                         C_ar_10
-                        (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                        (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                      (coe
                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                         (coe
                            C_ar_10
-                           (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                           (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                         (coe
                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                            (coe
                               C_ar_10
-                              (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058 d_ED_2050))
+                              (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110 d_ED_2102))
                            (coe
                               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                               (coe
                                  C_ar_10
-                                 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_FD_2058))
+                                 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_FD_2110))
                               (coe
                                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                  (coe
                                     C_ar_10
                                     (coe
-                                       MAlonzo.Code.Ar.d__'8855'__54 () erased d_VO_2062 d_ED_2050))
+                                       MAlonzo.Code.Ar.d__'8855'__54 () erased d_VO_2114 d_ED_2102))
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                     (coe
                                        C_ar_10
                                        (coe
-                                          MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056
-                                          d_ED_2050))
+                                          MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108
+                                          d_ED_2102))
                                     (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))
       (coe
          (\ v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 ->
-            d_mgpt'45'forward_1870
-              (coe d_SL_2056)
+            d_mgpt'45'forward_1922
+              (coe d_SL_2108)
               (coe
                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (27 :: Integer))
                  (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
@@ -21401,862 +21536,862 @@ d_mgpt'45'forward'45'e_2066
               (coe
                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (64 :: Integer))
                  (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
-              (coe d_AH_2052) (coe d_HD_2054)
+              (coe d_AH_2104) (coe d_HD_2106)
               (coe
-                 d_ext_1208 (coe C_ε_14)
+                 d_ext_1248 (coe C_ε_14)
                  (coe
                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                     (coe
                        C_ar_10
-                       (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                       (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                     (coe
                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                        (coe
                           C_ar_10
-                          (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                          (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_FD_2058))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_FD_2110))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_VO_2062
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_VO_2114
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_SL_2056 d_ED_2050))
+                                                     d_SL_2108 d_ED_2102))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))))
-              (coe d_SC_2060)
+              (coe d_SC_2112)
               (coe
                  v0
-                 (d_ext_1208
+                 (d_ext_1248
                     (coe C_ε_14)
                     (coe
                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                        (coe
                           C_ar_10
-                          (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                          (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                                  d_FD_2058))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                                  d_FD_2110))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_VO_2062 d_ED_2050))
+                                                     d_VO_2114 d_ED_2102))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_SL_2056 d_ED_2050))
+                                                        d_SL_2108 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))))
-                 (coe C_zero_1130))
+                 (coe C_zero_1160))
               (coe
-                 du_to'45'gptp_1694
+                 du_to'45'gptp_1746
                  (coe
                     v1
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v2
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v3
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v4
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v5
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v6
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v7
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v8
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))))
-                    (coe C_zero_1130)))
+                    (coe C_zero_1160)))
               (coe
                  v9
-                 (d_ext_1208
+                 (d_ext_1248
                     (coe C_ε_14)
                     (coe
                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                        (coe
                           C_ar_10
-                          (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                          (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                                  d_FD_2058))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                                  d_FD_2110))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_VO_2062 d_ED_2050))
+                                                     d_VO_2114 d_ED_2102))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_SL_2056 d_ED_2050))
+                                                        d_SL_2108 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))))
-                 (coe C_zero_1130))
-              (coe d_PR_2064)))
+                 (coe C_zero_1160))
+              (coe d_PR_2116)))
 -- Lang.Primitives.Microgpt.mgpt-loss-e
-d_mgpt'45'loss'45'e_2088 :: T_E_182
-d_mgpt'45'loss'45'e_2088
+d_mgpt'45'loss'45'e_2140 :: T_E_182
+d_mgpt'45'loss'45'e_2140
   = coe
-      du_Lcon_1272
+      du_Lcon_1312
       (coe
          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
          (coe
             C_ar_10
-            (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+            (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
          (coe
             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
             (coe
                C_ar_10
-               (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+               (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
             (coe
                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                (coe
                   C_ar_10
-                  (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                  (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                   (coe
                      C_ar_10
-                     (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                     (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                   (coe
                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                      (coe
                         C_ar_10
-                        (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                        (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                      (coe
                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                         (coe
                            C_ar_10
-                           (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                           (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                         (coe
                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                            (coe
                               C_ar_10
-                              (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058 d_ED_2050))
+                              (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110 d_ED_2102))
                            (coe
                               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                               (coe
                                  C_ar_10
-                                 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_FD_2058))
+                                 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_FD_2110))
                               (coe
                                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                  (coe
                                     C_ar_10
                                     (coe
-                                       MAlonzo.Code.Ar.d__'8855'__54 () erased d_VO_2062 d_ED_2050))
+                                       MAlonzo.Code.Ar.d__'8855'__54 () erased d_VO_2114 d_ED_2102))
                                  (coe
                                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                     (coe
                                        C_ar_10
                                        (coe
-                                          MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056
-                                          d_ED_2050))
+                                          MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108
+                                          d_ED_2102))
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                        (coe
                                           C_ar_10
                                           (coe
-                                             MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056
-                                             d_VO_2062))
+                                             MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108
+                                             d_VO_2114))
                                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))))
       (coe
          (\ v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 ->
-            d_mgpt'45'loss_1982
-              (coe d_SL_2056)
+            d_mgpt'45'loss_2034
+              (coe d_SL_2108)
               (coe
                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (27 :: Integer))
                  (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
@@ -22266,977 +22401,977 @@ d_mgpt'45'loss'45'e_2088
               (coe
                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (64 :: Integer))
                  (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
-              (coe d_AH_2052) (coe d_HD_2054)
+              (coe d_AH_2104) (coe d_HD_2106)
               (coe
-                 d_ext_1208 (coe C_ε_14)
+                 d_ext_1248 (coe C_ε_14)
                  (coe
                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                     (coe
                        C_ar_10
-                       (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                       (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                     (coe
                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                        (coe
                           C_ar_10
-                          (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                          (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_FD_2058))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_FD_2110))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_VO_2062
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_VO_2114
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_SL_2056 d_ED_2050))
+                                                     d_SL_2108 d_ED_2102))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_SL_2056 d_VO_2062))
+                                                        d_SL_2108 d_VO_2114))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))
-              (coe d_SC_2060)
+              (coe d_SC_2112)
               (coe
                  v0
-                 (d_ext_1208
+                 (d_ext_1248
                     (coe C_ε_14)
                     (coe
                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                        (coe
                           C_ar_10
-                          (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                          (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                                  d_FD_2058))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                                  d_FD_2110))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_VO_2062 d_ED_2050))
+                                                     d_VO_2114 d_ED_2102))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_SL_2056 d_ED_2050))
+                                                        d_SL_2108 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_VO_2062))
+                                                           d_SL_2108 d_VO_2114))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))
-                 (coe C_zero_1130))
+                 (coe C_zero_1160))
               (coe
-                 du_to'45'gptp_1694
+                 du_to'45'gptp_1746
                  (coe
                     v1
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                         (coe
                                                            C_ar_10
                                                            (coe
                                                               MAlonzo.Code.Ar.d__'8855'__54 ()
-                                                              erased d_SL_2056 d_VO_2062))
+                                                              erased d_SL_2108 d_VO_2114))
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v2
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                         (coe
                                                            C_ar_10
                                                            (coe
                                                               MAlonzo.Code.Ar.d__'8855'__54 ()
-                                                              erased d_SL_2056 d_VO_2062))
+                                                              erased d_SL_2108 d_VO_2114))
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v3
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                         (coe
                                                            C_ar_10
                                                            (coe
                                                               MAlonzo.Code.Ar.d__'8855'__54 ()
-                                                              erased d_SL_2056 d_VO_2062))
+                                                              erased d_SL_2108 d_VO_2114))
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v4
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                         (coe
                                                            C_ar_10
                                                            (coe
                                                               MAlonzo.Code.Ar.d__'8855'__54 ()
-                                                              erased d_SL_2056 d_VO_2062))
+                                                              erased d_SL_2108 d_VO_2114))
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v5
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                         (coe
                                                            C_ar_10
                                                            (coe
                                                               MAlonzo.Code.Ar.d__'8855'__54 ()
-                                                              erased d_SL_2056 d_VO_2062))
+                                                              erased d_SL_2108 d_VO_2114))
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v6
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                         (coe
                                                            C_ar_10
                                                            (coe
                                                               MAlonzo.Code.Ar.d__'8855'__54 ()
-                                                              erased d_SL_2056 d_VO_2062))
+                                                              erased d_SL_2108 d_VO_2114))
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v7
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                         (coe
                                                            C_ar_10
                                                            (coe
                                                               MAlonzo.Code.Ar.d__'8855'__54 ()
-                                                              erased d_SL_2056 d_VO_2062))
+                                                              erased d_SL_2108 d_VO_2114))
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))
-                    (coe C_zero_1130))
+                    (coe C_zero_1160))
                  (coe
                     v8
-                    (d_ext_1208
+                    (d_ext_1248
                        (coe C_ε_14)
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                                  d_ED_2050))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                                  d_ED_2102))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_ED_2050 d_FD_2058))
+                                                     d_ED_2102 d_FD_2110))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_VO_2062 d_ED_2050))
+                                                        d_VO_2114 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_ED_2050))
+                                                           d_SL_2108 d_ED_2102))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                         (coe
                                                            C_ar_10
                                                            (coe
                                                               MAlonzo.Code.Ar.d__'8855'__54 ()
-                                                              erased d_SL_2056 d_VO_2062))
+                                                              erased d_SL_2108 d_VO_2114))
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))
-                    (coe C_zero_1130)))
+                    (coe C_zero_1160)))
               (coe
                  v9
-                 (d_ext_1208
+                 (d_ext_1248
                     (coe C_ε_14)
                     (coe
                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                        (coe
                           C_ar_10
-                          (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                          (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                                  d_FD_2058))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                                  d_FD_2110))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_VO_2062 d_ED_2050))
+                                                     d_VO_2114 d_ED_2102))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_SL_2056 d_ED_2050))
+                                                        d_SL_2108 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_VO_2062))
+                                                           d_SL_2108 d_VO_2114))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))
-                 (coe C_zero_1130))
+                 (coe C_zero_1160))
               (coe
                  v10
-                 (d_ext_1208
+                 (d_ext_1248
                     (coe C_ε_14)
                     (coe
                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                        (coe
                           C_ar_10
-                          (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_SL_2056))
+                          (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_SL_2108))
                        (coe
                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                           (coe
                              C_ar_10
-                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2056 d_ED_2050))
+                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_SL_2108 d_ED_2102))
                           (coe
                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                              (coe
                                 C_ar_10
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                              (coe
                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                 (coe
                                    C_ar_10
                                    (coe
-                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050 d_ED_2050))
+                                      MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102 d_ED_2102))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                    (coe
                                       C_ar_10
                                       (coe
-                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                         d_ED_2050))
+                                         MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                         d_ED_2102))
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                       (coe
                                          C_ar_10
                                          (coe
-                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                            d_ED_2050))
+                                            MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                            d_ED_2102))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                          (coe
                                             C_ar_10
                                             (coe
-                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2058
-                                               d_ED_2050))
+                                               MAlonzo.Code.Ar.d__'8855'__54 () erased d_FD_2110
+                                               d_ED_2102))
                                          (coe
                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                             (coe
                                                C_ar_10
                                                (coe
-                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2050
-                                                  d_FD_2058))
+                                                  MAlonzo.Code.Ar.d__'8855'__54 () erased d_ED_2102
+                                                  d_FD_2110))
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                (coe
                                                   C_ar_10
                                                   (coe
                                                      MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                     d_VO_2062 d_ED_2050))
+                                                     d_VO_2114 d_ED_2102))
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                   (coe
                                                      C_ar_10
                                                      (coe
                                                         MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                        d_SL_2056 d_ED_2050))
+                                                        d_SL_2108 d_ED_2102))
                                                   (coe
                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                      (coe
                                                         C_ar_10
                                                         (coe
                                                            MAlonzo.Code.Ar.d__'8855'__54 () erased
-                                                           d_SL_2056 d_VO_2062))
+                                                           d_SL_2108 d_VO_2114))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))
-                 (coe C_zero_1130))
-              (coe d_PR_2064)))
+                 (coe C_zero_1160))
+              (coe d_PR_2116)))
 -- Lang.Primitives.Microgpt.let-test
-d_let'45'test_2114 :: T_Ctx_12 -> T_E_182 -> T_E_182
-d_let'45'test_2114 v0 v1
+d_let'45'test_2166 :: T_Ctx_12 -> T_E_182 -> T_E_182
+d_let'45'test_2166 v0 v1
   = coe
-      du_Let'45'syntax_1198 (coe d_SL_2056)
+      du_Let'45'syntax_1238 (coe d_SL_2108)
       (coe
-         du_Let'45'syntax_1198 (coe d_SL_2056)
+         du_Let'45'syntax_1238 (coe d_SL_2108)
          (coe
-            du_Imaps_1176
+            du_Imaps_1216
             (coe
                (\ v2 ->
                   coe
-                    C_sels_192 d_SL_2056
-                    (d_'10216'_'10217'_1300
-                       (coe v0) (coe C_ar_10 (coe d_SL_2056)) (coe v1)
-                       (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe d_SL_2056)))
-                       (coe C_suc_1132 (coe C_zero_1130)))
+                    C_sels_192 d_SL_2108
+                    (d_'10216'_'10217'_1340
+                       (coe v0) (coe C_ar_10 (coe d_SL_2108)) (coe v1)
+                       (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe d_SL_2108)))
+                       (coe C_suc_1162 (coe C_zero_1160)))
                     (coe
-                       v2 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe d_SL_2056)))
-                       (coe C_zero_1130)))))
+                       v2 (coe C__'9657'__16 (coe v0) (coe C_ix_8 (coe d_SL_2108)))
+                       (coe C_zero_1160)))))
          (coe
             (\ v2 ->
                coe
                  C_scaledown_212 (2 :: Integer)
                  (coe
-                    v2 (coe C__'9657'__16 (coe v0) (coe C_ar_10 (coe d_SL_2056)))
-                    (coe C_zero_1130)))))
+                    v2 (coe C__'9657'__16 (coe v0) (coe C_ar_10 (coe d_SL_2108)))
+                    (coe C_zero_1160)))))
       (coe
          (\ v2 ->
             coe
-              du_Sum_1166
+              du_Sum_1196
               (coe
                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (16 :: Integer))
                  (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
@@ -23251,21 +23386,21 @@ d_let'45'test_2114 v0 v1
                          v2
                          (coe
                             C__'9657'__16
-                            (coe C__'9657'__16 (coe v0) (coe C_ar_10 (coe d_SL_2056)))
+                            (coe C__'9657'__16 (coe v0) (coe C_ar_10 (coe d_SL_2108)))
                             (coe
                                C_ix_8
                                (coe
                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (16 :: Integer))
                                   (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                         (coe C_suc_1132 (coe C_zero_1130)))
+                         (coe C_suc_1162 (coe C_zero_1160)))
                       (coe
                          v3
                          (coe
                             C__'9657'__16
-                            (coe C__'9657'__16 (coe v0) (coe C_ar_10 (coe d_SL_2056)))
+                            (coe C__'9657'__16 (coe v0) (coe C_ar_10 (coe d_SL_2108)))
                             (coe
                                C_ix_8
                                (coe
                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (16 :: Integer))
                                   (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                         (coe C_zero_1130))))))
+                         (coe C_zero_1160))))))

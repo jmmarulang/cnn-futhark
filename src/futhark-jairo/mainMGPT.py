@@ -34,7 +34,7 @@ ed = 16     # width of the network (embedding dimension)
 sl = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
 ah = 4      # number of attention heads
 hd = 4 # derived dimension of each head
-big_num = 700
+big_num = 1000000000000
 
 ones = np.ones((sl,sl))
 tri = (ones - np.tril(ones))
@@ -96,11 +96,11 @@ ftarget = np.array([[1 if (n < (asl - 1) and ftarget_ids[n] == m) else 0
                      for m in range(vocab_size)]
                      for n in range(sl)]).astype(np.float64)
 
-# start = time.time()
-# floss, flosses = mgpt.cal_loss(fparams, seq_ids, ftarget, mask)
-# end = time.time()
-# print("floss", end - start)
-# flosses = flosses[: asl - 1]
+start = time.time()
+floss, flosses = mgpt.cal_loss(fparams, seq_ids, ftarget, mask)
+end = time.time()
+print("floss", end - start)
+flosses = flosses[: asl - 1]
 
 start = time.time()
 ploss, plosses = mp.cal_loss(pwdic, seq_ids)
@@ -116,21 +116,21 @@ ploss, plosses = ploss.data, [aloss.data for aloss in plosses]
 pdwdic = { k : np.vectorize(mp.to_grad)(v) for k, v in pwdic.items()}
 # print(pdwdic['wvoc'])
 
-# start = time.time()
-# fgrad = mgpt.grad_loss(fparams, seq_ids, ftarget, mask)
-# end = time.time()
-# print("fgrad_loss", end - start)
+start = time.time()
+fgrad = mgpt.grad_loss(fparams, seq_ids, ftarget, mask)
+end = time.time()
+print("fgrad_loss", end - start)
 
-# fdwdic = {}
-# fdwdic['wpe'] = fgrad[0]
-# fdwdic['wqry'] = fgrad[1]
-# fdwdic['wkey'] = fgrad[2]
-# fdwdic['wval'] = fgrad[3]
-# fdwdic['wout'] = fgrad[4]
-# fdwdic['wup'] = fgrad[5]
-# fdwdic['wdown'] = fgrad[6]
-# fdwdic['wvoc'] = fgrad[7]
-# fdwdic['wseq'] = fgrad[8]
+fdwdic = {}
+fdwdic['wpe'] = fgrad[0]
+fdwdic['wqry'] = fgrad[1]
+fdwdic['wkey'] = fgrad[2]
+fdwdic['wval'] = fgrad[3]
+fdwdic['wout'] = fgrad[4]
+fdwdic['wup'] = fgrad[5]
+fdwdic['wdown'] = fgrad[6]
+fdwdic['wvoc'] = fgrad[7]
+fdwdic['wseq'] = fgrad[8]
 
 try:
     np.save("fdwdic.npy", fdwdic, allow_pickle=True)
@@ -154,6 +154,7 @@ pdwdic_flat = { k : v.flatten() for k, v in pdwdic.items()}
 #-----------------------------------------------------
 
 # abse_loss = [np.abs(afloss - aploss) for (afloss , aploss) in zip(flosses, plosses)]
+# print(np.mean(abse_loss))
 # plt.plot(abse_loss, '-o')
 # plt.xlabel('token position', fontsize = 12)
 # plt.ylabel('abs error', fontsize = 12)
@@ -168,10 +169,21 @@ pdwdic_flat = { k : v.flatten() for k, v in pdwdic.items()}
 # # plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
 # plt.show()
 
+# barWidth = 0.25
+
+# br1 = np.arange(len(flosses))
+# br2 = [x + barWidth for x in br1]
+# plt.bar(br1, flosses, width=barWidth, label="futhark")
+# plt.bar(br2, plosses, width=barWidth, label="python")
+# plt.xticks([r + barWidth for r in range(len(flosses))], [i for i in range(sl - 1)])
+# plt.xlabel('next token loss', fontsize = 12)
+# plt.legend()
+# # plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+# plt.show()
 
 # barWidth = 0.25
-# lfprobs = mfprobs[0]
-# lpprobs = mpprobs[0]
+# lfprobs = mfprobs[-1]
+# lpprobs = mpprobs[-1]
 
 # br1 = np.arange(len(lfprobs))
 # br2 = [x + barWidth for x in br1]
@@ -189,7 +201,7 @@ pdwdic_flat = { k : v.flatten() for k, v in pdwdic.items()}
 # # plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
 # plt.show()
 
-key = "wpe"
+key = "wvoc"
 fdata = fdwdic[key]
 pdata = pdwdic[key]
 mse = np.array([np.mean([np.pow(fdata[i][j] - pdata[i][j], 2) for j in range(fdata.shape[1])]) for i in range(fdata.shape[0])])

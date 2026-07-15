@@ -178,6 +178,11 @@ module _ where
   to-sum s  i e = printf "(isum%u %s (\\%s -> %s))" (dim s) (shape-args s)
                          (ix-join i " ") e
 
+  to-maximum : (s : S) → (i : Ix s) → (e : String) → String
+  to-maximum [] i e = e
+  to-maximum s  i e = printf "(imaximum%u %s (\\%s -> %s))" (dim s) (shape-args s)
+                         (ix-join i " ") e
+
   ix-plus : s + p ≈ r → (suc_≈_ p u)
           → (i : Ix s)
           → (j : Ix u)
@@ -379,14 +384,19 @@ module _ where
     return λ i → do
       f , a′ ← a i
       -- return (f , printf "(if (zero F.< %s) then one else zero)" a′)
-      return (f , printf "indicatorp %s" a′)
+      return (f , printf "(indicatorp %s)" a′)
 
   to-fut (ln e) ρ = do
     a ← to-fut e ρ
     return λ i → do
       f , a′ ← a i
       return (f , printf "(F.log %s)" a′)
-
+  to-fut (maximum {s = s} e) ρ = do
+    i ← iv s
+    b ← to-fut e (ρ , i)
+    return λ j → do
+      f , b′ ← b j
+      return (id , to-maximum s i (f b′))
 
 module Test where
   open import Relation.Binary.PropositionalEquality
