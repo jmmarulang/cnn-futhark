@@ -35,7 +35,6 @@ big_num = 1000000000000000
 
 ones = np.ones((sl,sl))
 cau_mask = (ones - np.tril(ones))
-print(cau_mask)
 # cau_mask = -1 * tri * big_num
 
 dimdic = {'wpe' : (sl, ed), 'wqry' : (ed, ed), 'wkey' : (ed, ed),
