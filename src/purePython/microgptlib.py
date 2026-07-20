@@ -57,6 +57,8 @@ def to_num(x) : return x.data
 
 def to_val(x) : return Value(x)
 
+def reset_grad(x) : x.grad = 0
+
 def linear(x, w):
     return [sum(wi * xi for wi, xi in zip(wo, x)) for wo in w]
 
@@ -139,6 +141,18 @@ def cal_loss(wdic, seq_ids, sl = 16, ah = 4, hd = 4):
     loss = (1 / sl) * sum(losses)
 
     return loss, losses
+
+def update(wdic, dwdic, mdic, vdic, step, lr_t = 0.01, beta1 = 0.85, beta2 = 0.99, eps_adam = 1e-8):
+    for k , dp in dwdic.items():
+        mdic[k] = beta1 * mdic[k] + (1 - beta1) * dp
+        vdic[k] = beta2 * vdic[k] + (1 - beta2) * dp ** 2
+        m_hat = mdic[k] / (1 - beta1 ** (step + 1))
+        v_hat = vdic[k] / (1 - beta2 ** (step + 1))
+        wdic[k] -= lr_t * m_hat / (v_hat ** 0.5 + eps_adam)
+        try :
+            np.vectorize(reset_grad)(wdic[k])
+        except :
+            pass
 
 # def update_kvs(wdic, tok_id, pos_id, keys, vals):
 #     tok_emb = wdic['wte'][tok_id] # token embedding

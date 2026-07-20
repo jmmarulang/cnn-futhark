@@ -9,9 +9,6 @@ import time
 import random
 seed = 40
 random.seed(seed)
-# import argparse
-# import os       # os.path.exists
-# import math     # math.log, math.exp
 
 def softmax(logits):
     max_val = max(val for val in logits)
@@ -40,19 +37,26 @@ ones = np.ones((sl,sl))
 tri = (ones - np.tril(ones))
 cau_mask = -1 * tri * big_num
 
+dimdic = {'wpe' : (sl, ed), 'wqry' : (ed, ed), 'wkey' : (ed, ed),
+          'wval' : (ed, ed), 'wout' : (ed, ed), 'wup' : (4 * ed, ed),
+          'wdown' :(ed, 4 * ed), 'wvoc': (vocab_size, ed),
+          'wte' : (vocab_size, ed),}
+
 ran_matrix = lambda nout, nin, std=0.08: np.array(
     [[(random.gauss(0, std)) for _ in range(nin)] for _ in range(nout)])
-fwdic = {'wte': ran_matrix(vocab_size, ed), 'wpe': ran_matrix(sl, ed),
-         'wvoc': ran_matrix(vocab_size, ed)}
-fwdic['wqry'] = ran_matrix(ed, ed)
-fwdic['wkey'] = ran_matrix(ed, ed)
-fwdic['wval'] = ran_matrix(ed, ed)
-fwdic['wout'] = ran_matrix(ed, ed)
-fwdic['wup'] = ran_matrix(4 * ed, ed)
-fwdic['wdown'] = ran_matrix(ed, 4 * ed)
-# pparams = [p for mat in fwdic.values() for row in mat for p in row] # flatten params into a single list[Value]
-# print(f"num params: {len(params)}")
 
+fwdic = {}
+fmdic = {}
+fvdic = {}
+pmdic = {}
+pvdic = {}
+
+for k , dim in dimdic.items():
+    fwdic[k] = ran_matrix(*dim)
+    fmdic[k] = np.zeros(dim)
+    fvdic[k] = np.zeros(dim)
+    pmdic[k] = np.zeros(dim)
+    pvdic[k] = np.zeros(dim)
 pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
 
 fparams = mgpt.make_params(fwdic['wte'], fwdic['wpe'], fwdic['wqry'],
@@ -74,6 +78,9 @@ pad_mask = np.zeros((sl,sl))
 
 mask = cau_mask + pad_mask
 
+#-------------------------------------
+# PROBS
+
 # start = time.time()
 # fmlogits = mgpt.forward_seq(fparams, seq_ids, mask)
 # mfprobs = np.array([softmax(logits) for logits in fmlogits])
@@ -91,30 +98,35 @@ mask = cau_mask + pad_mask
 # pos = 0
 # print(big_num, pos, mse[pos])
 
+#-------------------------------------
+# LOSS
+
 ftarget_ids = np.array([seq_ids[pos_id + 1] for pos_id in range(asl - 1)])
 ftarget = np.array([[1 if (n < (asl - 1) and ftarget_ids[n] == m) else 0
                      for m in range(vocab_size)]
                      for n in range(sl)]).astype(np.float64)
 
-start = time.time()
-floss, flosses = mgpt.cal_loss(fparams, seq_ids, ftarget, mask)
-end = time.time()
-print("floss", end - start)
-flosses = flosses[: asl - 1]
+# start = time.time()
+# floss, flosses = mgpt.cal_loss(fparams, seq_ids, ftarget, mask)
+# end = time.time()
+# print("floss", end - start)
+# flosses = flosses[: asl - 1]
 
-start = time.time()
+# start = time.time()
 ploss, plosses = mp.cal_loss(pwdic, seq_ids)
-end1 = time.time()
-print("ploss", end1 - start)
+# end1 = time.time()
+# print("ploss", end1 - start)
 
 ploss.backward()
-end = time.time()
-print("pgrad_loss", end - start)
+# end = time.time()
+# print("pgrad_loss", end - start)
 
 ploss, plosses = ploss.data, [aloss.data for aloss in plosses]
 
+#-------------------------------------
+# GRADIENT
+
 pdwdic = { k : np.vectorize(mp.to_grad)(v) for k, v in pwdic.items()}
-# print(pdwdic['wvoc'])
 
 start = time.time()
 fgrad = mgpt.grad_loss(fparams, seq_ids, ftarget, mask)
@@ -122,22 +134,20 @@ end = time.time()
 print("fgrad_loss", end - start)
 
 fdwdic = {}
-fdwdic['wpe'] = fgrad[0]
-fdwdic['wqry'] = fgrad[1]
-fdwdic['wkey'] = fgrad[2]
-fdwdic['wval'] = fgrad[3]
-fdwdic['wout'] = fgrad[4]
-fdwdic['wup'] = fgrad[5]
-fdwdic['wdown'] = fgrad[6]
-fdwdic['wvoc'] = fgrad[7]
-fdwdic['wseq'] = fgrad[8]
+for i , k in enumerate(dimdic.keys()):
+    print(k , i)
+    fdwdic[k] = fgrad[i]
 
 try:
     np.save("fdwdic.npy", fdwdic, allow_pickle=True)
-    np.save("pdwdic.npy", pdwdic, allow_pickle=True)
     file = open('fdwdic.txt', 'wt')
     file.write(str(fdwdic))
     file.close()
+except :
+    print("It refused")
+
+try:
+    np.save("pdwdic.npy", pdwdic, allow_pickle=True)
     file = open('pdwdic.txt', 'wt')
     file.write(str(pdwdic))
     file.close()
@@ -147,11 +157,17 @@ except :
 fdwdic = np.load("fdwdic.npy", allow_pickle=True).item()
 pdwdic = np.load("pdwdic.npy", allow_pickle=True).item()
 
-fdwdic_flat = { k : v.flatten() for k, v in fdwdic.items()}
-pdwdic_flat = { k : v.flatten() for k, v in pdwdic.items()}
+
+#-------------------------------------
+# UPDATE WEIGHTS
+
+mp.update(pwdic, pdwdic, pmdic, pvdic, 0)
+
+mp.update(fwdic, fdwdic, fmdic, fvdic, 0)
 
 
 #-----------------------------------------------------
+# PLOT
 
 # abse_loss = [np.abs(afloss - aploss) for (afloss , aploss) in zip(flosses, plosses)]
 # print(np.mean(abse_loss))
@@ -201,12 +217,34 @@ pdwdic_flat = { k : v.flatten() for k, v in pdwdic.items()}
 # # plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
 # plt.show()
 
-key = "wvoc"
-fdata = fdwdic[key]
-pdata = pdwdic[key]
-mse = np.array([np.mean([np.pow(fdata[i][j] - pdata[i][j], 2) for j in range(fdata.shape[1])]) for i in range(fdata.shape[0])])
-plt.plot(mse, '-o')
-plt.xlabel(key + ' weight position', fontsize = 12)
-plt.ylabel('mse', fontsize = 12)
-# plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
-plt.show()
+# key = "wte"
+# index = [0]
+# fdata = fdwdic[key][index][0]
+# pdata = pdwdic[key][index][0]
+# print(fdata)
+# barWidth = 0.25
+
+# abse = [np.abs(afloss - aploss) for (afloss , aploss) in zip(fdata, pdata)]
+# print(np.mean(abse))
+# plt.plot(abse, '-o')
+# plt.xlabel('weight', fontsize = 12)
+# plt.ylabel('abs error', fontsize = 12)
+# # plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+# plt.show()
+
+# key = "wte"
+# index = [0]
+# fdata = fdwdic[key][index][0]
+# pdata = pdwdic[key][index][0]
+# barWidth = 0.25
+
+# br1 = np.arange(len(fdata))
+# br2 = [x + barWidth for x in br1]
+# plt.bar(br1, fdata, width=barWidth, label="futhark")
+# plt.bar(br2, pdata, width=barWidth, label="python")
+# plt.xticks([r + barWidth for r in range(len(fdata))], range(sl))
+# plt.xlabel('position', fontsize = 12)
+# plt.ylabel('weight', fontsize = 12)
+# plt.legend()
+# # plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+# plt.show()

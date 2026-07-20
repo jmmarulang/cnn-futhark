@@ -2472,4203 +2472,4225 @@ class microgpt:
     set_user_params(self.sizes, user_sizes)
     self.constants = {}
 
-  def futhark_entry_cal_loss(self, wdown_mem_121939, wkey_mem_121940, wout_mem_121941, wpe_mem_121942, wqry_mem_121943, wte_mem_121944, wup_mem_121945, wval_mem_121946, wvoc_mem_121947, seq_ids_mem_121948, target_mem_121949, mask_mem_121950):
-    mem_121951 = allocateMem(np.int64(2048))
-    mem_121956 = allocateMem(np.int64(128))
-    i_121015 = np.int64(0)
-    one_123915 = np.int64(1)
-    for counter_123914 in range(np.int64(16)):
-      tmp_110192 = np.int64(indexArray(seq_ids_mem_121948, i_121015, ct.c_int64))
-      x_110193 = sle64(np.int64(0), tmp_110192)
-      y_110194 = slt64(tmp_110192, np.int64(27))
-      bounds_check_110195 = (x_110193 and y_110194)
-      index_certs_110196 = True
-      assert bounds_check_110195, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:437:37-52\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:437:16-56\n" % ("Index [", tmp_110192, "] out of bounds for array of shape [", np.int64(27), "]."))
-      i_121011 = np.int64(0)
-      one_123913 = np.int64(1)
-      for counter_123912 in range(np.int64(16)):
-        lifted_lambda_res_110203 = np.float64(indexArray(wte_mem_121944, ((tmp_110192 * np.int64(16)) + i_121011), ct.c_double))
-        writeScalarArray(mem_121956, i_121011, lifted_lambda_res_110203)
-        i_121011 += one_123913
-      lmad_copy(ct.c_double, mem_121951, (i_121015 * np.int64(16)), [np.int64(1)], mem_121956, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121015 += one_123915
-    mem_121956 = None
-    mem_121967 = allocateMem(np.int64(2048))
-    mem_121972 = allocateMem(np.int64(128))
-    mem_121979 = allocateMem(np.int64(128))
-    i_121027 = np.int64(0)
-    one_123923 = np.int64(1)
-    for counter_123922 in range(np.int64(16)):
-      r_110231 = np.float64(0.0)
-      i_110230 = np.int64(0)
-      one_123917 = np.int64(1)
-      for counter_123916 in range(np.int64(16)):
-        zp_lhs_110232 = np.float64(indexArray(wpe_mem_121942, ((i_121027 * np.int64(16)) + i_110230), ct.c_double))
-        zp_rhs_110233 = np.float64(indexArray(mem_121951, ((i_121027 * np.int64(16)) + i_110230), ct.c_double))
-        zp_res_110234 = (zp_lhs_110232 + zp_rhs_110233)
-        zt_res_110235 = (zp_res_110234 * zp_res_110234)
-        zp_res_110236 = (r_110231 + zt_res_110235)
-        r_tmp_123624 = zp_res_110236
-        r_110231 = r_tmp_123624
-        i_110230 += one_123917
-      defunc_0_lifted_lambda_res_110229 = r_110231
-      zs_res_110237 = (defunc_0_lifted_lambda_res_110229 / np.float64(16.0))
-      zp_res_110238 = (np.float64(1.0e-5) + zs_res_110237)
-      sqrt_res_110239 = futhark_sqrt64(zp_res_110238)
-      zs_res_110240 = (np.float64(1.0) / sqrt_res_110239)
-      i_121019 = np.int64(0)
-      one_123919 = np.int64(1)
-      for counter_123918 in range(np.int64(16)):
-        zp_lhs_110247 = np.float64(indexArray(wpe_mem_121942, ((i_121027 * np.int64(16)) + i_121019), ct.c_double))
-        zp_rhs_110248 = np.float64(indexArray(mem_121951, ((i_121027 * np.int64(16)) + i_121019), ct.c_double))
-        zp_res_110249 = (zp_lhs_110247 + zp_rhs_110248)
-        zt_res_110250 = (zs_res_110240 * zp_res_110249)
-        writeScalarArray(mem_121972, i_121019, zt_res_110250)
-        i_121019 += one_123919
-      i_121023 = np.int64(0)
-      one_123921 = np.int64(1)
-      for counter_123920 in range(np.int64(16)):
-        lifted_lambda_res_110258 = np.float64(indexArray(mem_121972, i_121023, ct.c_double))
-        writeScalarArray(mem_121979, i_121023, lifted_lambda_res_110258)
-        i_121023 += one_123921
-      lmad_copy(ct.c_double, mem_121967, (i_121027 * np.int64(16)), [np.int64(1)], mem_121979, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121027 += one_123923
-    mem_121951 = None
-    mem_121972 = None
-    mem_121979 = None
-    mem_121990 = allocateMem(np.int64(2048))
-    mem_121995 = allocateMem(np.int64(128))
-    mem_122002 = allocateMem(np.int64(128))
-    i_121039 = np.int64(0)
-    one_123931 = np.int64(1)
-    for counter_123930 in range(np.int64(16)):
-      r_110269 = np.float64(0.0)
-      i_110268 = np.int64(0)
-      one_123925 = np.int64(1)
-      for counter_123924 in range(np.int64(16)):
-        zt_lhs_110270 = np.float64(indexArray(mem_121967, ((i_121039 * np.int64(16)) + i_110268), ct.c_double))
-        zt_res_110271 = (zt_lhs_110270 * zt_lhs_110270)
-        zp_res_110272 = (r_110269 + zt_res_110271)
-        r_tmp_123628 = zp_res_110272
-        r_110269 = r_tmp_123628
-        i_110268 += one_123925
-      defunc_0_lifted_lambda_res_110267 = r_110269
-      zs_res_110273 = (defunc_0_lifted_lambda_res_110267 / np.float64(16.0))
-      zp_res_110274 = (np.float64(1.0e-5) + zs_res_110273)
-      sqrt_res_110275 = futhark_sqrt64(zp_res_110274)
-      zs_res_110276 = (np.float64(1.0) / sqrt_res_110275)
-      i_121031 = np.int64(0)
-      one_123927 = np.int64(1)
-      for counter_123926 in range(np.int64(16)):
-        zt_lhs_110283 = np.float64(indexArray(mem_121967, ((i_121039 * np.int64(16)) + i_121031), ct.c_double))
-        zt_res_110284 = (zs_res_110276 * zt_lhs_110283)
-        writeScalarArray(mem_121995, i_121031, zt_res_110284)
-        i_121031 += one_123927
-      i_121035 = np.int64(0)
-      one_123929 = np.int64(1)
-      for counter_123928 in range(np.int64(16)):
-        lifted_lambda_res_110292 = np.float64(indexArray(mem_121995, i_121035, ct.c_double))
-        writeScalarArray(mem_122002, i_121035, lifted_lambda_res_110292)
-        i_121035 += one_123929
-      lmad_copy(ct.c_double, mem_121990, (i_121039 * np.int64(16)), [np.int64(1)], mem_122002, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121039 += one_123931
-    mem_121995 = None
-    mem_122002 = None
-    mem_122013 = allocateMem(np.int64(2048))
-    mem_122014 = allocateMem(np.int64(2048))
-    mem_122015 = allocateMem(np.int64(2048))
-    mem_122028 = allocateMem(np.int64(128))
-    mem_122029 = allocateMem(np.int64(128))
-    mem_122030 = allocateMem(np.int64(128))
-    i_121057 = np.int64(0)
-    one_123941 = np.int64(1)
-    for counter_123940 in range(np.int64(16)):
-      i_121047 = np.int64(0)
-      one_123939 = np.int64(1)
-      for counter_123938 in range(np.int64(16)):
-        r_112818 = np.float64(0.0)
-        i_112817 = np.int64(0)
-        one_123933 = np.int64(1)
-        for counter_123932 in range(np.int64(16)):
-          zt_lhs_112819 = np.float64(indexArray(wqry_mem_121943, ((i_121047 * np.int64(16)) + i_112817), ct.c_double))
-          zt_rhs_112820 = np.float64(indexArray(mem_121990, ((i_121057 * np.int64(16)) + i_112817), ct.c_double))
-          zt_res_112821 = (zt_lhs_112819 * zt_rhs_112820)
-          zp_res_112822 = (r_112818 + zt_res_112821)
-          r_tmp_123637 = zp_res_112822
-          r_112818 = r_tmp_123637
-          i_112817 += one_123933
-        defunc_0_lifted_lambda_res_112816 = r_112818
-        r_112831 = np.float64(0.0)
-        i_112830 = np.int64(0)
-        one_123935 = np.int64(1)
-        for counter_123934 in range(np.int64(16)):
-          zt_lhs_112832 = np.float64(indexArray(wkey_mem_121940, ((i_121047 * np.int64(16)) + i_112830), ct.c_double))
-          zt_rhs_112833 = np.float64(indexArray(mem_121990, ((i_121057 * np.int64(16)) + i_112830), ct.c_double))
-          zt_res_112834 = (zt_lhs_112832 * zt_rhs_112833)
-          zp_res_112835 = (r_112831 + zt_res_112834)
-          r_tmp_123638 = zp_res_112835
-          r_112831 = r_tmp_123638
-          i_112830 += one_123935
-        defunc_0_lifted_lambda_res_112829 = r_112831
-        r_112847 = np.float64(0.0)
-        i_112846 = np.int64(0)
-        one_123937 = np.int64(1)
-        for counter_123936 in range(np.int64(16)):
-          zt_lhs_112848 = np.float64(indexArray(wval_mem_121946, ((i_121047 * np.int64(16)) + i_112846), ct.c_double))
-          zt_rhs_112849 = np.float64(indexArray(mem_121990, ((i_121057 * np.int64(16)) + i_112846), ct.c_double))
-          zt_res_112850 = (zt_lhs_112848 * zt_rhs_112849)
-          zp_res_112851 = (r_112847 + zt_res_112850)
-          r_tmp_123639 = zp_res_112851
-          r_112847 = r_tmp_123639
-          i_112846 += one_123937
-        defunc_0_lifted_lambda_res_112845 = r_112847
-        writeScalarArray(mem_122028, i_121047, defunc_0_lifted_lambda_res_112845)
-        writeScalarArray(mem_122029, i_121047, defunc_0_lifted_lambda_res_112829)
-        writeScalarArray(mem_122030, i_121047, defunc_0_lifted_lambda_res_112816)
-        i_121047 += one_123939
-      lmad_copy(ct.c_double, mem_122013, (i_121057 * np.int64(16)), [np.int64(1)], mem_122028, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_122014, (i_121057 * np.int64(16)), [np.int64(1)], mem_122029, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_122015, (i_121057 * np.int64(16)), [np.int64(1)], mem_122030, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121057 += one_123941
-    mem_121990 = None
-    mem_122028 = None
-    mem_122029 = None
-    mem_122030 = None
-    mem_122061 = allocateMem(np.int64(2048))
-    mem_122062 = allocateMem(np.int64(2048))
-    mem_122063 = allocateMem(np.int64(2048))
-    mem_122079 = allocateMem(np.int64(512))
-    mem_122080 = allocateMem(np.int64(512))
-    mem_122081 = allocateMem(np.int64(512))
-    mem_122094 = allocateMem(np.int64(32))
-    mem_122095 = allocateMem(np.int64(32))
-    mem_122096 = allocateMem(np.int64(32))
-    i_121087 = np.int64(0)
-    one_123947 = np.int64(1)
-    for counter_123946 in range(np.int64(4)):
-      zp_lhs_112692 = (np.int64(4) * i_121087)
-      i_121077 = np.int64(0)
-      one_123945 = np.int64(1)
-      for counter_123944 in range(np.int64(16)):
-        i_121067 = np.int64(0)
-        one_123943 = np.int64(1)
-        for counter_123942 in range(np.int64(4)):
-          tmp_113009 = (zp_lhs_112692 + i_121067)
-          x_113010 = sle64(np.int64(0), tmp_113009)
-          y_113011 = slt64(tmp_113009, np.int64(16))
-          bounds_check_113012 = (x_113010 and y_113011)
-          index_certs_113013 = True
-          assert bounds_check_113012, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:204:51-83\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:15:29-44\n   #6  microgpt.fut:4:11-25\n   #7  microgpt.fut:15:15-45\n   #8  microgpt.fut:204:15-84\n   #9  microgpt.fut:438:7-76\n" % ("Index [", tmp_113009, "] out of bounds for array of shape [", np.int64(16), "]."))
-          lifted_lambda_res_113014 = np.float64(indexArray(mem_122015, ((i_121077 * np.int64(16)) + tmp_113009), ct.c_double))
-          lifted_lambda_res_113022 = np.float64(indexArray(mem_122014, ((i_121077 * np.int64(16)) + tmp_113009), ct.c_double))
-          lifted_lambda_res_113033 = np.float64(indexArray(mem_122013, ((i_121077 * np.int64(16)) + tmp_113009), ct.c_double))
-          writeScalarArray(mem_122094, i_121067, lifted_lambda_res_113033)
-          writeScalarArray(mem_122095, i_121067, lifted_lambda_res_113022)
-          writeScalarArray(mem_122096, i_121067, lifted_lambda_res_113014)
-          i_121067 += one_123943
-        lmad_copy(ct.c_double, mem_122079, (i_121077 * np.int64(4)), [np.int64(1)], mem_122094, np.int64(0), [np.int64(1)], [np.int64(4)])
-        lmad_copy(ct.c_double, mem_122080, (i_121077 * np.int64(4)), [np.int64(1)], mem_122095, np.int64(0), [np.int64(1)], [np.int64(4)])
-        lmad_copy(ct.c_double, mem_122081, (i_121077 * np.int64(4)), [np.int64(1)], mem_122096, np.int64(0), [np.int64(1)], [np.int64(4)])
-        i_121077 += one_123945
-      lmad_copy(ct.c_double, mem_122061, (i_121087 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122079, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
-      lmad_copy(ct.c_double, mem_122062, (i_121087 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122080, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
-      lmad_copy(ct.c_double, mem_122063, (i_121087 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122081, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
-      i_121087 += one_123947
-    mem_122013 = None
-    mem_122014 = None
-    mem_122015 = None
-    mem_122079 = None
-    mem_122080 = None
-    mem_122081 = None
-    mem_122094 = None
-    mem_122095 = None
-    mem_122096 = None
-    mem_122142 = allocateMem(np.int64(2048))
-    mem_122148 = allocateMem(np.int64(2048))
-    mem_122153 = allocateMem(np.int64(128))
-    mem_122164 = allocateMem(np.int64(2048))
-    mem_122169 = allocateMem(np.int64(128))
-    mem_122180 = allocateMem(np.int64(2048))
-    mem_122185 = allocateMem(np.int64(128))
-    mem_122192 = allocateMem(np.int64(128))
-    mem_122199 = allocateMem(np.int64(128))
-    mem_122210 = allocateMem(np.int64(512))
-    mem_122215 = allocateMem(np.int64(32))
-    mem_122226 = allocateMem(np.int64(512))
-    mem_122231 = allocateMem(np.int64(32))
-    i_121143 = np.int64(0)
-    one_123981 = np.int64(1)
-    for counter_123980 in range(np.int64(4)):
-      i_121097 = np.int64(0)
-      one_123953 = np.int64(1)
-      for counter_123952 in range(np.int64(16)):
-        i_121093 = np.int64(0)
-        one_123951 = np.int64(1)
-        for counter_123950 in range(np.int64(16)):
-          r_110439 = np.float64(0.0)
-          i_110438 = np.int64(0)
-          one_123949 = np.int64(1)
-          for counter_123948 in range(np.int64(4)):
-            zt_lhs_110440 = np.float64(indexArray(mem_122063, (((i_121143 * np.int64(64)) + (i_121097 * np.int64(4))) + i_110438), ct.c_double))
-            zt_rhs_110441 = np.float64(indexArray(mem_122062, (((i_121143 * np.int64(64)) + (i_121093 * np.int64(4))) + i_110438), ct.c_double))
-            zt_res_110442 = (zt_lhs_110440 * zt_rhs_110441)
-            zp_res_110443 = (r_110439 + zt_res_110442)
-            r_tmp_123652 = zp_res_110443
-            r_110439 = r_tmp_123652
-            i_110438 += one_123949
-          defunc_0_lifted_lambda_res_110437 = r_110439
-          writeScalarArray(mem_122153, i_121093, defunc_0_lifted_lambda_res_110437)
-          i_121093 += one_123951
-        lmad_copy(ct.c_double, mem_122148, (i_121097 * np.int64(16)), [np.int64(1)], mem_122153, np.int64(0), [np.int64(1)], [np.int64(16)])
-        i_121097 += one_123953
-      i_121105 = np.int64(0)
-      one_123957 = np.int64(1)
-      for counter_123956 in range(np.int64(16)):
-        i_121101 = np.int64(0)
-        one_123955 = np.int64(1)
-        for counter_123954 in range(np.int64(16)):
-          zs_lhs_110458 = np.float64(indexArray(mem_122148, ((i_121105 * np.int64(16)) + i_121101), ct.c_double))
-          zs_res_110459 = (zs_lhs_110458 / np.float64(2.0))
-          zp_rhs_110460 = np.float64(indexArray(mask_mem_121950, ((i_121105 * np.int64(16)) + i_121101), ct.c_double))
-          zp_res_110461 = (zs_res_110459 + zp_rhs_110460)
-          writeScalarArray(mem_122169, i_121101, zp_res_110461)
-          i_121101 += one_123955
-        lmad_copy(ct.c_double, mem_122164, (i_121105 * np.int64(16)), [np.int64(1)], mem_122169, np.int64(0), [np.int64(1)], [np.int64(16)])
-        i_121105 += one_123957
-      i_121123 = np.int64(0)
-      one_123969 = np.int64(1)
-      for counter_123968 in range(np.int64(16)):
-        redout_121107 = -np.inf
-        i_121108 = np.int64(0)
-        one_123959 = np.int64(1)
-        for counter_123958 in range(np.int64(16)):
-          lifted_lambda_res_113060 = np.float64(indexArray(mem_122164, ((i_121123 * np.int64(16)) + i_121108), ct.c_double))
-          max_res_110482 = fmax64(lifted_lambda_res_113060, redout_121107)
-          redout_tmp_123656 = max_res_110482
-          redout_121107 = redout_tmp_123656
-          i_121108 += one_123959
-        defunc_0_reduce_res_113136 = redout_121107
-        neg_res_110483 = -(defunc_0_reduce_res_113136)
-        i_121111 = np.int64(0)
-        one_123961 = np.int64(1)
-        for counter_123960 in range(np.int64(16)):
-          zp_lhs_110490 = np.float64(indexArray(mem_122164, ((i_121123 * np.int64(16)) + i_121111), ct.c_double))
-          zp_res_110491 = (neg_res_110483 + zp_lhs_110490)
-          exp_res_110492 = futhark_exp64(zp_res_110491)
-          writeScalarArray(mem_122185, i_121111, exp_res_110492)
-          i_121111 += one_123961
-        r_110496 = np.float64(0.0)
-        i_110495 = np.int64(0)
-        one_123963 = np.int64(1)
-        for counter_123962 in range(np.int64(16)):
-          lifted_lambda_res_110497 = np.float64(indexArray(mem_122185, i_110495, ct.c_double))
-          zp_res_110498 = (r_110496 + lifted_lambda_res_110497)
-          r_tmp_123658 = zp_res_110498
-          r_110496 = r_tmp_123658
-          i_110495 += one_123963
-        defunc_0_lifted_lambda_res_110494 = r_110496
-        zs_res_110499 = (np.float64(1.0) / defunc_0_lifted_lambda_res_110494)
-        i_121115 = np.int64(0)
-        one_123965 = np.int64(1)
-        for counter_123964 in range(np.int64(16)):
-          zt_lhs_110506 = np.float64(indexArray(mem_122185, i_121115, ct.c_double))
-          zt_res_110507 = (zs_res_110499 * zt_lhs_110506)
-          writeScalarArray(mem_122192, i_121115, zt_res_110507)
-          i_121115 += one_123965
-        i_121119 = np.int64(0)
-        one_123967 = np.int64(1)
-        for counter_123966 in range(np.int64(16)):
-          lifted_lambda_res_110515 = np.float64(indexArray(mem_122192, i_121119, ct.c_double))
-          writeScalarArray(mem_122199, i_121119, lifted_lambda_res_110515)
-          i_121119 += one_123967
-        lmad_copy(ct.c_double, mem_122180, (i_121123 * np.int64(16)), [np.int64(1)], mem_122199, np.int64(0), [np.int64(1)], [np.int64(16)])
-        i_121123 += one_123969
-      i_121131 = np.int64(0)
-      one_123975 = np.int64(1)
-      for counter_123974 in range(np.int64(16)):
-        i_121127 = np.int64(0)
-        one_123973 = np.int64(1)
-        for counter_123972 in range(np.int64(4)):
-          r_110532 = np.float64(0.0)
-          i_110531 = np.int64(0)
-          one_123971 = np.int64(1)
-          for counter_123970 in range(np.int64(16)):
-            zt_lhs_110533 = np.float64(indexArray(mem_122180, ((i_121131 * np.int64(16)) + i_110531), ct.c_double))
-            zt_rhs_110534 = np.float64(indexArray(mem_122061, (((i_121143 * np.int64(64)) + (i_110531 * np.int64(4))) + i_121127), ct.c_double))
-            zt_res_110535 = (zt_lhs_110533 * zt_rhs_110534)
-            zp_res_110536 = (r_110532 + zt_res_110535)
-            r_tmp_123663 = zp_res_110536
-            r_110532 = r_tmp_123663
-            i_110531 += one_123971
-          defunc_0_lifted_lambda_res_110530 = r_110532
-          writeScalarArray(mem_122215, i_121127, defunc_0_lifted_lambda_res_110530)
-          i_121127 += one_123973
-        lmad_copy(ct.c_double, mem_122210, (i_121131 * np.int64(4)), [np.int64(1)], mem_122215, np.int64(0), [np.int64(1)], [np.int64(4)])
-        i_121131 += one_123975
-      i_121139 = np.int64(0)
-      one_123979 = np.int64(1)
-      for counter_123978 in range(np.int64(16)):
-        i_121135 = np.int64(0)
-        one_123977 = np.int64(1)
-        for counter_123976 in range(np.int64(4)):
-          lifted_lambda_res_110551 = np.float64(indexArray(mem_122210, ((i_121139 * np.int64(4)) + i_121135), ct.c_double))
-          writeScalarArray(mem_122231, i_121135, lifted_lambda_res_110551)
-          i_121135 += one_123977
-        lmad_copy(ct.c_double, mem_122226, (i_121139 * np.int64(4)), [np.int64(1)], mem_122231, np.int64(0), [np.int64(1)], [np.int64(4)])
-        i_121139 += one_123979
-      lmad_copy(ct.c_double, mem_122142, (i_121143 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122226, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
-      i_121143 += one_123981
-    mem_122061 = None
-    mem_122062 = None
-    mem_122063 = None
-    mem_122148 = None
-    mem_122153 = None
-    mem_122164 = None
-    mem_122169 = None
-    mem_122180 = None
-    mem_122185 = None
-    mem_122192 = None
-    mem_122199 = None
-    mem_122210 = None
-    mem_122215 = None
-    mem_122226 = None
-    mem_122231 = None
-    mem_122247 = allocateMem(np.int64(2048))
-    mem_122252 = allocateMem(np.int64(128))
-    i_121151 = np.int64(0)
-    one_123985 = np.int64(1)
-    for counter_123984 in range(np.int64(16)):
-      i_121147 = np.int64(0)
-      one_123983 = np.int64(1)
-      for counter_123982 in range(np.int64(16)):
-        tmp_110563 = sdiv64(i_121147, np.int64(4))
-        x_110564 = sle64(np.int64(0), tmp_110563)
-        y_110565 = slt64(tmp_110563, np.int64(4))
-        bounds_check_110566 = (x_110564 and y_110565)
-        index_certs_110567 = True
-        assert bounds_check_110566, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:216:44-59\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:216:15-80\n   #6  microgpt.fut:438:7-76\n" % ("Index [", tmp_110563, "] out of bounds for array of shape [", np.int64(4), "]."))
-        tmp_110568 = smod64(i_121147, np.int64(4))
-        x_110569 = sle64(np.int64(0), tmp_110568)
-        y_110570 = slt64(tmp_110568, np.int64(4))
-        bounds_check_110571 = (x_110569 and y_110570)
-        index_certs_110572 = True
-        assert bounds_check_110571, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:216:44-79\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:216:15-80\n   #6  microgpt.fut:438:7-76\n" % ("Index [", tmp_110568, "] out of bounds for array of shape [", np.int64(4), "]."))
-        lifted_lambda_res_110573 = np.float64(indexArray(mem_122142, (((tmp_110563 * np.int64(64)) + (i_121151 * np.int64(4))) + tmp_110568), ct.c_double))
-        writeScalarArray(mem_122252, i_121147, lifted_lambda_res_110573)
-        i_121147 += one_123983
-      lmad_copy(ct.c_double, mem_122247, (i_121151 * np.int64(16)), [np.int64(1)], mem_122252, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121151 += one_123985
-    mem_122142 = None
-    mem_122252 = None
-    mem_122263 = allocateMem(np.int64(2048))
-    mem_122268 = allocateMem(np.int64(128))
-    i_121159 = np.int64(0)
-    one_123991 = np.int64(1)
-    for counter_123990 in range(np.int64(16)):
-      i_121155 = np.int64(0)
-      one_123989 = np.int64(1)
-      for counter_123988 in range(np.int64(16)):
-        r_110590 = np.float64(0.0)
-        i_110589 = np.int64(0)
-        one_123987 = np.int64(1)
-        for counter_123986 in range(np.int64(16)):
-          zt_lhs_110591 = np.float64(indexArray(wout_mem_121941, ((i_121155 * np.int64(16)) + i_110589), ct.c_double))
-          zt_rhs_110592 = np.float64(indexArray(mem_122247, ((i_121159 * np.int64(16)) + i_110589), ct.c_double))
-          zt_res_110593 = (zt_lhs_110591 * zt_rhs_110592)
-          zp_res_110594 = (r_110590 + zt_res_110593)
-          r_tmp_123670 = zp_res_110594
-          r_110590 = r_tmp_123670
-          i_110589 += one_123987
-        defunc_0_lifted_lambda_res_110588 = r_110590
-        writeScalarArray(mem_122268, i_121155, defunc_0_lifted_lambda_res_110588)
-        i_121155 += one_123989
-      lmad_copy(ct.c_double, mem_122263, (i_121159 * np.int64(16)), [np.int64(1)], mem_122268, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121159 += one_123991
-    mem_122247 = None
-    mem_122268 = None
-    mem_122279 = allocateMem(np.int64(2048))
-    mem_122284 = allocateMem(np.int64(128))
-    i_121167 = np.int64(0)
-    one_123995 = np.int64(1)
-    for counter_123994 in range(np.int64(16)):
-      i_121163 = np.int64(0)
-      one_123993 = np.int64(1)
-      for counter_123992 in range(np.int64(16)):
-        zp_lhs_110609 = np.float64(indexArray(mem_122263, ((i_121167 * np.int64(16)) + i_121163), ct.c_double))
-        zp_rhs_110610 = np.float64(indexArray(mem_121967, ((i_121167 * np.int64(16)) + i_121163), ct.c_double))
-        zp_res_110611 = (zp_lhs_110609 + zp_rhs_110610)
-        writeScalarArray(mem_122284, i_121163, zp_res_110611)
-        i_121163 += one_123993
-      lmad_copy(ct.c_double, mem_122279, (i_121167 * np.int64(16)), [np.int64(1)], mem_122284, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121167 += one_123995
-    mem_121967 = None
-    mem_122263 = None
-    mem_122284 = None
-    mem_122295 = allocateMem(np.int64(2048))
-    mem_122300 = allocateMem(np.int64(128))
-    mem_122307 = allocateMem(np.int64(128))
-    i_121179 = np.int64(0)
-    one_124003 = np.int64(1)
-    for counter_124002 in range(np.int64(16)):
-      r_110622 = np.float64(0.0)
-      i_110621 = np.int64(0)
-      one_123997 = np.int64(1)
-      for counter_123996 in range(np.int64(16)):
-        zt_lhs_110623 = np.float64(indexArray(mem_122279, ((i_121179 * np.int64(16)) + i_110621), ct.c_double))
-        zt_res_110624 = (zt_lhs_110623 * zt_lhs_110623)
-        zp_res_110625 = (r_110622 + zt_res_110624)
-        r_tmp_123674 = zp_res_110625
-        r_110622 = r_tmp_123674
-        i_110621 += one_123997
-      defunc_0_lifted_lambda_res_110620 = r_110622
-      zs_res_110626 = (defunc_0_lifted_lambda_res_110620 / np.float64(16.0))
-      zp_res_110627 = (np.float64(1.0e-5) + zs_res_110626)
-      sqrt_res_110628 = futhark_sqrt64(zp_res_110627)
-      zs_res_110629 = (np.float64(1.0) / sqrt_res_110628)
-      i_121171 = np.int64(0)
-      one_123999 = np.int64(1)
-      for counter_123998 in range(np.int64(16)):
-        zt_lhs_110636 = np.float64(indexArray(mem_122279, ((i_121179 * np.int64(16)) + i_121171), ct.c_double))
-        zt_res_110637 = (zs_res_110629 * zt_lhs_110636)
-        writeScalarArray(mem_122300, i_121171, zt_res_110637)
-        i_121171 += one_123999
-      i_121175 = np.int64(0)
-      one_124001 = np.int64(1)
-      for counter_124000 in range(np.int64(16)):
-        lifted_lambda_res_110645 = np.float64(indexArray(mem_122300, i_121175, ct.c_double))
-        writeScalarArray(mem_122307, i_121175, lifted_lambda_res_110645)
-        i_121175 += one_124001
-      lmad_copy(ct.c_double, mem_122295, (i_121179 * np.int64(16)), [np.int64(1)], mem_122307, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121179 += one_124003
-    mem_122300 = None
-    mem_122307 = None
-    mem_122318 = allocateMem(np.int64(8192))
-    mem_122323 = allocateMem(np.int64(512))
-    i_121187 = np.int64(0)
-    one_124009 = np.int64(1)
-    for counter_124008 in range(np.int64(16)):
-      i_121183 = np.int64(0)
-      one_124007 = np.int64(1)
-      for counter_124006 in range(np.int64(64)):
-        r_110663 = np.float64(0.0)
-        i_110662 = np.int64(0)
-        one_124005 = np.int64(1)
-        for counter_124004 in range(np.int64(16)):
-          zt_lhs_110664 = np.float64(indexArray(wup_mem_121945, ((i_121183 * np.int64(16)) + i_110662), ct.c_double))
-          zt_rhs_110665 = np.float64(indexArray(mem_122295, ((i_121187 * np.int64(16)) + i_110662), ct.c_double))
-          zt_res_110666 = (zt_lhs_110664 * zt_rhs_110665)
-          zp_res_110667 = (r_110663 + zt_res_110666)
-          r_tmp_123679 = zp_res_110667
-          r_110663 = r_tmp_123679
-          i_110662 += one_124005
-        defunc_0_lifted_lambda_res_110661 = r_110663
-        writeScalarArray(mem_122323, i_121183, defunc_0_lifted_lambda_res_110661)
-        i_121183 += one_124007
-      lmad_copy(ct.c_double, mem_122318, (i_121187 * np.int64(64)), [np.int64(1)], mem_122323, np.int64(0), [np.int64(1)], [np.int64(64)])
-      i_121187 += one_124009
-    mem_122295 = None
-    mem_122323 = None
-    mem_122334 = allocateMem(np.int64(8192))
-    mem_122339 = allocateMem(np.int64(512))
-    i_121195 = np.int64(0)
-    one_124013 = np.int64(1)
-    for counter_124012 in range(np.int64(16)):
-      i_121191 = np.int64(0)
-      one_124011 = np.int64(1)
-      for counter_124010 in range(np.int64(64)):
-        max_arg0_110682 = np.float64(indexArray(mem_122318, ((i_121195 * np.int64(64)) + i_121191), ct.c_double))
-        max_res_110683 = fmax64(np.float64(0.0), max_arg0_110682)
-        writeScalarArray(mem_122339, i_121191, max_res_110683)
-        i_121191 += one_124011
-      lmad_copy(ct.c_double, mem_122334, (i_121195 * np.int64(64)), [np.int64(1)], mem_122339, np.int64(0), [np.int64(1)], [np.int64(64)])
-      i_121195 += one_124013
-    mem_122318 = None
-    mem_122339 = None
-    mem_122350 = allocateMem(np.int64(2048))
-    mem_122355 = allocateMem(np.int64(128))
-    i_121203 = np.int64(0)
-    one_124019 = np.int64(1)
-    for counter_124018 in range(np.int64(16)):
-      i_121199 = np.int64(0)
-      one_124017 = np.int64(1)
-      for counter_124016 in range(np.int64(16)):
-        r_110700 = np.float64(0.0)
-        i_110699 = np.int64(0)
-        one_124015 = np.int64(1)
-        for counter_124014 in range(np.int64(64)):
-          zt_lhs_110701 = np.float64(indexArray(wdown_mem_121939, ((i_121199 * np.int64(64)) + i_110699), ct.c_double))
-          zt_rhs_110702 = np.float64(indexArray(mem_122334, ((i_121203 * np.int64(64)) + i_110699), ct.c_double))
-          zt_res_110703 = (zt_lhs_110701 * zt_rhs_110702)
-          zp_res_110704 = (r_110700 + zt_res_110703)
-          r_tmp_123684 = zp_res_110704
-          r_110700 = r_tmp_123684
-          i_110699 += one_124015
-        defunc_0_lifted_lambda_res_110698 = r_110700
-        writeScalarArray(mem_122355, i_121199, defunc_0_lifted_lambda_res_110698)
-        i_121199 += one_124017
-      lmad_copy(ct.c_double, mem_122350, (i_121203 * np.int64(16)), [np.int64(1)], mem_122355, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121203 += one_124019
-    mem_122334 = None
-    mem_122355 = None
-    mem_122366 = allocateMem(np.int64(2048))
-    mem_122371 = allocateMem(np.int64(128))
-    i_121211 = np.int64(0)
-    one_124023 = np.int64(1)
-    for counter_124022 in range(np.int64(16)):
-      i_121207 = np.int64(0)
-      one_124021 = np.int64(1)
-      for counter_124020 in range(np.int64(16)):
-        zp_lhs_110719 = np.float64(indexArray(mem_122350, ((i_121211 * np.int64(16)) + i_121207), ct.c_double))
-        zp_rhs_110720 = np.float64(indexArray(mem_122279, ((i_121211 * np.int64(16)) + i_121207), ct.c_double))
+  def futhark_entry_cal_loss(self, wdown_mem_122578, wkey_mem_122579, wout_mem_122580, wpe_mem_122581, wqry_mem_122582, wte_mem_122583, wup_mem_122584, wval_mem_122585, wvoc_mem_122586, seq_ids_mem_122587, target_mem_122588, mask_mem_122589):
+    mem_122590 = allocateMem(np.int64(2048))
+    mem_122595 = allocateMem(np.int64(128))
+    i_121648 = np.int64(0)
+    one_124573 = np.int64(1)
+    for counter_124572 in range(np.int64(16)):
+      tmp_110664 = np.int64(indexArray(seq_ids_mem_122587, i_121648, ct.c_int64))
+      x_110665 = sle64(np.int64(0), tmp_110664)
+      y_110666 = slt64(tmp_110664, np.int64(27))
+      bounds_check_110667 = (x_110665 and y_110666)
+      index_certs_110668 = True
+      assert bounds_check_110667, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:435:37-52\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:435:16-56\n" % ("Index [", tmp_110664, "] out of bounds for array of shape [", np.int64(27), "]."))
+      i_121644 = np.int64(0)
+      one_124571 = np.int64(1)
+      for counter_124570 in range(np.int64(16)):
+        lifted_lambda_res_110675 = np.float64(indexArray(wte_mem_122583, ((tmp_110664 * np.int64(16)) + i_121644), ct.c_double))
+        writeScalarArray(mem_122595, i_121644, lifted_lambda_res_110675)
+        i_121644 += one_124571
+      lmad_copy(ct.c_double, mem_122590, (i_121648 * np.int64(16)), [np.int64(1)], mem_122595, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121648 += one_124573
+    mem_122595 = None
+    mem_122606 = allocateMem(np.int64(2048))
+    mem_122611 = allocateMem(np.int64(128))
+    mem_122618 = allocateMem(np.int64(128))
+    i_121660 = np.int64(0)
+    one_124581 = np.int64(1)
+    for counter_124580 in range(np.int64(16)):
+      r_110703 = np.float64(0.0)
+      i_110702 = np.int64(0)
+      one_124575 = np.int64(1)
+      for counter_124574 in range(np.int64(16)):
+        zp_lhs_110704 = np.float64(indexArray(wpe_mem_122581, ((i_121660 * np.int64(16)) + i_110702), ct.c_double))
+        zp_rhs_110705 = np.float64(indexArray(mem_122590, ((i_121660 * np.int64(16)) + i_110702), ct.c_double))
+        zp_res_110706 = (zp_lhs_110704 + zp_rhs_110705)
+        zt_res_110707 = (zp_res_110706 * zp_res_110706)
+        zp_res_110708 = (r_110703 + zt_res_110707)
+        r_tmp_124279 = zp_res_110708
+        r_110703 = r_tmp_124279
+        i_110702 += one_124575
+      defunc_0_lifted_lambda_res_110701 = r_110703
+      zs_res_110709 = (defunc_0_lifted_lambda_res_110701 / np.float64(16.0))
+      zp_res_110710 = (np.float64(1.0e-5) + zs_res_110709)
+      sqrt_res_110711 = futhark_sqrt64(zp_res_110710)
+      zs_res_110712 = (np.float64(1.0) / sqrt_res_110711)
+      i_121652 = np.int64(0)
+      one_124577 = np.int64(1)
+      for counter_124576 in range(np.int64(16)):
+        zp_lhs_110719 = np.float64(indexArray(wpe_mem_122581, ((i_121660 * np.int64(16)) + i_121652), ct.c_double))
+        zp_rhs_110720 = np.float64(indexArray(mem_122590, ((i_121660 * np.int64(16)) + i_121652), ct.c_double))
         zp_res_110721 = (zp_lhs_110719 + zp_rhs_110720)
-        writeScalarArray(mem_122371, i_121207, zp_res_110721)
-        i_121207 += one_124021
-      lmad_copy(ct.c_double, mem_122366, (i_121211 * np.int64(16)), [np.int64(1)], mem_122371, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121211 += one_124023
-    mem_122279 = None
-    mem_122350 = None
-    mem_122371 = None
-    mem_122382 = allocateMem(np.int64(3456))
-    mem_122387 = allocateMem(np.int64(216))
-    i_121219 = np.int64(0)
-    one_124029 = np.int64(1)
-    for counter_124028 in range(np.int64(16)):
-      i_121215 = np.int64(0)
-      one_124027 = np.int64(1)
-      for counter_124026 in range(np.int64(27)):
-        r_110739 = np.float64(0.0)
-        i_110738 = np.int64(0)
-        one_124025 = np.int64(1)
-        for counter_124024 in range(np.int64(16)):
-          zt_lhs_110740 = np.float64(indexArray(wvoc_mem_121947, ((i_121215 * np.int64(16)) + i_110738), ct.c_double))
-          zt_rhs_110741 = np.float64(indexArray(mem_122366, ((i_121219 * np.int64(16)) + i_110738), ct.c_double))
-          zt_res_110742 = (zt_lhs_110740 * zt_rhs_110741)
-          zp_res_110743 = (r_110739 + zt_res_110742)
-          r_tmp_123689 = zp_res_110743
-          r_110739 = r_tmp_123689
-          i_110738 += one_124025
-        defunc_0_lifted_lambda_res_110737 = r_110739
-        writeScalarArray(mem_122387, i_121215, defunc_0_lifted_lambda_res_110737)
-        i_121215 += one_124027
-      lmad_copy(ct.c_double, mem_122382, (i_121219 * np.int64(27)), [np.int64(1)], mem_122387, np.int64(0), [np.int64(1)], [np.int64(27)])
-      i_121219 += one_124029
-    mem_122366 = None
-    mem_122387 = None
-    mem_122398 = allocateMem(np.int64(128))
-    mem_122402 = allocateMem(np.int64(216))
-    mem_122409 = allocateMem(np.int64(216))
-    i_121233 = np.int64(0)
-    one_124041 = np.int64(1)
-    for counter_124040 in range(np.int64(16)):
-      redout_121221 = -np.inf
-      i_121222 = np.int64(0)
-      one_124031 = np.int64(1)
-      for counter_124030 in range(np.int64(27)):
-        lifted_lambda_res_113106 = np.float64(indexArray(mem_122382, ((i_121233 * np.int64(27)) + i_121222), ct.c_double))
-        max_res_110767 = fmax64(lifted_lambda_res_113106, redout_121221)
-        redout_tmp_123691 = max_res_110767
-        redout_121221 = redout_tmp_123691
-        i_121222 += one_124031
-      x_113159 = redout_121221
-      neg_res_110768 = -(x_113159)
-      r_110754 = np.float64(0.0)
-      i_110753 = np.int64(0)
-      one_124039 = np.int64(1)
-      for counter_124038 in range(np.int64(27)):
-        i_121225 = np.int64(0)
-        one_124033 = np.int64(1)
-        for counter_124032 in range(np.int64(27)):
-          zp_lhs_110775 = np.float64(indexArray(mem_122382, ((i_121233 * np.int64(27)) + i_121225), ct.c_double))
-          zp_res_110776 = (neg_res_110768 + zp_lhs_110775)
-          exp_res_110777 = futhark_exp64(zp_res_110776)
-          writeScalarArray(mem_122402, i_121225, exp_res_110777)
-          i_121225 += one_124033
-        r_110781 = np.float64(0.0)
-        i_110780 = np.int64(0)
-        one_124035 = np.int64(1)
-        for counter_124034 in range(np.int64(27)):
-          lifted_lambda_res_110782 = np.float64(indexArray(mem_122402, i_110780, ct.c_double))
-          zp_res_110783 = (r_110781 + lifted_lambda_res_110782)
-          r_tmp_123694 = zp_res_110783
-          r_110781 = r_tmp_123694
-          i_110780 += one_124035
-        defunc_0_lifted_lambda_res_110779 = r_110781
-        zs_res_110784 = (np.float64(1.0) / defunc_0_lifted_lambda_res_110779)
-        i_121229 = np.int64(0)
-        one_124037 = np.int64(1)
-        for counter_124036 in range(np.int64(27)):
-          zt_lhs_110791 = np.float64(indexArray(mem_122402, i_121229, ct.c_double))
-          zt_res_110792 = (zs_res_110784 * zt_lhs_110791)
-          writeScalarArray(mem_122409, i_121229, zt_res_110792)
-          i_121229 += one_124037
-        log_arg0_110794 = np.float64(indexArray(mem_122409, i_110753, ct.c_double))
-        log_res_110795 = futhark_log64(log_arg0_110794)
-        zt_rhs_110796 = np.float64(indexArray(target_mem_121949, ((i_121233 * np.int64(27)) + i_110753), ct.c_double))
-        zt_res_110797 = (log_res_110795 * zt_rhs_110796)
-        zp_res_110798 = (r_110754 + zt_res_110797)
-        r_tmp_123692 = zp_res_110798
-        r_110754 = r_tmp_123692
-        i_110753 += one_124039
-      defunc_0_lifted_lambda_res_110752 = r_110754
-      neg_res_110799 = -(defunc_0_lifted_lambda_res_110752)
-      writeScalarArray(mem_122398, i_121233, neg_res_110799)
-      i_121233 += one_124041
-    mem_122382 = None
-    mem_122402 = None
-    mem_122409 = None
-    r_110803 = np.float64(0.0)
-    i_110802 = np.int64(0)
-    one_124043 = np.int64(1)
-    for counter_124042 in range(np.int64(16)):
-      lifted_lambda_res_110804 = np.float64(indexArray(mem_122398, i_110802, ct.c_double))
-      zp_res_110805 = (r_110803 + lifted_lambda_res_110804)
-      r_tmp_123696 = zp_res_110805
-      r_110803 = r_tmp_123696
-      i_110802 += one_124043
-    defunc_0_lifted_lambda_res_110801 = r_110803
-    zs_res_110806 = (defunc_0_lifted_lambda_res_110801 / np.float64(16.0))
-    mem_out_123619 = mem_122398
-    prim_out_123620 = zs_res_110806
-    return (mem_out_123619, prim_out_123620)
-
-  def futhark_entry_forward_seq(self, wdown_mem_121939, wkey_mem_121940, wout_mem_121941, wpe_mem_121942, wqry_mem_121943, wte_mem_121944, wup_mem_121945, wval_mem_121946, wvoc_mem_121947, seq_ids_mem_121948, mask_mem_121949):
-    mem_121950 = allocateMem(np.int64(2048))
-    mem_121955 = allocateMem(np.int64(128))
-    i_121015 = np.int64(0)
-    one_124047 = np.int64(1)
-    for counter_124046 in range(np.int64(16)):
-      tmp_110191 = np.int64(indexArray(seq_ids_mem_121948, i_121015, ct.c_int64))
-      x_110192 = sle64(np.int64(0), tmp_110191)
-      y_110193 = slt64(tmp_110191, np.int64(27))
-      bounds_check_110194 = (x_110192 and y_110193)
-      index_certs_110195 = True
-      assert bounds_check_110194, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:432:37-52\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:432:16-56\n" % ("Index [", tmp_110191, "] out of bounds for array of shape [", np.int64(27), "]."))
-      i_121011 = np.int64(0)
-      one_124045 = np.int64(1)
-      for counter_124044 in range(np.int64(16)):
-        lifted_lambda_res_110202 = np.float64(indexArray(wte_mem_121944, ((tmp_110191 * np.int64(16)) + i_121011), ct.c_double))
-        writeScalarArray(mem_121955, i_121011, lifted_lambda_res_110202)
-        i_121011 += one_124045
-      lmad_copy(ct.c_double, mem_121950, (i_121015 * np.int64(16)), [np.int64(1)], mem_121955, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121015 += one_124047
-    mem_121955 = None
-    mem_121966 = allocateMem(np.int64(2048))
-    mem_121971 = allocateMem(np.int64(128))
-    mem_121978 = allocateMem(np.int64(128))
-    i_121027 = np.int64(0)
-    one_124055 = np.int64(1)
-    for counter_124054 in range(np.int64(16)):
-      r_110230 = np.float64(0.0)
-      i_110229 = np.int64(0)
-      one_124049 = np.int64(1)
-      for counter_124048 in range(np.int64(16)):
-        zp_lhs_110231 = np.float64(indexArray(wpe_mem_121942, ((i_121027 * np.int64(16)) + i_110229), ct.c_double))
-        zp_rhs_110232 = np.float64(indexArray(mem_121950, ((i_121027 * np.int64(16)) + i_110229), ct.c_double))
-        zp_res_110233 = (zp_lhs_110231 + zp_rhs_110232)
-        zt_res_110234 = (zp_res_110233 * zp_res_110233)
-        zp_res_110235 = (r_110230 + zt_res_110234)
-        r_tmp_123623 = zp_res_110235
-        r_110230 = r_tmp_123623
-        i_110229 += one_124049
-      defunc_0_lifted_lambda_res_110228 = r_110230
-      zs_res_110236 = (defunc_0_lifted_lambda_res_110228 / np.float64(16.0))
-      zp_res_110237 = (np.float64(1.0e-5) + zs_res_110236)
-      sqrt_res_110238 = futhark_sqrt64(zp_res_110237)
-      zs_res_110239 = (np.float64(1.0) / sqrt_res_110238)
-      i_121019 = np.int64(0)
-      one_124051 = np.int64(1)
-      for counter_124050 in range(np.int64(16)):
-        zp_lhs_110246 = np.float64(indexArray(wpe_mem_121942, ((i_121027 * np.int64(16)) + i_121019), ct.c_double))
-        zp_rhs_110247 = np.float64(indexArray(mem_121950, ((i_121027 * np.int64(16)) + i_121019), ct.c_double))
-        zp_res_110248 = (zp_lhs_110246 + zp_rhs_110247)
-        zt_res_110249 = (zs_res_110239 * zp_res_110248)
-        writeScalarArray(mem_121971, i_121019, zt_res_110249)
-        i_121019 += one_124051
-      i_121023 = np.int64(0)
-      one_124053 = np.int64(1)
-      for counter_124052 in range(np.int64(16)):
-        lifted_lambda_res_110257 = np.float64(indexArray(mem_121971, i_121023, ct.c_double))
-        writeScalarArray(mem_121978, i_121023, lifted_lambda_res_110257)
-        i_121023 += one_124053
-      lmad_copy(ct.c_double, mem_121966, (i_121027 * np.int64(16)), [np.int64(1)], mem_121978, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121027 += one_124055
-    mem_121950 = None
-    mem_121971 = None
-    mem_121978 = None
-    mem_121989 = allocateMem(np.int64(2048))
-    mem_121994 = allocateMem(np.int64(128))
-    mem_122001 = allocateMem(np.int64(128))
-    i_121039 = np.int64(0)
-    one_124063 = np.int64(1)
-    for counter_124062 in range(np.int64(16)):
-      r_110268 = np.float64(0.0)
-      i_110267 = np.int64(0)
-      one_124057 = np.int64(1)
-      for counter_124056 in range(np.int64(16)):
-        zt_lhs_110269 = np.float64(indexArray(mem_121966, ((i_121039 * np.int64(16)) + i_110267), ct.c_double))
-        zt_res_110270 = (zt_lhs_110269 * zt_lhs_110269)
-        zp_res_110271 = (r_110268 + zt_res_110270)
-        r_tmp_123627 = zp_res_110271
-        r_110268 = r_tmp_123627
-        i_110267 += one_124057
-      defunc_0_lifted_lambda_res_110266 = r_110268
-      zs_res_110272 = (defunc_0_lifted_lambda_res_110266 / np.float64(16.0))
-      zp_res_110273 = (np.float64(1.0e-5) + zs_res_110272)
-      sqrt_res_110274 = futhark_sqrt64(zp_res_110273)
-      zs_res_110275 = (np.float64(1.0) / sqrt_res_110274)
-      i_121031 = np.int64(0)
-      one_124059 = np.int64(1)
-      for counter_124058 in range(np.int64(16)):
-        zt_lhs_110282 = np.float64(indexArray(mem_121966, ((i_121039 * np.int64(16)) + i_121031), ct.c_double))
-        zt_res_110283 = (zs_res_110275 * zt_lhs_110282)
-        writeScalarArray(mem_121994, i_121031, zt_res_110283)
-        i_121031 += one_124059
-      i_121035 = np.int64(0)
-      one_124061 = np.int64(1)
-      for counter_124060 in range(np.int64(16)):
-        lifted_lambda_res_110291 = np.float64(indexArray(mem_121994, i_121035, ct.c_double))
-        writeScalarArray(mem_122001, i_121035, lifted_lambda_res_110291)
-        i_121035 += one_124061
-      lmad_copy(ct.c_double, mem_121989, (i_121039 * np.int64(16)), [np.int64(1)], mem_122001, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121039 += one_124063
-    mem_121994 = None
-    mem_122001 = None
-    mem_122012 = allocateMem(np.int64(2048))
-    mem_122013 = allocateMem(np.int64(2048))
-    mem_122014 = allocateMem(np.int64(2048))
-    mem_122027 = allocateMem(np.int64(128))
-    mem_122028 = allocateMem(np.int64(128))
-    mem_122029 = allocateMem(np.int64(128))
-    i_121057 = np.int64(0)
-    one_124073 = np.int64(1)
-    for counter_124072 in range(np.int64(16)):
-      i_121047 = np.int64(0)
-      one_124071 = np.int64(1)
-      for counter_124070 in range(np.int64(16)):
-        r_112818 = np.float64(0.0)
-        i_112817 = np.int64(0)
-        one_124065 = np.int64(1)
-        for counter_124064 in range(np.int64(16)):
-          zt_lhs_112819 = np.float64(indexArray(wqry_mem_121943, ((i_121047 * np.int64(16)) + i_112817), ct.c_double))
-          zt_rhs_112820 = np.float64(indexArray(mem_121989, ((i_121057 * np.int64(16)) + i_112817), ct.c_double))
-          zt_res_112821 = (zt_lhs_112819 * zt_rhs_112820)
-          zp_res_112822 = (r_112818 + zt_res_112821)
-          r_tmp_123636 = zp_res_112822
-          r_112818 = r_tmp_123636
-          i_112817 += one_124065
-        defunc_0_lifted_lambda_res_112816 = r_112818
-        r_112831 = np.float64(0.0)
-        i_112830 = np.int64(0)
-        one_124067 = np.int64(1)
-        for counter_124066 in range(np.int64(16)):
-          zt_lhs_112832 = np.float64(indexArray(wkey_mem_121940, ((i_121047 * np.int64(16)) + i_112830), ct.c_double))
-          zt_rhs_112833 = np.float64(indexArray(mem_121989, ((i_121057 * np.int64(16)) + i_112830), ct.c_double))
-          zt_res_112834 = (zt_lhs_112832 * zt_rhs_112833)
-          zp_res_112835 = (r_112831 + zt_res_112834)
-          r_tmp_123637 = zp_res_112835
-          r_112831 = r_tmp_123637
-          i_112830 += one_124067
-        defunc_0_lifted_lambda_res_112829 = r_112831
-        r_112847 = np.float64(0.0)
-        i_112846 = np.int64(0)
-        one_124069 = np.int64(1)
-        for counter_124068 in range(np.int64(16)):
-          zt_lhs_112848 = np.float64(indexArray(wval_mem_121946, ((i_121047 * np.int64(16)) + i_112846), ct.c_double))
-          zt_rhs_112849 = np.float64(indexArray(mem_121989, ((i_121057 * np.int64(16)) + i_112846), ct.c_double))
-          zt_res_112850 = (zt_lhs_112848 * zt_rhs_112849)
-          zp_res_112851 = (r_112847 + zt_res_112850)
-          r_tmp_123638 = zp_res_112851
-          r_112847 = r_tmp_123638
-          i_112846 += one_124069
-        defunc_0_lifted_lambda_res_112845 = r_112847
-        writeScalarArray(mem_122027, i_121047, defunc_0_lifted_lambda_res_112845)
-        writeScalarArray(mem_122028, i_121047, defunc_0_lifted_lambda_res_112829)
-        writeScalarArray(mem_122029, i_121047, defunc_0_lifted_lambda_res_112816)
-        i_121047 += one_124071
-      lmad_copy(ct.c_double, mem_122012, (i_121057 * np.int64(16)), [np.int64(1)], mem_122027, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_122013, (i_121057 * np.int64(16)), [np.int64(1)], mem_122028, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_122014, (i_121057 * np.int64(16)), [np.int64(1)], mem_122029, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121057 += one_124073
-    mem_121989 = None
-    mem_122027 = None
-    mem_122028 = None
-    mem_122029 = None
-    mem_122060 = allocateMem(np.int64(2048))
-    mem_122061 = allocateMem(np.int64(2048))
-    mem_122062 = allocateMem(np.int64(2048))
-    mem_122078 = allocateMem(np.int64(512))
-    mem_122079 = allocateMem(np.int64(512))
-    mem_122080 = allocateMem(np.int64(512))
-    mem_122093 = allocateMem(np.int64(32))
-    mem_122094 = allocateMem(np.int64(32))
-    mem_122095 = allocateMem(np.int64(32))
-    i_121087 = np.int64(0)
-    one_124079 = np.int64(1)
-    for counter_124078 in range(np.int64(4)):
-      zp_lhs_112692 = (np.int64(4) * i_121087)
-      i_121077 = np.int64(0)
-      one_124077 = np.int64(1)
-      for counter_124076 in range(np.int64(16)):
-        i_121067 = np.int64(0)
-        one_124075 = np.int64(1)
-        for counter_124074 in range(np.int64(4)):
-          tmp_113009 = (zp_lhs_112692 + i_121067)
-          x_113010 = sle64(np.int64(0), tmp_113009)
-          y_113011 = slt64(tmp_113009, np.int64(16))
-          bounds_check_113012 = (x_113010 and y_113011)
-          index_certs_113013 = True
-          assert bounds_check_113012, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:149:51-83\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:15:29-44\n   #6  microgpt.fut:4:11-25\n   #7  microgpt.fut:15:15-45\n   #8  microgpt.fut:149:15-84\n   #9  microgpt.fut:433:7-72\n" % ("Index [", tmp_113009, "] out of bounds for array of shape [", np.int64(16), "]."))
-          lifted_lambda_res_113014 = np.float64(indexArray(mem_122014, ((i_121077 * np.int64(16)) + tmp_113009), ct.c_double))
-          lifted_lambda_res_113022 = np.float64(indexArray(mem_122013, ((i_121077 * np.int64(16)) + tmp_113009), ct.c_double))
-          lifted_lambda_res_113033 = np.float64(indexArray(mem_122012, ((i_121077 * np.int64(16)) + tmp_113009), ct.c_double))
-          writeScalarArray(mem_122093, i_121067, lifted_lambda_res_113033)
-          writeScalarArray(mem_122094, i_121067, lifted_lambda_res_113022)
-          writeScalarArray(mem_122095, i_121067, lifted_lambda_res_113014)
-          i_121067 += one_124075
-        lmad_copy(ct.c_double, mem_122078, (i_121077 * np.int64(4)), [np.int64(1)], mem_122093, np.int64(0), [np.int64(1)], [np.int64(4)])
-        lmad_copy(ct.c_double, mem_122079, (i_121077 * np.int64(4)), [np.int64(1)], mem_122094, np.int64(0), [np.int64(1)], [np.int64(4)])
-        lmad_copy(ct.c_double, mem_122080, (i_121077 * np.int64(4)), [np.int64(1)], mem_122095, np.int64(0), [np.int64(1)], [np.int64(4)])
-        i_121077 += one_124077
-      lmad_copy(ct.c_double, mem_122060, (i_121087 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122078, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
-      lmad_copy(ct.c_double, mem_122061, (i_121087 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122079, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
-      lmad_copy(ct.c_double, mem_122062, (i_121087 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122080, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
-      i_121087 += one_124079
-    mem_122012 = None
-    mem_122013 = None
-    mem_122014 = None
-    mem_122078 = None
-    mem_122079 = None
-    mem_122080 = None
-    mem_122093 = None
-    mem_122094 = None
-    mem_122095 = None
-    mem_122141 = allocateMem(np.int64(2048))
-    mem_122147 = allocateMem(np.int64(2048))
-    mem_122152 = allocateMem(np.int64(128))
-    mem_122163 = allocateMem(np.int64(2048))
-    mem_122168 = allocateMem(np.int64(128))
-    mem_122179 = allocateMem(np.int64(2048))
-    mem_122184 = allocateMem(np.int64(128))
-    mem_122191 = allocateMem(np.int64(128))
-    mem_122198 = allocateMem(np.int64(128))
-    mem_122209 = allocateMem(np.int64(512))
-    mem_122214 = allocateMem(np.int64(32))
-    mem_122225 = allocateMem(np.int64(512))
-    mem_122230 = allocateMem(np.int64(32))
-    i_121143 = np.int64(0)
-    one_124113 = np.int64(1)
-    for counter_124112 in range(np.int64(4)):
-      i_121097 = np.int64(0)
-      one_124085 = np.int64(1)
-      for counter_124084 in range(np.int64(16)):
-        i_121093 = np.int64(0)
-        one_124083 = np.int64(1)
-        for counter_124082 in range(np.int64(16)):
-          r_110438 = np.float64(0.0)
-          i_110437 = np.int64(0)
-          one_124081 = np.int64(1)
-          for counter_124080 in range(np.int64(4)):
-            zt_lhs_110439 = np.float64(indexArray(mem_122062, (((i_121143 * np.int64(64)) + (i_121097 * np.int64(4))) + i_110437), ct.c_double))
-            zt_rhs_110440 = np.float64(indexArray(mem_122061, (((i_121143 * np.int64(64)) + (i_121093 * np.int64(4))) + i_110437), ct.c_double))
-            zt_res_110441 = (zt_lhs_110439 * zt_rhs_110440)
-            zp_res_110442 = (r_110438 + zt_res_110441)
-            r_tmp_123651 = zp_res_110442
-            r_110438 = r_tmp_123651
-            i_110437 += one_124081
-          defunc_0_lifted_lambda_res_110436 = r_110438
-          writeScalarArray(mem_122152, i_121093, defunc_0_lifted_lambda_res_110436)
-          i_121093 += one_124083
-        lmad_copy(ct.c_double, mem_122147, (i_121097 * np.int64(16)), [np.int64(1)], mem_122152, np.int64(0), [np.int64(1)], [np.int64(16)])
-        i_121097 += one_124085
-      i_121105 = np.int64(0)
-      one_124089 = np.int64(1)
-      for counter_124088 in range(np.int64(16)):
-        i_121101 = np.int64(0)
-        one_124087 = np.int64(1)
-        for counter_124086 in range(np.int64(16)):
-          zs_lhs_110457 = np.float64(indexArray(mem_122147, ((i_121105 * np.int64(16)) + i_121101), ct.c_double))
-          zs_res_110458 = (zs_lhs_110457 / np.float64(2.0))
-          zp_rhs_110459 = np.float64(indexArray(mask_mem_121949, ((i_121105 * np.int64(16)) + i_121101), ct.c_double))
-          zp_res_110460 = (zs_res_110458 + zp_rhs_110459)
-          writeScalarArray(mem_122168, i_121101, zp_res_110460)
-          i_121101 += one_124087
-        lmad_copy(ct.c_double, mem_122163, (i_121105 * np.int64(16)), [np.int64(1)], mem_122168, np.int64(0), [np.int64(1)], [np.int64(16)])
-        i_121105 += one_124089
-      i_121123 = np.int64(0)
-      one_124101 = np.int64(1)
-      for counter_124100 in range(np.int64(16)):
-        redout_121107 = -np.inf
-        i_121108 = np.int64(0)
-        one_124091 = np.int64(1)
-        for counter_124090 in range(np.int64(16)):
-          lifted_lambda_res_113060 = np.float64(indexArray(mem_122163, ((i_121123 * np.int64(16)) + i_121108), ct.c_double))
-          max_res_110481 = fmax64(lifted_lambda_res_113060, redout_121107)
-          redout_tmp_123655 = max_res_110481
-          redout_121107 = redout_tmp_123655
-          i_121108 += one_124091
-        defunc_0_reduce_res_113111 = redout_121107
-        neg_res_110482 = -(defunc_0_reduce_res_113111)
-        i_121111 = np.int64(0)
-        one_124093 = np.int64(1)
-        for counter_124092 in range(np.int64(16)):
-          zp_lhs_110489 = np.float64(indexArray(mem_122163, ((i_121123 * np.int64(16)) + i_121111), ct.c_double))
-          zp_res_110490 = (neg_res_110482 + zp_lhs_110489)
-          exp_res_110491 = futhark_exp64(zp_res_110490)
-          writeScalarArray(mem_122184, i_121111, exp_res_110491)
-          i_121111 += one_124093
-        r_110495 = np.float64(0.0)
-        i_110494 = np.int64(0)
-        one_124095 = np.int64(1)
-        for counter_124094 in range(np.int64(16)):
-          lifted_lambda_res_110496 = np.float64(indexArray(mem_122184, i_110494, ct.c_double))
-          zp_res_110497 = (r_110495 + lifted_lambda_res_110496)
-          r_tmp_123657 = zp_res_110497
-          r_110495 = r_tmp_123657
-          i_110494 += one_124095
-        defunc_0_lifted_lambda_res_110493 = r_110495
-        zs_res_110498 = (np.float64(1.0) / defunc_0_lifted_lambda_res_110493)
-        i_121115 = np.int64(0)
-        one_124097 = np.int64(1)
-        for counter_124096 in range(np.int64(16)):
-          zt_lhs_110505 = np.float64(indexArray(mem_122184, i_121115, ct.c_double))
-          zt_res_110506 = (zs_res_110498 * zt_lhs_110505)
-          writeScalarArray(mem_122191, i_121115, zt_res_110506)
-          i_121115 += one_124097
-        i_121119 = np.int64(0)
-        one_124099 = np.int64(1)
-        for counter_124098 in range(np.int64(16)):
-          lifted_lambda_res_110514 = np.float64(indexArray(mem_122191, i_121119, ct.c_double))
-          writeScalarArray(mem_122198, i_121119, lifted_lambda_res_110514)
-          i_121119 += one_124099
-        lmad_copy(ct.c_double, mem_122179, (i_121123 * np.int64(16)), [np.int64(1)], mem_122198, np.int64(0), [np.int64(1)], [np.int64(16)])
-        i_121123 += one_124101
-      i_121131 = np.int64(0)
-      one_124107 = np.int64(1)
-      for counter_124106 in range(np.int64(16)):
-        i_121127 = np.int64(0)
-        one_124105 = np.int64(1)
-        for counter_124104 in range(np.int64(4)):
-          r_110531 = np.float64(0.0)
-          i_110530 = np.int64(0)
-          one_124103 = np.int64(1)
-          for counter_124102 in range(np.int64(16)):
-            zt_lhs_110532 = np.float64(indexArray(mem_122179, ((i_121131 * np.int64(16)) + i_110530), ct.c_double))
-            zt_rhs_110533 = np.float64(indexArray(mem_122060, (((i_121143 * np.int64(64)) + (i_110530 * np.int64(4))) + i_121127), ct.c_double))
-            zt_res_110534 = (zt_lhs_110532 * zt_rhs_110533)
-            zp_res_110535 = (r_110531 + zt_res_110534)
-            r_tmp_123662 = zp_res_110535
-            r_110531 = r_tmp_123662
-            i_110530 += one_124103
-          defunc_0_lifted_lambda_res_110529 = r_110531
-          writeScalarArray(mem_122214, i_121127, defunc_0_lifted_lambda_res_110529)
-          i_121127 += one_124105
-        lmad_copy(ct.c_double, mem_122209, (i_121131 * np.int64(4)), [np.int64(1)], mem_122214, np.int64(0), [np.int64(1)], [np.int64(4)])
-        i_121131 += one_124107
-      i_121139 = np.int64(0)
-      one_124111 = np.int64(1)
-      for counter_124110 in range(np.int64(16)):
-        i_121135 = np.int64(0)
-        one_124109 = np.int64(1)
-        for counter_124108 in range(np.int64(4)):
-          lifted_lambda_res_110550 = np.float64(indexArray(mem_122209, ((i_121139 * np.int64(4)) + i_121135), ct.c_double))
-          writeScalarArray(mem_122230, i_121135, lifted_lambda_res_110550)
-          i_121135 += one_124109
-        lmad_copy(ct.c_double, mem_122225, (i_121139 * np.int64(4)), [np.int64(1)], mem_122230, np.int64(0), [np.int64(1)], [np.int64(4)])
-        i_121139 += one_124111
-      lmad_copy(ct.c_double, mem_122141, (i_121143 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122225, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
-      i_121143 += one_124113
-    mem_122060 = None
-    mem_122061 = None
-    mem_122062 = None
-    mem_122147 = None
-    mem_122152 = None
-    mem_122163 = None
-    mem_122168 = None
-    mem_122179 = None
-    mem_122184 = None
-    mem_122191 = None
-    mem_122198 = None
-    mem_122209 = None
-    mem_122214 = None
-    mem_122225 = None
-    mem_122230 = None
-    mem_122246 = allocateMem(np.int64(2048))
-    mem_122251 = allocateMem(np.int64(128))
-    i_121151 = np.int64(0)
-    one_124117 = np.int64(1)
-    for counter_124116 in range(np.int64(16)):
-      i_121147 = np.int64(0)
-      one_124115 = np.int64(1)
-      for counter_124114 in range(np.int64(16)):
-        tmp_110562 = sdiv64(i_121147, np.int64(4))
-        x_110563 = sle64(np.int64(0), tmp_110562)
-        y_110564 = slt64(tmp_110562, np.int64(4))
-        bounds_check_110565 = (x_110563 and y_110564)
-        index_certs_110566 = True
-        assert bounds_check_110565, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:161:44-59\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:161:15-80\n   #6  microgpt.fut:433:7-72\n" % ("Index [", tmp_110562, "] out of bounds for array of shape [", np.int64(4), "]."))
-        tmp_110567 = smod64(i_121147, np.int64(4))
-        x_110568 = sle64(np.int64(0), tmp_110567)
-        y_110569 = slt64(tmp_110567, np.int64(4))
-        bounds_check_110570 = (x_110568 and y_110569)
-        index_certs_110571 = True
-        assert bounds_check_110570, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:161:44-79\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:161:15-80\n   #6  microgpt.fut:433:7-72\n" % ("Index [", tmp_110567, "] out of bounds for array of shape [", np.int64(4), "]."))
-        lifted_lambda_res_110572 = np.float64(indexArray(mem_122141, (((tmp_110562 * np.int64(64)) + (i_121151 * np.int64(4))) + tmp_110567), ct.c_double))
-        writeScalarArray(mem_122251, i_121147, lifted_lambda_res_110572)
-        i_121147 += one_124115
-      lmad_copy(ct.c_double, mem_122246, (i_121151 * np.int64(16)), [np.int64(1)], mem_122251, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121151 += one_124117
-    mem_122141 = None
-    mem_122251 = None
-    mem_122262 = allocateMem(np.int64(2048))
-    mem_122267 = allocateMem(np.int64(128))
-    i_121159 = np.int64(0)
-    one_124123 = np.int64(1)
-    for counter_124122 in range(np.int64(16)):
-      i_121155 = np.int64(0)
-      one_124121 = np.int64(1)
-      for counter_124120 in range(np.int64(16)):
-        r_110589 = np.float64(0.0)
-        i_110588 = np.int64(0)
-        one_124119 = np.int64(1)
-        for counter_124118 in range(np.int64(16)):
-          zt_lhs_110590 = np.float64(indexArray(wout_mem_121941, ((i_121155 * np.int64(16)) + i_110588), ct.c_double))
-          zt_rhs_110591 = np.float64(indexArray(mem_122246, ((i_121159 * np.int64(16)) + i_110588), ct.c_double))
-          zt_res_110592 = (zt_lhs_110590 * zt_rhs_110591)
-          zp_res_110593 = (r_110589 + zt_res_110592)
-          r_tmp_123669 = zp_res_110593
-          r_110589 = r_tmp_123669
-          i_110588 += one_124119
-        defunc_0_lifted_lambda_res_110587 = r_110589
-        writeScalarArray(mem_122267, i_121155, defunc_0_lifted_lambda_res_110587)
-        i_121155 += one_124121
-      lmad_copy(ct.c_double, mem_122262, (i_121159 * np.int64(16)), [np.int64(1)], mem_122267, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121159 += one_124123
-    mem_122246 = None
-    mem_122267 = None
-    mem_122278 = allocateMem(np.int64(2048))
-    mem_122283 = allocateMem(np.int64(128))
-    i_121167 = np.int64(0)
-    one_124127 = np.int64(1)
-    for counter_124126 in range(np.int64(16)):
-      i_121163 = np.int64(0)
-      one_124125 = np.int64(1)
-      for counter_124124 in range(np.int64(16)):
-        zp_lhs_110608 = np.float64(indexArray(mem_122262, ((i_121167 * np.int64(16)) + i_121163), ct.c_double))
-        zp_rhs_110609 = np.float64(indexArray(mem_121966, ((i_121167 * np.int64(16)) + i_121163), ct.c_double))
-        zp_res_110610 = (zp_lhs_110608 + zp_rhs_110609)
-        writeScalarArray(mem_122283, i_121163, zp_res_110610)
-        i_121163 += one_124125
-      lmad_copy(ct.c_double, mem_122278, (i_121167 * np.int64(16)), [np.int64(1)], mem_122283, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121167 += one_124127
-    mem_121966 = None
-    mem_122262 = None
-    mem_122283 = None
-    mem_122294 = allocateMem(np.int64(2048))
-    mem_122299 = allocateMem(np.int64(128))
-    mem_122306 = allocateMem(np.int64(128))
-    i_121179 = np.int64(0)
-    one_124135 = np.int64(1)
-    for counter_124134 in range(np.int64(16)):
-      r_110621 = np.float64(0.0)
-      i_110620 = np.int64(0)
-      one_124129 = np.int64(1)
-      for counter_124128 in range(np.int64(16)):
-        zt_lhs_110622 = np.float64(indexArray(mem_122278, ((i_121179 * np.int64(16)) + i_110620), ct.c_double))
-        zt_res_110623 = (zt_lhs_110622 * zt_lhs_110622)
-        zp_res_110624 = (r_110621 + zt_res_110623)
-        r_tmp_123673 = zp_res_110624
-        r_110621 = r_tmp_123673
-        i_110620 += one_124129
-      defunc_0_lifted_lambda_res_110619 = r_110621
-      zs_res_110625 = (defunc_0_lifted_lambda_res_110619 / np.float64(16.0))
-      zp_res_110626 = (np.float64(1.0e-5) + zs_res_110625)
-      sqrt_res_110627 = futhark_sqrt64(zp_res_110626)
-      zs_res_110628 = (np.float64(1.0) / sqrt_res_110627)
-      i_121171 = np.int64(0)
-      one_124131 = np.int64(1)
-      for counter_124130 in range(np.int64(16)):
-        zt_lhs_110635 = np.float64(indexArray(mem_122278, ((i_121179 * np.int64(16)) + i_121171), ct.c_double))
-        zt_res_110636 = (zs_res_110628 * zt_lhs_110635)
-        writeScalarArray(mem_122299, i_121171, zt_res_110636)
-        i_121171 += one_124131
-      i_121175 = np.int64(0)
-      one_124133 = np.int64(1)
-      for counter_124132 in range(np.int64(16)):
-        lifted_lambda_res_110644 = np.float64(indexArray(mem_122299, i_121175, ct.c_double))
-        writeScalarArray(mem_122306, i_121175, lifted_lambda_res_110644)
-        i_121175 += one_124133
-      lmad_copy(ct.c_double, mem_122294, (i_121179 * np.int64(16)), [np.int64(1)], mem_122306, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121179 += one_124135
-    mem_122299 = None
-    mem_122306 = None
-    mem_122317 = allocateMem(np.int64(8192))
-    mem_122322 = allocateMem(np.int64(512))
-    i_121187 = np.int64(0)
-    one_124141 = np.int64(1)
-    for counter_124140 in range(np.int64(16)):
-      i_121183 = np.int64(0)
-      one_124139 = np.int64(1)
-      for counter_124138 in range(np.int64(64)):
-        r_110662 = np.float64(0.0)
-        i_110661 = np.int64(0)
-        one_124137 = np.int64(1)
-        for counter_124136 in range(np.int64(16)):
-          zt_lhs_110663 = np.float64(indexArray(wup_mem_121945, ((i_121183 * np.int64(16)) + i_110661), ct.c_double))
-          zt_rhs_110664 = np.float64(indexArray(mem_122294, ((i_121187 * np.int64(16)) + i_110661), ct.c_double))
-          zt_res_110665 = (zt_lhs_110663 * zt_rhs_110664)
-          zp_res_110666 = (r_110662 + zt_res_110665)
-          r_tmp_123678 = zp_res_110666
-          r_110662 = r_tmp_123678
-          i_110661 += one_124137
-        defunc_0_lifted_lambda_res_110660 = r_110662
-        writeScalarArray(mem_122322, i_121183, defunc_0_lifted_lambda_res_110660)
-        i_121183 += one_124139
-      lmad_copy(ct.c_double, mem_122317, (i_121187 * np.int64(64)), [np.int64(1)], mem_122322, np.int64(0), [np.int64(1)], [np.int64(64)])
-      i_121187 += one_124141
-    mem_122294 = None
-    mem_122322 = None
-    mem_122333 = allocateMem(np.int64(8192))
-    mem_122338 = allocateMem(np.int64(512))
-    i_121195 = np.int64(0)
-    one_124145 = np.int64(1)
-    for counter_124144 in range(np.int64(16)):
-      i_121191 = np.int64(0)
-      one_124143 = np.int64(1)
-      for counter_124142 in range(np.int64(64)):
-        max_arg0_110681 = np.float64(indexArray(mem_122317, ((i_121195 * np.int64(64)) + i_121191), ct.c_double))
-        max_res_110682 = fmax64(np.float64(0.0), max_arg0_110681)
-        writeScalarArray(mem_122338, i_121191, max_res_110682)
-        i_121191 += one_124143
-      lmad_copy(ct.c_double, mem_122333, (i_121195 * np.int64(64)), [np.int64(1)], mem_122338, np.int64(0), [np.int64(1)], [np.int64(64)])
-      i_121195 += one_124145
-    mem_122317 = None
-    mem_122338 = None
-    mem_122349 = allocateMem(np.int64(2048))
-    mem_122354 = allocateMem(np.int64(128))
-    i_121203 = np.int64(0)
-    one_124151 = np.int64(1)
-    for counter_124150 in range(np.int64(16)):
-      i_121199 = np.int64(0)
-      one_124149 = np.int64(1)
-      for counter_124148 in range(np.int64(16)):
-        r_110699 = np.float64(0.0)
-        i_110698 = np.int64(0)
-        one_124147 = np.int64(1)
-        for counter_124146 in range(np.int64(64)):
-          zt_lhs_110700 = np.float64(indexArray(wdown_mem_121939, ((i_121199 * np.int64(64)) + i_110698), ct.c_double))
-          zt_rhs_110701 = np.float64(indexArray(mem_122333, ((i_121203 * np.int64(64)) + i_110698), ct.c_double))
-          zt_res_110702 = (zt_lhs_110700 * zt_rhs_110701)
-          zp_res_110703 = (r_110699 + zt_res_110702)
-          r_tmp_123683 = zp_res_110703
-          r_110699 = r_tmp_123683
-          i_110698 += one_124147
-        defunc_0_lifted_lambda_res_110697 = r_110699
-        writeScalarArray(mem_122354, i_121199, defunc_0_lifted_lambda_res_110697)
-        i_121199 += one_124149
-      lmad_copy(ct.c_double, mem_122349, (i_121203 * np.int64(16)), [np.int64(1)], mem_122354, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121203 += one_124151
-    mem_122333 = None
-    mem_122354 = None
-    mem_122365 = allocateMem(np.int64(2048))
-    mem_122370 = allocateMem(np.int64(128))
-    i_121211 = np.int64(0)
-    one_124155 = np.int64(1)
-    for counter_124154 in range(np.int64(16)):
-      i_121207 = np.int64(0)
-      one_124153 = np.int64(1)
-      for counter_124152 in range(np.int64(16)):
-        zp_lhs_110718 = np.float64(indexArray(mem_122349, ((i_121211 * np.int64(16)) + i_121207), ct.c_double))
-        zp_rhs_110719 = np.float64(indexArray(mem_122278, ((i_121211 * np.int64(16)) + i_121207), ct.c_double))
-        zp_res_110720 = (zp_lhs_110718 + zp_rhs_110719)
-        writeScalarArray(mem_122370, i_121207, zp_res_110720)
-        i_121207 += one_124153
-      lmad_copy(ct.c_double, mem_122365, (i_121211 * np.int64(16)), [np.int64(1)], mem_122370, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121211 += one_124155
-    mem_122278 = None
-    mem_122349 = None
-    mem_122370 = None
-    mem_122381 = allocateMem(np.int64(3456))
-    mem_122386 = allocateMem(np.int64(216))
-    i_121219 = np.int64(0)
-    one_124161 = np.int64(1)
-    for counter_124160 in range(np.int64(16)):
-      i_121215 = np.int64(0)
-      one_124159 = np.int64(1)
-      for counter_124158 in range(np.int64(27)):
-        r_110738 = np.float64(0.0)
-        i_110737 = np.int64(0)
-        one_124157 = np.int64(1)
-        for counter_124156 in range(np.int64(16)):
-          zt_lhs_110739 = np.float64(indexArray(wvoc_mem_121947, ((i_121215 * np.int64(16)) + i_110737), ct.c_double))
-          zt_rhs_110740 = np.float64(indexArray(mem_122365, ((i_121219 * np.int64(16)) + i_110737), ct.c_double))
-          zt_res_110741 = (zt_lhs_110739 * zt_rhs_110740)
-          zp_res_110742 = (r_110738 + zt_res_110741)
-          r_tmp_123688 = zp_res_110742
-          r_110738 = r_tmp_123688
-          i_110737 += one_124157
-        defunc_0_lifted_lambda_res_110736 = r_110738
-        writeScalarArray(mem_122386, i_121215, defunc_0_lifted_lambda_res_110736)
-        i_121215 += one_124159
-      lmad_copy(ct.c_double, mem_122381, (i_121219 * np.int64(27)), [np.int64(1)], mem_122386, np.int64(0), [np.int64(1)], [np.int64(27)])
-      i_121219 += one_124161
-    mem_122365 = None
-    mem_122386 = None
-    mem_122397 = allocateMem(np.int64(3456))
-    mem_122402 = allocateMem(np.int64(216))
-    i_121227 = np.int64(0)
-    one_124165 = np.int64(1)
-    for counter_124164 in range(np.int64(16)):
-      i_121223 = np.int64(0)
-      one_124163 = np.int64(1)
-      for counter_124162 in range(np.int64(27)):
-        lifted_lambda_res_110757 = np.float64(indexArray(mem_122381, ((i_121227 * np.int64(27)) + i_121223), ct.c_double))
-        writeScalarArray(mem_122402, i_121223, lifted_lambda_res_110757)
-        i_121223 += one_124163
-      lmad_copy(ct.c_double, mem_122397, (i_121227 * np.int64(27)), [np.int64(1)], mem_122402, np.int64(0), [np.int64(1)], [np.int64(27)])
-      i_121227 += one_124165
-    mem_122381 = None
-    mem_122402 = None
-    mem_out_123619 = mem_122397
-    return mem_out_123619
-
-  def futhark_entry_grad_loss(self, wdown_mem_121939, wkey_mem_121940, wout_mem_121941, wpe_mem_121942, wqry_mem_121943, wte_mem_121944, wup_mem_121945, wval_mem_121946, wvoc_mem_121947, seq_ids_mem_121948, target_mem_121949, mask_mem_121950):
-    mem_121951 = allocateMem(np.int64(2048))
-    mem_121956 = allocateMem(np.int64(128))
-    i_121015 = np.int64(0)
-    one_124169 = np.int64(1)
-    for counter_124168 in range(np.int64(16)):
-      tmp_110192 = np.int64(indexArray(seq_ids_mem_121948, i_121015, ct.c_int64))
-      x_110193 = sle64(np.int64(0), tmp_110192)
-      y_110194 = slt64(tmp_110192, np.int64(27))
-      bounds_check_110195 = (x_110193 and y_110194)
-      index_certs_110196 = True
-      assert bounds_check_110195, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:461:37-52\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:461:16-56\n" % ("Index [", tmp_110192, "] out of bounds for array of shape [", np.int64(27), "]."))
-      i_121011 = np.int64(0)
-      one_124167 = np.int64(1)
-      for counter_124166 in range(np.int64(16)):
-        lifted_lambda_res_110203 = np.float64(indexArray(wte_mem_121944, ((tmp_110192 * np.int64(16)) + i_121011), ct.c_double))
-        writeScalarArray(mem_121956, i_121011, lifted_lambda_res_110203)
-        i_121011 += one_124167
-      lmad_copy(ct.c_double, mem_121951, (i_121015 * np.int64(16)), [np.int64(1)], mem_121956, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121015 += one_124169
-    mem_121956 = None
-    mem_121967 = allocateMem(np.int64(128))
-    mem_121968 = allocateMem(np.int64(128))
-    mem_121969 = allocateMem(np.int64(2048))
-    mem_121980 = allocateMem(np.int64(128))
-    mem_121987 = allocateMem(np.int64(128))
-    i_121031 = np.int64(0)
-    one_124181 = np.int64(1)
-    for counter_124180 in range(np.int64(16)):
-      r_112901 = np.float64(0.0)
-      i_112900 = np.int64(0)
-      one_124171 = np.int64(1)
-      for counter_124170 in range(np.int64(16)):
-        zp_lhs_112902 = np.float64(indexArray(wpe_mem_121942, ((i_121031 * np.int64(16)) + i_112900), ct.c_double))
-        zp_rhs_112903 = np.float64(indexArray(mem_121951, ((i_121031 * np.int64(16)) + i_112900), ct.c_double))
-        zp_res_112904 = (zp_lhs_112902 + zp_rhs_112903)
-        zt_res_112905 = (zp_res_112904 * zp_res_112904)
-        zp_res_112906 = (r_112901 + zt_res_112905)
-        r_tmp_123633 = zp_res_112906
-        r_112901 = r_tmp_123633
-        i_112900 += one_124171
-      defunc_0_lifted_lambda_res_112899 = r_112901
-      zs_res_112907 = (defunc_0_lifted_lambda_res_112899 / np.float64(16.0))
-      zp_res_112908 = (np.float64(1.0e-5) + zs_res_112907)
-      sqrt_res_112909 = futhark_sqrt64(zp_res_112908)
-      zs_res_112910 = (np.float64(1.0) / sqrt_res_112909)
-      i_121019 = np.int64(0)
-      one_124173 = np.int64(1)
-      for counter_124172 in range(np.int64(16)):
-        zp_lhs_112917 = np.float64(indexArray(wpe_mem_121942, ((i_121031 * np.int64(16)) + i_121019), ct.c_double))
-        zp_rhs_112918 = np.float64(indexArray(mem_121951, ((i_121031 * np.int64(16)) + i_121019), ct.c_double))
-        zp_res_112919 = (zp_lhs_112917 + zp_rhs_112918)
-        zt_res_112920 = (zs_res_112910 * zp_res_112919)
-        writeScalarArray(mem_121980, i_121019, zt_res_112920)
-        i_121019 += one_124173
-      i_121023 = np.int64(0)
-      one_124175 = np.int64(1)
-      for counter_124174 in range(np.int64(16)):
-        lifted_lambda_res_112928 = np.float64(indexArray(mem_121980, i_121023, ct.c_double))
-        writeScalarArray(mem_121987, i_121023, lifted_lambda_res_112928)
-        i_121023 += one_124175
-      r_112938 = np.float64(0.0)
-      i_112937 = np.int64(0)
-      one_124177 = np.int64(1)
-      for counter_124176 in range(np.int64(16)):
-        zp_lhs_112939 = np.float64(indexArray(wpe_mem_121942, ((i_121031 * np.int64(16)) + i_112937), ct.c_double))
-        zp_rhs_112940 = np.float64(indexArray(mem_121951, ((i_121031 * np.int64(16)) + i_112937), ct.c_double))
-        zp_res_112941 = (zp_lhs_112939 + zp_rhs_112940)
-        zt_res_112942 = (zp_res_112941 * zp_res_112941)
-        zp_res_112943 = (r_112938 + zt_res_112942)
-        r_tmp_123636 = zp_res_112943
-        r_112938 = r_tmp_123636
-        i_112937 += one_124177
-      defunc_0_lifted_lambda_res_112936 = r_112938
-      zs_res_112944 = (defunc_0_lifted_lambda_res_112936 / np.float64(16.0))
-      r_112956 = np.float64(0.0)
-      i_112955 = np.int64(0)
-      one_124179 = np.int64(1)
-      for counter_124178 in range(np.int64(16)):
-        zp_lhs_112957 = np.float64(indexArray(wpe_mem_121942, ((i_121031 * np.int64(16)) + i_112955), ct.c_double))
-        zp_rhs_112958 = np.float64(indexArray(mem_121951, ((i_121031 * np.int64(16)) + i_112955), ct.c_double))
-        zp_res_112959 = (zp_lhs_112957 + zp_rhs_112958)
-        zt_res_112960 = (zp_res_112959 * zp_res_112959)
-        zp_res_112961 = (r_112956 + zt_res_112960)
-        r_tmp_123637 = zp_res_112961
-        r_112956 = r_tmp_123637
-        i_112955 += one_124179
-      defunc_0_lifted_lambda_res_112954 = r_112956
-      zs_res_112962 = (defunc_0_lifted_lambda_res_112954 / np.float64(16.0))
-      writeScalarArray(mem_121967, i_121031, zs_res_112962)
-      writeScalarArray(mem_121968, i_121031, zs_res_112944)
-      lmad_copy(ct.c_double, mem_121969, (i_121031 * np.int64(16)), [np.int64(1)], mem_121987, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121031 += one_124181
-    mem_121980 = None
-    mem_121987 = None
-    mem_122004 = allocateMem(np.int64(128))
-    mem_122005 = allocateMem(np.int64(2048))
-    mem_122013 = allocateMem(np.int64(128))
-    mem_122020 = allocateMem(np.int64(128))
-    i_121047 = np.int64(0)
-    one_124191 = np.int64(1)
-    for counter_124190 in range(np.int64(16)):
-      r_112983 = np.float64(0.0)
-      i_112982 = np.int64(0)
-      one_124183 = np.int64(1)
-      for counter_124182 in range(np.int64(16)):
-        zt_lhs_112984 = np.float64(indexArray(mem_121969, ((i_121047 * np.int64(16)) + i_112982), ct.c_double))
-        zt_res_112985 = (zt_lhs_112984 * zt_lhs_112984)
-        zp_res_112986 = (r_112983 + zt_res_112985)
-        r_tmp_123640 = zp_res_112986
-        r_112983 = r_tmp_123640
-        i_112982 += one_124183
-      defunc_0_lifted_lambda_res_112981 = r_112983
-      zs_res_112987 = (defunc_0_lifted_lambda_res_112981 / np.float64(16.0))
-      zp_res_112988 = (np.float64(1.0e-5) + zs_res_112987)
-      sqrt_res_112989 = futhark_sqrt64(zp_res_112988)
-      zs_res_112990 = (np.float64(1.0) / sqrt_res_112989)
-      i_121037 = np.int64(0)
-      one_124185 = np.int64(1)
-      for counter_124184 in range(np.int64(16)):
-        zt_lhs_112997 = np.float64(indexArray(mem_121969, ((i_121047 * np.int64(16)) + i_121037), ct.c_double))
-        zt_res_112998 = (zs_res_112990 * zt_lhs_112997)
-        writeScalarArray(mem_122013, i_121037, zt_res_112998)
-        i_121037 += one_124185
-      i_121041 = np.int64(0)
-      one_124187 = np.int64(1)
-      for counter_124186 in range(np.int64(16)):
-        lifted_lambda_res_113006 = np.float64(indexArray(mem_122013, i_121041, ct.c_double))
-        writeScalarArray(mem_122020, i_121041, lifted_lambda_res_113006)
-        i_121041 += one_124187
-      r_113016 = np.float64(0.0)
-      i_113015 = np.int64(0)
-      one_124189 = np.int64(1)
-      for counter_124188 in range(np.int64(16)):
-        zt_lhs_113017 = np.float64(indexArray(mem_121969, ((i_121047 * np.int64(16)) + i_113015), ct.c_double))
-        zt_res_113018 = (zt_lhs_113017 * zt_lhs_113017)
-        zp_res_113019 = (r_113016 + zt_res_113018)
-        r_tmp_123643 = zp_res_113019
-        r_113016 = r_tmp_123643
-        i_113015 += one_124189
-      defunc_0_lifted_lambda_res_113014 = r_113016
-      zs_res_113020 = (defunc_0_lifted_lambda_res_113014 / np.float64(16.0))
-      writeScalarArray(mem_122004, i_121047, zs_res_113020)
-      lmad_copy(ct.c_double, mem_122005, (i_121047 * np.int64(16)), [np.int64(1)], mem_122020, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121047 += one_124191
-    mem_122013 = None
-    mem_122020 = None
-    mem_122034 = allocateMem(np.int64(2048))
-    mem_122035 = allocateMem(np.int64(2048))
-    mem_122036 = allocateMem(np.int64(2048))
-    mem_122052 = allocateMem(np.int64(512))
-    mem_122053 = allocateMem(np.int64(512))
-    mem_122054 = allocateMem(np.int64(512))
-    mem_122067 = allocateMem(np.int64(32))
-    mem_122068 = allocateMem(np.int64(32))
-    mem_122069 = allocateMem(np.int64(32))
-    i_121076 = np.int64(0)
-    one_124203 = np.int64(1)
-    for counter_124202 in range(np.int64(4)):
-      zp_lhs_113101 = (np.int64(4) * i_121076)
-      i_121066 = np.int64(0)
-      one_124201 = np.int64(1)
-      for counter_124200 in range(np.int64(16)):
-        i_121056 = np.int64(0)
-        one_124199 = np.int64(1)
-        for counter_124198 in range(np.int64(4)):
-          zt_lhs_116622 = (zp_lhs_113101 + i_121056)
-          x_116623 = sle64(np.int64(0), zt_lhs_116622)
-          y_116624 = slt64(zt_lhs_116622, np.int64(16))
-          bounds_check_116625 = (x_116623 and y_116624)
-          index_certs_116626 = True
-          assert bounds_check_116625, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:284:70-97\n   #1  microgpt.fut:61:46-49\n   #2  microgpt.fut:284:49-127\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:27-39\n   #5  microgpt.fut:4:11-25\n   #6  microgpt.fut:9:13-40\n   #7  microgpt.fut:15:29-44\n   #8  microgpt.fut:4:11-25\n   #9  microgpt.fut:15:15-45\n   #10 microgpt.fut:284:12-129\n   #11 microgpt.fut:462:7-77\n" % ("Index [", zt_lhs_116622, "] out of bounds for array of shape [", np.int64(16), "]."))
-          r_116629 = np.float64(0.0)
-          i_116628 = np.int64(0)
-          one_124193 = np.int64(1)
-          for counter_124192 in range(np.int64(16)):
-            zt_lhs_116630 = np.float64(indexArray(wqry_mem_121943, ((zt_lhs_116622 * np.int64(16)) + i_116628), ct.c_double))
-            zt_rhs_116631 = np.float64(indexArray(mem_122005, ((i_121066 * np.int64(16)) + i_116628), ct.c_double))
-            zt_res_116632 = (zt_lhs_116630 * zt_rhs_116631)
-            zp_res_116633 = (r_116629 + zt_res_116632)
-            r_tmp_123653 = zp_res_116633
-            r_116629 = r_tmp_123653
-            i_116628 += one_124193
-          defunc_0_lifted_lambda_res_116627 = r_116629
-          r_116643 = np.float64(0.0)
-          i_116642 = np.int64(0)
-          one_124195 = np.int64(1)
-          for counter_124194 in range(np.int64(16)):
-            zt_lhs_116644 = np.float64(indexArray(wkey_mem_121940, ((zt_lhs_116622 * np.int64(16)) + i_116642), ct.c_double))
-            zt_rhs_116645 = np.float64(indexArray(mem_122005, ((i_121066 * np.int64(16)) + i_116642), ct.c_double))
-            zt_res_116646 = (zt_lhs_116644 * zt_rhs_116645)
-            zp_res_116647 = (r_116643 + zt_res_116646)
-            r_tmp_123654 = zp_res_116647
-            r_116643 = r_tmp_123654
-            i_116642 += one_124195
-          defunc_0_lifted_lambda_res_116641 = r_116643
-          r_116660 = np.float64(0.0)
-          i_116659 = np.int64(0)
-          one_124197 = np.int64(1)
-          for counter_124196 in range(np.int64(16)):
-            zt_lhs_116661 = np.float64(indexArray(wval_mem_121946, ((zt_lhs_116622 * np.int64(16)) + i_116659), ct.c_double))
-            zt_rhs_116662 = np.float64(indexArray(mem_122005, ((i_121066 * np.int64(16)) + i_116659), ct.c_double))
-            zt_res_116663 = (zt_lhs_116661 * zt_rhs_116662)
-            zp_res_116664 = (r_116660 + zt_res_116663)
-            r_tmp_123655 = zp_res_116664
-            r_116660 = r_tmp_123655
-            i_116659 += one_124197
-          defunc_0_lifted_lambda_res_116658 = r_116660
-          writeScalarArray(mem_122067, i_121056, defunc_0_lifted_lambda_res_116658)
-          writeScalarArray(mem_122068, i_121056, defunc_0_lifted_lambda_res_116641)
-          writeScalarArray(mem_122069, i_121056, defunc_0_lifted_lambda_res_116627)
-          i_121056 += one_124199
-        lmad_copy(ct.c_double, mem_122052, (i_121066 * np.int64(4)), [np.int64(1)], mem_122067, np.int64(0), [np.int64(1)], [np.int64(4)])
-        lmad_copy(ct.c_double, mem_122053, (i_121066 * np.int64(4)), [np.int64(1)], mem_122068, np.int64(0), [np.int64(1)], [np.int64(4)])
-        lmad_copy(ct.c_double, mem_122054, (i_121066 * np.int64(4)), [np.int64(1)], mem_122069, np.int64(0), [np.int64(1)], [np.int64(4)])
-        i_121066 += one_124201
-      lmad_copy(ct.c_double, mem_122034, (i_121076 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122052, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
-      lmad_copy(ct.c_double, mem_122035, (i_121076 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122053, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
-      lmad_copy(ct.c_double, mem_122036, (i_121076 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122054, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
-      i_121076 += one_124203
-    mem_122052 = None
-    mem_122053 = None
-    mem_122054 = None
-    mem_122067 = None
-    mem_122068 = None
-    mem_122069 = None
-    mem_122115 = allocateMem(np.int64(2048))
-    mem_122120 = allocateMem(np.int64(128))
-    mem_122124 = allocateMem(np.int64(2048))
-    mem_122129 = allocateMem(np.int64(128))
-    mem_122140 = allocateMem(np.int64(2048))
-    mem_122145 = allocateMem(np.int64(128))
-    mem_122156 = allocateMem(np.int64(2048))
-    mem_122161 = allocateMem(np.int64(128))
-    mem_122168 = allocateMem(np.int64(128))
-    mem_122175 = allocateMem(np.int64(128))
-    mem_122186 = allocateMem(np.int64(512))
-    mem_122191 = allocateMem(np.int64(32))
-    i_121128 = np.int64(0)
-    one_124235 = np.int64(1)
-    for counter_124234 in range(np.int64(16)):
-      i_121124 = np.int64(0)
-      one_124233 = np.int64(1)
-      for counter_124232 in range(np.int64(16)):
-        zt_lhs_110382 = sdiv64(i_121124, np.int64(4))
-        x_110383 = sle64(np.int64(0), zt_lhs_110382)
-        y_110384 = slt64(zt_lhs_110382, np.int64(4))
-        bounds_check_110385 = (x_110383 and y_110384)
-        index_certs_110386 = True
-        assert bounds_check_110385, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:287:103-119\n   #1  microgpt.fut:61:46-49\n   #2  microgpt.fut:287:83-170\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:27-39\n   #5  microgpt.fut:4:11-25\n   #6  microgpt.fut:9:13-40\n   #7  microgpt.fut:287:53-172\n   #8  microgpt.fut:4:11-25\n   #9  microgpt.fut:9:27-39\n   #10 microgpt.fut:4:11-25\n   #11 microgpt.fut:9:13-40\n   #12 microgpt.fut:287:12-295:32\n   #13 microgpt.fut:462:7-77\n" % ("Index [", zt_lhs_110382, "] out of bounds for array of shape [", np.int64(4), "]."))
-        tmp_110501 = smod64(i_121124, np.int64(4))
-        x_110502 = sle64(np.int64(0), tmp_110501)
-        y_110503 = slt64(tmp_110501, np.int64(4))
-        bounds_check_110504 = (x_110502 and y_110503)
-        index_certs_110505 = True
-        assert bounds_check_110504, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:295:4-27\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:287:12-295:32\n   #6  microgpt.fut:462:7-77\n" % ("Index [", tmp_110501, "] out of bounds for array of shape [", np.int64(4), "]."))
-        i_121086 = np.int64(0)
-        one_124209 = np.int64(1)
-        for counter_124208 in range(np.int64(16)):
-          i_121082 = np.int64(0)
-          one_124207 = np.int64(1)
-          for counter_124206 in range(np.int64(16)):
-            r_110401 = np.float64(0.0)
-            i_110400 = np.int64(0)
-            one_124205 = np.int64(1)
-            for counter_124204 in range(np.int64(4)):
-              zt_lhs_110402 = np.float64(indexArray(mem_122036, (((zt_lhs_110382 * np.int64(64)) + (i_121086 * np.int64(4))) + i_110400), ct.c_double))
-              zt_rhs_110403 = np.float64(indexArray(mem_122035, (((zt_lhs_110382 * np.int64(64)) + (i_121082 * np.int64(4))) + i_110400), ct.c_double))
-              zt_res_110404 = (zt_lhs_110402 * zt_rhs_110403)
-              zp_res_110405 = (r_110401 + zt_res_110404)
-              r_tmp_123660 = zp_res_110405
-              r_110401 = r_tmp_123660
-              i_110400 += one_124205
-            defunc_0_lifted_lambda_res_110399 = r_110401
-            writeScalarArray(mem_122129, i_121082, defunc_0_lifted_lambda_res_110399)
-            i_121082 += one_124207
-          lmad_copy(ct.c_double, mem_122124, (i_121086 * np.int64(16)), [np.int64(1)], mem_122129, np.int64(0), [np.int64(1)], [np.int64(16)])
-          i_121086 += one_124209
-        i_121094 = np.int64(0)
-        one_124213 = np.int64(1)
-        for counter_124212 in range(np.int64(16)):
-          i_121090 = np.int64(0)
-          one_124211 = np.int64(1)
-          for counter_124210 in range(np.int64(16)):
-            zs_lhs_110420 = np.float64(indexArray(mem_122124, ((i_121094 * np.int64(16)) + i_121090), ct.c_double))
-            zs_res_110421 = (zs_lhs_110420 / np.float64(2.0))
-            zp_rhs_110422 = np.float64(indexArray(mask_mem_121950, ((i_121094 * np.int64(16)) + i_121090), ct.c_double))
-            zp_res_110423 = (zs_res_110421 + zp_rhs_110422)
-            writeScalarArray(mem_122145, i_121090, zp_res_110423)
-            i_121090 += one_124211
-          lmad_copy(ct.c_double, mem_122140, (i_121094 * np.int64(16)), [np.int64(1)], mem_122145, np.int64(0), [np.int64(1)], [np.int64(16)])
-          i_121094 += one_124213
-        i_121112 = np.int64(0)
-        one_124225 = np.int64(1)
-        for counter_124224 in range(np.int64(16)):
-          redout_121096 = -np.inf
-          i_121097 = np.int64(0)
-          one_124215 = np.int64(1)
-          for counter_124214 in range(np.int64(16)):
-            lifted_lambda_res_116691 = np.float64(indexArray(mem_122140, ((i_121112 * np.int64(16)) + i_121097), ct.c_double))
-            max_res_110444 = fmax64(lifted_lambda_res_116691, redout_121096)
-            redout_tmp_123664 = max_res_110444
-            redout_121096 = redout_tmp_123664
-            i_121097 += one_124215
-          defunc_0_reduce_res_120604 = redout_121096
-          neg_res_110445 = -(defunc_0_reduce_res_120604)
-          i_121100 = np.int64(0)
-          one_124217 = np.int64(1)
-          for counter_124216 in range(np.int64(16)):
-            zp_lhs_110452 = np.float64(indexArray(mem_122140, ((i_121112 * np.int64(16)) + i_121100), ct.c_double))
-            zp_res_110453 = (neg_res_110445 + zp_lhs_110452)
-            exp_res_110454 = futhark_exp64(zp_res_110453)
-            writeScalarArray(mem_122161, i_121100, exp_res_110454)
-            i_121100 += one_124217
-          r_110458 = np.float64(0.0)
-          i_110457 = np.int64(0)
-          one_124219 = np.int64(1)
-          for counter_124218 in range(np.int64(16)):
-            lifted_lambda_res_110459 = np.float64(indexArray(mem_122161, i_110457, ct.c_double))
-            zp_res_110460 = (r_110458 + lifted_lambda_res_110459)
-            r_tmp_123666 = zp_res_110460
-            r_110458 = r_tmp_123666
-            i_110457 += one_124219
-          defunc_0_lifted_lambda_res_110456 = r_110458
-          zs_res_110461 = (np.float64(1.0) / defunc_0_lifted_lambda_res_110456)
-          i_121104 = np.int64(0)
-          one_124221 = np.int64(1)
-          for counter_124220 in range(np.int64(16)):
-            zt_lhs_110468 = np.float64(indexArray(mem_122161, i_121104, ct.c_double))
-            zt_res_110469 = (zs_res_110461 * zt_lhs_110468)
-            writeScalarArray(mem_122168, i_121104, zt_res_110469)
-            i_121104 += one_124221
-          i_121108 = np.int64(0)
-          one_124223 = np.int64(1)
-          for counter_124222 in range(np.int64(16)):
-            lifted_lambda_res_110477 = np.float64(indexArray(mem_122168, i_121108, ct.c_double))
-            writeScalarArray(mem_122175, i_121108, lifted_lambda_res_110477)
-            i_121108 += one_124223
-          lmad_copy(ct.c_double, mem_122156, (i_121112 * np.int64(16)), [np.int64(1)], mem_122175, np.int64(0), [np.int64(1)], [np.int64(16)])
-          i_121112 += one_124225
-        i_121120 = np.int64(0)
-        one_124231 = np.int64(1)
-        for counter_124230 in range(np.int64(16)):
-          i_121116 = np.int64(0)
-          one_124229 = np.int64(1)
-          for counter_124228 in range(np.int64(4)):
-            r_110494 = np.float64(0.0)
-            i_110493 = np.int64(0)
-            one_124227 = np.int64(1)
-            for counter_124226 in range(np.int64(16)):
-              zt_lhs_110495 = np.float64(indexArray(mem_122156, ((i_121120 * np.int64(16)) + i_110493), ct.c_double))
-              zt_rhs_110496 = np.float64(indexArray(mem_122034, (((zt_lhs_110382 * np.int64(64)) + (i_110493 * np.int64(4))) + i_121116), ct.c_double))
-              zt_res_110497 = (zt_lhs_110495 * zt_rhs_110496)
-              zp_res_110498 = (r_110494 + zt_res_110497)
-              r_tmp_123671 = zp_res_110498
-              r_110494 = r_tmp_123671
-              i_110493 += one_124227
-            defunc_0_lifted_lambda_res_110492 = r_110494
-            writeScalarArray(mem_122191, i_121116, defunc_0_lifted_lambda_res_110492)
-            i_121116 += one_124229
-          lmad_copy(ct.c_double, mem_122186, (i_121120 * np.int64(4)), [np.int64(1)], mem_122191, np.int64(0), [np.int64(1)], [np.int64(4)])
-          i_121120 += one_124231
-        lifted_lambda_res_110506 = np.float64(indexArray(mem_122186, ((i_121128 * np.int64(4)) + tmp_110501), ct.c_double))
-        writeScalarArray(mem_122120, i_121124, lifted_lambda_res_110506)
-        i_121124 += one_124233
-      lmad_copy(ct.c_double, mem_122115, (i_121128 * np.int64(16)), [np.int64(1)], mem_122120, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121128 += one_124235
-    mem_122120 = None
-    mem_122124 = None
-    mem_122129 = None
-    mem_122140 = None
-    mem_122145 = None
-    mem_122156 = None
-    mem_122161 = None
-    mem_122168 = None
-    mem_122175 = None
-    mem_122186 = None
-    mem_122191 = None
-    mem_122209 = allocateMem(np.int64(2048))
-    mem_122214 = allocateMem(np.int64(128))
-    i_121136 = np.int64(0)
-    one_124241 = np.int64(1)
-    for counter_124240 in range(np.int64(16)):
-      i_121132 = np.int64(0)
-      one_124239 = np.int64(1)
-      for counter_124238 in range(np.int64(16)):
-        r_110523 = np.float64(0.0)
-        i_110522 = np.int64(0)
-        one_124237 = np.int64(1)
-        for counter_124236 in range(np.int64(16)):
-          zt_lhs_110524 = np.float64(indexArray(wout_mem_121941, ((i_121132 * np.int64(16)) + i_110522), ct.c_double))
-          zt_rhs_110525 = np.float64(indexArray(mem_122115, ((i_121136 * np.int64(16)) + i_110522), ct.c_double))
-          zt_res_110526 = (zt_lhs_110524 * zt_rhs_110525)
-          zp_res_110527 = (r_110523 + zt_res_110526)
-          r_tmp_123674 = zp_res_110527
-          r_110523 = r_tmp_123674
-          i_110522 += one_124237
-        defunc_0_lifted_lambda_res_110521 = r_110523
-        zp_rhs_110528 = np.float64(indexArray(mem_121969, ((i_121136 * np.int64(16)) + i_121132), ct.c_double))
-        zp_res_110529 = (defunc_0_lifted_lambda_res_110521 + zp_rhs_110528)
-        writeScalarArray(mem_122214, i_121132, zp_res_110529)
-        i_121132 += one_124239
-      lmad_copy(ct.c_double, mem_122209, (i_121136 * np.int64(16)), [np.int64(1)], mem_122214, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121136 += one_124241
-    mem_122214 = None
-    mem_122225 = allocateMem(np.int64(128))
-    mem_122226 = allocateMem(np.int64(2048))
-    mem_122234 = allocateMem(np.int64(128))
-    mem_122241 = allocateMem(np.int64(128))
-    i_121150 = np.int64(0)
-    one_124251 = np.int64(1)
-    for counter_124250 in range(np.int64(16)):
-      r_113197 = np.float64(0.0)
-      i_113196 = np.int64(0)
-      one_124243 = np.int64(1)
-      for counter_124242 in range(np.int64(16)):
-        zt_lhs_113198 = np.float64(indexArray(mem_122209, ((i_121150 * np.int64(16)) + i_113196), ct.c_double))
-        zt_res_113199 = (zt_lhs_113198 * zt_lhs_113198)
-        zp_res_113200 = (r_113197 + zt_res_113199)
-        r_tmp_123677 = zp_res_113200
-        r_113197 = r_tmp_123677
-        i_113196 += one_124243
-      defunc_0_lifted_lambda_res_113195 = r_113197
-      zs_res_113201 = (defunc_0_lifted_lambda_res_113195 / np.float64(16.0))
-      zp_res_113202 = (np.float64(1.0e-5) + zs_res_113201)
-      sqrt_res_113203 = futhark_sqrt64(zp_res_113202)
-      zs_res_113204 = (np.float64(1.0) / sqrt_res_113203)
-      i_121140 = np.int64(0)
-      one_124245 = np.int64(1)
-      for counter_124244 in range(np.int64(16)):
-        zt_lhs_113211 = np.float64(indexArray(mem_122209, ((i_121150 * np.int64(16)) + i_121140), ct.c_double))
-        zt_res_113212 = (zs_res_113204 * zt_lhs_113211)
-        writeScalarArray(mem_122234, i_121140, zt_res_113212)
-        i_121140 += one_124245
-      i_121144 = np.int64(0)
-      one_124247 = np.int64(1)
-      for counter_124246 in range(np.int64(16)):
-        lifted_lambda_res_113220 = np.float64(indexArray(mem_122234, i_121144, ct.c_double))
-        writeScalarArray(mem_122241, i_121144, lifted_lambda_res_113220)
-        i_121144 += one_124247
-      r_113230 = np.float64(0.0)
-      i_113229 = np.int64(0)
-      one_124249 = np.int64(1)
-      for counter_124248 in range(np.int64(16)):
-        zt_lhs_113231 = np.float64(indexArray(mem_122209, ((i_121150 * np.int64(16)) + i_113229), ct.c_double))
-        zt_res_113232 = (zt_lhs_113231 * zt_lhs_113231)
-        zp_res_113233 = (r_113230 + zt_res_113232)
-        r_tmp_123680 = zp_res_113233
-        r_113230 = r_tmp_123680
-        i_113229 += one_124249
-      defunc_0_lifted_lambda_res_113228 = r_113230
-      zs_res_113234 = (defunc_0_lifted_lambda_res_113228 / np.float64(16.0))
-      writeScalarArray(mem_122225, i_121150, zs_res_113234)
-      lmad_copy(ct.c_double, mem_122226, (i_121150 * np.int64(16)), [np.int64(1)], mem_122241, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121150 += one_124251
-    mem_122234 = None
-    mem_122241 = None
-    mem_122255 = allocateMem(np.int64(8192))
-    mem_122260 = allocateMem(np.int64(512))
-    i_121159 = np.int64(0)
-    one_124257 = np.int64(1)
-    for counter_124256 in range(np.int64(16)):
-      i_121155 = np.int64(0)
-      one_124255 = np.int64(1)
-      for counter_124254 in range(np.int64(64)):
-        r_110581 = np.float64(0.0)
-        i_110580 = np.int64(0)
-        one_124253 = np.int64(1)
-        for counter_124252 in range(np.int64(16)):
-          zt_lhs_110582 = np.float64(indexArray(wup_mem_121945, ((i_121155 * np.int64(16)) + i_110580), ct.c_double))
-          zt_rhs_110583 = np.float64(indexArray(mem_122226, ((i_121159 * np.int64(16)) + i_110580), ct.c_double))
-          zt_res_110584 = (zt_lhs_110582 * zt_rhs_110583)
-          zp_res_110585 = (r_110581 + zt_res_110584)
-          r_tmp_123683 = zp_res_110585
-          r_110581 = r_tmp_123683
-          i_110580 += one_124253
-        defunc_0_lifted_lambda_res_110579 = r_110581
-        writeScalarArray(mem_122260, i_121155, defunc_0_lifted_lambda_res_110579)
-        i_121155 += one_124255
-      lmad_copy(ct.c_double, mem_122255, (i_121159 * np.int64(64)), [np.int64(1)], mem_122260, np.int64(0), [np.int64(1)], [np.int64(64)])
-      i_121159 += one_124257
-    mem_122260 = None
-    mem_122271 = allocateMem(np.int64(8192))
-    mem_122276 = allocateMem(np.int64(512))
-    i_121167 = np.int64(0)
-    one_124261 = np.int64(1)
-    for counter_124260 in range(np.int64(16)):
-      i_121163 = np.int64(0)
-      one_124259 = np.int64(1)
-      for counter_124258 in range(np.int64(64)):
-        max_arg0_110600 = np.float64(indexArray(mem_122255, ((i_121167 * np.int64(64)) + i_121163), ct.c_double))
-        max_res_110601 = fmax64(np.float64(0.0), max_arg0_110600)
-        writeScalarArray(mem_122276, i_121163, max_res_110601)
-        i_121163 += one_124259
-      lmad_copy(ct.c_double, mem_122271, (i_121167 * np.int64(64)), [np.int64(1)], mem_122276, np.int64(0), [np.int64(1)], [np.int64(64)])
-      i_121167 += one_124261
-    mem_122276 = None
-    mem_122287 = allocateMem(np.int64(2048))
-    mem_122292 = allocateMem(np.int64(128))
-    i_121175 = np.int64(0)
-    one_124267 = np.int64(1)
-    for counter_124266 in range(np.int64(16)):
-      i_121171 = np.int64(0)
-      one_124265 = np.int64(1)
-      for counter_124264 in range(np.int64(16)):
-        r_110618 = np.float64(0.0)
-        i_110617 = np.int64(0)
-        one_124263 = np.int64(1)
-        for counter_124262 in range(np.int64(64)):
-          zt_lhs_110619 = np.float64(indexArray(wdown_mem_121939, ((i_121171 * np.int64(64)) + i_110617), ct.c_double))
-          zt_rhs_110620 = np.float64(indexArray(mem_122271, ((i_121175 * np.int64(64)) + i_110617), ct.c_double))
-          zt_res_110621 = (zt_lhs_110619 * zt_rhs_110620)
-          zp_res_110622 = (r_110618 + zt_res_110621)
-          r_tmp_123688 = zp_res_110622
-          r_110618 = r_tmp_123688
-          i_110617 += one_124263
-        defunc_0_lifted_lambda_res_110616 = r_110618
-        zp_rhs_110623 = np.float64(indexArray(mem_122209, ((i_121175 * np.int64(16)) + i_121171), ct.c_double))
-        zp_res_110624 = (defunc_0_lifted_lambda_res_110616 + zp_rhs_110623)
-        writeScalarArray(mem_122292, i_121171, zp_res_110624)
-        i_121171 += one_124265
-      lmad_copy(ct.c_double, mem_122287, (i_121175 * np.int64(16)), [np.int64(1)], mem_122292, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121175 += one_124267
-    mem_122292 = None
-    mem_122303 = allocateMem(np.int64(3456))
-    mem_122308 = allocateMem(np.int64(216))
-    i_121183 = np.int64(0)
-    one_124273 = np.int64(1)
-    for counter_124272 in range(np.int64(16)):
-      i_121179 = np.int64(0)
-      one_124271 = np.int64(1)
-      for counter_124270 in range(np.int64(27)):
-        r_110642 = np.float64(0.0)
-        i_110641 = np.int64(0)
-        one_124269 = np.int64(1)
-        for counter_124268 in range(np.int64(16)):
-          zt_lhs_110643 = np.float64(indexArray(wvoc_mem_121947, ((i_121179 * np.int64(16)) + i_110641), ct.c_double))
-          zt_rhs_110644 = np.float64(indexArray(mem_122287, ((i_121183 * np.int64(16)) + i_110641), ct.c_double))
-          zt_res_110645 = (zt_lhs_110643 * zt_rhs_110644)
-          zp_res_110646 = (r_110642 + zt_res_110645)
-          r_tmp_123691 = zp_res_110646
-          r_110642 = r_tmp_123691
-          i_110641 += one_124269
-        defunc_0_lifted_lambda_res_110640 = r_110642
-        writeScalarArray(mem_122308, i_121179, defunc_0_lifted_lambda_res_110640)
-        i_121179 += one_124271
-      lmad_copy(ct.c_double, mem_122303, (i_121183 * np.int64(27)), [np.int64(1)], mem_122308, np.int64(0), [np.int64(1)], [np.int64(27)])
-      i_121183 += one_124273
-    mem_122308 = None
-    mem_122319 = allocateMem(np.int64(93312))
-    mem_122320 = allocateMem(np.int64(3456))
-    mem_122331 = allocateMem(np.int64(216))
-    mem_122338 = allocateMem(np.int64(216))
-    mem_122345 = allocateMem(np.int64(5832))
-    mem_122350 = allocateMem(np.int64(216))
-    i_121208 = np.int64(0)
-    one_124289 = np.int64(1)
-    for counter_124288 in range(np.int64(16)):
-      redout_121185 = -np.inf
-      redout_121186 = -np.inf
-      i_121187 = np.int64(0)
-      one_124275 = np.int64(1)
-      for counter_124274 in range(np.int64(27)):
-        lifted_lambda_res_116789 = np.float64(indexArray(mem_122303, ((i_121208 * np.int64(27)) + i_121187), ct.c_double))
-        max_res_113264 = fmax64(lifted_lambda_res_116789, redout_121185)
-        max_res_113284 = fmax64(lifted_lambda_res_116789, redout_121186)
-        redout_tmp_123694 = max_res_113264
-        redout_tmp_123695 = max_res_113284
-        redout_121185 = redout_tmp_123694
-        redout_121186 = redout_tmp_123695
-        i_121187 += one_124275
-      defunc_0_reduce_res_120628 = redout_121185
-      defunc_0_reduce_res_120629 = redout_121186
-      nest_i_123696 = np.int64(0)
-      one_124277 = np.int64(1)
-      for counter_124276 in range(np.int64(27)):
-        writeScalarArray(mem_122320, ((i_121208 * np.int64(27)) + nest_i_123696), defunc_0_reduce_res_120628)
-        nest_i_123696 += one_124277
-      neg_res_113285 = -(defunc_0_reduce_res_120629)
-      i_121190 = np.int64(0)
-      one_124279 = np.int64(1)
-      for counter_124278 in range(np.int64(27)):
-        zp_lhs_113292 = np.float64(indexArray(mem_122303, ((i_121208 * np.int64(27)) + i_121190), ct.c_double))
-        zp_res_113293 = (neg_res_113285 + zp_lhs_113292)
-        exp_res_113294 = futhark_exp64(zp_res_113293)
-        writeScalarArray(mem_122331, i_121190, exp_res_113294)
-        i_121190 += one_124279
-      r_113298 = np.float64(0.0)
-      i_113297 = np.int64(0)
-      one_124281 = np.int64(1)
-      for counter_124280 in range(np.int64(27)):
-        lifted_lambda_res_113299 = np.float64(indexArray(mem_122331, i_113297, ct.c_double))
-        zp_res_113300 = (r_113298 + lifted_lambda_res_113299)
-        r_tmp_123698 = zp_res_113300
-        r_113298 = r_tmp_123698
-        i_113297 += one_124281
-      defunc_0_lifted_lambda_res_113296 = r_113298
-      zs_res_113301 = (np.float64(1.0) / defunc_0_lifted_lambda_res_113296)
-      i_121194 = np.int64(0)
-      one_124283 = np.int64(1)
-      for counter_124282 in range(np.int64(27)):
-        zt_lhs_113308 = np.float64(indexArray(mem_122331, i_121194, ct.c_double))
-        zt_res_113309 = (zs_res_113301 * zt_lhs_113308)
-        writeScalarArray(mem_122338, i_121194, zt_res_113309)
-        i_121194 += one_124283
-      i_121202 = np.int64(0)
-      one_124287 = np.int64(1)
-      for counter_124286 in range(np.int64(27)):
-        i_121198 = np.int64(0)
-        one_124285 = np.int64(1)
-        for counter_124284 in range(np.int64(27)):
-          cond_113315 = (i_121198 == i_121202)
-          if cond_113315:
-            zt_rhs_120625 = np.float64(indexArray(target_mem_121949, ((i_121208 * np.int64(27)) + i_121202), ct.c_double))
-            zt_res_120626 = (np.float64(-6.25e-2) * zt_rhs_120625)
-            zt_lhs_113316 = zt_res_120626
-          else:
-            zt_lhs_113316 = np.float64(0.0)
-          zs_rhs_113327 = np.float64(indexArray(mem_122338, i_121198, ct.c_double))
-          zs_res_113328 = (np.float64(1.0) / zs_rhs_113327)
-          zt_res_113329 = (zt_lhs_113316 * zs_res_113328)
-          writeScalarArray(mem_122350, i_121198, zt_res_113329)
-          i_121198 += one_124285
-        lmad_copy(ct.c_double, mem_122345, (i_121202 * np.int64(27)), [np.int64(1)], mem_122350, np.int64(0), [np.int64(1)], [np.int64(27)])
-        i_121202 += one_124287
-      lmad_copy(ct.c_double, mem_122319, (i_121208 * np.int64(729)), [np.int64(27), np.int64(1)], mem_122345, np.int64(0), [np.int64(27), np.int64(1)], [np.int64(27), np.int64(27)])
-      i_121208 += one_124289
-    mem_122331 = None
-    mem_122338 = None
-    mem_122345 = None
-    mem_122350 = None
-    mem_122370 = allocateMem(np.int64(93312))
-    mem_122376 = allocateMem(np.int64(5832))
-    mem_122381 = allocateMem(np.int64(216))
-    i_121221 = np.int64(0)
-    one_124295 = np.int64(1)
-    for counter_124294 in range(np.int64(16)):
-      i_121217 = np.int64(0)
-      one_124293 = np.int64(1)
-      for counter_124292 in range(np.int64(27)):
-        neg_arg0_110682 = np.float64(indexArray(mem_122320, ((i_121221 * np.int64(27)) + i_121217), ct.c_double))
-        neg_res_110683 = -(neg_arg0_110682)
-        i_121213 = np.int64(0)
-        one_124291 = np.int64(1)
-        for counter_124290 in range(np.int64(27)):
-          zp_lhs_110690 = np.float64(indexArray(mem_122303, ((i_121221 * np.int64(27)) + i_121213), ct.c_double))
-          zp_res_110691 = (neg_res_110683 + zp_lhs_110690)
-          exp_res_110692 = futhark_exp64(zp_res_110691)
-          writeScalarArray(mem_122381, i_121213, exp_res_110692)
-          i_121213 += one_124291
-        lmad_copy(ct.c_double, mem_122376, (i_121217 * np.int64(27)), [np.int64(1)], mem_122381, np.int64(0), [np.int64(1)], [np.int64(27)])
-        i_121217 += one_124293
-      lmad_copy(ct.c_double, mem_122370, (i_121221 * np.int64(729)), [np.int64(27), np.int64(1)], mem_122376, np.int64(0), [np.int64(27), np.int64(1)], [np.int64(27), np.int64(27)])
-      i_121221 += one_124295
-    mem_122376 = None
-    mem_122381 = None
-    mem_122397 = allocateMem(np.int64(3456))
-    mem_122398 = allocateMem(np.int64(3456))
-    mem_122407 = allocateMem(np.int64(216))
-    mem_122408 = allocateMem(np.int64(216))
-    i_121234 = np.int64(0)
-    one_124303 = np.int64(1)
-    for counter_124302 in range(np.int64(16)):
-      i_121227 = np.int64(0)
-      one_124301 = np.int64(1)
-      for counter_124300 in range(np.int64(27)):
-        r_116851 = np.float64(0.0)
-        i_116850 = np.int64(0)
-        one_124297 = np.int64(1)
-        for counter_124296 in range(np.int64(27)):
-          lifted_lambda_res_116852 = np.float64(indexArray(mem_122370, (((i_121234 * np.int64(729)) + (i_121227 * np.int64(27))) + i_116850), ct.c_double))
-          zp_res_116853 = (r_116851 + lifted_lambda_res_116852)
-          r_tmp_123709 = zp_res_116853
-          r_116851 = r_tmp_123709
-          i_116850 += one_124297
-        defunc_0_lifted_lambda_res_116849 = r_116851
-        zt_res_116861 = (defunc_0_lifted_lambda_res_116849 * defunc_0_lifted_lambda_res_116849)
-        zs_res_116862 = (np.float64(1.0) / zt_res_116861)
-        r_116865 = np.float64(0.0)
-        i_116864 = np.int64(0)
-        one_124299 = np.int64(1)
-        for counter_124298 in range(np.int64(27)):
-          zt_lhs_116866 = np.float64(indexArray(mem_122319, (((i_121234 * np.int64(729)) + (i_121227 * np.int64(27))) + i_116864), ct.c_double))
-          zt_rhs_116867 = np.float64(indexArray(mem_122370, (((i_121234 * np.int64(729)) + (i_121227 * np.int64(27))) + i_116864), ct.c_double))
-          zt_res_116868 = (zt_lhs_116866 * zt_rhs_116867)
-          zt_res_116869 = (zs_res_116862 * zt_res_116868)
-          neg_res_116870 = -(zt_res_116869)
-          zp_res_116871 = (r_116865 + neg_res_116870)
-          r_tmp_123710 = zp_res_116871
-          r_116865 = r_tmp_123710
-          i_116864 += one_124299
-        defunc_0_lifted_lambda_res_116863 = r_116865
-        writeScalarArray(mem_122407, i_121227, defunc_0_lifted_lambda_res_116863)
-        writeScalarArray(mem_122408, i_121227, defunc_0_lifted_lambda_res_116849)
-        i_121227 += one_124301
-      lmad_copy(ct.c_double, mem_122397, (i_121234 * np.int64(27)), [np.int64(1)], mem_122407, np.int64(0), [np.int64(1)], [np.int64(27)])
-      lmad_copy(ct.c_double, mem_122398, (i_121234 * np.int64(27)), [np.int64(1)], mem_122408, np.int64(0), [np.int64(1)], [np.int64(27)])
-      i_121234 += one_124303
-    mem_122370 = None
-    mem_122407 = None
-    mem_122408 = None
-    mem_122429 = allocateMem(np.int64(93312))
-    mem_122435 = allocateMem(np.int64(5832))
-    mem_122440 = allocateMem(np.int64(216))
-    i_121247 = np.int64(0)
-    one_124309 = np.int64(1)
-    for counter_124308 in range(np.int64(16)):
-      i_121243 = np.int64(0)
-      one_124307 = np.int64(1)
-      for counter_124306 in range(np.int64(27)):
-        zs_rhs_110821 = np.float64(indexArray(mem_122398, ((i_121247 * np.int64(27)) + i_121243), ct.c_double))
-        zs_res_110822 = (np.float64(1.0) / zs_rhs_110821)
-        zp_rhs_110823 = np.float64(indexArray(mem_122397, ((i_121247 * np.int64(27)) + i_121243), ct.c_double))
-        i_121239 = np.int64(0)
-        one_124305 = np.int64(1)
-        for counter_124304 in range(np.int64(27)):
-          zt_lhs_110830 = np.float64(indexArray(mem_122319, (((i_121247 * np.int64(729)) + (i_121243 * np.int64(27))) + i_121239), ct.c_double))
-          zt_res_110831 = (zs_res_110822 * zt_lhs_110830)
-          zp_res_110832 = (zp_rhs_110823 + zt_res_110831)
-          writeScalarArray(mem_122440, i_121239, zp_res_110832)
-          i_121239 += one_124305
-        lmad_copy(ct.c_double, mem_122435, (i_121243 * np.int64(27)), [np.int64(1)], mem_122440, np.int64(0), [np.int64(1)], [np.int64(27)])
-        i_121243 += one_124307
-      lmad_copy(ct.c_double, mem_122429, (i_121247 * np.int64(729)), [np.int64(27), np.int64(1)], mem_122435, np.int64(0), [np.int64(27), np.int64(1)], [np.int64(27), np.int64(27)])
-      i_121247 += one_124309
-    mem_122319 = None
-    mem_122397 = None
-    mem_122398 = None
-    mem_122435 = None
-    mem_122440 = None
-    mem_122456 = allocateMem(np.int64(3456))
-    mem_122461 = allocateMem(np.int64(216))
-    i_121255 = np.int64(0)
-    one_124317 = np.int64(1)
-    for counter_124316 in range(np.int64(16)):
-      i_121251 = np.int64(0)
-      one_124315 = np.int64(1)
-      for counter_124314 in range(np.int64(27)):
-        r_110845 = np.float64(0.0)
-        i_110844 = np.int64(0)
-        one_124313 = np.int64(1)
-        for counter_124312 in range(np.int64(16)):
-          cond_110846 = (i_121255 == i_110844)
-          if cond_110846:
-            x_120639 = np.float64(indexArray(mem_122303, ((i_110844 * np.int64(27)) + i_121251), ct.c_double))
-            zp_lhs_110850 = x_120639
-          else:
-            zp_lhs_110850 = np.float64(0.0)
-          r_110854 = np.float64(0.0)
-          i_110853 = np.int64(0)
-          one_124311 = np.int64(1)
-          for counter_124310 in range(np.int64(27)):
-            if cond_110846:
-              neg_arg0_120640 = np.float64(indexArray(mem_122320, ((i_110844 * np.int64(27)) + i_110853), ct.c_double))
-              neg_res_120641 = -(neg_arg0_120640)
-              zp_res_120642 = (zp_lhs_110850 + neg_res_120641)
-              exp_res_120643 = futhark_exp64(zp_res_120642)
-              zt_rhs_120644 = np.float64(indexArray(mem_122429, (((i_110844 * np.int64(729)) + (i_110853 * np.int64(27))) + i_121251), ct.c_double))
-              zt_res_120645 = (exp_res_120643 * zt_rhs_120644)
-              zp_lhs_110855 = zt_res_120645
-            else:
-              zp_lhs_110855 = np.float64(0.0)
-            zp_res_110862 = (r_110854 + zp_lhs_110855)
-            r_tmp_123717 = zp_res_110862
-            r_110854 = r_tmp_123717
-            i_110853 += one_124311
-          defunc_0_lifted_lambda_res_110852 = r_110854
-          zp_res_110863 = (r_110845 + defunc_0_lifted_lambda_res_110852)
-          r_tmp_123716 = zp_res_110863
-          r_110845 = r_tmp_123716
-          i_110844 += one_124313
-        defunc_0_lifted_lambda_res_110843 = r_110845
-        writeScalarArray(mem_122461, i_121251, defunc_0_lifted_lambda_res_110843)
-        i_121251 += one_124315
-      lmad_copy(ct.c_double, mem_122456, (i_121255 * np.int64(27)), [np.int64(1)], mem_122461, np.int64(0), [np.int64(1)], [np.int64(27)])
-      i_121255 += one_124317
-    mem_122303 = None
-    mem_122320 = None
-    mem_122429 = None
-    mem_122461 = None
-    mem_122472 = allocateMem(np.int64(2048))
-    mem_122477 = allocateMem(np.int64(128))
-    i_121263 = np.int64(0)
-    one_124325 = np.int64(1)
-    for counter_124324 in range(np.int64(16)):
-      i_121259 = np.int64(0)
-      one_124323 = np.int64(1)
-      for counter_124322 in range(np.int64(16)):
-        r_110872 = np.float64(0.0)
-        i_110871 = np.int64(0)
-        one_124321 = np.int64(1)
-        for counter_124320 in range(np.int64(27)):
-          x_110873 = np.float64(indexArray(wvoc_mem_121947, ((i_110871 * np.int64(16)) + i_121259), ct.c_double))
-          r_110876 = np.float64(0.0)
-          i_110875 = np.int64(0)
-          one_124319 = np.int64(1)
-          for counter_124318 in range(np.int64(16)):
-            cond_110877 = (i_121259 == i_110875)
-            if cond_110877:
-              zt_lhs_t_res_120651 = np.float64(indexArray(mem_122456, ((i_121263 * np.int64(27)) + i_110871), ct.c_double))
-              zt_lhs_110878 = zt_lhs_t_res_120651
-            else:
-              zt_lhs_110878 = np.float64(0.0)
-            zt_res_110884 = (x_110873 * zt_lhs_110878)
-            zp_res_110885 = (r_110876 + zt_res_110884)
-            r_tmp_123721 = zp_res_110885
-            r_110876 = r_tmp_123721
-            i_110875 += one_124319
-          defunc_0_lifted_lambda_res_110874 = r_110876
-          zp_res_110886 = (r_110872 + defunc_0_lifted_lambda_res_110874)
-          r_tmp_123720 = zp_res_110886
-          r_110872 = r_tmp_123720
-          i_110871 += one_124321
-        defunc_0_lifted_lambda_res_110870 = r_110872
-        writeScalarArray(mem_122477, i_121259, defunc_0_lifted_lambda_res_110870)
-        i_121259 += one_124323
-      lmad_copy(ct.c_double, mem_122472, (i_121263 * np.int64(16)), [np.int64(1)], mem_122477, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121263 += one_124325
-    mem_122477 = None
-    mem_122488 = allocateMem(np.int64(8192))
-    mem_122489 = allocateMem(np.int64(8192))
-    mem_122498 = allocateMem(np.int64(512))
-    mem_122499 = allocateMem(np.int64(512))
-    i_121276 = np.int64(0)
-    one_124337 = np.int64(1)
-    for counter_124336 in range(np.int64(16)):
-      i_121269 = np.int64(0)
-      one_124335 = np.int64(1)
-      for counter_124334 in range(np.int64(64)):
-        indicatorp_arg0_116907 = np.float64(indexArray(mem_122255, ((i_121276 * np.int64(64)) + i_121269), ct.c_double))
-        max_res_116908 = fmax64(np.float64(0.0), indicatorp_arg0_116907)
-        sgn_res_116909 = np.sign(max_res_116908)
-        r_116912 = np.float64(0.0)
-        i_116911 = np.int64(0)
-        one_124329 = np.int64(1)
-        for counter_124328 in range(np.int64(16)):
-          x_116913 = np.float64(indexArray(wdown_mem_121939, ((i_116911 * np.int64(64)) + i_121269), ct.c_double))
-          r_116916 = np.float64(0.0)
-          i_116915 = np.int64(0)
-          one_124327 = np.int64(1)
-          for counter_124326 in range(np.int64(64)):
-            cond_116917 = (i_121269 == i_116915)
-            if cond_116917:
-              zt_lhs_t_res_120657 = np.float64(indexArray(mem_122472, ((i_121276 * np.int64(16)) + i_116911), ct.c_double))
-              zt_lhs_116918 = zt_lhs_t_res_120657
-            else:
-              zt_lhs_116918 = np.float64(0.0)
-            zt_res_116924 = (x_116913 * zt_lhs_116918)
-            zp_res_116925 = (r_116916 + zt_res_116924)
-            r_tmp_123727 = zp_res_116925
-            r_116916 = r_tmp_123727
-            i_116915 += one_124327
-          defunc_0_lifted_lambda_res_116914 = r_116916
-          zp_res_116926 = (r_116912 + defunc_0_lifted_lambda_res_116914)
-          r_tmp_123726 = zp_res_116926
-          r_116912 = r_tmp_123726
-          i_116911 += one_124329
-        defunc_0_lifted_lambda_res_116910 = r_116912
-        zt_res_116927 = (sgn_res_116909 * defunc_0_lifted_lambda_res_116910)
-        r_116932 = np.float64(0.0)
-        i_116931 = np.int64(0)
-        one_124333 = np.int64(1)
-        for counter_124332 in range(np.int64(16)):
-          x_116933 = np.float64(indexArray(mem_122271, ((i_116931 * np.int64(64)) + i_121269), ct.c_double))
-          r_116936 = np.float64(0.0)
-          i_116935 = np.int64(0)
-          one_124331 = np.int64(1)
-          for counter_124330 in range(np.int64(64)):
-            cond_116937 = (i_121269 == i_116935)
-            if cond_116937:
-              zt_lhs_t_res_120662 = np.float64(indexArray(mem_122472, ((i_116931 * np.int64(16)) + i_121276), ct.c_double))
-              zt_lhs_116938 = zt_lhs_t_res_120662
-            else:
-              zt_lhs_116938 = np.float64(0.0)
-            zt_res_116944 = (x_116933 * zt_lhs_116938)
-            zp_res_116945 = (r_116936 + zt_res_116944)
-            r_tmp_123729 = zp_res_116945
-            r_116936 = r_tmp_123729
-            i_116935 += one_124331
-          defunc_0_lifted_lambda_res_116934 = r_116936
-          zp_res_116946 = (r_116932 + defunc_0_lifted_lambda_res_116934)
-          r_tmp_123728 = zp_res_116946
-          r_116932 = r_tmp_123728
-          i_116931 += one_124333
-        defunc_0_lifted_lambda_res_116930 = r_116932
-        writeScalarArray(mem_122498, i_121269, defunc_0_lifted_lambda_res_116930)
-        writeScalarArray(mem_122499, i_121269, zt_res_116927)
-        i_121269 += one_124335
-      lmad_copy(ct.c_double, mem_122488, (i_121276 * np.int64(64)), [np.int64(1)], mem_122498, np.int64(0), [np.int64(1)], [np.int64(64)])
-      lmad_copy(ct.c_double, mem_122489, (i_121276 * np.int64(64)), [np.int64(1)], mem_122499, np.int64(0), [np.int64(1)], [np.int64(64)])
-      i_121276 += one_124337
-    mem_122255 = None
-    mem_122271 = None
-    mem_122498 = None
-    mem_122499 = None
-    mem_122520 = allocateMem(np.int64(2048))
-    mem_122525 = allocateMem(np.int64(128))
-    i_121285 = np.int64(0)
-    one_124345 = np.int64(1)
-    for counter_124344 in range(np.int64(16)):
-      i_121281 = np.int64(0)
-      one_124343 = np.int64(1)
-      for counter_124342 in range(np.int64(16)):
-        r_110954 = np.float64(0.0)
-        i_110953 = np.int64(0)
-        one_124341 = np.int64(1)
-        for counter_124340 in range(np.int64(64)):
-          x_110955 = np.float64(indexArray(wup_mem_121945, ((i_110953 * np.int64(16)) + i_121281), ct.c_double))
-          r_110958 = np.float64(0.0)
-          i_110957 = np.int64(0)
-          one_124339 = np.int64(1)
-          for counter_124338 in range(np.int64(16)):
-            cond_110959 = (i_121281 == i_110957)
-            if cond_110959:
-              zt_lhs_t_res_120669 = np.float64(indexArray(mem_122489, ((i_121285 * np.int64(64)) + i_110953), ct.c_double))
-              zt_lhs_110960 = zt_lhs_t_res_120669
-            else:
-              zt_lhs_110960 = np.float64(0.0)
-            zt_res_110966 = (x_110955 * zt_lhs_110960)
-            zp_res_110967 = (r_110958 + zt_res_110966)
-            r_tmp_123733 = zp_res_110967
-            r_110958 = r_tmp_123733
-            i_110957 += one_124339
-          defunc_0_lifted_lambda_res_110956 = r_110958
-          zp_res_110968 = (r_110954 + defunc_0_lifted_lambda_res_110956)
-          r_tmp_123732 = zp_res_110968
-          r_110954 = r_tmp_123732
-          i_110953 += one_124341
-        defunc_0_lifted_lambda_res_110952 = r_110954
-        writeScalarArray(mem_122525, i_121281, defunc_0_lifted_lambda_res_110952)
-        i_121281 += one_124343
-      lmad_copy(ct.c_double, mem_122520, (i_121285 * np.int64(16)), [np.int64(1)], mem_122525, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121285 += one_124345
-    mem_122525 = None
-    mem_122536 = allocateMem(np.int64(128))
-    mem_122537 = allocateMem(np.int64(128))
-    i_121291 = np.int64(0)
-    one_124349 = np.int64(1)
-    for counter_124348 in range(np.int64(16)):
-      zp_lhs_112737 = np.float64(indexArray(mem_122225, i_121291, ct.c_double))
-      zp_res_112738 = (np.float64(1.0e-5) + zp_lhs_112737)
-      sqrt_res_112739 = futhark_sqrt64(zp_res_112738)
-      zt_res_112747 = (sqrt_res_112739 * sqrt_res_112739)
-      zs_res_112748 = (np.float64(1.0) / zt_res_112747)
-      r_112751 = np.float64(0.0)
-      i_112750 = np.int64(0)
-      one_124347 = np.int64(1)
-      for counter_124346 in range(np.int64(16)):
-        zt_lhs_112752 = np.float64(indexArray(mem_122520, ((i_121291 * np.int64(16)) + i_112750), ct.c_double))
-        zt_rhs_112753 = np.float64(indexArray(mem_122209, ((i_121291 * np.int64(16)) + i_112750), ct.c_double))
-        zt_res_112754 = (zt_lhs_112752 * zt_rhs_112753)
-        zt_res_112755 = (zs_res_112748 * zt_res_112754)
-        neg_res_112756 = -(zt_res_112755)
-        zp_res_112757 = (r_112751 + neg_res_112756)
-        r_tmp_123736 = zp_res_112757
-        r_112751 = r_tmp_123736
-        i_112750 += one_124347
-      defunc_0_lifted_lambda_res_112749 = r_112751
-      writeScalarArray(mem_122536, i_121291, defunc_0_lifted_lambda_res_112749)
-      writeScalarArray(mem_122537, i_121291, sqrt_res_112739)
-      i_121291 += one_124349
-    mem_122550 = allocateMem(np.int64(128))
-    i_121296 = np.int64(0)
-    one_124351 = np.int64(1)
-    for counter_124350 in range(np.int64(16)):
-      zt_lhs_110996 = np.float64(indexArray(mem_122536, i_121296, ct.c_double))
-      zp_lhs_110997 = np.float64(indexArray(mem_122225, i_121296, ct.c_double))
-      zp_res_110998 = (np.float64(1.0e-5) + zp_lhs_110997)
-      sqrt_res_110999 = futhark_sqrt64(zp_res_110998)
-      zt_res_111000 = (np.float64(2.0) * sqrt_res_110999)
-      zs_res_111001 = (np.float64(1.0) / zt_res_111000)
-      zt_res_111002 = (zt_lhs_110996 * zs_res_111001)
-      writeScalarArray(mem_122550, i_121296, zt_res_111002)
-      i_121296 += one_124351
-    mem_122225 = None
-    mem_122536 = None
-    mem_122557 = allocateMem(np.int64(2048))
-    mem_122562 = allocateMem(np.int64(128))
-    i_121304 = np.int64(0)
-    one_124359 = np.int64(1)
-    for counter_124358 in range(np.int64(16)):
-      i_121300 = np.int64(0)
-      one_124357 = np.int64(1)
-      for counter_124356 in range(np.int64(16)):
-        zp_lhs_111016 = np.float64(indexArray(mem_122472, ((i_121304 * np.int64(16)) + i_121300), ct.c_double))
-        r_111019 = np.float64(0.0)
-        i_111018 = np.int64(0)
-        one_124355 = np.int64(1)
-        for counter_124354 in range(np.int64(16)):
-          cond_111020 = (i_121304 == i_111018)
-          if cond_111020:
-            zt_lhs_120671 = np.float64(indexArray(mem_122520, ((i_111018 * np.int64(16)) + i_121300), ct.c_double))
-            zs_rhs_120672 = np.float64(indexArray(mem_122537, i_111018, ct.c_double))
-            zs_res_120673 = (np.float64(1.0) / zs_rhs_120672)
-            zt_res_120674 = (zt_lhs_120671 * zs_res_120673)
-            zp_lhs_111021 = zt_res_120674
-          else:
-            zp_lhs_111021 = np.float64(0.0)
-          if cond_111020:
-            x_120675 = np.float64(indexArray(mem_122209, ((i_111018 * np.int64(16)) + i_121300), ct.c_double))
-            zt_rhs_111029 = x_120675
-          else:
-            zt_rhs_111029 = np.float64(0.0)
-          if cond_111020:
-            x_120676 = np.float64(indexArray(mem_122209, ((i_111018 * np.int64(16)) + i_121300), ct.c_double))
-            zt_rhs_111031 = x_120676
-          else:
-            zt_rhs_111031 = np.float64(0.0)
-          r_111035 = np.float64(0.0)
-          i_111034 = np.int64(0)
-          one_124353 = np.int64(1)
-          for counter_124352 in range(np.int64(16)):
-            if cond_111020:
-              cond_120679 = (i_121300 == i_111034)
-              if cond_120679:
-                zs_lhs_120681 = np.float64(indexArray(mem_122550, i_111018, ct.c_double))
-                zs_res_120682 = (zs_lhs_120681 / np.float64(16.0))
-                zt_lhs_120680 = zs_res_120682
-              else:
-                zt_lhs_120680 = np.float64(0.0)
-              zt_res_120683 = (zt_rhs_111029 * zt_lhs_120680)
-              zp_lhs_111036 = zt_res_120683
-            else:
-              zp_lhs_111036 = np.float64(0.0)
-            if cond_111020:
-              cond_120686 = (i_121300 == i_111034)
-              if cond_120686:
-                zs_lhs_120688 = np.float64(indexArray(mem_122550, i_111018, ct.c_double))
-                zs_res_120689 = (zs_lhs_120688 / np.float64(16.0))
-                zt_lhs_120687 = zs_res_120689
-              else:
-                zt_lhs_120687 = np.float64(0.0)
-              zt_res_120690 = (zt_rhs_111031 * zt_lhs_120687)
-              zp_rhs_111042 = zt_res_120690
-            else:
-              zp_rhs_111042 = np.float64(0.0)
-            zp_res_111048 = (zp_lhs_111036 + zp_rhs_111042)
-            zp_res_111049 = (r_111035 + zp_res_111048)
-            r_tmp_123741 = zp_res_111049
-            r_111035 = r_tmp_123741
-            i_111034 += one_124353
-          defunc_0_lifted_lambda_res_111033 = r_111035
-          zp_res_111050 = (zp_lhs_111021 + defunc_0_lifted_lambda_res_111033)
-          zp_res_111051 = (r_111019 + zp_res_111050)
-          r_tmp_123740 = zp_res_111051
-          r_111019 = r_tmp_123740
-          i_111018 += one_124355
-        defunc_0_lifted_lambda_res_111017 = r_111019
-        zp_res_111052 = (zp_lhs_111016 + defunc_0_lifted_lambda_res_111017)
-        writeScalarArray(mem_122562, i_121300, zp_res_111052)
-        i_121300 += one_124357
-      lmad_copy(ct.c_double, mem_122557, (i_121304 * np.int64(16)), [np.int64(1)], mem_122562, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121304 += one_124359
-    mem_122209 = None
-    mem_122472 = None
-    mem_122520 = None
-    mem_122537 = None
-    mem_122550 = None
-    mem_122562 = None
-    mem_122573 = allocateMem(np.int64(8192))
-    mem_122574 = allocateMem(np.int64(8192))
-    mem_122575 = allocateMem(np.int64(8192))
-    mem_122576 = allocateMem(np.int64(2048))
-    mem_122597 = allocateMem(np.int64(2048))
-    mem_122598 = allocateMem(np.int64(2048))
-    mem_122599 = allocateMem(np.int64(2048))
-    mem_122600 = allocateMem(np.int64(512))
-    mem_122617 = allocateMem(np.int64(32))
-    mem_122624 = allocateMem(np.int64(128))
-    mem_122625 = allocateMem(np.int64(128))
-    mem_122626 = allocateMem(np.int64(128))
-    i_121341 = np.int64(0)
-    one_124377 = np.int64(1)
-    for counter_124376 in range(np.int64(4)):
-      zp_lhs_113591 = (np.int64(4) * i_121341)
-      i_121328 = np.int64(0)
-      one_124375 = np.int64(1)
-      for counter_124374 in range(np.int64(16)):
-        i_121308 = np.int64(0)
-        one_124365 = np.int64(1)
-        for counter_124364 in range(np.int64(4)):
-          zeze_lhs_117161 = (zp_lhs_113591 + i_121308)
-          r_117164 = np.float64(0.0)
-          i_117163 = np.int64(0)
-          one_124363 = np.int64(1)
-          for counter_124362 in range(np.int64(16)):
-            x_117165 = np.float64(indexArray(wout_mem_121941, ((i_117163 * np.int64(16)) + zeze_lhs_117161), ct.c_double))
-            r_117168 = np.float64(0.0)
-            i_117167 = np.int64(0)
-            one_124361 = np.int64(1)
-            for counter_124360 in range(np.int64(16)):
-              cond_117169 = (zeze_lhs_117161 == i_117167)
-              if cond_117169:
-                zt_lhs_t_res_120696 = np.float64(indexArray(mem_122557, ((i_121328 * np.int64(16)) + i_117163), ct.c_double))
-                zt_lhs_117170 = zt_lhs_t_res_120696
-              else:
-                zt_lhs_117170 = np.float64(0.0)
-              zt_res_117176 = (x_117165 * zt_lhs_117170)
-              zp_res_117177 = (r_117168 + zt_res_117176)
-              r_tmp_123752 = zp_res_117177
-              r_117168 = r_tmp_123752
-              i_117167 += one_124361
-            defunc_0_lifted_lambda_res_117166 = r_117168
-            zp_res_117178 = (r_117164 + defunc_0_lifted_lambda_res_117166)
-            r_tmp_123751 = zp_res_117178
-            r_117164 = r_tmp_123751
-            i_117163 += one_124363
-          defunc_0_lifted_lambda_res_117162 = r_117164
-          writeScalarArray(mem_122617, i_121308, defunc_0_lifted_lambda_res_117162)
-          i_121308 += one_124365
-        i_121316 = np.int64(0)
-        one_124373 = np.int64(1)
-        for counter_124372 in range(np.int64(16)):
-          r_117312 = np.float64(0.0)
-          i_117311 = np.int64(0)
-          one_124367 = np.int64(1)
-          for counter_124366 in range(np.int64(4)):
-            zt_lhs_117313 = np.float64(indexArray(mem_122036, (((i_121341 * np.int64(64)) + (i_121328 * np.int64(4))) + i_117311), ct.c_double))
-            zt_rhs_117314 = np.float64(indexArray(mem_122035, (((i_121341 * np.int64(64)) + (i_121316 * np.int64(4))) + i_117311), ct.c_double))
-            zt_res_117315 = (zt_lhs_117313 * zt_rhs_117314)
-            zp_res_117316 = (r_117312 + zt_res_117315)
-            r_tmp_123756 = zp_res_117316
-            r_117312 = r_tmp_123756
-            i_117311 += one_124367
-          defunc_0_lifted_lambda_res_117310 = r_117312
-          r_117325 = np.float64(0.0)
-          i_117324 = np.int64(0)
-          one_124369 = np.int64(1)
-          for counter_124368 in range(np.int64(4)):
-            zt_lhs_117326 = np.float64(indexArray(mem_122036, (((i_121341 * np.int64(64)) + (i_121328 * np.int64(4))) + i_117324), ct.c_double))
-            zt_rhs_117327 = np.float64(indexArray(mem_122035, (((i_121341 * np.int64(64)) + (i_121316 * np.int64(4))) + i_117324), ct.c_double))
-            zt_res_117328 = (zt_lhs_117326 * zt_rhs_117327)
-            zp_res_117329 = (r_117325 + zt_res_117328)
-            r_tmp_123757 = zp_res_117329
-            r_117325 = r_tmp_123757
-            i_117324 += one_124369
-          defunc_0_lifted_lambda_res_117323 = r_117325
-          r_117341 = np.float64(0.0)
-          i_117340 = np.int64(0)
-          one_124371 = np.int64(1)
-          for counter_124370 in range(np.int64(4)):
-            zt_lhs_117342 = np.float64(indexArray(mem_122036, (((i_121341 * np.int64(64)) + (i_121328 * np.int64(4))) + i_117340), ct.c_double))
-            zt_rhs_117343 = np.float64(indexArray(mem_122035, (((i_121341 * np.int64(64)) + (i_121316 * np.int64(4))) + i_117340), ct.c_double))
-            zt_res_117344 = (zt_lhs_117342 * zt_rhs_117343)
-            zp_res_117345 = (r_117341 + zt_res_117344)
-            r_tmp_123758 = zp_res_117345
-            r_117341 = r_tmp_123758
-            i_117340 += one_124371
-          defunc_0_lifted_lambda_res_117339 = r_117341
-          writeScalarArray(mem_122624, i_121316, defunc_0_lifted_lambda_res_117339)
-          writeScalarArray(mem_122625, i_121316, defunc_0_lifted_lambda_res_117323)
-          writeScalarArray(mem_122626, i_121316, defunc_0_lifted_lambda_res_117310)
-          i_121316 += one_124373
-        lmad_copy(ct.c_double, mem_122597, (i_121328 * np.int64(16)), [np.int64(1)], mem_122624, np.int64(0), [np.int64(1)], [np.int64(16)])
-        lmad_copy(ct.c_double, mem_122598, (i_121328 * np.int64(16)), [np.int64(1)], mem_122625, np.int64(0), [np.int64(1)], [np.int64(16)])
-        lmad_copy(ct.c_double, mem_122599, (i_121328 * np.int64(16)), [np.int64(1)], mem_122626, np.int64(0), [np.int64(1)], [np.int64(16)])
-        lmad_copy(ct.c_double, mem_122600, (i_121328 * np.int64(4)), [np.int64(1)], mem_122617, np.int64(0), [np.int64(1)], [np.int64(4)])
-        i_121328 += one_124375
-      lmad_copy(ct.c_double, mem_122573, (i_121341 * np.int64(256)), [np.int64(16), np.int64(1)], mem_122597, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      lmad_copy(ct.c_double, mem_122574, (i_121341 * np.int64(256)), [np.int64(16), np.int64(1)], mem_122598, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      lmad_copy(ct.c_double, mem_122575, (i_121341 * np.int64(256)), [np.int64(16), np.int64(1)], mem_122599, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      lmad_copy(ct.c_double, mem_122576, (i_121341 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122600, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
-      i_121341 += one_124377
-    mem_122597 = None
-    mem_122598 = None
-    mem_122599 = None
-    mem_122600 = None
-    mem_122617 = None
-    mem_122624 = None
-    mem_122625 = None
-    mem_122626 = None
-    mem_122681 = allocateMem(np.int64(2048))
-    mem_122682 = allocateMem(np.int64(8192))
-    mem_122683 = allocateMem(np.int64(2048))
-    mem_122684 = allocateMem(np.int64(8192))
-    mem_122685 = allocateMem(np.int64(2048))
-    mem_122686 = allocateMem(np.int64(8192))
-    mem_122717 = allocateMem(np.int64(512))
-    mem_122718 = allocateMem(np.int64(2048))
+        zt_res_110722 = (zs_res_110712 * zp_res_110721)
+        writeScalarArray(mem_122611, i_121652, zt_res_110722)
+        i_121652 += one_124577
+      i_121656 = np.int64(0)
+      one_124579 = np.int64(1)
+      for counter_124578 in range(np.int64(16)):
+        lifted_lambda_res_110730 = np.float64(indexArray(mem_122611, i_121656, ct.c_double))
+        writeScalarArray(mem_122618, i_121656, lifted_lambda_res_110730)
+        i_121656 += one_124579
+      lmad_copy(ct.c_double, mem_122606, (i_121660 * np.int64(16)), [np.int64(1)], mem_122618, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121660 += one_124581
+    mem_122590 = None
+    mem_122611 = None
+    mem_122618 = None
+    mem_122629 = allocateMem(np.int64(2048))
+    mem_122634 = allocateMem(np.int64(128))
+    mem_122641 = allocateMem(np.int64(128))
+    i_121672 = np.int64(0)
+    one_124589 = np.int64(1)
+    for counter_124588 in range(np.int64(16)):
+      r_110741 = np.float64(0.0)
+      i_110740 = np.int64(0)
+      one_124583 = np.int64(1)
+      for counter_124582 in range(np.int64(16)):
+        zt_lhs_110742 = np.float64(indexArray(mem_122606, ((i_121672 * np.int64(16)) + i_110740), ct.c_double))
+        zt_res_110743 = (zt_lhs_110742 * zt_lhs_110742)
+        zp_res_110744 = (r_110741 + zt_res_110743)
+        r_tmp_124283 = zp_res_110744
+        r_110741 = r_tmp_124283
+        i_110740 += one_124583
+      defunc_0_lifted_lambda_res_110739 = r_110741
+      zs_res_110745 = (defunc_0_lifted_lambda_res_110739 / np.float64(16.0))
+      zp_res_110746 = (np.float64(1.0e-5) + zs_res_110745)
+      sqrt_res_110747 = futhark_sqrt64(zp_res_110746)
+      zs_res_110748 = (np.float64(1.0) / sqrt_res_110747)
+      i_121664 = np.int64(0)
+      one_124585 = np.int64(1)
+      for counter_124584 in range(np.int64(16)):
+        zt_lhs_110755 = np.float64(indexArray(mem_122606, ((i_121672 * np.int64(16)) + i_121664), ct.c_double))
+        zt_res_110756 = (zs_res_110748 * zt_lhs_110755)
+        writeScalarArray(mem_122634, i_121664, zt_res_110756)
+        i_121664 += one_124585
+      i_121668 = np.int64(0)
+      one_124587 = np.int64(1)
+      for counter_124586 in range(np.int64(16)):
+        lifted_lambda_res_110764 = np.float64(indexArray(mem_122634, i_121668, ct.c_double))
+        writeScalarArray(mem_122641, i_121668, lifted_lambda_res_110764)
+        i_121668 += one_124587
+      lmad_copy(ct.c_double, mem_122629, (i_121672 * np.int64(16)), [np.int64(1)], mem_122641, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121672 += one_124589
+    mem_122634 = None
+    mem_122641 = None
+    mem_122652 = allocateMem(np.int64(2048))
+    mem_122653 = allocateMem(np.int64(2048))
+    mem_122654 = allocateMem(np.int64(2048))
+    mem_122667 = allocateMem(np.int64(128))
+    mem_122668 = allocateMem(np.int64(128))
+    mem_122669 = allocateMem(np.int64(128))
+    i_121690 = np.int64(0)
+    one_124599 = np.int64(1)
+    for counter_124598 in range(np.int64(16)):
+      i_121680 = np.int64(0)
+      one_124597 = np.int64(1)
+      for counter_124596 in range(np.int64(16)):
+        r_113334 = np.float64(0.0)
+        i_113333 = np.int64(0)
+        one_124591 = np.int64(1)
+        for counter_124590 in range(np.int64(16)):
+          zt_lhs_113335 = np.float64(indexArray(wqry_mem_122582, ((i_121680 * np.int64(16)) + i_113333), ct.c_double))
+          zt_rhs_113336 = np.float64(indexArray(mem_122629, ((i_121690 * np.int64(16)) + i_113333), ct.c_double))
+          zt_res_113337 = (zt_lhs_113335 * zt_rhs_113336)
+          zp_res_113338 = (r_113334 + zt_res_113337)
+          r_tmp_124292 = zp_res_113338
+          r_113334 = r_tmp_124292
+          i_113333 += one_124591
+        defunc_0_lifted_lambda_res_113332 = r_113334
+        r_113347 = np.float64(0.0)
+        i_113346 = np.int64(0)
+        one_124593 = np.int64(1)
+        for counter_124592 in range(np.int64(16)):
+          zt_lhs_113348 = np.float64(indexArray(wkey_mem_122579, ((i_121680 * np.int64(16)) + i_113346), ct.c_double))
+          zt_rhs_113349 = np.float64(indexArray(mem_122629, ((i_121690 * np.int64(16)) + i_113346), ct.c_double))
+          zt_res_113350 = (zt_lhs_113348 * zt_rhs_113349)
+          zp_res_113351 = (r_113347 + zt_res_113350)
+          r_tmp_124293 = zp_res_113351
+          r_113347 = r_tmp_124293
+          i_113346 += one_124593
+        defunc_0_lifted_lambda_res_113345 = r_113347
+        r_113363 = np.float64(0.0)
+        i_113362 = np.int64(0)
+        one_124595 = np.int64(1)
+        for counter_124594 in range(np.int64(16)):
+          zt_lhs_113364 = np.float64(indexArray(wval_mem_122585, ((i_121680 * np.int64(16)) + i_113362), ct.c_double))
+          zt_rhs_113365 = np.float64(indexArray(mem_122629, ((i_121690 * np.int64(16)) + i_113362), ct.c_double))
+          zt_res_113366 = (zt_lhs_113364 * zt_rhs_113365)
+          zp_res_113367 = (r_113363 + zt_res_113366)
+          r_tmp_124294 = zp_res_113367
+          r_113363 = r_tmp_124294
+          i_113362 += one_124595
+        defunc_0_lifted_lambda_res_113361 = r_113363
+        writeScalarArray(mem_122667, i_121680, defunc_0_lifted_lambda_res_113361)
+        writeScalarArray(mem_122668, i_121680, defunc_0_lifted_lambda_res_113345)
+        writeScalarArray(mem_122669, i_121680, defunc_0_lifted_lambda_res_113332)
+        i_121680 += one_124597
+      lmad_copy(ct.c_double, mem_122652, (i_121690 * np.int64(16)), [np.int64(1)], mem_122667, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_122653, (i_121690 * np.int64(16)), [np.int64(1)], mem_122668, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_122654, (i_121690 * np.int64(16)), [np.int64(1)], mem_122669, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121690 += one_124599
+    mem_122629 = None
+    mem_122667 = None
+    mem_122668 = None
+    mem_122669 = None
+    mem_122700 = allocateMem(np.int64(2048))
+    mem_122701 = allocateMem(np.int64(2048))
+    mem_122702 = allocateMem(np.int64(2048))
+    mem_122718 = allocateMem(np.int64(512))
     mem_122719 = allocateMem(np.int64(512))
-    mem_122720 = allocateMem(np.int64(2048))
-    mem_122721 = allocateMem(np.int64(512))
-    mem_122722 = allocateMem(np.int64(2048))
-    mem_122747 = allocateMem(np.int64(128))
-    mem_122748 = allocateMem(np.int64(128))
-    mem_122749 = allocateMem(np.int64(128))
-    mem_122768 = allocateMem(np.int64(32))
-    mem_122769 = allocateMem(np.int64(32))
-    i_121394 = np.int64(0)
-    one_124385 = np.int64(1)
-    for counter_124384 in range(np.int64(4)):
-      i_121375 = np.int64(0)
-      one_124383 = np.int64(1)
-      for counter_124382 in range(np.int64(16)):
-        i_121352 = np.int64(0)
-        one_124379 = np.int64(1)
-        for counter_124378 in range(np.int64(16)):
-          zs_lhs_117916 = np.float64(indexArray(mem_122575, (((i_121394 * np.int64(256)) + (i_121375 * np.int64(16))) + i_121352), ct.c_double))
-          zs_res_117917 = (zs_lhs_117916 / np.float64(2.0))
-          zp_rhs_117918 = np.float64(indexArray(mask_mem_121950, ((i_121375 * np.int64(16)) + i_121352), ct.c_double))
-          zp_res_117919 = (zs_res_117917 + zp_rhs_117918)
-          zs_lhs_117926 = np.float64(indexArray(mem_122574, (((i_121394 * np.int64(256)) + (i_121375 * np.int64(16))) + i_121352), ct.c_double))
-          zs_res_117927 = (zs_lhs_117926 / np.float64(2.0))
-          zp_res_117929 = (zp_rhs_117918 + zs_res_117927)
-          zs_lhs_117939 = np.float64(indexArray(mem_122573, (((i_121394 * np.int64(256)) + (i_121375 * np.int64(16))) + i_121352), ct.c_double))
-          zs_res_117940 = (zs_lhs_117939 / np.float64(2.0))
-          zp_res_117942 = (zp_rhs_117918 + zs_res_117940)
-          writeScalarArray(mem_122747, i_121352, zp_res_117942)
-          writeScalarArray(mem_122748, i_121352, zp_res_117929)
-          writeScalarArray(mem_122749, i_121352, zp_res_117919)
-          i_121352 += one_124379
-        i_121360 = np.int64(0)
-        one_124381 = np.int64(1)
-        for counter_124380 in range(np.int64(4)):
-          lifted_lambda_res_117992 = np.float64(indexArray(mem_122576, (((i_121394 * np.int64(64)) + (i_121375 * np.int64(4))) + i_121360), ct.c_double))
-          writeScalarArray(mem_122768, i_121360, lifted_lambda_res_117992)
-          writeScalarArray(mem_122769, i_121360, lifted_lambda_res_117992)
-          i_121360 += one_124381
-        lmad_copy(ct.c_double, mem_122721, (i_121375 * np.int64(4)), [np.int64(1)], mem_122769, np.int64(0), [np.int64(1)], [np.int64(4)])
-        lmad_copy(ct.c_double, mem_122717, (i_121375 * np.int64(4)), [np.int64(1)], mem_122768, np.int64(0), [np.int64(1)], [np.int64(4)])
-        lmad_copy(ct.c_double, mem_122718, (i_121375 * np.int64(16)), [np.int64(1)], mem_122747, np.int64(0), [np.int64(1)], [np.int64(16)])
-        lmad_copy(ct.c_double, mem_122719, (i_121375 * np.int64(4)), [np.int64(1)], mem_122769, np.int64(0), [np.int64(1)], [np.int64(4)])
-        lmad_copy(ct.c_double, mem_122720, (i_121375 * np.int64(16)), [np.int64(1)], mem_122748, np.int64(0), [np.int64(1)], [np.int64(16)])
-        lmad_copy(ct.c_double, mem_122722, (i_121375 * np.int64(16)), [np.int64(1)], mem_122749, np.int64(0), [np.int64(1)], [np.int64(16)])
-        i_121375 += one_124383
-      lmad_copy(ct.c_double, mem_122681, (i_121394 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122717, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
-      lmad_copy(ct.c_double, mem_122682, (i_121394 * np.int64(256)), [np.int64(16), np.int64(1)], mem_122718, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      lmad_copy(ct.c_double, mem_122683, (i_121394 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122719, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
-      lmad_copy(ct.c_double, mem_122684, (i_121394 * np.int64(256)), [np.int64(16), np.int64(1)], mem_122720, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      lmad_copy(ct.c_double, mem_122685, (i_121394 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122721, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
-      lmad_copy(ct.c_double, mem_122686, (i_121394 * np.int64(256)), [np.int64(16), np.int64(1)], mem_122722, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      i_121394 += one_124385
-    mem_122573 = None
-    mem_122574 = None
-    mem_122575 = None
-    mem_122576 = None
-    mem_122717 = None
+    mem_122720 = allocateMem(np.int64(512))
+    mem_122733 = allocateMem(np.int64(32))
+    mem_122734 = allocateMem(np.int64(32))
+    mem_122735 = allocateMem(np.int64(32))
+    i_121720 = np.int64(0)
+    one_124605 = np.int64(1)
+    for counter_124604 in range(np.int64(4)):
+      zp_lhs_113208 = (np.int64(4) * i_121720)
+      i_121710 = np.int64(0)
+      one_124603 = np.int64(1)
+      for counter_124602 in range(np.int64(16)):
+        i_121700 = np.int64(0)
+        one_124601 = np.int64(1)
+        for counter_124600 in range(np.int64(4)):
+          tmp_113525 = (zp_lhs_113208 + i_121700)
+          x_113526 = sle64(np.int64(0), tmp_113525)
+          y_113527 = slt64(tmp_113525, np.int64(16))
+          bounds_check_113528 = (x_113526 and y_113527)
+          index_certs_113529 = True
+          assert bounds_check_113528, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:204:51-83\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:15:29-44\n   #6  microgpt.fut:4:11-25\n   #7  microgpt.fut:15:15-45\n   #8  microgpt.fut:204:15-84\n   #9  microgpt.fut:436:7-76\n" % ("Index [", tmp_113525, "] out of bounds for array of shape [", np.int64(16), "]."))
+          lifted_lambda_res_113530 = np.float64(indexArray(mem_122654, ((i_121710 * np.int64(16)) + tmp_113525), ct.c_double))
+          lifted_lambda_res_113538 = np.float64(indexArray(mem_122653, ((i_121710 * np.int64(16)) + tmp_113525), ct.c_double))
+          lifted_lambda_res_113549 = np.float64(indexArray(mem_122652, ((i_121710 * np.int64(16)) + tmp_113525), ct.c_double))
+          writeScalarArray(mem_122733, i_121700, lifted_lambda_res_113549)
+          writeScalarArray(mem_122734, i_121700, lifted_lambda_res_113538)
+          writeScalarArray(mem_122735, i_121700, lifted_lambda_res_113530)
+          i_121700 += one_124601
+        lmad_copy(ct.c_double, mem_122718, (i_121710 * np.int64(4)), [np.int64(1)], mem_122733, np.int64(0), [np.int64(1)], [np.int64(4)])
+        lmad_copy(ct.c_double, mem_122719, (i_121710 * np.int64(4)), [np.int64(1)], mem_122734, np.int64(0), [np.int64(1)], [np.int64(4)])
+        lmad_copy(ct.c_double, mem_122720, (i_121710 * np.int64(4)), [np.int64(1)], mem_122735, np.int64(0), [np.int64(1)], [np.int64(4)])
+        i_121710 += one_124603
+      lmad_copy(ct.c_double, mem_122700, (i_121720 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122718, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
+      lmad_copy(ct.c_double, mem_122701, (i_121720 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122719, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
+      lmad_copy(ct.c_double, mem_122702, (i_121720 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122720, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
+      i_121720 += one_124605
+    mem_122652 = None
+    mem_122653 = None
+    mem_122654 = None
     mem_122718 = None
     mem_122719 = None
     mem_122720 = None
-    mem_122721 = None
-    mem_122722 = None
-    mem_122747 = None
-    mem_122748 = None
-    mem_122749 = None
-    mem_122768 = None
-    mem_122769 = None
-    mem_122837 = allocateMem(np.int64(512))
-    mem_122838 = allocateMem(np.int64(8192))
-    mem_122839 = allocateMem(np.int64(512))
-    mem_122840 = allocateMem(np.int64(8192))
-    mem_122841 = allocateMem(np.int64(8192))
-    mem_122865 = allocateMem(np.int64(128))
-    mem_122866 = allocateMem(np.int64(2048))
-    mem_122867 = allocateMem(np.int64(128))
-    mem_122868 = allocateMem(np.int64(2048))
-    mem_122869 = allocateMem(np.int64(2048))
-    mem_122888 = allocateMem(np.int64(128))
-    mem_122889 = allocateMem(np.int64(128))
-    mem_122902 = allocateMem(np.int64(128))
-    mem_122909 = allocateMem(np.int64(128))
-    mem_122916 = allocateMem(np.int64(128))
-    i_121449 = np.int64(0)
-    one_124403 = np.int64(1)
-    for counter_124402 in range(np.int64(4)):
-      i_121433 = np.int64(0)
-      one_124401 = np.int64(1)
-      for counter_124400 in range(np.int64(16)):
-        redout_121403 = -np.inf
-        redout_121404 = -np.inf
-        redout_121405 = -np.inf
-        i_121408 = np.int64(0)
-        one_124391 = np.int64(1)
-        for counter_124390 in range(np.int64(16)):
-          lifted_lambda_res_118841 = np.float64(indexArray(mem_122686, (((i_121449 * np.int64(256)) + (i_121433 * np.int64(16))) + i_121408), ct.c_double))
-          r_118854 = np.float64(0.0)
-          i_118853 = np.int64(0)
-          one_124387 = np.int64(1)
-          for counter_124386 in range(np.int64(4)):
-            zt_lhs_118855 = np.float64(indexArray(mem_122683, (((i_121449 * np.int64(64)) + (i_121433 * np.int64(4))) + i_118853), ct.c_double))
-            zt_rhs_118856 = np.float64(indexArray(mem_122034, (((i_121449 * np.int64(64)) + (i_121408 * np.int64(4))) + i_118853), ct.c_double))
-            zt_res_118857 = (zt_lhs_118855 * zt_rhs_118856)
-            zp_res_118858 = (r_118854 + zt_res_118857)
-            r_tmp_123791 = zp_res_118858
-            r_118854 = r_tmp_123791
-            i_118853 += one_124387
-          defunc_0_lifted_lambda_res_118852 = r_118854
-          lifted_lambda_res_118866 = np.float64(indexArray(mem_122684, (((i_121449 * np.int64(256)) + (i_121433 * np.int64(16))) + i_121408), ct.c_double))
-          r_118892 = np.float64(0.0)
-          i_118891 = np.int64(0)
-          one_124389 = np.int64(1)
-          for counter_124388 in range(np.int64(4)):
-            zt_lhs_118893 = np.float64(indexArray(mem_122681, (((i_121449 * np.int64(64)) + (i_121433 * np.int64(4))) + i_118891), ct.c_double))
-            zt_rhs_118894 = np.float64(indexArray(mem_122034, (((i_121449 * np.int64(64)) + (i_121408 * np.int64(4))) + i_118891), ct.c_double))
-            zt_res_118895 = (zt_lhs_118893 * zt_rhs_118894)
-            zp_res_118896 = (r_118892 + zt_res_118895)
-            r_tmp_123792 = zp_res_118896
-            r_118892 = r_tmp_123792
-            i_118891 += one_124389
-          defunc_0_lifted_lambda_res_118890 = r_118892
-          lifted_lambda_res_118906 = np.float64(indexArray(mem_122682, (((i_121449 * np.int64(256)) + (i_121433 * np.int64(16))) + i_121408), ct.c_double))
-          max_res_118418 = fmax64(lifted_lambda_res_118841, redout_121403)
-          max_res_118494 = fmax64(lifted_lambda_res_118866, redout_121404)
-          max_res_118545 = fmax64(lifted_lambda_res_118906, redout_121405)
-          writeScalarArray(mem_122888, i_121408, defunc_0_lifted_lambda_res_118890)
-          writeScalarArray(mem_122889, i_121408, defunc_0_lifted_lambda_res_118852)
-          redout_tmp_123786 = max_res_118418
-          redout_tmp_123787 = max_res_118494
-          redout_tmp_123788 = max_res_118545
-          redout_121403 = redout_tmp_123786
-          redout_121404 = redout_tmp_123787
-          redout_121405 = redout_tmp_123788
-          i_121408 += one_124391
-        defunc_0_reduce_res_120717 = redout_121403
-        defunc_0_reduce_res_120718 = redout_121404
-        defunc_0_reduce_res_120719 = redout_121405
-        neg_res_118419 = -(defunc_0_reduce_res_120717)
-        i_121413 = np.int64(0)
-        one_124393 = np.int64(1)
-        for counter_124392 in range(np.int64(16)):
-          zp_lhs_118426 = np.float64(indexArray(mem_122686, (((i_121449 * np.int64(256)) + (i_121433 * np.int64(16))) + i_121413), ct.c_double))
-          zp_res_118427 = (neg_res_118419 + zp_lhs_118426)
-          exp_res_118428 = futhark_exp64(zp_res_118427)
-          writeScalarArray(mem_122902, i_121413, exp_res_118428)
-          i_121413 += one_124393
-        r_118432 = np.float64(0.0)
-        i_118431 = np.int64(0)
-        one_124395 = np.int64(1)
-        for counter_124394 in range(np.int64(16)):
-          lifted_lambda_res_118433 = np.float64(indexArray(mem_122902, i_118431, ct.c_double))
-          zp_res_118434 = (r_118432 + lifted_lambda_res_118433)
-          r_tmp_123794 = zp_res_118434
-          r_118432 = r_tmp_123794
-          i_118431 += one_124395
-        defunc_0_lifted_lambda_res_118430 = r_118432
-        zs_res_118435 = (np.float64(1.0) / defunc_0_lifted_lambda_res_118430)
-        i_121417 = np.int64(0)
-        one_124397 = np.int64(1)
-        for counter_124396 in range(np.int64(16)):
-          zt_lhs_118442 = np.float64(indexArray(mem_122902, i_121417, ct.c_double))
-          zt_res_118443 = (zs_res_118435 * zt_lhs_118442)
-          writeScalarArray(mem_122909, i_121417, zt_res_118443)
-          i_121417 += one_124397
-        i_121421 = np.int64(0)
-        one_124399 = np.int64(1)
-        for counter_124398 in range(np.int64(16)):
-          lifted_lambda_res_118451 = np.float64(indexArray(mem_122909, i_121421, ct.c_double))
-          writeScalarArray(mem_122916, i_121421, lifted_lambda_res_118451)
-          i_121421 += one_124399
-        writeScalarArray(mem_122865, i_121433, defunc_0_reduce_res_120719)
-        lmad_copy(ct.c_double, mem_122866, (i_121433 * np.int64(16)), [np.int64(1)], mem_122888, np.int64(0), [np.int64(1)], [np.int64(16)])
-        writeScalarArray(mem_122867, i_121433, defunc_0_reduce_res_120718)
-        lmad_copy(ct.c_double, mem_122868, (i_121433 * np.int64(16)), [np.int64(1)], mem_122889, np.int64(0), [np.int64(1)], [np.int64(16)])
-        lmad_copy(ct.c_double, mem_122869, (i_121433 * np.int64(16)), [np.int64(1)], mem_122916, np.int64(0), [np.int64(1)], [np.int64(16)])
-        i_121433 += one_124401
-      lmad_copy(ct.c_double, mem_122837, (i_121449 * np.int64(16)), [np.int64(1)], mem_122865, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_122838, (i_121449 * np.int64(256)), [np.int64(16), np.int64(1)], mem_122866, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      lmad_copy(ct.c_double, mem_122839, (i_121449 * np.int64(16)), [np.int64(1)], mem_122867, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_122840, (i_121449 * np.int64(256)), [np.int64(16), np.int64(1)], mem_122868, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      lmad_copy(ct.c_double, mem_122841, (i_121449 * np.int64(256)), [np.int64(16), np.int64(1)], mem_122869, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      i_121449 += one_124403
-    mem_122034 = None
-    mem_122681 = None
-    mem_122683 = None
-    mem_122686 = None
-    mem_122865 = None
-    mem_122866 = None
-    mem_122867 = None
-    mem_122868 = None
-    mem_122869 = None
-    mem_122888 = None
-    mem_122889 = None
-    mem_122902 = None
-    mem_122909 = None
-    mem_122916 = None
-    mem_122964 = allocateMem(np.int64(8192))
-    mem_122965 = allocateMem(np.int64(8192))
-    mem_122966 = allocateMem(np.int64(8192))
-    mem_122967 = allocateMem(np.int64(8192))
-    mem_122988 = allocateMem(np.int64(2048))
-    mem_122989 = allocateMem(np.int64(2048))
-    mem_122990 = allocateMem(np.int64(2048))
-    mem_122991 = allocateMem(np.int64(2048))
-    mem_123008 = allocateMem(np.int64(128))
-    mem_123009 = allocateMem(np.int64(128))
-    mem_123010 = allocateMem(np.int64(128))
-    mem_123011 = allocateMem(np.int64(128))
-    i_121489 = np.int64(0)
-    one_124409 = np.int64(1)
-    for counter_124408 in range(np.int64(4)):
-      i_121476 = np.int64(0)
-      one_124407 = np.int64(1)
-      for counter_124406 in range(np.int64(16)):
-        neg_arg0_119392 = np.float64(indexArray(mem_122839, ((i_121489 * np.int64(16)) + i_121476), ct.c_double))
-        neg_res_119393 = -(neg_arg0_119392)
-        neg_arg0_119427 = np.float64(indexArray(mem_122837, ((i_121489 * np.int64(16)) + i_121476), ct.c_double))
-        neg_res_119428 = -(neg_arg0_119427)
-        i_121463 = np.int64(0)
-        one_124405 = np.int64(1)
-        for counter_124404 in range(np.int64(16)):
-          zp_lhs_119562 = np.float64(indexArray(mem_122684, (((i_121489 * np.int64(256)) + (i_121476 * np.int64(16))) + i_121463), ct.c_double))
-          zp_res_119563 = (neg_res_119393 + zp_lhs_119562)
-          exp_res_119564 = futhark_exp64(zp_res_119563)
-          lifted_lambda_res_119571 = np.float64(indexArray(mem_122840, (((i_121489 * np.int64(256)) + (i_121476 * np.int64(16))) + i_121463), ct.c_double))
-          zp_lhs_119581 = np.float64(indexArray(mem_122682, (((i_121489 * np.int64(256)) + (i_121476 * np.int64(16))) + i_121463), ct.c_double))
-          zp_res_119582 = (neg_res_119428 + zp_lhs_119581)
-          exp_res_119583 = futhark_exp64(zp_res_119582)
-          lifted_lambda_res_119595 = np.float64(indexArray(mem_122838, (((i_121489 * np.int64(256)) + (i_121476 * np.int64(16))) + i_121463), ct.c_double))
-          writeScalarArray(mem_123008, i_121463, lifted_lambda_res_119595)
-          writeScalarArray(mem_123009, i_121463, exp_res_119583)
-          writeScalarArray(mem_123010, i_121463, lifted_lambda_res_119571)
-          writeScalarArray(mem_123011, i_121463, exp_res_119564)
-          i_121463 += one_124405
-        lmad_copy(ct.c_double, mem_122988, (i_121476 * np.int64(16)), [np.int64(1)], mem_123008, np.int64(0), [np.int64(1)], [np.int64(16)])
-        lmad_copy(ct.c_double, mem_122989, (i_121476 * np.int64(16)), [np.int64(1)], mem_123009, np.int64(0), [np.int64(1)], [np.int64(16)])
-        lmad_copy(ct.c_double, mem_122990, (i_121476 * np.int64(16)), [np.int64(1)], mem_123010, np.int64(0), [np.int64(1)], [np.int64(16)])
-        lmad_copy(ct.c_double, mem_122991, (i_121476 * np.int64(16)), [np.int64(1)], mem_123011, np.int64(0), [np.int64(1)], [np.int64(16)])
-        i_121476 += one_124407
-      lmad_copy(ct.c_double, mem_122964, (i_121489 * np.int64(256)), [np.int64(16), np.int64(1)], mem_122988, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      lmad_copy(ct.c_double, mem_122965, (i_121489 * np.int64(256)), [np.int64(16), np.int64(1)], mem_122989, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      lmad_copy(ct.c_double, mem_122966, (i_121489 * np.int64(256)), [np.int64(16), np.int64(1)], mem_122990, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      lmad_copy(ct.c_double, mem_122967, (i_121489 * np.int64(256)), [np.int64(16), np.int64(1)], mem_122991, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      i_121489 += one_124409
+    mem_122733 = None
+    mem_122734 = None
+    mem_122735 = None
+    mem_122781 = allocateMem(np.int64(2048))
+    mem_122787 = allocateMem(np.int64(2048))
+    mem_122792 = allocateMem(np.int64(128))
+    mem_122803 = allocateMem(np.int64(2048))
+    mem_122808 = allocateMem(np.int64(128))
+    mem_122819 = allocateMem(np.int64(2048))
+    mem_122824 = allocateMem(np.int64(128))
+    mem_122831 = allocateMem(np.int64(128))
+    mem_122838 = allocateMem(np.int64(128))
+    mem_122849 = allocateMem(np.int64(512))
+    mem_122854 = allocateMem(np.int64(32))
+    mem_122865 = allocateMem(np.int64(512))
+    mem_122870 = allocateMem(np.int64(32))
+    i_121776 = np.int64(0)
+    one_124639 = np.int64(1)
+    for counter_124638 in range(np.int64(4)):
+      i_121730 = np.int64(0)
+      one_124611 = np.int64(1)
+      for counter_124610 in range(np.int64(16)):
+        i_121726 = np.int64(0)
+        one_124609 = np.int64(1)
+        for counter_124608 in range(np.int64(16)):
+          r_110911 = np.float64(0.0)
+          i_110910 = np.int64(0)
+          one_124607 = np.int64(1)
+          for counter_124606 in range(np.int64(4)):
+            zt_lhs_110912 = np.float64(indexArray(mem_122702, (((i_121776 * np.int64(64)) + (i_121730 * np.int64(4))) + i_110910), ct.c_double))
+            zt_rhs_110913 = np.float64(indexArray(mem_122701, (((i_121776 * np.int64(64)) + (i_121726 * np.int64(4))) + i_110910), ct.c_double))
+            zt_res_110914 = (zt_lhs_110912 * zt_rhs_110913)
+            zp_res_110915 = (r_110911 + zt_res_110914)
+            r_tmp_124307 = zp_res_110915
+            r_110911 = r_tmp_124307
+            i_110910 += one_124607
+          defunc_0_lifted_lambda_res_110909 = r_110911
+          writeScalarArray(mem_122792, i_121726, defunc_0_lifted_lambda_res_110909)
+          i_121726 += one_124609
+        lmad_copy(ct.c_double, mem_122787, (i_121730 * np.int64(16)), [np.int64(1)], mem_122792, np.int64(0), [np.int64(1)], [np.int64(16)])
+        i_121730 += one_124611
+      i_121738 = np.int64(0)
+      one_124615 = np.int64(1)
+      for counter_124614 in range(np.int64(16)):
+        i_121734 = np.int64(0)
+        one_124613 = np.int64(1)
+        for counter_124612 in range(np.int64(16)):
+          zs_lhs_110930 = np.float64(indexArray(mem_122787, ((i_121738 * np.int64(16)) + i_121734), ct.c_double))
+          zs_res_110931 = (zs_lhs_110930 / np.float64(2.0))
+          zp_rhs_110932 = np.float64(indexArray(mask_mem_122589, ((i_121738 * np.int64(16)) + i_121734), ct.c_double))
+          zp_res_110933 = (zs_res_110931 + zp_rhs_110932)
+          writeScalarArray(mem_122808, i_121734, zp_res_110933)
+          i_121734 += one_124613
+        lmad_copy(ct.c_double, mem_122803, (i_121738 * np.int64(16)), [np.int64(1)], mem_122808, np.int64(0), [np.int64(1)], [np.int64(16)])
+        i_121738 += one_124615
+      i_121756 = np.int64(0)
+      one_124627 = np.int64(1)
+      for counter_124626 in range(np.int64(16)):
+        redout_121740 = -np.inf
+        i_121741 = np.int64(0)
+        one_124617 = np.int64(1)
+        for counter_124616 in range(np.int64(16)):
+          lifted_lambda_res_113576 = np.float64(indexArray(mem_122803, ((i_121756 * np.int64(16)) + i_121741), ct.c_double))
+          max_res_110954 = fmax64(lifted_lambda_res_113576, redout_121740)
+          redout_tmp_124311 = max_res_110954
+          redout_121740 = redout_tmp_124311
+          i_121741 += one_124617
+        defunc_0_reduce_res_113652 = redout_121740
+        neg_res_110955 = -(defunc_0_reduce_res_113652)
+        i_121744 = np.int64(0)
+        one_124619 = np.int64(1)
+        for counter_124618 in range(np.int64(16)):
+          zp_lhs_110962 = np.float64(indexArray(mem_122803, ((i_121756 * np.int64(16)) + i_121744), ct.c_double))
+          zp_res_110963 = (neg_res_110955 + zp_lhs_110962)
+          exp_res_110964 = futhark_exp64(zp_res_110963)
+          writeScalarArray(mem_122824, i_121744, exp_res_110964)
+          i_121744 += one_124619
+        r_110968 = np.float64(0.0)
+        i_110967 = np.int64(0)
+        one_124621 = np.int64(1)
+        for counter_124620 in range(np.int64(16)):
+          lifted_lambda_res_110969 = np.float64(indexArray(mem_122824, i_110967, ct.c_double))
+          zp_res_110970 = (r_110968 + lifted_lambda_res_110969)
+          r_tmp_124313 = zp_res_110970
+          r_110968 = r_tmp_124313
+          i_110967 += one_124621
+        defunc_0_lifted_lambda_res_110966 = r_110968
+        zs_res_110971 = (np.float64(1.0) / defunc_0_lifted_lambda_res_110966)
+        i_121748 = np.int64(0)
+        one_124623 = np.int64(1)
+        for counter_124622 in range(np.int64(16)):
+          zt_lhs_110978 = np.float64(indexArray(mem_122824, i_121748, ct.c_double))
+          zt_res_110979 = (zs_res_110971 * zt_lhs_110978)
+          writeScalarArray(mem_122831, i_121748, zt_res_110979)
+          i_121748 += one_124623
+        i_121752 = np.int64(0)
+        one_124625 = np.int64(1)
+        for counter_124624 in range(np.int64(16)):
+          lifted_lambda_res_110987 = np.float64(indexArray(mem_122831, i_121752, ct.c_double))
+          writeScalarArray(mem_122838, i_121752, lifted_lambda_res_110987)
+          i_121752 += one_124625
+        lmad_copy(ct.c_double, mem_122819, (i_121756 * np.int64(16)), [np.int64(1)], mem_122838, np.int64(0), [np.int64(1)], [np.int64(16)])
+        i_121756 += one_124627
+      i_121764 = np.int64(0)
+      one_124633 = np.int64(1)
+      for counter_124632 in range(np.int64(16)):
+        i_121760 = np.int64(0)
+        one_124631 = np.int64(1)
+        for counter_124630 in range(np.int64(4)):
+          r_111004 = np.float64(0.0)
+          i_111003 = np.int64(0)
+          one_124629 = np.int64(1)
+          for counter_124628 in range(np.int64(16)):
+            zt_lhs_111005 = np.float64(indexArray(mem_122819, ((i_121764 * np.int64(16)) + i_111003), ct.c_double))
+            zt_rhs_111006 = np.float64(indexArray(mem_122700, (((i_121776 * np.int64(64)) + (i_111003 * np.int64(4))) + i_121760), ct.c_double))
+            zt_res_111007 = (zt_lhs_111005 * zt_rhs_111006)
+            zp_res_111008 = (r_111004 + zt_res_111007)
+            r_tmp_124318 = zp_res_111008
+            r_111004 = r_tmp_124318
+            i_111003 += one_124629
+          defunc_0_lifted_lambda_res_111002 = r_111004
+          writeScalarArray(mem_122854, i_121760, defunc_0_lifted_lambda_res_111002)
+          i_121760 += one_124631
+        lmad_copy(ct.c_double, mem_122849, (i_121764 * np.int64(4)), [np.int64(1)], mem_122854, np.int64(0), [np.int64(1)], [np.int64(4)])
+        i_121764 += one_124633
+      i_121772 = np.int64(0)
+      one_124637 = np.int64(1)
+      for counter_124636 in range(np.int64(16)):
+        i_121768 = np.int64(0)
+        one_124635 = np.int64(1)
+        for counter_124634 in range(np.int64(4)):
+          lifted_lambda_res_111023 = np.float64(indexArray(mem_122849, ((i_121772 * np.int64(4)) + i_121768), ct.c_double))
+          writeScalarArray(mem_122870, i_121768, lifted_lambda_res_111023)
+          i_121768 += one_124635
+        lmad_copy(ct.c_double, mem_122865, (i_121772 * np.int64(4)), [np.int64(1)], mem_122870, np.int64(0), [np.int64(1)], [np.int64(4)])
+        i_121772 += one_124637
+      lmad_copy(ct.c_double, mem_122781, (i_121776 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122865, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
+      i_121776 += one_124639
+    mem_122700 = None
+    mem_122701 = None
+    mem_122702 = None
+    mem_122787 = None
+    mem_122792 = None
+    mem_122803 = None
+    mem_122808 = None
+    mem_122819 = None
+    mem_122824 = None
+    mem_122831 = None
     mem_122838 = None
-    mem_122840 = None
-    mem_122988 = None
+    mem_122849 = None
+    mem_122854 = None
+    mem_122865 = None
+    mem_122870 = None
+    mem_122886 = allocateMem(np.int64(2048))
+    mem_122891 = allocateMem(np.int64(128))
+    i_121784 = np.int64(0)
+    one_124643 = np.int64(1)
+    for counter_124642 in range(np.int64(16)):
+      i_121780 = np.int64(0)
+      one_124641 = np.int64(1)
+      for counter_124640 in range(np.int64(16)):
+        tmp_111035 = sdiv64(i_121780, np.int64(4))
+        x_111036 = sle64(np.int64(0), tmp_111035)
+        y_111037 = slt64(tmp_111035, np.int64(4))
+        bounds_check_111038 = (x_111036 and y_111037)
+        index_certs_111039 = True
+        assert bounds_check_111038, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:216:44-59\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:216:15-80\n   #6  microgpt.fut:436:7-76\n" % ("Index [", tmp_111035, "] out of bounds for array of shape [", np.int64(4), "]."))
+        tmp_111040 = smod64(i_121780, np.int64(4))
+        x_111041 = sle64(np.int64(0), tmp_111040)
+        y_111042 = slt64(tmp_111040, np.int64(4))
+        bounds_check_111043 = (x_111041 and y_111042)
+        index_certs_111044 = True
+        assert bounds_check_111043, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:216:44-79\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:216:15-80\n   #6  microgpt.fut:436:7-76\n" % ("Index [", tmp_111040, "] out of bounds for array of shape [", np.int64(4), "]."))
+        lifted_lambda_res_111045 = np.float64(indexArray(mem_122781, (((tmp_111035 * np.int64(64)) + (i_121784 * np.int64(4))) + tmp_111040), ct.c_double))
+        writeScalarArray(mem_122891, i_121780, lifted_lambda_res_111045)
+        i_121780 += one_124641
+      lmad_copy(ct.c_double, mem_122886, (i_121784 * np.int64(16)), [np.int64(1)], mem_122891, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121784 += one_124643
+    mem_122781 = None
+    mem_122891 = None
+    mem_122902 = allocateMem(np.int64(2048))
+    mem_122907 = allocateMem(np.int64(128))
+    i_121792 = np.int64(0)
+    one_124649 = np.int64(1)
+    for counter_124648 in range(np.int64(16)):
+      i_121788 = np.int64(0)
+      one_124647 = np.int64(1)
+      for counter_124646 in range(np.int64(16)):
+        r_111062 = np.float64(0.0)
+        i_111061 = np.int64(0)
+        one_124645 = np.int64(1)
+        for counter_124644 in range(np.int64(16)):
+          zt_lhs_111063 = np.float64(indexArray(wout_mem_122580, ((i_121788 * np.int64(16)) + i_111061), ct.c_double))
+          zt_rhs_111064 = np.float64(indexArray(mem_122886, ((i_121792 * np.int64(16)) + i_111061), ct.c_double))
+          zt_res_111065 = (zt_lhs_111063 * zt_rhs_111064)
+          zp_res_111066 = (r_111062 + zt_res_111065)
+          r_tmp_124325 = zp_res_111066
+          r_111062 = r_tmp_124325
+          i_111061 += one_124645
+        defunc_0_lifted_lambda_res_111060 = r_111062
+        writeScalarArray(mem_122907, i_121788, defunc_0_lifted_lambda_res_111060)
+        i_121788 += one_124647
+      lmad_copy(ct.c_double, mem_122902, (i_121792 * np.int64(16)), [np.int64(1)], mem_122907, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121792 += one_124649
+    mem_122886 = None
+    mem_122907 = None
+    mem_122918 = allocateMem(np.int64(2048))
+    mem_122923 = allocateMem(np.int64(128))
+    i_121800 = np.int64(0)
+    one_124653 = np.int64(1)
+    for counter_124652 in range(np.int64(16)):
+      i_121796 = np.int64(0)
+      one_124651 = np.int64(1)
+      for counter_124650 in range(np.int64(16)):
+        zp_lhs_111081 = np.float64(indexArray(mem_122902, ((i_121800 * np.int64(16)) + i_121796), ct.c_double))
+        zp_rhs_111082 = np.float64(indexArray(mem_122606, ((i_121800 * np.int64(16)) + i_121796), ct.c_double))
+        zp_res_111083 = (zp_lhs_111081 + zp_rhs_111082)
+        writeScalarArray(mem_122923, i_121796, zp_res_111083)
+        i_121796 += one_124651
+      lmad_copy(ct.c_double, mem_122918, (i_121800 * np.int64(16)), [np.int64(1)], mem_122923, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121800 += one_124653
+    mem_122606 = None
+    mem_122902 = None
+    mem_122923 = None
+    mem_122934 = allocateMem(np.int64(2048))
+    mem_122939 = allocateMem(np.int64(128))
+    mem_122946 = allocateMem(np.int64(128))
+    i_121812 = np.int64(0)
+    one_124661 = np.int64(1)
+    for counter_124660 in range(np.int64(16)):
+      r_111094 = np.float64(0.0)
+      i_111093 = np.int64(0)
+      one_124655 = np.int64(1)
+      for counter_124654 in range(np.int64(16)):
+        zt_lhs_111095 = np.float64(indexArray(mem_122918, ((i_121812 * np.int64(16)) + i_111093), ct.c_double))
+        zt_res_111096 = (zt_lhs_111095 * zt_lhs_111095)
+        zp_res_111097 = (r_111094 + zt_res_111096)
+        r_tmp_124329 = zp_res_111097
+        r_111094 = r_tmp_124329
+        i_111093 += one_124655
+      defunc_0_lifted_lambda_res_111092 = r_111094
+      zs_res_111098 = (defunc_0_lifted_lambda_res_111092 / np.float64(16.0))
+      zp_res_111099 = (np.float64(1.0e-5) + zs_res_111098)
+      sqrt_res_111100 = futhark_sqrt64(zp_res_111099)
+      zs_res_111101 = (np.float64(1.0) / sqrt_res_111100)
+      i_121804 = np.int64(0)
+      one_124657 = np.int64(1)
+      for counter_124656 in range(np.int64(16)):
+        zt_lhs_111108 = np.float64(indexArray(mem_122918, ((i_121812 * np.int64(16)) + i_121804), ct.c_double))
+        zt_res_111109 = (zs_res_111101 * zt_lhs_111108)
+        writeScalarArray(mem_122939, i_121804, zt_res_111109)
+        i_121804 += one_124657
+      i_121808 = np.int64(0)
+      one_124659 = np.int64(1)
+      for counter_124658 in range(np.int64(16)):
+        lifted_lambda_res_111117 = np.float64(indexArray(mem_122939, i_121808, ct.c_double))
+        writeScalarArray(mem_122946, i_121808, lifted_lambda_res_111117)
+        i_121808 += one_124659
+      lmad_copy(ct.c_double, mem_122934, (i_121812 * np.int64(16)), [np.int64(1)], mem_122946, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121812 += one_124661
+    mem_122939 = None
+    mem_122946 = None
+    mem_122957 = allocateMem(np.int64(8192))
+    mem_122962 = allocateMem(np.int64(512))
+    i_121820 = np.int64(0)
+    one_124667 = np.int64(1)
+    for counter_124666 in range(np.int64(16)):
+      i_121816 = np.int64(0)
+      one_124665 = np.int64(1)
+      for counter_124664 in range(np.int64(64)):
+        r_111135 = np.float64(0.0)
+        i_111134 = np.int64(0)
+        one_124663 = np.int64(1)
+        for counter_124662 in range(np.int64(16)):
+          zt_lhs_111136 = np.float64(indexArray(wup_mem_122584, ((i_121816 * np.int64(16)) + i_111134), ct.c_double))
+          zt_rhs_111137 = np.float64(indexArray(mem_122934, ((i_121820 * np.int64(16)) + i_111134), ct.c_double))
+          zt_res_111138 = (zt_lhs_111136 * zt_rhs_111137)
+          zp_res_111139 = (r_111135 + zt_res_111138)
+          r_tmp_124334 = zp_res_111139
+          r_111135 = r_tmp_124334
+          i_111134 += one_124663
+        defunc_0_lifted_lambda_res_111133 = r_111135
+        writeScalarArray(mem_122962, i_121816, defunc_0_lifted_lambda_res_111133)
+        i_121816 += one_124665
+      lmad_copy(ct.c_double, mem_122957, (i_121820 * np.int64(64)), [np.int64(1)], mem_122962, np.int64(0), [np.int64(1)], [np.int64(64)])
+      i_121820 += one_124667
+    mem_122934 = None
+    mem_122962 = None
+    mem_122973 = allocateMem(np.int64(8192))
+    mem_122978 = allocateMem(np.int64(512))
+    i_121828 = np.int64(0)
+    one_124671 = np.int64(1)
+    for counter_124670 in range(np.int64(16)):
+      i_121824 = np.int64(0)
+      one_124669 = np.int64(1)
+      for counter_124668 in range(np.int64(64)):
+        max_arg0_111154 = np.float64(indexArray(mem_122957, ((i_121828 * np.int64(64)) + i_121824), ct.c_double))
+        max_res_111155 = fmax64(np.float64(0.0), max_arg0_111154)
+        writeScalarArray(mem_122978, i_121824, max_res_111155)
+        i_121824 += one_124669
+      lmad_copy(ct.c_double, mem_122973, (i_121828 * np.int64(64)), [np.int64(1)], mem_122978, np.int64(0), [np.int64(1)], [np.int64(64)])
+      i_121828 += one_124671
+    mem_122957 = None
+    mem_122978 = None
+    mem_122989 = allocateMem(np.int64(2048))
+    mem_122994 = allocateMem(np.int64(128))
+    i_121836 = np.int64(0)
+    one_124677 = np.int64(1)
+    for counter_124676 in range(np.int64(16)):
+      i_121832 = np.int64(0)
+      one_124675 = np.int64(1)
+      for counter_124674 in range(np.int64(16)):
+        r_111172 = np.float64(0.0)
+        i_111171 = np.int64(0)
+        one_124673 = np.int64(1)
+        for counter_124672 in range(np.int64(64)):
+          zt_lhs_111173 = np.float64(indexArray(wdown_mem_122578, ((i_121832 * np.int64(64)) + i_111171), ct.c_double))
+          zt_rhs_111174 = np.float64(indexArray(mem_122973, ((i_121836 * np.int64(64)) + i_111171), ct.c_double))
+          zt_res_111175 = (zt_lhs_111173 * zt_rhs_111174)
+          zp_res_111176 = (r_111172 + zt_res_111175)
+          r_tmp_124339 = zp_res_111176
+          r_111172 = r_tmp_124339
+          i_111171 += one_124673
+        defunc_0_lifted_lambda_res_111170 = r_111172
+        writeScalarArray(mem_122994, i_121832, defunc_0_lifted_lambda_res_111170)
+        i_121832 += one_124675
+      lmad_copy(ct.c_double, mem_122989, (i_121836 * np.int64(16)), [np.int64(1)], mem_122994, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121836 += one_124677
+    mem_122973 = None
+    mem_122994 = None
+    mem_123005 = allocateMem(np.int64(2048))
+    mem_123010 = allocateMem(np.int64(128))
+    i_121844 = np.int64(0)
+    one_124681 = np.int64(1)
+    for counter_124680 in range(np.int64(16)):
+      i_121840 = np.int64(0)
+      one_124679 = np.int64(1)
+      for counter_124678 in range(np.int64(16)):
+        zp_lhs_111191 = np.float64(indexArray(mem_122989, ((i_121844 * np.int64(16)) + i_121840), ct.c_double))
+        zp_rhs_111192 = np.float64(indexArray(mem_122918, ((i_121844 * np.int64(16)) + i_121840), ct.c_double))
+        zp_res_111193 = (zp_lhs_111191 + zp_rhs_111192)
+        writeScalarArray(mem_123010, i_121840, zp_res_111193)
+        i_121840 += one_124679
+      lmad_copy(ct.c_double, mem_123005, (i_121844 * np.int64(16)), [np.int64(1)], mem_123010, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121844 += one_124681
+    mem_122918 = None
     mem_122989 = None
-    mem_122990 = None
-    mem_122991 = None
-    mem_123008 = None
-    mem_123009 = None
     mem_123010 = None
-    mem_123011 = None
-    mem_123072 = allocateMem(np.int64(512))
-    mem_123073 = allocateMem(np.int64(512))
-    mem_123074 = allocateMem(np.int64(512))
-    mem_123075 = allocateMem(np.int64(512))
-    mem_123092 = allocateMem(np.int64(128))
-    mem_123093 = allocateMem(np.int64(128))
-    mem_123094 = allocateMem(np.int64(128))
-    mem_123095 = allocateMem(np.int64(128))
-    i_121515 = np.int64(0)
-    one_124421 = np.int64(1)
-    for counter_124420 in range(np.int64(4)):
-      i_121502 = np.int64(0)
-      one_124419 = np.int64(1)
-      for counter_124418 in range(np.int64(16)):
-        r_119718 = np.float64(0.0)
-        i_119717 = np.int64(0)
-        one_124411 = np.int64(1)
-        for counter_124410 in range(np.int64(16)):
-          lifted_lambda_res_119719 = np.float64(indexArray(mem_122967, (((i_121515 * np.int64(256)) + (i_121502 * np.int64(16))) + i_119717), ct.c_double))
-          zp_res_119720 = (r_119718 + lifted_lambda_res_119719)
-          r_tmp_123817 = zp_res_119720
-          r_119718 = r_tmp_123817
-          i_119717 += one_124411
-        defunc_0_lifted_lambda_res_119716 = r_119718
-        zt_res_119728 = (defunc_0_lifted_lambda_res_119716 * defunc_0_lifted_lambda_res_119716)
-        zs_res_119729 = (np.float64(1.0) / zt_res_119728)
-        r_119732 = np.float64(0.0)
-        i_119731 = np.int64(0)
-        one_124413 = np.int64(1)
-        for counter_124412 in range(np.int64(16)):
-          zt_lhs_119733 = np.float64(indexArray(mem_122966, (((i_121515 * np.int64(256)) + (i_121502 * np.int64(16))) + i_119731), ct.c_double))
-          zt_rhs_119734 = np.float64(indexArray(mem_122967, (((i_121515 * np.int64(256)) + (i_121502 * np.int64(16))) + i_119731), ct.c_double))
-          zt_res_119735 = (zt_lhs_119733 * zt_rhs_119734)
-          zt_res_119736 = (zs_res_119729 * zt_res_119735)
-          neg_res_119737 = -(zt_res_119736)
-          zp_res_119738 = (r_119732 + neg_res_119737)
-          r_tmp_123818 = zp_res_119738
-          r_119732 = r_tmp_123818
-          i_119731 += one_124413
-        defunc_0_lifted_lambda_res_119730 = r_119732
-        r_119751 = np.float64(0.0)
-        i_119750 = np.int64(0)
-        one_124415 = np.int64(1)
-        for counter_124414 in range(np.int64(16)):
-          lifted_lambda_res_119752 = np.float64(indexArray(mem_122965, (((i_121515 * np.int64(256)) + (i_121502 * np.int64(16))) + i_119750), ct.c_double))
-          zp_res_119753 = (r_119751 + lifted_lambda_res_119752)
-          r_tmp_123819 = zp_res_119753
-          r_119751 = r_tmp_123819
-          i_119750 += one_124415
-        defunc_0_lifted_lambda_res_119749 = r_119751
-        zt_res_119761 = (defunc_0_lifted_lambda_res_119749 * defunc_0_lifted_lambda_res_119749)
-        zs_res_119762 = (np.float64(1.0) / zt_res_119761)
-        r_119765 = np.float64(0.0)
-        i_119764 = np.int64(0)
-        one_124417 = np.int64(1)
-        for counter_124416 in range(np.int64(16)):
-          zt_lhs_119766 = np.float64(indexArray(mem_122964, (((i_121515 * np.int64(256)) + (i_121502 * np.int64(16))) + i_119764), ct.c_double))
-          zt_rhs_119767 = np.float64(indexArray(mem_122965, (((i_121515 * np.int64(256)) + (i_121502 * np.int64(16))) + i_119764), ct.c_double))
-          zt_res_119768 = (zt_lhs_119766 * zt_rhs_119767)
-          zt_res_119769 = (zs_res_119762 * zt_res_119768)
-          neg_res_119770 = -(zt_res_119769)
-          zp_res_119771 = (r_119765 + neg_res_119770)
-          r_tmp_123820 = zp_res_119771
-          r_119765 = r_tmp_123820
-          i_119764 += one_124417
-        defunc_0_lifted_lambda_res_119763 = r_119765
-        writeScalarArray(mem_123092, i_121502, defunc_0_lifted_lambda_res_119763)
-        writeScalarArray(mem_123093, i_121502, defunc_0_lifted_lambda_res_119749)
-        writeScalarArray(mem_123094, i_121502, defunc_0_lifted_lambda_res_119730)
-        writeScalarArray(mem_123095, i_121502, defunc_0_lifted_lambda_res_119716)
-        i_121502 += one_124419
-      lmad_copy(ct.c_double, mem_123072, (i_121515 * np.int64(16)), [np.int64(1)], mem_123092, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_123073, (i_121515 * np.int64(16)), [np.int64(1)], mem_123093, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_123074, (i_121515 * np.int64(16)), [np.int64(1)], mem_123094, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_123075, (i_121515 * np.int64(16)), [np.int64(1)], mem_123095, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121515 += one_124421
-    mem_122965 = None
-    mem_122967 = None
-    mem_123092 = None
-    mem_123093 = None
-    mem_123094 = None
-    mem_123095 = None
-    mem_123136 = allocateMem(np.int64(8192))
-    mem_123137 = allocateMem(np.int64(8192))
-    mem_123148 = allocateMem(np.int64(2048))
-    mem_123149 = allocateMem(np.int64(2048))
-    mem_123158 = allocateMem(np.int64(128))
-    mem_123159 = allocateMem(np.int64(128))
-    i_121538 = np.int64(0)
-    one_124427 = np.int64(1)
-    for counter_124426 in range(np.int64(4)):
-      i_121531 = np.int64(0)
-      one_124425 = np.int64(1)
-      for counter_124424 in range(np.int64(16)):
-        zs_rhs_119797 = np.float64(indexArray(mem_123075, ((i_121538 * np.int64(16)) + i_121531), ct.c_double))
-        zs_res_119798 = (np.float64(1.0) / zs_rhs_119797)
-        zp_rhs_119799 = np.float64(indexArray(mem_123074, ((i_121538 * np.int64(16)) + i_121531), ct.c_double))
-        zp_rhs_119818 = np.float64(indexArray(mem_123072, ((i_121538 * np.int64(16)) + i_121531), ct.c_double))
-        zs_rhs_119816 = np.float64(indexArray(mem_123073, ((i_121538 * np.int64(16)) + i_121531), ct.c_double))
-        zs_res_119817 = (np.float64(1.0) / zs_rhs_119816)
-        i_121524 = np.int64(0)
-        one_124423 = np.int64(1)
-        for counter_124422 in range(np.int64(16)):
-          zt_lhs_119846 = np.float64(indexArray(mem_122966, (((i_121538 * np.int64(256)) + (i_121531 * np.int64(16))) + i_121524), ct.c_double))
-          zt_res_119847 = (zs_res_119798 * zt_lhs_119846)
-          zp_res_119848 = (zp_rhs_119799 + zt_res_119847)
-          zt_lhs_119855 = np.float64(indexArray(mem_122964, (((i_121538 * np.int64(256)) + (i_121531 * np.int64(16))) + i_121524), ct.c_double))
-          zt_res_119856 = (zs_res_119817 * zt_lhs_119855)
-          zp_res_119857 = (zp_rhs_119818 + zt_res_119856)
-          writeScalarArray(mem_123158, i_121524, zp_res_119857)
-          writeScalarArray(mem_123159, i_121524, zp_res_119848)
-          i_121524 += one_124423
-        lmad_copy(ct.c_double, mem_123148, (i_121531 * np.int64(16)), [np.int64(1)], mem_123158, np.int64(0), [np.int64(1)], [np.int64(16)])
-        lmad_copy(ct.c_double, mem_123149, (i_121531 * np.int64(16)), [np.int64(1)], mem_123159, np.int64(0), [np.int64(1)], [np.int64(16)])
-        i_121531 += one_124425
-      lmad_copy(ct.c_double, mem_123136, (i_121538 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123148, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      lmad_copy(ct.c_double, mem_123137, (i_121538 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123149, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      i_121538 += one_124427
-    mem_122964 = None
-    mem_122966 = None
-    mem_123072 = None
-    mem_123073 = None
-    mem_123074 = None
-    mem_123075 = None
-    mem_123148 = None
-    mem_123149 = None
-    mem_123158 = None
-    mem_123159 = None
-    mem_123190 = allocateMem(np.int64(8192))
-    mem_123191 = allocateMem(np.int64(8192))
-    mem_123202 = allocateMem(np.int64(2048))
-    mem_123203 = allocateMem(np.int64(2048))
-    mem_123212 = allocateMem(np.int64(128))
-    mem_123213 = allocateMem(np.int64(128))
-    i_121559 = np.int64(0)
-    one_124437 = np.int64(1)
-    for counter_124436 in range(np.int64(4)):
-      i_121552 = np.int64(0)
-      one_124435 = np.int64(1)
-      for counter_124434 in range(np.int64(16)):
-        i_121545 = np.int64(0)
-        one_124433 = np.int64(1)
-        for counter_124432 in range(np.int64(16)):
-          r_119942 = np.float64(0.0)
-          i_119941 = np.int64(0)
-          one_124429 = np.int64(1)
-          for counter_124428 in range(np.int64(16)):
-            cond_119943 = (i_121552 == i_119941)
-            if cond_119943:
-              zp_lhs_120775 = np.float64(indexArray(mem_122684, (((i_121559 * np.int64(256)) + (i_119941 * np.int64(16))) + i_121545), ct.c_double))
-              neg_arg0_120776 = np.float64(indexArray(mem_122839, ((i_121559 * np.int64(16)) + i_119941), ct.c_double))
-              neg_res_120777 = -(neg_arg0_120776)
-              zp_res_120778 = (zp_lhs_120775 + neg_res_120777)
-              exp_res_120779 = futhark_exp64(zp_res_120778)
-              zt_rhs_120780 = np.float64(indexArray(mem_123137, (((i_121559 * np.int64(256)) + (i_119941 * np.int64(16))) + i_121545), ct.c_double))
-              zt_res_120781 = (exp_res_120779 * zt_rhs_120780)
-              zp_lhs_119944 = zt_res_120781
-            else:
-              zp_lhs_119944 = np.float64(0.0)
-            zp_res_119960 = (r_119942 + zp_lhs_119944)
-            r_tmp_123833 = zp_res_119960
-            r_119942 = r_tmp_123833
-            i_119941 += one_124429
-          defunc_0_lifted_lambda_res_119940 = r_119942
-          r_119965 = np.float64(0.0)
-          i_119964 = np.int64(0)
-          one_124431 = np.int64(1)
-          for counter_124430 in range(np.int64(16)):
-            cond_119966 = (i_121552 == i_119964)
-            if cond_119966:
-              zp_lhs_120790 = np.float64(indexArray(mem_122682, (((i_121559 * np.int64(256)) + (i_119964 * np.int64(16))) + i_121545), ct.c_double))
-              neg_arg0_120791 = np.float64(indexArray(mem_122837, ((i_121559 * np.int64(16)) + i_119964), ct.c_double))
-              neg_res_120792 = -(neg_arg0_120791)
-              zp_res_120793 = (zp_lhs_120790 + neg_res_120792)
-              exp_res_120794 = futhark_exp64(zp_res_120793)
-              zt_rhs_120795 = np.float64(indexArray(mem_123136, (((i_121559 * np.int64(256)) + (i_119964 * np.int64(16))) + i_121545), ct.c_double))
-              zt_res_120796 = (exp_res_120794 * zt_rhs_120795)
-              zp_lhs_119967 = zt_res_120796
-            else:
-              zp_lhs_119967 = np.float64(0.0)
-            zp_res_119983 = (r_119965 + zp_lhs_119967)
-            r_tmp_123834 = zp_res_119983
-            r_119965 = r_tmp_123834
-            i_119964 += one_124431
-          defunc_0_lifted_lambda_res_119963 = r_119965
-          writeScalarArray(mem_123212, i_121545, defunc_0_lifted_lambda_res_119963)
-          writeScalarArray(mem_123213, i_121545, defunc_0_lifted_lambda_res_119940)
-          i_121545 += one_124433
-        lmad_copy(ct.c_double, mem_123202, (i_121552 * np.int64(16)), [np.int64(1)], mem_123212, np.int64(0), [np.int64(1)], [np.int64(16)])
-        lmad_copy(ct.c_double, mem_123203, (i_121552 * np.int64(16)), [np.int64(1)], mem_123213, np.int64(0), [np.int64(1)], [np.int64(16)])
-        i_121552 += one_124435
-      lmad_copy(ct.c_double, mem_123190, (i_121559 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123202, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      lmad_copy(ct.c_double, mem_123191, (i_121559 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123203, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      i_121559 += one_124437
-    mem_122682 = None
-    mem_122684 = None
+    mem_123021 = allocateMem(np.int64(3456))
+    mem_123026 = allocateMem(np.int64(216))
+    i_121852 = np.int64(0)
+    one_124687 = np.int64(1)
+    for counter_124686 in range(np.int64(16)):
+      i_121848 = np.int64(0)
+      one_124685 = np.int64(1)
+      for counter_124684 in range(np.int64(27)):
+        r_111211 = np.float64(0.0)
+        i_111210 = np.int64(0)
+        one_124683 = np.int64(1)
+        for counter_124682 in range(np.int64(16)):
+          zt_lhs_111212 = np.float64(indexArray(wvoc_mem_122586, ((i_121848 * np.int64(16)) + i_111210), ct.c_double))
+          zt_rhs_111213 = np.float64(indexArray(mem_123005, ((i_121852 * np.int64(16)) + i_111210), ct.c_double))
+          zt_res_111214 = (zt_lhs_111212 * zt_rhs_111213)
+          zp_res_111215 = (r_111211 + zt_res_111214)
+          r_tmp_124344 = zp_res_111215
+          r_111211 = r_tmp_124344
+          i_111210 += one_124683
+        defunc_0_lifted_lambda_res_111209 = r_111211
+        writeScalarArray(mem_123026, i_121848, defunc_0_lifted_lambda_res_111209)
+        i_121848 += one_124685
+      lmad_copy(ct.c_double, mem_123021, (i_121852 * np.int64(27)), [np.int64(1)], mem_123026, np.int64(0), [np.int64(1)], [np.int64(27)])
+      i_121852 += one_124687
+    mem_123005 = None
+    mem_123026 = None
+    mem_123037 = allocateMem(np.int64(128))
+    mem_123041 = allocateMem(np.int64(216))
+    mem_123048 = allocateMem(np.int64(216))
+    i_121866 = np.int64(0)
+    one_124699 = np.int64(1)
+    for counter_124698 in range(np.int64(16)):
+      redout_121854 = -np.inf
+      i_121855 = np.int64(0)
+      one_124689 = np.int64(1)
+      for counter_124688 in range(np.int64(27)):
+        lifted_lambda_res_113622 = np.float64(indexArray(mem_123021, ((i_121866 * np.int64(27)) + i_121855), ct.c_double))
+        max_res_111239 = fmax64(lifted_lambda_res_113622, redout_121854)
+        redout_tmp_124346 = max_res_111239
+        redout_121854 = redout_tmp_124346
+        i_121855 += one_124689
+      x_113675 = redout_121854
+      neg_res_111240 = -(x_113675)
+      r_111226 = np.float64(0.0)
+      i_111225 = np.int64(0)
+      one_124697 = np.int64(1)
+      for counter_124696 in range(np.int64(27)):
+        i_121858 = np.int64(0)
+        one_124691 = np.int64(1)
+        for counter_124690 in range(np.int64(27)):
+          zp_lhs_111247 = np.float64(indexArray(mem_123021, ((i_121866 * np.int64(27)) + i_121858), ct.c_double))
+          zp_res_111248 = (neg_res_111240 + zp_lhs_111247)
+          exp_res_111249 = futhark_exp64(zp_res_111248)
+          writeScalarArray(mem_123041, i_121858, exp_res_111249)
+          i_121858 += one_124691
+        r_111253 = np.float64(0.0)
+        i_111252 = np.int64(0)
+        one_124693 = np.int64(1)
+        for counter_124692 in range(np.int64(27)):
+          lifted_lambda_res_111254 = np.float64(indexArray(mem_123041, i_111252, ct.c_double))
+          zp_res_111255 = (r_111253 + lifted_lambda_res_111254)
+          r_tmp_124349 = zp_res_111255
+          r_111253 = r_tmp_124349
+          i_111252 += one_124693
+        defunc_0_lifted_lambda_res_111251 = r_111253
+        zs_res_111256 = (np.float64(1.0) / defunc_0_lifted_lambda_res_111251)
+        i_121862 = np.int64(0)
+        one_124695 = np.int64(1)
+        for counter_124694 in range(np.int64(27)):
+          zt_lhs_111263 = np.float64(indexArray(mem_123041, i_121862, ct.c_double))
+          zt_res_111264 = (zs_res_111256 * zt_lhs_111263)
+          writeScalarArray(mem_123048, i_121862, zt_res_111264)
+          i_121862 += one_124695
+        log_arg0_111266 = np.float64(indexArray(mem_123048, i_111225, ct.c_double))
+        log_res_111267 = futhark_log64(log_arg0_111266)
+        zt_rhs_111268 = np.float64(indexArray(target_mem_122588, ((i_121866 * np.int64(27)) + i_111225), ct.c_double))
+        zt_res_111269 = (log_res_111267 * zt_rhs_111268)
+        zp_res_111270 = (r_111226 + zt_res_111269)
+        r_tmp_124347 = zp_res_111270
+        r_111226 = r_tmp_124347
+        i_111225 += one_124697
+      defunc_0_lifted_lambda_res_111224 = r_111226
+      neg_res_111271 = -(defunc_0_lifted_lambda_res_111224)
+      writeScalarArray(mem_123037, i_121866, neg_res_111271)
+      i_121866 += one_124699
+    mem_123021 = None
+    mem_123041 = None
+    mem_123048 = None
+    r_111275 = np.float64(0.0)
+    i_111274 = np.int64(0)
+    one_124701 = np.int64(1)
+    for counter_124700 in range(np.int64(16)):
+      lifted_lambda_res_111276 = np.float64(indexArray(mem_123037, i_111274, ct.c_double))
+      zp_res_111277 = (r_111275 + lifted_lambda_res_111276)
+      r_tmp_124351 = zp_res_111277
+      r_111275 = r_tmp_124351
+      i_111274 += one_124701
+    defunc_0_lifted_lambda_res_111273 = r_111275
+    zs_res_111278 = (defunc_0_lifted_lambda_res_111273 / np.float64(16.0))
+    mem_out_124274 = mem_123037
+    prim_out_124275 = zs_res_111278
+    return (mem_out_124274, prim_out_124275)
+
+  def futhark_entry_forward_seq(self, wdown_mem_122578, wkey_mem_122579, wout_mem_122580, wpe_mem_122581, wqry_mem_122582, wte_mem_122583, wup_mem_122584, wval_mem_122585, wvoc_mem_122586, seq_ids_mem_122587, mask_mem_122588):
+    mem_122589 = allocateMem(np.int64(2048))
+    mem_122594 = allocateMem(np.int64(128))
+    i_121648 = np.int64(0)
+    one_124705 = np.int64(1)
+    for counter_124704 in range(np.int64(16)):
+      tmp_110663 = np.int64(indexArray(seq_ids_mem_122587, i_121648, ct.c_int64))
+      x_110664 = sle64(np.int64(0), tmp_110663)
+      y_110665 = slt64(tmp_110663, np.int64(27))
+      bounds_check_110666 = (x_110664 and y_110665)
+      index_certs_110667 = True
+      assert bounds_check_110666, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:430:37-52\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:430:16-56\n" % ("Index [", tmp_110663, "] out of bounds for array of shape [", np.int64(27), "]."))
+      i_121644 = np.int64(0)
+      one_124703 = np.int64(1)
+      for counter_124702 in range(np.int64(16)):
+        lifted_lambda_res_110674 = np.float64(indexArray(wte_mem_122583, ((tmp_110663 * np.int64(16)) + i_121644), ct.c_double))
+        writeScalarArray(mem_122594, i_121644, lifted_lambda_res_110674)
+        i_121644 += one_124703
+      lmad_copy(ct.c_double, mem_122589, (i_121648 * np.int64(16)), [np.int64(1)], mem_122594, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121648 += one_124705
+    mem_122594 = None
+    mem_122605 = allocateMem(np.int64(2048))
+    mem_122610 = allocateMem(np.int64(128))
+    mem_122617 = allocateMem(np.int64(128))
+    i_121660 = np.int64(0)
+    one_124713 = np.int64(1)
+    for counter_124712 in range(np.int64(16)):
+      r_110702 = np.float64(0.0)
+      i_110701 = np.int64(0)
+      one_124707 = np.int64(1)
+      for counter_124706 in range(np.int64(16)):
+        zp_lhs_110703 = np.float64(indexArray(wpe_mem_122581, ((i_121660 * np.int64(16)) + i_110701), ct.c_double))
+        zp_rhs_110704 = np.float64(indexArray(mem_122589, ((i_121660 * np.int64(16)) + i_110701), ct.c_double))
+        zp_res_110705 = (zp_lhs_110703 + zp_rhs_110704)
+        zt_res_110706 = (zp_res_110705 * zp_res_110705)
+        zp_res_110707 = (r_110702 + zt_res_110706)
+        r_tmp_124278 = zp_res_110707
+        r_110702 = r_tmp_124278
+        i_110701 += one_124707
+      defunc_0_lifted_lambda_res_110700 = r_110702
+      zs_res_110708 = (defunc_0_lifted_lambda_res_110700 / np.float64(16.0))
+      zp_res_110709 = (np.float64(1.0e-5) + zs_res_110708)
+      sqrt_res_110710 = futhark_sqrt64(zp_res_110709)
+      zs_res_110711 = (np.float64(1.0) / sqrt_res_110710)
+      i_121652 = np.int64(0)
+      one_124709 = np.int64(1)
+      for counter_124708 in range(np.int64(16)):
+        zp_lhs_110718 = np.float64(indexArray(wpe_mem_122581, ((i_121660 * np.int64(16)) + i_121652), ct.c_double))
+        zp_rhs_110719 = np.float64(indexArray(mem_122589, ((i_121660 * np.int64(16)) + i_121652), ct.c_double))
+        zp_res_110720 = (zp_lhs_110718 + zp_rhs_110719)
+        zt_res_110721 = (zs_res_110711 * zp_res_110720)
+        writeScalarArray(mem_122610, i_121652, zt_res_110721)
+        i_121652 += one_124709
+      i_121656 = np.int64(0)
+      one_124711 = np.int64(1)
+      for counter_124710 in range(np.int64(16)):
+        lifted_lambda_res_110729 = np.float64(indexArray(mem_122610, i_121656, ct.c_double))
+        writeScalarArray(mem_122617, i_121656, lifted_lambda_res_110729)
+        i_121656 += one_124711
+      lmad_copy(ct.c_double, mem_122605, (i_121660 * np.int64(16)), [np.int64(1)], mem_122617, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121660 += one_124713
+    mem_122589 = None
+    mem_122610 = None
+    mem_122617 = None
+    mem_122628 = allocateMem(np.int64(2048))
+    mem_122633 = allocateMem(np.int64(128))
+    mem_122640 = allocateMem(np.int64(128))
+    i_121672 = np.int64(0)
+    one_124721 = np.int64(1)
+    for counter_124720 in range(np.int64(16)):
+      r_110740 = np.float64(0.0)
+      i_110739 = np.int64(0)
+      one_124715 = np.int64(1)
+      for counter_124714 in range(np.int64(16)):
+        zt_lhs_110741 = np.float64(indexArray(mem_122605, ((i_121672 * np.int64(16)) + i_110739), ct.c_double))
+        zt_res_110742 = (zt_lhs_110741 * zt_lhs_110741)
+        zp_res_110743 = (r_110740 + zt_res_110742)
+        r_tmp_124282 = zp_res_110743
+        r_110740 = r_tmp_124282
+        i_110739 += one_124715
+      defunc_0_lifted_lambda_res_110738 = r_110740
+      zs_res_110744 = (defunc_0_lifted_lambda_res_110738 / np.float64(16.0))
+      zp_res_110745 = (np.float64(1.0e-5) + zs_res_110744)
+      sqrt_res_110746 = futhark_sqrt64(zp_res_110745)
+      zs_res_110747 = (np.float64(1.0) / sqrt_res_110746)
+      i_121664 = np.int64(0)
+      one_124717 = np.int64(1)
+      for counter_124716 in range(np.int64(16)):
+        zt_lhs_110754 = np.float64(indexArray(mem_122605, ((i_121672 * np.int64(16)) + i_121664), ct.c_double))
+        zt_res_110755 = (zs_res_110747 * zt_lhs_110754)
+        writeScalarArray(mem_122633, i_121664, zt_res_110755)
+        i_121664 += one_124717
+      i_121668 = np.int64(0)
+      one_124719 = np.int64(1)
+      for counter_124718 in range(np.int64(16)):
+        lifted_lambda_res_110763 = np.float64(indexArray(mem_122633, i_121668, ct.c_double))
+        writeScalarArray(mem_122640, i_121668, lifted_lambda_res_110763)
+        i_121668 += one_124719
+      lmad_copy(ct.c_double, mem_122628, (i_121672 * np.int64(16)), [np.int64(1)], mem_122640, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121672 += one_124721
+    mem_122633 = None
+    mem_122640 = None
+    mem_122651 = allocateMem(np.int64(2048))
+    mem_122652 = allocateMem(np.int64(2048))
+    mem_122653 = allocateMem(np.int64(2048))
+    mem_122666 = allocateMem(np.int64(128))
+    mem_122667 = allocateMem(np.int64(128))
+    mem_122668 = allocateMem(np.int64(128))
+    i_121690 = np.int64(0)
+    one_124731 = np.int64(1)
+    for counter_124730 in range(np.int64(16)):
+      i_121680 = np.int64(0)
+      one_124729 = np.int64(1)
+      for counter_124728 in range(np.int64(16)):
+        r_113334 = np.float64(0.0)
+        i_113333 = np.int64(0)
+        one_124723 = np.int64(1)
+        for counter_124722 in range(np.int64(16)):
+          zt_lhs_113335 = np.float64(indexArray(wqry_mem_122582, ((i_121680 * np.int64(16)) + i_113333), ct.c_double))
+          zt_rhs_113336 = np.float64(indexArray(mem_122628, ((i_121690 * np.int64(16)) + i_113333), ct.c_double))
+          zt_res_113337 = (zt_lhs_113335 * zt_rhs_113336)
+          zp_res_113338 = (r_113334 + zt_res_113337)
+          r_tmp_124291 = zp_res_113338
+          r_113334 = r_tmp_124291
+          i_113333 += one_124723
+        defunc_0_lifted_lambda_res_113332 = r_113334
+        r_113347 = np.float64(0.0)
+        i_113346 = np.int64(0)
+        one_124725 = np.int64(1)
+        for counter_124724 in range(np.int64(16)):
+          zt_lhs_113348 = np.float64(indexArray(wkey_mem_122579, ((i_121680 * np.int64(16)) + i_113346), ct.c_double))
+          zt_rhs_113349 = np.float64(indexArray(mem_122628, ((i_121690 * np.int64(16)) + i_113346), ct.c_double))
+          zt_res_113350 = (zt_lhs_113348 * zt_rhs_113349)
+          zp_res_113351 = (r_113347 + zt_res_113350)
+          r_tmp_124292 = zp_res_113351
+          r_113347 = r_tmp_124292
+          i_113346 += one_124725
+        defunc_0_lifted_lambda_res_113345 = r_113347
+        r_113363 = np.float64(0.0)
+        i_113362 = np.int64(0)
+        one_124727 = np.int64(1)
+        for counter_124726 in range(np.int64(16)):
+          zt_lhs_113364 = np.float64(indexArray(wval_mem_122585, ((i_121680 * np.int64(16)) + i_113362), ct.c_double))
+          zt_rhs_113365 = np.float64(indexArray(mem_122628, ((i_121690 * np.int64(16)) + i_113362), ct.c_double))
+          zt_res_113366 = (zt_lhs_113364 * zt_rhs_113365)
+          zp_res_113367 = (r_113363 + zt_res_113366)
+          r_tmp_124293 = zp_res_113367
+          r_113363 = r_tmp_124293
+          i_113362 += one_124727
+        defunc_0_lifted_lambda_res_113361 = r_113363
+        writeScalarArray(mem_122666, i_121680, defunc_0_lifted_lambda_res_113361)
+        writeScalarArray(mem_122667, i_121680, defunc_0_lifted_lambda_res_113345)
+        writeScalarArray(mem_122668, i_121680, defunc_0_lifted_lambda_res_113332)
+        i_121680 += one_124729
+      lmad_copy(ct.c_double, mem_122651, (i_121690 * np.int64(16)), [np.int64(1)], mem_122666, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_122652, (i_121690 * np.int64(16)), [np.int64(1)], mem_122667, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_122653, (i_121690 * np.int64(16)), [np.int64(1)], mem_122668, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121690 += one_124731
+    mem_122628 = None
+    mem_122666 = None
+    mem_122667 = None
+    mem_122668 = None
+    mem_122699 = allocateMem(np.int64(2048))
+    mem_122700 = allocateMem(np.int64(2048))
+    mem_122701 = allocateMem(np.int64(2048))
+    mem_122717 = allocateMem(np.int64(512))
+    mem_122718 = allocateMem(np.int64(512))
+    mem_122719 = allocateMem(np.int64(512))
+    mem_122732 = allocateMem(np.int64(32))
+    mem_122733 = allocateMem(np.int64(32))
+    mem_122734 = allocateMem(np.int64(32))
+    i_121720 = np.int64(0)
+    one_124737 = np.int64(1)
+    for counter_124736 in range(np.int64(4)):
+      zp_lhs_113208 = (np.int64(4) * i_121720)
+      i_121710 = np.int64(0)
+      one_124735 = np.int64(1)
+      for counter_124734 in range(np.int64(16)):
+        i_121700 = np.int64(0)
+        one_124733 = np.int64(1)
+        for counter_124732 in range(np.int64(4)):
+          tmp_113525 = (zp_lhs_113208 + i_121700)
+          x_113526 = sle64(np.int64(0), tmp_113525)
+          y_113527 = slt64(tmp_113525, np.int64(16))
+          bounds_check_113528 = (x_113526 and y_113527)
+          index_certs_113529 = True
+          assert bounds_check_113528, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:149:51-83\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:15:29-44\n   #6  microgpt.fut:4:11-25\n   #7  microgpt.fut:15:15-45\n   #8  microgpt.fut:149:15-84\n   #9  microgpt.fut:431:7-72\n" % ("Index [", tmp_113525, "] out of bounds for array of shape [", np.int64(16), "]."))
+          lifted_lambda_res_113530 = np.float64(indexArray(mem_122653, ((i_121710 * np.int64(16)) + tmp_113525), ct.c_double))
+          lifted_lambda_res_113538 = np.float64(indexArray(mem_122652, ((i_121710 * np.int64(16)) + tmp_113525), ct.c_double))
+          lifted_lambda_res_113549 = np.float64(indexArray(mem_122651, ((i_121710 * np.int64(16)) + tmp_113525), ct.c_double))
+          writeScalarArray(mem_122732, i_121700, lifted_lambda_res_113549)
+          writeScalarArray(mem_122733, i_121700, lifted_lambda_res_113538)
+          writeScalarArray(mem_122734, i_121700, lifted_lambda_res_113530)
+          i_121700 += one_124733
+        lmad_copy(ct.c_double, mem_122717, (i_121710 * np.int64(4)), [np.int64(1)], mem_122732, np.int64(0), [np.int64(1)], [np.int64(4)])
+        lmad_copy(ct.c_double, mem_122718, (i_121710 * np.int64(4)), [np.int64(1)], mem_122733, np.int64(0), [np.int64(1)], [np.int64(4)])
+        lmad_copy(ct.c_double, mem_122719, (i_121710 * np.int64(4)), [np.int64(1)], mem_122734, np.int64(0), [np.int64(1)], [np.int64(4)])
+        i_121710 += one_124735
+      lmad_copy(ct.c_double, mem_122699, (i_121720 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122717, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
+      lmad_copy(ct.c_double, mem_122700, (i_121720 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122718, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
+      lmad_copy(ct.c_double, mem_122701, (i_121720 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122719, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
+      i_121720 += one_124737
+    mem_122651 = None
+    mem_122652 = None
+    mem_122653 = None
+    mem_122717 = None
+    mem_122718 = None
+    mem_122719 = None
+    mem_122732 = None
+    mem_122733 = None
+    mem_122734 = None
+    mem_122780 = allocateMem(np.int64(2048))
+    mem_122786 = allocateMem(np.int64(2048))
+    mem_122791 = allocateMem(np.int64(128))
+    mem_122802 = allocateMem(np.int64(2048))
+    mem_122807 = allocateMem(np.int64(128))
+    mem_122818 = allocateMem(np.int64(2048))
+    mem_122823 = allocateMem(np.int64(128))
+    mem_122830 = allocateMem(np.int64(128))
+    mem_122837 = allocateMem(np.int64(128))
+    mem_122848 = allocateMem(np.int64(512))
+    mem_122853 = allocateMem(np.int64(32))
+    mem_122864 = allocateMem(np.int64(512))
+    mem_122869 = allocateMem(np.int64(32))
+    i_121776 = np.int64(0)
+    one_124771 = np.int64(1)
+    for counter_124770 in range(np.int64(4)):
+      i_121730 = np.int64(0)
+      one_124743 = np.int64(1)
+      for counter_124742 in range(np.int64(16)):
+        i_121726 = np.int64(0)
+        one_124741 = np.int64(1)
+        for counter_124740 in range(np.int64(16)):
+          r_110910 = np.float64(0.0)
+          i_110909 = np.int64(0)
+          one_124739 = np.int64(1)
+          for counter_124738 in range(np.int64(4)):
+            zt_lhs_110911 = np.float64(indexArray(mem_122701, (((i_121776 * np.int64(64)) + (i_121730 * np.int64(4))) + i_110909), ct.c_double))
+            zt_rhs_110912 = np.float64(indexArray(mem_122700, (((i_121776 * np.int64(64)) + (i_121726 * np.int64(4))) + i_110909), ct.c_double))
+            zt_res_110913 = (zt_lhs_110911 * zt_rhs_110912)
+            zp_res_110914 = (r_110910 + zt_res_110913)
+            r_tmp_124306 = zp_res_110914
+            r_110910 = r_tmp_124306
+            i_110909 += one_124739
+          defunc_0_lifted_lambda_res_110908 = r_110910
+          writeScalarArray(mem_122791, i_121726, defunc_0_lifted_lambda_res_110908)
+          i_121726 += one_124741
+        lmad_copy(ct.c_double, mem_122786, (i_121730 * np.int64(16)), [np.int64(1)], mem_122791, np.int64(0), [np.int64(1)], [np.int64(16)])
+        i_121730 += one_124743
+      i_121738 = np.int64(0)
+      one_124747 = np.int64(1)
+      for counter_124746 in range(np.int64(16)):
+        i_121734 = np.int64(0)
+        one_124745 = np.int64(1)
+        for counter_124744 in range(np.int64(16)):
+          zs_lhs_110929 = np.float64(indexArray(mem_122786, ((i_121738 * np.int64(16)) + i_121734), ct.c_double))
+          zs_res_110930 = (zs_lhs_110929 / np.float64(2.0))
+          zp_rhs_110931 = np.float64(indexArray(mask_mem_122588, ((i_121738 * np.int64(16)) + i_121734), ct.c_double))
+          zp_res_110932 = (zs_res_110930 + zp_rhs_110931)
+          writeScalarArray(mem_122807, i_121734, zp_res_110932)
+          i_121734 += one_124745
+        lmad_copy(ct.c_double, mem_122802, (i_121738 * np.int64(16)), [np.int64(1)], mem_122807, np.int64(0), [np.int64(1)], [np.int64(16)])
+        i_121738 += one_124747
+      i_121756 = np.int64(0)
+      one_124759 = np.int64(1)
+      for counter_124758 in range(np.int64(16)):
+        redout_121740 = -np.inf
+        i_121741 = np.int64(0)
+        one_124749 = np.int64(1)
+        for counter_124748 in range(np.int64(16)):
+          lifted_lambda_res_113576 = np.float64(indexArray(mem_122802, ((i_121756 * np.int64(16)) + i_121741), ct.c_double))
+          max_res_110953 = fmax64(lifted_lambda_res_113576, redout_121740)
+          redout_tmp_124310 = max_res_110953
+          redout_121740 = redout_tmp_124310
+          i_121741 += one_124749
+        defunc_0_reduce_res_113627 = redout_121740
+        neg_res_110954 = -(defunc_0_reduce_res_113627)
+        i_121744 = np.int64(0)
+        one_124751 = np.int64(1)
+        for counter_124750 in range(np.int64(16)):
+          zp_lhs_110961 = np.float64(indexArray(mem_122802, ((i_121756 * np.int64(16)) + i_121744), ct.c_double))
+          zp_res_110962 = (neg_res_110954 + zp_lhs_110961)
+          exp_res_110963 = futhark_exp64(zp_res_110962)
+          writeScalarArray(mem_122823, i_121744, exp_res_110963)
+          i_121744 += one_124751
+        r_110967 = np.float64(0.0)
+        i_110966 = np.int64(0)
+        one_124753 = np.int64(1)
+        for counter_124752 in range(np.int64(16)):
+          lifted_lambda_res_110968 = np.float64(indexArray(mem_122823, i_110966, ct.c_double))
+          zp_res_110969 = (r_110967 + lifted_lambda_res_110968)
+          r_tmp_124312 = zp_res_110969
+          r_110967 = r_tmp_124312
+          i_110966 += one_124753
+        defunc_0_lifted_lambda_res_110965 = r_110967
+        zs_res_110970 = (np.float64(1.0) / defunc_0_lifted_lambda_res_110965)
+        i_121748 = np.int64(0)
+        one_124755 = np.int64(1)
+        for counter_124754 in range(np.int64(16)):
+          zt_lhs_110977 = np.float64(indexArray(mem_122823, i_121748, ct.c_double))
+          zt_res_110978 = (zs_res_110970 * zt_lhs_110977)
+          writeScalarArray(mem_122830, i_121748, zt_res_110978)
+          i_121748 += one_124755
+        i_121752 = np.int64(0)
+        one_124757 = np.int64(1)
+        for counter_124756 in range(np.int64(16)):
+          lifted_lambda_res_110986 = np.float64(indexArray(mem_122830, i_121752, ct.c_double))
+          writeScalarArray(mem_122837, i_121752, lifted_lambda_res_110986)
+          i_121752 += one_124757
+        lmad_copy(ct.c_double, mem_122818, (i_121756 * np.int64(16)), [np.int64(1)], mem_122837, np.int64(0), [np.int64(1)], [np.int64(16)])
+        i_121756 += one_124759
+      i_121764 = np.int64(0)
+      one_124765 = np.int64(1)
+      for counter_124764 in range(np.int64(16)):
+        i_121760 = np.int64(0)
+        one_124763 = np.int64(1)
+        for counter_124762 in range(np.int64(4)):
+          r_111003 = np.float64(0.0)
+          i_111002 = np.int64(0)
+          one_124761 = np.int64(1)
+          for counter_124760 in range(np.int64(16)):
+            zt_lhs_111004 = np.float64(indexArray(mem_122818, ((i_121764 * np.int64(16)) + i_111002), ct.c_double))
+            zt_rhs_111005 = np.float64(indexArray(mem_122699, (((i_121776 * np.int64(64)) + (i_111002 * np.int64(4))) + i_121760), ct.c_double))
+            zt_res_111006 = (zt_lhs_111004 * zt_rhs_111005)
+            zp_res_111007 = (r_111003 + zt_res_111006)
+            r_tmp_124317 = zp_res_111007
+            r_111003 = r_tmp_124317
+            i_111002 += one_124761
+          defunc_0_lifted_lambda_res_111001 = r_111003
+          writeScalarArray(mem_122853, i_121760, defunc_0_lifted_lambda_res_111001)
+          i_121760 += one_124763
+        lmad_copy(ct.c_double, mem_122848, (i_121764 * np.int64(4)), [np.int64(1)], mem_122853, np.int64(0), [np.int64(1)], [np.int64(4)])
+        i_121764 += one_124765
+      i_121772 = np.int64(0)
+      one_124769 = np.int64(1)
+      for counter_124768 in range(np.int64(16)):
+        i_121768 = np.int64(0)
+        one_124767 = np.int64(1)
+        for counter_124766 in range(np.int64(4)):
+          lifted_lambda_res_111022 = np.float64(indexArray(mem_122848, ((i_121772 * np.int64(4)) + i_121768), ct.c_double))
+          writeScalarArray(mem_122869, i_121768, lifted_lambda_res_111022)
+          i_121768 += one_124767
+        lmad_copy(ct.c_double, mem_122864, (i_121772 * np.int64(4)), [np.int64(1)], mem_122869, np.int64(0), [np.int64(1)], [np.int64(4)])
+        i_121772 += one_124769
+      lmad_copy(ct.c_double, mem_122780, (i_121776 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122864, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
+      i_121776 += one_124771
+    mem_122699 = None
+    mem_122700 = None
+    mem_122701 = None
+    mem_122786 = None
+    mem_122791 = None
+    mem_122802 = None
+    mem_122807 = None
+    mem_122818 = None
+    mem_122823 = None
+    mem_122830 = None
     mem_122837 = None
-    mem_122839 = None
-    mem_123136 = None
+    mem_122848 = None
+    mem_122853 = None
+    mem_122864 = None
+    mem_122869 = None
+    mem_122885 = allocateMem(np.int64(2048))
+    mem_122890 = allocateMem(np.int64(128))
+    i_121784 = np.int64(0)
+    one_124775 = np.int64(1)
+    for counter_124774 in range(np.int64(16)):
+      i_121780 = np.int64(0)
+      one_124773 = np.int64(1)
+      for counter_124772 in range(np.int64(16)):
+        tmp_111034 = sdiv64(i_121780, np.int64(4))
+        x_111035 = sle64(np.int64(0), tmp_111034)
+        y_111036 = slt64(tmp_111034, np.int64(4))
+        bounds_check_111037 = (x_111035 and y_111036)
+        index_certs_111038 = True
+        assert bounds_check_111037, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:161:44-59\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:161:15-80\n   #6  microgpt.fut:431:7-72\n" % ("Index [", tmp_111034, "] out of bounds for array of shape [", np.int64(4), "]."))
+        tmp_111039 = smod64(i_121780, np.int64(4))
+        x_111040 = sle64(np.int64(0), tmp_111039)
+        y_111041 = slt64(tmp_111039, np.int64(4))
+        bounds_check_111042 = (x_111040 and y_111041)
+        index_certs_111043 = True
+        assert bounds_check_111042, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:161:44-79\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:161:15-80\n   #6  microgpt.fut:431:7-72\n" % ("Index [", tmp_111039, "] out of bounds for array of shape [", np.int64(4), "]."))
+        lifted_lambda_res_111044 = np.float64(indexArray(mem_122780, (((tmp_111034 * np.int64(64)) + (i_121784 * np.int64(4))) + tmp_111039), ct.c_double))
+        writeScalarArray(mem_122890, i_121780, lifted_lambda_res_111044)
+        i_121780 += one_124773
+      lmad_copy(ct.c_double, mem_122885, (i_121784 * np.int64(16)), [np.int64(1)], mem_122890, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121784 += one_124775
+    mem_122780 = None
+    mem_122890 = None
+    mem_122901 = allocateMem(np.int64(2048))
+    mem_122906 = allocateMem(np.int64(128))
+    i_121792 = np.int64(0)
+    one_124781 = np.int64(1)
+    for counter_124780 in range(np.int64(16)):
+      i_121788 = np.int64(0)
+      one_124779 = np.int64(1)
+      for counter_124778 in range(np.int64(16)):
+        r_111061 = np.float64(0.0)
+        i_111060 = np.int64(0)
+        one_124777 = np.int64(1)
+        for counter_124776 in range(np.int64(16)):
+          zt_lhs_111062 = np.float64(indexArray(wout_mem_122580, ((i_121788 * np.int64(16)) + i_111060), ct.c_double))
+          zt_rhs_111063 = np.float64(indexArray(mem_122885, ((i_121792 * np.int64(16)) + i_111060), ct.c_double))
+          zt_res_111064 = (zt_lhs_111062 * zt_rhs_111063)
+          zp_res_111065 = (r_111061 + zt_res_111064)
+          r_tmp_124324 = zp_res_111065
+          r_111061 = r_tmp_124324
+          i_111060 += one_124777
+        defunc_0_lifted_lambda_res_111059 = r_111061
+        writeScalarArray(mem_122906, i_121788, defunc_0_lifted_lambda_res_111059)
+        i_121788 += one_124779
+      lmad_copy(ct.c_double, mem_122901, (i_121792 * np.int64(16)), [np.int64(1)], mem_122906, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121792 += one_124781
+    mem_122885 = None
+    mem_122906 = None
+    mem_122917 = allocateMem(np.int64(2048))
+    mem_122922 = allocateMem(np.int64(128))
+    i_121800 = np.int64(0)
+    one_124785 = np.int64(1)
+    for counter_124784 in range(np.int64(16)):
+      i_121796 = np.int64(0)
+      one_124783 = np.int64(1)
+      for counter_124782 in range(np.int64(16)):
+        zp_lhs_111080 = np.float64(indexArray(mem_122901, ((i_121800 * np.int64(16)) + i_121796), ct.c_double))
+        zp_rhs_111081 = np.float64(indexArray(mem_122605, ((i_121800 * np.int64(16)) + i_121796), ct.c_double))
+        zp_res_111082 = (zp_lhs_111080 + zp_rhs_111081)
+        writeScalarArray(mem_122922, i_121796, zp_res_111082)
+        i_121796 += one_124783
+      lmad_copy(ct.c_double, mem_122917, (i_121800 * np.int64(16)), [np.int64(1)], mem_122922, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121800 += one_124785
+    mem_122605 = None
+    mem_122901 = None
+    mem_122922 = None
+    mem_122933 = allocateMem(np.int64(2048))
+    mem_122938 = allocateMem(np.int64(128))
+    mem_122945 = allocateMem(np.int64(128))
+    i_121812 = np.int64(0)
+    one_124793 = np.int64(1)
+    for counter_124792 in range(np.int64(16)):
+      r_111093 = np.float64(0.0)
+      i_111092 = np.int64(0)
+      one_124787 = np.int64(1)
+      for counter_124786 in range(np.int64(16)):
+        zt_lhs_111094 = np.float64(indexArray(mem_122917, ((i_121812 * np.int64(16)) + i_111092), ct.c_double))
+        zt_res_111095 = (zt_lhs_111094 * zt_lhs_111094)
+        zp_res_111096 = (r_111093 + zt_res_111095)
+        r_tmp_124328 = zp_res_111096
+        r_111093 = r_tmp_124328
+        i_111092 += one_124787
+      defunc_0_lifted_lambda_res_111091 = r_111093
+      zs_res_111097 = (defunc_0_lifted_lambda_res_111091 / np.float64(16.0))
+      zp_res_111098 = (np.float64(1.0e-5) + zs_res_111097)
+      sqrt_res_111099 = futhark_sqrt64(zp_res_111098)
+      zs_res_111100 = (np.float64(1.0) / sqrt_res_111099)
+      i_121804 = np.int64(0)
+      one_124789 = np.int64(1)
+      for counter_124788 in range(np.int64(16)):
+        zt_lhs_111107 = np.float64(indexArray(mem_122917, ((i_121812 * np.int64(16)) + i_121804), ct.c_double))
+        zt_res_111108 = (zs_res_111100 * zt_lhs_111107)
+        writeScalarArray(mem_122938, i_121804, zt_res_111108)
+        i_121804 += one_124789
+      i_121808 = np.int64(0)
+      one_124791 = np.int64(1)
+      for counter_124790 in range(np.int64(16)):
+        lifted_lambda_res_111116 = np.float64(indexArray(mem_122938, i_121808, ct.c_double))
+        writeScalarArray(mem_122945, i_121808, lifted_lambda_res_111116)
+        i_121808 += one_124791
+      lmad_copy(ct.c_double, mem_122933, (i_121812 * np.int64(16)), [np.int64(1)], mem_122945, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121812 += one_124793
+    mem_122938 = None
+    mem_122945 = None
+    mem_122956 = allocateMem(np.int64(8192))
+    mem_122961 = allocateMem(np.int64(512))
+    i_121820 = np.int64(0)
+    one_124799 = np.int64(1)
+    for counter_124798 in range(np.int64(16)):
+      i_121816 = np.int64(0)
+      one_124797 = np.int64(1)
+      for counter_124796 in range(np.int64(64)):
+        r_111134 = np.float64(0.0)
+        i_111133 = np.int64(0)
+        one_124795 = np.int64(1)
+        for counter_124794 in range(np.int64(16)):
+          zt_lhs_111135 = np.float64(indexArray(wup_mem_122584, ((i_121816 * np.int64(16)) + i_111133), ct.c_double))
+          zt_rhs_111136 = np.float64(indexArray(mem_122933, ((i_121820 * np.int64(16)) + i_111133), ct.c_double))
+          zt_res_111137 = (zt_lhs_111135 * zt_rhs_111136)
+          zp_res_111138 = (r_111134 + zt_res_111137)
+          r_tmp_124333 = zp_res_111138
+          r_111134 = r_tmp_124333
+          i_111133 += one_124795
+        defunc_0_lifted_lambda_res_111132 = r_111134
+        writeScalarArray(mem_122961, i_121816, defunc_0_lifted_lambda_res_111132)
+        i_121816 += one_124797
+      lmad_copy(ct.c_double, mem_122956, (i_121820 * np.int64(64)), [np.int64(1)], mem_122961, np.int64(0), [np.int64(1)], [np.int64(64)])
+      i_121820 += one_124799
+    mem_122933 = None
+    mem_122961 = None
+    mem_122972 = allocateMem(np.int64(8192))
+    mem_122977 = allocateMem(np.int64(512))
+    i_121828 = np.int64(0)
+    one_124803 = np.int64(1)
+    for counter_124802 in range(np.int64(16)):
+      i_121824 = np.int64(0)
+      one_124801 = np.int64(1)
+      for counter_124800 in range(np.int64(64)):
+        max_arg0_111153 = np.float64(indexArray(mem_122956, ((i_121828 * np.int64(64)) + i_121824), ct.c_double))
+        max_res_111154 = fmax64(np.float64(0.0), max_arg0_111153)
+        writeScalarArray(mem_122977, i_121824, max_res_111154)
+        i_121824 += one_124801
+      lmad_copy(ct.c_double, mem_122972, (i_121828 * np.int64(64)), [np.int64(1)], mem_122977, np.int64(0), [np.int64(1)], [np.int64(64)])
+      i_121828 += one_124803
+    mem_122956 = None
+    mem_122977 = None
+    mem_122988 = allocateMem(np.int64(2048))
+    mem_122993 = allocateMem(np.int64(128))
+    i_121836 = np.int64(0)
+    one_124809 = np.int64(1)
+    for counter_124808 in range(np.int64(16)):
+      i_121832 = np.int64(0)
+      one_124807 = np.int64(1)
+      for counter_124806 in range(np.int64(16)):
+        r_111171 = np.float64(0.0)
+        i_111170 = np.int64(0)
+        one_124805 = np.int64(1)
+        for counter_124804 in range(np.int64(64)):
+          zt_lhs_111172 = np.float64(indexArray(wdown_mem_122578, ((i_121832 * np.int64(64)) + i_111170), ct.c_double))
+          zt_rhs_111173 = np.float64(indexArray(mem_122972, ((i_121836 * np.int64(64)) + i_111170), ct.c_double))
+          zt_res_111174 = (zt_lhs_111172 * zt_rhs_111173)
+          zp_res_111175 = (r_111171 + zt_res_111174)
+          r_tmp_124338 = zp_res_111175
+          r_111171 = r_tmp_124338
+          i_111170 += one_124805
+        defunc_0_lifted_lambda_res_111169 = r_111171
+        writeScalarArray(mem_122993, i_121832, defunc_0_lifted_lambda_res_111169)
+        i_121832 += one_124807
+      lmad_copy(ct.c_double, mem_122988, (i_121836 * np.int64(16)), [np.int64(1)], mem_122993, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121836 += one_124809
+    mem_122972 = None
+    mem_122993 = None
+    mem_123004 = allocateMem(np.int64(2048))
+    mem_123009 = allocateMem(np.int64(128))
+    i_121844 = np.int64(0)
+    one_124813 = np.int64(1)
+    for counter_124812 in range(np.int64(16)):
+      i_121840 = np.int64(0)
+      one_124811 = np.int64(1)
+      for counter_124810 in range(np.int64(16)):
+        zp_lhs_111190 = np.float64(indexArray(mem_122988, ((i_121844 * np.int64(16)) + i_121840), ct.c_double))
+        zp_rhs_111191 = np.float64(indexArray(mem_122917, ((i_121844 * np.int64(16)) + i_121840), ct.c_double))
+        zp_res_111192 = (zp_lhs_111190 + zp_rhs_111191)
+        writeScalarArray(mem_123009, i_121840, zp_res_111192)
+        i_121840 += one_124811
+      lmad_copy(ct.c_double, mem_123004, (i_121844 * np.int64(16)), [np.int64(1)], mem_123009, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121844 += one_124813
+    mem_122917 = None
+    mem_122988 = None
+    mem_123009 = None
+    mem_123020 = allocateMem(np.int64(3456))
+    mem_123025 = allocateMem(np.int64(216))
+    i_121852 = np.int64(0)
+    one_124819 = np.int64(1)
+    for counter_124818 in range(np.int64(16)):
+      i_121848 = np.int64(0)
+      one_124817 = np.int64(1)
+      for counter_124816 in range(np.int64(27)):
+        r_111210 = np.float64(0.0)
+        i_111209 = np.int64(0)
+        one_124815 = np.int64(1)
+        for counter_124814 in range(np.int64(16)):
+          zt_lhs_111211 = np.float64(indexArray(wvoc_mem_122586, ((i_121848 * np.int64(16)) + i_111209), ct.c_double))
+          zt_rhs_111212 = np.float64(indexArray(mem_123004, ((i_121852 * np.int64(16)) + i_111209), ct.c_double))
+          zt_res_111213 = (zt_lhs_111211 * zt_rhs_111212)
+          zp_res_111214 = (r_111210 + zt_res_111213)
+          r_tmp_124343 = zp_res_111214
+          r_111210 = r_tmp_124343
+          i_111209 += one_124815
+        defunc_0_lifted_lambda_res_111208 = r_111210
+        writeScalarArray(mem_123025, i_121848, defunc_0_lifted_lambda_res_111208)
+        i_121848 += one_124817
+      lmad_copy(ct.c_double, mem_123020, (i_121852 * np.int64(27)), [np.int64(1)], mem_123025, np.int64(0), [np.int64(1)], [np.int64(27)])
+      i_121852 += one_124819
+    mem_123004 = None
+    mem_123025 = None
+    mem_123036 = allocateMem(np.int64(3456))
+    mem_123041 = allocateMem(np.int64(216))
+    i_121860 = np.int64(0)
+    one_124823 = np.int64(1)
+    for counter_124822 in range(np.int64(16)):
+      i_121856 = np.int64(0)
+      one_124821 = np.int64(1)
+      for counter_124820 in range(np.int64(27)):
+        lifted_lambda_res_111229 = np.float64(indexArray(mem_123020, ((i_121860 * np.int64(27)) + i_121856), ct.c_double))
+        writeScalarArray(mem_123041, i_121856, lifted_lambda_res_111229)
+        i_121856 += one_124821
+      lmad_copy(ct.c_double, mem_123036, (i_121860 * np.int64(27)), [np.int64(1)], mem_123041, np.int64(0), [np.int64(1)], [np.int64(27)])
+      i_121860 += one_124823
+    mem_123020 = None
+    mem_123041 = None
+    mem_out_124274 = mem_123036
+    return mem_out_124274
+
+  def futhark_entry_grad_loss(self, wdown_mem_122578, wkey_mem_122579, wout_mem_122580, wpe_mem_122581, wqry_mem_122582, wte_mem_122583, wup_mem_122584, wval_mem_122585, wvoc_mem_122586, seq_ids_mem_122587, target_mem_122588, mask_mem_122589):
+    mem_122590 = allocateMem(np.int64(2048))
+    mem_122595 = allocateMem(np.int64(128))
+    i_121648 = np.int64(0)
+    one_124827 = np.int64(1)
+    for counter_124826 in range(np.int64(16)):
+      tmp_110664 = np.int64(indexArray(seq_ids_mem_122587, i_121648, ct.c_int64))
+      x_110665 = sle64(np.int64(0), tmp_110664)
+      y_110666 = slt64(tmp_110664, np.int64(27))
+      bounds_check_110667 = (x_110665 and y_110666)
+      index_certs_110668 = True
+      assert bounds_check_110667, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:459:37-52\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:459:16-56\n" % ("Index [", tmp_110664, "] out of bounds for array of shape [", np.int64(27), "]."))
+      i_121644 = np.int64(0)
+      one_124825 = np.int64(1)
+      for counter_124824 in range(np.int64(16)):
+        lifted_lambda_res_110675 = np.float64(indexArray(wte_mem_122583, ((tmp_110664 * np.int64(16)) + i_121644), ct.c_double))
+        writeScalarArray(mem_122595, i_121644, lifted_lambda_res_110675)
+        i_121644 += one_124825
+      lmad_copy(ct.c_double, mem_122590, (i_121648 * np.int64(16)), [np.int64(1)], mem_122595, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121648 += one_124827
+    mem_122595 = None
+    mem_122606 = allocateMem(np.int64(128))
+    mem_122607 = allocateMem(np.int64(128))
+    mem_122608 = allocateMem(np.int64(2048))
+    mem_122619 = allocateMem(np.int64(128))
+    mem_122626 = allocateMem(np.int64(128))
+    i_121664 = np.int64(0)
+    one_124839 = np.int64(1)
+    for counter_124838 in range(np.int64(16)):
+      r_113417 = np.float64(0.0)
+      i_113416 = np.int64(0)
+      one_124829 = np.int64(1)
+      for counter_124828 in range(np.int64(16)):
+        zp_lhs_113418 = np.float64(indexArray(wpe_mem_122581, ((i_121664 * np.int64(16)) + i_113416), ct.c_double))
+        zp_rhs_113419 = np.float64(indexArray(mem_122590, ((i_121664 * np.int64(16)) + i_113416), ct.c_double))
+        zp_res_113420 = (zp_lhs_113418 + zp_rhs_113419)
+        zt_res_113421 = (zp_res_113420 * zp_res_113420)
+        zp_res_113422 = (r_113417 + zt_res_113421)
+        r_tmp_124288 = zp_res_113422
+        r_113417 = r_tmp_124288
+        i_113416 += one_124829
+      defunc_0_lifted_lambda_res_113415 = r_113417
+      zs_res_113423 = (defunc_0_lifted_lambda_res_113415 / np.float64(16.0))
+      zp_res_113424 = (np.float64(1.0e-5) + zs_res_113423)
+      sqrt_res_113425 = futhark_sqrt64(zp_res_113424)
+      zs_res_113426 = (np.float64(1.0) / sqrt_res_113425)
+      i_121652 = np.int64(0)
+      one_124831 = np.int64(1)
+      for counter_124830 in range(np.int64(16)):
+        zp_lhs_113433 = np.float64(indexArray(wpe_mem_122581, ((i_121664 * np.int64(16)) + i_121652), ct.c_double))
+        zp_rhs_113434 = np.float64(indexArray(mem_122590, ((i_121664 * np.int64(16)) + i_121652), ct.c_double))
+        zp_res_113435 = (zp_lhs_113433 + zp_rhs_113434)
+        zt_res_113436 = (zs_res_113426 * zp_res_113435)
+        writeScalarArray(mem_122619, i_121652, zt_res_113436)
+        i_121652 += one_124831
+      i_121656 = np.int64(0)
+      one_124833 = np.int64(1)
+      for counter_124832 in range(np.int64(16)):
+        lifted_lambda_res_113444 = np.float64(indexArray(mem_122619, i_121656, ct.c_double))
+        writeScalarArray(mem_122626, i_121656, lifted_lambda_res_113444)
+        i_121656 += one_124833
+      r_113454 = np.float64(0.0)
+      i_113453 = np.int64(0)
+      one_124835 = np.int64(1)
+      for counter_124834 in range(np.int64(16)):
+        zp_lhs_113455 = np.float64(indexArray(wpe_mem_122581, ((i_121664 * np.int64(16)) + i_113453), ct.c_double))
+        zp_rhs_113456 = np.float64(indexArray(mem_122590, ((i_121664 * np.int64(16)) + i_113453), ct.c_double))
+        zp_res_113457 = (zp_lhs_113455 + zp_rhs_113456)
+        zt_res_113458 = (zp_res_113457 * zp_res_113457)
+        zp_res_113459 = (r_113454 + zt_res_113458)
+        r_tmp_124291 = zp_res_113459
+        r_113454 = r_tmp_124291
+        i_113453 += one_124835
+      defunc_0_lifted_lambda_res_113452 = r_113454
+      zs_res_113460 = (defunc_0_lifted_lambda_res_113452 / np.float64(16.0))
+      r_113472 = np.float64(0.0)
+      i_113471 = np.int64(0)
+      one_124837 = np.int64(1)
+      for counter_124836 in range(np.int64(16)):
+        zp_lhs_113473 = np.float64(indexArray(wpe_mem_122581, ((i_121664 * np.int64(16)) + i_113471), ct.c_double))
+        zp_rhs_113474 = np.float64(indexArray(mem_122590, ((i_121664 * np.int64(16)) + i_113471), ct.c_double))
+        zp_res_113475 = (zp_lhs_113473 + zp_rhs_113474)
+        zt_res_113476 = (zp_res_113475 * zp_res_113475)
+        zp_res_113477 = (r_113472 + zt_res_113476)
+        r_tmp_124292 = zp_res_113477
+        r_113472 = r_tmp_124292
+        i_113471 += one_124837
+      defunc_0_lifted_lambda_res_113470 = r_113472
+      zs_res_113478 = (defunc_0_lifted_lambda_res_113470 / np.float64(16.0))
+      writeScalarArray(mem_122606, i_121664, zs_res_113478)
+      writeScalarArray(mem_122607, i_121664, zs_res_113460)
+      lmad_copy(ct.c_double, mem_122608, (i_121664 * np.int64(16)), [np.int64(1)], mem_122626, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121664 += one_124839
+    mem_122619 = None
+    mem_122626 = None
+    mem_122643 = allocateMem(np.int64(128))
+    mem_122644 = allocateMem(np.int64(2048))
+    mem_122652 = allocateMem(np.int64(128))
+    mem_122659 = allocateMem(np.int64(128))
+    i_121680 = np.int64(0)
+    one_124849 = np.int64(1)
+    for counter_124848 in range(np.int64(16)):
+      r_113499 = np.float64(0.0)
+      i_113498 = np.int64(0)
+      one_124841 = np.int64(1)
+      for counter_124840 in range(np.int64(16)):
+        zt_lhs_113500 = np.float64(indexArray(mem_122608, ((i_121680 * np.int64(16)) + i_113498), ct.c_double))
+        zt_res_113501 = (zt_lhs_113500 * zt_lhs_113500)
+        zp_res_113502 = (r_113499 + zt_res_113501)
+        r_tmp_124295 = zp_res_113502
+        r_113499 = r_tmp_124295
+        i_113498 += one_124841
+      defunc_0_lifted_lambda_res_113497 = r_113499
+      zs_res_113503 = (defunc_0_lifted_lambda_res_113497 / np.float64(16.0))
+      zp_res_113504 = (np.float64(1.0e-5) + zs_res_113503)
+      sqrt_res_113505 = futhark_sqrt64(zp_res_113504)
+      zs_res_113506 = (np.float64(1.0) / sqrt_res_113505)
+      i_121670 = np.int64(0)
+      one_124843 = np.int64(1)
+      for counter_124842 in range(np.int64(16)):
+        zt_lhs_113513 = np.float64(indexArray(mem_122608, ((i_121680 * np.int64(16)) + i_121670), ct.c_double))
+        zt_res_113514 = (zs_res_113506 * zt_lhs_113513)
+        writeScalarArray(mem_122652, i_121670, zt_res_113514)
+        i_121670 += one_124843
+      i_121674 = np.int64(0)
+      one_124845 = np.int64(1)
+      for counter_124844 in range(np.int64(16)):
+        lifted_lambda_res_113522 = np.float64(indexArray(mem_122652, i_121674, ct.c_double))
+        writeScalarArray(mem_122659, i_121674, lifted_lambda_res_113522)
+        i_121674 += one_124845
+      r_113532 = np.float64(0.0)
+      i_113531 = np.int64(0)
+      one_124847 = np.int64(1)
+      for counter_124846 in range(np.int64(16)):
+        zt_lhs_113533 = np.float64(indexArray(mem_122608, ((i_121680 * np.int64(16)) + i_113531), ct.c_double))
+        zt_res_113534 = (zt_lhs_113533 * zt_lhs_113533)
+        zp_res_113535 = (r_113532 + zt_res_113534)
+        r_tmp_124298 = zp_res_113535
+        r_113532 = r_tmp_124298
+        i_113531 += one_124847
+      defunc_0_lifted_lambda_res_113530 = r_113532
+      zs_res_113536 = (defunc_0_lifted_lambda_res_113530 / np.float64(16.0))
+      writeScalarArray(mem_122643, i_121680, zs_res_113536)
+      lmad_copy(ct.c_double, mem_122644, (i_121680 * np.int64(16)), [np.int64(1)], mem_122659, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121680 += one_124849
+    mem_122652 = None
+    mem_122659 = None
+    mem_122673 = allocateMem(np.int64(2048))
+    mem_122674 = allocateMem(np.int64(2048))
+    mem_122675 = allocateMem(np.int64(2048))
+    mem_122691 = allocateMem(np.int64(512))
+    mem_122692 = allocateMem(np.int64(512))
+    mem_122693 = allocateMem(np.int64(512))
+    mem_122706 = allocateMem(np.int64(32))
+    mem_122707 = allocateMem(np.int64(32))
+    mem_122708 = allocateMem(np.int64(32))
+    i_121709 = np.int64(0)
+    one_124861 = np.int64(1)
+    for counter_124860 in range(np.int64(4)):
+      zp_lhs_113617 = (np.int64(4) * i_121709)
+      i_121699 = np.int64(0)
+      one_124859 = np.int64(1)
+      for counter_124858 in range(np.int64(16)):
+        i_121689 = np.int64(0)
+        one_124857 = np.int64(1)
+        for counter_124856 in range(np.int64(4)):
+          zt_lhs_117188 = (zp_lhs_113617 + i_121689)
+          x_117189 = sle64(np.int64(0), zt_lhs_117188)
+          y_117190 = slt64(zt_lhs_117188, np.int64(16))
+          bounds_check_117191 = (x_117189 and y_117190)
+          index_certs_117192 = True
+          assert bounds_check_117191, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:282:70-97\n   #1  microgpt.fut:61:46-49\n   #2  microgpt.fut:282:49-127\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:27-39\n   #5  microgpt.fut:4:11-25\n   #6  microgpt.fut:9:13-40\n   #7  microgpt.fut:15:29-44\n   #8  microgpt.fut:4:11-25\n   #9  microgpt.fut:15:15-45\n   #10 microgpt.fut:282:12-129\n   #11 microgpt.fut:461:5-75\n" % ("Index [", zt_lhs_117188, "] out of bounds for array of shape [", np.int64(16), "]."))
+          r_117195 = np.float64(0.0)
+          i_117194 = np.int64(0)
+          one_124851 = np.int64(1)
+          for counter_124850 in range(np.int64(16)):
+            zt_lhs_117196 = np.float64(indexArray(wqry_mem_122582, ((zt_lhs_117188 * np.int64(16)) + i_117194), ct.c_double))
+            zt_rhs_117197 = np.float64(indexArray(mem_122644, ((i_121699 * np.int64(16)) + i_117194), ct.c_double))
+            zt_res_117198 = (zt_lhs_117196 * zt_rhs_117197)
+            zp_res_117199 = (r_117195 + zt_res_117198)
+            r_tmp_124308 = zp_res_117199
+            r_117195 = r_tmp_124308
+            i_117194 += one_124851
+          defunc_0_lifted_lambda_res_117193 = r_117195
+          r_117209 = np.float64(0.0)
+          i_117208 = np.int64(0)
+          one_124853 = np.int64(1)
+          for counter_124852 in range(np.int64(16)):
+            zt_lhs_117210 = np.float64(indexArray(wkey_mem_122579, ((zt_lhs_117188 * np.int64(16)) + i_117208), ct.c_double))
+            zt_rhs_117211 = np.float64(indexArray(mem_122644, ((i_121699 * np.int64(16)) + i_117208), ct.c_double))
+            zt_res_117212 = (zt_lhs_117210 * zt_rhs_117211)
+            zp_res_117213 = (r_117209 + zt_res_117212)
+            r_tmp_124309 = zp_res_117213
+            r_117209 = r_tmp_124309
+            i_117208 += one_124853
+          defunc_0_lifted_lambda_res_117207 = r_117209
+          r_117226 = np.float64(0.0)
+          i_117225 = np.int64(0)
+          one_124855 = np.int64(1)
+          for counter_124854 in range(np.int64(16)):
+            zt_lhs_117227 = np.float64(indexArray(wval_mem_122585, ((zt_lhs_117188 * np.int64(16)) + i_117225), ct.c_double))
+            zt_rhs_117228 = np.float64(indexArray(mem_122644, ((i_121699 * np.int64(16)) + i_117225), ct.c_double))
+            zt_res_117229 = (zt_lhs_117227 * zt_rhs_117228)
+            zp_res_117230 = (r_117226 + zt_res_117229)
+            r_tmp_124310 = zp_res_117230
+            r_117226 = r_tmp_124310
+            i_117225 += one_124855
+          defunc_0_lifted_lambda_res_117224 = r_117226
+          writeScalarArray(mem_122706, i_121689, defunc_0_lifted_lambda_res_117224)
+          writeScalarArray(mem_122707, i_121689, defunc_0_lifted_lambda_res_117207)
+          writeScalarArray(mem_122708, i_121689, defunc_0_lifted_lambda_res_117193)
+          i_121689 += one_124857
+        lmad_copy(ct.c_double, mem_122691, (i_121699 * np.int64(4)), [np.int64(1)], mem_122706, np.int64(0), [np.int64(1)], [np.int64(4)])
+        lmad_copy(ct.c_double, mem_122692, (i_121699 * np.int64(4)), [np.int64(1)], mem_122707, np.int64(0), [np.int64(1)], [np.int64(4)])
+        lmad_copy(ct.c_double, mem_122693, (i_121699 * np.int64(4)), [np.int64(1)], mem_122708, np.int64(0), [np.int64(1)], [np.int64(4)])
+        i_121699 += one_124859
+      lmad_copy(ct.c_double, mem_122673, (i_121709 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122691, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
+      lmad_copy(ct.c_double, mem_122674, (i_121709 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122692, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
+      lmad_copy(ct.c_double, mem_122675, (i_121709 * np.int64(64)), [np.int64(4), np.int64(1)], mem_122693, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
+      i_121709 += one_124861
+    mem_122691 = None
+    mem_122692 = None
+    mem_122693 = None
+    mem_122706 = None
+    mem_122707 = None
+    mem_122708 = None
+    mem_122754 = allocateMem(np.int64(2048))
+    mem_122759 = allocateMem(np.int64(128))
+    mem_122763 = allocateMem(np.int64(2048))
+    mem_122768 = allocateMem(np.int64(128))
+    mem_122779 = allocateMem(np.int64(2048))
+    mem_122784 = allocateMem(np.int64(128))
+    mem_122795 = allocateMem(np.int64(2048))
+    mem_122800 = allocateMem(np.int64(128))
+    mem_122807 = allocateMem(np.int64(128))
+    mem_122814 = allocateMem(np.int64(128))
+    mem_122825 = allocateMem(np.int64(512))
+    mem_122830 = allocateMem(np.int64(32))
+    i_121761 = np.int64(0)
+    one_124893 = np.int64(1)
+    for counter_124892 in range(np.int64(16)):
+      i_121757 = np.int64(0)
+      one_124891 = np.int64(1)
+      for counter_124890 in range(np.int64(16)):
+        zt_lhs_110854 = sdiv64(i_121757, np.int64(4))
+        x_110855 = sle64(np.int64(0), zt_lhs_110854)
+        y_110856 = slt64(zt_lhs_110854, np.int64(4))
+        bounds_check_110857 = (x_110855 and y_110856)
+        index_certs_110858 = True
+        assert bounds_check_110857, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:285:103-119\n   #1  microgpt.fut:61:46-49\n   #2  microgpt.fut:285:83-170\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:27-39\n   #5  microgpt.fut:4:11-25\n   #6  microgpt.fut:9:13-40\n   #7  microgpt.fut:285:53-172\n   #8  microgpt.fut:4:11-25\n   #9  microgpt.fut:9:27-39\n   #10 microgpt.fut:4:11-25\n   #11 microgpt.fut:9:13-40\n   #12 microgpt.fut:285:12-293:32\n   #13 microgpt.fut:461:5-75\n" % ("Index [", zt_lhs_110854, "] out of bounds for array of shape [", np.int64(4), "]."))
+        tmp_110973 = smod64(i_121757, np.int64(4))
+        x_110974 = sle64(np.int64(0), tmp_110973)
+        y_110975 = slt64(tmp_110973, np.int64(4))
+        bounds_check_110976 = (x_110974 and y_110975)
+        index_certs_110977 = True
+        assert bounds_check_110976, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:293:4-27\n   #1  microgpt.fut:4:11-25\n   #2  microgpt.fut:9:27-39\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:13-40\n   #5  microgpt.fut:285:12-293:32\n   #6  microgpt.fut:461:5-75\n" % ("Index [", tmp_110973, "] out of bounds for array of shape [", np.int64(4), "]."))
+        i_121719 = np.int64(0)
+        one_124867 = np.int64(1)
+        for counter_124866 in range(np.int64(16)):
+          i_121715 = np.int64(0)
+          one_124865 = np.int64(1)
+          for counter_124864 in range(np.int64(16)):
+            r_110873 = np.float64(0.0)
+            i_110872 = np.int64(0)
+            one_124863 = np.int64(1)
+            for counter_124862 in range(np.int64(4)):
+              zt_lhs_110874 = np.float64(indexArray(mem_122675, (((zt_lhs_110854 * np.int64(64)) + (i_121719 * np.int64(4))) + i_110872), ct.c_double))
+              zt_rhs_110875 = np.float64(indexArray(mem_122674, (((zt_lhs_110854 * np.int64(64)) + (i_121715 * np.int64(4))) + i_110872), ct.c_double))
+              zt_res_110876 = (zt_lhs_110874 * zt_rhs_110875)
+              zp_res_110877 = (r_110873 + zt_res_110876)
+              r_tmp_124315 = zp_res_110877
+              r_110873 = r_tmp_124315
+              i_110872 += one_124863
+            defunc_0_lifted_lambda_res_110871 = r_110873
+            writeScalarArray(mem_122768, i_121715, defunc_0_lifted_lambda_res_110871)
+            i_121715 += one_124865
+          lmad_copy(ct.c_double, mem_122763, (i_121719 * np.int64(16)), [np.int64(1)], mem_122768, np.int64(0), [np.int64(1)], [np.int64(16)])
+          i_121719 += one_124867
+        i_121727 = np.int64(0)
+        one_124871 = np.int64(1)
+        for counter_124870 in range(np.int64(16)):
+          i_121723 = np.int64(0)
+          one_124869 = np.int64(1)
+          for counter_124868 in range(np.int64(16)):
+            zs_lhs_110892 = np.float64(indexArray(mem_122763, ((i_121727 * np.int64(16)) + i_121723), ct.c_double))
+            zs_res_110893 = (zs_lhs_110892 / np.float64(2.0))
+            zp_rhs_110894 = np.float64(indexArray(mask_mem_122589, ((i_121727 * np.int64(16)) + i_121723), ct.c_double))
+            zp_res_110895 = (zs_res_110893 + zp_rhs_110894)
+            writeScalarArray(mem_122784, i_121723, zp_res_110895)
+            i_121723 += one_124869
+          lmad_copy(ct.c_double, mem_122779, (i_121727 * np.int64(16)), [np.int64(1)], mem_122784, np.int64(0), [np.int64(1)], [np.int64(16)])
+          i_121727 += one_124871
+        i_121745 = np.int64(0)
+        one_124883 = np.int64(1)
+        for counter_124882 in range(np.int64(16)):
+          redout_121729 = -np.inf
+          i_121730 = np.int64(0)
+          one_124873 = np.int64(1)
+          for counter_124872 in range(np.int64(16)):
+            lifted_lambda_res_117257 = np.float64(indexArray(mem_122779, ((i_121745 * np.int64(16)) + i_121730), ct.c_double))
+            max_res_110916 = fmax64(lifted_lambda_res_117257, redout_121729)
+            redout_tmp_124319 = max_res_110916
+            redout_121729 = redout_tmp_124319
+            i_121730 += one_124873
+          defunc_0_reduce_res_121230 = redout_121729
+          neg_res_110917 = -(defunc_0_reduce_res_121230)
+          i_121733 = np.int64(0)
+          one_124875 = np.int64(1)
+          for counter_124874 in range(np.int64(16)):
+            zp_lhs_110924 = np.float64(indexArray(mem_122779, ((i_121745 * np.int64(16)) + i_121733), ct.c_double))
+            zp_res_110925 = (neg_res_110917 + zp_lhs_110924)
+            exp_res_110926 = futhark_exp64(zp_res_110925)
+            writeScalarArray(mem_122800, i_121733, exp_res_110926)
+            i_121733 += one_124875
+          r_110930 = np.float64(0.0)
+          i_110929 = np.int64(0)
+          one_124877 = np.int64(1)
+          for counter_124876 in range(np.int64(16)):
+            lifted_lambda_res_110931 = np.float64(indexArray(mem_122800, i_110929, ct.c_double))
+            zp_res_110932 = (r_110930 + lifted_lambda_res_110931)
+            r_tmp_124321 = zp_res_110932
+            r_110930 = r_tmp_124321
+            i_110929 += one_124877
+          defunc_0_lifted_lambda_res_110928 = r_110930
+          zs_res_110933 = (np.float64(1.0) / defunc_0_lifted_lambda_res_110928)
+          i_121737 = np.int64(0)
+          one_124879 = np.int64(1)
+          for counter_124878 in range(np.int64(16)):
+            zt_lhs_110940 = np.float64(indexArray(mem_122800, i_121737, ct.c_double))
+            zt_res_110941 = (zs_res_110933 * zt_lhs_110940)
+            writeScalarArray(mem_122807, i_121737, zt_res_110941)
+            i_121737 += one_124879
+          i_121741 = np.int64(0)
+          one_124881 = np.int64(1)
+          for counter_124880 in range(np.int64(16)):
+            lifted_lambda_res_110949 = np.float64(indexArray(mem_122807, i_121741, ct.c_double))
+            writeScalarArray(mem_122814, i_121741, lifted_lambda_res_110949)
+            i_121741 += one_124881
+          lmad_copy(ct.c_double, mem_122795, (i_121745 * np.int64(16)), [np.int64(1)], mem_122814, np.int64(0), [np.int64(1)], [np.int64(16)])
+          i_121745 += one_124883
+        i_121753 = np.int64(0)
+        one_124889 = np.int64(1)
+        for counter_124888 in range(np.int64(16)):
+          i_121749 = np.int64(0)
+          one_124887 = np.int64(1)
+          for counter_124886 in range(np.int64(4)):
+            r_110966 = np.float64(0.0)
+            i_110965 = np.int64(0)
+            one_124885 = np.int64(1)
+            for counter_124884 in range(np.int64(16)):
+              zt_lhs_110967 = np.float64(indexArray(mem_122795, ((i_121753 * np.int64(16)) + i_110965), ct.c_double))
+              zt_rhs_110968 = np.float64(indexArray(mem_122673, (((zt_lhs_110854 * np.int64(64)) + (i_110965 * np.int64(4))) + i_121749), ct.c_double))
+              zt_res_110969 = (zt_lhs_110967 * zt_rhs_110968)
+              zp_res_110970 = (r_110966 + zt_res_110969)
+              r_tmp_124326 = zp_res_110970
+              r_110966 = r_tmp_124326
+              i_110965 += one_124885
+            defunc_0_lifted_lambda_res_110964 = r_110966
+            writeScalarArray(mem_122830, i_121749, defunc_0_lifted_lambda_res_110964)
+            i_121749 += one_124887
+          lmad_copy(ct.c_double, mem_122825, (i_121753 * np.int64(4)), [np.int64(1)], mem_122830, np.int64(0), [np.int64(1)], [np.int64(4)])
+          i_121753 += one_124889
+        lifted_lambda_res_110978 = np.float64(indexArray(mem_122825, ((i_121761 * np.int64(4)) + tmp_110973), ct.c_double))
+        writeScalarArray(mem_122759, i_121757, lifted_lambda_res_110978)
+        i_121757 += one_124891
+      lmad_copy(ct.c_double, mem_122754, (i_121761 * np.int64(16)), [np.int64(1)], mem_122759, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121761 += one_124893
+    mem_122759 = None
+    mem_122763 = None
+    mem_122768 = None
+    mem_122779 = None
+    mem_122784 = None
+    mem_122795 = None
+    mem_122800 = None
+    mem_122807 = None
+    mem_122814 = None
+    mem_122825 = None
+    mem_122830 = None
+    mem_122848 = allocateMem(np.int64(2048))
+    mem_122853 = allocateMem(np.int64(128))
+    i_121769 = np.int64(0)
+    one_124899 = np.int64(1)
+    for counter_124898 in range(np.int64(16)):
+      i_121765 = np.int64(0)
+      one_124897 = np.int64(1)
+      for counter_124896 in range(np.int64(16)):
+        r_110995 = np.float64(0.0)
+        i_110994 = np.int64(0)
+        one_124895 = np.int64(1)
+        for counter_124894 in range(np.int64(16)):
+          zt_lhs_110996 = np.float64(indexArray(wout_mem_122580, ((i_121765 * np.int64(16)) + i_110994), ct.c_double))
+          zt_rhs_110997 = np.float64(indexArray(mem_122754, ((i_121769 * np.int64(16)) + i_110994), ct.c_double))
+          zt_res_110998 = (zt_lhs_110996 * zt_rhs_110997)
+          zp_res_110999 = (r_110995 + zt_res_110998)
+          r_tmp_124329 = zp_res_110999
+          r_110995 = r_tmp_124329
+          i_110994 += one_124895
+        defunc_0_lifted_lambda_res_110993 = r_110995
+        zp_rhs_111000 = np.float64(indexArray(mem_122608, ((i_121769 * np.int64(16)) + i_121765), ct.c_double))
+        zp_res_111001 = (defunc_0_lifted_lambda_res_110993 + zp_rhs_111000)
+        writeScalarArray(mem_122853, i_121765, zp_res_111001)
+        i_121765 += one_124897
+      lmad_copy(ct.c_double, mem_122848, (i_121769 * np.int64(16)), [np.int64(1)], mem_122853, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121769 += one_124899
+    mem_122853 = None
+    mem_122864 = allocateMem(np.int64(128))
+    mem_122865 = allocateMem(np.int64(2048))
+    mem_122873 = allocateMem(np.int64(128))
+    mem_122880 = allocateMem(np.int64(128))
+    i_121783 = np.int64(0)
+    one_124909 = np.int64(1)
+    for counter_124908 in range(np.int64(16)):
+      r_113713 = np.float64(0.0)
+      i_113712 = np.int64(0)
+      one_124901 = np.int64(1)
+      for counter_124900 in range(np.int64(16)):
+        zt_lhs_113714 = np.float64(indexArray(mem_122848, ((i_121783 * np.int64(16)) + i_113712), ct.c_double))
+        zt_res_113715 = (zt_lhs_113714 * zt_lhs_113714)
+        zp_res_113716 = (r_113713 + zt_res_113715)
+        r_tmp_124332 = zp_res_113716
+        r_113713 = r_tmp_124332
+        i_113712 += one_124901
+      defunc_0_lifted_lambda_res_113711 = r_113713
+      zs_res_113717 = (defunc_0_lifted_lambda_res_113711 / np.float64(16.0))
+      zp_res_113718 = (np.float64(1.0e-5) + zs_res_113717)
+      sqrt_res_113719 = futhark_sqrt64(zp_res_113718)
+      zs_res_113720 = (np.float64(1.0) / sqrt_res_113719)
+      i_121773 = np.int64(0)
+      one_124903 = np.int64(1)
+      for counter_124902 in range(np.int64(16)):
+        zt_lhs_113727 = np.float64(indexArray(mem_122848, ((i_121783 * np.int64(16)) + i_121773), ct.c_double))
+        zt_res_113728 = (zs_res_113720 * zt_lhs_113727)
+        writeScalarArray(mem_122873, i_121773, zt_res_113728)
+        i_121773 += one_124903
+      i_121777 = np.int64(0)
+      one_124905 = np.int64(1)
+      for counter_124904 in range(np.int64(16)):
+        lifted_lambda_res_113736 = np.float64(indexArray(mem_122873, i_121777, ct.c_double))
+        writeScalarArray(mem_122880, i_121777, lifted_lambda_res_113736)
+        i_121777 += one_124905
+      r_113746 = np.float64(0.0)
+      i_113745 = np.int64(0)
+      one_124907 = np.int64(1)
+      for counter_124906 in range(np.int64(16)):
+        zt_lhs_113747 = np.float64(indexArray(mem_122848, ((i_121783 * np.int64(16)) + i_113745), ct.c_double))
+        zt_res_113748 = (zt_lhs_113747 * zt_lhs_113747)
+        zp_res_113749 = (r_113746 + zt_res_113748)
+        r_tmp_124335 = zp_res_113749
+        r_113746 = r_tmp_124335
+        i_113745 += one_124907
+      defunc_0_lifted_lambda_res_113744 = r_113746
+      zs_res_113750 = (defunc_0_lifted_lambda_res_113744 / np.float64(16.0))
+      writeScalarArray(mem_122864, i_121783, zs_res_113750)
+      lmad_copy(ct.c_double, mem_122865, (i_121783 * np.int64(16)), [np.int64(1)], mem_122880, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121783 += one_124909
+    mem_122873 = None
+    mem_122880 = None
+    mem_122894 = allocateMem(np.int64(8192))
+    mem_122899 = allocateMem(np.int64(512))
+    i_121792 = np.int64(0)
+    one_124915 = np.int64(1)
+    for counter_124914 in range(np.int64(16)):
+      i_121788 = np.int64(0)
+      one_124913 = np.int64(1)
+      for counter_124912 in range(np.int64(64)):
+        r_111053 = np.float64(0.0)
+        i_111052 = np.int64(0)
+        one_124911 = np.int64(1)
+        for counter_124910 in range(np.int64(16)):
+          zt_lhs_111054 = np.float64(indexArray(wup_mem_122584, ((i_121788 * np.int64(16)) + i_111052), ct.c_double))
+          zt_rhs_111055 = np.float64(indexArray(mem_122865, ((i_121792 * np.int64(16)) + i_111052), ct.c_double))
+          zt_res_111056 = (zt_lhs_111054 * zt_rhs_111055)
+          zp_res_111057 = (r_111053 + zt_res_111056)
+          r_tmp_124338 = zp_res_111057
+          r_111053 = r_tmp_124338
+          i_111052 += one_124911
+        defunc_0_lifted_lambda_res_111051 = r_111053
+        writeScalarArray(mem_122899, i_121788, defunc_0_lifted_lambda_res_111051)
+        i_121788 += one_124913
+      lmad_copy(ct.c_double, mem_122894, (i_121792 * np.int64(64)), [np.int64(1)], mem_122899, np.int64(0), [np.int64(1)], [np.int64(64)])
+      i_121792 += one_124915
+    mem_122899 = None
+    mem_122910 = allocateMem(np.int64(8192))
+    mem_122915 = allocateMem(np.int64(512))
+    i_121800 = np.int64(0)
+    one_124919 = np.int64(1)
+    for counter_124918 in range(np.int64(16)):
+      i_121796 = np.int64(0)
+      one_124917 = np.int64(1)
+      for counter_124916 in range(np.int64(64)):
+        max_arg0_111072 = np.float64(indexArray(mem_122894, ((i_121800 * np.int64(64)) + i_121796), ct.c_double))
+        max_res_111073 = fmax64(np.float64(0.0), max_arg0_111072)
+        writeScalarArray(mem_122915, i_121796, max_res_111073)
+        i_121796 += one_124917
+      lmad_copy(ct.c_double, mem_122910, (i_121800 * np.int64(64)), [np.int64(1)], mem_122915, np.int64(0), [np.int64(1)], [np.int64(64)])
+      i_121800 += one_124919
+    mem_122915 = None
+    mem_122926 = allocateMem(np.int64(2048))
+    mem_122931 = allocateMem(np.int64(128))
+    i_121808 = np.int64(0)
+    one_124925 = np.int64(1)
+    for counter_124924 in range(np.int64(16)):
+      i_121804 = np.int64(0)
+      one_124923 = np.int64(1)
+      for counter_124922 in range(np.int64(16)):
+        r_111090 = np.float64(0.0)
+        i_111089 = np.int64(0)
+        one_124921 = np.int64(1)
+        for counter_124920 in range(np.int64(64)):
+          zt_lhs_111091 = np.float64(indexArray(wdown_mem_122578, ((i_121804 * np.int64(64)) + i_111089), ct.c_double))
+          zt_rhs_111092 = np.float64(indexArray(mem_122910, ((i_121808 * np.int64(64)) + i_111089), ct.c_double))
+          zt_res_111093 = (zt_lhs_111091 * zt_rhs_111092)
+          zp_res_111094 = (r_111090 + zt_res_111093)
+          r_tmp_124343 = zp_res_111094
+          r_111090 = r_tmp_124343
+          i_111089 += one_124921
+        defunc_0_lifted_lambda_res_111088 = r_111090
+        zp_rhs_111095 = np.float64(indexArray(mem_122848, ((i_121808 * np.int64(16)) + i_121804), ct.c_double))
+        zp_res_111096 = (defunc_0_lifted_lambda_res_111088 + zp_rhs_111095)
+        writeScalarArray(mem_122931, i_121804, zp_res_111096)
+        i_121804 += one_124923
+      lmad_copy(ct.c_double, mem_122926, (i_121808 * np.int64(16)), [np.int64(1)], mem_122931, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121808 += one_124925
+    mem_122931 = None
+    mem_122942 = allocateMem(np.int64(3456))
+    mem_122947 = allocateMem(np.int64(216))
+    i_121816 = np.int64(0)
+    one_124931 = np.int64(1)
+    for counter_124930 in range(np.int64(16)):
+      i_121812 = np.int64(0)
+      one_124929 = np.int64(1)
+      for counter_124928 in range(np.int64(27)):
+        r_111114 = np.float64(0.0)
+        i_111113 = np.int64(0)
+        one_124927 = np.int64(1)
+        for counter_124926 in range(np.int64(16)):
+          zt_lhs_111115 = np.float64(indexArray(wvoc_mem_122586, ((i_121812 * np.int64(16)) + i_111113), ct.c_double))
+          zt_rhs_111116 = np.float64(indexArray(mem_122926, ((i_121816 * np.int64(16)) + i_111113), ct.c_double))
+          zt_res_111117 = (zt_lhs_111115 * zt_rhs_111116)
+          zp_res_111118 = (r_111114 + zt_res_111117)
+          r_tmp_124346 = zp_res_111118
+          r_111114 = r_tmp_124346
+          i_111113 += one_124927
+        defunc_0_lifted_lambda_res_111112 = r_111114
+        writeScalarArray(mem_122947, i_121812, defunc_0_lifted_lambda_res_111112)
+        i_121812 += one_124929
+      lmad_copy(ct.c_double, mem_122942, (i_121816 * np.int64(27)), [np.int64(1)], mem_122947, np.int64(0), [np.int64(1)], [np.int64(27)])
+      i_121816 += one_124931
+    mem_122947 = None
+    mem_122958 = allocateMem(np.int64(93312))
+    mem_122959 = allocateMem(np.int64(3456))
+    mem_122970 = allocateMem(np.int64(216))
+    mem_122977 = allocateMem(np.int64(216))
+    mem_122984 = allocateMem(np.int64(5832))
+    mem_122989 = allocateMem(np.int64(216))
+    i_121841 = np.int64(0)
+    one_124947 = np.int64(1)
+    for counter_124946 in range(np.int64(16)):
+      redout_121818 = -np.inf
+      redout_121819 = -np.inf
+      i_121820 = np.int64(0)
+      one_124933 = np.int64(1)
+      for counter_124932 in range(np.int64(27)):
+        lifted_lambda_res_117355 = np.float64(indexArray(mem_122942, ((i_121841 * np.int64(27)) + i_121820), ct.c_double))
+        max_res_113780 = fmax64(lifted_lambda_res_117355, redout_121818)
+        max_res_113800 = fmax64(lifted_lambda_res_117355, redout_121819)
+        redout_tmp_124349 = max_res_113780
+        redout_tmp_124350 = max_res_113800
+        redout_121818 = redout_tmp_124349
+        redout_121819 = redout_tmp_124350
+        i_121820 += one_124933
+      defunc_0_reduce_res_121254 = redout_121818
+      defunc_0_reduce_res_121255 = redout_121819
+      nest_i_124351 = np.int64(0)
+      one_124935 = np.int64(1)
+      for counter_124934 in range(np.int64(27)):
+        writeScalarArray(mem_122959, ((i_121841 * np.int64(27)) + nest_i_124351), defunc_0_reduce_res_121254)
+        nest_i_124351 += one_124935
+      neg_res_113801 = -(defunc_0_reduce_res_121255)
+      i_121823 = np.int64(0)
+      one_124937 = np.int64(1)
+      for counter_124936 in range(np.int64(27)):
+        zp_lhs_113808 = np.float64(indexArray(mem_122942, ((i_121841 * np.int64(27)) + i_121823), ct.c_double))
+        zp_res_113809 = (neg_res_113801 + zp_lhs_113808)
+        exp_res_113810 = futhark_exp64(zp_res_113809)
+        writeScalarArray(mem_122970, i_121823, exp_res_113810)
+        i_121823 += one_124937
+      r_113814 = np.float64(0.0)
+      i_113813 = np.int64(0)
+      one_124939 = np.int64(1)
+      for counter_124938 in range(np.int64(27)):
+        lifted_lambda_res_113815 = np.float64(indexArray(mem_122970, i_113813, ct.c_double))
+        zp_res_113816 = (r_113814 + lifted_lambda_res_113815)
+        r_tmp_124353 = zp_res_113816
+        r_113814 = r_tmp_124353
+        i_113813 += one_124939
+      defunc_0_lifted_lambda_res_113812 = r_113814
+      zs_res_113817 = (np.float64(1.0) / defunc_0_lifted_lambda_res_113812)
+      i_121827 = np.int64(0)
+      one_124941 = np.int64(1)
+      for counter_124940 in range(np.int64(27)):
+        zt_lhs_113824 = np.float64(indexArray(mem_122970, i_121827, ct.c_double))
+        zt_res_113825 = (zs_res_113817 * zt_lhs_113824)
+        writeScalarArray(mem_122977, i_121827, zt_res_113825)
+        i_121827 += one_124941
+      i_121835 = np.int64(0)
+      one_124945 = np.int64(1)
+      for counter_124944 in range(np.int64(27)):
+        i_121831 = np.int64(0)
+        one_124943 = np.int64(1)
+        for counter_124942 in range(np.int64(27)):
+          cond_113831 = (i_121831 == i_121835)
+          if cond_113831:
+            zt_rhs_121251 = np.float64(indexArray(target_mem_122588, ((i_121841 * np.int64(27)) + i_121835), ct.c_double))
+            zt_res_121252 = (np.float64(-6.25e-2) * zt_rhs_121251)
+            zt_lhs_113832 = zt_res_121252
+          else:
+            zt_lhs_113832 = np.float64(0.0)
+          zs_rhs_113843 = np.float64(indexArray(mem_122977, i_121831, ct.c_double))
+          zs_res_113844 = (np.float64(1.0) / zs_rhs_113843)
+          zt_res_113845 = (zt_lhs_113832 * zs_res_113844)
+          writeScalarArray(mem_122989, i_121831, zt_res_113845)
+          i_121831 += one_124943
+        lmad_copy(ct.c_double, mem_122984, (i_121835 * np.int64(27)), [np.int64(1)], mem_122989, np.int64(0), [np.int64(1)], [np.int64(27)])
+        i_121835 += one_124945
+      lmad_copy(ct.c_double, mem_122958, (i_121841 * np.int64(729)), [np.int64(27), np.int64(1)], mem_122984, np.int64(0), [np.int64(27), np.int64(1)], [np.int64(27), np.int64(27)])
+      i_121841 += one_124947
+    mem_122970 = None
+    mem_122977 = None
+    mem_122984 = None
+    mem_122989 = None
+    mem_123009 = allocateMem(np.int64(93312))
+    mem_123015 = allocateMem(np.int64(5832))
+    mem_123020 = allocateMem(np.int64(216))
+    i_121854 = np.int64(0)
+    one_124953 = np.int64(1)
+    for counter_124952 in range(np.int64(16)):
+      i_121850 = np.int64(0)
+      one_124951 = np.int64(1)
+      for counter_124950 in range(np.int64(27)):
+        neg_arg0_111154 = np.float64(indexArray(mem_122959, ((i_121854 * np.int64(27)) + i_121850), ct.c_double))
+        neg_res_111155 = -(neg_arg0_111154)
+        i_121846 = np.int64(0)
+        one_124949 = np.int64(1)
+        for counter_124948 in range(np.int64(27)):
+          zp_lhs_111162 = np.float64(indexArray(mem_122942, ((i_121854 * np.int64(27)) + i_121846), ct.c_double))
+          zp_res_111163 = (neg_res_111155 + zp_lhs_111162)
+          exp_res_111164 = futhark_exp64(zp_res_111163)
+          writeScalarArray(mem_123020, i_121846, exp_res_111164)
+          i_121846 += one_124949
+        lmad_copy(ct.c_double, mem_123015, (i_121850 * np.int64(27)), [np.int64(1)], mem_123020, np.int64(0), [np.int64(1)], [np.int64(27)])
+        i_121850 += one_124951
+      lmad_copy(ct.c_double, mem_123009, (i_121854 * np.int64(729)), [np.int64(27), np.int64(1)], mem_123015, np.int64(0), [np.int64(27), np.int64(1)], [np.int64(27), np.int64(27)])
+      i_121854 += one_124953
+    mem_123015 = None
+    mem_123020 = None
+    mem_123036 = allocateMem(np.int64(3456))
+    mem_123037 = allocateMem(np.int64(3456))
+    mem_123046 = allocateMem(np.int64(216))
+    mem_123047 = allocateMem(np.int64(216))
+    i_121867 = np.int64(0)
+    one_124961 = np.int64(1)
+    for counter_124960 in range(np.int64(16)):
+      i_121860 = np.int64(0)
+      one_124959 = np.int64(1)
+      for counter_124958 in range(np.int64(27)):
+        r_117417 = np.float64(0.0)
+        i_117416 = np.int64(0)
+        one_124955 = np.int64(1)
+        for counter_124954 in range(np.int64(27)):
+          lifted_lambda_res_117418 = np.float64(indexArray(mem_123009, (((i_121867 * np.int64(729)) + (i_121860 * np.int64(27))) + i_117416), ct.c_double))
+          zp_res_117419 = (r_117417 + lifted_lambda_res_117418)
+          r_tmp_124364 = zp_res_117419
+          r_117417 = r_tmp_124364
+          i_117416 += one_124955
+        defunc_0_lifted_lambda_res_117415 = r_117417
+        zt_res_117427 = (defunc_0_lifted_lambda_res_117415 * defunc_0_lifted_lambda_res_117415)
+        zs_res_117428 = (np.float64(1.0) / zt_res_117427)
+        r_117431 = np.float64(0.0)
+        i_117430 = np.int64(0)
+        one_124957 = np.int64(1)
+        for counter_124956 in range(np.int64(27)):
+          zt_lhs_117432 = np.float64(indexArray(mem_122958, (((i_121867 * np.int64(729)) + (i_121860 * np.int64(27))) + i_117430), ct.c_double))
+          zt_rhs_117433 = np.float64(indexArray(mem_123009, (((i_121867 * np.int64(729)) + (i_121860 * np.int64(27))) + i_117430), ct.c_double))
+          zt_res_117434 = (zt_lhs_117432 * zt_rhs_117433)
+          zt_res_117435 = (zs_res_117428 * zt_res_117434)
+          neg_res_117436 = -(zt_res_117435)
+          zp_res_117437 = (r_117431 + neg_res_117436)
+          r_tmp_124365 = zp_res_117437
+          r_117431 = r_tmp_124365
+          i_117430 += one_124957
+        defunc_0_lifted_lambda_res_117429 = r_117431
+        writeScalarArray(mem_123046, i_121860, defunc_0_lifted_lambda_res_117429)
+        writeScalarArray(mem_123047, i_121860, defunc_0_lifted_lambda_res_117415)
+        i_121860 += one_124959
+      lmad_copy(ct.c_double, mem_123036, (i_121867 * np.int64(27)), [np.int64(1)], mem_123046, np.int64(0), [np.int64(1)], [np.int64(27)])
+      lmad_copy(ct.c_double, mem_123037, (i_121867 * np.int64(27)), [np.int64(1)], mem_123047, np.int64(0), [np.int64(1)], [np.int64(27)])
+      i_121867 += one_124961
+    mem_123009 = None
+    mem_123046 = None
+    mem_123047 = None
+    mem_123068 = allocateMem(np.int64(93312))
+    mem_123074 = allocateMem(np.int64(5832))
+    mem_123079 = allocateMem(np.int64(216))
+    i_121880 = np.int64(0)
+    one_124967 = np.int64(1)
+    for counter_124966 in range(np.int64(16)):
+      i_121876 = np.int64(0)
+      one_124965 = np.int64(1)
+      for counter_124964 in range(np.int64(27)):
+        zs_rhs_111293 = np.float64(indexArray(mem_123037, ((i_121880 * np.int64(27)) + i_121876), ct.c_double))
+        zs_res_111294 = (np.float64(1.0) / zs_rhs_111293)
+        zp_rhs_111295 = np.float64(indexArray(mem_123036, ((i_121880 * np.int64(27)) + i_121876), ct.c_double))
+        i_121872 = np.int64(0)
+        one_124963 = np.int64(1)
+        for counter_124962 in range(np.int64(27)):
+          zt_lhs_111302 = np.float64(indexArray(mem_122958, (((i_121880 * np.int64(729)) + (i_121876 * np.int64(27))) + i_121872), ct.c_double))
+          zt_res_111303 = (zs_res_111294 * zt_lhs_111302)
+          zp_res_111304 = (zp_rhs_111295 + zt_res_111303)
+          writeScalarArray(mem_123079, i_121872, zp_res_111304)
+          i_121872 += one_124963
+        lmad_copy(ct.c_double, mem_123074, (i_121876 * np.int64(27)), [np.int64(1)], mem_123079, np.int64(0), [np.int64(1)], [np.int64(27)])
+        i_121876 += one_124965
+      lmad_copy(ct.c_double, mem_123068, (i_121880 * np.int64(729)), [np.int64(27), np.int64(1)], mem_123074, np.int64(0), [np.int64(27), np.int64(1)], [np.int64(27), np.int64(27)])
+      i_121880 += one_124967
+    mem_122958 = None
+    mem_123036 = None
+    mem_123037 = None
+    mem_123074 = None
+    mem_123079 = None
+    mem_123095 = allocateMem(np.int64(3456))
+    mem_123100 = allocateMem(np.int64(216))
+    i_121888 = np.int64(0)
+    one_124975 = np.int64(1)
+    for counter_124974 in range(np.int64(16)):
+      i_121884 = np.int64(0)
+      one_124973 = np.int64(1)
+      for counter_124972 in range(np.int64(27)):
+        r_111317 = np.float64(0.0)
+        i_111316 = np.int64(0)
+        one_124971 = np.int64(1)
+        for counter_124970 in range(np.int64(16)):
+          cond_111318 = (i_121888 == i_111316)
+          if cond_111318:
+            x_121265 = np.float64(indexArray(mem_122942, ((i_111316 * np.int64(27)) + i_121884), ct.c_double))
+            zp_lhs_111322 = x_121265
+          else:
+            zp_lhs_111322 = np.float64(0.0)
+          r_111326 = np.float64(0.0)
+          i_111325 = np.int64(0)
+          one_124969 = np.int64(1)
+          for counter_124968 in range(np.int64(27)):
+            if cond_111318:
+              neg_arg0_121266 = np.float64(indexArray(mem_122959, ((i_111316 * np.int64(27)) + i_111325), ct.c_double))
+              neg_res_121267 = -(neg_arg0_121266)
+              zp_res_121268 = (zp_lhs_111322 + neg_res_121267)
+              exp_res_121269 = futhark_exp64(zp_res_121268)
+              zt_rhs_121270 = np.float64(indexArray(mem_123068, (((i_111316 * np.int64(729)) + (i_111325 * np.int64(27))) + i_121884), ct.c_double))
+              zt_res_121271 = (exp_res_121269 * zt_rhs_121270)
+              zp_lhs_111327 = zt_res_121271
+            else:
+              zp_lhs_111327 = np.float64(0.0)
+            zp_res_111334 = (r_111326 + zp_lhs_111327)
+            r_tmp_124372 = zp_res_111334
+            r_111326 = r_tmp_124372
+            i_111325 += one_124969
+          defunc_0_lifted_lambda_res_111324 = r_111326
+          zp_res_111335 = (r_111317 + defunc_0_lifted_lambda_res_111324)
+          r_tmp_124371 = zp_res_111335
+          r_111317 = r_tmp_124371
+          i_111316 += one_124971
+        defunc_0_lifted_lambda_res_111315 = r_111317
+        writeScalarArray(mem_123100, i_121884, defunc_0_lifted_lambda_res_111315)
+        i_121884 += one_124973
+      lmad_copy(ct.c_double, mem_123095, (i_121888 * np.int64(27)), [np.int64(1)], mem_123100, np.int64(0), [np.int64(1)], [np.int64(27)])
+      i_121888 += one_124975
+    mem_122942 = None
+    mem_122959 = None
+    mem_123068 = None
+    mem_123100 = None
+    mem_123111 = allocateMem(np.int64(2048))
+    mem_123116 = allocateMem(np.int64(128))
+    i_121896 = np.int64(0)
+    one_124983 = np.int64(1)
+    for counter_124982 in range(np.int64(16)):
+      i_121892 = np.int64(0)
+      one_124981 = np.int64(1)
+      for counter_124980 in range(np.int64(16)):
+        r_111344 = np.float64(0.0)
+        i_111343 = np.int64(0)
+        one_124979 = np.int64(1)
+        for counter_124978 in range(np.int64(27)):
+          x_111345 = np.float64(indexArray(wvoc_mem_122586, ((i_111343 * np.int64(16)) + i_121892), ct.c_double))
+          r_111348 = np.float64(0.0)
+          i_111347 = np.int64(0)
+          one_124977 = np.int64(1)
+          for counter_124976 in range(np.int64(16)):
+            cond_111349 = (i_121892 == i_111347)
+            if cond_111349:
+              zt_lhs_t_res_121277 = np.float64(indexArray(mem_123095, ((i_121896 * np.int64(27)) + i_111343), ct.c_double))
+              zt_lhs_111350 = zt_lhs_t_res_121277
+            else:
+              zt_lhs_111350 = np.float64(0.0)
+            zt_res_111356 = (x_111345 * zt_lhs_111350)
+            zp_res_111357 = (r_111348 + zt_res_111356)
+            r_tmp_124376 = zp_res_111357
+            r_111348 = r_tmp_124376
+            i_111347 += one_124977
+          defunc_0_lifted_lambda_res_111346 = r_111348
+          zp_res_111358 = (r_111344 + defunc_0_lifted_lambda_res_111346)
+          r_tmp_124375 = zp_res_111358
+          r_111344 = r_tmp_124375
+          i_111343 += one_124979
+        defunc_0_lifted_lambda_res_111342 = r_111344
+        writeScalarArray(mem_123116, i_121892, defunc_0_lifted_lambda_res_111342)
+        i_121892 += one_124981
+      lmad_copy(ct.c_double, mem_123111, (i_121896 * np.int64(16)), [np.int64(1)], mem_123116, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121896 += one_124983
+    mem_123116 = None
+    mem_123127 = allocateMem(np.int64(8192))
+    mem_123128 = allocateMem(np.int64(8192))
+    mem_123137 = allocateMem(np.int64(512))
+    mem_123138 = allocateMem(np.int64(512))
+    i_121909 = np.int64(0)
+    one_124995 = np.int64(1)
+    for counter_124994 in range(np.int64(16)):
+      i_121902 = np.int64(0)
+      one_124993 = np.int64(1)
+      for counter_124992 in range(np.int64(64)):
+        indicatorp_arg0_117473 = np.float64(indexArray(mem_122894, ((i_121909 * np.int64(64)) + i_121902), ct.c_double))
+        max_res_117474 = fmax64(np.float64(0.0), indicatorp_arg0_117473)
+        sgn_res_117475 = np.sign(max_res_117474)
+        r_117478 = np.float64(0.0)
+        i_117477 = np.int64(0)
+        one_124987 = np.int64(1)
+        for counter_124986 in range(np.int64(16)):
+          x_117479 = np.float64(indexArray(wdown_mem_122578, ((i_117477 * np.int64(64)) + i_121902), ct.c_double))
+          r_117482 = np.float64(0.0)
+          i_117481 = np.int64(0)
+          one_124985 = np.int64(1)
+          for counter_124984 in range(np.int64(64)):
+            cond_117483 = (i_121902 == i_117481)
+            if cond_117483:
+              zt_lhs_t_res_121283 = np.float64(indexArray(mem_123111, ((i_121909 * np.int64(16)) + i_117477), ct.c_double))
+              zt_lhs_117484 = zt_lhs_t_res_121283
+            else:
+              zt_lhs_117484 = np.float64(0.0)
+            zt_res_117490 = (x_117479 * zt_lhs_117484)
+            zp_res_117491 = (r_117482 + zt_res_117490)
+            r_tmp_124382 = zp_res_117491
+            r_117482 = r_tmp_124382
+            i_117481 += one_124985
+          defunc_0_lifted_lambda_res_117480 = r_117482
+          zp_res_117492 = (r_117478 + defunc_0_lifted_lambda_res_117480)
+          r_tmp_124381 = zp_res_117492
+          r_117478 = r_tmp_124381
+          i_117477 += one_124987
+        defunc_0_lifted_lambda_res_117476 = r_117478
+        zt_res_117493 = (sgn_res_117475 * defunc_0_lifted_lambda_res_117476)
+        r_117498 = np.float64(0.0)
+        i_117497 = np.int64(0)
+        one_124991 = np.int64(1)
+        for counter_124990 in range(np.int64(16)):
+          x_117499 = np.float64(indexArray(mem_122910, ((i_117497 * np.int64(64)) + i_121902), ct.c_double))
+          r_117502 = np.float64(0.0)
+          i_117501 = np.int64(0)
+          one_124989 = np.int64(1)
+          for counter_124988 in range(np.int64(64)):
+            cond_117503 = (i_121902 == i_117501)
+            if cond_117503:
+              zt_lhs_t_res_121288 = np.float64(indexArray(mem_123111, ((i_117497 * np.int64(16)) + i_121909), ct.c_double))
+              zt_lhs_117504 = zt_lhs_t_res_121288
+            else:
+              zt_lhs_117504 = np.float64(0.0)
+            zt_res_117510 = (x_117499 * zt_lhs_117504)
+            zp_res_117511 = (r_117502 + zt_res_117510)
+            r_tmp_124384 = zp_res_117511
+            r_117502 = r_tmp_124384
+            i_117501 += one_124989
+          defunc_0_lifted_lambda_res_117500 = r_117502
+          zp_res_117512 = (r_117498 + defunc_0_lifted_lambda_res_117500)
+          r_tmp_124383 = zp_res_117512
+          r_117498 = r_tmp_124383
+          i_117497 += one_124991
+        defunc_0_lifted_lambda_res_117496 = r_117498
+        writeScalarArray(mem_123137, i_121902, defunc_0_lifted_lambda_res_117496)
+        writeScalarArray(mem_123138, i_121902, zt_res_117493)
+        i_121902 += one_124993
+      lmad_copy(ct.c_double, mem_123127, (i_121909 * np.int64(64)), [np.int64(1)], mem_123137, np.int64(0), [np.int64(1)], [np.int64(64)])
+      lmad_copy(ct.c_double, mem_123128, (i_121909 * np.int64(64)), [np.int64(1)], mem_123138, np.int64(0), [np.int64(1)], [np.int64(64)])
+      i_121909 += one_124995
+    mem_122894 = None
+    mem_122910 = None
     mem_123137 = None
-    mem_123202 = None
-    mem_123203 = None
+    mem_123138 = None
+    mem_123159 = allocateMem(np.int64(2048))
+    mem_123164 = allocateMem(np.int64(128))
+    i_121918 = np.int64(0)
+    one_125003 = np.int64(1)
+    for counter_125002 in range(np.int64(16)):
+      i_121914 = np.int64(0)
+      one_125001 = np.int64(1)
+      for counter_125000 in range(np.int64(16)):
+        r_111426 = np.float64(0.0)
+        i_111425 = np.int64(0)
+        one_124999 = np.int64(1)
+        for counter_124998 in range(np.int64(64)):
+          x_111427 = np.float64(indexArray(wup_mem_122584, ((i_111425 * np.int64(16)) + i_121914), ct.c_double))
+          r_111430 = np.float64(0.0)
+          i_111429 = np.int64(0)
+          one_124997 = np.int64(1)
+          for counter_124996 in range(np.int64(16)):
+            cond_111431 = (i_121914 == i_111429)
+            if cond_111431:
+              zt_lhs_t_res_121295 = np.float64(indexArray(mem_123128, ((i_121918 * np.int64(64)) + i_111425), ct.c_double))
+              zt_lhs_111432 = zt_lhs_t_res_121295
+            else:
+              zt_lhs_111432 = np.float64(0.0)
+            zt_res_111438 = (x_111427 * zt_lhs_111432)
+            zp_res_111439 = (r_111430 + zt_res_111438)
+            r_tmp_124388 = zp_res_111439
+            r_111430 = r_tmp_124388
+            i_111429 += one_124997
+          defunc_0_lifted_lambda_res_111428 = r_111430
+          zp_res_111440 = (r_111426 + defunc_0_lifted_lambda_res_111428)
+          r_tmp_124387 = zp_res_111440
+          r_111426 = r_tmp_124387
+          i_111425 += one_124999
+        defunc_0_lifted_lambda_res_111424 = r_111426
+        writeScalarArray(mem_123164, i_121914, defunc_0_lifted_lambda_res_111424)
+        i_121914 += one_125001
+      lmad_copy(ct.c_double, mem_123159, (i_121918 * np.int64(16)), [np.int64(1)], mem_123164, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121918 += one_125003
+    mem_123164 = None
+    mem_123175 = allocateMem(np.int64(128))
+    mem_123176 = allocateMem(np.int64(128))
+    i_121924 = np.int64(0)
+    one_125007 = np.int64(1)
+    for counter_125006 in range(np.int64(16)):
+      zp_lhs_113253 = np.float64(indexArray(mem_122864, i_121924, ct.c_double))
+      zp_res_113254 = (np.float64(1.0e-5) + zp_lhs_113253)
+      sqrt_res_113255 = futhark_sqrt64(zp_res_113254)
+      zt_res_113263 = (sqrt_res_113255 * sqrt_res_113255)
+      zs_res_113264 = (np.float64(1.0) / zt_res_113263)
+      r_113267 = np.float64(0.0)
+      i_113266 = np.int64(0)
+      one_125005 = np.int64(1)
+      for counter_125004 in range(np.int64(16)):
+        zt_lhs_113268 = np.float64(indexArray(mem_123159, ((i_121924 * np.int64(16)) + i_113266), ct.c_double))
+        zt_rhs_113269 = np.float64(indexArray(mem_122848, ((i_121924 * np.int64(16)) + i_113266), ct.c_double))
+        zt_res_113270 = (zt_lhs_113268 * zt_rhs_113269)
+        zt_res_113271 = (zs_res_113264 * zt_res_113270)
+        neg_res_113272 = -(zt_res_113271)
+        zp_res_113273 = (r_113267 + neg_res_113272)
+        r_tmp_124391 = zp_res_113273
+        r_113267 = r_tmp_124391
+        i_113266 += one_125005
+      defunc_0_lifted_lambda_res_113265 = r_113267
+      writeScalarArray(mem_123175, i_121924, defunc_0_lifted_lambda_res_113265)
+      writeScalarArray(mem_123176, i_121924, sqrt_res_113255)
+      i_121924 += one_125007
+    mem_123189 = allocateMem(np.int64(128))
+    i_121929 = np.int64(0)
+    one_125009 = np.int64(1)
+    for counter_125008 in range(np.int64(16)):
+      zt_lhs_111468 = np.float64(indexArray(mem_123175, i_121929, ct.c_double))
+      zp_lhs_111469 = np.float64(indexArray(mem_122864, i_121929, ct.c_double))
+      zp_res_111470 = (np.float64(1.0e-5) + zp_lhs_111469)
+      sqrt_res_111471 = futhark_sqrt64(zp_res_111470)
+      zt_res_111472 = (np.float64(2.0) * sqrt_res_111471)
+      zs_res_111473 = (np.float64(1.0) / zt_res_111472)
+      zt_res_111474 = (zt_lhs_111468 * zs_res_111473)
+      writeScalarArray(mem_123189, i_121929, zt_res_111474)
+      i_121929 += one_125009
+    mem_122864 = None
+    mem_123175 = None
+    mem_123196 = allocateMem(np.int64(2048))
+    mem_123201 = allocateMem(np.int64(128))
+    i_121937 = np.int64(0)
+    one_125017 = np.int64(1)
+    for counter_125016 in range(np.int64(16)):
+      i_121933 = np.int64(0)
+      one_125015 = np.int64(1)
+      for counter_125014 in range(np.int64(16)):
+        zp_lhs_111488 = np.float64(indexArray(mem_123111, ((i_121937 * np.int64(16)) + i_121933), ct.c_double))
+        r_111491 = np.float64(0.0)
+        i_111490 = np.int64(0)
+        one_125013 = np.int64(1)
+        for counter_125012 in range(np.int64(16)):
+          cond_111492 = (i_121937 == i_111490)
+          if cond_111492:
+            zt_lhs_121297 = np.float64(indexArray(mem_123159, ((i_111490 * np.int64(16)) + i_121933), ct.c_double))
+            zs_rhs_121298 = np.float64(indexArray(mem_123176, i_111490, ct.c_double))
+            zs_res_121299 = (np.float64(1.0) / zs_rhs_121298)
+            zt_res_121300 = (zt_lhs_121297 * zs_res_121299)
+            zp_lhs_111493 = zt_res_121300
+          else:
+            zp_lhs_111493 = np.float64(0.0)
+          if cond_111492:
+            x_121301 = np.float64(indexArray(mem_122848, ((i_111490 * np.int64(16)) + i_121933), ct.c_double))
+            zt_rhs_111501 = x_121301
+          else:
+            zt_rhs_111501 = np.float64(0.0)
+          if cond_111492:
+            x_121302 = np.float64(indexArray(mem_122848, ((i_111490 * np.int64(16)) + i_121933), ct.c_double))
+            zt_rhs_111503 = x_121302
+          else:
+            zt_rhs_111503 = np.float64(0.0)
+          r_111507 = np.float64(0.0)
+          i_111506 = np.int64(0)
+          one_125011 = np.int64(1)
+          for counter_125010 in range(np.int64(16)):
+            if cond_111492:
+              cond_121305 = (i_121933 == i_111506)
+              if cond_121305:
+                zs_lhs_121307 = np.float64(indexArray(mem_123189, i_111490, ct.c_double))
+                zs_res_121308 = (zs_lhs_121307 / np.float64(16.0))
+                zt_lhs_121306 = zs_res_121308
+              else:
+                zt_lhs_121306 = np.float64(0.0)
+              zt_res_121309 = (zt_rhs_111501 * zt_lhs_121306)
+              zp_lhs_111508 = zt_res_121309
+            else:
+              zp_lhs_111508 = np.float64(0.0)
+            if cond_111492:
+              cond_121312 = (i_121933 == i_111506)
+              if cond_121312:
+                zs_lhs_121314 = np.float64(indexArray(mem_123189, i_111490, ct.c_double))
+                zs_res_121315 = (zs_lhs_121314 / np.float64(16.0))
+                zt_lhs_121313 = zs_res_121315
+              else:
+                zt_lhs_121313 = np.float64(0.0)
+              zt_res_121316 = (zt_rhs_111503 * zt_lhs_121313)
+              zp_rhs_111514 = zt_res_121316
+            else:
+              zp_rhs_111514 = np.float64(0.0)
+            zp_res_111520 = (zp_lhs_111508 + zp_rhs_111514)
+            zp_res_111521 = (r_111507 + zp_res_111520)
+            r_tmp_124396 = zp_res_111521
+            r_111507 = r_tmp_124396
+            i_111506 += one_125011
+          defunc_0_lifted_lambda_res_111505 = r_111507
+          zp_res_111522 = (zp_lhs_111493 + defunc_0_lifted_lambda_res_111505)
+          zp_res_111523 = (r_111491 + zp_res_111522)
+          r_tmp_124395 = zp_res_111523
+          r_111491 = r_tmp_124395
+          i_111490 += one_125013
+        defunc_0_lifted_lambda_res_111489 = r_111491
+        zp_res_111524 = (zp_lhs_111488 + defunc_0_lifted_lambda_res_111489)
+        writeScalarArray(mem_123201, i_121933, zp_res_111524)
+        i_121933 += one_125015
+      lmad_copy(ct.c_double, mem_123196, (i_121937 * np.int64(16)), [np.int64(1)], mem_123201, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_121937 += one_125017
+    mem_122848 = None
+    mem_123111 = None
+    mem_123159 = None
+    mem_123176 = None
+    mem_123189 = None
+    mem_123201 = None
+    mem_123212 = allocateMem(np.int64(8192))
+    mem_123213 = allocateMem(np.int64(8192))
+    mem_123214 = allocateMem(np.int64(8192))
+    mem_123215 = allocateMem(np.int64(2048))
+    mem_123236 = allocateMem(np.int64(2048))
+    mem_123237 = allocateMem(np.int64(2048))
+    mem_123238 = allocateMem(np.int64(2048))
+    mem_123239 = allocateMem(np.int64(512))
+    mem_123256 = allocateMem(np.int64(32))
+    mem_123263 = allocateMem(np.int64(128))
+    mem_123264 = allocateMem(np.int64(128))
+    mem_123265 = allocateMem(np.int64(128))
+    i_121974 = np.int64(0)
+    one_125035 = np.int64(1)
+    for counter_125034 in range(np.int64(4)):
+      zp_lhs_114107 = (np.int64(4) * i_121974)
+      i_121961 = np.int64(0)
+      one_125033 = np.int64(1)
+      for counter_125032 in range(np.int64(16)):
+        i_121941 = np.int64(0)
+        one_125023 = np.int64(1)
+        for counter_125022 in range(np.int64(4)):
+          zeze_lhs_117727 = (zp_lhs_114107 + i_121941)
+          r_117730 = np.float64(0.0)
+          i_117729 = np.int64(0)
+          one_125021 = np.int64(1)
+          for counter_125020 in range(np.int64(16)):
+            x_117731 = np.float64(indexArray(wout_mem_122580, ((i_117729 * np.int64(16)) + zeze_lhs_117727), ct.c_double))
+            r_117734 = np.float64(0.0)
+            i_117733 = np.int64(0)
+            one_125019 = np.int64(1)
+            for counter_125018 in range(np.int64(16)):
+              cond_117735 = (zeze_lhs_117727 == i_117733)
+              if cond_117735:
+                zt_lhs_t_res_121322 = np.float64(indexArray(mem_123196, ((i_121961 * np.int64(16)) + i_117729), ct.c_double))
+                zt_lhs_117736 = zt_lhs_t_res_121322
+              else:
+                zt_lhs_117736 = np.float64(0.0)
+              zt_res_117742 = (x_117731 * zt_lhs_117736)
+              zp_res_117743 = (r_117734 + zt_res_117742)
+              r_tmp_124407 = zp_res_117743
+              r_117734 = r_tmp_124407
+              i_117733 += one_125019
+            defunc_0_lifted_lambda_res_117732 = r_117734
+            zp_res_117744 = (r_117730 + defunc_0_lifted_lambda_res_117732)
+            r_tmp_124406 = zp_res_117744
+            r_117730 = r_tmp_124406
+            i_117729 += one_125021
+          defunc_0_lifted_lambda_res_117728 = r_117730
+          writeScalarArray(mem_123256, i_121941, defunc_0_lifted_lambda_res_117728)
+          i_121941 += one_125023
+        i_121949 = np.int64(0)
+        one_125031 = np.int64(1)
+        for counter_125030 in range(np.int64(16)):
+          r_117878 = np.float64(0.0)
+          i_117877 = np.int64(0)
+          one_125025 = np.int64(1)
+          for counter_125024 in range(np.int64(4)):
+            zt_lhs_117879 = np.float64(indexArray(mem_122675, (((i_121974 * np.int64(64)) + (i_121961 * np.int64(4))) + i_117877), ct.c_double))
+            zt_rhs_117880 = np.float64(indexArray(mem_122674, (((i_121974 * np.int64(64)) + (i_121949 * np.int64(4))) + i_117877), ct.c_double))
+            zt_res_117881 = (zt_lhs_117879 * zt_rhs_117880)
+            zp_res_117882 = (r_117878 + zt_res_117881)
+            r_tmp_124411 = zp_res_117882
+            r_117878 = r_tmp_124411
+            i_117877 += one_125025
+          defunc_0_lifted_lambda_res_117876 = r_117878
+          r_117891 = np.float64(0.0)
+          i_117890 = np.int64(0)
+          one_125027 = np.int64(1)
+          for counter_125026 in range(np.int64(4)):
+            zt_lhs_117892 = np.float64(indexArray(mem_122675, (((i_121974 * np.int64(64)) + (i_121961 * np.int64(4))) + i_117890), ct.c_double))
+            zt_rhs_117893 = np.float64(indexArray(mem_122674, (((i_121974 * np.int64(64)) + (i_121949 * np.int64(4))) + i_117890), ct.c_double))
+            zt_res_117894 = (zt_lhs_117892 * zt_rhs_117893)
+            zp_res_117895 = (r_117891 + zt_res_117894)
+            r_tmp_124412 = zp_res_117895
+            r_117891 = r_tmp_124412
+            i_117890 += one_125027
+          defunc_0_lifted_lambda_res_117889 = r_117891
+          r_117907 = np.float64(0.0)
+          i_117906 = np.int64(0)
+          one_125029 = np.int64(1)
+          for counter_125028 in range(np.int64(4)):
+            zt_lhs_117908 = np.float64(indexArray(mem_122675, (((i_121974 * np.int64(64)) + (i_121961 * np.int64(4))) + i_117906), ct.c_double))
+            zt_rhs_117909 = np.float64(indexArray(mem_122674, (((i_121974 * np.int64(64)) + (i_121949 * np.int64(4))) + i_117906), ct.c_double))
+            zt_res_117910 = (zt_lhs_117908 * zt_rhs_117909)
+            zp_res_117911 = (r_117907 + zt_res_117910)
+            r_tmp_124413 = zp_res_117911
+            r_117907 = r_tmp_124413
+            i_117906 += one_125029
+          defunc_0_lifted_lambda_res_117905 = r_117907
+          writeScalarArray(mem_123263, i_121949, defunc_0_lifted_lambda_res_117905)
+          writeScalarArray(mem_123264, i_121949, defunc_0_lifted_lambda_res_117889)
+          writeScalarArray(mem_123265, i_121949, defunc_0_lifted_lambda_res_117876)
+          i_121949 += one_125031
+        lmad_copy(ct.c_double, mem_123236, (i_121961 * np.int64(16)), [np.int64(1)], mem_123263, np.int64(0), [np.int64(1)], [np.int64(16)])
+        lmad_copy(ct.c_double, mem_123237, (i_121961 * np.int64(16)), [np.int64(1)], mem_123264, np.int64(0), [np.int64(1)], [np.int64(16)])
+        lmad_copy(ct.c_double, mem_123238, (i_121961 * np.int64(16)), [np.int64(1)], mem_123265, np.int64(0), [np.int64(1)], [np.int64(16)])
+        lmad_copy(ct.c_double, mem_123239, (i_121961 * np.int64(4)), [np.int64(1)], mem_123256, np.int64(0), [np.int64(1)], [np.int64(4)])
+        i_121961 += one_125033
+      lmad_copy(ct.c_double, mem_123212, (i_121974 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123236, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      lmad_copy(ct.c_double, mem_123213, (i_121974 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123237, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      lmad_copy(ct.c_double, mem_123214, (i_121974 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123238, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      lmad_copy(ct.c_double, mem_123215, (i_121974 * np.int64(64)), [np.int64(4), np.int64(1)], mem_123239, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
+      i_121974 += one_125035
+    mem_123236 = None
+    mem_123237 = None
+    mem_123238 = None
+    mem_123239 = None
+    mem_123256 = None
+    mem_123263 = None
+    mem_123264 = None
+    mem_123265 = None
+    mem_123320 = allocateMem(np.int64(2048))
+    mem_123321 = allocateMem(np.int64(8192))
+    mem_123322 = allocateMem(np.int64(2048))
+    mem_123323 = allocateMem(np.int64(8192))
+    mem_123324 = allocateMem(np.int64(2048))
+    mem_123325 = allocateMem(np.int64(8192))
+    mem_123356 = allocateMem(np.int64(512))
+    mem_123357 = allocateMem(np.int64(2048))
+    mem_123358 = allocateMem(np.int64(512))
+    mem_123359 = allocateMem(np.int64(2048))
+    mem_123360 = allocateMem(np.int64(512))
+    mem_123361 = allocateMem(np.int64(2048))
+    mem_123386 = allocateMem(np.int64(128))
+    mem_123387 = allocateMem(np.int64(128))
+    mem_123388 = allocateMem(np.int64(128))
+    mem_123407 = allocateMem(np.int64(32))
+    mem_123408 = allocateMem(np.int64(32))
+    i_122027 = np.int64(0)
+    one_125043 = np.int64(1)
+    for counter_125042 in range(np.int64(4)):
+      i_122008 = np.int64(0)
+      one_125041 = np.int64(1)
+      for counter_125040 in range(np.int64(16)):
+        i_121985 = np.int64(0)
+        one_125037 = np.int64(1)
+        for counter_125036 in range(np.int64(16)):
+          zs_lhs_118482 = np.float64(indexArray(mem_123214, (((i_122027 * np.int64(256)) + (i_122008 * np.int64(16))) + i_121985), ct.c_double))
+          zs_res_118483 = (zs_lhs_118482 / np.float64(2.0))
+          zp_rhs_118484 = np.float64(indexArray(mask_mem_122589, ((i_122008 * np.int64(16)) + i_121985), ct.c_double))
+          zp_res_118485 = (zs_res_118483 + zp_rhs_118484)
+          zs_lhs_118492 = np.float64(indexArray(mem_123213, (((i_122027 * np.int64(256)) + (i_122008 * np.int64(16))) + i_121985), ct.c_double))
+          zs_res_118493 = (zs_lhs_118492 / np.float64(2.0))
+          zp_res_118495 = (zp_rhs_118484 + zs_res_118493)
+          zs_lhs_118505 = np.float64(indexArray(mem_123212, (((i_122027 * np.int64(256)) + (i_122008 * np.int64(16))) + i_121985), ct.c_double))
+          zs_res_118506 = (zs_lhs_118505 / np.float64(2.0))
+          zp_res_118508 = (zp_rhs_118484 + zs_res_118506)
+          writeScalarArray(mem_123386, i_121985, zp_res_118508)
+          writeScalarArray(mem_123387, i_121985, zp_res_118495)
+          writeScalarArray(mem_123388, i_121985, zp_res_118485)
+          i_121985 += one_125037
+        i_121993 = np.int64(0)
+        one_125039 = np.int64(1)
+        for counter_125038 in range(np.int64(4)):
+          lifted_lambda_res_118558 = np.float64(indexArray(mem_123215, (((i_122027 * np.int64(64)) + (i_122008 * np.int64(4))) + i_121993), ct.c_double))
+          writeScalarArray(mem_123407, i_121993, lifted_lambda_res_118558)
+          writeScalarArray(mem_123408, i_121993, lifted_lambda_res_118558)
+          i_121993 += one_125039
+        lmad_copy(ct.c_double, mem_123360, (i_122008 * np.int64(4)), [np.int64(1)], mem_123408, np.int64(0), [np.int64(1)], [np.int64(4)])
+        lmad_copy(ct.c_double, mem_123356, (i_122008 * np.int64(4)), [np.int64(1)], mem_123407, np.int64(0), [np.int64(1)], [np.int64(4)])
+        lmad_copy(ct.c_double, mem_123357, (i_122008 * np.int64(16)), [np.int64(1)], mem_123386, np.int64(0), [np.int64(1)], [np.int64(16)])
+        lmad_copy(ct.c_double, mem_123358, (i_122008 * np.int64(4)), [np.int64(1)], mem_123408, np.int64(0), [np.int64(1)], [np.int64(4)])
+        lmad_copy(ct.c_double, mem_123359, (i_122008 * np.int64(16)), [np.int64(1)], mem_123387, np.int64(0), [np.int64(1)], [np.int64(16)])
+        lmad_copy(ct.c_double, mem_123361, (i_122008 * np.int64(16)), [np.int64(1)], mem_123388, np.int64(0), [np.int64(1)], [np.int64(16)])
+        i_122008 += one_125041
+      lmad_copy(ct.c_double, mem_123320, (i_122027 * np.int64(64)), [np.int64(4), np.int64(1)], mem_123356, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
+      lmad_copy(ct.c_double, mem_123321, (i_122027 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123357, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      lmad_copy(ct.c_double, mem_123322, (i_122027 * np.int64(64)), [np.int64(4), np.int64(1)], mem_123358, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
+      lmad_copy(ct.c_double, mem_123323, (i_122027 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123359, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      lmad_copy(ct.c_double, mem_123324, (i_122027 * np.int64(64)), [np.int64(4), np.int64(1)], mem_123360, np.int64(0), [np.int64(4), np.int64(1)], [np.int64(16), np.int64(4)])
+      lmad_copy(ct.c_double, mem_123325, (i_122027 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123361, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      i_122027 += one_125043
     mem_123212 = None
     mem_123213 = None
-    mem_123244 = allocateMem(np.int64(8192))
-    mem_123245 = allocateMem(np.int64(8192))
-    mem_123256 = allocateMem(np.int64(2048))
-    mem_123257 = allocateMem(np.int64(2048))
-    mem_123266 = allocateMem(np.int64(128))
-    mem_123267 = allocateMem(np.int64(128))
-    i_121580 = np.int64(0)
-    one_124443 = np.int64(1)
-    for counter_124442 in range(np.int64(4)):
-      i_121573 = np.int64(0)
-      one_124441 = np.int64(1)
-      for counter_124440 in range(np.int64(16)):
-        i_121566 = np.int64(0)
-        one_124439 = np.int64(1)
-        for counter_124438 in range(np.int64(16)):
-          zs_lhs_120138 = np.float64(indexArray(mem_123191, (((i_121580 * np.int64(256)) + (i_121573 * np.int64(16))) + i_121566), ct.c_double))
-          zs_res_120139 = (zs_lhs_120138 / np.float64(2.0))
-          zs_lhs_120146 = np.float64(indexArray(mem_123190, (((i_121580 * np.int64(256)) + (i_121573 * np.int64(16))) + i_121566), ct.c_double))
-          zs_res_120147 = (zs_lhs_120146 / np.float64(2.0))
-          writeScalarArray(mem_123266, i_121566, zs_res_120147)
-          writeScalarArray(mem_123267, i_121566, zs_res_120139)
-          i_121566 += one_124439
-        lmad_copy(ct.c_double, mem_123256, (i_121573 * np.int64(16)), [np.int64(1)], mem_123266, np.int64(0), [np.int64(1)], [np.int64(16)])
-        lmad_copy(ct.c_double, mem_123257, (i_121573 * np.int64(16)), [np.int64(1)], mem_123267, np.int64(0), [np.int64(1)], [np.int64(16)])
-        i_121573 += one_124441
-      lmad_copy(ct.c_double, mem_123244, (i_121580 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123256, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      lmad_copy(ct.c_double, mem_123245, (i_121580 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123257, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
-      i_121580 += one_124443
-    mem_123190 = None
-    mem_123191 = None
-    mem_123256 = None
-    mem_123257 = None
-    mem_123266 = None
-    mem_123267 = None
-    mem_123298 = allocateMem(np.int64(2048))
-    mem_123299 = allocateMem(np.int64(2048))
-    mem_123300 = allocateMem(np.int64(2048))
-    mem_123301 = allocateMem(np.int64(2048))
-    mem_123318 = allocateMem(np.int64(128))
-    mem_123319 = allocateMem(np.int64(128))
-    mem_123320 = allocateMem(np.int64(128))
-    mem_123321 = allocateMem(np.int64(128))
-    i_121604 = np.int64(0)
-    one_124461 = np.int64(1)
-    for counter_124460 in range(np.int64(16)):
-      i_121591 = np.int64(0)
-      one_124459 = np.int64(1)
-      for counter_124458 in range(np.int64(16)):
-        zt_lhs_119115 = sdiv64(i_121591, np.int64(4))
-        x_119116 = sle64(np.int64(0), zt_lhs_119115)
-        y_119117 = slt64(zt_lhs_119115, np.int64(4))
-        bounds_check_119118 = (x_119116 and y_119117)
-        index_certs_119119 = True
-        assert bounds_check_119118, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:334:27-45\n   #1  microgpt.fut:61:46-49\n   #2  microgpt.fut:334:5-108\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:27-39\n   #5  microgpt.fut:4:11-25\n   #6  microgpt.fut:9:13-40\n   #7  microgpt.fut:326:13-334:114\n   #8  microgpt.fut:462:7-77\n" % ("Index [", zt_lhs_119115, "] out of bounds for array of shape [", np.int64(4), "]."))
-        zt_lhs_119120 = smod64(i_121591, np.int64(4))
-        x_119121 = sle64(np.int64(0), zt_lhs_119120)
-        y_119122 = slt64(zt_lhs_119120, np.int64(4))
-        bounds_check_119123 = (x_119121 and y_119122)
-        index_certs_119124 = True
-        assert bounds_check_119123, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:334:27-67\n   #1  microgpt.fut:61:46-49\n   #2  microgpt.fut:334:5-108\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:27-39\n   #5  microgpt.fut:4:11-25\n   #6  microgpt.fut:9:13-40\n   #7  microgpt.fut:326:13-334:114\n   #8  microgpt.fut:462:7-77\n" % ("Index [", zt_lhs_119120, "] out of bounds for array of shape [", np.int64(4), "]."))
-        r_119127 = np.float64(0.0)
-        i_119126 = np.int64(0)
-        one_124445 = np.int64(1)
-        for counter_124444 in range(np.int64(16)):
-          zt_lhs_119128 = np.float64(indexArray(mem_122685, (((zt_lhs_119115 * np.int64(64)) + (i_119126 * np.int64(4))) + zt_lhs_119120), ct.c_double))
-          zt_rhs_119129 = np.float64(indexArray(mem_122841, (((zt_lhs_119115 * np.int64(256)) + (i_119126 * np.int64(16))) + i_121604), ct.c_double))
-          zt_res_119130 = (zt_lhs_119128 * zt_rhs_119129)
-          zp_res_119131 = (r_119127 + zt_res_119130)
-          r_tmp_123849 = zp_res_119131
-          r_119127 = r_tmp_123849
-          i_119126 += one_124445
-        defunc_0_lifted_lambda_res_119125 = r_119127
-        r_119141 = np.float64(0.0)
-        i_119140 = np.int64(0)
-        one_124449 = np.int64(1)
-        for counter_124448 in range(np.int64(16)):
-          x_119142 = np.float64(indexArray(mem_122036, (((zt_lhs_119115 * np.int64(64)) + (i_119140 * np.int64(4))) + zt_lhs_119120), ct.c_double))
-          r_119145 = np.float64(0.0)
-          i_119144 = np.int64(0)
-          one_124447 = np.int64(1)
-          for counter_124446 in range(np.int64(4)):
-            cond_119146 = (zt_lhs_119120 == i_119144)
-            if cond_119146:
-              zt_lhs_t_res_120735 = np.float64(indexArray(mem_123245, (((zt_lhs_119115 * np.int64(256)) + (i_119140 * np.int64(16))) + i_121604), ct.c_double))
-              zt_lhs_119147 = zt_lhs_t_res_120735
-            else:
-              zt_lhs_119147 = np.float64(0.0)
-            zt_res_119154 = (x_119142 * zt_lhs_119147)
-            zp_res_119155 = (r_119145 + zt_res_119154)
-            r_tmp_123851 = zp_res_119155
-            r_119145 = r_tmp_123851
-            i_119144 += one_124447
-          defunc_0_lifted_lambda_res_119143 = r_119145
-          zp_res_119156 = (r_119141 + defunc_0_lifted_lambda_res_119143)
-          r_tmp_123850 = zp_res_119156
-          r_119141 = r_tmp_123850
-          i_119140 += one_124449
-        defunc_0_lifted_lambda_res_119139 = r_119141
-        r_119169 = np.float64(0.0)
-        i_119168 = np.int64(0)
-        one_124453 = np.int64(1)
-        for counter_124452 in range(np.int64(16)):
-          x_119170 = np.float64(indexArray(mem_122035, (((zt_lhs_119115 * np.int64(64)) + (i_119168 * np.int64(4))) + zt_lhs_119120), ct.c_double))
-          r_119173 = np.float64(0.0)
-          i_119172 = np.int64(0)
-          one_124451 = np.int64(1)
-          for counter_124450 in range(np.int64(4)):
-            cond_119174 = (zt_lhs_119120 == i_119172)
-            if cond_119174:
-              zt_lhs_t_res_120741 = np.float64(indexArray(mem_123244, (((zt_lhs_119115 * np.int64(256)) + (i_121604 * np.int64(16))) + i_119168), ct.c_double))
-              zt_lhs_119175 = zt_lhs_t_res_120741
-            else:
-              zt_lhs_119175 = np.float64(0.0)
-            zt_res_119182 = (x_119170 * zt_lhs_119175)
-            zp_res_119183 = (r_119173 + zt_res_119182)
-            r_tmp_123853 = zp_res_119183
-            r_119173 = r_tmp_123853
-            i_119172 += one_124451
-          defunc_0_lifted_lambda_res_119171 = r_119173
-          zp_res_119184 = (r_119169 + defunc_0_lifted_lambda_res_119171)
-          r_tmp_123852 = zp_res_119184
-          r_119169 = r_tmp_123852
-          i_119168 += one_124453
-        defunc_0_lifted_lambda_res_119167 = r_119169
-        r_119194 = np.float64(0.0)
-        i_119193 = np.int64(0)
-        one_124457 = np.int64(1)
-        for counter_124456 in range(np.int64(16)):
-          x_119195 = np.float64(indexArray(mem_122115, ((i_119193 * np.int64(16)) + i_121591), ct.c_double))
-          r_119198 = np.float64(0.0)
-          i_119197 = np.int64(0)
-          one_124455 = np.int64(1)
-          for counter_124454 in range(np.int64(16)):
-            cond_119199 = (i_121591 == i_119197)
-            if cond_119199:
-              zt_lhs_t_res_120746 = np.float64(indexArray(mem_122557, ((i_119193 * np.int64(16)) + i_121604), ct.c_double))
-              zt_lhs_119200 = zt_lhs_t_res_120746
-            else:
-              zt_lhs_119200 = np.float64(0.0)
-            zt_res_119206 = (x_119195 * zt_lhs_119200)
-            zp_res_119207 = (r_119198 + zt_res_119206)
-            r_tmp_123855 = zp_res_119207
-            r_119198 = r_tmp_123855
-            i_119197 += one_124455
-          defunc_0_lifted_lambda_res_119196 = r_119198
-          zp_res_119208 = (r_119194 + defunc_0_lifted_lambda_res_119196)
-          r_tmp_123854 = zp_res_119208
-          r_119194 = r_tmp_123854
-          i_119193 += one_124457
-        defunc_0_lifted_lambda_res_119192 = r_119194
-        writeScalarArray(mem_123318, i_121591, defunc_0_lifted_lambda_res_119192)
-        writeScalarArray(mem_123319, i_121591, defunc_0_lifted_lambda_res_119167)
-        writeScalarArray(mem_123320, i_121591, defunc_0_lifted_lambda_res_119139)
-        writeScalarArray(mem_123321, i_121591, defunc_0_lifted_lambda_res_119125)
-        i_121591 += one_124459
-      lmad_copy(ct.c_double, mem_123298, (i_121604 * np.int64(16)), [np.int64(1)], mem_123318, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_123299, (i_121604 * np.int64(16)), [np.int64(1)], mem_123319, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_123300, (i_121604 * np.int64(16)), [np.int64(1)], mem_123320, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_123301, (i_121604 * np.int64(16)), [np.int64(1)], mem_123321, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121604 += one_124461
-    mem_122035 = None
-    mem_122036 = None
-    mem_122115 = None
-    mem_122685 = None
-    mem_122841 = None
-    mem_123244 = None
-    mem_123245 = None
-    mem_123318 = None
-    mem_123319 = None
-    mem_123320 = None
-    mem_123321 = None
-    mem_123362 = allocateMem(np.int64(2048))
-    mem_123367 = allocateMem(np.int64(128))
-    i_121615 = np.int64(0)
-    one_124477 = np.int64(1)
-    for counter_124476 in range(np.int64(16)):
-      i_121611 = np.int64(0)
-      one_124475 = np.int64(1)
-      for counter_124474 in range(np.int64(16)):
-        r_111942 = np.float64(0.0)
-        i_111941 = np.int64(0)
-        one_124465 = np.int64(1)
-        for counter_124464 in range(np.int64(16)):
-          x_111943 = np.float64(indexArray(wval_mem_121946, ((i_111941 * np.int64(16)) + i_121611), ct.c_double))
-          r_111946 = np.float64(0.0)
-          i_111945 = np.int64(0)
-          one_124463 = np.int64(1)
-          for counter_124462 in range(np.int64(16)):
-            cond_111947 = (i_121611 == i_111945)
-            if cond_111947:
-              zt_lhs_t_res_120827 = np.float64(indexArray(mem_123301, ((i_121615 * np.int64(16)) + i_111941), ct.c_double))
-              zt_lhs_111948 = zt_lhs_t_res_120827
-            else:
-              zt_lhs_111948 = np.float64(0.0)
-            zt_res_111954 = (x_111943 * zt_lhs_111948)
-            zp_res_111955 = (r_111946 + zt_res_111954)
-            r_tmp_123859 = zp_res_111955
-            r_111946 = r_tmp_123859
-            i_111945 += one_124463
-          defunc_0_lifted_lambda_res_111944 = r_111946
-          zp_res_111956 = (r_111942 + defunc_0_lifted_lambda_res_111944)
-          r_tmp_123858 = zp_res_111956
-          r_111942 = r_tmp_123858
-          i_111941 += one_124465
-        defunc_0_lifted_lambda_res_111940 = r_111942
-        r_111959 = np.float64(0.0)
-        i_111958 = np.int64(0)
-        one_124469 = np.int64(1)
-        for counter_124468 in range(np.int64(16)):
-          x_111960 = np.float64(indexArray(wkey_mem_121940, ((i_111958 * np.int64(16)) + i_121611), ct.c_double))
-          r_111963 = np.float64(0.0)
-          i_111962 = np.int64(0)
-          one_124467 = np.int64(1)
-          for counter_124466 in range(np.int64(16)):
-            cond_111964 = (i_121611 == i_111962)
-            if cond_111964:
-              zt_lhs_t_res_120832 = np.float64(indexArray(mem_123300, ((i_121615 * np.int64(16)) + i_111958), ct.c_double))
-              zt_lhs_111965 = zt_lhs_t_res_120832
-            else:
-              zt_lhs_111965 = np.float64(0.0)
-            zt_res_111971 = (x_111960 * zt_lhs_111965)
-            zp_res_111972 = (r_111963 + zt_res_111971)
-            r_tmp_123861 = zp_res_111972
-            r_111963 = r_tmp_123861
-            i_111962 += one_124467
-          defunc_0_lifted_lambda_res_111961 = r_111963
-          zp_res_111973 = (r_111959 + defunc_0_lifted_lambda_res_111961)
-          r_tmp_123860 = zp_res_111973
-          r_111959 = r_tmp_123860
-          i_111958 += one_124469
-        defunc_0_lifted_lambda_res_111957 = r_111959
-        zp_res_111974 = (defunc_0_lifted_lambda_res_111940 + defunc_0_lifted_lambda_res_111957)
-        r_111977 = np.float64(0.0)
-        i_111976 = np.int64(0)
-        one_124473 = np.int64(1)
-        for counter_124472 in range(np.int64(16)):
-          x_111978 = np.float64(indexArray(wqry_mem_121943, ((i_111976 * np.int64(16)) + i_121611), ct.c_double))
-          r_111981 = np.float64(0.0)
-          i_111980 = np.int64(0)
-          one_124471 = np.int64(1)
-          for counter_124470 in range(np.int64(16)):
-            cond_111982 = (i_121611 == i_111980)
-            if cond_111982:
-              zt_lhs_t_res_120837 = np.float64(indexArray(mem_123299, ((i_121615 * np.int64(16)) + i_111976), ct.c_double))
-              zt_lhs_111983 = zt_lhs_t_res_120837
-            else:
-              zt_lhs_111983 = np.float64(0.0)
-            zt_res_111989 = (x_111978 * zt_lhs_111983)
-            zp_res_111990 = (r_111981 + zt_res_111989)
-            r_tmp_123863 = zp_res_111990
-            r_111981 = r_tmp_123863
-            i_111980 += one_124471
-          defunc_0_lifted_lambda_res_111979 = r_111981
-          zp_res_111991 = (r_111977 + defunc_0_lifted_lambda_res_111979)
-          r_tmp_123862 = zp_res_111991
-          r_111977 = r_tmp_123862
-          i_111976 += one_124473
-        defunc_0_lifted_lambda_res_111975 = r_111977
-        zp_res_111992 = (zp_res_111974 + defunc_0_lifted_lambda_res_111975)
-        writeScalarArray(mem_123367, i_121611, zp_res_111992)
-        i_121611 += one_124475
-      lmad_copy(ct.c_double, mem_123362, (i_121615 * np.int64(16)), [np.int64(1)], mem_123367, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121615 += one_124477
-    mem_123367 = None
-    mem_123378 = allocateMem(np.int64(2048))
-    mem_123379 = allocateMem(np.int64(2048))
-    mem_123380 = allocateMem(np.int64(2048))
-    mem_123381 = allocateMem(np.int64(128))
-    mem_123382 = allocateMem(np.int64(128))
-    mem_123401 = allocateMem(np.int64(128))
-    mem_123402 = allocateMem(np.int64(128))
-    mem_123403 = allocateMem(np.int64(128))
-    i_121637 = np.int64(0)
-    one_124495 = np.int64(1)
-    for counter_124494 in range(np.int64(16)):
-      zp_lhs_116044 = np.float64(indexArray(mem_122004, i_121637, ct.c_double))
-      zp_res_116045 = (np.float64(1.0e-5) + zp_lhs_116044)
-      sqrt_res_116046 = futhark_sqrt64(zp_res_116045)
-      zt_res_116054 = (sqrt_res_116046 * sqrt_res_116046)
-      zs_res_116055 = (np.float64(1.0) / zt_res_116054)
-      r_116058 = np.float64(0.0)
-      i_116057 = np.int64(0)
-      one_124479 = np.int64(1)
-      for counter_124478 in range(np.int64(16)):
-        zt_lhs_116059 = np.float64(indexArray(mem_123362, ((i_121637 * np.int64(16)) + i_116057), ct.c_double))
-        zt_rhs_116060 = np.float64(indexArray(mem_121969, ((i_121637 * np.int64(16)) + i_116057), ct.c_double))
-        zt_res_116061 = (zt_lhs_116059 * zt_rhs_116060)
-        zt_res_116062 = (zs_res_116055 * zt_res_116061)
-        neg_res_116063 = -(zt_res_116062)
-        zp_res_116064 = (r_116058 + neg_res_116063)
-        r_tmp_123869 = zp_res_116064
-        r_116058 = r_tmp_123869
-        i_116057 += one_124479
-      defunc_0_lifted_lambda_res_116056 = r_116058
-      i_121623 = np.int64(0)
-      one_124493 = np.int64(1)
-      for counter_124492 in range(np.int64(16)):
-        r_120224 = np.float64(0.0)
-        i_120223 = np.int64(0)
-        one_124483 = np.int64(1)
-        for counter_124482 in range(np.int64(16)):
-          x_120225 = np.float64(indexArray(mem_122005, ((i_120223 * np.int64(16)) + i_121623), ct.c_double))
-          r_120228 = np.float64(0.0)
-          i_120227 = np.int64(0)
-          one_124481 = np.int64(1)
-          for counter_124480 in range(np.int64(16)):
-            cond_120229 = (i_121623 == i_120227)
-            if cond_120229:
-              zt_lhs_t_res_120809 = np.float64(indexArray(mem_123299, ((i_120223 * np.int64(16)) + i_121637), ct.c_double))
-              zt_lhs_120230 = zt_lhs_t_res_120809
-            else:
-              zt_lhs_120230 = np.float64(0.0)
-            zt_res_120236 = (x_120225 * zt_lhs_120230)
-            zp_res_120237 = (r_120228 + zt_res_120236)
-            r_tmp_123874 = zp_res_120237
-            r_120228 = r_tmp_123874
-            i_120227 += one_124481
-          defunc_0_lifted_lambda_res_120226 = r_120228
-          zp_res_120238 = (r_120224 + defunc_0_lifted_lambda_res_120226)
-          r_tmp_123873 = zp_res_120238
-          r_120224 = r_tmp_123873
-          i_120223 += one_124483
-        defunc_0_lifted_lambda_res_120222 = r_120224
-        r_120243 = np.float64(0.0)
-        i_120242 = np.int64(0)
-        one_124487 = np.int64(1)
-        for counter_124486 in range(np.int64(16)):
-          x_120244 = np.float64(indexArray(mem_122005, ((i_120242 * np.int64(16)) + i_121623), ct.c_double))
-          r_120247 = np.float64(0.0)
-          i_120246 = np.int64(0)
-          one_124485 = np.int64(1)
-          for counter_124484 in range(np.int64(16)):
-            cond_120248 = (i_121623 == i_120246)
-            if cond_120248:
-              zt_lhs_t_res_120814 = np.float64(indexArray(mem_123300, ((i_120242 * np.int64(16)) + i_121637), ct.c_double))
-              zt_lhs_120249 = zt_lhs_t_res_120814
-            else:
-              zt_lhs_120249 = np.float64(0.0)
-            zt_res_120255 = (x_120244 * zt_lhs_120249)
-            zp_res_120256 = (r_120247 + zt_res_120255)
-            r_tmp_123876 = zp_res_120256
-            r_120247 = r_tmp_123876
-            i_120246 += one_124485
-          defunc_0_lifted_lambda_res_120245 = r_120247
-          zp_res_120257 = (r_120243 + defunc_0_lifted_lambda_res_120245)
-          r_tmp_123875 = zp_res_120257
-          r_120243 = r_tmp_123875
-          i_120242 += one_124487
-        defunc_0_lifted_lambda_res_120241 = r_120243
-        r_120265 = np.float64(0.0)
-        i_120264 = np.int64(0)
-        one_124491 = np.int64(1)
-        for counter_124490 in range(np.int64(16)):
-          x_120266 = np.float64(indexArray(mem_122005, ((i_120264 * np.int64(16)) + i_121623), ct.c_double))
-          r_120269 = np.float64(0.0)
-          i_120268 = np.int64(0)
-          one_124489 = np.int64(1)
-          for counter_124488 in range(np.int64(16)):
-            cond_120270 = (i_121623 == i_120268)
-            if cond_120270:
-              zt_lhs_t_res_120819 = np.float64(indexArray(mem_123301, ((i_120264 * np.int64(16)) + i_121637), ct.c_double))
-              zt_lhs_120271 = zt_lhs_t_res_120819
-            else:
-              zt_lhs_120271 = np.float64(0.0)
-            zt_res_120277 = (x_120266 * zt_lhs_120271)
-            zp_res_120278 = (r_120269 + zt_res_120277)
-            r_tmp_123878 = zp_res_120278
-            r_120269 = r_tmp_123878
-            i_120268 += one_124489
-          defunc_0_lifted_lambda_res_120267 = r_120269
-          zp_res_120279 = (r_120265 + defunc_0_lifted_lambda_res_120267)
-          r_tmp_123877 = zp_res_120279
-          r_120265 = r_tmp_123877
-          i_120264 += one_124491
-        defunc_0_lifted_lambda_res_120263 = r_120265
-        writeScalarArray(mem_123401, i_121623, defunc_0_lifted_lambda_res_120263)
-        writeScalarArray(mem_123402, i_121623, defunc_0_lifted_lambda_res_120241)
-        writeScalarArray(mem_123403, i_121623, defunc_0_lifted_lambda_res_120222)
-        i_121623 += one_124493
-      lmad_copy(ct.c_double, mem_123378, (i_121637 * np.int64(16)), [np.int64(1)], mem_123401, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_123379, (i_121637 * np.int64(16)), [np.int64(1)], mem_123402, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_123380, (i_121637 * np.int64(16)), [np.int64(1)], mem_123403, np.int64(0), [np.int64(1)], [np.int64(16)])
-      writeScalarArray(mem_123381, i_121637, defunc_0_lifted_lambda_res_116056)
-      writeScalarArray(mem_123382, i_121637, sqrt_res_116046)
-      i_121637 += one_124495
-    mem_122005 = None
-    mem_123299 = None
-    mem_123300 = None
-    mem_123301 = None
-    mem_123401 = None
-    mem_123402 = None
-    mem_123403 = None
-    mem_123440 = allocateMem(np.int64(128))
-    i_121645 = np.int64(0)
-    one_124497 = np.int64(1)
-    for counter_124496 in range(np.int64(16)):
-      zt_lhs_112020 = np.float64(indexArray(mem_123381, i_121645, ct.c_double))
-      zp_lhs_112021 = np.float64(indexArray(mem_122004, i_121645, ct.c_double))
-      zp_res_112022 = (np.float64(1.0e-5) + zp_lhs_112021)
-      sqrt_res_112023 = futhark_sqrt64(zp_res_112022)
-      zt_res_112024 = (np.float64(2.0) * sqrt_res_112023)
-      zs_res_112025 = (np.float64(1.0) / zt_res_112024)
-      zt_res_112026 = (zt_lhs_112020 * zs_res_112025)
-      writeScalarArray(mem_123440, i_121645, zt_res_112026)
-      i_121645 += one_124497
-    mem_122004 = None
-    mem_123381 = None
-    mem_123447 = allocateMem(np.int64(2048))
-    mem_123452 = allocateMem(np.int64(128))
-    i_121653 = np.int64(0)
-    one_124505 = np.int64(1)
-    for counter_124504 in range(np.int64(16)):
-      i_121649 = np.int64(0)
-      one_124503 = np.int64(1)
-      for counter_124502 in range(np.int64(16)):
-        zp_lhs_112040 = np.float64(indexArray(mem_122557, ((i_121653 * np.int64(16)) + i_121649), ct.c_double))
-        r_112043 = np.float64(0.0)
-        i_112042 = np.int64(0)
-        one_124501 = np.int64(1)
-        for counter_124500 in range(np.int64(16)):
-          cond_112044 = (i_121653 == i_112042)
-          if cond_112044:
-            zt_lhs_120839 = np.float64(indexArray(mem_123362, ((i_112042 * np.int64(16)) + i_121649), ct.c_double))
-            zs_rhs_120840 = np.float64(indexArray(mem_123382, i_112042, ct.c_double))
-            zs_res_120841 = (np.float64(1.0) / zs_rhs_120840)
-            zt_res_120842 = (zt_lhs_120839 * zs_res_120841)
-            zp_lhs_112045 = zt_res_120842
-          else:
-            zp_lhs_112045 = np.float64(0.0)
-          if cond_112044:
-            x_120843 = np.float64(indexArray(mem_121969, ((i_112042 * np.int64(16)) + i_121649), ct.c_double))
-            zt_rhs_112053 = x_120843
-          else:
-            zt_rhs_112053 = np.float64(0.0)
-          if cond_112044:
-            x_120844 = np.float64(indexArray(mem_121969, ((i_112042 * np.int64(16)) + i_121649), ct.c_double))
-            zt_rhs_112055 = x_120844
-          else:
-            zt_rhs_112055 = np.float64(0.0)
-          r_112059 = np.float64(0.0)
-          i_112058 = np.int64(0)
-          one_124499 = np.int64(1)
-          for counter_124498 in range(np.int64(16)):
-            if cond_112044:
-              cond_120847 = (i_121649 == i_112058)
-              if cond_120847:
-                zs_lhs_120849 = np.float64(indexArray(mem_123440, i_112042, ct.c_double))
-                zs_res_120850 = (zs_lhs_120849 / np.float64(16.0))
-                zt_lhs_120848 = zs_res_120850
-              else:
-                zt_lhs_120848 = np.float64(0.0)
-              zt_res_120851 = (zt_rhs_112053 * zt_lhs_120848)
-              zp_lhs_112060 = zt_res_120851
-            else:
-              zp_lhs_112060 = np.float64(0.0)
-            if cond_112044:
-              cond_120854 = (i_121649 == i_112058)
-              if cond_120854:
-                zs_lhs_120856 = np.float64(indexArray(mem_123440, i_112042, ct.c_double))
-                zs_res_120857 = (zs_lhs_120856 / np.float64(16.0))
-                zt_lhs_120855 = zs_res_120857
-              else:
-                zt_lhs_120855 = np.float64(0.0)
-              zt_res_120858 = (zt_rhs_112055 * zt_lhs_120855)
-              zp_rhs_112066 = zt_res_120858
-            else:
-              zp_rhs_112066 = np.float64(0.0)
-            zp_res_112072 = (zp_lhs_112060 + zp_rhs_112066)
-            zp_res_112073 = (r_112059 + zp_res_112072)
-            r_tmp_123883 = zp_res_112073
-            r_112059 = r_tmp_123883
-            i_112058 += one_124499
-          defunc_0_lifted_lambda_res_112057 = r_112059
-          zp_res_112074 = (zp_lhs_112045 + defunc_0_lifted_lambda_res_112057)
-          zp_res_112075 = (r_112043 + zp_res_112074)
-          r_tmp_123882 = zp_res_112075
-          r_112043 = r_tmp_123882
-          i_112042 += one_124501
-        defunc_0_lifted_lambda_res_112041 = r_112043
-        zp_res_112076 = (zp_lhs_112040 + defunc_0_lifted_lambda_res_112041)
-        writeScalarArray(mem_123452, i_121649, zp_res_112076)
-        i_121649 += one_124503
-      lmad_copy(ct.c_double, mem_123447, (i_121653 * np.int64(16)), [np.int64(1)], mem_123452, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121653 += one_124505
-    mem_121969 = None
-    mem_122557 = None
-    mem_123362 = None
-    mem_123382 = None
-    mem_123440 = None
-    mem_123452 = None
-    mem_123463 = allocateMem(np.int64(2048))
-    mem_123464 = allocateMem(np.int64(2048))
-    mem_123473 = allocateMem(np.int64(128))
-    mem_123474 = allocateMem(np.int64(128))
-    i_121666 = np.int64(0)
-    one_124509 = np.int64(1)
-    for counter_124508 in range(np.int64(16)):
-      i_121659 = np.int64(0)
-      one_124507 = np.int64(1)
-      for counter_124506 in range(np.int64(16)):
-        lifted_lambda_res_120368 = np.float64(indexArray(mem_123447, ((i_121666 * np.int64(16)) + i_121659), ct.c_double))
-        writeScalarArray(mem_123473, i_121659, lifted_lambda_res_120368)
-        writeScalarArray(mem_123474, i_121659, lifted_lambda_res_120368)
-        i_121659 += one_124507
-      lmad_copy(ct.c_double, mem_123463, (i_121666 * np.int64(16)), [np.int64(1)], mem_123473, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_123464, (i_121666 * np.int64(16)), [np.int64(1)], mem_123474, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121666 += one_124509
-    mem_123447 = None
-    mem_123473 = None
-    mem_123474 = None
-    mem_123495 = allocateMem(np.int64(128))
-    mem_123496 = allocateMem(np.int64(128))
-    mem_123497 = allocateMem(np.int64(128))
-    mem_123498 = allocateMem(np.int64(128))
-    i_121677 = np.int64(0)
-    one_124515 = np.int64(1)
-    for counter_124514 in range(np.int64(16)):
-      zp_lhs_116175 = np.float64(indexArray(mem_121968, i_121677, ct.c_double))
-      zp_res_116176 = (np.float64(1.0e-5) + zp_lhs_116175)
-      sqrt_res_116177 = futhark_sqrt64(zp_res_116176)
-      zt_res_116185 = (sqrt_res_116177 * sqrt_res_116177)
-      zs_res_116186 = (np.float64(1.0) / zt_res_116185)
-      r_116189 = np.float64(0.0)
-      i_116188 = np.int64(0)
-      one_124511 = np.int64(1)
-      for counter_124510 in range(np.int64(16)):
-        zt_lhs_116190 = np.float64(indexArray(mem_123464, ((i_121677 * np.int64(16)) + i_116188), ct.c_double))
-        zp_lhs_116191 = np.float64(indexArray(wpe_mem_121942, ((i_121677 * np.int64(16)) + i_116188), ct.c_double))
-        zp_rhs_116192 = np.float64(indexArray(mem_121951, ((i_121677 * np.int64(16)) + i_116188), ct.c_double))
-        zp_res_116193 = (zp_lhs_116191 + zp_rhs_116192)
-        zt_res_116194 = (zt_lhs_116190 * zp_res_116193)
-        zt_res_116195 = (zs_res_116186 * zt_res_116194)
-        neg_res_116196 = -(zt_res_116195)
-        zp_res_116197 = (r_116189 + neg_res_116196)
-        r_tmp_123892 = zp_res_116197
-        r_116189 = r_tmp_123892
-        i_116188 += one_124511
-      defunc_0_lifted_lambda_res_116187 = r_116189
-      zp_lhs_116208 = np.float64(indexArray(mem_121967, i_121677, ct.c_double))
-      zp_res_116209 = (np.float64(1.0e-5) + zp_lhs_116208)
-      sqrt_res_116210 = futhark_sqrt64(zp_res_116209)
-      zt_res_116218 = (sqrt_res_116210 * sqrt_res_116210)
-      zs_res_116219 = (np.float64(1.0) / zt_res_116218)
-      r_116222 = np.float64(0.0)
-      i_116221 = np.int64(0)
-      one_124513 = np.int64(1)
-      for counter_124512 in range(np.int64(16)):
-        zt_lhs_116223 = np.float64(indexArray(mem_123463, ((i_121677 * np.int64(16)) + i_116221), ct.c_double))
-        zp_lhs_116224 = np.float64(indexArray(wpe_mem_121942, ((i_121677 * np.int64(16)) + i_116221), ct.c_double))
-        zp_rhs_116225 = np.float64(indexArray(mem_121951, ((i_121677 * np.int64(16)) + i_116221), ct.c_double))
-        zp_res_116226 = (zp_lhs_116224 + zp_rhs_116225)
-        zt_res_116227 = (zt_lhs_116223 * zp_res_116226)
-        zt_res_116228 = (zs_res_116219 * zt_res_116227)
-        neg_res_116229 = -(zt_res_116228)
-        zp_res_116230 = (r_116222 + neg_res_116229)
-        r_tmp_123893 = zp_res_116230
-        r_116222 = r_tmp_123893
-        i_116221 += one_124513
-      defunc_0_lifted_lambda_res_116220 = r_116222
-      writeScalarArray(mem_123495, i_121677, defunc_0_lifted_lambda_res_116220)
-      writeScalarArray(mem_123496, i_121677, sqrt_res_116210)
-      writeScalarArray(mem_123497, i_121677, defunc_0_lifted_lambda_res_116187)
-      writeScalarArray(mem_123498, i_121677, sqrt_res_116177)
-      i_121677 += one_124515
-    mem_123523 = allocateMem(np.int64(128))
-    mem_123524 = allocateMem(np.int64(128))
-    i_121686 = np.int64(0)
-    one_124517 = np.int64(1)
-    for counter_124516 in range(np.int64(16)):
-      zt_lhs_116291 = np.float64(indexArray(mem_123497, i_121686, ct.c_double))
-      zp_lhs_116292 = np.float64(indexArray(mem_121968, i_121686, ct.c_double))
-      zp_res_116293 = (np.float64(1.0e-5) + zp_lhs_116292)
-      sqrt_res_116294 = futhark_sqrt64(zp_res_116293)
-      zt_res_116295 = (np.float64(2.0) * sqrt_res_116294)
-      zs_res_116296 = (np.float64(1.0) / zt_res_116295)
-      zt_res_116297 = (zt_lhs_116291 * zs_res_116296)
-      zt_lhs_116304 = np.float64(indexArray(mem_123495, i_121686, ct.c_double))
-      zp_lhs_116305 = np.float64(indexArray(mem_121967, i_121686, ct.c_double))
-      zp_res_116306 = (np.float64(1.0e-5) + zp_lhs_116305)
-      sqrt_res_116307 = futhark_sqrt64(zp_res_116306)
-      zt_res_116308 = (np.float64(2.0) * sqrt_res_116307)
-      zs_res_116309 = (np.float64(1.0) / zt_res_116308)
-      zt_res_116310 = (zt_lhs_116304 * zs_res_116309)
-      writeScalarArray(mem_123523, i_121686, zt_res_116310)
-      writeScalarArray(mem_123524, i_121686, zt_res_116297)
-      i_121686 += one_124517
-    mem_121967 = None
-    mem_121968 = None
-    mem_123495 = None
-    mem_123497 = None
-    mem_123537 = allocateMem(np.int64(2048))
-    mem_123538 = allocateMem(np.int64(2048))
-    mem_123547 = allocateMem(np.int64(128))
+    mem_123214 = None
+    mem_123215 = None
+    mem_123356 = None
+    mem_123357 = None
+    mem_123358 = None
+    mem_123359 = None
+    mem_123360 = None
+    mem_123361 = None
+    mem_123386 = None
+    mem_123387 = None
+    mem_123388 = None
+    mem_123407 = None
+    mem_123408 = None
+    mem_123476 = allocateMem(np.int64(512))
+    mem_123477 = allocateMem(np.int64(8192))
+    mem_123478 = allocateMem(np.int64(512))
+    mem_123479 = allocateMem(np.int64(8192))
+    mem_123480 = allocateMem(np.int64(8192))
+    mem_123504 = allocateMem(np.int64(128))
+    mem_123505 = allocateMem(np.int64(2048))
+    mem_123506 = allocateMem(np.int64(128))
+    mem_123507 = allocateMem(np.int64(2048))
+    mem_123508 = allocateMem(np.int64(2048))
+    mem_123527 = allocateMem(np.int64(128))
+    mem_123528 = allocateMem(np.int64(128))
+    mem_123541 = allocateMem(np.int64(128))
     mem_123548 = allocateMem(np.int64(128))
-    i_121700 = np.int64(0)
-    one_124529 = np.int64(1)
-    for counter_124528 in range(np.int64(16)):
-      i_121693 = np.int64(0)
-      one_124527 = np.int64(1)
-      for counter_124526 in range(np.int64(16)):
-        r_120396 = np.float64(0.0)
-        i_120395 = np.int64(0)
-        one_124521 = np.int64(1)
-        for counter_124520 in range(np.int64(16)):
-          cond_120397 = (i_121700 == i_120395)
-          if cond_120397:
-            zt_lhs_120863 = np.float64(indexArray(mem_123464, ((i_120395 * np.int64(16)) + i_121693), ct.c_double))
-            zs_rhs_120864 = np.float64(indexArray(mem_123498, i_120395, ct.c_double))
-            zs_res_120865 = (np.float64(1.0) / zs_rhs_120864)
-            zt_res_120866 = (zt_lhs_120863 * zs_res_120865)
-            zp_lhs_120398 = zt_res_120866
-          else:
-            zp_lhs_120398 = np.float64(0.0)
-          if cond_120397:
-            x_120867 = np.float64(indexArray(wpe_mem_121942, ((i_120395 * np.int64(16)) + i_121693), ct.c_double))
-            zp_lhs_120407 = x_120867
-          else:
-            zp_lhs_120407 = np.float64(0.0)
-          if cond_120397:
-            x_120868 = np.float64(indexArray(mem_121951, ((i_120395 * np.int64(16)) + i_121693), ct.c_double))
-            zp_rhs_120409 = x_120868
-          else:
-            zp_rhs_120409 = np.float64(0.0)
-          if cond_120397:
-            x_120869 = np.float64(indexArray(wpe_mem_121942, ((i_120395 * np.int64(16)) + i_121693), ct.c_double))
-            zp_lhs_120411 = x_120869
-          else:
-            zp_lhs_120411 = np.float64(0.0)
-          if cond_120397:
-            x_120870 = np.float64(indexArray(mem_121951, ((i_120395 * np.int64(16)) + i_121693), ct.c_double))
-            zp_rhs_120413 = x_120870
-          else:
-            zp_rhs_120413 = np.float64(0.0)
-          zp_res_120415 = (zp_lhs_120407 + zp_rhs_120409)
-          zp_res_120416 = (zp_lhs_120411 + zp_rhs_120413)
-          r_120419 = np.float64(0.0)
-          i_120418 = np.int64(0)
-          one_124519 = np.int64(1)
-          for counter_124518 in range(np.int64(16)):
-            if cond_120397:
-              cond_120873 = (i_121693 == i_120418)
-              if cond_120873:
-                zs_lhs_120875 = np.float64(indexArray(mem_123524, i_120395, ct.c_double))
-                zs_res_120876 = (zs_lhs_120875 / np.float64(16.0))
-                zt_lhs_120874 = zs_res_120876
-              else:
-                zt_lhs_120874 = np.float64(0.0)
-              zt_res_120877 = (zp_res_120415 * zt_lhs_120874)
-              zp_lhs_120420 = zt_res_120877
-            else:
-              zp_lhs_120420 = np.float64(0.0)
-            if cond_120397:
-              cond_120880 = (i_121693 == i_120418)
-              if cond_120880:
-                zs_lhs_120882 = np.float64(indexArray(mem_123524, i_120395, ct.c_double))
-                zs_res_120883 = (zs_lhs_120882 / np.float64(16.0))
-                zt_lhs_120881 = zs_res_120883
-              else:
-                zt_lhs_120881 = np.float64(0.0)
-              zt_res_120884 = (zp_res_120416 * zt_lhs_120881)
-              zp_rhs_120426 = zt_res_120884
-            else:
-              zp_rhs_120426 = np.float64(0.0)
-            zp_res_120432 = (zp_lhs_120420 + zp_rhs_120426)
-            zp_res_120433 = (r_120419 + zp_res_120432)
-            r_tmp_123901 = zp_res_120433
-            r_120419 = r_tmp_123901
-            i_120418 += one_124519
-          defunc_0_lifted_lambda_res_120417 = r_120419
-          zp_res_120434 = (zp_lhs_120398 + defunc_0_lifted_lambda_res_120417)
-          zp_res_120435 = (r_120396 + zp_res_120434)
-          r_tmp_123900 = zp_res_120435
-          r_120396 = r_tmp_123900
-          i_120395 += one_124521
-        defunc_0_lifted_lambda_res_120394 = r_120396
-        r_120443 = np.float64(0.0)
-        i_120442 = np.int64(0)
-        one_124525 = np.int64(1)
-        for counter_124524 in range(np.int64(16)):
-          cond_120444 = (i_121700 == i_120442)
-          if cond_120444:
-            zt_lhs_120886 = np.float64(indexArray(mem_123463, ((i_120442 * np.int64(16)) + i_121693), ct.c_double))
-            zs_rhs_120887 = np.float64(indexArray(mem_123496, i_120442, ct.c_double))
-            zs_res_120888 = (np.float64(1.0) / zs_rhs_120887)
-            zt_res_120889 = (zt_lhs_120886 * zs_res_120888)
-            zp_lhs_120445 = zt_res_120889
-          else:
-            zp_lhs_120445 = np.float64(0.0)
-          if cond_120444:
-            x_120890 = np.float64(indexArray(wpe_mem_121942, ((i_120442 * np.int64(16)) + i_121693), ct.c_double))
-            zp_lhs_120454 = x_120890
-          else:
-            zp_lhs_120454 = np.float64(0.0)
-          if cond_120444:
-            x_120891 = np.float64(indexArray(mem_121951, ((i_120442 * np.int64(16)) + i_121693), ct.c_double))
-            zp_rhs_120456 = x_120891
-          else:
-            zp_rhs_120456 = np.float64(0.0)
-          if cond_120444:
-            x_120892 = np.float64(indexArray(wpe_mem_121942, ((i_120442 * np.int64(16)) + i_121693), ct.c_double))
-            zp_lhs_120458 = x_120892
-          else:
-            zp_lhs_120458 = np.float64(0.0)
-          if cond_120444:
-            x_120893 = np.float64(indexArray(mem_121951, ((i_120442 * np.int64(16)) + i_121693), ct.c_double))
-            zp_rhs_120460 = x_120893
-          else:
-            zp_rhs_120460 = np.float64(0.0)
-          zp_res_120462 = (zp_lhs_120454 + zp_rhs_120456)
-          zp_res_120463 = (zp_lhs_120458 + zp_rhs_120460)
-          r_120466 = np.float64(0.0)
-          i_120465 = np.int64(0)
-          one_124523 = np.int64(1)
-          for counter_124522 in range(np.int64(16)):
-            if cond_120444:
-              cond_120896 = (i_121693 == i_120465)
-              if cond_120896:
-                zs_lhs_120898 = np.float64(indexArray(mem_123523, i_120442, ct.c_double))
-                zs_res_120899 = (zs_lhs_120898 / np.float64(16.0))
-                zt_lhs_120897 = zs_res_120899
-              else:
-                zt_lhs_120897 = np.float64(0.0)
-              zt_res_120900 = (zp_res_120462 * zt_lhs_120897)
-              zp_lhs_120467 = zt_res_120900
-            else:
-              zp_lhs_120467 = np.float64(0.0)
-            if cond_120444:
-              cond_120903 = (i_121693 == i_120465)
-              if cond_120903:
-                zs_lhs_120905 = np.float64(indexArray(mem_123523, i_120442, ct.c_double))
-                zs_res_120906 = (zs_lhs_120905 / np.float64(16.0))
-                zt_lhs_120904 = zs_res_120906
-              else:
-                zt_lhs_120904 = np.float64(0.0)
-              zt_res_120907 = (zp_res_120463 * zt_lhs_120904)
-              zp_rhs_120473 = zt_res_120907
-            else:
-              zp_rhs_120473 = np.float64(0.0)
-            zp_res_120479 = (zp_lhs_120467 + zp_rhs_120473)
-            zp_res_120480 = (r_120466 + zp_res_120479)
-            r_tmp_123903 = zp_res_120480
-            r_120466 = r_tmp_123903
-            i_120465 += one_124523
-          defunc_0_lifted_lambda_res_120464 = r_120466
-          zp_res_120481 = (zp_lhs_120445 + defunc_0_lifted_lambda_res_120464)
-          zp_res_120482 = (r_120443 + zp_res_120481)
-          r_tmp_123902 = zp_res_120482
-          r_120443 = r_tmp_123902
-          i_120442 += one_124525
-        defunc_0_lifted_lambda_res_120441 = r_120443
-        writeScalarArray(mem_123547, i_121693, defunc_0_lifted_lambda_res_120441)
-        writeScalarArray(mem_123548, i_121693, defunc_0_lifted_lambda_res_120394)
-        i_121693 += one_124527
-      lmad_copy(ct.c_double, mem_123537, (i_121700 * np.int64(16)), [np.int64(1)], mem_123547, np.int64(0), [np.int64(1)], [np.int64(16)])
-      lmad_copy(ct.c_double, mem_123538, (i_121700 * np.int64(16)), [np.int64(1)], mem_123548, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121700 += one_124529
-    mem_121951 = None
-    mem_123463 = None
-    mem_123464 = None
-    mem_123496 = None
-    mem_123498 = None
-    mem_123523 = None
-    mem_123524 = None
-    mem_123547 = None
+    mem_123555 = allocateMem(np.int64(128))
+    i_122082 = np.int64(0)
+    one_125061 = np.int64(1)
+    for counter_125060 in range(np.int64(4)):
+      i_122066 = np.int64(0)
+      one_125059 = np.int64(1)
+      for counter_125058 in range(np.int64(16)):
+        redout_122036 = -np.inf
+        redout_122037 = -np.inf
+        redout_122038 = -np.inf
+        i_122041 = np.int64(0)
+        one_125049 = np.int64(1)
+        for counter_125048 in range(np.int64(16)):
+          lifted_lambda_res_119407 = np.float64(indexArray(mem_123325, (((i_122082 * np.int64(256)) + (i_122066 * np.int64(16))) + i_122041), ct.c_double))
+          r_119420 = np.float64(0.0)
+          i_119419 = np.int64(0)
+          one_125045 = np.int64(1)
+          for counter_125044 in range(np.int64(4)):
+            zt_lhs_119421 = np.float64(indexArray(mem_123322, (((i_122082 * np.int64(64)) + (i_122066 * np.int64(4))) + i_119419), ct.c_double))
+            zt_rhs_119422 = np.float64(indexArray(mem_122673, (((i_122082 * np.int64(64)) + (i_122041 * np.int64(4))) + i_119419), ct.c_double))
+            zt_res_119423 = (zt_lhs_119421 * zt_rhs_119422)
+            zp_res_119424 = (r_119420 + zt_res_119423)
+            r_tmp_124446 = zp_res_119424
+            r_119420 = r_tmp_124446
+            i_119419 += one_125045
+          defunc_0_lifted_lambda_res_119418 = r_119420
+          lifted_lambda_res_119432 = np.float64(indexArray(mem_123323, (((i_122082 * np.int64(256)) + (i_122066 * np.int64(16))) + i_122041), ct.c_double))
+          r_119458 = np.float64(0.0)
+          i_119457 = np.int64(0)
+          one_125047 = np.int64(1)
+          for counter_125046 in range(np.int64(4)):
+            zt_lhs_119459 = np.float64(indexArray(mem_123320, (((i_122082 * np.int64(64)) + (i_122066 * np.int64(4))) + i_119457), ct.c_double))
+            zt_rhs_119460 = np.float64(indexArray(mem_122673, (((i_122082 * np.int64(64)) + (i_122041 * np.int64(4))) + i_119457), ct.c_double))
+            zt_res_119461 = (zt_lhs_119459 * zt_rhs_119460)
+            zp_res_119462 = (r_119458 + zt_res_119461)
+            r_tmp_124447 = zp_res_119462
+            r_119458 = r_tmp_124447
+            i_119457 += one_125047
+          defunc_0_lifted_lambda_res_119456 = r_119458
+          lifted_lambda_res_119472 = np.float64(indexArray(mem_123321, (((i_122082 * np.int64(256)) + (i_122066 * np.int64(16))) + i_122041), ct.c_double))
+          max_res_118984 = fmax64(lifted_lambda_res_119407, redout_122036)
+          max_res_119060 = fmax64(lifted_lambda_res_119432, redout_122037)
+          max_res_119111 = fmax64(lifted_lambda_res_119472, redout_122038)
+          writeScalarArray(mem_123527, i_122041, defunc_0_lifted_lambda_res_119456)
+          writeScalarArray(mem_123528, i_122041, defunc_0_lifted_lambda_res_119418)
+          redout_tmp_124441 = max_res_118984
+          redout_tmp_124442 = max_res_119060
+          redout_tmp_124443 = max_res_119111
+          redout_122036 = redout_tmp_124441
+          redout_122037 = redout_tmp_124442
+          redout_122038 = redout_tmp_124443
+          i_122041 += one_125049
+        defunc_0_reduce_res_121343 = redout_122036
+        defunc_0_reduce_res_121344 = redout_122037
+        defunc_0_reduce_res_121345 = redout_122038
+        neg_res_118985 = -(defunc_0_reduce_res_121343)
+        i_122046 = np.int64(0)
+        one_125051 = np.int64(1)
+        for counter_125050 in range(np.int64(16)):
+          zp_lhs_118992 = np.float64(indexArray(mem_123325, (((i_122082 * np.int64(256)) + (i_122066 * np.int64(16))) + i_122046), ct.c_double))
+          zp_res_118993 = (neg_res_118985 + zp_lhs_118992)
+          exp_res_118994 = futhark_exp64(zp_res_118993)
+          writeScalarArray(mem_123541, i_122046, exp_res_118994)
+          i_122046 += one_125051
+        r_118998 = np.float64(0.0)
+        i_118997 = np.int64(0)
+        one_125053 = np.int64(1)
+        for counter_125052 in range(np.int64(16)):
+          lifted_lambda_res_118999 = np.float64(indexArray(mem_123541, i_118997, ct.c_double))
+          zp_res_119000 = (r_118998 + lifted_lambda_res_118999)
+          r_tmp_124449 = zp_res_119000
+          r_118998 = r_tmp_124449
+          i_118997 += one_125053
+        defunc_0_lifted_lambda_res_118996 = r_118998
+        zs_res_119001 = (np.float64(1.0) / defunc_0_lifted_lambda_res_118996)
+        i_122050 = np.int64(0)
+        one_125055 = np.int64(1)
+        for counter_125054 in range(np.int64(16)):
+          zt_lhs_119008 = np.float64(indexArray(mem_123541, i_122050, ct.c_double))
+          zt_res_119009 = (zs_res_119001 * zt_lhs_119008)
+          writeScalarArray(mem_123548, i_122050, zt_res_119009)
+          i_122050 += one_125055
+        i_122054 = np.int64(0)
+        one_125057 = np.int64(1)
+        for counter_125056 in range(np.int64(16)):
+          lifted_lambda_res_119017 = np.float64(indexArray(mem_123548, i_122054, ct.c_double))
+          writeScalarArray(mem_123555, i_122054, lifted_lambda_res_119017)
+          i_122054 += one_125057
+        writeScalarArray(mem_123504, i_122066, defunc_0_reduce_res_121345)
+        lmad_copy(ct.c_double, mem_123505, (i_122066 * np.int64(16)), [np.int64(1)], mem_123527, np.int64(0), [np.int64(1)], [np.int64(16)])
+        writeScalarArray(mem_123506, i_122066, defunc_0_reduce_res_121344)
+        lmad_copy(ct.c_double, mem_123507, (i_122066 * np.int64(16)), [np.int64(1)], mem_123528, np.int64(0), [np.int64(1)], [np.int64(16)])
+        lmad_copy(ct.c_double, mem_123508, (i_122066 * np.int64(16)), [np.int64(1)], mem_123555, np.int64(0), [np.int64(1)], [np.int64(16)])
+        i_122066 += one_125059
+      lmad_copy(ct.c_double, mem_123476, (i_122082 * np.int64(16)), [np.int64(1)], mem_123504, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_123477, (i_122082 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123505, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      lmad_copy(ct.c_double, mem_123478, (i_122082 * np.int64(16)), [np.int64(1)], mem_123506, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_123479, (i_122082 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123507, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      lmad_copy(ct.c_double, mem_123480, (i_122082 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123508, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      i_122082 += one_125061
+    mem_122673 = None
+    mem_123320 = None
+    mem_123322 = None
+    mem_123325 = None
+    mem_123504 = None
+    mem_123505 = None
+    mem_123506 = None
+    mem_123507 = None
+    mem_123508 = None
+    mem_123527 = None
+    mem_123528 = None
+    mem_123541 = None
     mem_123548 = None
-    mem_123569 = allocateMem(np.int64(8192))
-    mem_123574 = allocateMem(np.int64(128))
-    i_121709 = np.int64(0)
-    one_124537 = np.int64(1)
-    for counter_124536 in range(np.int64(64)):
-      i_121705 = np.int64(0)
-      one_124535 = np.int64(1)
-      for counter_124534 in range(np.int64(16)):
-        r_112304 = np.float64(0.0)
-        i_112303 = np.int64(0)
-        one_124533 = np.int64(1)
-        for counter_124532 in range(np.int64(16)):
-          x_112305 = np.float64(indexArray(mem_122226, ((i_112303 * np.int64(16)) + i_121705), ct.c_double))
-          r_112308 = np.float64(0.0)
-          i_112307 = np.int64(0)
-          one_124531 = np.int64(1)
-          for counter_124530 in range(np.int64(16)):
-            cond_112309 = (i_121705 == i_112307)
-            if cond_112309:
-              zt_lhs_t_res_120914 = np.float64(indexArray(mem_122489, ((i_112303 * np.int64(64)) + i_121709), ct.c_double))
-              zt_lhs_112310 = zt_lhs_t_res_120914
+    mem_123555 = None
+    mem_123603 = allocateMem(np.int64(8192))
+    mem_123604 = allocateMem(np.int64(8192))
+    mem_123605 = allocateMem(np.int64(8192))
+    mem_123606 = allocateMem(np.int64(8192))
+    mem_123627 = allocateMem(np.int64(2048))
+    mem_123628 = allocateMem(np.int64(2048))
+    mem_123629 = allocateMem(np.int64(2048))
+    mem_123630 = allocateMem(np.int64(2048))
+    mem_123647 = allocateMem(np.int64(128))
+    mem_123648 = allocateMem(np.int64(128))
+    mem_123649 = allocateMem(np.int64(128))
+    mem_123650 = allocateMem(np.int64(128))
+    i_122122 = np.int64(0)
+    one_125067 = np.int64(1)
+    for counter_125066 in range(np.int64(4)):
+      i_122109 = np.int64(0)
+      one_125065 = np.int64(1)
+      for counter_125064 in range(np.int64(16)):
+        neg_arg0_119958 = np.float64(indexArray(mem_123478, ((i_122122 * np.int64(16)) + i_122109), ct.c_double))
+        neg_res_119959 = -(neg_arg0_119958)
+        neg_arg0_119993 = np.float64(indexArray(mem_123476, ((i_122122 * np.int64(16)) + i_122109), ct.c_double))
+        neg_res_119994 = -(neg_arg0_119993)
+        i_122096 = np.int64(0)
+        one_125063 = np.int64(1)
+        for counter_125062 in range(np.int64(16)):
+          zp_lhs_120128 = np.float64(indexArray(mem_123323, (((i_122122 * np.int64(256)) + (i_122109 * np.int64(16))) + i_122096), ct.c_double))
+          zp_res_120129 = (neg_res_119959 + zp_lhs_120128)
+          exp_res_120130 = futhark_exp64(zp_res_120129)
+          lifted_lambda_res_120137 = np.float64(indexArray(mem_123479, (((i_122122 * np.int64(256)) + (i_122109 * np.int64(16))) + i_122096), ct.c_double))
+          zp_lhs_120147 = np.float64(indexArray(mem_123321, (((i_122122 * np.int64(256)) + (i_122109 * np.int64(16))) + i_122096), ct.c_double))
+          zp_res_120148 = (neg_res_119994 + zp_lhs_120147)
+          exp_res_120149 = futhark_exp64(zp_res_120148)
+          lifted_lambda_res_120161 = np.float64(indexArray(mem_123477, (((i_122122 * np.int64(256)) + (i_122109 * np.int64(16))) + i_122096), ct.c_double))
+          writeScalarArray(mem_123647, i_122096, lifted_lambda_res_120161)
+          writeScalarArray(mem_123648, i_122096, exp_res_120149)
+          writeScalarArray(mem_123649, i_122096, lifted_lambda_res_120137)
+          writeScalarArray(mem_123650, i_122096, exp_res_120130)
+          i_122096 += one_125063
+        lmad_copy(ct.c_double, mem_123627, (i_122109 * np.int64(16)), [np.int64(1)], mem_123647, np.int64(0), [np.int64(1)], [np.int64(16)])
+        lmad_copy(ct.c_double, mem_123628, (i_122109 * np.int64(16)), [np.int64(1)], mem_123648, np.int64(0), [np.int64(1)], [np.int64(16)])
+        lmad_copy(ct.c_double, mem_123629, (i_122109 * np.int64(16)), [np.int64(1)], mem_123649, np.int64(0), [np.int64(1)], [np.int64(16)])
+        lmad_copy(ct.c_double, mem_123630, (i_122109 * np.int64(16)), [np.int64(1)], mem_123650, np.int64(0), [np.int64(1)], [np.int64(16)])
+        i_122109 += one_125065
+      lmad_copy(ct.c_double, mem_123603, (i_122122 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123627, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      lmad_copy(ct.c_double, mem_123604, (i_122122 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123628, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      lmad_copy(ct.c_double, mem_123605, (i_122122 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123629, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      lmad_copy(ct.c_double, mem_123606, (i_122122 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123630, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      i_122122 += one_125067
+    mem_123477 = None
+    mem_123479 = None
+    mem_123627 = None
+    mem_123628 = None
+    mem_123629 = None
+    mem_123630 = None
+    mem_123647 = None
+    mem_123648 = None
+    mem_123649 = None
+    mem_123650 = None
+    mem_123711 = allocateMem(np.int64(512))
+    mem_123712 = allocateMem(np.int64(512))
+    mem_123713 = allocateMem(np.int64(512))
+    mem_123714 = allocateMem(np.int64(512))
+    mem_123731 = allocateMem(np.int64(128))
+    mem_123732 = allocateMem(np.int64(128))
+    mem_123733 = allocateMem(np.int64(128))
+    mem_123734 = allocateMem(np.int64(128))
+    i_122148 = np.int64(0)
+    one_125079 = np.int64(1)
+    for counter_125078 in range(np.int64(4)):
+      i_122135 = np.int64(0)
+      one_125077 = np.int64(1)
+      for counter_125076 in range(np.int64(16)):
+        r_120284 = np.float64(0.0)
+        i_120283 = np.int64(0)
+        one_125069 = np.int64(1)
+        for counter_125068 in range(np.int64(16)):
+          lifted_lambda_res_120285 = np.float64(indexArray(mem_123606, (((i_122148 * np.int64(256)) + (i_122135 * np.int64(16))) + i_120283), ct.c_double))
+          zp_res_120286 = (r_120284 + lifted_lambda_res_120285)
+          r_tmp_124472 = zp_res_120286
+          r_120284 = r_tmp_124472
+          i_120283 += one_125069
+        defunc_0_lifted_lambda_res_120282 = r_120284
+        zt_res_120294 = (defunc_0_lifted_lambda_res_120282 * defunc_0_lifted_lambda_res_120282)
+        zs_res_120295 = (np.float64(1.0) / zt_res_120294)
+        r_120298 = np.float64(0.0)
+        i_120297 = np.int64(0)
+        one_125071 = np.int64(1)
+        for counter_125070 in range(np.int64(16)):
+          zt_lhs_120299 = np.float64(indexArray(mem_123605, (((i_122148 * np.int64(256)) + (i_122135 * np.int64(16))) + i_120297), ct.c_double))
+          zt_rhs_120300 = np.float64(indexArray(mem_123606, (((i_122148 * np.int64(256)) + (i_122135 * np.int64(16))) + i_120297), ct.c_double))
+          zt_res_120301 = (zt_lhs_120299 * zt_rhs_120300)
+          zt_res_120302 = (zs_res_120295 * zt_res_120301)
+          neg_res_120303 = -(zt_res_120302)
+          zp_res_120304 = (r_120298 + neg_res_120303)
+          r_tmp_124473 = zp_res_120304
+          r_120298 = r_tmp_124473
+          i_120297 += one_125071
+        defunc_0_lifted_lambda_res_120296 = r_120298
+        r_120317 = np.float64(0.0)
+        i_120316 = np.int64(0)
+        one_125073 = np.int64(1)
+        for counter_125072 in range(np.int64(16)):
+          lifted_lambda_res_120318 = np.float64(indexArray(mem_123604, (((i_122148 * np.int64(256)) + (i_122135 * np.int64(16))) + i_120316), ct.c_double))
+          zp_res_120319 = (r_120317 + lifted_lambda_res_120318)
+          r_tmp_124474 = zp_res_120319
+          r_120317 = r_tmp_124474
+          i_120316 += one_125073
+        defunc_0_lifted_lambda_res_120315 = r_120317
+        zt_res_120327 = (defunc_0_lifted_lambda_res_120315 * defunc_0_lifted_lambda_res_120315)
+        zs_res_120328 = (np.float64(1.0) / zt_res_120327)
+        r_120331 = np.float64(0.0)
+        i_120330 = np.int64(0)
+        one_125075 = np.int64(1)
+        for counter_125074 in range(np.int64(16)):
+          zt_lhs_120332 = np.float64(indexArray(mem_123603, (((i_122148 * np.int64(256)) + (i_122135 * np.int64(16))) + i_120330), ct.c_double))
+          zt_rhs_120333 = np.float64(indexArray(mem_123604, (((i_122148 * np.int64(256)) + (i_122135 * np.int64(16))) + i_120330), ct.c_double))
+          zt_res_120334 = (zt_lhs_120332 * zt_rhs_120333)
+          zt_res_120335 = (zs_res_120328 * zt_res_120334)
+          neg_res_120336 = -(zt_res_120335)
+          zp_res_120337 = (r_120331 + neg_res_120336)
+          r_tmp_124475 = zp_res_120337
+          r_120331 = r_tmp_124475
+          i_120330 += one_125075
+        defunc_0_lifted_lambda_res_120329 = r_120331
+        writeScalarArray(mem_123731, i_122135, defunc_0_lifted_lambda_res_120329)
+        writeScalarArray(mem_123732, i_122135, defunc_0_lifted_lambda_res_120315)
+        writeScalarArray(mem_123733, i_122135, defunc_0_lifted_lambda_res_120296)
+        writeScalarArray(mem_123734, i_122135, defunc_0_lifted_lambda_res_120282)
+        i_122135 += one_125077
+      lmad_copy(ct.c_double, mem_123711, (i_122148 * np.int64(16)), [np.int64(1)], mem_123731, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_123712, (i_122148 * np.int64(16)), [np.int64(1)], mem_123732, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_123713, (i_122148 * np.int64(16)), [np.int64(1)], mem_123733, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_123714, (i_122148 * np.int64(16)), [np.int64(1)], mem_123734, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_122148 += one_125079
+    mem_123604 = None
+    mem_123606 = None
+    mem_123731 = None
+    mem_123732 = None
+    mem_123733 = None
+    mem_123734 = None
+    mem_123775 = allocateMem(np.int64(8192))
+    mem_123776 = allocateMem(np.int64(8192))
+    mem_123787 = allocateMem(np.int64(2048))
+    mem_123788 = allocateMem(np.int64(2048))
+    mem_123797 = allocateMem(np.int64(128))
+    mem_123798 = allocateMem(np.int64(128))
+    i_122171 = np.int64(0)
+    one_125085 = np.int64(1)
+    for counter_125084 in range(np.int64(4)):
+      i_122164 = np.int64(0)
+      one_125083 = np.int64(1)
+      for counter_125082 in range(np.int64(16)):
+        zs_rhs_120363 = np.float64(indexArray(mem_123714, ((i_122171 * np.int64(16)) + i_122164), ct.c_double))
+        zs_res_120364 = (np.float64(1.0) / zs_rhs_120363)
+        zp_rhs_120365 = np.float64(indexArray(mem_123713, ((i_122171 * np.int64(16)) + i_122164), ct.c_double))
+        zp_rhs_120384 = np.float64(indexArray(mem_123711, ((i_122171 * np.int64(16)) + i_122164), ct.c_double))
+        zs_rhs_120382 = np.float64(indexArray(mem_123712, ((i_122171 * np.int64(16)) + i_122164), ct.c_double))
+        zs_res_120383 = (np.float64(1.0) / zs_rhs_120382)
+        i_122157 = np.int64(0)
+        one_125081 = np.int64(1)
+        for counter_125080 in range(np.int64(16)):
+          zt_lhs_120412 = np.float64(indexArray(mem_123605, (((i_122171 * np.int64(256)) + (i_122164 * np.int64(16))) + i_122157), ct.c_double))
+          zt_res_120413 = (zs_res_120364 * zt_lhs_120412)
+          zp_res_120414 = (zp_rhs_120365 + zt_res_120413)
+          zt_lhs_120421 = np.float64(indexArray(mem_123603, (((i_122171 * np.int64(256)) + (i_122164 * np.int64(16))) + i_122157), ct.c_double))
+          zt_res_120422 = (zs_res_120383 * zt_lhs_120421)
+          zp_res_120423 = (zp_rhs_120384 + zt_res_120422)
+          writeScalarArray(mem_123797, i_122157, zp_res_120423)
+          writeScalarArray(mem_123798, i_122157, zp_res_120414)
+          i_122157 += one_125081
+        lmad_copy(ct.c_double, mem_123787, (i_122164 * np.int64(16)), [np.int64(1)], mem_123797, np.int64(0), [np.int64(1)], [np.int64(16)])
+        lmad_copy(ct.c_double, mem_123788, (i_122164 * np.int64(16)), [np.int64(1)], mem_123798, np.int64(0), [np.int64(1)], [np.int64(16)])
+        i_122164 += one_125083
+      lmad_copy(ct.c_double, mem_123775, (i_122171 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123787, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      lmad_copy(ct.c_double, mem_123776, (i_122171 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123788, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      i_122171 += one_125085
+    mem_123603 = None
+    mem_123605 = None
+    mem_123711 = None
+    mem_123712 = None
+    mem_123713 = None
+    mem_123714 = None
+    mem_123787 = None
+    mem_123788 = None
+    mem_123797 = None
+    mem_123798 = None
+    mem_123829 = allocateMem(np.int64(8192))
+    mem_123830 = allocateMem(np.int64(8192))
+    mem_123841 = allocateMem(np.int64(2048))
+    mem_123842 = allocateMem(np.int64(2048))
+    mem_123851 = allocateMem(np.int64(128))
+    mem_123852 = allocateMem(np.int64(128))
+    i_122192 = np.int64(0)
+    one_125095 = np.int64(1)
+    for counter_125094 in range(np.int64(4)):
+      i_122185 = np.int64(0)
+      one_125093 = np.int64(1)
+      for counter_125092 in range(np.int64(16)):
+        i_122178 = np.int64(0)
+        one_125091 = np.int64(1)
+        for counter_125090 in range(np.int64(16)):
+          r_120508 = np.float64(0.0)
+          i_120507 = np.int64(0)
+          one_125087 = np.int64(1)
+          for counter_125086 in range(np.int64(16)):
+            cond_120509 = (i_122185 == i_120507)
+            if cond_120509:
+              zp_lhs_121401 = np.float64(indexArray(mem_123323, (((i_122192 * np.int64(256)) + (i_120507 * np.int64(16))) + i_122178), ct.c_double))
+              neg_arg0_121402 = np.float64(indexArray(mem_123478, ((i_122192 * np.int64(16)) + i_120507), ct.c_double))
+              neg_res_121403 = -(neg_arg0_121402)
+              zp_res_121404 = (zp_lhs_121401 + neg_res_121403)
+              exp_res_121405 = futhark_exp64(zp_res_121404)
+              zt_rhs_121406 = np.float64(indexArray(mem_123776, (((i_122192 * np.int64(256)) + (i_120507 * np.int64(16))) + i_122178), ct.c_double))
+              zt_res_121407 = (exp_res_121405 * zt_rhs_121406)
+              zp_lhs_120510 = zt_res_121407
             else:
-              zt_lhs_112310 = np.float64(0.0)
-            zt_res_112316 = (x_112305 * zt_lhs_112310)
-            zp_res_112317 = (r_112308 + zt_res_112316)
-            r_tmp_123907 = zp_res_112317
-            r_112308 = r_tmp_123907
-            i_112307 += one_124531
-          defunc_0_lifted_lambda_res_112306 = r_112308
-          zp_res_112318 = (r_112304 + defunc_0_lifted_lambda_res_112306)
-          r_tmp_123906 = zp_res_112318
-          r_112304 = r_tmp_123906
-          i_112303 += one_124533
-        defunc_0_lifted_lambda_res_112302 = r_112304
-        writeScalarArray(mem_123574, i_121705, defunc_0_lifted_lambda_res_112302)
-        i_121705 += one_124535
-      lmad_copy(ct.c_double, mem_123569, (i_121709 * np.int64(16)), [np.int64(1)], mem_123574, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121709 += one_124537
-    mem_122226 = None
-    mem_122489 = None
-    mem_123574 = None
-    mem_123585 = allocateMem(np.int64(3456))
-    mem_123590 = allocateMem(np.int64(128))
-    i_121717 = np.int64(0)
-    one_124545 = np.int64(1)
-    for counter_124544 in range(np.int64(27)):
-      i_121713 = np.int64(0)
-      one_124543 = np.int64(1)
-      for counter_124542 in range(np.int64(16)):
-        r_112350 = np.float64(0.0)
-        i_112349 = np.int64(0)
-        one_124541 = np.int64(1)
-        for counter_124540 in range(np.int64(16)):
-          x_112351 = np.float64(indexArray(mem_122287, ((i_112349 * np.int64(16)) + i_121713), ct.c_double))
-          r_112354 = np.float64(0.0)
-          i_112353 = np.int64(0)
-          one_124539 = np.int64(1)
-          for counter_124538 in range(np.int64(16)):
-            cond_112355 = (i_121713 == i_112353)
-            if cond_112355:
-              zt_lhs_t_res_120920 = np.float64(indexArray(mem_122456, ((i_112349 * np.int64(27)) + i_121717), ct.c_double))
-              zt_lhs_112356 = zt_lhs_t_res_120920
+              zp_lhs_120510 = np.float64(0.0)
+            zp_res_120526 = (r_120508 + zp_lhs_120510)
+            r_tmp_124488 = zp_res_120526
+            r_120508 = r_tmp_124488
+            i_120507 += one_125087
+          defunc_0_lifted_lambda_res_120506 = r_120508
+          r_120531 = np.float64(0.0)
+          i_120530 = np.int64(0)
+          one_125089 = np.int64(1)
+          for counter_125088 in range(np.int64(16)):
+            cond_120532 = (i_122185 == i_120530)
+            if cond_120532:
+              zp_lhs_121416 = np.float64(indexArray(mem_123321, (((i_122192 * np.int64(256)) + (i_120530 * np.int64(16))) + i_122178), ct.c_double))
+              neg_arg0_121417 = np.float64(indexArray(mem_123476, ((i_122192 * np.int64(16)) + i_120530), ct.c_double))
+              neg_res_121418 = -(neg_arg0_121417)
+              zp_res_121419 = (zp_lhs_121416 + neg_res_121418)
+              exp_res_121420 = futhark_exp64(zp_res_121419)
+              zt_rhs_121421 = np.float64(indexArray(mem_123775, (((i_122192 * np.int64(256)) + (i_120530 * np.int64(16))) + i_122178), ct.c_double))
+              zt_res_121422 = (exp_res_121420 * zt_rhs_121421)
+              zp_lhs_120533 = zt_res_121422
             else:
-              zt_lhs_112356 = np.float64(0.0)
-            zt_res_112362 = (x_112351 * zt_lhs_112356)
-            zp_res_112363 = (r_112354 + zt_res_112362)
-            r_tmp_123911 = zp_res_112363
-            r_112354 = r_tmp_123911
-            i_112353 += one_124539
-          defunc_0_lifted_lambda_res_112352 = r_112354
-          zp_res_112364 = (r_112350 + defunc_0_lifted_lambda_res_112352)
-          r_tmp_123910 = zp_res_112364
-          r_112350 = r_tmp_123910
-          i_112349 += one_124541
-        defunc_0_lifted_lambda_res_112348 = r_112350
-        writeScalarArray(mem_123590, i_121713, defunc_0_lifted_lambda_res_112348)
-        i_121713 += one_124543
-      lmad_copy(ct.c_double, mem_123585, (i_121717 * np.int64(16)), [np.int64(1)], mem_123590, np.int64(0), [np.int64(1)], [np.int64(16)])
-      i_121717 += one_124545
-    mem_122287 = None
-    mem_122456 = None
-    mem_123590 = None
-    mem_out_123619 = mem_123538
-    mem_out_123620 = mem_123380
-    mem_out_123621 = mem_123379
-    mem_out_123622 = mem_123378
-    mem_out_123623 = mem_123298
-    mem_out_123624 = mem_123569
-    mem_out_123625 = mem_122488
-    mem_out_123626 = mem_123585
-    mem_out_123627 = mem_123537
-    return (mem_out_123619, mem_out_123620, mem_out_123621, mem_out_123622, mem_out_123623, mem_out_123624, mem_out_123625, mem_out_123626, mem_out_123627)
+              zp_lhs_120533 = np.float64(0.0)
+            zp_res_120549 = (r_120531 + zp_lhs_120533)
+            r_tmp_124489 = zp_res_120549
+            r_120531 = r_tmp_124489
+            i_120530 += one_125089
+          defunc_0_lifted_lambda_res_120529 = r_120531
+          writeScalarArray(mem_123851, i_122178, defunc_0_lifted_lambda_res_120529)
+          writeScalarArray(mem_123852, i_122178, defunc_0_lifted_lambda_res_120506)
+          i_122178 += one_125091
+        lmad_copy(ct.c_double, mem_123841, (i_122185 * np.int64(16)), [np.int64(1)], mem_123851, np.int64(0), [np.int64(1)], [np.int64(16)])
+        lmad_copy(ct.c_double, mem_123842, (i_122185 * np.int64(16)), [np.int64(1)], mem_123852, np.int64(0), [np.int64(1)], [np.int64(16)])
+        i_122185 += one_125093
+      lmad_copy(ct.c_double, mem_123829, (i_122192 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123841, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      lmad_copy(ct.c_double, mem_123830, (i_122192 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123842, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      i_122192 += one_125095
+    mem_123321 = None
+    mem_123323 = None
+    mem_123476 = None
+    mem_123478 = None
+    mem_123775 = None
+    mem_123776 = None
+    mem_123841 = None
+    mem_123842 = None
+    mem_123851 = None
+    mem_123852 = None
+    mem_123883 = allocateMem(np.int64(8192))
+    mem_123884 = allocateMem(np.int64(8192))
+    mem_123895 = allocateMem(np.int64(2048))
+    mem_123896 = allocateMem(np.int64(2048))
+    mem_123905 = allocateMem(np.int64(128))
+    mem_123906 = allocateMem(np.int64(128))
+    i_122213 = np.int64(0)
+    one_125101 = np.int64(1)
+    for counter_125100 in range(np.int64(4)):
+      i_122206 = np.int64(0)
+      one_125099 = np.int64(1)
+      for counter_125098 in range(np.int64(16)):
+        i_122199 = np.int64(0)
+        one_125097 = np.int64(1)
+        for counter_125096 in range(np.int64(16)):
+          zs_lhs_120704 = np.float64(indexArray(mem_123830, (((i_122213 * np.int64(256)) + (i_122206 * np.int64(16))) + i_122199), ct.c_double))
+          zs_res_120705 = (zs_lhs_120704 / np.float64(2.0))
+          zs_lhs_120712 = np.float64(indexArray(mem_123829, (((i_122213 * np.int64(256)) + (i_122206 * np.int64(16))) + i_122199), ct.c_double))
+          zs_res_120713 = (zs_lhs_120712 / np.float64(2.0))
+          writeScalarArray(mem_123905, i_122199, zs_res_120713)
+          writeScalarArray(mem_123906, i_122199, zs_res_120705)
+          i_122199 += one_125097
+        lmad_copy(ct.c_double, mem_123895, (i_122206 * np.int64(16)), [np.int64(1)], mem_123905, np.int64(0), [np.int64(1)], [np.int64(16)])
+        lmad_copy(ct.c_double, mem_123896, (i_122206 * np.int64(16)), [np.int64(1)], mem_123906, np.int64(0), [np.int64(1)], [np.int64(16)])
+        i_122206 += one_125099
+      lmad_copy(ct.c_double, mem_123883, (i_122213 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123895, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      lmad_copy(ct.c_double, mem_123884, (i_122213 * np.int64(256)), [np.int64(16), np.int64(1)], mem_123896, np.int64(0), [np.int64(16), np.int64(1)], [np.int64(16), np.int64(16)])
+      i_122213 += one_125101
+    mem_123829 = None
+    mem_123830 = None
+    mem_123895 = None
+    mem_123896 = None
+    mem_123905 = None
+    mem_123906 = None
+    mem_123937 = allocateMem(np.int64(2048))
+    mem_123938 = allocateMem(np.int64(2048))
+    mem_123939 = allocateMem(np.int64(2048))
+    mem_123940 = allocateMem(np.int64(2048))
+    mem_123957 = allocateMem(np.int64(128))
+    mem_123958 = allocateMem(np.int64(128))
+    mem_123959 = allocateMem(np.int64(128))
+    mem_123960 = allocateMem(np.int64(128))
+    i_122237 = np.int64(0)
+    one_125119 = np.int64(1)
+    for counter_125118 in range(np.int64(16)):
+      i_122224 = np.int64(0)
+      one_125117 = np.int64(1)
+      for counter_125116 in range(np.int64(16)):
+        zt_lhs_119681 = sdiv64(i_122224, np.int64(4))
+        x_119682 = sle64(np.int64(0), zt_lhs_119681)
+        y_119683 = slt64(zt_lhs_119681, np.int64(4))
+        bounds_check_119684 = (x_119682 and y_119683)
+        index_certs_119685 = True
+        assert bounds_check_119684, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:332:27-45\n   #1  microgpt.fut:61:46-49\n   #2  microgpt.fut:332:5-108\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:27-39\n   #5  microgpt.fut:4:11-25\n   #6  microgpt.fut:9:13-40\n   #7  microgpt.fut:324:13-332:114\n   #8  microgpt.fut:461:5-75\n" % ("Index [", zt_lhs_119681, "] out of bounds for array of shape [", np.int64(4), "]."))
+        zt_lhs_119686 = smod64(i_122224, np.int64(4))
+        x_119687 = sle64(np.int64(0), zt_lhs_119686)
+        y_119688 = slt64(zt_lhs_119686, np.int64(4))
+        bounds_check_119689 = (x_119687 and y_119688)
+        index_certs_119690 = True
+        assert bounds_check_119689, ("Error: %s%d%s%d%s\n\nBacktrace:\n-> #0  microgpt.fut:332:27-67\n   #1  microgpt.fut:61:46-49\n   #2  microgpt.fut:332:5-108\n   #3  microgpt.fut:4:11-25\n   #4  microgpt.fut:9:27-39\n   #5  microgpt.fut:4:11-25\n   #6  microgpt.fut:9:13-40\n   #7  microgpt.fut:324:13-332:114\n   #8  microgpt.fut:461:5-75\n" % ("Index [", zt_lhs_119686, "] out of bounds for array of shape [", np.int64(4), "]."))
+        r_119693 = np.float64(0.0)
+        i_119692 = np.int64(0)
+        one_125103 = np.int64(1)
+        for counter_125102 in range(np.int64(16)):
+          zt_lhs_119694 = np.float64(indexArray(mem_123324, (((zt_lhs_119681 * np.int64(64)) + (i_119692 * np.int64(4))) + zt_lhs_119686), ct.c_double))
+          zt_rhs_119695 = np.float64(indexArray(mem_123480, (((zt_lhs_119681 * np.int64(256)) + (i_119692 * np.int64(16))) + i_122237), ct.c_double))
+          zt_res_119696 = (zt_lhs_119694 * zt_rhs_119695)
+          zp_res_119697 = (r_119693 + zt_res_119696)
+          r_tmp_124504 = zp_res_119697
+          r_119693 = r_tmp_124504
+          i_119692 += one_125103
+        defunc_0_lifted_lambda_res_119691 = r_119693
+        r_119707 = np.float64(0.0)
+        i_119706 = np.int64(0)
+        one_125107 = np.int64(1)
+        for counter_125106 in range(np.int64(16)):
+          x_119708 = np.float64(indexArray(mem_122675, (((zt_lhs_119681 * np.int64(64)) + (i_119706 * np.int64(4))) + zt_lhs_119686), ct.c_double))
+          r_119711 = np.float64(0.0)
+          i_119710 = np.int64(0)
+          one_125105 = np.int64(1)
+          for counter_125104 in range(np.int64(4)):
+            cond_119712 = (zt_lhs_119686 == i_119710)
+            if cond_119712:
+              zt_lhs_t_res_121361 = np.float64(indexArray(mem_123884, (((zt_lhs_119681 * np.int64(256)) + (i_119706 * np.int64(16))) + i_122237), ct.c_double))
+              zt_lhs_119713 = zt_lhs_t_res_121361
+            else:
+              zt_lhs_119713 = np.float64(0.0)
+            zt_res_119720 = (x_119708 * zt_lhs_119713)
+            zp_res_119721 = (r_119711 + zt_res_119720)
+            r_tmp_124506 = zp_res_119721
+            r_119711 = r_tmp_124506
+            i_119710 += one_125105
+          defunc_0_lifted_lambda_res_119709 = r_119711
+          zp_res_119722 = (r_119707 + defunc_0_lifted_lambda_res_119709)
+          r_tmp_124505 = zp_res_119722
+          r_119707 = r_tmp_124505
+          i_119706 += one_125107
+        defunc_0_lifted_lambda_res_119705 = r_119707
+        r_119735 = np.float64(0.0)
+        i_119734 = np.int64(0)
+        one_125111 = np.int64(1)
+        for counter_125110 in range(np.int64(16)):
+          x_119736 = np.float64(indexArray(mem_122674, (((zt_lhs_119681 * np.int64(64)) + (i_119734 * np.int64(4))) + zt_lhs_119686), ct.c_double))
+          r_119739 = np.float64(0.0)
+          i_119738 = np.int64(0)
+          one_125109 = np.int64(1)
+          for counter_125108 in range(np.int64(4)):
+            cond_119740 = (zt_lhs_119686 == i_119738)
+            if cond_119740:
+              zt_lhs_t_res_121367 = np.float64(indexArray(mem_123883, (((zt_lhs_119681 * np.int64(256)) + (i_122237 * np.int64(16))) + i_119734), ct.c_double))
+              zt_lhs_119741 = zt_lhs_t_res_121367
+            else:
+              zt_lhs_119741 = np.float64(0.0)
+            zt_res_119748 = (x_119736 * zt_lhs_119741)
+            zp_res_119749 = (r_119739 + zt_res_119748)
+            r_tmp_124508 = zp_res_119749
+            r_119739 = r_tmp_124508
+            i_119738 += one_125109
+          defunc_0_lifted_lambda_res_119737 = r_119739
+          zp_res_119750 = (r_119735 + defunc_0_lifted_lambda_res_119737)
+          r_tmp_124507 = zp_res_119750
+          r_119735 = r_tmp_124507
+          i_119734 += one_125111
+        defunc_0_lifted_lambda_res_119733 = r_119735
+        r_119760 = np.float64(0.0)
+        i_119759 = np.int64(0)
+        one_125115 = np.int64(1)
+        for counter_125114 in range(np.int64(16)):
+          x_119761 = np.float64(indexArray(mem_122754, ((i_119759 * np.int64(16)) + i_122224), ct.c_double))
+          r_119764 = np.float64(0.0)
+          i_119763 = np.int64(0)
+          one_125113 = np.int64(1)
+          for counter_125112 in range(np.int64(16)):
+            cond_119765 = (i_122224 == i_119763)
+            if cond_119765:
+              zt_lhs_t_res_121372 = np.float64(indexArray(mem_123196, ((i_119759 * np.int64(16)) + i_122237), ct.c_double))
+              zt_lhs_119766 = zt_lhs_t_res_121372
+            else:
+              zt_lhs_119766 = np.float64(0.0)
+            zt_res_119772 = (x_119761 * zt_lhs_119766)
+            zp_res_119773 = (r_119764 + zt_res_119772)
+            r_tmp_124510 = zp_res_119773
+            r_119764 = r_tmp_124510
+            i_119763 += one_125113
+          defunc_0_lifted_lambda_res_119762 = r_119764
+          zp_res_119774 = (r_119760 + defunc_0_lifted_lambda_res_119762)
+          r_tmp_124509 = zp_res_119774
+          r_119760 = r_tmp_124509
+          i_119759 += one_125115
+        defunc_0_lifted_lambda_res_119758 = r_119760
+        writeScalarArray(mem_123957, i_122224, defunc_0_lifted_lambda_res_119758)
+        writeScalarArray(mem_123958, i_122224, defunc_0_lifted_lambda_res_119733)
+        writeScalarArray(mem_123959, i_122224, defunc_0_lifted_lambda_res_119705)
+        writeScalarArray(mem_123960, i_122224, defunc_0_lifted_lambda_res_119691)
+        i_122224 += one_125117
+      lmad_copy(ct.c_double, mem_123937, (i_122237 * np.int64(16)), [np.int64(1)], mem_123957, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_123938, (i_122237 * np.int64(16)), [np.int64(1)], mem_123958, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_123939, (i_122237 * np.int64(16)), [np.int64(1)], mem_123959, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_123940, (i_122237 * np.int64(16)), [np.int64(1)], mem_123960, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_122237 += one_125119
+    mem_122674 = None
+    mem_122675 = None
+    mem_122754 = None
+    mem_123324 = None
+    mem_123480 = None
+    mem_123883 = None
+    mem_123884 = None
+    mem_123957 = None
+    mem_123958 = None
+    mem_123959 = None
+    mem_123960 = None
+    mem_124001 = allocateMem(np.int64(2048))
+    mem_124006 = allocateMem(np.int64(128))
+    i_122248 = np.int64(0)
+    one_125135 = np.int64(1)
+    for counter_125134 in range(np.int64(16)):
+      i_122244 = np.int64(0)
+      one_125133 = np.int64(1)
+      for counter_125132 in range(np.int64(16)):
+        r_112414 = np.float64(0.0)
+        i_112413 = np.int64(0)
+        one_125123 = np.int64(1)
+        for counter_125122 in range(np.int64(16)):
+          x_112415 = np.float64(indexArray(wval_mem_122585, ((i_112413 * np.int64(16)) + i_122244), ct.c_double))
+          r_112418 = np.float64(0.0)
+          i_112417 = np.int64(0)
+          one_125121 = np.int64(1)
+          for counter_125120 in range(np.int64(16)):
+            cond_112419 = (i_122244 == i_112417)
+            if cond_112419:
+              zt_lhs_t_res_121453 = np.float64(indexArray(mem_123940, ((i_122248 * np.int64(16)) + i_112413), ct.c_double))
+              zt_lhs_112420 = zt_lhs_t_res_121453
+            else:
+              zt_lhs_112420 = np.float64(0.0)
+            zt_res_112426 = (x_112415 * zt_lhs_112420)
+            zp_res_112427 = (r_112418 + zt_res_112426)
+            r_tmp_124514 = zp_res_112427
+            r_112418 = r_tmp_124514
+            i_112417 += one_125121
+          defunc_0_lifted_lambda_res_112416 = r_112418
+          zp_res_112428 = (r_112414 + defunc_0_lifted_lambda_res_112416)
+          r_tmp_124513 = zp_res_112428
+          r_112414 = r_tmp_124513
+          i_112413 += one_125123
+        defunc_0_lifted_lambda_res_112412 = r_112414
+        r_112431 = np.float64(0.0)
+        i_112430 = np.int64(0)
+        one_125127 = np.int64(1)
+        for counter_125126 in range(np.int64(16)):
+          x_112432 = np.float64(indexArray(wkey_mem_122579, ((i_112430 * np.int64(16)) + i_122244), ct.c_double))
+          r_112435 = np.float64(0.0)
+          i_112434 = np.int64(0)
+          one_125125 = np.int64(1)
+          for counter_125124 in range(np.int64(16)):
+            cond_112436 = (i_122244 == i_112434)
+            if cond_112436:
+              zt_lhs_t_res_121458 = np.float64(indexArray(mem_123939, ((i_122248 * np.int64(16)) + i_112430), ct.c_double))
+              zt_lhs_112437 = zt_lhs_t_res_121458
+            else:
+              zt_lhs_112437 = np.float64(0.0)
+            zt_res_112443 = (x_112432 * zt_lhs_112437)
+            zp_res_112444 = (r_112435 + zt_res_112443)
+            r_tmp_124516 = zp_res_112444
+            r_112435 = r_tmp_124516
+            i_112434 += one_125125
+          defunc_0_lifted_lambda_res_112433 = r_112435
+          zp_res_112445 = (r_112431 + defunc_0_lifted_lambda_res_112433)
+          r_tmp_124515 = zp_res_112445
+          r_112431 = r_tmp_124515
+          i_112430 += one_125127
+        defunc_0_lifted_lambda_res_112429 = r_112431
+        zp_res_112446 = (defunc_0_lifted_lambda_res_112412 + defunc_0_lifted_lambda_res_112429)
+        r_112449 = np.float64(0.0)
+        i_112448 = np.int64(0)
+        one_125131 = np.int64(1)
+        for counter_125130 in range(np.int64(16)):
+          x_112450 = np.float64(indexArray(wqry_mem_122582, ((i_112448 * np.int64(16)) + i_122244), ct.c_double))
+          r_112453 = np.float64(0.0)
+          i_112452 = np.int64(0)
+          one_125129 = np.int64(1)
+          for counter_125128 in range(np.int64(16)):
+            cond_112454 = (i_122244 == i_112452)
+            if cond_112454:
+              zt_lhs_t_res_121463 = np.float64(indexArray(mem_123938, ((i_122248 * np.int64(16)) + i_112448), ct.c_double))
+              zt_lhs_112455 = zt_lhs_t_res_121463
+            else:
+              zt_lhs_112455 = np.float64(0.0)
+            zt_res_112461 = (x_112450 * zt_lhs_112455)
+            zp_res_112462 = (r_112453 + zt_res_112461)
+            r_tmp_124518 = zp_res_112462
+            r_112453 = r_tmp_124518
+            i_112452 += one_125129
+          defunc_0_lifted_lambda_res_112451 = r_112453
+          zp_res_112463 = (r_112449 + defunc_0_lifted_lambda_res_112451)
+          r_tmp_124517 = zp_res_112463
+          r_112449 = r_tmp_124517
+          i_112448 += one_125131
+        defunc_0_lifted_lambda_res_112447 = r_112449
+        zp_res_112464 = (zp_res_112446 + defunc_0_lifted_lambda_res_112447)
+        writeScalarArray(mem_124006, i_122244, zp_res_112464)
+        i_122244 += one_125133
+      lmad_copy(ct.c_double, mem_124001, (i_122248 * np.int64(16)), [np.int64(1)], mem_124006, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_122248 += one_125135
+    mem_124006 = None
+    mem_124017 = allocateMem(np.int64(2048))
+    mem_124018 = allocateMem(np.int64(2048))
+    mem_124019 = allocateMem(np.int64(2048))
+    mem_124020 = allocateMem(np.int64(128))
+    mem_124021 = allocateMem(np.int64(128))
+    mem_124040 = allocateMem(np.int64(128))
+    mem_124041 = allocateMem(np.int64(128))
+    mem_124042 = allocateMem(np.int64(128))
+    i_122270 = np.int64(0)
+    one_125153 = np.int64(1)
+    for counter_125152 in range(np.int64(16)):
+      zp_lhs_116560 = np.float64(indexArray(mem_122643, i_122270, ct.c_double))
+      zp_res_116561 = (np.float64(1.0e-5) + zp_lhs_116560)
+      sqrt_res_116562 = futhark_sqrt64(zp_res_116561)
+      zt_res_116570 = (sqrt_res_116562 * sqrt_res_116562)
+      zs_res_116571 = (np.float64(1.0) / zt_res_116570)
+      r_116574 = np.float64(0.0)
+      i_116573 = np.int64(0)
+      one_125137 = np.int64(1)
+      for counter_125136 in range(np.int64(16)):
+        zt_lhs_116575 = np.float64(indexArray(mem_124001, ((i_122270 * np.int64(16)) + i_116573), ct.c_double))
+        zt_rhs_116576 = np.float64(indexArray(mem_122608, ((i_122270 * np.int64(16)) + i_116573), ct.c_double))
+        zt_res_116577 = (zt_lhs_116575 * zt_rhs_116576)
+        zt_res_116578 = (zs_res_116571 * zt_res_116577)
+        neg_res_116579 = -(zt_res_116578)
+        zp_res_116580 = (r_116574 + neg_res_116579)
+        r_tmp_124524 = zp_res_116580
+        r_116574 = r_tmp_124524
+        i_116573 += one_125137
+      defunc_0_lifted_lambda_res_116572 = r_116574
+      i_122256 = np.int64(0)
+      one_125151 = np.int64(1)
+      for counter_125150 in range(np.int64(16)):
+        r_120790 = np.float64(0.0)
+        i_120789 = np.int64(0)
+        one_125141 = np.int64(1)
+        for counter_125140 in range(np.int64(16)):
+          x_120791 = np.float64(indexArray(mem_122644, ((i_120789 * np.int64(16)) + i_122256), ct.c_double))
+          r_120794 = np.float64(0.0)
+          i_120793 = np.int64(0)
+          one_125139 = np.int64(1)
+          for counter_125138 in range(np.int64(16)):
+            cond_120795 = (i_122256 == i_120793)
+            if cond_120795:
+              zt_lhs_t_res_121435 = np.float64(indexArray(mem_123938, ((i_120789 * np.int64(16)) + i_122270), ct.c_double))
+              zt_lhs_120796 = zt_lhs_t_res_121435
+            else:
+              zt_lhs_120796 = np.float64(0.0)
+            zt_res_120802 = (x_120791 * zt_lhs_120796)
+            zp_res_120803 = (r_120794 + zt_res_120802)
+            r_tmp_124529 = zp_res_120803
+            r_120794 = r_tmp_124529
+            i_120793 += one_125139
+          defunc_0_lifted_lambda_res_120792 = r_120794
+          zp_res_120804 = (r_120790 + defunc_0_lifted_lambda_res_120792)
+          r_tmp_124528 = zp_res_120804
+          r_120790 = r_tmp_124528
+          i_120789 += one_125141
+        defunc_0_lifted_lambda_res_120788 = r_120790
+        r_120809 = np.float64(0.0)
+        i_120808 = np.int64(0)
+        one_125145 = np.int64(1)
+        for counter_125144 in range(np.int64(16)):
+          x_120810 = np.float64(indexArray(mem_122644, ((i_120808 * np.int64(16)) + i_122256), ct.c_double))
+          r_120813 = np.float64(0.0)
+          i_120812 = np.int64(0)
+          one_125143 = np.int64(1)
+          for counter_125142 in range(np.int64(16)):
+            cond_120814 = (i_122256 == i_120812)
+            if cond_120814:
+              zt_lhs_t_res_121440 = np.float64(indexArray(mem_123939, ((i_120808 * np.int64(16)) + i_122270), ct.c_double))
+              zt_lhs_120815 = zt_lhs_t_res_121440
+            else:
+              zt_lhs_120815 = np.float64(0.0)
+            zt_res_120821 = (x_120810 * zt_lhs_120815)
+            zp_res_120822 = (r_120813 + zt_res_120821)
+            r_tmp_124531 = zp_res_120822
+            r_120813 = r_tmp_124531
+            i_120812 += one_125143
+          defunc_0_lifted_lambda_res_120811 = r_120813
+          zp_res_120823 = (r_120809 + defunc_0_lifted_lambda_res_120811)
+          r_tmp_124530 = zp_res_120823
+          r_120809 = r_tmp_124530
+          i_120808 += one_125145
+        defunc_0_lifted_lambda_res_120807 = r_120809
+        r_120831 = np.float64(0.0)
+        i_120830 = np.int64(0)
+        one_125149 = np.int64(1)
+        for counter_125148 in range(np.int64(16)):
+          x_120832 = np.float64(indexArray(mem_122644, ((i_120830 * np.int64(16)) + i_122256), ct.c_double))
+          r_120835 = np.float64(0.0)
+          i_120834 = np.int64(0)
+          one_125147 = np.int64(1)
+          for counter_125146 in range(np.int64(16)):
+            cond_120836 = (i_122256 == i_120834)
+            if cond_120836:
+              zt_lhs_t_res_121445 = np.float64(indexArray(mem_123940, ((i_120830 * np.int64(16)) + i_122270), ct.c_double))
+              zt_lhs_120837 = zt_lhs_t_res_121445
+            else:
+              zt_lhs_120837 = np.float64(0.0)
+            zt_res_120843 = (x_120832 * zt_lhs_120837)
+            zp_res_120844 = (r_120835 + zt_res_120843)
+            r_tmp_124533 = zp_res_120844
+            r_120835 = r_tmp_124533
+            i_120834 += one_125147
+          defunc_0_lifted_lambda_res_120833 = r_120835
+          zp_res_120845 = (r_120831 + defunc_0_lifted_lambda_res_120833)
+          r_tmp_124532 = zp_res_120845
+          r_120831 = r_tmp_124532
+          i_120830 += one_125149
+        defunc_0_lifted_lambda_res_120829 = r_120831
+        writeScalarArray(mem_124040, i_122256, defunc_0_lifted_lambda_res_120829)
+        writeScalarArray(mem_124041, i_122256, defunc_0_lifted_lambda_res_120807)
+        writeScalarArray(mem_124042, i_122256, defunc_0_lifted_lambda_res_120788)
+        i_122256 += one_125151
+      lmad_copy(ct.c_double, mem_124017, (i_122270 * np.int64(16)), [np.int64(1)], mem_124040, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_124018, (i_122270 * np.int64(16)), [np.int64(1)], mem_124041, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_124019, (i_122270 * np.int64(16)), [np.int64(1)], mem_124042, np.int64(0), [np.int64(1)], [np.int64(16)])
+      writeScalarArray(mem_124020, i_122270, defunc_0_lifted_lambda_res_116572)
+      writeScalarArray(mem_124021, i_122270, sqrt_res_116562)
+      i_122270 += one_125153
+    mem_122644 = None
+    mem_123938 = None
+    mem_123939 = None
+    mem_123940 = None
+    mem_124040 = None
+    mem_124041 = None
+    mem_124042 = None
+    mem_124079 = allocateMem(np.int64(128))
+    i_122278 = np.int64(0)
+    one_125155 = np.int64(1)
+    for counter_125154 in range(np.int64(16)):
+      zt_lhs_112492 = np.float64(indexArray(mem_124020, i_122278, ct.c_double))
+      zp_lhs_112493 = np.float64(indexArray(mem_122643, i_122278, ct.c_double))
+      zp_res_112494 = (np.float64(1.0e-5) + zp_lhs_112493)
+      sqrt_res_112495 = futhark_sqrt64(zp_res_112494)
+      zt_res_112496 = (np.float64(2.0) * sqrt_res_112495)
+      zs_res_112497 = (np.float64(1.0) / zt_res_112496)
+      zt_res_112498 = (zt_lhs_112492 * zs_res_112497)
+      writeScalarArray(mem_124079, i_122278, zt_res_112498)
+      i_122278 += one_125155
+    mem_122643 = None
+    mem_124020 = None
+    mem_124086 = allocateMem(np.int64(2048))
+    mem_124091 = allocateMem(np.int64(128))
+    i_122286 = np.int64(0)
+    one_125163 = np.int64(1)
+    for counter_125162 in range(np.int64(16)):
+      i_122282 = np.int64(0)
+      one_125161 = np.int64(1)
+      for counter_125160 in range(np.int64(16)):
+        zp_lhs_112512 = np.float64(indexArray(mem_123196, ((i_122286 * np.int64(16)) + i_122282), ct.c_double))
+        r_112515 = np.float64(0.0)
+        i_112514 = np.int64(0)
+        one_125159 = np.int64(1)
+        for counter_125158 in range(np.int64(16)):
+          cond_112516 = (i_122286 == i_112514)
+          if cond_112516:
+            zt_lhs_121465 = np.float64(indexArray(mem_124001, ((i_112514 * np.int64(16)) + i_122282), ct.c_double))
+            zs_rhs_121466 = np.float64(indexArray(mem_124021, i_112514, ct.c_double))
+            zs_res_121467 = (np.float64(1.0) / zs_rhs_121466)
+            zt_res_121468 = (zt_lhs_121465 * zs_res_121467)
+            zp_lhs_112517 = zt_res_121468
+          else:
+            zp_lhs_112517 = np.float64(0.0)
+          if cond_112516:
+            x_121469 = np.float64(indexArray(mem_122608, ((i_112514 * np.int64(16)) + i_122282), ct.c_double))
+            zt_rhs_112525 = x_121469
+          else:
+            zt_rhs_112525 = np.float64(0.0)
+          if cond_112516:
+            x_121470 = np.float64(indexArray(mem_122608, ((i_112514 * np.int64(16)) + i_122282), ct.c_double))
+            zt_rhs_112527 = x_121470
+          else:
+            zt_rhs_112527 = np.float64(0.0)
+          r_112531 = np.float64(0.0)
+          i_112530 = np.int64(0)
+          one_125157 = np.int64(1)
+          for counter_125156 in range(np.int64(16)):
+            if cond_112516:
+              cond_121473 = (i_122282 == i_112530)
+              if cond_121473:
+                zs_lhs_121475 = np.float64(indexArray(mem_124079, i_112514, ct.c_double))
+                zs_res_121476 = (zs_lhs_121475 / np.float64(16.0))
+                zt_lhs_121474 = zs_res_121476
+              else:
+                zt_lhs_121474 = np.float64(0.0)
+              zt_res_121477 = (zt_rhs_112525 * zt_lhs_121474)
+              zp_lhs_112532 = zt_res_121477
+            else:
+              zp_lhs_112532 = np.float64(0.0)
+            if cond_112516:
+              cond_121480 = (i_122282 == i_112530)
+              if cond_121480:
+                zs_lhs_121482 = np.float64(indexArray(mem_124079, i_112514, ct.c_double))
+                zs_res_121483 = (zs_lhs_121482 / np.float64(16.0))
+                zt_lhs_121481 = zs_res_121483
+              else:
+                zt_lhs_121481 = np.float64(0.0)
+              zt_res_121484 = (zt_rhs_112527 * zt_lhs_121481)
+              zp_rhs_112538 = zt_res_121484
+            else:
+              zp_rhs_112538 = np.float64(0.0)
+            zp_res_112544 = (zp_lhs_112532 + zp_rhs_112538)
+            zp_res_112545 = (r_112531 + zp_res_112544)
+            r_tmp_124538 = zp_res_112545
+            r_112531 = r_tmp_124538
+            i_112530 += one_125157
+          defunc_0_lifted_lambda_res_112529 = r_112531
+          zp_res_112546 = (zp_lhs_112517 + defunc_0_lifted_lambda_res_112529)
+          zp_res_112547 = (r_112515 + zp_res_112546)
+          r_tmp_124537 = zp_res_112547
+          r_112515 = r_tmp_124537
+          i_112514 += one_125159
+        defunc_0_lifted_lambda_res_112513 = r_112515
+        zp_res_112548 = (zp_lhs_112512 + defunc_0_lifted_lambda_res_112513)
+        writeScalarArray(mem_124091, i_122282, zp_res_112548)
+        i_122282 += one_125161
+      lmad_copy(ct.c_double, mem_124086, (i_122286 * np.int64(16)), [np.int64(1)], mem_124091, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_122286 += one_125163
+    mem_122608 = None
+    mem_123196 = None
+    mem_124001 = None
+    mem_124021 = None
+    mem_124079 = None
+    mem_124091 = None
+    mem_124102 = allocateMem(np.int64(2048))
+    mem_124103 = allocateMem(np.int64(2048))
+    mem_124112 = allocateMem(np.int64(128))
+    mem_124113 = allocateMem(np.int64(128))
+    i_122299 = np.int64(0)
+    one_125167 = np.int64(1)
+    for counter_125166 in range(np.int64(16)):
+      i_122292 = np.int64(0)
+      one_125165 = np.int64(1)
+      for counter_125164 in range(np.int64(16)):
+        lifted_lambda_res_120934 = np.float64(indexArray(mem_124086, ((i_122299 * np.int64(16)) + i_122292), ct.c_double))
+        writeScalarArray(mem_124112, i_122292, lifted_lambda_res_120934)
+        writeScalarArray(mem_124113, i_122292, lifted_lambda_res_120934)
+        i_122292 += one_125165
+      lmad_copy(ct.c_double, mem_124102, (i_122299 * np.int64(16)), [np.int64(1)], mem_124112, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_124103, (i_122299 * np.int64(16)), [np.int64(1)], mem_124113, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_122299 += one_125167
+    mem_124086 = None
+    mem_124112 = None
+    mem_124113 = None
+    mem_124134 = allocateMem(np.int64(128))
+    mem_124135 = allocateMem(np.int64(128))
+    mem_124136 = allocateMem(np.int64(128))
+    mem_124137 = allocateMem(np.int64(128))
+    i_122310 = np.int64(0)
+    one_125173 = np.int64(1)
+    for counter_125172 in range(np.int64(16)):
+      zp_lhs_116691 = np.float64(indexArray(mem_122607, i_122310, ct.c_double))
+      zp_res_116692 = (np.float64(1.0e-5) + zp_lhs_116691)
+      sqrt_res_116693 = futhark_sqrt64(zp_res_116692)
+      zt_res_116701 = (sqrt_res_116693 * sqrt_res_116693)
+      zs_res_116702 = (np.float64(1.0) / zt_res_116701)
+      r_116705 = np.float64(0.0)
+      i_116704 = np.int64(0)
+      one_125169 = np.int64(1)
+      for counter_125168 in range(np.int64(16)):
+        zt_lhs_116706 = np.float64(indexArray(mem_124103, ((i_122310 * np.int64(16)) + i_116704), ct.c_double))
+        zp_lhs_116707 = np.float64(indexArray(wpe_mem_122581, ((i_122310 * np.int64(16)) + i_116704), ct.c_double))
+        zp_rhs_116708 = np.float64(indexArray(mem_122590, ((i_122310 * np.int64(16)) + i_116704), ct.c_double))
+        zp_res_116709 = (zp_lhs_116707 + zp_rhs_116708)
+        zt_res_116710 = (zt_lhs_116706 * zp_res_116709)
+        zt_res_116711 = (zs_res_116702 * zt_res_116710)
+        neg_res_116712 = -(zt_res_116711)
+        zp_res_116713 = (r_116705 + neg_res_116712)
+        r_tmp_124547 = zp_res_116713
+        r_116705 = r_tmp_124547
+        i_116704 += one_125169
+      defunc_0_lifted_lambda_res_116703 = r_116705
+      zp_lhs_116724 = np.float64(indexArray(mem_122606, i_122310, ct.c_double))
+      zp_res_116725 = (np.float64(1.0e-5) + zp_lhs_116724)
+      sqrt_res_116726 = futhark_sqrt64(zp_res_116725)
+      zt_res_116734 = (sqrt_res_116726 * sqrt_res_116726)
+      zs_res_116735 = (np.float64(1.0) / zt_res_116734)
+      r_116738 = np.float64(0.0)
+      i_116737 = np.int64(0)
+      one_125171 = np.int64(1)
+      for counter_125170 in range(np.int64(16)):
+        zt_lhs_116739 = np.float64(indexArray(mem_124102, ((i_122310 * np.int64(16)) + i_116737), ct.c_double))
+        zp_lhs_116740 = np.float64(indexArray(wpe_mem_122581, ((i_122310 * np.int64(16)) + i_116737), ct.c_double))
+        zp_rhs_116741 = np.float64(indexArray(mem_122590, ((i_122310 * np.int64(16)) + i_116737), ct.c_double))
+        zp_res_116742 = (zp_lhs_116740 + zp_rhs_116741)
+        zt_res_116743 = (zt_lhs_116739 * zp_res_116742)
+        zt_res_116744 = (zs_res_116735 * zt_res_116743)
+        neg_res_116745 = -(zt_res_116744)
+        zp_res_116746 = (r_116738 + neg_res_116745)
+        r_tmp_124548 = zp_res_116746
+        r_116738 = r_tmp_124548
+        i_116737 += one_125171
+      defunc_0_lifted_lambda_res_116736 = r_116738
+      writeScalarArray(mem_124134, i_122310, defunc_0_lifted_lambda_res_116736)
+      writeScalarArray(mem_124135, i_122310, sqrt_res_116726)
+      writeScalarArray(mem_124136, i_122310, defunc_0_lifted_lambda_res_116703)
+      writeScalarArray(mem_124137, i_122310, sqrt_res_116693)
+      i_122310 += one_125173
+    mem_124162 = allocateMem(np.int64(128))
+    mem_124163 = allocateMem(np.int64(128))
+    i_122319 = np.int64(0)
+    one_125175 = np.int64(1)
+    for counter_125174 in range(np.int64(16)):
+      zt_lhs_116807 = np.float64(indexArray(mem_124136, i_122319, ct.c_double))
+      zp_lhs_116808 = np.float64(indexArray(mem_122607, i_122319, ct.c_double))
+      zp_res_116809 = (np.float64(1.0e-5) + zp_lhs_116808)
+      sqrt_res_116810 = futhark_sqrt64(zp_res_116809)
+      zt_res_116811 = (np.float64(2.0) * sqrt_res_116810)
+      zs_res_116812 = (np.float64(1.0) / zt_res_116811)
+      zt_res_116813 = (zt_lhs_116807 * zs_res_116812)
+      zt_lhs_116820 = np.float64(indexArray(mem_124134, i_122319, ct.c_double))
+      zp_lhs_116821 = np.float64(indexArray(mem_122606, i_122319, ct.c_double))
+      zp_res_116822 = (np.float64(1.0e-5) + zp_lhs_116821)
+      sqrt_res_116823 = futhark_sqrt64(zp_res_116822)
+      zt_res_116824 = (np.float64(2.0) * sqrt_res_116823)
+      zs_res_116825 = (np.float64(1.0) / zt_res_116824)
+      zt_res_116826 = (zt_lhs_116820 * zs_res_116825)
+      writeScalarArray(mem_124162, i_122319, zt_res_116826)
+      writeScalarArray(mem_124163, i_122319, zt_res_116813)
+      i_122319 += one_125175
+    mem_122606 = None
+    mem_122607 = None
+    mem_124134 = None
+    mem_124136 = None
+    mem_124176 = allocateMem(np.int64(2048))
+    mem_124177 = allocateMem(np.int64(2048))
+    mem_124186 = allocateMem(np.int64(128))
+    mem_124187 = allocateMem(np.int64(128))
+    i_122333 = np.int64(0)
+    one_125187 = np.int64(1)
+    for counter_125186 in range(np.int64(16)):
+      i_122326 = np.int64(0)
+      one_125185 = np.int64(1)
+      for counter_125184 in range(np.int64(16)):
+        r_120962 = np.float64(0.0)
+        i_120961 = np.int64(0)
+        one_125179 = np.int64(1)
+        for counter_125178 in range(np.int64(16)):
+          cond_120963 = (i_122333 == i_120961)
+          if cond_120963:
+            zt_lhs_121489 = np.float64(indexArray(mem_124103, ((i_120961 * np.int64(16)) + i_122326), ct.c_double))
+            zs_rhs_121490 = np.float64(indexArray(mem_124137, i_120961, ct.c_double))
+            zs_res_121491 = (np.float64(1.0) / zs_rhs_121490)
+            zt_res_121492 = (zt_lhs_121489 * zs_res_121491)
+            zp_lhs_120964 = zt_res_121492
+          else:
+            zp_lhs_120964 = np.float64(0.0)
+          if cond_120963:
+            x_121493 = np.float64(indexArray(wpe_mem_122581, ((i_120961 * np.int64(16)) + i_122326), ct.c_double))
+            zp_lhs_120973 = x_121493
+          else:
+            zp_lhs_120973 = np.float64(0.0)
+          if cond_120963:
+            x_121494 = np.float64(indexArray(mem_122590, ((i_120961 * np.int64(16)) + i_122326), ct.c_double))
+            zp_rhs_120975 = x_121494
+          else:
+            zp_rhs_120975 = np.float64(0.0)
+          if cond_120963:
+            x_121495 = np.float64(indexArray(wpe_mem_122581, ((i_120961 * np.int64(16)) + i_122326), ct.c_double))
+            zp_lhs_120977 = x_121495
+          else:
+            zp_lhs_120977 = np.float64(0.0)
+          if cond_120963:
+            x_121496 = np.float64(indexArray(mem_122590, ((i_120961 * np.int64(16)) + i_122326), ct.c_double))
+            zp_rhs_120979 = x_121496
+          else:
+            zp_rhs_120979 = np.float64(0.0)
+          zp_res_120981 = (zp_lhs_120973 + zp_rhs_120975)
+          zp_res_120982 = (zp_lhs_120977 + zp_rhs_120979)
+          r_120985 = np.float64(0.0)
+          i_120984 = np.int64(0)
+          one_125177 = np.int64(1)
+          for counter_125176 in range(np.int64(16)):
+            if cond_120963:
+              cond_121499 = (i_122326 == i_120984)
+              if cond_121499:
+                zs_lhs_121501 = np.float64(indexArray(mem_124163, i_120961, ct.c_double))
+                zs_res_121502 = (zs_lhs_121501 / np.float64(16.0))
+                zt_lhs_121500 = zs_res_121502
+              else:
+                zt_lhs_121500 = np.float64(0.0)
+              zt_res_121503 = (zp_res_120981 * zt_lhs_121500)
+              zp_lhs_120986 = zt_res_121503
+            else:
+              zp_lhs_120986 = np.float64(0.0)
+            if cond_120963:
+              cond_121506 = (i_122326 == i_120984)
+              if cond_121506:
+                zs_lhs_121508 = np.float64(indexArray(mem_124163, i_120961, ct.c_double))
+                zs_res_121509 = (zs_lhs_121508 / np.float64(16.0))
+                zt_lhs_121507 = zs_res_121509
+              else:
+                zt_lhs_121507 = np.float64(0.0)
+              zt_res_121510 = (zp_res_120982 * zt_lhs_121507)
+              zp_rhs_120992 = zt_res_121510
+            else:
+              zp_rhs_120992 = np.float64(0.0)
+            zp_res_120998 = (zp_lhs_120986 + zp_rhs_120992)
+            zp_res_120999 = (r_120985 + zp_res_120998)
+            r_tmp_124556 = zp_res_120999
+            r_120985 = r_tmp_124556
+            i_120984 += one_125177
+          defunc_0_lifted_lambda_res_120983 = r_120985
+          zp_res_121000 = (zp_lhs_120964 + defunc_0_lifted_lambda_res_120983)
+          zp_res_121001 = (r_120962 + zp_res_121000)
+          r_tmp_124555 = zp_res_121001
+          r_120962 = r_tmp_124555
+          i_120961 += one_125179
+        defunc_0_lifted_lambda_res_120960 = r_120962
+        r_121009 = np.float64(0.0)
+        i_121008 = np.int64(0)
+        one_125183 = np.int64(1)
+        for counter_125182 in range(np.int64(16)):
+          cond_121010 = (i_122333 == i_121008)
+          if cond_121010:
+            zt_lhs_121512 = np.float64(indexArray(mem_124102, ((i_121008 * np.int64(16)) + i_122326), ct.c_double))
+            zs_rhs_121513 = np.float64(indexArray(mem_124135, i_121008, ct.c_double))
+            zs_res_121514 = (np.float64(1.0) / zs_rhs_121513)
+            zt_res_121515 = (zt_lhs_121512 * zs_res_121514)
+            zp_lhs_121011 = zt_res_121515
+          else:
+            zp_lhs_121011 = np.float64(0.0)
+          if cond_121010:
+            x_121516 = np.float64(indexArray(wpe_mem_122581, ((i_121008 * np.int64(16)) + i_122326), ct.c_double))
+            zp_lhs_121020 = x_121516
+          else:
+            zp_lhs_121020 = np.float64(0.0)
+          if cond_121010:
+            x_121517 = np.float64(indexArray(mem_122590, ((i_121008 * np.int64(16)) + i_122326), ct.c_double))
+            zp_rhs_121022 = x_121517
+          else:
+            zp_rhs_121022 = np.float64(0.0)
+          if cond_121010:
+            x_121518 = np.float64(indexArray(wpe_mem_122581, ((i_121008 * np.int64(16)) + i_122326), ct.c_double))
+            zp_lhs_121024 = x_121518
+          else:
+            zp_lhs_121024 = np.float64(0.0)
+          if cond_121010:
+            x_121519 = np.float64(indexArray(mem_122590, ((i_121008 * np.int64(16)) + i_122326), ct.c_double))
+            zp_rhs_121026 = x_121519
+          else:
+            zp_rhs_121026 = np.float64(0.0)
+          zp_res_121028 = (zp_lhs_121020 + zp_rhs_121022)
+          zp_res_121029 = (zp_lhs_121024 + zp_rhs_121026)
+          r_121032 = np.float64(0.0)
+          i_121031 = np.int64(0)
+          one_125181 = np.int64(1)
+          for counter_125180 in range(np.int64(16)):
+            if cond_121010:
+              cond_121522 = (i_122326 == i_121031)
+              if cond_121522:
+                zs_lhs_121524 = np.float64(indexArray(mem_124162, i_121008, ct.c_double))
+                zs_res_121525 = (zs_lhs_121524 / np.float64(16.0))
+                zt_lhs_121523 = zs_res_121525
+              else:
+                zt_lhs_121523 = np.float64(0.0)
+              zt_res_121526 = (zp_res_121028 * zt_lhs_121523)
+              zp_lhs_121033 = zt_res_121526
+            else:
+              zp_lhs_121033 = np.float64(0.0)
+            if cond_121010:
+              cond_121529 = (i_122326 == i_121031)
+              if cond_121529:
+                zs_lhs_121531 = np.float64(indexArray(mem_124162, i_121008, ct.c_double))
+                zs_res_121532 = (zs_lhs_121531 / np.float64(16.0))
+                zt_lhs_121530 = zs_res_121532
+              else:
+                zt_lhs_121530 = np.float64(0.0)
+              zt_res_121533 = (zp_res_121029 * zt_lhs_121530)
+              zp_rhs_121039 = zt_res_121533
+            else:
+              zp_rhs_121039 = np.float64(0.0)
+            zp_res_121045 = (zp_lhs_121033 + zp_rhs_121039)
+            zp_res_121046 = (r_121032 + zp_res_121045)
+            r_tmp_124558 = zp_res_121046
+            r_121032 = r_tmp_124558
+            i_121031 += one_125181
+          defunc_0_lifted_lambda_res_121030 = r_121032
+          zp_res_121047 = (zp_lhs_121011 + defunc_0_lifted_lambda_res_121030)
+          zp_res_121048 = (r_121009 + zp_res_121047)
+          r_tmp_124557 = zp_res_121048
+          r_121009 = r_tmp_124557
+          i_121008 += one_125183
+        defunc_0_lifted_lambda_res_121007 = r_121009
+        writeScalarArray(mem_124186, i_122326, defunc_0_lifted_lambda_res_121007)
+        writeScalarArray(mem_124187, i_122326, defunc_0_lifted_lambda_res_120960)
+        i_122326 += one_125185
+      lmad_copy(ct.c_double, mem_124176, (i_122333 * np.int64(16)), [np.int64(1)], mem_124186, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_124177, (i_122333 * np.int64(16)), [np.int64(1)], mem_124187, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_122333 += one_125187
+    mem_122590 = None
+    mem_124102 = None
+    mem_124103 = None
+    mem_124135 = None
+    mem_124137 = None
+    mem_124162 = None
+    mem_124163 = None
+    mem_124186 = None
+    mem_124187 = None
+    mem_124208 = allocateMem(np.int64(8192))
+    mem_124213 = allocateMem(np.int64(128))
+    i_122342 = np.int64(0)
+    one_125195 = np.int64(1)
+    for counter_125194 in range(np.int64(64)):
+      i_122338 = np.int64(0)
+      one_125193 = np.int64(1)
+      for counter_125192 in range(np.int64(16)):
+        r_112776 = np.float64(0.0)
+        i_112775 = np.int64(0)
+        one_125191 = np.int64(1)
+        for counter_125190 in range(np.int64(16)):
+          x_112777 = np.float64(indexArray(mem_122865, ((i_112775 * np.int64(16)) + i_122338), ct.c_double))
+          r_112780 = np.float64(0.0)
+          i_112779 = np.int64(0)
+          one_125189 = np.int64(1)
+          for counter_125188 in range(np.int64(16)):
+            cond_112781 = (i_122338 == i_112779)
+            if cond_112781:
+              zt_lhs_t_res_121540 = np.float64(indexArray(mem_123128, ((i_112775 * np.int64(64)) + i_122342), ct.c_double))
+              zt_lhs_112782 = zt_lhs_t_res_121540
+            else:
+              zt_lhs_112782 = np.float64(0.0)
+            zt_res_112788 = (x_112777 * zt_lhs_112782)
+            zp_res_112789 = (r_112780 + zt_res_112788)
+            r_tmp_124562 = zp_res_112789
+            r_112780 = r_tmp_124562
+            i_112779 += one_125189
+          defunc_0_lifted_lambda_res_112778 = r_112780
+          zp_res_112790 = (r_112776 + defunc_0_lifted_lambda_res_112778)
+          r_tmp_124561 = zp_res_112790
+          r_112776 = r_tmp_124561
+          i_112775 += one_125191
+        defunc_0_lifted_lambda_res_112774 = r_112776
+        writeScalarArray(mem_124213, i_122338, defunc_0_lifted_lambda_res_112774)
+        i_122338 += one_125193
+      lmad_copy(ct.c_double, mem_124208, (i_122342 * np.int64(16)), [np.int64(1)], mem_124213, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_122342 += one_125195
+    mem_122865 = None
+    mem_123128 = None
+    mem_124213 = None
+    mem_124224 = allocateMem(np.int64(3456))
+    mem_124225 = allocateMem(np.int64(3456))
+    mem_124234 = allocateMem(np.int64(128))
+    mem_124235 = allocateMem(np.int64(128))
+    i_122355 = np.int64(0)
+    one_125205 = np.int64(1)
+    for counter_125204 in range(np.int64(27)):
+      i_122348 = np.int64(0)
+      one_125203 = np.int64(1)
+      for counter_125202 in range(np.int64(16)):
+        r_121164 = np.float64(0.0)
+        i_121163 = np.int64(0)
+        one_125199 = np.int64(1)
+        for counter_125198 in range(np.int64(16)):
+          x_121165 = np.float64(indexArray(mem_122926, ((i_121163 * np.int64(16)) + i_122348), ct.c_double))
+          r_121168 = np.float64(0.0)
+          i_121167 = np.int64(0)
+          one_125197 = np.int64(1)
+          for counter_125196 in range(np.int64(16)):
+            cond_121169 = (i_122348 == i_121167)
+            if cond_121169:
+              zt_lhs_t_res_121546 = np.float64(indexArray(mem_123095, ((i_121163 * np.int64(27)) + i_122355), ct.c_double))
+              zt_lhs_121170 = zt_lhs_t_res_121546
+            else:
+              zt_lhs_121170 = np.float64(0.0)
+            zt_res_121176 = (x_121165 * zt_lhs_121170)
+            zp_res_121177 = (r_121168 + zt_res_121176)
+            r_tmp_124568 = zp_res_121177
+            r_121168 = r_tmp_124568
+            i_121167 += one_125197
+          defunc_0_lifted_lambda_res_121166 = r_121168
+          zp_res_121178 = (r_121164 + defunc_0_lifted_lambda_res_121166)
+          r_tmp_124567 = zp_res_121178
+          r_121164 = r_tmp_124567
+          i_121163 += one_125199
+        defunc_0_lifted_lambda_res_121162 = r_121164
+        r_121183 = np.float64(0.0)
+        i_121182 = np.int64(0)
+        one_125201 = np.int64(1)
+        for counter_125200 in range(np.int64(16)):
+          zeze_lhs_121184 = np.int64(indexArray(seq_ids_mem_122587, i_121182, ct.c_int64))
+          cond_121185 = (zeze_lhs_121184 == i_122355)
+          if cond_121185:
+            lifted_lambda_res_t_res_121551 = np.float64(indexArray(mem_124176, ((i_121182 * np.int64(16)) + i_122348), ct.c_double))
+            lifted_lambda_res_121186 = lifted_lambda_res_t_res_121551
+          else:
+            lifted_lambda_res_121186 = np.float64(0.0)
+          zp_res_121192 = (r_121183 + lifted_lambda_res_121186)
+          r_tmp_124569 = zp_res_121192
+          r_121183 = r_tmp_124569
+          i_121182 += one_125201
+        defunc_0_lifted_lambda_res_121181 = r_121183
+        writeScalarArray(mem_124234, i_122348, defunc_0_lifted_lambda_res_121181)
+        writeScalarArray(mem_124235, i_122348, defunc_0_lifted_lambda_res_121162)
+        i_122348 += one_125203
+      lmad_copy(ct.c_double, mem_124224, (i_122355 * np.int64(16)), [np.int64(1)], mem_124234, np.int64(0), [np.int64(1)], [np.int64(16)])
+      lmad_copy(ct.c_double, mem_124225, (i_122355 * np.int64(16)), [np.int64(1)], mem_124235, np.int64(0), [np.int64(1)], [np.int64(16)])
+      i_122355 += one_125205
+    mem_122926 = None
+    mem_123095 = None
+    mem_124176 = None
+    mem_124234 = None
+    mem_124235 = None
+    mem_out_124274 = mem_124177
+    mem_out_124275 = mem_124019
+    mem_out_124276 = mem_124018
+    mem_out_124277 = mem_124017
+    mem_out_124278 = mem_123937
+    mem_out_124279 = mem_124208
+    mem_out_124280 = mem_123127
+    mem_out_124281 = mem_124225
+    mem_out_124282 = mem_124224
+    return (mem_out_124274, mem_out_124275, mem_out_124276, mem_out_124277, mem_out_124278, mem_out_124279, mem_out_124280, mem_out_124281, mem_out_124282)
 
-  def futhark_entry_make_params(self, wte_mem_121939, wpe_mem_121940, wqry_mem_121941, wkey_mem_121942, wval_mem_121943, wout_mem_121944, wup_mem_121945, wdown_mem_121946, wvoc_mem_121947, sl_49228):
-    mem_out_123619 = wdown_mem_121946
-    mem_out_123620 = wkey_mem_121942
-    mem_out_123621 = wout_mem_121944
-    mem_out_123622 = wpe_mem_121940
-    mem_out_123623 = wqry_mem_121941
-    mem_out_123624 = wte_mem_121939
-    mem_out_123625 = wup_mem_121945
-    mem_out_123626 = wval_mem_121943
-    mem_out_123627 = wvoc_mem_121947
-    return (mem_out_123619, mem_out_123620, mem_out_123621, mem_out_123622, mem_out_123623, mem_out_123624, mem_out_123625, mem_out_123626, mem_out_123627)
+  def futhark_entry_make_params(self, wte_mem_122578, wpe_mem_122579, wqry_mem_122580, wkey_mem_122581, wval_mem_122582, wout_mem_122583, wup_mem_122584, wdown_mem_122585, wvoc_mem_122586, sl_49457):
+    mem_out_124274 = wdown_mem_122585
+    mem_out_124275 = wkey_mem_122581
+    mem_out_124276 = wout_mem_122583
+    mem_out_124277 = wpe_mem_122579
+    mem_out_124278 = wqry_mem_122580
+    mem_out_124279 = wte_mem_122578
+    mem_out_124280 = wup_mem_122584
+    mem_out_124281 = wval_mem_122582
+    mem_out_124282 = wvoc_mem_122586
+    return (mem_out_124274, mem_out_124275, mem_out_124276, mem_out_124277, mem_out_124278, mem_out_124279, mem_out_124280, mem_out_124281, mem_out_124282)
 
-  def cal_loss(self, params_121939_ext, seq_ids_mem_121948_ext, target_mem_121949_ext, mask_mem_121950_ext):
-    if not((isinstance(params_121939_ext, opaque) and (params_121939_ext.desc == "params"))):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("params", type(params_121939_ext), params_121939_ext))
-    if not((type(params_121939_ext.data[0]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[0]), params_121939_ext.data[0]))
-    if not((params_121939_ext.data[0].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[0]), params_121939_ext.data[0], np.dtype(np.float64), params_121939_ext.data[0].dtype))
-    if not((params_121939_ext.data[0].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[0].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[0].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(64) == params_121939_ext.data[0].shape[1]), "Entry point arguments have invalid sizes."
-    wdown_mem_121939 = unwrapArray(params_121939_ext.data[0])
-    if not((type(params_121939_ext.data[1]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[1]), params_121939_ext.data[1]))
-    if not((params_121939_ext.data[1].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[1]), params_121939_ext.data[1], np.dtype(np.float64), params_121939_ext.data[1].dtype))
-    if not((params_121939_ext.data[1].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[1].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[1].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[1].shape[1]), "Entry point arguments have invalid sizes."
-    wkey_mem_121940 = unwrapArray(params_121939_ext.data[1])
-    if not((type(params_121939_ext.data[2]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[2]), params_121939_ext.data[2]))
-    if not((params_121939_ext.data[2].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[2]), params_121939_ext.data[2], np.dtype(np.float64), params_121939_ext.data[2].dtype))
-    if not((params_121939_ext.data[2].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[2].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[2].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[2].shape[1]), "Entry point arguments have invalid sizes."
-    wout_mem_121941 = unwrapArray(params_121939_ext.data[2])
-    if not((type(params_121939_ext.data[3]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[3]), params_121939_ext.data[3]))
-    if not((params_121939_ext.data[3].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[3]), params_121939_ext.data[3], np.dtype(np.float64), params_121939_ext.data[3].dtype))
-    if not((params_121939_ext.data[3].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[3].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[3].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[3].shape[1]), "Entry point arguments have invalid sizes."
-    wpe_mem_121942 = unwrapArray(params_121939_ext.data[3])
-    if not((type(params_121939_ext.data[4]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[4]), params_121939_ext.data[4]))
-    if not((params_121939_ext.data[4].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[4]), params_121939_ext.data[4], np.dtype(np.float64), params_121939_ext.data[4].dtype))
-    if not((params_121939_ext.data[4].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[4].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[4].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[4].shape[1]), "Entry point arguments have invalid sizes."
-    wqry_mem_121943 = unwrapArray(params_121939_ext.data[4])
-    if not((type(params_121939_ext.data[5]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[5]), params_121939_ext.data[5]))
-    if not((params_121939_ext.data[5].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[5]), params_121939_ext.data[5], np.dtype(np.float64), params_121939_ext.data[5].dtype))
-    if not((params_121939_ext.data[5].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[5].ndim) + "f64")))
-    assert (np.int64(27) == params_121939_ext.data[5].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[5].shape[1]), "Entry point arguments have invalid sizes."
-    wte_mem_121944 = unwrapArray(params_121939_ext.data[5])
-    if not((type(params_121939_ext.data[6]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[6]), params_121939_ext.data[6]))
-    if not((params_121939_ext.data[6].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[6]), params_121939_ext.data[6], np.dtype(np.float64), params_121939_ext.data[6].dtype))
-    if not((params_121939_ext.data[6].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[6].ndim) + "f64")))
-    assert (np.int64(64) == params_121939_ext.data[6].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[6].shape[1]), "Entry point arguments have invalid sizes."
-    wup_mem_121945 = unwrapArray(params_121939_ext.data[6])
-    if not((type(params_121939_ext.data[7]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[7]), params_121939_ext.data[7]))
-    if not((params_121939_ext.data[7].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[7]), params_121939_ext.data[7], np.dtype(np.float64), params_121939_ext.data[7].dtype))
-    if not((params_121939_ext.data[7].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[7].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[7].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[7].shape[1]), "Entry point arguments have invalid sizes."
-    wval_mem_121946 = unwrapArray(params_121939_ext.data[7])
-    if not((type(params_121939_ext.data[8]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[8]), params_121939_ext.data[8]))
-    if not((params_121939_ext.data[8].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[8]), params_121939_ext.data[8], np.dtype(np.float64), params_121939_ext.data[8].dtype))
-    if not((params_121939_ext.data[8].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[8].ndim) + "f64")))
-    assert (np.int64(27) == params_121939_ext.data[8].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[8].shape[1]), "Entry point arguments have invalid sizes."
-    wvoc_mem_121947 = unwrapArray(params_121939_ext.data[8])
-    if not((type(seq_ids_mem_121948_ext) in [np.ndarray])):
-      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[]i64", type(seq_ids_mem_121948_ext), seq_ids_mem_121948_ext))
-    if not((seq_ids_mem_121948_ext.dtype == np.int64)):
-      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[]i64", type(seq_ids_mem_121948_ext), seq_ids_mem_121948_ext, np.dtype(np.int64), seq_ids_mem_121948_ext.dtype))
-    if not((seq_ids_mem_121948_ext.ndim == 1)):
-      raise TypeError("Argument #1 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[]i64", (("[]" * seq_ids_mem_121948_ext.ndim) + "i64")))
-    assert (np.int64(16) == seq_ids_mem_121948_ext.shape[0]), "Entry point arguments have invalid sizes."
-    seq_ids_mem_121948 = unwrapArray(seq_ids_mem_121948_ext)
-    if not((type(target_mem_121949_ext) in [np.ndarray])):
-      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(target_mem_121949_ext), target_mem_121949_ext))
-    if not((target_mem_121949_ext.dtype == np.float64)):
-      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(target_mem_121949_ext), target_mem_121949_ext, np.dtype(np.float64), target_mem_121949_ext.dtype))
-    if not((target_mem_121949_ext.ndim == 2)):
-      raise TypeError("Argument #2 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * target_mem_121949_ext.ndim) + "f64")))
-    assert (np.int64(16) == target_mem_121949_ext.shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(27) == target_mem_121949_ext.shape[1]), "Entry point arguments have invalid sizes."
-    target_mem_121949 = unwrapArray(target_mem_121949_ext)
-    if not((type(mask_mem_121950_ext) in [np.ndarray])):
-      raise TypeError("Argument #3 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(mask_mem_121950_ext), mask_mem_121950_ext))
-    if not((mask_mem_121950_ext.dtype == np.float64)):
-      raise TypeError("Argument #3 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(mask_mem_121950_ext), mask_mem_121950_ext, np.dtype(np.float64), mask_mem_121950_ext.dtype))
-    if not((mask_mem_121950_ext.ndim == 2)):
-      raise TypeError("Argument #3 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * mask_mem_121950_ext.ndim) + "f64")))
-    assert (np.int64(16) == mask_mem_121950_ext.shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == mask_mem_121950_ext.shape[1]), "Entry point arguments have invalid sizes."
-    mask_mem_121950 = unwrapArray(mask_mem_121950_ext)
+  def cal_loss(self, params_122578_ext, seq_ids_mem_122587_ext, target_mem_122588_ext, mask_mem_122589_ext):
+    if not((isinstance(params_122578_ext, opaque) and (params_122578_ext.desc == "params"))):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("params", type(params_122578_ext), params_122578_ext))
+    if not((type(params_122578_ext.data[0]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[0]), params_122578_ext.data[0]))
+    if not((params_122578_ext.data[0].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[0]), params_122578_ext.data[0], np.dtype(np.float64), params_122578_ext.data[0].dtype))
+    if not((params_122578_ext.data[0].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[0].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[0].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(64) == params_122578_ext.data[0].shape[1]), "Entry point arguments have invalid sizes."
+    wdown_mem_122578 = unwrapArray(params_122578_ext.data[0])
+    if not((type(params_122578_ext.data[1]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[1]), params_122578_ext.data[1]))
+    if not((params_122578_ext.data[1].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[1]), params_122578_ext.data[1], np.dtype(np.float64), params_122578_ext.data[1].dtype))
+    if not((params_122578_ext.data[1].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[1].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[1].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[1].shape[1]), "Entry point arguments have invalid sizes."
+    wkey_mem_122579 = unwrapArray(params_122578_ext.data[1])
+    if not((type(params_122578_ext.data[2]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[2]), params_122578_ext.data[2]))
+    if not((params_122578_ext.data[2].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[2]), params_122578_ext.data[2], np.dtype(np.float64), params_122578_ext.data[2].dtype))
+    if not((params_122578_ext.data[2].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[2].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[2].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[2].shape[1]), "Entry point arguments have invalid sizes."
+    wout_mem_122580 = unwrapArray(params_122578_ext.data[2])
+    if not((type(params_122578_ext.data[3]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[3]), params_122578_ext.data[3]))
+    if not((params_122578_ext.data[3].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[3]), params_122578_ext.data[3], np.dtype(np.float64), params_122578_ext.data[3].dtype))
+    if not((params_122578_ext.data[3].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[3].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[3].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[3].shape[1]), "Entry point arguments have invalid sizes."
+    wpe_mem_122581 = unwrapArray(params_122578_ext.data[3])
+    if not((type(params_122578_ext.data[4]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[4]), params_122578_ext.data[4]))
+    if not((params_122578_ext.data[4].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[4]), params_122578_ext.data[4], np.dtype(np.float64), params_122578_ext.data[4].dtype))
+    if not((params_122578_ext.data[4].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[4].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[4].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[4].shape[1]), "Entry point arguments have invalid sizes."
+    wqry_mem_122582 = unwrapArray(params_122578_ext.data[4])
+    if not((type(params_122578_ext.data[5]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[5]), params_122578_ext.data[5]))
+    if not((params_122578_ext.data[5].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[5]), params_122578_ext.data[5], np.dtype(np.float64), params_122578_ext.data[5].dtype))
+    if not((params_122578_ext.data[5].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[5].ndim) + "f64")))
+    assert (np.int64(27) == params_122578_ext.data[5].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[5].shape[1]), "Entry point arguments have invalid sizes."
+    wte_mem_122583 = unwrapArray(params_122578_ext.data[5])
+    if not((type(params_122578_ext.data[6]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[6]), params_122578_ext.data[6]))
+    if not((params_122578_ext.data[6].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[6]), params_122578_ext.data[6], np.dtype(np.float64), params_122578_ext.data[6].dtype))
+    if not((params_122578_ext.data[6].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[6].ndim) + "f64")))
+    assert (np.int64(64) == params_122578_ext.data[6].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[6].shape[1]), "Entry point arguments have invalid sizes."
+    wup_mem_122584 = unwrapArray(params_122578_ext.data[6])
+    if not((type(params_122578_ext.data[7]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[7]), params_122578_ext.data[7]))
+    if not((params_122578_ext.data[7].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[7]), params_122578_ext.data[7], np.dtype(np.float64), params_122578_ext.data[7].dtype))
+    if not((params_122578_ext.data[7].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[7].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[7].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[7].shape[1]), "Entry point arguments have invalid sizes."
+    wval_mem_122585 = unwrapArray(params_122578_ext.data[7])
+    if not((type(params_122578_ext.data[8]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[8]), params_122578_ext.data[8]))
+    if not((params_122578_ext.data[8].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[8]), params_122578_ext.data[8], np.dtype(np.float64), params_122578_ext.data[8].dtype))
+    if not((params_122578_ext.data[8].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[8].ndim) + "f64")))
+    assert (np.int64(27) == params_122578_ext.data[8].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[8].shape[1]), "Entry point arguments have invalid sizes."
+    wvoc_mem_122586 = unwrapArray(params_122578_ext.data[8])
+    if not((type(seq_ids_mem_122587_ext) in [np.ndarray])):
+      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[]i64", type(seq_ids_mem_122587_ext), seq_ids_mem_122587_ext))
+    if not((seq_ids_mem_122587_ext.dtype == np.int64)):
+      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[]i64", type(seq_ids_mem_122587_ext), seq_ids_mem_122587_ext, np.dtype(np.int64), seq_ids_mem_122587_ext.dtype))
+    if not((seq_ids_mem_122587_ext.ndim == 1)):
+      raise TypeError("Argument #1 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[]i64", (("[]" * seq_ids_mem_122587_ext.ndim) + "i64")))
+    assert (np.int64(16) == seq_ids_mem_122587_ext.shape[0]), "Entry point arguments have invalid sizes."
+    seq_ids_mem_122587 = unwrapArray(seq_ids_mem_122587_ext)
+    if not((type(target_mem_122588_ext) in [np.ndarray])):
+      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(target_mem_122588_ext), target_mem_122588_ext))
+    if not((target_mem_122588_ext.dtype == np.float64)):
+      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(target_mem_122588_ext), target_mem_122588_ext, np.dtype(np.float64), target_mem_122588_ext.dtype))
+    if not((target_mem_122588_ext.ndim == 2)):
+      raise TypeError("Argument #2 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * target_mem_122588_ext.ndim) + "f64")))
+    assert (np.int64(16) == target_mem_122588_ext.shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(27) == target_mem_122588_ext.shape[1]), "Entry point arguments have invalid sizes."
+    target_mem_122588 = unwrapArray(target_mem_122588_ext)
+    if not((type(mask_mem_122589_ext) in [np.ndarray])):
+      raise TypeError("Argument #3 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(mask_mem_122589_ext), mask_mem_122589_ext))
+    if not((mask_mem_122589_ext.dtype == np.float64)):
+      raise TypeError("Argument #3 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(mask_mem_122589_ext), mask_mem_122589_ext, np.dtype(np.float64), mask_mem_122589_ext.dtype))
+    if not((mask_mem_122589_ext.ndim == 2)):
+      raise TypeError("Argument #3 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * mask_mem_122589_ext.ndim) + "f64")))
+    assert (np.int64(16) == mask_mem_122589_ext.shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == mask_mem_122589_ext.shape[1]), "Entry point arguments have invalid sizes."
+    mask_mem_122589 = unwrapArray(mask_mem_122589_ext)
     time_start = time.time()
     with np.errstate(divide="ignore", over="ignore", under="ignore", invalid="ignore"):
-      (mem_out_123619, prim_out_123620) = self.futhark_entry_cal_loss(wdown_mem_121939, wkey_mem_121940, wout_mem_121941, wpe_mem_121942, wqry_mem_121943, wte_mem_121944, wup_mem_121945, wval_mem_121946, wvoc_mem_121947, seq_ids_mem_121948, target_mem_121949, mask_mem_121950)
+      (mem_out_124274, prim_out_124275) = self.futhark_entry_cal_loss(wdown_mem_122578, wkey_mem_122579, wout_mem_122580, wpe_mem_122581, wqry_mem_122582, wte_mem_122583, wup_mem_122584, wval_mem_122585, wvoc_mem_122586, seq_ids_mem_122587, target_mem_122588, mask_mem_122589)
     runtime = (int((time.time() * 1000000)) - int((time_start * 1000000)))
-    return opaque("(f64, []f64)", self.opaques, np.float64(prim_out_123620), np.reshape(mem_out_123619.view(np.float64)[0:np.int64(16)], (np.int64(16),)))
+    return opaque("(f64, []f64)", self.opaques, np.float64(prim_out_124275), np.reshape(mem_out_124274.view(np.float64)[0:np.int64(16)], (np.int64(16),)))
 
-  def forward_seq(self, params_121939_ext, seq_ids_mem_121948_ext, mask_mem_121949_ext):
-    if not((isinstance(params_121939_ext, opaque) and (params_121939_ext.desc == "params"))):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("params", type(params_121939_ext), params_121939_ext))
-    if not((type(params_121939_ext.data[0]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[0]), params_121939_ext.data[0]))
-    if not((params_121939_ext.data[0].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[0]), params_121939_ext.data[0], np.dtype(np.float64), params_121939_ext.data[0].dtype))
-    if not((params_121939_ext.data[0].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[0].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[0].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(64) == params_121939_ext.data[0].shape[1]), "Entry point arguments have invalid sizes."
-    wdown_mem_121939 = unwrapArray(params_121939_ext.data[0])
-    if not((type(params_121939_ext.data[1]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[1]), params_121939_ext.data[1]))
-    if not((params_121939_ext.data[1].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[1]), params_121939_ext.data[1], np.dtype(np.float64), params_121939_ext.data[1].dtype))
-    if not((params_121939_ext.data[1].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[1].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[1].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[1].shape[1]), "Entry point arguments have invalid sizes."
-    wkey_mem_121940 = unwrapArray(params_121939_ext.data[1])
-    if not((type(params_121939_ext.data[2]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[2]), params_121939_ext.data[2]))
-    if not((params_121939_ext.data[2].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[2]), params_121939_ext.data[2], np.dtype(np.float64), params_121939_ext.data[2].dtype))
-    if not((params_121939_ext.data[2].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[2].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[2].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[2].shape[1]), "Entry point arguments have invalid sizes."
-    wout_mem_121941 = unwrapArray(params_121939_ext.data[2])
-    if not((type(params_121939_ext.data[3]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[3]), params_121939_ext.data[3]))
-    if not((params_121939_ext.data[3].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[3]), params_121939_ext.data[3], np.dtype(np.float64), params_121939_ext.data[3].dtype))
-    if not((params_121939_ext.data[3].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[3].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[3].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[3].shape[1]), "Entry point arguments have invalid sizes."
-    wpe_mem_121942 = unwrapArray(params_121939_ext.data[3])
-    if not((type(params_121939_ext.data[4]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[4]), params_121939_ext.data[4]))
-    if not((params_121939_ext.data[4].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[4]), params_121939_ext.data[4], np.dtype(np.float64), params_121939_ext.data[4].dtype))
-    if not((params_121939_ext.data[4].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[4].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[4].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[4].shape[1]), "Entry point arguments have invalid sizes."
-    wqry_mem_121943 = unwrapArray(params_121939_ext.data[4])
-    if not((type(params_121939_ext.data[5]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[5]), params_121939_ext.data[5]))
-    if not((params_121939_ext.data[5].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[5]), params_121939_ext.data[5], np.dtype(np.float64), params_121939_ext.data[5].dtype))
-    if not((params_121939_ext.data[5].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[5].ndim) + "f64")))
-    assert (np.int64(27) == params_121939_ext.data[5].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[5].shape[1]), "Entry point arguments have invalid sizes."
-    wte_mem_121944 = unwrapArray(params_121939_ext.data[5])
-    if not((type(params_121939_ext.data[6]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[6]), params_121939_ext.data[6]))
-    if not((params_121939_ext.data[6].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[6]), params_121939_ext.data[6], np.dtype(np.float64), params_121939_ext.data[6].dtype))
-    if not((params_121939_ext.data[6].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[6].ndim) + "f64")))
-    assert (np.int64(64) == params_121939_ext.data[6].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[6].shape[1]), "Entry point arguments have invalid sizes."
-    wup_mem_121945 = unwrapArray(params_121939_ext.data[6])
-    if not((type(params_121939_ext.data[7]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[7]), params_121939_ext.data[7]))
-    if not((params_121939_ext.data[7].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[7]), params_121939_ext.data[7], np.dtype(np.float64), params_121939_ext.data[7].dtype))
-    if not((params_121939_ext.data[7].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[7].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[7].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[7].shape[1]), "Entry point arguments have invalid sizes."
-    wval_mem_121946 = unwrapArray(params_121939_ext.data[7])
-    if not((type(params_121939_ext.data[8]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[8]), params_121939_ext.data[8]))
-    if not((params_121939_ext.data[8].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[8]), params_121939_ext.data[8], np.dtype(np.float64), params_121939_ext.data[8].dtype))
-    if not((params_121939_ext.data[8].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[8].ndim) + "f64")))
-    assert (np.int64(27) == params_121939_ext.data[8].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[8].shape[1]), "Entry point arguments have invalid sizes."
-    wvoc_mem_121947 = unwrapArray(params_121939_ext.data[8])
-    if not((type(seq_ids_mem_121948_ext) in [np.ndarray])):
-      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[]i64", type(seq_ids_mem_121948_ext), seq_ids_mem_121948_ext))
-    if not((seq_ids_mem_121948_ext.dtype == np.int64)):
-      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[]i64", type(seq_ids_mem_121948_ext), seq_ids_mem_121948_ext, np.dtype(np.int64), seq_ids_mem_121948_ext.dtype))
-    if not((seq_ids_mem_121948_ext.ndim == 1)):
-      raise TypeError("Argument #1 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[]i64", (("[]" * seq_ids_mem_121948_ext.ndim) + "i64")))
-    assert (np.int64(16) == seq_ids_mem_121948_ext.shape[0]), "Entry point arguments have invalid sizes."
-    seq_ids_mem_121948 = unwrapArray(seq_ids_mem_121948_ext)
-    if not((type(mask_mem_121949_ext) in [np.ndarray])):
-      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(mask_mem_121949_ext), mask_mem_121949_ext))
-    if not((mask_mem_121949_ext.dtype == np.float64)):
-      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(mask_mem_121949_ext), mask_mem_121949_ext, np.dtype(np.float64), mask_mem_121949_ext.dtype))
-    if not((mask_mem_121949_ext.ndim == 2)):
-      raise TypeError("Argument #2 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * mask_mem_121949_ext.ndim) + "f64")))
-    assert (np.int64(16) == mask_mem_121949_ext.shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == mask_mem_121949_ext.shape[1]), "Entry point arguments have invalid sizes."
-    mask_mem_121949 = unwrapArray(mask_mem_121949_ext)
+  def forward_seq(self, params_122578_ext, seq_ids_mem_122587_ext, mask_mem_122588_ext):
+    if not((isinstance(params_122578_ext, opaque) and (params_122578_ext.desc == "params"))):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("params", type(params_122578_ext), params_122578_ext))
+    if not((type(params_122578_ext.data[0]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[0]), params_122578_ext.data[0]))
+    if not((params_122578_ext.data[0].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[0]), params_122578_ext.data[0], np.dtype(np.float64), params_122578_ext.data[0].dtype))
+    if not((params_122578_ext.data[0].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[0].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[0].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(64) == params_122578_ext.data[0].shape[1]), "Entry point arguments have invalid sizes."
+    wdown_mem_122578 = unwrapArray(params_122578_ext.data[0])
+    if not((type(params_122578_ext.data[1]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[1]), params_122578_ext.data[1]))
+    if not((params_122578_ext.data[1].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[1]), params_122578_ext.data[1], np.dtype(np.float64), params_122578_ext.data[1].dtype))
+    if not((params_122578_ext.data[1].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[1].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[1].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[1].shape[1]), "Entry point arguments have invalid sizes."
+    wkey_mem_122579 = unwrapArray(params_122578_ext.data[1])
+    if not((type(params_122578_ext.data[2]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[2]), params_122578_ext.data[2]))
+    if not((params_122578_ext.data[2].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[2]), params_122578_ext.data[2], np.dtype(np.float64), params_122578_ext.data[2].dtype))
+    if not((params_122578_ext.data[2].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[2].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[2].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[2].shape[1]), "Entry point arguments have invalid sizes."
+    wout_mem_122580 = unwrapArray(params_122578_ext.data[2])
+    if not((type(params_122578_ext.data[3]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[3]), params_122578_ext.data[3]))
+    if not((params_122578_ext.data[3].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[3]), params_122578_ext.data[3], np.dtype(np.float64), params_122578_ext.data[3].dtype))
+    if not((params_122578_ext.data[3].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[3].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[3].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[3].shape[1]), "Entry point arguments have invalid sizes."
+    wpe_mem_122581 = unwrapArray(params_122578_ext.data[3])
+    if not((type(params_122578_ext.data[4]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[4]), params_122578_ext.data[4]))
+    if not((params_122578_ext.data[4].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[4]), params_122578_ext.data[4], np.dtype(np.float64), params_122578_ext.data[4].dtype))
+    if not((params_122578_ext.data[4].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[4].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[4].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[4].shape[1]), "Entry point arguments have invalid sizes."
+    wqry_mem_122582 = unwrapArray(params_122578_ext.data[4])
+    if not((type(params_122578_ext.data[5]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[5]), params_122578_ext.data[5]))
+    if not((params_122578_ext.data[5].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[5]), params_122578_ext.data[5], np.dtype(np.float64), params_122578_ext.data[5].dtype))
+    if not((params_122578_ext.data[5].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[5].ndim) + "f64")))
+    assert (np.int64(27) == params_122578_ext.data[5].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[5].shape[1]), "Entry point arguments have invalid sizes."
+    wte_mem_122583 = unwrapArray(params_122578_ext.data[5])
+    if not((type(params_122578_ext.data[6]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[6]), params_122578_ext.data[6]))
+    if not((params_122578_ext.data[6].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[6]), params_122578_ext.data[6], np.dtype(np.float64), params_122578_ext.data[6].dtype))
+    if not((params_122578_ext.data[6].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[6].ndim) + "f64")))
+    assert (np.int64(64) == params_122578_ext.data[6].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[6].shape[1]), "Entry point arguments have invalid sizes."
+    wup_mem_122584 = unwrapArray(params_122578_ext.data[6])
+    if not((type(params_122578_ext.data[7]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[7]), params_122578_ext.data[7]))
+    if not((params_122578_ext.data[7].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[7]), params_122578_ext.data[7], np.dtype(np.float64), params_122578_ext.data[7].dtype))
+    if not((params_122578_ext.data[7].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[7].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[7].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[7].shape[1]), "Entry point arguments have invalid sizes."
+    wval_mem_122585 = unwrapArray(params_122578_ext.data[7])
+    if not((type(params_122578_ext.data[8]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[8]), params_122578_ext.data[8]))
+    if not((params_122578_ext.data[8].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[8]), params_122578_ext.data[8], np.dtype(np.float64), params_122578_ext.data[8].dtype))
+    if not((params_122578_ext.data[8].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[8].ndim) + "f64")))
+    assert (np.int64(27) == params_122578_ext.data[8].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[8].shape[1]), "Entry point arguments have invalid sizes."
+    wvoc_mem_122586 = unwrapArray(params_122578_ext.data[8])
+    if not((type(seq_ids_mem_122587_ext) in [np.ndarray])):
+      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[]i64", type(seq_ids_mem_122587_ext), seq_ids_mem_122587_ext))
+    if not((seq_ids_mem_122587_ext.dtype == np.int64)):
+      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[]i64", type(seq_ids_mem_122587_ext), seq_ids_mem_122587_ext, np.dtype(np.int64), seq_ids_mem_122587_ext.dtype))
+    if not((seq_ids_mem_122587_ext.ndim == 1)):
+      raise TypeError("Argument #1 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[]i64", (("[]" * seq_ids_mem_122587_ext.ndim) + "i64")))
+    assert (np.int64(16) == seq_ids_mem_122587_ext.shape[0]), "Entry point arguments have invalid sizes."
+    seq_ids_mem_122587 = unwrapArray(seq_ids_mem_122587_ext)
+    if not((type(mask_mem_122588_ext) in [np.ndarray])):
+      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(mask_mem_122588_ext), mask_mem_122588_ext))
+    if not((mask_mem_122588_ext.dtype == np.float64)):
+      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(mask_mem_122588_ext), mask_mem_122588_ext, np.dtype(np.float64), mask_mem_122588_ext.dtype))
+    if not((mask_mem_122588_ext.ndim == 2)):
+      raise TypeError("Argument #2 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * mask_mem_122588_ext.ndim) + "f64")))
+    assert (np.int64(16) == mask_mem_122588_ext.shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == mask_mem_122588_ext.shape[1]), "Entry point arguments have invalid sizes."
+    mask_mem_122588 = unwrapArray(mask_mem_122588_ext)
     time_start = time.time()
     with np.errstate(divide="ignore", over="ignore", under="ignore", invalid="ignore"):
-      mem_out_123619 = self.futhark_entry_forward_seq(wdown_mem_121939, wkey_mem_121940, wout_mem_121941, wpe_mem_121942, wqry_mem_121943, wte_mem_121944, wup_mem_121945, wval_mem_121946, wvoc_mem_121947, seq_ids_mem_121948, mask_mem_121949)
+      mem_out_124274 = self.futhark_entry_forward_seq(wdown_mem_122578, wkey_mem_122579, wout_mem_122580, wpe_mem_122581, wqry_mem_122582, wte_mem_122583, wup_mem_122584, wval_mem_122585, wvoc_mem_122586, seq_ids_mem_122587, mask_mem_122588)
     runtime = (int((time.time() * 1000000)) - int((time_start * 1000000)))
-    return np.reshape(mem_out_123619.view(np.float64)[0:(np.int64(16) * np.int64(27))], (np.int64(16), np.int64(27)))
+    return np.reshape(mem_out_124274.view(np.float64)[0:(np.int64(16) * np.int64(27))], (np.int64(16), np.int64(27)))
 
-  def grad_loss(self, params_121939_ext, seq_ids_mem_121948_ext, target_mem_121949_ext, mask_mem_121950_ext):
-    if not((isinstance(params_121939_ext, opaque) and (params_121939_ext.desc == "params"))):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("params", type(params_121939_ext), params_121939_ext))
-    if not((type(params_121939_ext.data[0]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[0]), params_121939_ext.data[0]))
-    if not((params_121939_ext.data[0].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[0]), params_121939_ext.data[0], np.dtype(np.float64), params_121939_ext.data[0].dtype))
-    if not((params_121939_ext.data[0].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[0].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[0].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(64) == params_121939_ext.data[0].shape[1]), "Entry point arguments have invalid sizes."
-    wdown_mem_121939 = unwrapArray(params_121939_ext.data[0])
-    if not((type(params_121939_ext.data[1]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[1]), params_121939_ext.data[1]))
-    if not((params_121939_ext.data[1].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[1]), params_121939_ext.data[1], np.dtype(np.float64), params_121939_ext.data[1].dtype))
-    if not((params_121939_ext.data[1].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[1].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[1].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[1].shape[1]), "Entry point arguments have invalid sizes."
-    wkey_mem_121940 = unwrapArray(params_121939_ext.data[1])
-    if not((type(params_121939_ext.data[2]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[2]), params_121939_ext.data[2]))
-    if not((params_121939_ext.data[2].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[2]), params_121939_ext.data[2], np.dtype(np.float64), params_121939_ext.data[2].dtype))
-    if not((params_121939_ext.data[2].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[2].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[2].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[2].shape[1]), "Entry point arguments have invalid sizes."
-    wout_mem_121941 = unwrapArray(params_121939_ext.data[2])
-    if not((type(params_121939_ext.data[3]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[3]), params_121939_ext.data[3]))
-    if not((params_121939_ext.data[3].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[3]), params_121939_ext.data[3], np.dtype(np.float64), params_121939_ext.data[3].dtype))
-    if not((params_121939_ext.data[3].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[3].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[3].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[3].shape[1]), "Entry point arguments have invalid sizes."
-    wpe_mem_121942 = unwrapArray(params_121939_ext.data[3])
-    if not((type(params_121939_ext.data[4]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[4]), params_121939_ext.data[4]))
-    if not((params_121939_ext.data[4].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[4]), params_121939_ext.data[4], np.dtype(np.float64), params_121939_ext.data[4].dtype))
-    if not((params_121939_ext.data[4].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[4].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[4].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[4].shape[1]), "Entry point arguments have invalid sizes."
-    wqry_mem_121943 = unwrapArray(params_121939_ext.data[4])
-    if not((type(params_121939_ext.data[5]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[5]), params_121939_ext.data[5]))
-    if not((params_121939_ext.data[5].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[5]), params_121939_ext.data[5], np.dtype(np.float64), params_121939_ext.data[5].dtype))
-    if not((params_121939_ext.data[5].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[5].ndim) + "f64")))
-    assert (np.int64(27) == params_121939_ext.data[5].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[5].shape[1]), "Entry point arguments have invalid sizes."
-    wte_mem_121944 = unwrapArray(params_121939_ext.data[5])
-    if not((type(params_121939_ext.data[6]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[6]), params_121939_ext.data[6]))
-    if not((params_121939_ext.data[6].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[6]), params_121939_ext.data[6], np.dtype(np.float64), params_121939_ext.data[6].dtype))
-    if not((params_121939_ext.data[6].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[6].ndim) + "f64")))
-    assert (np.int64(64) == params_121939_ext.data[6].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[6].shape[1]), "Entry point arguments have invalid sizes."
-    wup_mem_121945 = unwrapArray(params_121939_ext.data[6])
-    if not((type(params_121939_ext.data[7]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[7]), params_121939_ext.data[7]))
-    if not((params_121939_ext.data[7].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[7]), params_121939_ext.data[7], np.dtype(np.float64), params_121939_ext.data[7].dtype))
-    if not((params_121939_ext.data[7].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[7].ndim) + "f64")))
-    assert (np.int64(16) == params_121939_ext.data[7].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[7].shape[1]), "Entry point arguments have invalid sizes."
-    wval_mem_121946 = unwrapArray(params_121939_ext.data[7])
-    if not((type(params_121939_ext.data[8]) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_121939_ext.data[8]), params_121939_ext.data[8]))
-    if not((params_121939_ext.data[8].dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_121939_ext.data[8]), params_121939_ext.data[8], np.dtype(np.float64), params_121939_ext.data[8].dtype))
-    if not((params_121939_ext.data[8].ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_121939_ext.data[8].ndim) + "f64")))
-    assert (np.int64(27) == params_121939_ext.data[8].shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == params_121939_ext.data[8].shape[1]), "Entry point arguments have invalid sizes."
-    wvoc_mem_121947 = unwrapArray(params_121939_ext.data[8])
-    if not((type(seq_ids_mem_121948_ext) in [np.ndarray])):
-      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[]i64", type(seq_ids_mem_121948_ext), seq_ids_mem_121948_ext))
-    if not((seq_ids_mem_121948_ext.dtype == np.int64)):
-      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[]i64", type(seq_ids_mem_121948_ext), seq_ids_mem_121948_ext, np.dtype(np.int64), seq_ids_mem_121948_ext.dtype))
-    if not((seq_ids_mem_121948_ext.ndim == 1)):
-      raise TypeError("Argument #1 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[]i64", (("[]" * seq_ids_mem_121948_ext.ndim) + "i64")))
-    assert (np.int64(16) == seq_ids_mem_121948_ext.shape[0]), "Entry point arguments have invalid sizes."
-    seq_ids_mem_121948 = unwrapArray(seq_ids_mem_121948_ext)
-    if not((type(target_mem_121949_ext) in [np.ndarray])):
-      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(target_mem_121949_ext), target_mem_121949_ext))
-    if not((target_mem_121949_ext.dtype == np.float64)):
-      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(target_mem_121949_ext), target_mem_121949_ext, np.dtype(np.float64), target_mem_121949_ext.dtype))
-    if not((target_mem_121949_ext.ndim == 2)):
-      raise TypeError("Argument #2 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * target_mem_121949_ext.ndim) + "f64")))
-    assert (np.int64(16) == target_mem_121949_ext.shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(27) == target_mem_121949_ext.shape[1]), "Entry point arguments have invalid sizes."
-    target_mem_121949 = unwrapArray(target_mem_121949_ext)
-    if not((type(mask_mem_121950_ext) in [np.ndarray])):
-      raise TypeError("Argument #3 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(mask_mem_121950_ext), mask_mem_121950_ext))
-    if not((mask_mem_121950_ext.dtype == np.float64)):
-      raise TypeError("Argument #3 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(mask_mem_121950_ext), mask_mem_121950_ext, np.dtype(np.float64), mask_mem_121950_ext.dtype))
-    if not((mask_mem_121950_ext.ndim == 2)):
-      raise TypeError("Argument #3 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * mask_mem_121950_ext.ndim) + "f64")))
-    assert (np.int64(16) == mask_mem_121950_ext.shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == mask_mem_121950_ext.shape[1]), "Entry point arguments have invalid sizes."
-    mask_mem_121950 = unwrapArray(mask_mem_121950_ext)
+  def grad_loss(self, params_122578_ext, seq_ids_mem_122587_ext, target_mem_122588_ext, mask_mem_122589_ext):
+    if not((isinstance(params_122578_ext, opaque) and (params_122578_ext.desc == "params"))):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("params", type(params_122578_ext), params_122578_ext))
+    if not((type(params_122578_ext.data[0]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[0]), params_122578_ext.data[0]))
+    if not((params_122578_ext.data[0].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[0]), params_122578_ext.data[0], np.dtype(np.float64), params_122578_ext.data[0].dtype))
+    if not((params_122578_ext.data[0].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[0].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[0].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(64) == params_122578_ext.data[0].shape[1]), "Entry point arguments have invalid sizes."
+    wdown_mem_122578 = unwrapArray(params_122578_ext.data[0])
+    if not((type(params_122578_ext.data[1]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[1]), params_122578_ext.data[1]))
+    if not((params_122578_ext.data[1].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[1]), params_122578_ext.data[1], np.dtype(np.float64), params_122578_ext.data[1].dtype))
+    if not((params_122578_ext.data[1].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[1].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[1].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[1].shape[1]), "Entry point arguments have invalid sizes."
+    wkey_mem_122579 = unwrapArray(params_122578_ext.data[1])
+    if not((type(params_122578_ext.data[2]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[2]), params_122578_ext.data[2]))
+    if not((params_122578_ext.data[2].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[2]), params_122578_ext.data[2], np.dtype(np.float64), params_122578_ext.data[2].dtype))
+    if not((params_122578_ext.data[2].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[2].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[2].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[2].shape[1]), "Entry point arguments have invalid sizes."
+    wout_mem_122580 = unwrapArray(params_122578_ext.data[2])
+    if not((type(params_122578_ext.data[3]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[3]), params_122578_ext.data[3]))
+    if not((params_122578_ext.data[3].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[3]), params_122578_ext.data[3], np.dtype(np.float64), params_122578_ext.data[3].dtype))
+    if not((params_122578_ext.data[3].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[3].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[3].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[3].shape[1]), "Entry point arguments have invalid sizes."
+    wpe_mem_122581 = unwrapArray(params_122578_ext.data[3])
+    if not((type(params_122578_ext.data[4]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[4]), params_122578_ext.data[4]))
+    if not((params_122578_ext.data[4].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[4]), params_122578_ext.data[4], np.dtype(np.float64), params_122578_ext.data[4].dtype))
+    if not((params_122578_ext.data[4].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[4].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[4].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[4].shape[1]), "Entry point arguments have invalid sizes."
+    wqry_mem_122582 = unwrapArray(params_122578_ext.data[4])
+    if not((type(params_122578_ext.data[5]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[5]), params_122578_ext.data[5]))
+    if not((params_122578_ext.data[5].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[5]), params_122578_ext.data[5], np.dtype(np.float64), params_122578_ext.data[5].dtype))
+    if not((params_122578_ext.data[5].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[5].ndim) + "f64")))
+    assert (np.int64(27) == params_122578_ext.data[5].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[5].shape[1]), "Entry point arguments have invalid sizes."
+    wte_mem_122583 = unwrapArray(params_122578_ext.data[5])
+    if not((type(params_122578_ext.data[6]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[6]), params_122578_ext.data[6]))
+    if not((params_122578_ext.data[6].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[6]), params_122578_ext.data[6], np.dtype(np.float64), params_122578_ext.data[6].dtype))
+    if not((params_122578_ext.data[6].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[6].ndim) + "f64")))
+    assert (np.int64(64) == params_122578_ext.data[6].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[6].shape[1]), "Entry point arguments have invalid sizes."
+    wup_mem_122584 = unwrapArray(params_122578_ext.data[6])
+    if not((type(params_122578_ext.data[7]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[7]), params_122578_ext.data[7]))
+    if not((params_122578_ext.data[7].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[7]), params_122578_ext.data[7], np.dtype(np.float64), params_122578_ext.data[7].dtype))
+    if not((params_122578_ext.data[7].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[7].ndim) + "f64")))
+    assert (np.int64(16) == params_122578_ext.data[7].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[7].shape[1]), "Entry point arguments have invalid sizes."
+    wval_mem_122585 = unwrapArray(params_122578_ext.data[7])
+    if not((type(params_122578_ext.data[8]) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(params_122578_ext.data[8]), params_122578_ext.data[8]))
+    if not((params_122578_ext.data[8].dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(params_122578_ext.data[8]), params_122578_ext.data[8], np.dtype(np.float64), params_122578_ext.data[8].dtype))
+    if not((params_122578_ext.data[8].ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * params_122578_ext.data[8].ndim) + "f64")))
+    assert (np.int64(27) == params_122578_ext.data[8].shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == params_122578_ext.data[8].shape[1]), "Entry point arguments have invalid sizes."
+    wvoc_mem_122586 = unwrapArray(params_122578_ext.data[8])
+    if not((type(seq_ids_mem_122587_ext) in [np.ndarray])):
+      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[]i64", type(seq_ids_mem_122587_ext), seq_ids_mem_122587_ext))
+    if not((seq_ids_mem_122587_ext.dtype == np.int64)):
+      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[]i64", type(seq_ids_mem_122587_ext), seq_ids_mem_122587_ext, np.dtype(np.int64), seq_ids_mem_122587_ext.dtype))
+    if not((seq_ids_mem_122587_ext.ndim == 1)):
+      raise TypeError("Argument #1 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[]i64", (("[]" * seq_ids_mem_122587_ext.ndim) + "i64")))
+    assert (np.int64(16) == seq_ids_mem_122587_ext.shape[0]), "Entry point arguments have invalid sizes."
+    seq_ids_mem_122587 = unwrapArray(seq_ids_mem_122587_ext)
+    if not((type(target_mem_122588_ext) in [np.ndarray])):
+      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(target_mem_122588_ext), target_mem_122588_ext))
+    if not((target_mem_122588_ext.dtype == np.float64)):
+      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(target_mem_122588_ext), target_mem_122588_ext, np.dtype(np.float64), target_mem_122588_ext.dtype))
+    if not((target_mem_122588_ext.ndim == 2)):
+      raise TypeError("Argument #2 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * target_mem_122588_ext.ndim) + "f64")))
+    assert (np.int64(16) == target_mem_122588_ext.shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(27) == target_mem_122588_ext.shape[1]), "Entry point arguments have invalid sizes."
+    target_mem_122588 = unwrapArray(target_mem_122588_ext)
+    if not((type(mask_mem_122589_ext) in [np.ndarray])):
+      raise TypeError("Argument #3 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(mask_mem_122589_ext), mask_mem_122589_ext))
+    if not((mask_mem_122589_ext.dtype == np.float64)):
+      raise TypeError("Argument #3 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(mask_mem_122589_ext), mask_mem_122589_ext, np.dtype(np.float64), mask_mem_122589_ext.dtype))
+    if not((mask_mem_122589_ext.ndim == 2)):
+      raise TypeError("Argument #3 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * mask_mem_122589_ext.ndim) + "f64")))
+    assert (np.int64(16) == mask_mem_122589_ext.shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == mask_mem_122589_ext.shape[1]), "Entry point arguments have invalid sizes."
+    mask_mem_122589 = unwrapArray(mask_mem_122589_ext)
     time_start = time.time()
     with np.errstate(divide="ignore", over="ignore", under="ignore", invalid="ignore"):
-      (mem_out_123619, mem_out_123620, mem_out_123621, mem_out_123622, mem_out_123623, mem_out_123624, mem_out_123625, mem_out_123626, mem_out_123627) = self.futhark_entry_grad_loss(wdown_mem_121939, wkey_mem_121940, wout_mem_121941, wpe_mem_121942, wqry_mem_121943, wte_mem_121944, wup_mem_121945, wval_mem_121946, wvoc_mem_121947, seq_ids_mem_121948, target_mem_121949, mask_mem_121950)
+      (mem_out_124274, mem_out_124275, mem_out_124276, mem_out_124277, mem_out_124278, mem_out_124279, mem_out_124280, mem_out_124281, mem_out_124282) = self.futhark_entry_grad_loss(wdown_mem_122578, wkey_mem_122579, wout_mem_122580, wpe_mem_122581, wqry_mem_122582, wte_mem_122583, wup_mem_122584, wval_mem_122585, wvoc_mem_122586, seq_ids_mem_122587, target_mem_122588, mask_mem_122589)
     runtime = (int((time.time() * 1000000)) - int((time_start * 1000000)))
-    return opaque("([][]f64, [][]f64, [][]f64, [][]f64, [][]f64, [][]f64, [][]f64, [][]f64, [][]f64)", self.opaques, np.reshape(mem_out_123619.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_123620.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_123621.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_123622.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_123623.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_123624.view(np.float64)[0:(np.int64(64) * np.int64(16))], (np.int64(64), np.int64(16))), np.reshape(mem_out_123625.view(np.float64)[0:(np.int64(16) * np.int64(64))], (np.int64(16), np.int64(64))), np.reshape(mem_out_123626.view(np.float64)[0:(np.int64(27) * np.int64(16))], (np.int64(27), np.int64(16))), np.reshape(mem_out_123627.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))))
+    return opaque("([][]f64, [][]f64, [][]f64, [][]f64, [][]f64, [][]f64, [][]f64, [][]f64, [][]f64)", self.opaques, np.reshape(mem_out_124274.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_124275.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_124276.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_124277.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_124278.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_124279.view(np.float64)[0:(np.int64(64) * np.int64(16))], (np.int64(64), np.int64(16))), np.reshape(mem_out_124280.view(np.float64)[0:(np.int64(16) * np.int64(64))], (np.int64(16), np.int64(64))), np.reshape(mem_out_124281.view(np.float64)[0:(np.int64(27) * np.int64(16))], (np.int64(27), np.int64(16))), np.reshape(mem_out_124282.view(np.float64)[0:(np.int64(27) * np.int64(16))], (np.int64(27), np.int64(16))))
 
-  def make_params(self, wte_mem_121939_ext, wpe_mem_121940_ext, wqry_mem_121941_ext, wkey_mem_121942_ext, wval_mem_121943_ext, wout_mem_121944_ext, wup_mem_121945_ext, wdown_mem_121946_ext, wvoc_mem_121947_ext):
-    sl_49228 = None
-    sl_49228 = None
-    if not((type(wte_mem_121939_ext) in [np.ndarray])):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wte_mem_121939_ext), wte_mem_121939_ext))
-    if not((wte_mem_121939_ext.dtype == np.float64)):
-      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wte_mem_121939_ext), wte_mem_121939_ext, np.dtype(np.float64), wte_mem_121939_ext.dtype))
-    if not((wte_mem_121939_ext.ndim == 2)):
-      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wte_mem_121939_ext.ndim) + "f64")))
-    assert (np.int64(27) == wte_mem_121939_ext.shape[0]), "Entry point arguments have invalid sizes."
-    if (sl_49228 == None):
-      sl_49228 = np.int64(wte_mem_121939_ext.shape[1])
+  def make_params(self, wte_mem_122578_ext, wpe_mem_122579_ext, wqry_mem_122580_ext, wkey_mem_122581_ext, wval_mem_122582_ext, wout_mem_122583_ext, wup_mem_122584_ext, wdown_mem_122585_ext, wvoc_mem_122586_ext):
+    sl_49457 = None
+    sl_49457 = None
+    if not((type(wte_mem_122578_ext) in [np.ndarray])):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wte_mem_122578_ext), wte_mem_122578_ext))
+    if not((wte_mem_122578_ext.dtype == np.float64)):
+      raise TypeError("Argument #0 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wte_mem_122578_ext), wte_mem_122578_ext, np.dtype(np.float64), wte_mem_122578_ext.dtype))
+    if not((wte_mem_122578_ext.ndim == 2)):
+      raise TypeError("Argument #0 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wte_mem_122578_ext.ndim) + "f64")))
+    assert (np.int64(27) == wte_mem_122578_ext.shape[0]), "Entry point arguments have invalid sizes."
+    if (sl_49457 == None):
+      sl_49457 = np.int64(wte_mem_122578_ext.shape[1])
     else:
-      assert (sl_49228 == wte_mem_121939_ext.shape[1]), "Error: entry point arguments have invalid sizes."
-    wte_mem_121939 = unwrapArray(wte_mem_121939_ext)
-    if not((type(wpe_mem_121940_ext) in [np.ndarray])):
-      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wpe_mem_121940_ext), wpe_mem_121940_ext))
-    if not((wpe_mem_121940_ext.dtype == np.float64)):
-      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wpe_mem_121940_ext), wpe_mem_121940_ext, np.dtype(np.float64), wpe_mem_121940_ext.dtype))
-    if not((wpe_mem_121940_ext.ndim == 2)):
-      raise TypeError("Argument #1 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wpe_mem_121940_ext.ndim) + "f64")))
-    if (sl_49228 == None):
-      sl_49228 = np.int64(wpe_mem_121940_ext.shape[0])
+      assert (sl_49457 == wte_mem_122578_ext.shape[1]), "Error: entry point arguments have invalid sizes."
+    wte_mem_122578 = unwrapArray(wte_mem_122578_ext)
+    if not((type(wpe_mem_122579_ext) in [np.ndarray])):
+      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wpe_mem_122579_ext), wpe_mem_122579_ext))
+    if not((wpe_mem_122579_ext.dtype == np.float64)):
+      raise TypeError("Argument #1 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wpe_mem_122579_ext), wpe_mem_122579_ext, np.dtype(np.float64), wpe_mem_122579_ext.dtype))
+    if not((wpe_mem_122579_ext.ndim == 2)):
+      raise TypeError("Argument #1 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wpe_mem_122579_ext.ndim) + "f64")))
+    if (sl_49457 == None):
+      sl_49457 = np.int64(wpe_mem_122579_ext.shape[0])
     else:
-      assert (sl_49228 == wpe_mem_121940_ext.shape[0]), "Error: entry point arguments have invalid sizes."
-    assert (np.int64(16) == wpe_mem_121940_ext.shape[1]), "Entry point arguments have invalid sizes."
-    wpe_mem_121940 = unwrapArray(wpe_mem_121940_ext)
-    if not((type(wqry_mem_121941_ext) in [np.ndarray])):
-      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wqry_mem_121941_ext), wqry_mem_121941_ext))
-    if not((wqry_mem_121941_ext.dtype == np.float64)):
-      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wqry_mem_121941_ext), wqry_mem_121941_ext, np.dtype(np.float64), wqry_mem_121941_ext.dtype))
-    if not((wqry_mem_121941_ext.ndim == 2)):
-      raise TypeError("Argument #2 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wqry_mem_121941_ext.ndim) + "f64")))
-    assert (np.int64(16) == wqry_mem_121941_ext.shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == wqry_mem_121941_ext.shape[1]), "Entry point arguments have invalid sizes."
-    wqry_mem_121941 = unwrapArray(wqry_mem_121941_ext)
-    if not((type(wkey_mem_121942_ext) in [np.ndarray])):
-      raise TypeError("Argument #3 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wkey_mem_121942_ext), wkey_mem_121942_ext))
-    if not((wkey_mem_121942_ext.dtype == np.float64)):
-      raise TypeError("Argument #3 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wkey_mem_121942_ext), wkey_mem_121942_ext, np.dtype(np.float64), wkey_mem_121942_ext.dtype))
-    if not((wkey_mem_121942_ext.ndim == 2)):
-      raise TypeError("Argument #3 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wkey_mem_121942_ext.ndim) + "f64")))
-    assert (np.int64(16) == wkey_mem_121942_ext.shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == wkey_mem_121942_ext.shape[1]), "Entry point arguments have invalid sizes."
-    wkey_mem_121942 = unwrapArray(wkey_mem_121942_ext)
-    if not((type(wval_mem_121943_ext) in [np.ndarray])):
-      raise TypeError("Argument #4 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wval_mem_121943_ext), wval_mem_121943_ext))
-    if not((wval_mem_121943_ext.dtype == np.float64)):
-      raise TypeError("Argument #4 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wval_mem_121943_ext), wval_mem_121943_ext, np.dtype(np.float64), wval_mem_121943_ext.dtype))
-    if not((wval_mem_121943_ext.ndim == 2)):
-      raise TypeError("Argument #4 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wval_mem_121943_ext.ndim) + "f64")))
-    assert (np.int64(16) == wval_mem_121943_ext.shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == wval_mem_121943_ext.shape[1]), "Entry point arguments have invalid sizes."
-    wval_mem_121943 = unwrapArray(wval_mem_121943_ext)
-    if not((type(wout_mem_121944_ext) in [np.ndarray])):
-      raise TypeError("Argument #5 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wout_mem_121944_ext), wout_mem_121944_ext))
-    if not((wout_mem_121944_ext.dtype == np.float64)):
-      raise TypeError("Argument #5 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wout_mem_121944_ext), wout_mem_121944_ext, np.dtype(np.float64), wout_mem_121944_ext.dtype))
-    if not((wout_mem_121944_ext.ndim == 2)):
-      raise TypeError("Argument #5 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wout_mem_121944_ext.ndim) + "f64")))
-    assert (np.int64(16) == wout_mem_121944_ext.shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == wout_mem_121944_ext.shape[1]), "Entry point arguments have invalid sizes."
-    wout_mem_121944 = unwrapArray(wout_mem_121944_ext)
-    if not((type(wup_mem_121945_ext) in [np.ndarray])):
-      raise TypeError("Argument #6 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wup_mem_121945_ext), wup_mem_121945_ext))
-    if not((wup_mem_121945_ext.dtype == np.float64)):
-      raise TypeError("Argument #6 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wup_mem_121945_ext), wup_mem_121945_ext, np.dtype(np.float64), wup_mem_121945_ext.dtype))
-    if not((wup_mem_121945_ext.ndim == 2)):
-      raise TypeError("Argument #6 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wup_mem_121945_ext.ndim) + "f64")))
-    assert (np.int64(64) == wup_mem_121945_ext.shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == wup_mem_121945_ext.shape[1]), "Entry point arguments have invalid sizes."
-    wup_mem_121945 = unwrapArray(wup_mem_121945_ext)
-    if not((type(wdown_mem_121946_ext) in [np.ndarray])):
-      raise TypeError("Argument #7 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wdown_mem_121946_ext), wdown_mem_121946_ext))
-    if not((wdown_mem_121946_ext.dtype == np.float64)):
-      raise TypeError("Argument #7 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wdown_mem_121946_ext), wdown_mem_121946_ext, np.dtype(np.float64), wdown_mem_121946_ext.dtype))
-    if not((wdown_mem_121946_ext.ndim == 2)):
-      raise TypeError("Argument #7 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wdown_mem_121946_ext.ndim) + "f64")))
-    assert (np.int64(16) == wdown_mem_121946_ext.shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(64) == wdown_mem_121946_ext.shape[1]), "Entry point arguments have invalid sizes."
-    wdown_mem_121946 = unwrapArray(wdown_mem_121946_ext)
-    if not((type(wvoc_mem_121947_ext) in [np.ndarray])):
-      raise TypeError("Argument #8 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wvoc_mem_121947_ext), wvoc_mem_121947_ext))
-    if not((wvoc_mem_121947_ext.dtype == np.float64)):
-      raise TypeError("Argument #8 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wvoc_mem_121947_ext), wvoc_mem_121947_ext, np.dtype(np.float64), wvoc_mem_121947_ext.dtype))
-    if not((wvoc_mem_121947_ext.ndim == 2)):
-      raise TypeError("Argument #8 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wvoc_mem_121947_ext.ndim) + "f64")))
-    assert (np.int64(27) == wvoc_mem_121947_ext.shape[0]), "Entry point arguments have invalid sizes."
-    assert (np.int64(16) == wvoc_mem_121947_ext.shape[1]), "Entry point arguments have invalid sizes."
-    wvoc_mem_121947 = unwrapArray(wvoc_mem_121947_ext)
+      assert (sl_49457 == wpe_mem_122579_ext.shape[0]), "Error: entry point arguments have invalid sizes."
+    assert (np.int64(16) == wpe_mem_122579_ext.shape[1]), "Entry point arguments have invalid sizes."
+    wpe_mem_122579 = unwrapArray(wpe_mem_122579_ext)
+    if not((type(wqry_mem_122580_ext) in [np.ndarray])):
+      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wqry_mem_122580_ext), wqry_mem_122580_ext))
+    if not((wqry_mem_122580_ext.dtype == np.float64)):
+      raise TypeError("Argument #2 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wqry_mem_122580_ext), wqry_mem_122580_ext, np.dtype(np.float64), wqry_mem_122580_ext.dtype))
+    if not((wqry_mem_122580_ext.ndim == 2)):
+      raise TypeError("Argument #2 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wqry_mem_122580_ext.ndim) + "f64")))
+    assert (np.int64(16) == wqry_mem_122580_ext.shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == wqry_mem_122580_ext.shape[1]), "Entry point arguments have invalid sizes."
+    wqry_mem_122580 = unwrapArray(wqry_mem_122580_ext)
+    if not((type(wkey_mem_122581_ext) in [np.ndarray])):
+      raise TypeError("Argument #3 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wkey_mem_122581_ext), wkey_mem_122581_ext))
+    if not((wkey_mem_122581_ext.dtype == np.float64)):
+      raise TypeError("Argument #3 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wkey_mem_122581_ext), wkey_mem_122581_ext, np.dtype(np.float64), wkey_mem_122581_ext.dtype))
+    if not((wkey_mem_122581_ext.ndim == 2)):
+      raise TypeError("Argument #3 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wkey_mem_122581_ext.ndim) + "f64")))
+    assert (np.int64(16) == wkey_mem_122581_ext.shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == wkey_mem_122581_ext.shape[1]), "Entry point arguments have invalid sizes."
+    wkey_mem_122581 = unwrapArray(wkey_mem_122581_ext)
+    if not((type(wval_mem_122582_ext) in [np.ndarray])):
+      raise TypeError("Argument #4 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wval_mem_122582_ext), wval_mem_122582_ext))
+    if not((wval_mem_122582_ext.dtype == np.float64)):
+      raise TypeError("Argument #4 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wval_mem_122582_ext), wval_mem_122582_ext, np.dtype(np.float64), wval_mem_122582_ext.dtype))
+    if not((wval_mem_122582_ext.ndim == 2)):
+      raise TypeError("Argument #4 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wval_mem_122582_ext.ndim) + "f64")))
+    assert (np.int64(16) == wval_mem_122582_ext.shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == wval_mem_122582_ext.shape[1]), "Entry point arguments have invalid sizes."
+    wval_mem_122582 = unwrapArray(wval_mem_122582_ext)
+    if not((type(wout_mem_122583_ext) in [np.ndarray])):
+      raise TypeError("Argument #5 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wout_mem_122583_ext), wout_mem_122583_ext))
+    if not((wout_mem_122583_ext.dtype == np.float64)):
+      raise TypeError("Argument #5 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wout_mem_122583_ext), wout_mem_122583_ext, np.dtype(np.float64), wout_mem_122583_ext.dtype))
+    if not((wout_mem_122583_ext.ndim == 2)):
+      raise TypeError("Argument #5 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wout_mem_122583_ext.ndim) + "f64")))
+    assert (np.int64(16) == wout_mem_122583_ext.shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == wout_mem_122583_ext.shape[1]), "Entry point arguments have invalid sizes."
+    wout_mem_122583 = unwrapArray(wout_mem_122583_ext)
+    if not((type(wup_mem_122584_ext) in [np.ndarray])):
+      raise TypeError("Argument #6 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wup_mem_122584_ext), wup_mem_122584_ext))
+    if not((wup_mem_122584_ext.dtype == np.float64)):
+      raise TypeError("Argument #6 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wup_mem_122584_ext), wup_mem_122584_ext, np.dtype(np.float64), wup_mem_122584_ext.dtype))
+    if not((wup_mem_122584_ext.ndim == 2)):
+      raise TypeError("Argument #6 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wup_mem_122584_ext.ndim) + "f64")))
+    assert (np.int64(64) == wup_mem_122584_ext.shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == wup_mem_122584_ext.shape[1]), "Entry point arguments have invalid sizes."
+    wup_mem_122584 = unwrapArray(wup_mem_122584_ext)
+    if not((type(wdown_mem_122585_ext) in [np.ndarray])):
+      raise TypeError("Argument #7 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wdown_mem_122585_ext), wdown_mem_122585_ext))
+    if not((wdown_mem_122585_ext.dtype == np.float64)):
+      raise TypeError("Argument #7 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wdown_mem_122585_ext), wdown_mem_122585_ext, np.dtype(np.float64), wdown_mem_122585_ext.dtype))
+    if not((wdown_mem_122585_ext.ndim == 2)):
+      raise TypeError("Argument #7 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wdown_mem_122585_ext.ndim) + "f64")))
+    assert (np.int64(16) == wdown_mem_122585_ext.shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(64) == wdown_mem_122585_ext.shape[1]), "Entry point arguments have invalid sizes."
+    wdown_mem_122585 = unwrapArray(wdown_mem_122585_ext)
+    if not((type(wvoc_mem_122586_ext) in [np.ndarray])):
+      raise TypeError("Argument #8 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\n".format("[][]f64", type(wvoc_mem_122586_ext), wvoc_mem_122586_ext))
+    if not((wvoc_mem_122586_ext.dtype == np.float64)):
+      raise TypeError("Argument #8 has invalid value\nFuthark type: {}\nArgument has Python type {} and value: {}\nExpected array with elements of dtype: {}\nThe array given has elements of dtype: {}\n".format("[][]f64", type(wvoc_mem_122586_ext), wvoc_mem_122586_ext, np.dtype(np.float64), wvoc_mem_122586_ext.dtype))
+    if not((wvoc_mem_122586_ext.ndim == 2)):
+      raise TypeError("Argument #8 has invalid value\nDimensionality mismatch\nExpected Futhark type: {}\nBad Python value passed\nActual Futhark type: {}\n".format("[][]f64", (("[]" * wvoc_mem_122586_ext.ndim) + "f64")))
+    assert (np.int64(27) == wvoc_mem_122586_ext.shape[0]), "Entry point arguments have invalid sizes."
+    assert (np.int64(16) == wvoc_mem_122586_ext.shape[1]), "Entry point arguments have invalid sizes."
+    wvoc_mem_122586 = unwrapArray(wvoc_mem_122586_ext)
     time_start = time.time()
     with np.errstate(divide="ignore", over="ignore", under="ignore", invalid="ignore"):
-      (mem_out_123619, mem_out_123620, mem_out_123621, mem_out_123622, mem_out_123623, mem_out_123624, mem_out_123625, mem_out_123626, mem_out_123627) = self.futhark_entry_make_params(wte_mem_121939, wpe_mem_121940, wqry_mem_121941, wkey_mem_121942, wval_mem_121943, wout_mem_121944, wup_mem_121945, wdown_mem_121946, wvoc_mem_121947, sl_49228)
+      (mem_out_124274, mem_out_124275, mem_out_124276, mem_out_124277, mem_out_124278, mem_out_124279, mem_out_124280, mem_out_124281, mem_out_124282) = self.futhark_entry_make_params(wte_mem_122578, wpe_mem_122579, wqry_mem_122580, wkey_mem_122581, wval_mem_122582, wout_mem_122583, wup_mem_122584, wdown_mem_122585, wvoc_mem_122586, sl_49457)
     runtime = (int((time.time() * 1000000)) - int((time_start * 1000000)))
-    return opaque("params", self.opaques, np.reshape(mem_out_123619.view(np.float64)[0:(np.int64(16) * np.int64(64))], (np.int64(16), np.int64(64))), np.reshape(mem_out_123620.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_123621.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_123622.view(np.float64)[0:(sl_49228 * np.int64(16))], (sl_49228, np.int64(16))), np.reshape(mem_out_123623.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_123624.view(np.float64)[0:(np.int64(27) * sl_49228)], (np.int64(27), sl_49228)), np.reshape(mem_out_123625.view(np.float64)[0:(np.int64(64) * np.int64(16))], (np.int64(64), np.int64(16))), np.reshape(mem_out_123626.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_123627.view(np.float64)[0:(np.int64(27) * np.int64(16))], (np.int64(27), np.int64(16))))
+    return opaque("params", self.opaques, np.reshape(mem_out_124274.view(np.float64)[0:(np.int64(16) * np.int64(64))], (np.int64(16), np.int64(64))), np.reshape(mem_out_124275.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_124276.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_124277.view(np.float64)[0:(sl_49457 * np.int64(16))], (sl_49457, np.int64(16))), np.reshape(mem_out_124278.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_124279.view(np.float64)[0:(np.int64(27) * sl_49457)], (np.int64(27), sl_49457)), np.reshape(mem_out_124280.view(np.float64)[0:(np.int64(64) * np.int64(16))], (np.int64(64), np.int64(16))), np.reshape(mem_out_124281.view(np.float64)[0:(np.int64(16) * np.int64(16))], (np.int64(16), np.int64(16))), np.reshape(mem_out_124282.view(np.float64)[0:(np.int64(27) * np.int64(16))], (np.int64(27), np.int64(16))))

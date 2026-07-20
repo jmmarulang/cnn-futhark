@@ -238,11 +238,6 @@ let losses = x18
 in (loss, losses)
 ))))))))))))))))))))
 
-  -- is this correct? does it fill with zeroes if sl < 16?
-  -- def cal_target [asl] : (target_ids : [asl]i64) -> [16][27]real =
-  --   \(target_ids : [asl]i64) ->
-  --   imap2 16 27 (\n m -> (if (n < asl && target_ids[n] == m) then one else zero))
-
   def grad_loss : (mask: [16][16]real)
     -> (wpe: [16][16]real)
     -> (wqry: [16][16]real)
@@ -435,14 +430,6 @@ entry cal_loss (p : params [16]) (seq_ids : [16]i64) (target : [16][27]f64) (mas
    let wseq = (imap2 16 16 (\m n -> wte[seq_ids[m]][n]))
    in nn64.cal_loss mask wpe wqry wkey wval wout wup wdown wvoc wseq target
 
--- entry cal_loss (asl : i64) (p : params [16]) (seq_ids : [16]i64) (mask : [16][16]f64) : (f64 , [16]f64) =
---    let {wte, wpe, wqry, wkey, wval, wout, wup, wdown, wvoc} = p
---    let wseq = (imap2 16 16 (\m n -> wte[seq_ids[m]][n]))
---    let target_ids = (imap1 (asl - 1) (\m -> seq_ids[m + 1]))
---    -- inefficient?
---    let target = nn64.cal_target target_ids
---    in nn64.cal_loss mask wpe wqry wkey wval wout wup wdown wvoc wseq target
-
 entry grad_loss (p : params [16]) (seq_ids : [16]i64) (target : [16][27]f64) (mask : [16][16]f64) :
         (
         [16][16]f64, -- dwpe
@@ -453,29 +440,11 @@ entry grad_loss (p : params [16]) (seq_ids : [16]i64) (target : [16][27]f64) (ma
         [64][16]f64, -- dwup
         [16][64]f64, -- dwdown
         [27][16]f64, -- dwvoc
-        [16][16]f64 -- dwseq
+        [27][16]f64 -- dwte
         ) =
    let {wte, wpe, wqry, wkey, wval, wout, wup, wdown, wvoc} = p
    let wseq = (imap2 16 16 (\m n -> wte[seq_ids[m]][n]))
-   in nn64.grad_loss mask wpe wqry wkey wval wout wup wdown wvoc wseq target
-
--- entry grad_loss (asl : i64) (p : params [16]) (seq_ids : [16]i64) (mask : [16][16]f64) :
---         (
---         [16][16]f64, -- dwpe
---         [16][16]f64, -- dwqry
---         [16][16]f64, -- dwkey
---         [16][16]f64, -- dwval
---         [16][16]f64, -- dwout
---         [64][16]f64, -- dwup
---         [16][64]f64, -- dwdown
---         [27][16]f64, -- dwvoc
---         [16][16]f64 -- dwseq
---         ) =
---    let {wte, wpe, wqry, wkey, wval, wout, wup, wdown, wvoc} = p
---    let wseq = (imap2 16 16 (\m n -> wte[seq_ids[m]][n]))
---    let target_ids = (imap1 (asl - 1) (\m -> seq_ids[m + 1]))
---    -- inefficient?
---    let target = nn64.cal_target target_ids
---   --  in (wpe, wpe, wpe, wpe, wpe, wup, wdown, wvoc, wseq)
---    in nn64.grad_loss mask wpe wqry wkey wval wout wup wdown wvoc wseq target
-
+   let (dwpe, dwqry, dwkey, dwval, dwout, dwup, dwdown, dwvoc, dwseq) =
+    nn64.grad_loss mask wpe wqry wkey wval wout wup wdown wvoc wseq target
+   let dwte = (imap2 27 16 (\m n -> nn64.isum1 16 (\k -> if (seq_ids[k] == m) then dwseq[k][n] else nn64.zero)))
+   in  (dwpe, dwqry, dwkey, dwval, dwout, dwup, dwdown, dwvoc, dwte)
