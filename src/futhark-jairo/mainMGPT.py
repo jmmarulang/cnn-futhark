@@ -34,13 +34,14 @@ hd = 4 # derived dimension of each head
 big_num = 1000000000000
 
 ones = np.ones((sl,sl))
-tri = (ones - np.tril(ones))
-cau_mask = -1 * tri * big_num
+cau_mask = (ones - np.tril(ones))
+print(cau_mask)
+# cau_mask = -1 * tri * big_num
 
 dimdic = {'wpe' : (sl, ed), 'wqry' : (ed, ed), 'wkey' : (ed, ed),
           'wval' : (ed, ed), 'wout' : (ed, ed), 'wup' : (4 * ed, ed),
           'wdown' :(ed, 4 * ed), 'wvoc': (vocab_size, ed),
-          'wte' : (vocab_size, ed),}
+          'wte' : (vocab_size, ed)}
 
 ran_matrix = lambda nout, nin, std=0.08: np.array(
     [[(random.gauss(0, std)) for _ in range(nin)] for _ in range(nout)])
@@ -65,78 +66,86 @@ fparams = mgpt.make_params(fwdic['wte'], fwdic['wpe'], fwdic['wqry'],
 
 # input
 doc = list("wakuntchapinka")
-
+# doc = list("jairo")
+asl = len(doc) + 2
 # doc = [alphabet[i] for i in random.sample(range(BOS), sl - 2)]
 
-seq_ids = np.array([BOS] + [alphabet.index(ch) for ch in doc] + [BOS])
-asl = len(seq_ids)
+# sequence ids
+seq_ids = [BOS] + [alphabet.index(ch) for ch in doc] + [BOS]
+print(seq_ids)
+# add padding
+seq_ids = seq_ids + ([BOS] * (sl - asl - 2))
+print(seq_ids)
+# to numpy
+seq_ids = np.array(seq_ids)
 print("".join(doc))
 
-assert asl == 16
+pad_mask = np.ones((sl,sl))
+for i in range(asl):
+    pad_mask[i][ 0 : asl] = 0
 
-pad_mask = np.zeros((sl,sl))
-
-mask = cau_mask + pad_mask
+# print(pad_mask)
+mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
+mask = -1*mask*big_num
 
 #-------------------------------------
 # PROBS
 
-# start = time.time()
-# fmlogits = mgpt.forward_seq(fparams, seq_ids, mask)
-# mfprobs = np.array([softmax(logits) for logits in fmlogits])
-# end = time.time()
-# print("mfprobs", end - start)
+start = time.time()
+fmlogits = mgpt.forward_seq(fparams, seq_ids, mask)
+mfprobs = np.array([softmax(logits) for logits in fmlogits])
+end = time.time()
+print("mfprobs", end - start)
 
-# start = time.time()
-# pmlogits = mp.forward_seq(pwdic, seq_ids)
-# pmlogits = np.array([[val.data for val in logits] for logits in pmlogits])
-# mpprobs = np.array([softmax(logits) for logits in pmlogits])
-# end = time.time()
-# print("mpprobs", end - start)
-
-# mse = np.array([np.mean([np.pow(pmlogits[i][j] - fmlogits[i][j], 2) for j in range(ed)]) for i in range(sl)])
-# pos = 0
-# print(big_num, pos, mse[pos])
+start = time.time()
+pmlogits = mp.forward_seq(pwdic, seq_ids)
+pmlogits = np.array([[val.data for val in logits] for logits in pmlogits])
+mpprobs = np.array([softmax(logits) for logits in pmlogits])
+end = time.time()
+print("mpprobs", end - start)
 
 #-------------------------------------
 # LOSS
 
-ftarget_ids = np.array([seq_ids[pos_id + 1] for pos_id in range(asl - 1)])
-ftarget = np.array([[1 if (n < (asl - 1) and ftarget_ids[n] == m) else 0
-                     for m in range(vocab_size)]
-                     for n in range(sl)]).astype(np.float64)
+# ftarget_ids = np.array([seq_ids[pos_id + 1] for pos_id in range(asl - 1)])
+# ftarget = np.array([[1 if (n < (asl - 1) and ftarget_ids[n] == m) else 0
+#                      for m in range(vocab_size)]
+#                      for n in range(sl)]).astype(np.float64)
 
-# start = time.time()
-# floss, flosses = mgpt.cal_loss(fparams, seq_ids, ftarget, mask)
-# end = time.time()
-# print("floss", end - start)
-# flosses = flosses[: asl - 1]
+# # start = time.time()
+# # floss, flosses = mgpt.cal_loss(fparams, seq_ids, ftarget, mask)
+# # end = time.time()
+# # print("floss", end - start)
+# # flosses = flosses[: asl - 1]
 
-# start = time.time()
-ploss, plosses = mp.cal_loss(pwdic, seq_ids)
-# end1 = time.time()
-# print("ploss", end1 - start)
+# # start = time.time()
+# ploss, plosses = mp.cal_loss(pwdic, seq_ids)
+# # end1 = time.time()
+# # print("ploss", end1 - start)
 
-ploss.backward()
-# end = time.time()
-# print("pgrad_loss", end - start)
+# ploss.backward()
+# # end = time.time()
+# # print("pgrad_loss", end - start)
 
-ploss, plosses = ploss.data, [aloss.data for aloss in plosses]
+# ploss, plosses = ploss.data, [aloss.data for aloss in plosses]
 
 #-------------------------------------
 # GRADIENT
 
-pdwdic = { k : np.vectorize(mp.to_grad)(v) for k, v in pwdic.items()}
+# pdwdic = { k : np.vectorize(mp.to_grad)(v) for k, v in pwdic.items()}
 
-start = time.time()
-fgrad = mgpt.grad_loss(fparams, seq_ids, ftarget, mask)
-end = time.time()
-print("fgrad_loss", end - start)
+# start = time.time()
+# fgrad = mgpt.grad_loss(fparams, seq_ids, ftarget, mask)
+# end = time.time()
+# print("fgrad_loss", end - start)
 
-fdwdic = {}
-for i , k in enumerate(dimdic.keys()):
-    print(k , i)
-    fdwdic[k] = fgrad[i]
+# fdwdic = {}
+# for i , k in enumerate(dimdic.keys()):
+#     print(k , i)
+#     fdwdic[k] = fgrad[i]
+
+#-------------------------------------
+# TO FILE
 
 try:
     np.save("fdwdic.npy", fdwdic, allow_pickle=True)
@@ -161,9 +170,9 @@ pdwdic = np.load("pdwdic.npy", allow_pickle=True).item()
 #-------------------------------------
 # UPDATE WEIGHTS
 
-mp.update(pwdic, pdwdic, pmdic, pvdic, 0)
+# mp.update(pwdic, pdwdic, pmdic, pvdic, 0)
 
-mp.update(fwdic, fdwdic, fmdic, fvdic, 0)
+# mp.update(fwdic, fdwdic, fmdic, fvdic, 0)
 
 
 #-----------------------------------------------------
@@ -211,11 +220,12 @@ mp.update(fwdic, fdwdic, fmdic, fvdic, 0)
 # # plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
 # plt.show()
 
-# plt.plot(mse, '-o')
-# plt.xlabel('token position', fontsize = 12)
-# plt.ylabel('mean square error', fontsize = 12)
-# # plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
-# plt.show()
+mse = np.array([np.mean([np.pow(pmlogits[i][j] - fmlogits[i][j], 2) for j in range(ed)]) for i in range(sl)])
+plt.plot(mse, '-o')
+plt.xlabel('token position', fontsize = 12)
+plt.ylabel('mean square error', fontsize = 12)
+# plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+plt.show()
 
 # key = "wte"
 # index = [0]
