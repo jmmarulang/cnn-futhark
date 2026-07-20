@@ -10,11 +10,11 @@ import random
 seed = 40
 random.seed(seed)
 
-def softmax(logits):
-    max_val = max(val for val in logits)
-    exps = [np.exp(val - max_val) for val in logits]
-    total = np.sum(exps)
-    return [e / total for e in exps]
+# def softmax(logits):
+#     max_val = max(val for val in logits)
+#     exps = [np.exp(val - max_val) for val in logits]
+#     total = np.sum(exps)
+#     return [e / total for e in exps]
 
 # Futhark call
 mgpt = microgpt.microgpt()
@@ -93,14 +93,14 @@ mask = -1*mask*big_num
 
 # start = time.time()
 # fmlogits = mgpt.forward_seq(fparams, seq_ids, mask)
-# mfprobs = np.array([softmax(logits) for logits in fmlogits])
+# mfprobs = np.array([mp.softmax(logits) for logits in fmlogits])
 # end = time.time()
 # print("mfprobs", end - start)
 
 # start = time.time()
 # pmlogits = mp.forward_seq(pwdic, seq_ids)
 # pmlogits = np.array([[val.data for val in logits] for logits in pmlogits])
-# mpprobs = np.array([softmax(logits) for logits in pmlogits])
+# mpprobs = np.array([mp.softmax(logits) for logits in pmlogits])
 # end = time.time()
 # print("mpprobs", end - start)
 
@@ -113,11 +113,11 @@ ftarget = np.array([[1 if (n < (asl - 1) and ftarget_ids[n] == m) else 0
                      for m in range(vocab_size)]
                      for n in range(sl)]).astype(np.float64)
 
-start = time.time()
-floss, flosses = mgpt.cal_loss(fparams, seq_ids, ftarget, mask)
-end = time.time()
-print("floss", end - start)
-flosses = flosses[: asl - 1]
+# start = time.time()
+# floss, flosses = mgpt.cal_loss(fparams, seq_ids, ftarget, mask)
+# end = time.time()
+# print("floss", end - start)
+# flosses = flosses[: asl - 1]
 
 start = time.time()
 ploss, plosses = mp.cal_loss(pwdic, seq_ids)
@@ -125,25 +125,24 @@ end1 = time.time()
 print("ploss", end1 - start)
 
 ploss.backward()
-# end = time.time()
-# print("pgrad_loss", end - start)
+end = time.time()
+print("pgrad_loss", end - start)
 
 ploss, plosses = ploss.data, [aloss.data for aloss in plosses]
 
 #-------------------------------------
 # GRADIENT
 
-# pdwdic = { k : np.vectorize(mp.to_grad)(v) for k, v in pwdic.items()}
+pdwdic = { k : np.vectorize(mp.to_grad)(v) for k, v in pwdic.items()}
 
-# start = time.time()
-# fgrad = mgpt.grad_loss(fparams, seq_ids, ftarget, mask)
-# end = time.time()
-# print("fgrad_loss", end - start)
+start = time.time()
+fgrad = mgpt.grad_loss(fparams, seq_ids, ftarget, mask)
+end = time.time()
+print("fgrad_loss", end - start)
 
-# fdwdic = {}
-# for i , k in enumerate(dimdic.keys()):
-#     print(k , i)
-#     fdwdic[k] = fgrad[i]
+fdwdic = {}
+for i , k in enumerate(dimdic.keys()):
+    fdwdic[k] = fgrad[i]
 
 #-------------------------------------
 # TO FILE
@@ -179,13 +178,13 @@ pdwdic = np.load("pdwdic.npy", allow_pickle=True).item()
 #-----------------------------------------------------
 # PLOT
 
-abse_loss = [np.abs(afloss - aploss) for (afloss , aploss) in zip(flosses, plosses)]
-print(np.mean(abse_loss))
-plt.plot(abse_loss, '-o')
-plt.xlabel('token position', fontsize = 12)
-plt.ylabel('abs error', fontsize = 12)
-# plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
-plt.show()
+# abse_loss = [np.abs(afloss - aploss) for (afloss , aploss) in zip(flosses, plosses)]
+# print(np.mean(abse_loss))
+# plt.plot(abse_loss, '-o')
+# plt.xlabel('token position', fontsize = 12)
+# plt.ylabel('abs error', fontsize = 12)
+# # plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+# plt.show()
 
 
 # plt.plot(plosses, '-o')
@@ -243,19 +242,19 @@ plt.show()
 # # plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
 # plt.show()
 
-# key = "wte"
-# index = [0]
-# fdata = fdwdic[key][index][0]
-# pdata = pdwdic[key][index][0]
-# barWidth = 0.25
+key = "wte"
+index = [0]
+fdata = fdwdic[key][index][0]
+pdata = pdwdic[key][index][0]
+barWidth = 0.25
 
-# br1 = np.arange(len(fdata))
-# br2 = [x + barWidth for x in br1]
-# plt.bar(br1, fdata, width=barWidth, label="futhark")
-# plt.bar(br2, pdata, width=barWidth, label="python")
-# plt.xticks([r + barWidth for r in range(len(fdata))], range(sl))
-# plt.xlabel('position', fontsize = 12)
-# plt.ylabel('weight', fontsize = 12)
-# plt.legend()
-# # plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
-# plt.show()
+br1 = np.arange(len(fdata))
+br2 = [x + barWidth for x in br1]
+plt.bar(br1, fdata, width=barWidth, label="futhark")
+plt.bar(br2, pdata, width=barWidth, label="python")
+plt.xticks([r + barWidth for r in range(len(fdata))], range(sl))
+plt.xlabel('position', fontsize = 12)
+plt.ylabel('weight', fontsize = 12)
+plt.legend()
+# plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+plt.show()
