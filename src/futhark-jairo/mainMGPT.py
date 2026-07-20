@@ -7,8 +7,8 @@ sys.path.insert(0,"/home/jmmg1c24/Documents/Github Repos/cnn-futhark/src/purePyt
 import microgptlib as mp
 import time
 import random
-# seed = 40
-# random.seed(seed)
+seed = 40
+random.seed(seed)
 
 def softmax(logits):
     max_val = max(val for val in logits)
@@ -31,7 +31,7 @@ ed = 16     # width of the network (embedding dimension)
 sl = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
 ah = 4      # number of attention heads
 hd = 4 # derived dimension of each head
-big_num = 1000000000000
+big_num = 1000000000000000
 
 ones = np.ones((sl,sl))
 cau_mask = (ones - np.tril(ones))
