@@ -7,8 +7,8 @@ sys.path.insert(0,"/home/jmmg1c24/Documents/Github Repos/cnn-futhark/src/purePyt
 import microgptlib as mp
 import time
 import random
-seed = 40
-random.seed(seed)
+# seed = 40
+# random.seed(seed)
 
 def softmax(logits):
     max_val = max(val for val in logits)
@@ -91,43 +91,44 @@ mask = -1*mask*big_num
 #-------------------------------------
 # PROBS
 
-start = time.time()
-fmlogits = mgpt.forward_seq(fparams, seq_ids, mask)
-mfprobs = np.array([softmax(logits) for logits in fmlogits])
-end = time.time()
-print("mfprobs", end - start)
+# start = time.time()
+# fmlogits = mgpt.forward_seq(fparams, seq_ids, mask)
+# mfprobs = np.array([softmax(logits) for logits in fmlogits])
+# end = time.time()
+# print("mfprobs", end - start)
 
-start = time.time()
-pmlogits = mp.forward_seq(pwdic, seq_ids)
-pmlogits = np.array([[val.data for val in logits] for logits in pmlogits])
-mpprobs = np.array([softmax(logits) for logits in pmlogits])
-end = time.time()
-print("mpprobs", end - start)
+# start = time.time()
+# pmlogits = mp.forward_seq(pwdic, seq_ids)
+# pmlogits = np.array([[val.data for val in logits] for logits in pmlogits])
+# mpprobs = np.array([softmax(logits) for logits in pmlogits])
+# end = time.time()
+# print("mpprobs", end - start)
 
 #-------------------------------------
 # LOSS
 
-# ftarget_ids = np.array([seq_ids[pos_id + 1] for pos_id in range(asl - 1)])
-# ftarget = np.array([[1 if (n < (asl - 1) and ftarget_ids[n] == m) else 0
-#                      for m in range(vocab_size)]
-#                      for n in range(sl)]).astype(np.float64)
+# Generate target ids
+ftarget_ids = np.array([seq_ids[pos_id + 1] for pos_id in range(asl - 1)])
+ftarget = np.array([[1 if (n < (asl - 1) and ftarget_ids[n] == m) else 0
+                     for m in range(vocab_size)]
+                     for n in range(sl)]).astype(np.float64)
 
-# # start = time.time()
-# # floss, flosses = mgpt.cal_loss(fparams, seq_ids, ftarget, mask)
-# # end = time.time()
-# # print("floss", end - start)
-# # flosses = flosses[: asl - 1]
+start = time.time()
+floss, flosses = mgpt.cal_loss(fparams, seq_ids, ftarget, mask)
+end = time.time()
+print("floss", end - start)
+flosses = flosses[: asl - 1]
 
-# # start = time.time()
-# ploss, plosses = mp.cal_loss(pwdic, seq_ids)
-# # end1 = time.time()
-# # print("ploss", end1 - start)
+start = time.time()
+ploss, plosses = mp.cal_loss(pwdic, seq_ids)
+end1 = time.time()
+print("ploss", end1 - start)
 
-# ploss.backward()
-# # end = time.time()
-# # print("pgrad_loss", end - start)
+ploss.backward()
+# end = time.time()
+# print("pgrad_loss", end - start)
 
-# ploss, plosses = ploss.data, [aloss.data for aloss in plosses]
+ploss, plosses = ploss.data, [aloss.data for aloss in plosses]
 
 #-------------------------------------
 # GRADIENT
@@ -178,13 +179,13 @@ pdwdic = np.load("pdwdic.npy", allow_pickle=True).item()
 #-----------------------------------------------------
 # PLOT
 
-# abse_loss = [np.abs(afloss - aploss) for (afloss , aploss) in zip(flosses, plosses)]
-# print(np.mean(abse_loss))
-# plt.plot(abse_loss, '-o')
-# plt.xlabel('token position', fontsize = 12)
-# plt.ylabel('abs error', fontsize = 12)
-# # plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
-# plt.show()
+abse_loss = [np.abs(afloss - aploss) for (afloss , aploss) in zip(flosses, plosses)]
+print(np.mean(abse_loss))
+plt.plot(abse_loss, '-o')
+plt.xlabel('token position', fontsize = 12)
+plt.ylabel('abs error', fontsize = 12)
+# plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+plt.show()
 
 
 # plt.plot(plosses, '-o')
@@ -220,12 +221,12 @@ pdwdic = np.load("pdwdic.npy", allow_pickle=True).item()
 # # plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
 # plt.show()
 
-mse = np.array([np.mean([np.pow(pmlogits[i][j] - fmlogits[i][j], 2) for j in range(ed)]) for i in range(sl)])
-plt.plot(mse, '-o')
-plt.xlabel('token position', fontsize = 12)
-plt.ylabel('mean square error', fontsize = 12)
-# plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
-plt.show()
+# mse = np.array([np.mean([np.pow(pmlogits[i][j] - fmlogits[i][j], 2) for j in range(ed)]) for i in range(sl)])
+# plt.plot(mse, '-o')
+# plt.xlabel('token position', fontsize = 12)
+# plt.ylabel('mean square error', fontsize = 12)
+# # plt.savefig('mse_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+# plt.show()
 
 # key = "wte"
 # index = [0]
