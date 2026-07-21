@@ -148,7 +148,8 @@ def cal_loss(wdic, seq_ids, sl = 16, ah = 4, hd = 4):
 
     return loss, losses
 
-def update(wdic, dwdic, mdic, vdic, step, lr_t = 0.01, beta1 = 0.85, beta2 = 0.99, eps_adam = 1e-8):
+def update(wdic, dwdic, mdic, vdic, step, num_steps, learning_rate = 0.01, beta1 = 0.85, beta2 = 0.99, eps_adam = 1e-8):
+    lr_t = learning_rate * (1 - step / num_steps) # linear learning rate decay
     for k , dp in dwdic.items():
         mdic[k] = beta1 * mdic[k] + (1 - beta1) * dp
         vdic[k] = beta2 * vdic[k] + (1 - beta2) * dp ** 2
