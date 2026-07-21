@@ -104,92 +104,92 @@ pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
 #-------------------------------------
 # TRAINING FUT
 
-num_steps = 1
+# num_steps = 1
 
-with futhark_server.Server(futhark) as server:
-    start = time.time()
-    for step in range(num_steps):
-        doc = docs[step % len(docs)]
-        asl = len(doc) + 2
-        tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+# with futhark_server.Server(futhark) as server:
+#     start = time.time()
+#     for step in range(num_steps):
+#         doc = docs[step % len(docs)]
+#         asl = len(doc) + 2
+#         tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
 
-        # Padding
-        ftokens = tokens + ([BOS] * (sl - asl))
+#         # Padding
+#         ftokens = tokens + ([BOS] * (sl - asl))
 
-        ftokens = np.array(ftokens)
+#         ftokens = np.array(ftokens)
 
-        # Masking
-        pad_mask = np.ones((sl,sl))
-        for i in range(asl):
-            pad_mask[i][ 0 : asl] = 0
+#         # Masking
+#         pad_mask = np.ones((sl,sl))
+#         for i in range(asl):
+#             pad_mask[i][ 0 : asl] = 0
 
-        mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
-        mask = -1*mask*big_num
+#         mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
+#         mask = -1*mask*big_num
 
-        # Generate target ids
-        ftarget_ids = np.array([tokens[pos_id + 1] for pos_id in range(asl - 1)])
-        ftarget = np.array([[1 if (n < (asl - 1) and ftarget_ids[n] == m) else 0
-                            for m in range(vocab_size)]
-                            for n in range(sl)]).astype(np.float64)
+#         # Generate target ids
+#         ftarget_ids = np.array([tokens[pos_id + 1] for pos_id in range(asl - 1)])
+#         ftarget = np.array([[1 if (n < (asl - 1) and ftarget_ids[n] == m) else 0
+#                             for m in range(vocab_size)]
+#                             for n in range(sl)]).astype(np.float64)
 
-        server.put_value('tokens', ftokens)
-        server.put_value('mask', mask)
-        server.put_value('ftarget', ftarget)
-        for k , data in fwdic.items():
-            server.put_value(k, data)
-        server.cmd_call('make_params', 'fparams', *fwdic.keys())
-        server.cmd_call('grad_loss', 'grad',
-                        'fparams', 'tokens',  'ftarget' ,'mask')
-        fgrad = server.get_value('grad')
+#         server.put_value('tokens', ftokens)
+#         server.put_value('mask', mask)
+#         server.put_value('ftarget', ftarget)
+#         for k , data in fwdic.items():
+#             server.put_value(k, data)
+#         server.cmd_call('make_params', 'fparams', *fwdic.keys())
+#         server.cmd_call('grad_loss', 'grad',
+#                         'fparams', 'tokens',  'ftarget' ,'mask')
+#         fgrad = server.get_value('grad')
 
-        fdwdic = {}
-        for i , k in enumerate(dimdic.keys()):
-            fdwdic[k] = fgrad[i]
+#         fdwdic = {}
+#         for i , k in enumerate(dimdic.keys()):
+#             fdwdic[k] = fgrad[i]
 
-        mp.update(fwdic, fdwdic, fmdic, fvdic, step, num_steps)
+#         mp.update(fwdic, fdwdic, fmdic, fvdic, step, num_steps)
 
-        server.cmd_free('tokens', 'mask', 'ftarget', 'fparams','grad')
-        server.cmd_free(*fwdic.keys())
+#         server.cmd_free('tokens', 'mask', 'ftarget', 'fparams','grad')
+#         server.cmd_free(*fwdic.keys())
 
-end = time.time()
-print("fgrad time", end - start)
+# end = time.time()
+# print("fgrad time", end - start)
 
-try:
-    np.save("fdwdic.npy", fdwdic, allow_pickle=True)
-    file = open('fdwdic.txt', 'wt')
-    file.write(str(fdwdic))
-    file.close()
-except :
-    print("It refused")
+# try:
+#     np.save("fdwdic.npy", fdwdic, allow_pickle=True)
+#     file = open('fdwdic.txt', 'wt')
+#     file.write(str(fdwdic))
+#     file.close()
+# except :
+#     print("It refused")
 
-#-------------------------------------
-# TRAINING PY
+# #-------------------------------------
+# # TRAINING PY
 
-num_steps = 1
+# num_steps = 1
 
-start = time.time()
+# start = time.time()
 
-for step in range(num_steps):
-    doc = docs[step % len(docs)]
-    tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+# for step in range(num_steps):
+#     doc = docs[step % len(docs)]
+#     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
 
-    plossV, plossesV = mp.cal_loss(pwdic, tokens)
-    plossV.backward()
+#     plossV, plossesV = mp.cal_loss(pwdic, tokens)
+#     plossV.backward()
 
-    pdwdic = { k : np.vectorize(mp.to_grad)(v) for k, v in pwdic.items()}
+#     pdwdic = { k : np.vectorize(mp.to_grad)(v) for k, v in pwdic.items()}
 
-    mp.update(pwdic, pdwdic, pmdic, pvdic, step, num_steps)
+#     mp.update(pwdic, pdwdic, pmdic, pvdic, step, num_steps)
 
-end = time.time()
-print("pgrad time", end - start)
+# end = time.time()
+# print("pgrad time", end - start)
 
-try:
-    np.save("fdwdic.npy", fdwdic, allow_pickle=True)
-    file = open('fdwdic.txt', 'wt')
-    file.write(str(fdwdic))
-    file.close()
-except :
-    print("It refused")
+# try:
+#     np.save("fdwdic.npy", fdwdic, allow_pickle=True)
+#     file = open('fdwdic.txt', 'wt')
+#     file.write(str(fdwdic))
+#     file.close()
+# except :
+#     print("It refused")
 
 #-------------------------------------
 # PROBS
