@@ -22,8 +22,8 @@ random.seed(seed)
 # Futhark call
 # mgpt = microgpt.microgpt()
 
-# alphabet = list(string.ascii_lowercase)
-# assert len(alphabet) == 26
+alphabet = list(string.ascii_lowercase)
+assert len(alphabet) == 26
 
 # BOS = len(alphabet)
 # vocab = alphabet + ["end"]
@@ -200,7 +200,7 @@ doc = list("jairo")
 asl = len(doc) + 2
 
 # sequence ids
-ptokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+ptokens = [BOS] + [alphabet.index(ch) for ch in doc] + [BOS]
 # add padding
 ftokens = ptokens + ([BOS] * (sl - asl))
 # to numpy
@@ -211,9 +211,13 @@ pad_mask = np.ones((sl,sl))
 for i in range(asl):
     pad_mask[i][ 0 : asl] = 0
 
+print(pad_mask)
+
 # print(pad_mask)
 mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
+
 mask = -1*mask*big_num
+
 
 with futhark_server.Server(futhark) as server:
     server.put_value('tokens', ftokens)
@@ -259,19 +263,19 @@ mpprobs = np.array([mp.softmax(logits) for logits in pmlogits])
 # # plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
 # plt.show()
 
-barWidth = 0.25
-lfprobs = mfprobs[-1]
-lpprobs = mpprobs[-1]
+# barWidth = 0.25
+# lfprobs = mfprobs[-1]
+# lpprobs = mpprobs[-1]
 
-br1 = np.arange(len(lfprobs))
-br2 = [x + barWidth for x in br1]
-plt.bar(br1, lfprobs, width=barWidth, label="futhark")
-plt.bar(br2, lpprobs, width=barWidth, label="python")
-plt.xticks([r + barWidth for r in range(len(lfprobs))], vocab)
-plt.xlabel('next token probability', fontsize = 12)
-plt.legend()
-# plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
-plt.show()
+# br1 = np.arange(len(lfprobs))
+# br2 = [x + barWidth for x in br1]
+# plt.bar(br1, lfprobs, width=barWidth, label="futhark")
+# plt.bar(br2, lpprobs, width=barWidth, label="python")
+# plt.xticks([r + barWidth for r in range(len(lfprobs))], vocab)
+# plt.xlabel('next token probability', fontsize = 12)
+# plt.legend()
+# # plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+# plt.show()
 
 # mse = np.array([np.mean([np.pow(pmlogits[i][j] - fmlogits[i][j], 2) for j in range(ed)]) for i in range(sl)])
 # plt.plot(mse, '-o')
