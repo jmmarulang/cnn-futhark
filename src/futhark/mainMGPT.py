@@ -260,8 +260,8 @@ mpprobs = np.array([mp.softmax(logits) for logits in pmlogits])
 # plt.show()
 
 barWidth = 0.25
-lfprobs = mfprobs[0]
-lpprobs = mpprobs[0]
+lfprobs = mfprobs[-1]
+lpprobs = mpprobs[-1]
 
 br1 = np.arange(len(lfprobs))
 br2 = [x + barWidth for x in br1]
