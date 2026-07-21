@@ -1,4 +1,0 @@
--- optimized?
-let x50 = (imap2 16 16 (\xi xj -> (isum1 16 (\xk -> (isum1 4 (\xl -> x43[(xj / 4)][xk][xl] F.* x10[(xj / 4)][xi][xl] F.* x4[(xj / 4)][xk][(xj % 4)] F./ fromi64 2))))))
--- optimized?
-let x57 = (imap2 16 16 (\xi xj -> isum1 4 (\xl -> (isum1 16 (\xm -> x43[(xj / 4)][xi][xl] F.* x10[(xj / 4)][xm][xl] F.* x7[(xj / 4)][xm][(xj % 4)] F./ fromi64 2)))))

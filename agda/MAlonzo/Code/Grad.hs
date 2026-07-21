@@ -1290,9 +1290,169 @@ d_grad_454 v0 v1 v2 v3
              MAlonzo.Code.Lang.C_ar_10 v8
                -> coe
                     (\ v9 ->
-                       d_grad'45'sum_460
-                         (coe v0) (coe v5) (coe v8) (coe v7)
-                         (coe MAlonzo.Code.Lang.C_zero_186) (coe v9))
+                       coe
+                         C_let'8242'_24 v8 (coe MAlonzo.Code.Lang.C_maximum_218 v5 v7)
+                         (coe
+                            C_let'8242'_24 v8
+                            (coe
+                               MAlonzo.Code.Lang.C_un_216 (coe MAlonzo.Code.Lang.C_inverse_174)
+                               (coe
+                                  MAlonzo.Code.Lang.C_sum_202 v5
+                                  (coe
+                                     MAlonzo.Code.Lang.du_𝕀0'43'_302
+                                     (coe
+                                        MAlonzo.Code.Lang.du__'8863'__272
+                                        (coe
+                                           MAlonzo.Code.Lang.d_wk_330
+                                           (coe
+                                              MAlonzo.Code.Lang.C__'9657'__16 (coe v0)
+                                              (coe MAlonzo.Code.Lang.C_ix_8 (coe v5)))
+                                           (coe
+                                              MAlonzo.Code.Lang.C__'9657'__16
+                                              (coe
+                                                 MAlonzo.Code.Lang.C__'9657'__16 (coe v0) (coe v1))
+                                              (coe MAlonzo.Code.Lang.C_ix_8 (coe v5)))
+                                           (coe v1)
+                                           (coe
+                                              MAlonzo.Code.Lang.C_keep_316
+                                              (coe
+                                                 MAlonzo.Code.Lang.C_skip_314
+                                                 (MAlonzo.Code.Lang.d_'8838''45'eq_456 (coe v0))))
+                                           (coe v7))
+                                        (coe
+                                           MAlonzo.Code.Lang.C_var_184
+                                           (coe
+                                              MAlonzo.Code.Lang.C_there_38
+                                              (coe MAlonzo.Code.Lang.C_here_36)))))))
+                            (coe
+                               du_ee'45'tail_52
+                               (coe
+                                  du_ee'45'tail_52
+                                  (coe
+                                     d_grad'45'sum_460
+                                     (coe
+                                        MAlonzo.Code.Lang.C__'9657'__16
+                                        (coe MAlonzo.Code.Lang.C__'9657'__16 (coe v0) (coe v1))
+                                        (coe v1))
+                                     (coe v5) (coe v8)
+                                     (coe
+                                        MAlonzo.Code.Lang.d_wk_330
+                                        (coe
+                                           MAlonzo.Code.Lang.C__'9657'__16 (coe v0)
+                                           (coe MAlonzo.Code.Lang.C_ix_8 (coe v5)))
+                                        (coe
+                                           MAlonzo.Code.Lang.C__'9657'__16
+                                           (coe
+                                              MAlonzo.Code.Lang.C__'9657'__16
+                                              (coe
+                                                 MAlonzo.Code.Lang.C__'9657'__16 (coe v0) (coe v1))
+                                              (coe v1))
+                                           (coe MAlonzo.Code.Lang.C_ix_8 (coe v5)))
+                                        (coe v1)
+                                        (coe
+                                           MAlonzo.Code.Lang.C_keep_316
+                                           (coe
+                                              MAlonzo.Code.Lang.C_skip_314
+                                              (coe
+                                                 MAlonzo.Code.Lang.C_skip_314
+                                                 (MAlonzo.Code.Lang.d_'8838''45'eq_456 (coe v0)))))
+                                        (coe v7))
+                                     (coe
+                                        MAlonzo.Code.Lang.C_bin_210
+                                        (coe MAlonzo.Code.Lang.C_mul_160)
+                                        (coe
+                                           MAlonzo.Code.Lang.C_bin_210
+                                           (coe MAlonzo.Code.Lang.C_mul_160)
+                                           (MAlonzo.Code.Lang.d_wk_330
+                                              (coe v0)
+                                              (coe
+                                                 MAlonzo.Code.Lang.C__'9657'__16
+                                                 (coe
+                                                    MAlonzo.Code.Lang.C__'9657'__16
+                                                    (coe
+                                                       MAlonzo.Code.Lang.C__'9657'__16 (coe v0)
+                                                       (coe v1))
+                                                    (coe v1))
+                                                 (coe MAlonzo.Code.Lang.C_ix_8 (coe v5)))
+                                              (coe v1)
+                                              (coe
+                                                 MAlonzo.Code.Lang.C_skip_314
+                                                 (coe
+                                                    MAlonzo.Code.Lang.C_skip_314
+                                                    (coe
+                                                       MAlonzo.Code.Lang.C_skip_314
+                                                       (MAlonzo.Code.Lang.d_'8838''45'eq_456
+                                                          (coe v0)))))
+                                              (coe v3))
+                                           (coe
+                                              MAlonzo.Code.Lang.du_𝕀0'43'_302
+                                              (coe
+                                                 MAlonzo.Code.Lang.du__'8863'__272
+                                                 (coe
+                                                    MAlonzo.Code.Lang.d_wk_330
+                                                    (coe
+                                                       MAlonzo.Code.Lang.C__'9657'__16 (coe v0)
+                                                       (coe MAlonzo.Code.Lang.C_ix_8 (coe v5)))
+                                                    (coe
+                                                       MAlonzo.Code.Lang.C__'9657'__16
+                                                       (coe
+                                                          MAlonzo.Code.Lang.C__'9657'__16
+                                                          (coe
+                                                             MAlonzo.Code.Lang.C__'9657'__16
+                                                             (coe v0) (coe v1))
+                                                          (coe v1))
+                                                       (coe MAlonzo.Code.Lang.C_ix_8 (coe v5)))
+                                                    (coe v1)
+                                                    (coe
+                                                       MAlonzo.Code.Lang.C_keep_316
+                                                       (coe
+                                                          MAlonzo.Code.Lang.C_skip_314
+                                                          (coe
+                                                             MAlonzo.Code.Lang.C_skip_314
+                                                             (MAlonzo.Code.Lang.d_'8838''45'eq_456
+                                                                (coe v0)))))
+                                                    (coe v7))
+                                                 (coe
+                                                    MAlonzo.Code.Lang.C_var_184
+                                                    (coe
+                                                       MAlonzo.Code.Lang.C_there_38
+                                                       (coe
+                                                          MAlonzo.Code.Lang.C_there_38
+                                                          (coe MAlonzo.Code.Lang.C_here_36)))))))
+                                        (coe
+                                           MAlonzo.Code.Lang.C_var_184
+                                           (coe
+                                              MAlonzo.Code.Lang.C_there_38
+                                              (coe MAlonzo.Code.Lang.C_here_36))))
+                                     (coe
+                                        d_ee'45'wk_40 (coe v0)
+                                        (coe
+                                           MAlonzo.Code.Lang.C__'9657'__16
+                                           (coe MAlonzo.Code.Lang.C__'9657'__16 (coe v0) (coe v1))
+                                           (coe v1))
+                                        (coe
+                                           MAlonzo.Code.Lang.C__'9657'__16
+                                           (coe MAlonzo.Code.Lang.C__'9657'__16 (coe v0) (coe v1))
+                                           (coe v1))
+                                        (coe
+                                           MAlonzo.Code.Lang.C_skip_314
+                                           (coe
+                                              MAlonzo.Code.Lang.C_skip_314
+                                              (MAlonzo.Code.Lang.d_'8838''45'eq_456 (coe v0))))
+                                        (coe
+                                           du_ee'45'wk'45'zero_92 (coe v0)
+                                           (coe
+                                              MAlonzo.Code.Lang.C__'9657'__16
+                                              (coe
+                                                 MAlonzo.Code.Lang.C__'9657'__16 (coe v0) (coe v1))
+                                              (coe v1))
+                                           (coe v9)
+                                           (coe
+                                              MAlonzo.Code.Lang.C_skip_314
+                                              (coe
+                                                 MAlonzo.Code.Lang.C_skip_314
+                                                 (MAlonzo.Code.Lang.d_'8838''45'eq_456
+                                                    (coe v0)))))))))))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Grad._.grad-sum
@@ -1325,8 +1485,8 @@ d_grad'45'sum_460 v0 v1 v2 v3 v4 v5
                      MAlonzo.Code.Lang.C__'9657'__16 (coe v0)
                      (coe MAlonzo.Code.Lang.C_ix_8 (coe v1)))))))
 -- Grad.test
-d_test_692 :: T_EE_20
-d_test_692
+d_test_694 :: T_EE_20
+d_test_694
   = coe
       d_grad_454
       (coe

@@ -42,23 +42,23 @@ module Opt (r : Real) (rp : RealProp r) where
   -- Jairo made
   opt (imaps {s = s} e) with opt e
   ... | c , p with isLet c
-  -- ... | yes (r , a , b , refl) = let′ (imap a) (imaps
-  --   (sub b ((skeep (sdrop sub-id)) ▹ sel (var v₁) (var v₀)))) , foo
-  --   where
-  --   foo : _
-  --   foo ρ i = (p _ [])
-  --     ∙ sym (eval-sub b _ _ _
-  --     ∙ eval-cong b
-  --       (sub-env-wks (sdrop sub-id) (skip ⊆-eq) _ ▹ refl ▹ λ _ → refl) []
-  --     ∙ eval-cong b (sub-env-sdrop sub-id ▹ refl ▹ λ _ → refl) []
-  --     ∙ eval-cong b (sub-env-id ▹ refl ▹ λ _ → refl) []
-  --     ∙ eval-cong b (wk-env-id ▹ refl ▹ λ _ → refl) []
-  --     ∙ eval-cong b (reflᶜ ▹ refl ▹ foo') [])
-  --     where
-  --     foo' : _
-  --     foo' l =
-  --       cong (eval a _) (splitP-proj₂ {i = i})
-  --       ∙ cong (λ x → eval a (_ , x) _) (splitP-proj₁ {i = i})
+  ... | yes (r , a , b , refl) = let′ (imap a) (imaps
+    (sub b ((skeep (sdrop sub-id)) ▹ sel (var v₁) (var v₀)))) , foo
+    where
+    foo : _
+    foo ρ i = (p _ [])
+      ∙ sym (eval-sub b _ _ _
+      ∙ eval-cong b
+        (sub-env-wks (sdrop sub-id) (skip ⊆-eq) _ ▹ refl ▹ λ _ → refl) []
+      ∙ eval-cong b (sub-env-sdrop sub-id ▹ refl ▹ λ _ → refl) []
+      ∙ eval-cong b (sub-env-id ▹ refl ▹ λ _ → refl) []
+      ∙ eval-cong b (wk-env-id ▹ refl ▹ λ _ → refl) []
+      ∙ eval-cong b (reflᶜ ▹ refl ▹ foo') [])
+      where
+      foo' : _
+      foo' l =
+        cong (eval a _) (splitP-proj₂ {i = i})
+        ∙ cong (λ x → eval a (_ , x) _) (splitP-proj₁ {i = i})
   opt (imaps e) | t , p | _ = imaps t , λ ρ i → p (ρ , i) []
   opt (sels e e₁) with opt e | opt e₁
 
@@ -108,24 +108,24 @@ module Opt (r : Real) (rp : RealProp r) where
 
 -- Jairo made
   opt (imap {s = s} {p = p} e) with opt e
-  -- ... | (let′ {s = r} {p = .p} a b) , q =
-  --   let′ (imap a) (imap {s = s} {p = p}
-  --     (sub b (skeep (sdrop sub-id) ▹ sel (var v₁) (var v₀)))) , foo where
-  --   foo : _
-  --   foo ρ i = let j , k = splitP {s} i .proj₁ , splitP {s} i .proj₂ in
-  --     (q _ k)
-  --     ∙ sym (eval-sub b _ _ _
-  --     ∙ eval-cong b
-  --       (sub-env-wks (sdrop sub-id) (skip ⊆-eq) _ ▹ refl ▹ λ _ → refl) k
-  --     ∙ eval-cong b (sub-env-sdrop sub-id ▹ refl ▹ λ _ → refl) k
-  --     ∙ eval-cong b (sub-env-id ▹ refl ▹ λ _ → refl) k
-  --     ∙ eval-cong b (wk-env-id ▹ refl ▹ λ _ → refl) k
-  --     ∙ eval-cong b (reflᶜ ▹ refl ▹ foo') k)
-  --     where
-  --     foo' : _
-  --     foo' l = let j , k = splitP {s} i .proj₁ , splitP {s} i .proj₂ in
-  --       cong (eval a _) (splitP-proj₂ {i = j})
-  --       ∙ cong (λ x → eval a (_ , x) _) (splitP-proj₁ {i = j})
+  ... | (let′ {s = r} {p = .p} a b) , q =
+    let′ (imap a) (imap {s = s} {p = p}
+      (sub b (skeep (sdrop sub-id) ▹ sel (var v₁) (var v₀)))) , foo where
+    foo : _
+    foo ρ i = let j , k = splitP {s} i .proj₁ , splitP {s} i .proj₂ in
+      (q _ k)
+      ∙ sym (eval-sub b _ _ _
+      ∙ eval-cong b
+        (sub-env-wks (sdrop sub-id) (skip ⊆-eq) _ ▹ refl ▹ λ _ → refl) k
+      ∙ eval-cong b (sub-env-sdrop sub-id ▹ refl ▹ λ _ → refl) k
+      ∙ eval-cong b (sub-env-id ▹ refl ▹ λ _ → refl) k
+      ∙ eval-cong b (wk-env-id ▹ refl ▹ λ _ → refl) k
+      ∙ eval-cong b (reflᶜ ▹ refl ▹ foo') k)
+      where
+      foo' : _
+      foo' l = let j , k = splitP {s} i .proj₁ , splitP {s} i .proj₂ in
+        cong (eval a _) (splitP-proj₂ {i = j})
+        ∙ cong (λ x → eval a (_ , x) _) (splitP-proj₁ {i = j})
 
   ... | t , p = imap t , λ ρ i → p (ρ , splitP i .proj₁) (splitP i .proj₂)
     --let t , p = opt e in imap t , λ ρ i → p (ρ , splitP i .proj₁) (splitP i .proj₂)

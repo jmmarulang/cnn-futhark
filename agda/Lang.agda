@@ -615,6 +615,7 @@ module Primitives where
       -- Let exps := 𝕖^ (x) In
       -- Let total := Sum {s} (λ i → sels exps i) In
       -- Let r := exps // (Imaps λ _ → total) In r
+
       Let maxs := Max {s} (λ i → sels ⟨ x ⟩ i) In
       Let exps := 𝕖^ (⟨ x ⟩ ⊟ tiles maxs) In
       Let total := Sum {s} (λ i → sels exps i) In
@@ -633,15 +634,15 @@ module Primitives where
     rmsnorm : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
     rmsnorm {s = s} x =
       -- Imaps λ i →
-        -- (sels ⟨ x ⟩ i)
-        -- ⊠
-        -- 𝟙/ (
-        --   sqrt (
-        --     scaledown (len s) (Sum (λ i → sels ⟨ x ⟩ i ⊠ sels ⟨ x ⟩ i))
-        --     ⊞
-        --     (scaledown 100000 one)
-        --        )
-        --     )
+      --   (sels ⟨ x ⟩ i)
+      --   ⊠
+      --   𝟙/ (
+      --     sqrt (
+      --       scaledown (len s) (Sum (λ i → sels ⟨ x ⟩ i ⊠ sels ⟨ x ⟩ i))
+      --       ⊞
+      --       (scaledown 100000 one)
+      --          )
+      --       )
 
       Let ms := scaledown (len s) (Sum (λ i → sels ⟨ x ⊠ x ⟩ i)) In
       Let scale := sqrt (ms ⊞ (scaledown 100000 one)) In
