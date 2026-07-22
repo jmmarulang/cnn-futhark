@@ -149,11 +149,12 @@ m = [0.0] * len(params) # first moment buffer
 v = [0.0] * len(params) # second moment buffer
 
 # Repeat in sequence
-num_steps = 1000 # number of training steps
+num_steps = 1 # number of training steps
 for step in range(num_steps):
 
     # Take single document, tokenize it, surround it with BOS special token on both sides
     doc = docs[step % len(docs)]
+    print('Aku' , doc)
     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
     n = min(block_size, len(tokens) - 1)
 
@@ -170,6 +171,10 @@ for step in range(num_steps):
 
     # Backward the loss, calculating the gradients with respect to all model parameters
     loss.backward()
+
+    # tt = [[state_dict['wte'][j][i].grad for i in range(16)] for j in range(27)]
+    # for i in range(27):
+    #     print(tt[i])
 
     # Adam optimizer update: update the model parameters based on the corresponding gradients
     lr_t = learning_rate * (1 - step / num_steps) # linear learning rate decay

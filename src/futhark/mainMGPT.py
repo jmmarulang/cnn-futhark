@@ -75,12 +75,6 @@ for k , dim in dimdic.items():
     pvdic[k] = np.zeros(dim)
 pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
 
-# fparams = mgpt.make_params(fwdic['wte'], fwdic['wpe'], fwdic['wqry'],
-#                            fwdic['wkey'], fwdic['wval'], fwdic['wout'],
-#                            fwdic['wup'], fwdic['wdown'], fwdic['wvoc'])
-
-
-
 #-------------------------------------
 # TRAINING FUT
 
