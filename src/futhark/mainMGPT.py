@@ -275,7 +275,7 @@ except :
 # plt.show()
 
 key = "wte"
-index = -1
+index = 0
 fdata = fdwdic[key][index]
 pdata = pdwdic[key][index]
 print(pdwdic[key])
