@@ -13,11 +13,11 @@ import logging
 seed = 40
 random.seed(seed)
 
-# def softmax(logits):
-#     max_val = max(val for val in logits)
-#     exps = [np.exp(val - max_val) for val in logits]
-#     total = np.sum(exps)
-#     return [e / total for e in exps]
+def softmax(logits):
+    max_val = max(val for val in logits)
+    exps = [np.exp(val - max_val) for val in logits]
+    total = np.sum(exps)
+    return [e / total for e in exps]
 
 # Futhark call
 # mgpt = microgpt.microgpt()
@@ -87,6 +87,7 @@ with futhark_server.Server(futhark) as server:
         doc = docs[step % len(docs)]
         asl = len(doc) + 2
         tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+        print(tokens)
 
         # Padding
         ftokens = tokens + ([BOS] * (sl - asl))
@@ -277,6 +278,7 @@ key = "wte"
 index = -1
 fdata = fdwdic[key][index]
 pdata = pdwdic[key][index]
+print(pdwdic[key])
 barWidth = 0.25
 
 br1 = np.arange(len(fdata))

@@ -63,16 +63,10 @@ def linear(x, w):
     return [sum(wi * xi for wi, xi in zip(wo, x)) for wo in w]
 
 def softmax(logits):
-    try :
-        max_val = max(val.data for val in logits)
-        exps = [(val - max_val).exp() for val in logits]
-        total = sum(exps)
-        return [e / total for e in exps]
-    except:
-        max_val = max(val for val in logits)
-        exps = [np.exp(val - max_val) for val in logits]
-        total = np.sum(exps)
-        return [e / total for e in exps]
+    max_val = max(val.data for val in logits)
+    exps = [(val - max_val).exp() for val in logits]
+    total = sum(exps)
+    return [e / total for e in exps]
 
 def rmsnorm(x):
     ms = sum(xi * xi for xi in x) / len(x)
