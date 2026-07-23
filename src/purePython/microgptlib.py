@@ -1,7 +1,9 @@
+import numpy as np
 import os       # os.path.exists
 import math     # math.log, math.exp
-import numpy as np
+# import numpy as np
 
+# Let there be Autograd to recursively apply the chain rule through a computation graph
 # Let there be Autograd to recursively apply the chain rule through a computation graph
 class Value:
     __slots__ = ('data', 'grad', '_children', '_local_grads') # Python optimization for memory usage
@@ -18,16 +20,12 @@ class Value:
 
     def __mul__(self, other):
         other = other if isinstance(other, Value) else Value(other)
-        return Value(self.data * other.data, (self, other), (
-            other.data, self.data))
+        return Value(self.data * other.data, (self, other), (other.data, self.data))
 
-    def __pow__(self, other): return Value(self.data**other, (self,), (
-                other * self.data**(other-1),))
+    def __pow__(self, other): return Value(self.data**other, (self,), (other * self.data**(other-1),))
     def log(self): return Value(math.log(self.data), (self,), (1/self.data,))
-    def exp(self): return Value(math.exp(self.data), (self,), (
-                math.exp(self.data),))
-    def relu(self): return Value(max(0, self.data), (self,), (
-                float(self.data > 0),))
+    def exp(self): return Value(math.exp(self.data), (self,), (math.exp(self.data),))
+    def relu(self): return Value(max(0, self.data), (self,), (float(self.data > 0),))
     def __neg__(self): return self * -1
     def __radd__(self, other): return self + other
     def __sub__(self, other): return self + (-other)
@@ -53,7 +51,7 @@ class Value:
 
 def to_grad(x) : return x.grad
 
-def to_num(x) : return x.data
+def to_data(x) : return x.data
 
 def to_val(x) : return Value(x)
 
@@ -73,47 +71,47 @@ def rmsnorm(x):
     scale = (ms + 1e-5) ** -0.5
     return [xi * scale for xi in x]
 
-def forward_tok(wdic, tok_id, pos_id, keys, vals, ah = 4, hd = 4):
-    tok_emb = wdic['wte'][tok_id] # token embedding
-    pos_emb = wdic['wpe'][pos_id] # position embedding
+def forward_tok(state_dict, token_id, pos_id, keys, values, n_head = 4, head_dim = 4, n_layer= 1):
+    tok_emb = state_dict['wte'][token_id] # token embedding
+    pos_emb = state_dict['wpe'][pos_id] # position embedding
     x = [t + p for t, p in zip(tok_emb, pos_emb)] # joint token and position embedding
     x = rmsnorm(x) # note: not redundant due to backward pass via the residual connection
-    # 1) Multi-head Attention block
-    x_residual = x
-    x = rmsnorm(x)
-    q = linear(x, wdic['wqry'])
-    k = linear(x, wdic['wkey'])
-    v = linear(x, wdic['wval'])
-    keys.append(k)
-    vals.append(v)
-    x_attn = []
-    for h in range(ah):
-        hs = h * hd
-        q_h = q[hs:hs+hd]
-        k_h = [ki[hs:hs+hd] for ki in keys]
-        v_h = [vi[hs:hs+hd] for vi in vals]
-        attn_logits = [sum(q_h[j] * k_h[t][j] for j in range(hd)) / hd**0.5
-                       for t in range(len(k_h))]
-        attn_weights = softmax(attn_logits)
-        head_out = [sum(attn_weights[t] * v_h[t][j] for t in range(len(v_h)))
-                    for j in range(hd)]
-        x_attn.extend(head_out)
-    x = linear(x_attn, wdic['wout'])
-    x = [a + b for a, b in zip(x, x_residual)]
-    # 2) MLP block
-    x_residual = x
-    x = rmsnorm(x)
-    x = linear(x, wdic['wup'])
-    x = [xi.relu() for xi in x]
-    x = linear(x, wdic['wdown'])
-    x = [a + b for a, b in zip(x, x_residual)]
 
-    logits = linear(x, wdic['wvoc'])
+    for li in range(n_layer):
+        # 1) Multi-head Attention block
+        x_residual = x
+        x = rmsnorm(x)
+        q = linear(x, state_dict['wqry'])
+        k = linear(x, state_dict['wkey'])
+        v = linear(x, state_dict['wval'])
+        keys[li].append(k)
+        values[li].append(v)
+        x_attn = []
+        for h in range(n_head):
+            hs = h * head_dim
+            q_h = q[hs:hs+head_dim]
+            k_h = [ki[hs:hs+head_dim] for ki in keys[li]]
+            v_h = [vi[hs:hs+head_dim] for vi in values[li]]
+            attn_logits = [sum(q_h[j] * k_h[t][j] for j in range(head_dim)) / head_dim**0.5 for t in range(len(k_h))]
+            attn_weights = softmax(attn_logits)
+            head_out = [sum(attn_weights[t] * v_h[t][j] for t in range(len(v_h))) for j in range(head_dim)]
+            x_attn.extend(head_out)
+        x = linear(x_attn, state_dict['wout'])
+        x = [a + b for a, b in zip(x, x_residual)]
+        # 2) MLP block
+        x_residual = x
+        x = rmsnorm(x)
+        x = linear(x, state_dict['wup'])
+        x = [xi.relu() for xi in x]
+        x = linear(x, state_dict['wdown'])
+        x = [a + b for a, b in zip(x, x_residual)]
+
+    logits = linear(x, state_dict['wvoc'])
     return logits
 
 def forward_seq(wdic, seq_ids, sl = 16, ah = 4, hd = 4):
     n = min(sl, len(seq_ids))
-    keys, vals = [], []
+    keys, vals = [[]], [[]]
     mlogits = []
 
     for pos_id in range(n):
@@ -123,22 +121,19 @@ def forward_seq(wdic, seq_ids, sl = 16, ah = 4, hd = 4):
 
     return mlogits
 
-def cal_loss(wdic, seq_ids, sl = 16, ah = 4, hd = 4):
-    n = min(sl, len(seq_ids) - 1)
-    keys, vals = [], []
-    mprobs = []
-    losses = []
+def cal_loss(state_dict, tokens, block_size = 16, n_head = 4, head_dim = 4, n_layer = 1):
+    n = min(block_size, len(tokens) - 1)
 
+    # Forward the token sequence through the model, building up the computation graph all the way to the loss
+    keys, values = [[] for _ in range(n_layer)], [[] for _ in range(n_layer)]
+    losses = []
     for pos_id in range(n):
-        tok_id, target_id = seq_ids[pos_id], seq_ids[pos_id + 1]
-        logits = forward_tok(wdic, tok_id, pos_id, keys, vals, ah, hd)
+        token_id, target_id = tokens[pos_id], tokens[pos_id + 1]
+        logits = forward_tok(state_dict, token_id, pos_id, keys, values, n_head, head_dim, n_layer)
         probs = softmax(logits)
         loss_t = -probs[target_id].log()
-
-        mprobs.append(probs)
         losses.append(loss_t)
-    # Instead of dividing by n we divide by sl!!!
-    loss = (1 / sl) * sum(losses)
+    loss = (1 / block_size) * sum(losses)
 
     return loss, losses
 
@@ -150,10 +145,6 @@ def update(wdic, dwdic, mdic, vdic, step, num_steps, learning_rate = 0.01, beta1
         m_hat = mdic[k] / (1 - beta1 ** (step + 1))
         v_hat = vdic[k] / (1 - beta2 ** (step + 1))
         wdic[k] -= lr_t * m_hat / (v_hat ** 0.5 + eps_adam)
-        try :
-            np.vectorize(reset_grad)(wdic[k])
-        except :
-            pass
 
 # def update_kvs(wdic, tok_id, pos_id, keys, vals):
 #     tok_emb = wdic['wte'][tok_id] # token embedding

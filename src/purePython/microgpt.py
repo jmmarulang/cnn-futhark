@@ -153,7 +153,8 @@ num_steps = 1 # number of training steps
 for step in range(num_steps):
 
     # Take single document, tokenize it, surround it with BOS special token on both sides
-    doc = docs[step % len(docs)]
+    # doc = docs[step % len(docs)]
+    doc = 'b'
     print('Aku' , doc)
     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
     n = min(block_size, len(tokens) - 1)
@@ -176,30 +177,30 @@ for step in range(num_steps):
     # for i in range(27):
     #     print(tt[i])
 
-    # Adam optimizer update: update the model parameters based on the corresponding gradients
-    lr_t = learning_rate * (1 - step / num_steps) # linear learning rate decay
-    for i, p in enumerate(params):
-        m[i] = beta1 * m[i] + (1 - beta1) * p.grad
-        v[i] = beta2 * v[i] + (1 - beta2) * p.grad ** 2
-        m_hat = m[i] / (1 - beta1 ** (step + 1))
-        v_hat = v[i] / (1 - beta2 ** (step + 1))
-        p.data -= lr_t * m_hat / (v_hat ** 0.5 + eps_adam)
-        p.grad = 0
+    # # Adam optimizer update: update the model parameters based on the corresponding gradients
+    # lr_t = learning_rate * (1 - step / num_steps) # linear learning rate decay
+    # for i, p in enumerate(params):
+    #     m[i] = beta1 * m[i] + (1 - beta1) * p.grad
+    #     v[i] = beta2 * v[i] + (1 - beta2) * p.grad ** 2
+    #     m_hat = m[i] / (1 - beta1 ** (step + 1))
+    #     v_hat = v[i] / (1 - beta2 ** (step + 1))
+    #     p.data -= lr_t * m_hat / (v_hat ** 0.5 + eps_adam)
+    #     p.grad = 0
 
-    print(f"step {step+1:4d} / {num_steps:4d} | loss {loss.data:.4f}", end='\r')
+    # print(f"step {step+1:4d} / {num_steps:4d} | loss {loss.data:.4f}", end='\r')
 
-# Inference: may the model babble back to us
-temperature = 0.5 # in (0, 1], control the "creativity" of generated text, low to high
-print("\n--- inference (new, hallucinated names) ---")
-for sample_idx in range(20):
-    keys, values = [[] for _ in range(n_layer)], [[] for _ in range(n_layer)]
-    token_id = BOS
-    sample = []
-    for pos_id in range(block_size):
-        logits = gpt(token_id, pos_id, keys, values)
-        probs = softmax([l / temperature for l in logits])
-        token_id = random.choices(range(vocab_size), weights=[p.data for p in probs])[0]
-        if token_id == BOS:
-            break
-        sample.append(uchars[token_id])
-    print(f"sample {sample_idx+1:2d}: {''.join(sample)}")
+# # Inference: may the model babble back to us
+# temperature = 0.5 # in (0, 1], control the "creativity" of generated text, low to high
+# print("\n--- inference (new, hallucinated names) ---")
+# for sample_idx in range(20):
+#     keys, values = [[] for _ in range(n_layer)], [[] for _ in range(n_layer)]
+#     token_id = BOS
+#     sample = []
+#     for pos_id in range(block_size):
+#         logits = gpt(token_id, pos_id, keys, values)
+#         probs = softmax([l / temperature for l in logits])
+#         token_id = random.choices(range(vocab_size), weights=[p.data for p in probs])[0]
+#         if token_id == BOS:
+#             break
+#         sample.append(uchars[token_id])
+#     print(f"sample {sample_idx+1:2d}: {''.join(sample)}")
