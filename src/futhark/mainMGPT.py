@@ -77,7 +77,7 @@ cau_mask = (ones - np.tril(ones))
 #-------------------------------------
 # TRAINING FUT
 
-num_steps = 300
+num_steps = 1
 
 fdwdic = {}
 with futhark_server.Server(futhark) as server:
@@ -143,7 +143,6 @@ start = time.time()
 
 pdwdic = {}
 for step in range(num_steps):
-    print(step)
     doc = list(docs[step % len(docs)])
     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
 
@@ -167,7 +166,6 @@ end = time.time()
 print("pgrad time", end - start)
 
 pwdic_data = {k : np.vectorize(mp.to_data)(p) for k , p in pwdic.items()}
-print(pwdic_data)
 
 try:
     np.save("pwdic.npy", pwdic_data, allow_pickle=True)
