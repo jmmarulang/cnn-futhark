@@ -186,16 +186,10 @@ module Opt (r : Real) (rp : RealProp r) where
     foo ρ i =
       sum-inv {s = s} _+_ (fromℕ 0) i
       ∙ sum-cong{s = s} _+_ (fromℕ 𝟘) (λ _ → pf _ _)
-      ∙ sym (sum-inv {s = s} _+_ (fromℕ 𝟘) {λ j → eval (a ⊞ b) (ρ , j)} i)
-      ∙ {!   !}
--- Ar.sum (λ a₁ b₁ i₁ → a₁ i₁ + b₁ i₁) (λ i₁ → fromℕ 0)
---       (λ j i₁ → eval a (ρ , j) i₁ + eval b (ρ , j) i₁) i
---       ≡
---       Ar.sum (λ a₁ b₁ i₁ → a₁ i₁ + b₁ i₁) (λ i₁ → fromℕ 0)
---       (λ i₁ → eval a (ρ , i₁)) i
---       +
---       Ar.sum (λ a₁ b₁ i₁ → a₁ i₁ + b₁ i₁) (λ i₁ → fromℕ 0)
---       (λ i₁ → eval b (ρ , i₁)) i
+      ∙ sum-dist {s = s} _+_ (fromℕ 𝟘) +-neutˡ +-medial
+      ∙ cong₂ _+_
+        (sym (sum-inv {s = s} _+_ (fromℕ 0) i))
+        (sym (sum-inv {s = s} _+_ (fromℕ 0) i))
 
   ... | let′ {s = q} a b , pf = (let′ (imap a) (E.sum {s = s}
     (sub b (skeep (sdrop sub-id) ▹ sel (var v₁) (var v₀))))) , foo where
