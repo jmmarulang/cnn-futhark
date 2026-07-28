@@ -1,7 +1,0 @@
-
-let x0 = inp
-let x1 = one
-let x2 = x0
-let x3 = x1
-
-let dinp = x3

@@ -1,4 +1,5 @@
---{-# OPTIONS --overlapping-instances #-}
+-- {-# OPTIONS --overlapping-instances #-}
+{-# OPTIONS --warn=noUserWarning #-}
 open import Data.Nat using (zero; suc; ℕ; _+_; _*_; _≤_; s≤s; z≤n; _<_)
 open import Data.Nat.Properties using (+-mono-≤; ≤-step; ≤-pred; _≟_; +-comm; +-suc)
 open import Data.Fin as F using (zero; suc; Fin; combine; remQuot; fromℕ<; inject+; splitAt)
@@ -177,7 +178,6 @@ module _ where
            → (∀ k → sum₁ (zipWith f) (K e) a k ≡ map (sum₁ f e) (λ i j → a j i) k)
   sum₁-inv {n = zero} f e {a} _ = refl
   sum₁-inv {n = suc n} f e {a} k = cong (f (a (zero ∷ []) k)) (sum₁-inv f e {a ∘ ιsuc} k)
-
 
   sum-inv : (f : X → X → X) (e : X) → {a : Ar s (Ar p X)}
           → (∀ k → sum (zipWith f) (K e) a k ≡ map (sum f e) (λ i j → a j i) k)
@@ -373,6 +373,28 @@ module _ where
   -- Transposes an array
   transpose : Ar s X → Ar (reverse s) X
   transpose x i = x (unreverseP i)
+
+  sum₁-dist : (_⊙_ : X → X → X) (e : X) → ∀ {a b : Ar (n ∷ []) X} →
+    (∀ {x} → e ⊙ x ≡ x)
+    → (∀ {x y z w} → ((x ⊙ y) ⊙ (z ⊙ w)) ≡ ((x ⊙ z) ⊙ (y ⊙ w)))
+    → sum₁ (_⊙_) e (λ i → (a i) ⊙ (b i)) ≡
+      (sum₁ (_⊙_) e λ i → a i) ⊙ (sum₁ (_⊙_) e λ i → b i)
+  sum₁-dist {n = zero} _⊙_ e neul prop = sym neul
+  sum₁-dist {n = suc n} _⊙_ e {a} {b} neul prop =
+    let sum₁-dist' = λ i j → sum₁-dist _⊙_ e {i} {j} neul prop in
+    cong (λ x → _ ⊙ x) (sum₁-dist' (λ x → a (ιsuc x)) _) ∙ prop
+
+  sum-dist : (_⊙_ : X → X → X) (e : X) → ∀ {a b : Ar s X} →
+    (∀ {x} → e ⊙ x ≡ x)
+    → (∀ {x y z w} → ((x ⊙ y) ⊙ (z ⊙ w)) ≡ ((x ⊙ z) ⊙ (y ⊙ w)))
+    → sum (_⊙_) e (λ i → (a i) ⊙ (b i)) ≡
+      (sum (_⊙_) e λ i → a i) ⊙ (sum (_⊙_) e λ i → b i)
+  sum-dist {s = []} _⊙_ e neul prop = refl
+  sum-dist {s = s ∷ ss} _⊙_ e {a} {b} neul prop =
+    let a' = λ i → sum _⊙_ e λ j → a (i ++ j) in
+    sym (sym (sum₁-dist _⊙_ e {a'} neul prop)
+    ∙ sum₁-cong {n = s} _⊙_ e λ i →
+      sym (sum-dist _⊙_ e {λ j → a (i ++ j)} neul prop))
 
 module ArTests where
   imap : (s : S) → (P s → X) → Ar s X

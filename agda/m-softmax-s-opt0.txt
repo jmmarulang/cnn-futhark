@@ -1,4 +1,0 @@
-(imap2 16 16 (\x0_0 x0_1 -> (let x1 = (imap1 16 (\x4_0 -> (F.exp inp[x0_0][x4_0])))
-in (let x2 = (isum1 16 (\x5_0 -> x1[x5_0]))
-in (let x3 = (imap1 16 (\x6_0 -> (x1[x6_0] F.* (one F./ x2))))
-in x3[x0_1])))))

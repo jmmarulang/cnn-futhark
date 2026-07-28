@@ -273,7 +273,7 @@ module Extract where
   -- let-test-s : String
   -- let-test-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.let-test-e OPT) (from-named (ε ▹ "inp"))) 0)
 
-  grad-mgpt-loss-e = ee-OPT $ ee-dedup $ ee-opt (grad Primitives.Microgpt.mgpt-loss-e one zero-ee)
+  grad-mgpt-loss-e = ee-OPT $ ee-dedup $ ee-OPT (grad Primitives.Microgpt.mgpt-loss-e one zero-ee)
 
   mgpt-loss-s : String
   mgpt-loss-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.mgpt-loss-e OPT) ((from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target")))) 0)

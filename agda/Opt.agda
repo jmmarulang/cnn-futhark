@@ -1,4 +1,4 @@
--- {-# OPTIONS --warn=noUserWarning #-}
+{-# OPTIONS --warn=noUserWarning #-}
 open import Data.Product
 open import Data.Unit
 open import Data.Empty
@@ -181,6 +181,22 @@ module Opt (r : Real) (rp : RealProp r) where
                                 ∙ cong (eval a ρ) (cong (λ t → ix-combine t j x ) (q ρ))
   opt (E.sum {s = s}{p} e) with opt e
   -- Jairo made
+  ... | a ⊞ b , pf = (E.sum {s = s}{p} a ⊞ E.sum {s = s}{p} b) , foo where
+    foo : _
+    foo ρ i =
+      sum-inv {s = s} _+_ (fromℕ 0) i
+      ∙ sum-cong{s = s} _+_ (fromℕ 𝟘) (λ _ → pf _ _)
+      ∙ sym (sum-inv {s = s} _+_ (fromℕ 𝟘) {λ j → eval (a ⊞ b) (ρ , j)} i)
+      ∙ {!   !}
+-- Ar.sum (λ a₁ b₁ i₁ → a₁ i₁ + b₁ i₁) (λ i₁ → fromℕ 0)
+--       (λ j i₁ → eval a (ρ , j) i₁ + eval b (ρ , j) i₁) i
+--       ≡
+--       Ar.sum (λ a₁ b₁ i₁ → a₁ i₁ + b₁ i₁) (λ i₁ → fromℕ 0)
+--       (λ i₁ → eval a (ρ , i₁)) i
+--       +
+--       Ar.sum (λ a₁ b₁ i₁ → a₁ i₁ + b₁ i₁) (λ i₁ → fromℕ 0)
+--       (λ i₁ → eval b (ρ , i₁)) i
+
   ... | let′ {s = q} a b , pf = (let′ (imap a) (E.sum {s = s}
     (sub b (skeep (sdrop sub-id) ▹ sel (var v₁) (var v₀))))) , foo where
       foo : _
@@ -351,8 +367,20 @@ module Opt (r : Real) (rp : RealProp r) where
        foo ρ k with eval i ρ ≟ₚ eval j ρ | (p ρ k) | (q ρ k)
        ... | yes _ | p′ | q′ rewrite p′ | q′ = refl
        ... | no _ | p′ | q′ rewrite p′ = *-nulˡ
-
-  ... | a , p | b , q = a ⊠ b , λ ρ j → cong₂ _*_ (p ρ j) (q ρ j) --what about b = 1?
+  ... | a , p | b , q with isImaps b
+  ... | yes (b′ , refl) = imaps (sels (a ↑) (var here) ⊠ b′)
+                        , λ ρ j → cong₂ _*_ (p ρ j
+                                             ∙ sym (eval-wk (skip ⊆-eq) a (ρ , j) j
+                                                    ∙ eval-cong a (wk-env-id) j))
+                                           (q ρ j)
+  ... | no _ with isImaps a
+  ... | yes (a′ , refl) = (imaps (a′ ⊠ sels (b ↑) (var here)))
+                        , λ ρ j → cong₂ _*_ (p ρ j)
+                                            (sym (eval-wk (skip ⊆-eq) b (ρ , j) j
+                                                  ∙ eval-cong b (wk-env-id) j
+                                                  ∙ (sym (q ρ j))))
+  ... | no _ = a ⊠ b , λ ρ j → cong₂ _*_ (p ρ j) (q ρ j)
+  -- ... | a , p | b , q = a ⊠ b , λ ρ j → cong₂ _*_ (p ρ j) (q ρ j) --what about b = 1?
   opt (scaledown x e) with opt e
   -- Jairo Made
   ... | (imaps {s = s} a) , q = imaps (scaledown x a)
