@@ -1584,14 +1584,44 @@ du_transpose_1480 ::
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> AgdaAny
 du_transpose_1480 v0 v1 v2
   = coe v1 (d_unreverseP_1464 (coe v0) (coe v2))
+-- Ar._.sum₁-dist
+d_sum'8321''45'dist_1510 ::
+  () ->
+  Integer ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  (MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> AgdaAny) ->
+  (MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> AgdaAny) ->
+  (AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->
+  (AgdaAny ->
+   AgdaAny ->
+   AgdaAny ->
+   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_sum'8321''45'dist_1510 = erased
+-- Ar._.sum-dist
+d_sum'45'dist_1568 ::
+  () ->
+  [Integer] ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  (MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> AgdaAny) ->
+  (MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> AgdaAny) ->
+  (AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->
+  (AgdaAny ->
+   AgdaAny ->
+   AgdaAny ->
+   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_sum'45'dist_1568 = erased
 -- Ar.ArTests.imap
-d_imap_1490 ::
+d_imap_1608 ::
   () ->
   [Integer] ->
   (MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> AgdaAny) ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> AgdaAny
-d_imap_1490 ~v0 ~v1 v2 = du_imap_1490 v2
-du_imap_1490 ::
+d_imap_1608 ~v0 ~v1 v2 = du_imap_1608 v2
+du_imap_1608 ::
   (MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> AgdaAny) ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> AgdaAny
-du_imap_1490 v0 = coe v0
+du_imap_1608 v0 = coe v0

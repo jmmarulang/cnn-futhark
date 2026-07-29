@@ -1,4 +1,4 @@
-{-# OPTIONS --warn=noUserWarning #-}
+-- {-# OPTIONS --warn=noUserWarning #-}
 open import Data.Product
 open import Data.Unit
 open import Data.Empty

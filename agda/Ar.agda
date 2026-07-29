@@ -1,5 +1,5 @@
 -- {-# OPTIONS --overlapping-instances #-}
-{-# OPTIONS --warn=noUserWarning #-}
+-- {-# OPTIONS --warn=noUserWarning #-}
 open import Data.Nat using (zero; suc; ℕ; _+_; _*_; _≤_; s≤s; z≤n; _<_)
 open import Data.Nat.Properties using (+-mono-≤; ≤-step; ≤-pred; _≟_; +-comm; +-suc)
 open import Data.Fin as F using (zero; suc; Fin; combine; remQuot; fromℕ<; inject+; splitAt)

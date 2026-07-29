@@ -59,7 +59,7 @@ d_opt_12 ::
   MAlonzo.Code.Lang.T_Ctx_12 ->
   MAlonzo.Code.Lang.T_IS_6 ->
   MAlonzo.Code.Lang.T_E_182 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_opt_12 = coe MAlonzo.Code.Opt.du_opt_208 (coe d_r_4)
+d_opt_12 = coe MAlonzo.Code.Opt.du_opt_210 (coe d_r_4)
 -- Extraction.Optimise._.∷-inj₂
 d_'8759''45'inj'8322'_14 ::
   Integer ->
@@ -77,7 +77,7 @@ d_doopt_16 v0 v1 v2
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
       (coe
-         MAlonzo.Code.Opt.du_opt_208 (coe d_r_4) (coe v0) (coe v1) (coe v2))
+         MAlonzo.Code.Opt.du_opt_210 (coe d_r_4) (coe v0) (coe v1) (coe v2))
 -- Extraction.Optimise.multiopt
 d_multiopt_20 ::
   MAlonzo.Code.Lang.T_Ctx_12 ->
