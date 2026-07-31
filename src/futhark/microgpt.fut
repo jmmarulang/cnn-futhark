@@ -413,9 +413,9 @@ in (dwpe, dwqry, dwkey, dwval, dwout, dwup, dwdown, dwvoc, dwseq)
 
 module nn64 = nn f64
 
-type params [sl] = {
-  wte:   [27][sl]f64, -- token embeddings
-  wpe:   [sl][16]f64, -- position embeddings
+type params = {
+  wte:   [27][16]f64, -- token embeddings
+  wpe:   [16][16]f64, -- position embeddings
   wqry:  [16][16]f64, -- query weights
   wkey:  [16][16]f64, -- key weights
   wval:  [16][16]f64, -- value weights
@@ -425,23 +425,107 @@ type params [sl] = {
   wvoc:  [27][16]f64  -- output projection
 }
 
-entry make_params [sl] (wte: [27][sl]f64)  (wpe: [sl][16]f64)
+entry to_params (wte: [27][16]f64)  (wpe: [16][16]f64)
     (wqry: [16][16]f64) (wkey: [16][16]f64) (wval: [16][16]f64)
     (wout: [16][16]f64) (wup: [64][16]f64) (wdown: [16][64]f64)
-    (wvoc: [27][16]f64) : params [sl] =
+    (wvoc: [27][16]f64) : params =
     {wte, wpe, wqry, wkey, wval, wout, wup, wdown, wvoc}
 
-entry forward_seq (p : params [16]) (tokens : [16]i64) (mask : [16][16]f64) : [16][27]f64 =
+def from_params (p : params) :
+  (
+  [27][16]f64, -- dwte
+  [16][16]f64, -- dwpe
+  [16][16]f64, -- dwqry
+  [16][16]f64, -- dwkey
+  [16][16]f64, -- dwval
+  [16][16]f64, -- dwout
+  [64][16]f64, -- dwup
+  [16][64]f64, -- dwdown
+  [27][16]f64, -- dwvoc
+  ) =
+  let {wte, wpe, wqry, wkey, wval, wout, wup, wdown, wvoc} = p
+  in (wte, wpe, wqry, wkey, wval, wout, wup, wdown, wvoc)
+
+
+entry forward_seq (p : params) (tokens : [16]i64) (mask : [16][16]f64) : [16][27]f64 =
    let {wte, wpe, wqry, wkey, wval, wout, wup, wdown, wvoc} = p
    let wseq = (imap2 16 16 (\m n -> wte[tokens[m]][n]))
    in nn64.forward_seq mask wpe wqry wkey wval wout wup wdown wvoc wseq
 
-entry cal_loss (p : params [16]) (tokens : [16]i64) (target : [16][27]f64) (mask : [16][16]f64) : (f64 , [16]f64) =
+entry cal_loss (p : params) (tokens : [16]i64) (target : [16][27]f64) (mask : [16][16]f64) : (f64 , [16]f64) =
    let {wte, wpe, wqry, wkey, wval, wout, wup, wdown, wvoc} = p
    let wseq = (imap2 16 16 (\m n -> wte[tokens[m]][n]))
    in nn64.cal_loss mask wpe wqry wkey wval wout wup wdown wvoc wseq target
 
-entry grad_loss (p : params [16]) (tokens : [16]i64) (target : [16][27]f64) (mask : [16][16]f64) :
+def cal_target (n : i64) (tokens : [16]i64) : [16][27]f64 =
+  imap2 16 27 (\i j -> (if ((i < (n - 1)) && (tokens[i + 1] == j)) then 1 else 0))
+
+def adam_opt_w [n] [m] (w : [n][m]f64) (mw : [n][m]f64) (vw : [n][m]f64)
+  (dw : [n][m]f64) (step : i64) (lt_r : f64)
+  (beta1 : f64) (beta2 : f64) (eps_adam : f64):
+  ([n][m]f64, [n][m]f64, [n][m]f64) =
+  let new_mw = imap2 n m (\i j ->
+    beta1 * mw[i][j] + ((1 - beta1) * dw[i][j]))
+  let new_vw = imap2 n m (\i j ->
+    beta2 * vw[i][j] + ((1 - beta2) * dw[i][j] * dw[i][j]))
+  let m_hat = imap2 n m (\i j ->
+    new_mw[i][j] / (1 - beta1 ** ((nn64.fromi64 step) + 1)))
+  let v_hat = imap2 n m (\i j ->
+    new_vw[i][j] / (1 - (beta2 ** ((nn64.fromi64 step) + 1))))
+  let new_w = imap2 n m (\i j ->
+    w[i][j] - (lt_r * m_hat[i][j] / ((v_hat[i][j] ** 0.5) + eps_adam)))
+  in (new_w, new_mw, new_vw)
+
+def adam_opt (p : params) (mp : params) (vp : params)
+  (dp : params) (step : i64) (num_steps : i64) (lr : f64)
+  (beta1 : f64) (beta2 : f64) (eps_adam : f64):
+  (params,  params,  params) =
+  let lt_r = lr * (1 - (nn64.fromi64 step) / (nn64.fromi64 num_steps))
+  let (wte, mwte, vwte) =
+    adam_opt_w p.wte mp.wte vp.wte dp.wte step lt_r beta1 beta2 eps_adam
+  let (wpe, mwpe, vwpe) =
+    adam_opt_w p.wpe mp.wpe vp.wpe dp.wpe step lt_r beta1 beta2 eps_adam
+  let (wqry, mwqry, vwqry) =
+    adam_opt_w p.wqry mp.wqry vp.wqry dp.wqry step lt_r beta1 beta2 eps_adam
+  let (wkey, mwkey, vwkey) =
+    adam_opt_w p.wkey mp.wkey vp.wkey dp.wkey step lt_r beta1 beta2 eps_adam
+  let (wval, mwval, vwval) =
+    adam_opt_w p.wval mp.wval vp.wval dp.wval step lt_r beta1 beta2 eps_adam
+  let (wout, mwout, vwout) =
+    adam_opt_w p.wout mp.wout vp.wout dp.wout step lt_r beta1 beta2 eps_adam
+  let (wup, mwup, vwup) =
+    adam_opt_w p.wup mp.wup vp.wup dp.wup step lt_r beta1 beta2 eps_adam
+  let (wdown, mwdown, vwdown) =
+    adam_opt_w p.wdown mp.wdown vp.wdown dp.wdown step lt_r beta1 beta2 eps_adam
+  let (wvoc, mwvoc, vwvoc) =
+    adam_opt_w p.wvoc mp.wvoc vp.wvoc dp.wvoc step lt_r beta1 beta2 eps_adam
+  let p' = to_params wte wpe wqry wkey wval wout wup wdown wvoc
+  let mp' = to_params mwte mwpe mwqry mwkey mwval mwout mwup mwdown mwvoc
+  let vp' = to_params vwte vwpe vwqry vwkey vwval vwout vwup vwdown vwvoc
+  in (p', mp', vp')
+
+-- entry grad_loss (p : params) (tokens : [16]i64) (target : [16][27]f64) (mask : [16][16]f64) :
+-- def grad_loss (n : i64) (p : params) (tokens : [16]i64) (mask : [16][16]f64) :
+--         (
+--         [27][16]f64, -- dwte
+--         [16][16]f64, -- dwpe
+--         [16][16]f64, -- dwqry
+--         [16][16]f64, -- dwkey
+--         [16][16]f64, -- dwval
+--         [16][16]f64, -- dwout
+--         [64][16]f64, -- dwup
+--         [16][64]f64, -- dwdown
+--         [27][16]f64, -- dwvoc
+--         ) =
+--    let {wte, wpe, wqry, wkey, wval, wout, wup, wdown, wvoc} = p
+--    let target = cal_target n tokens
+--    let wseq = (imap2 16 16 (\m n -> wte[tokens[m]][n]))
+--    let (dwpe, dwqry, dwkey, dwval, dwout, dwup, dwdown, dwvoc, dwseq) =
+--     nn64.grad_loss mask wpe wqry wkey wval wout wup wdown wvoc wseq target
+--    let dwte = (imap2 27 16 (\m n -> nn64.isum1 16 (\k -> if (tokens[k] == m) then dwseq[k][n] else nn64.zero)))
+--    in  (dwte, dwpe, dwqry, dwkey, dwval, dwout, dwup, dwdown, dwvoc)
+
+def grad_loss (dl : i64) (p : params) (tokens : [16]i64) (mask : [16][16]f64) :
         (
         [27][16]f64, -- dwte
         [16][16]f64, -- dwpe
@@ -454,8 +538,69 @@ entry grad_loss (p : params [16]) (tokens : [16]i64) (target : [16][27]f64) (mas
         [27][16]f64, -- dwvoc
         ) =
    let {wte, wpe, wqry, wkey, wval, wout, wup, wdown, wvoc} = p
+   -- cal targets
+   let targets = cal_target dl tokens
+   -- cal voc embedding
    let wseq = (imap2 16 16 (\m n -> wte[tokens[m]][n]))
+   -- cal gradient
    let (dwpe, dwqry, dwkey, dwval, dwout, dwup, dwdown, dwvoc, dwseq) =
-    nn64.grad_loss mask wpe wqry wkey wval wout wup wdown wvoc wseq target
+    nn64.grad_loss mask wpe wqry wkey wval wout wup wdown wvoc wseq targets
    let dwte = (imap2 27 16 (\m n -> nn64.isum1 16 (\k -> if (tokens[k] == m) then dwseq[k][n] else nn64.zero)))
    in  (dwte, dwpe, dwqry, dwkey, dwval, dwout, dwup, dwdown, dwvoc)
+
+def cal_step (dl : i64) (p : params) (mp : params) (vp : params)
+  (tokens : [16]i64) (mask : [16][16]f64)
+  (step : i64) (num_steps : i64) :
+  (params,  params,  params) =
+  -- cal gradient
+  let (dwte, dwpe, dwqry, dwkey, dwval, dwout, dwup, dwdown, dwvoc) =
+    grad_loss dl p tokens mask
+  let dp = to_params dwte dwpe dwqry dwkey dwval dwout dwup dwdown dwvoc
+  -- cal new model weights
+  let (p', mp', vp') =
+    adam_opt p mp vp dp step num_steps 0.01 0.85 0.99 0.00000001
+  in (p', mp', vp')
+
+-- entry aux (dl : i64) (p : params) (tokens : [16]i64) (mask : [16][16]f64)
+--   (mp : params) (vp : params)
+--   (step : i64) (num_steps : i64) :
+--   (
+--   [27][16]f64, -- wte
+--   [16][16]f64, -- wpe
+--   [16][16]f64, -- wqry
+--   [16][16]f64, -- wkey
+--   [16][16]f64, -- wval
+--   [16][16]f64, -- wout
+--   [64][16]f64, -- wup
+--   [16][64]f64, -- wdown
+--   [27][16]f64, -- wvoc
+--   ) =
+--   let (p', _, _) = cal_step dl p tokens mask mp vp step num_steps
+--   in from_params p'
+
+entry train (num_steps : i64) (p : params) (mp : params) (vp : params)
+  (masks : [num_steps][16][16]f64) (dls : [num_steps]i64)
+  (seqs : [num_steps][16]i64) =
+  let (p, mp ,vp) =
+    loop (p, mp, vp) = (p, mp, vp)
+    for step < num_steps do
+      let dl = dls[step]
+      let tokens = seqs[step]
+      let mask = masks[step]
+      in (cal_step dl p mp vp tokens mask step num_steps)
+  let p = from_params p
+  let mp = from_params mp
+  let vp = from_params vp
+  in (p, mp, vp)
+
+entry zero_params : params =
+  let wte = imap2 27 16 (\_ _ -> 0)
+  let wpe = imap2 16 16 (\_ _ -> 0)
+  let wqry = imap2 16 16 (\_ _ -> 0)
+  let wkey = imap2 16 16 (\_ _ -> 0)
+  let wval = imap2 16 16 (\_ _ -> 0)
+  let wout = imap2 16 16 (\_ _ -> 0)
+  let wup = imap2 64 16 (\_ _ -> 0)
+  let wdown = imap2 16 64 (\_ _ -> 0)
+  let wvoc = imap2 27 16 (\_ _ -> 0)
+  in {wte, wpe, wqry, wkey, wval, wout, wup, wdown, wvoc}

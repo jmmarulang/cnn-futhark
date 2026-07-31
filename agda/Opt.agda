@@ -181,6 +181,7 @@ module Opt (r : Real) (rp : RealProp r) where
                                 ∙ cong (eval a ρ) (cong (λ t → ix-combine t j x ) (q ρ))
   opt (E.sum {s = s}{p} e) with opt e
   -- Jairo made
+  -- DANGER: maybe not efficient memorywise
   ... | a ⊞ b , pf = (E.sum {s = s}{p} a ⊞ E.sum {s = s}{p} b) , foo where
     foo : _
     foo ρ i =
@@ -430,58 +431,3 @@ module Opt (r : Real) (rp : RealProp r) where
               , λ ρ j → sum-inv _∨_ -∞ᵣ {(λ i₁ → eval e (ρ , i₁))} j
                         ∙ sum-cong _∨_ -∞ᵣ {λ j₁ → eval e (ρ , j₁) j} (λ i → p (ρ , i) j)
                         ∙ (sym (sum-inv _∨_ -∞ᵣ {λ i → eval a (ρ , i)} j))
-
-  -- rm-zbs : ∀ {s Γ} → E Γ (ar s) → E Γ (ar s)
-  -- rm-zbs {s} (var x) = var x
-  -- rm-zbs {s} 𝟘 = 𝟘
-  -- rm-zbs {s} 𝟙 = 𝟙
-  -- rm-zbs {s} (imaps x) = foo where
-  --   foo : _
-  --   foo with isZeroBut x
-  --   ... | yes (p , var i , var j , e , refl) = foo1 where
-  --     foo1 : _
-  --     foo1 with eq? i here | eq? j here
-  --     ... | a = {!   !}
-  --   ... | no _  = imaps (rm-zbs x)
-  -- rm-zbs {s} (sels x x₁) = {!   !}
-  -- rm-zbs {s} (imap x) = {!   !}
-  -- rm-zbs {s} (sel x x₁) = {!   !}
-  -- rm-zbs {s} (E.imapb x x₁) = {!   !}
-  -- rm-zbs {s} (E.selb x x₁ x₂) = {!   !}
-  -- rm-zbs {s} (E.sum x) = {!   !}
-  -- rm-zbs {s} (zero-but x x₁ x₂) = {!   !}
-  -- rm-zbs {s} (E.slide x x₁ x₂ x₃) = {!   !}
-  -- rm-zbs {s} (E.backslide x x₁ x₂ x₃) = {!   !}
-  -- rm-zbs {s} (bin x x₁ x₂) = {!   !}
-  -- rm-zbs {s} (scaledown x x₁) = {!   !}
-  -- rm-zbs {s} (let′ x x₁) = {!   !}
-  -- rm-zbs {s} (un x x₁) = {!   !}
-
-  -- rm-zbs : ∀ {s p Γ} → E Γ (ix s) → E Γ (ar p) → E Γ (ar p)
-  -- rm-zbs {s} {p} {Γ} i (var x) = var x
-  -- rm-zbs {s} {p} {Γ} i 𝟘 = 𝟘
-  -- rm-zbs {s} {p} {Γ} i 𝟙 = 𝟙
-  -- rm-zbs {s} {p} {Γ} i (imaps x) = imaps (rm-zbs (wk (skip ⊆-eq) i) x)
-  -- rm-zbs {s} {p} {Γ} i (sels x x₁) = sels (rm-zbs i x) x₁
-  -- rm-zbs {s} {p} {Γ} i (imap x) = imap (rm-zbs (wk (skip ⊆-eq) i) x)
-  -- rm-zbs {s} {p} {Γ} i (sel x x₁) = sel (rm-zbs i x) x₁
-  -- rm-zbs {s} {p} {Γ} i (E.imapb x x₁) = E.imapb x (rm-zbs (wk (skip ⊆-eq) i) x₁)
-  -- rm-zbs {s} {p} {Γ} i (E.selb x x₁ x₂) = E.selb x (rm-zbs i x₁) x₂
-  -- rm-zbs {s} {p} {Γ} i (E.sum x) = E.sum (rm-zbs (wk (skip ⊆-eq) i) x)
-  -- rm-zbs {s} {p} {Γ} (var i) (zero-but {s = q} (var j) (var k) x) = foo
-  --   where
-  --   foo : _
-  --   foo with eq? i j | eq? i k
-  --   ... | veq | veq = rm-zbs (var i) x
-  --   ... | veq | neq .i y = subv {!   !} {!   !}
-  --   ... | neq .i y | veq = {!   !}
-  --   ... | neq .i y | neq .i y₁ = zero-but (var j) (var k) (rm-zbs (var i) x)
-  -- rm-zbs {s} {p} {Γ} i (E.slide x x₁ x₂ x₃) = {!   !}
-  -- rm-zbs {s} {p} {Γ} i (E.backslide x x₁ x₂ x₃) = {!   !}
-  -- rm-zbs {s} {p} {Γ} i (bin x x₁ x₂) = {!   !}
-  -- rm-zbs {s} {p} {Γ} i (scaledown x x₁) = {!   !}
-  -- rm-zbs {s} {p} {Γ} i (let′ x x₁) = {!   !}
-  -- rm-zbs {s} {p} {Γ} i (un x x₁) = {!   !}
-
-
-

@@ -611,7 +611,6 @@ let′
                  (Lang.E.imap
                   (Lang.E.imap
                    (Lang.E.imaps
-                   ---AKU
                     (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
                      (Lang.E.var (Lang._∈_.there Lang._∈_.here))
                      (Lang.E.bin Lang.Bop.mul
