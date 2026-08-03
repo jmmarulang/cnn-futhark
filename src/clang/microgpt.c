@@ -938,7 +938,7 @@ int main(int argc, char **argv) {
         }
 
         loss_history[step] = avg_loss;
-        printf("step %4d / %4d | loss %.4f\n", step + 1, num_steps, avg_loss);
+        // printf("step %4d / %4d | loss %.4f\n", step + 1, num_steps, avg_loss);
     }
 
     // Print mean loss last 50 steps

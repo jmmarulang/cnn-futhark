@@ -257,7 +257,7 @@ module Extract where
 
   -- sel-zb-s : String
   -- sel-zb-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.sel-zb-e OPT) (from-named (ε ▹ "inp"))) 0)
-  
+
   -- x64-s : String
   -- x64-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.x64-e OPT) (from-named (ε ▹ "inp"))) 0)
 

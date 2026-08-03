@@ -168,13 +168,49 @@ module Opt (r : Real) (rp : RealProp r) where
        ... | yes _ | p′ = p′ ∙ cong (λ x → eval e₂ ρ (x ++ u)) (q ρ)
        ... | no _ | p′ = p′
 
-  opt (sel {s = s} {p} e e₁) | a , pf | i , q | no _ | no _ | no _ | no _
+  opt (sel {s = s} {p} e e₁) | a , pf | i , q | no _ | no _ | no _ | no _ with isLet a
+  ... | yes (r , c , d , refl) = let′ c (sel d (i ↑)) , foo where
+    -- let′ c (sel d (wk (skip ⊆-eq) i)) , foo where
+    foo : _
+    foo ρ j =
+      pf ρ _
+      ∙ sym (cong (λ x → eval d _ (x ++ j)) (eval-wk (skip ⊆-eq) i _
+      ∙ eval-cong i wk-env-id
+      ∙ sym (q _)))
+
+  opt (sel {s = s} {p} e e₁) | a , pf | i , q | no _ | no _ | no _ | no _ | no _ 
   -- ... | a | i = sel a i
     = sel a i , λ ρ j → pf ρ (eval e₁ ρ ++ j) ∙ cong (eval a ρ) (cong (_++ j) (q ρ))
+  -- opt (sel {s = s} {p} e e₁) | a , pf | i , q | no _ | no _ | no _ | no _ 
+  -- -- ... | a | i = sel a i
+  --   = sel a i , λ ρ j → pf ρ (eval e₁ ρ ++ j) ∙ cong (eval a ρ) (cong (_++ j) (q ρ))
 
+  opt (E.imapb {s = s} {p = p} {q = q} x e) with opt e
+  ... | (let′ {s = r} a b) , pf = (let′ (imap a) (E.imapb x
+    (sub b ((skeep (sdrop sub-id)) ▹ sel (var v₁) (var v₀))))) , foo
+    where
+    foo : _
+    foo ρ i =
+      pf _ _
+      ∙ sym (eval-sub b _ _ _
+      ∙ eval-cong b
+        (sub-env-wks (sdrop sub-id) (skip ⊆-eq) _ ▹ refl ▹ λ _ → refl) _
+      ∙ eval-cong b (sub-env-sdrop sub-id ▹ refl ▹ λ _ → refl) _
+      ∙ eval-cong b (sub-env-id ▹ refl ▹ λ _ → refl) _
+      ∙ eval-cong b (wk-env-id ▹ refl ▹ λ _ → refl) _
+      ∙ eval-cong b (reflᶜ ▹ refl ▹ foo') _)
+      where
+      foo' : _
+      foo' l =
+        cong (eval a _) (splitP-proj₂ {s} {j = l})
+        ∙ cong (λ x → eval a (_ , x) _) (splitP-proj₁ {s} {j = l})
 
-  opt (E.imapb x e) with opt e
+      -- eval a (ρ , splitP (ix-div i x ++ l) .proj₁)
+      -- (splitP (ix-div i x ++ l) .proj₂)
+      -- ≡ eval a (ρ , ix-div i x) l
   ... | a , p = E.imapb x a , λ ρ j → p (ρ , ix-div j x) (ix-mod j x)
+
+
   opt (E.selb x e e₁) with opt e | opt e₁
   ... | a , p | i , q = E.selb x a i
                       , λ ρ j → p ρ (ix-combine (eval e₁ ρ) j x)
