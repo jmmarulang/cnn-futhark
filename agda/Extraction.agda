@@ -89,12 +89,12 @@ module Extract where
   ... | 1 = ee-sub δ (sub-id ▹ norm-lets x) -- why only for 1?
   ... | _ = let′ (norm-lets x) δ
 
-  ee-inline' : EE Γ Δ → EE Γ Δ
-  ee-inline' (env x) = env x
-  ee-inline' (let′ x ρ) with δ ← ee-inline' ρ | ee-count-uses δ v₀
-  ... | 0 = ee-sub δ (sub-id ▹ x) -- does nothing?
-  ... | 1 = ee-sub δ (sub-id ▹ x) -- why only for 1?
-  ... | _ = let′ x δ
+  -- ee-inline' : EE Γ Δ → EE Γ Δ
+  -- ee-inline' (env x) = env x
+  -- ee-inline' (let′ x ρ) with δ ← ee-inline' ρ | ee-count-uses δ v₀
+  -- ... | 0 = ee-sub δ (sub-id ▹ x) -- does nothing?
+  -- ... | 1 = ee-sub δ (sub-id ▹ x) -- why only for 1?
+  -- ... | _ = let′ x δ
 
   env-replace : Env Γ Δ → (a b : E Δ is) → Env Γ Δ
   env-replace ε a b = ε

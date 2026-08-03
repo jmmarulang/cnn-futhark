@@ -354,6 +354,12 @@ module WkSub where
   stren (un x e) v = map (un x) (stren e v)
   stren (maximum e) v = map maximum (stren e (there v))
 
+  -- push-imaps : E Γ is → E Γ is
+  -- push-imaps (imaps {s = s} e) with (stren e here)
+  -- ... | just x = {!   !}
+  -- ... | nothing = {!   !}
+  -- push-imaps e = e
+
   -- Get rid of lets that do not use their arguments.
   norm-lets : E Γ is → E Γ is
   norm-lets (var x) = (var x)
