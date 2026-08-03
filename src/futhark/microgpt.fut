@@ -417,6 +417,7 @@ in (let x340 = (isum1 27 (\x344_0 -> x339[x344_0]))
 in (let x341 = (imap1 27 (\x345_0 -> (x339[x345_0] F.* (one F./ x340))))
 in ((F.neg x72[x337_0]) F.* (F.log x341[x337_1]))))))))
 
+
 in (dwpe, dwqry, dwkey, dwval, dwout, dwup, dwdown, dwvoc, dwseq)
 -- in (x46, x50, wkey, wval, wout, wup, wdown, wvoc, wseq)
 }
