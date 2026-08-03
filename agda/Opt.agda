@@ -168,22 +168,23 @@ module Opt (r : Real) (rp : RealProp r) where
        ... | yes _ | p′ = p′ ∙ cong (λ x → eval e₂ ρ (x ++ u)) (q ρ)
        ... | no _ | p′ = p′
 
-  opt (sel {s = s} {p} e e₁) | a , pf | i , q | no _ | no _ | no _ | no _ with isLet a
-  ... | yes (r , c , d , refl) = let′ c (sel d (i ↑)) , foo where
-    -- let′ c (sel d (wk (skip ⊆-eq) i)) , foo where
-    foo : _
-    foo ρ j =
-      pf ρ _
-      ∙ sym (cong (λ x → eval d _ (x ++ j)) (eval-wk (skip ⊆-eq) i _
-      ∙ eval-cong i wk-env-id
-      ∙ sym (q _)))
+  -- opt (sel {s = s} {p} e e₁) | a , pf | i , q | no _ | no _ | no _ | no _ with isLet a
+  -- ... | yes (r , c , d , refl) = let′ c (sel d (i ↑)) , foo where
+  --   -- let′ c (sel d (wk (skip ⊆-eq) i)) , foo where
+  --   foo : _
+  --   foo ρ j =
+  --     pf ρ _
+  --     ∙ sym (cong (λ x → eval d _ (x ++ j)) (eval-wk (skip ⊆-eq) i _
+  --     ∙ eval-cong i wk-env-id
+  --     ∙ sym (q _)))
 
-  opt (sel {s = s} {p} e e₁) | a , pf | i , q | no _ | no _ | no _ | no _ | no _ 
-  -- ... | a | i = sel a i
-    = sel a i , λ ρ j → pf ρ (eval e₁ ρ ++ j) ∙ cong (eval a ρ) (cong (_++ j) (q ρ))
-  -- opt (sel {s = s} {p} e e₁) | a , pf | i , q | no _ | no _ | no _ | no _ 
+  -- opt (sel {s = s} {p} e e₁) | a , pf | i , q | no _ | no _ | no _ | no _ | no _
   -- -- ... | a | i = sel a i
   --   = sel a i , λ ρ j → pf ρ (eval e₁ ρ ++ j) ∙ cong (eval a ρ) (cong (_++ j) (q ρ))
+
+  opt (sel {s = s} {p} e e₁) | a , pf | i , q | no _ | no _ | no _ | no _
+  -- ... | a | i = sel a i
+    = sel a i , λ ρ j → pf ρ (eval e₁ ρ ++ j) ∙ cong (eval a ρ) (cong (_++ j) (q ρ))
 
   opt (E.imapb {s = s} {p = p} {q = q} x e) with opt e
   ... | (let′ {s = r} a b) , pf = (let′ (imap a) (E.imapb x
