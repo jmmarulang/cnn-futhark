@@ -304,63 +304,15 @@ d_ee'45'inline_148 v0 v1 v2
                                    (coe v1) (coe MAlonzo.Code.Lang.C_ar_10 (coe v4)) (coe v6)))
                       _ -> coe v10)))
       _ -> MAlonzo.RTE.mazUnreachableError
--- Extraction.Extract.ee-inline'
-d_ee'45'inline''_178 ::
-  MAlonzo.Code.Lang.T_Ctx_12 ->
-  MAlonzo.Code.Lang.T_Ctx_12 ->
-  MAlonzo.Code.Grad.T_EE_20 -> MAlonzo.Code.Grad.T_EE_20
-d_ee'45'inline''_178 v0 v1 v2
-  = case coe v2 of
-      MAlonzo.Code.Grad.C_env_22 v5 -> coe MAlonzo.Code.Grad.C_env_22 v5
-      MAlonzo.Code.Grad.C_let'8242'_24 v4 v6 v7
-        -> let v8
-                 = d_ee'45'inline''_178
-                     (coe v0)
-                     (coe
-                        MAlonzo.Code.Lang.C__'9657'__16 (coe v1)
-                        (coe MAlonzo.Code.Lang.C_ar_10 (coe v4)))
-                     (coe v7) in
-           coe
-             (let v9
-                    = coe
-                        du_ee'45'count'45'uses_130 v0
-                        (coe
-                           MAlonzo.Code.Lang.C__'9657'__16 (coe v1)
-                           (coe MAlonzo.Code.Lang.C_ar_10 (coe v4)))
-                        v8 (coe MAlonzo.Code.Lang.C_here_36) in
-              coe
-                (let v10 = coe MAlonzo.Code.Grad.C_let'8242'_24 v4 v6 v8 in
-                 coe
-                   (case coe v9 of
-                      0 -> coe
-                             MAlonzo.Code.Grad.d_ee'45'sub_408 (coe v0)
-                             (coe
-                                MAlonzo.Code.Lang.C__'9657'__16 (coe v1)
-                                (coe MAlonzo.Code.Lang.C_ar_10 (coe v4)))
-                             (coe v1) (coe v8)
-                             (coe
-                                MAlonzo.Code.Lang.C__'9657'__478
-                                (MAlonzo.Code.Lang.d_sub'45'id_510 (coe v1)) v6)
-                      1 -> coe
-                             MAlonzo.Code.Grad.d_ee'45'sub_408 (coe v0)
-                             (coe
-                                MAlonzo.Code.Lang.C__'9657'__16 (coe v1)
-                                (coe MAlonzo.Code.Lang.C_ar_10 (coe v4)))
-                             (coe v1) (coe v8)
-                             (coe
-                                MAlonzo.Code.Lang.C__'9657'__478
-                                (MAlonzo.Code.Lang.d_sub'45'id_510 (coe v1)) v6)
-                      _ -> coe v10)))
-      _ -> MAlonzo.RTE.mazUnreachableError
 -- Extraction.Extract.env-replace
-d_env'45'replace_212 ::
+d_env'45'replace_182 ::
   MAlonzo.Code.Lang.T_Ctx_12 ->
   MAlonzo.Code.Lang.T_Ctx_12 ->
   MAlonzo.Code.Lang.T_IS_6 ->
   MAlonzo.Code.Grad.T_Env_12 ->
   MAlonzo.Code.Lang.T_E_182 ->
   MAlonzo.Code.Lang.T_E_182 -> MAlonzo.Code.Grad.T_Env_12
-d_env'45'replace_212 v0 v1 v2 v3 v4 v5
+d_env'45'replace_182 v0 v1 v2 v3 v4 v5
   = case coe v3 of
       MAlonzo.Code.Grad.C_ε_14 -> coe MAlonzo.Code.Grad.C_ε_14
       MAlonzo.Code.Grad.C_skip_16 v9
@@ -368,7 +320,7 @@ d_env'45'replace_212 v0 v1 v2 v3 v4 v5
              MAlonzo.Code.Lang.C__'9657'__16 v10 v11
                -> coe
                     MAlonzo.Code.Grad.C_skip_16
-                    (d_env'45'replace_212
+                    (d_env'45'replace_182
                        (coe v10) (coe v1) (coe v2) (coe v9) (coe v4) (coe v5))
              _ -> MAlonzo.RTE.mazUnreachableError
       MAlonzo.Code.Grad.C__'9657'__18 v9 v10
@@ -376,26 +328,26 @@ d_env'45'replace_212 v0 v1 v2 v3 v4 v5
              MAlonzo.Code.Lang.C__'9657'__16 v11 v12
                -> coe
                     MAlonzo.Code.Grad.C__'9657'__18
-                    (d_env'45'replace_212
+                    (d_env'45'replace_182
                        (coe v11) (coe v1) (coe v2) (coe v9) (coe v4) (coe v5))
                     (MAlonzo.Code.Replace.d_replace_12
                        (coe v1) (coe v12) (coe v2) (coe v10) (coe v4) (coe v5))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Extraction.Extract.ee-replace
-d_ee'45'replace_236 ::
+d_ee'45'replace_206 ::
   MAlonzo.Code.Lang.T_Ctx_12 ->
   MAlonzo.Code.Lang.T_Ctx_12 ->
   MAlonzo.Code.Lang.T_IS_6 ->
   MAlonzo.Code.Grad.T_EE_20 ->
   MAlonzo.Code.Lang.T_E_182 ->
   MAlonzo.Code.Lang.T_E_182 -> MAlonzo.Code.Grad.T_EE_20
-d_ee'45'replace_236 v0 v1 v2 v3 v4 v5
+d_ee'45'replace_206 v0 v1 v2 v3 v4 v5
   = case coe v3 of
       MAlonzo.Code.Grad.C_env_22 v8
         -> coe
              MAlonzo.Code.Grad.C_env_22
-             (d_env'45'replace_212
+             (d_env'45'replace_182
                 (coe v0) (coe v1) (coe v2) (coe v8) (coe v4) (coe v5))
       MAlonzo.Code.Grad.C_let'8242'_24 v7 v9 v10
         -> coe
@@ -403,7 +355,7 @@ d_ee'45'replace_236 v0 v1 v2 v3 v4 v5
              (MAlonzo.Code.Replace.d_replace_12
                 (coe v1) (coe MAlonzo.Code.Lang.C_ar_10 (coe v7)) (coe v2) (coe v9)
                 (coe v4) (coe v5))
-             (d_ee'45'replace_236
+             (d_ee'45'replace_206
                 (coe v0)
                 (coe
                    MAlonzo.Code.Lang.C__'9657'__16 (coe v1)
@@ -417,24 +369,24 @@ d_ee'45'replace_236 v0 v1 v2 v3 v4 v5
                    (coe MAlonzo.Code.Lang.C_ar_10 (coe v7)) v5))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Extraction.Extract.ee-dedup
-d_ee'45'dedup_252 ::
+d_ee'45'dedup_222 ::
   MAlonzo.Code.Lang.T_Ctx_12 ->
   MAlonzo.Code.Lang.T_Ctx_12 ->
   MAlonzo.Code.Grad.T_EE_20 -> MAlonzo.Code.Grad.T_EE_20
-d_ee'45'dedup_252 v0 v1 v2
+d_ee'45'dedup_222 v0 v1 v2
   = case coe v2 of
       MAlonzo.Code.Grad.C_env_22 v5 -> coe MAlonzo.Code.Grad.C_env_22 v5
       MAlonzo.Code.Grad.C_let'8242'_24 v4 v6 v7
         -> coe
              MAlonzo.Code.Grad.C_let'8242'_24 v4 v6
-             (d_ee'45'replace_236
+             (d_ee'45'replace_206
                 (coe v0)
                 (coe
                    MAlonzo.Code.Lang.C__'9657'__16 (coe v1)
                    (coe MAlonzo.Code.Lang.C_ar_10 (coe v4)))
                 (coe MAlonzo.Code.Lang.C_ar_10 (coe v4))
                 (coe
-                   d_ee'45'dedup_252 (coe v0)
+                   d_ee'45'dedup_222 (coe v0)
                    (coe
                       MAlonzo.Code.Lang.C__'9657'__16 (coe v1)
                       (coe MAlonzo.Code.Lang.C_ar_10 (coe v4)))
@@ -447,11 +399,11 @@ d_ee'45'dedup_252 v0 v1 v2
                    MAlonzo.Code.Lang.C_var_184 (coe MAlonzo.Code.Lang.C_here_36)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Extraction.Extract.ee-OPT
-d_ee'45'OPT_260 ::
+d_ee'45'OPT_230 ::
   MAlonzo.Code.Lang.T_Ctx_12 ->
   MAlonzo.Code.Lang.T_Ctx_12 ->
   MAlonzo.Code.Grad.T_EE_20 -> MAlonzo.Code.Grad.T_EE_20
-d_ee'45'OPT_260 v0 v1 v2
+d_ee'45'OPT_230 v0 v1 v2
   = coe
       d_ee'45'inline_148 (coe v0) (coe v1)
       (coe
@@ -462,43 +414,43 @@ d_ee'45'OPT_260 v0 v1 v2
                d_ee'45'opt_108 (coe v0) (coe v1)
                (coe d_ee'45'inline_148 (coe v0) (coe v1) (coe v2)))))
 -- Extraction.Extract.NamedEnv
-d_NamedEnv_264 a0 = ()
-data T_NamedEnv_264
-  = C_ε_266 |
-    C__'9657'__268 T_NamedEnv_264
+d_NamedEnv_234 a0 = ()
+data T_NamedEnv_234
+  = C_ε_236 |
+    C__'9657'__238 T_NamedEnv_234
                    MAlonzo.Code.Agda.Builtin.String.T_String_6
 -- Extraction.Extract.from-named
-d_from'45'named_270 ::
-  MAlonzo.Code.Lang.T_Ctx_12 -> T_NamedEnv_264 -> AgdaAny
-d_from'45'named_270 v0 v1
+d_from'45'named_240 ::
+  MAlonzo.Code.Lang.T_Ctx_12 -> T_NamedEnv_234 -> AgdaAny
+d_from'45'named_240 v0 v1
   = case coe v1 of
-      C_ε_266 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8
-      C__'9657'__268 v4 v5
+      C_ε_236 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8
+      C__'9657'__238 v4 v5
         -> case coe v0 of
              MAlonzo.Code.Lang.C__'9657'__16 v6 v7
                -> case coe v7 of
                     MAlonzo.Code.Lang.C_ix_8 v8
                       -> coe
                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                           (coe d_from'45'named_270 (coe v6) (coe v4))
+                           (coe d_from'45'named_240 (coe v6) (coe v4))
                            (coe MAlonzo.Code.Futhark.d_fresh'45'ix_116 (coe v8) (coe v5))
                     MAlonzo.Code.Lang.C_ar_10 v8
                       -> coe
                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                           (coe d_from'45'named_270 (coe v6) (coe v4))
+                           (coe d_from'45'named_240 (coe v6) (coe v4))
                            (coe MAlonzo.Code.Futhark.d_mkar_404 (coe v8) (coe v5))
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Extraction.Extract.env-fut′
-d_env'45'fut'8242'_284 ::
+d_env'45'fut'8242'_254 ::
   MAlonzo.Code.Lang.T_Ctx_12 ->
   MAlonzo.Code.Lang.T_Ctx_12 ->
   MAlonzo.Code.Grad.T_Env_12 ->
-  T_NamedEnv_264 ->
-  T_NamedEnv_264 ->
+  T_NamedEnv_234 ->
+  T_NamedEnv_234 ->
   MAlonzo.Code.Effect.Monad.State.Transformer.Base.T_StateT_58
-d_env'45'fut'8242'_284 v0 v1 v2 v3 v4
+d_env'45'fut'8242'_254 v0 v1 v2 v3 v4
   = case coe v2 of
       MAlonzo.Code.Grad.C_ε_14
         -> coe
@@ -511,9 +463,9 @@ d_env'45'fut'8242'_284 v0 v1 v2 v3 v4
         -> case coe v0 of
              MAlonzo.Code.Lang.C__'9657'__16 v9 v10
                -> case coe v3 of
-                    C__'9657'__268 v13 v14
+                    C__'9657'__238 v13 v14
                       -> coe
-                           d_env'45'fut'8242'_284 (coe v9) (coe v1) (coe v8) (coe v13)
+                           d_env'45'fut'8242'_254 (coe v9) (coe v1) (coe v8) (coe v13)
                            (coe v4)
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
@@ -523,7 +475,7 @@ d_env'45'fut'8242'_284 v0 v1 v2 v3 v4
                -> case coe v11 of
                     MAlonzo.Code.Lang.C_ar_10 v12
                       -> case coe v3 of
-                           C__'9657'__268 v15 v16
+                           C__'9657'__238 v15 v16
                              -> coe
                                   MAlonzo.Code.Effect.Monad.State.Transformer.Base.C_mkStateT_70
                                   (coe
@@ -536,7 +488,7 @@ d_env'45'fut'8242'_284 v0 v1 v2 v3 v4
                                                (coe v18))
                                           (coe
                                              MAlonzo.Code.Effect.Monad.State.Transformer.Base.d_runStateT_68
-                                             (d_env'45'fut'8242'_284
+                                             (d_env'45'fut'8242'_254
                                                 (coe v10) (coe v1) (coe v8) (coe v15) (coe v4))
                                              v17)
                                           (\ v18 ->
@@ -550,7 +502,7 @@ d_env'45'fut'8242'_284 v0 v1 v2 v3 v4
                                                          (MAlonzo.Code.Futhark.d_to'45'str_412
                                                             (coe v1) (coe v12) (coe v9)
                                                             (coe
-                                                               d_from'45'named_270 (coe v1)
+                                                               d_from'45'named_240 (coe v1)
                                                                (coe v4)))
                                                          (\ v21 ->
                                                             coe
@@ -570,17 +522,17 @@ d_env'45'fut'8242'_284 v0 v1 v2 v3 v4
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Extraction.Extract.ee-fut′
-d_ee'45'fut'8242'_310 ::
+d_ee'45'fut'8242'_280 ::
   MAlonzo.Code.Lang.T_Ctx_12 ->
   MAlonzo.Code.Lang.T_Ctx_12 ->
   MAlonzo.Code.Grad.T_EE_20 ->
-  T_NamedEnv_264 ->
-  T_NamedEnv_264 ->
+  T_NamedEnv_234 ->
+  T_NamedEnv_234 ->
   MAlonzo.Code.Effect.Monad.State.Transformer.Base.T_StateT_58
-d_ee'45'fut'8242'_310 v0 v1 v2
+d_ee'45'fut'8242'_280 v0 v1 v2
   = case coe v2 of
       MAlonzo.Code.Grad.C_env_22 v5
-        -> coe d_env'45'fut'8242'_284 (coe v0) (coe v1) (coe v5)
+        -> coe d_env'45'fut'8242'_254 (coe v0) (coe v1) (coe v5)
       MAlonzo.Code.Grad.C_let'8242'_24 v4 v6 v7
         -> coe
              (\ v8 v9 ->
@@ -618,19 +570,19 @@ d_ee'45'fut'8242'_310 v0 v1 v2
                                             (coe d___92 () erased) erased erased
                                             (MAlonzo.Code.Futhark.d_to'45'str_412
                                                (coe v1) (coe v4) (coe v6)
-                                               (coe d_from'45'named_270 (coe v1) (coe v9)))
+                                               (coe d_from'45'named_240 (coe v1) (coe v9)))
                                             (\ v14 ->
                                                coe
                                                  MAlonzo.Code.Effect.Monad.d__'62''62''61'__34
                                                  (coe d___92 () erased) erased erased
                                                  (coe
-                                                    d_ee'45'fut'8242'_310 v0
+                                                    d_ee'45'fut'8242'_280 v0
                                                     (coe
                                                        MAlonzo.Code.Lang.C__'9657'__16 (coe v1)
                                                        (coe MAlonzo.Code.Lang.C_ar_10 (coe v4)))
                                                     v7 v8
                                                     (coe
-                                                       C__'9657'__268 v9
+                                                       C__'9657'__238 v9
                                                        (MAlonzo.Code.Futhark.d_fresh'45'var_112
                                                           (coe v13))))
                                                  (\ v15 ->
@@ -648,33 +600,33 @@ d_ee'45'fut'8242'_310 v0 v1 v2
                                _ -> MAlonzo.RTE.mazUnreachableError))))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Extraction.Extract.ee-fut
-d_ee'45'fut_332 ::
+d_ee'45'fut_302 ::
   MAlonzo.Code.Lang.T_Ctx_12 ->
   MAlonzo.Code.Grad.T_EE_20 ->
-  T_NamedEnv_264 -> MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_ee'45'fut_332 v0 v1 v2
+  T_NamedEnv_234 -> MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_ee'45'fut_302 v0 v1 v2
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
       (coe
          MAlonzo.Code.Effect.Monad.State.du_runState_20
          (coe
-            d_ee'45'fut'8242'_310 v0 v0
-            (d_ee'45'OPT_260
+            d_ee'45'fut'8242'_280 v0 v0
+            (d_ee'45'OPT_230
                (coe v0) (coe v0)
                (coe
-                  d_ee'45'dedup_252 (coe v0) (coe v0)
-                  (coe d_ee'45'OPT_260 (coe v0) (coe v0) (coe v1))))
+                  d_ee'45'dedup_222 (coe v0) (coe v0)
+                  (coe d_ee'45'OPT_230 (coe v0) (coe v0) (coe v1))))
             v2 v2)
          (coe (0 :: Integer)))
 -- Extraction.Extract.pp
-d_pp_338 ::
+d_pp_308 ::
   MAlonzo.Code.Lang.T_Ctx_12 ->
   [Integer] ->
   MAlonzo.Code.Lang.T_E_182 ->
-  T_NamedEnv_264 -> MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_pp_338 v0 v1 v2 v3
+  T_NamedEnv_234 -> MAlonzo.Code.Agda.Builtin.String.T_String_6
+d_pp_308 v0 v1 v2 v3
   = coe
-      d_ee'45'fut_332 (coe v0)
+      d_ee'45'fut_302 (coe v0)
       (coe
          MAlonzo.Code.Grad.d_grad_454 v0
          (coe MAlonzo.Code.Lang.C_ar_10 (coe v1)) v2
@@ -682,8 +634,8 @@ d_pp_338 v0 v1 v2 v3
          (coe MAlonzo.Code.Grad.du_zero'45'ee_118 (coe v0)))
       (coe v3)
 -- Extraction.Extract.conv-e
-d_conv'45'e_344 :: MAlonzo.Code.Lang.T_E_182
-d_conv'45'e_344
+d_conv'45'e_314 :: MAlonzo.Code.Lang.T_E_182
+d_conv'45'e_314
   = coe
       MAlonzo.Code.Lang.du_Lcon_1312
       (coe
@@ -860,11 +812,11 @@ d_conv'45'e_344
                                      (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                          (coe MAlonzo.Code.Lang.C_zero_1160))))))
 -- Extraction.Extract.grad-conv-e
-d_grad'45'conv'45'e_352 ::
+d_grad'45'conv'45'e_322 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_grad'45'conv'45'e_352
+d_grad'45'conv'45'e_322
   = coe
-      d_pp_338
+      d_pp_308
       (coe
          MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
          (coe
@@ -891,17 +843,17 @@ d_grad'45'conv'45'e_352
          (coe
             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (4 :: Integer))
             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
-      (coe d_conv'45'e_344)
+      (coe d_conv'45'e_314)
       (coe
-         C__'9657'__268
-         (coe C__'9657'__268 (coe C_ε_266) ("img" :: Data.Text.Text))
+         C__'9657'__238
+         (coe C__'9657'__238 (coe C_ε_236) ("img" :: Data.Text.Text))
          ("k1" :: Data.Text.Text))
 -- Extraction.Extract.grad-conv-s
-d_grad'45'conv'45's_354 ::
+d_grad'45'conv'45's_324 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_grad'45'conv'45's_354
+d_grad'45'conv'45's_324
   = coe
-      d_pp_338
+      d_pp_308
       (coe
          MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
          (coe
@@ -928,14 +880,14 @@ d_grad'45'conv'45's_354
          (coe
             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (4 :: Integer))
             (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
-      (coe d_conv'45'e_344)
+      (coe d_conv'45'e_314)
       (coe
-         C__'9657'__268
-         (coe C__'9657'__268 (coe C_ε_266) ("inp" :: Data.Text.Text))
+         C__'9657'__238
+         (coe C__'9657'__238 (coe C_ε_236) ("inp" :: Data.Text.Text))
          ("k1" :: Data.Text.Text))
 -- Extraction.Extract.compc1
-d_compc1_356 :: MAlonzo.Code.Lang.T_E_182
-d_compc1_356
+d_compc1_326 :: MAlonzo.Code.Lang.T_E_182
+d_compc1_326
   = coe
       MAlonzo.Code.Lang.du_Lcon_1312
       (coe
@@ -2635,8 +2587,8 @@ d_compc1_356
                                                                    MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                               (coe MAlonzo.Code.Lang.C_zero_1160)))))))))))
 -- Extraction.Extract.grad-compc1-e
-d_grad'45'compc1'45'e_378 :: MAlonzo.Code.Grad.T_EE_20
-d_grad'45'compc1'45'e_378
+d_grad'45'compc1'45'e_348 :: MAlonzo.Code.Grad.T_EE_20
+d_grad'45'compc1'45'e_348
   = coe
       d_ee'45'opt_108
       (coe
@@ -2806,7 +2758,7 @@ d_grad'45'compc1'45'e_378
                      (coe
                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (8 :: Integer))
                         (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
-         d_compc1_356 (coe MAlonzo.Code.Lang.C_one_188)
+         d_compc1_326 (coe MAlonzo.Code.Lang.C_one_188)
          (coe
             MAlonzo.Code.Grad.du_zero'45'ee_118
             (coe
@@ -2864,11 +2816,11 @@ d_grad'45'compc1'45'e_378
                                     (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
                               (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))
 -- Extraction.Extract.grad-compc1-s
-d_grad'45'compc1'45's_380 ::
+d_grad'45'compc1'45's_350 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_grad'45'compc1'45's_380
+d_grad'45'compc1'45's_350
   = coe
-      d_pp_338
+      d_pp_308
       (coe
          MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
          (coe
@@ -2929,23 +2881,23 @@ d_grad'45'compc1'45's_380
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe (8 :: Integer))
                   (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
-      (coe d_compc1_356)
+      (coe d_compc1_326)
       (coe
-         C__'9657'__268
+         C__'9657'__238
          (coe
-            C__'9657'__268
+            C__'9657'__238
             (coe
-               C__'9657'__268
+               C__'9657'__238
                (coe
-                  C__'9657'__268
-                  (coe C__'9657'__268 (coe C_ε_266) ("inp" :: Data.Text.Text))
+                  C__'9657'__238
+                  (coe C__'9657'__238 (coe C_ε_236) ("inp" :: Data.Text.Text))
                   ("k1" :: Data.Text.Text))
                ("b1" :: Data.Text.Text))
             ("k2" :: Data.Text.Text))
          ("b2" :: Data.Text.Text))
 -- Extraction.Extract.sum-let
-d_sum'45'let_382 :: MAlonzo.Code.Lang.T_E_182
-d_sum'45'let_382
+d_sum'45'let_352 :: MAlonzo.Code.Lang.T_E_182
+d_sum'45'let_352
   = coe
       MAlonzo.Code.Lang.du_Lcon_1312
       (coe
@@ -3196,11 +3148,11 @@ d_sum'45'let_382
                                        (coe MAlonzo.Code.Lang.d_unit_180)))
                                  (coe MAlonzo.Code.Lang.C_zero_1160))))))))
 -- Extraction.Extract.sum-let-s
-d_sum'45'let'45's_392 ::
+d_sum'45'let'45's_362 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_sum'45'let'45's_392
+d_sum'45'let'45's_362
   = coe
-      d_pp_338
+      d_pp_308
       (coe
          MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
          (coe
@@ -3219,16 +3171,16 @@ d_sum'45'let'45's_392
                      (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
                (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
       (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
-      (coe d_sum'45'let_382)
+      (coe d_sum'45'let_352)
       (coe
-         C__'9657'__268
-         (coe C__'9657'__268 (coe C_ε_266) ("a" :: Data.Text.Text))
+         C__'9657'__238
+         (coe C__'9657'__238 (coe C_ε_236) ("a" :: Data.Text.Text))
          ("b" :: Data.Text.Text))
 -- Extraction.Extract.grad-cnn-e
-d_grad'45'cnn'45'e_394 :: MAlonzo.Code.Grad.T_EE_20
-d_grad'45'cnn'45'e_394
+d_grad'45'cnn'45'e_364 :: MAlonzo.Code.Grad.T_EE_20
+d_grad'45'cnn'45'e_364
   = coe
-      d_ee'45'OPT_260
+      d_ee'45'OPT_230
       (coe
          MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
          (coe
@@ -3644,11 +3596,11 @@ d_grad'45'cnn'45'e_394
                                                             MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))))))
 -- Extraction.Extract.grad-cnn-s
-d_grad'45'cnn'45's_396 ::
+d_grad'45'cnn'45's_366 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_grad'45'cnn'45's_396
+d_grad'45'cnn'45's_366
   = coe
-      d_pp_338
+      d_pp_308
       (coe
          MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
          (coe
@@ -3752,20 +3704,20 @@ d_grad'45'cnn'45's_396
       (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
       (coe MAlonzo.Code.Lang.d_cnn_1428)
       (coe
-         C__'9657'__268
+         C__'9657'__238
          (coe
-            C__'9657'__268
+            C__'9657'__238
             (coe
-               C__'9657'__268
+               C__'9657'__238
                (coe
-                  C__'9657'__268
+                  C__'9657'__238
                   (coe
-                     C__'9657'__268
+                     C__'9657'__238
                      (coe
-                        C__'9657'__268
+                        C__'9657'__238
                         (coe
-                           C__'9657'__268
-                           (coe C__'9657'__268 (coe C_ε_266) ("inp" :: Data.Text.Text))
+                           C__'9657'__238
+                           (coe C__'9657'__238 (coe C_ε_236) ("inp" :: Data.Text.Text))
                            ("k1" :: Data.Text.Text))
                         ("b1" :: Data.Text.Text))
                      ("k2" :: Data.Text.Text))
@@ -3774,10 +3726,10 @@ d_grad'45'cnn'45's_396
             ("b" :: Data.Text.Text))
          ("target" :: Data.Text.Text))
 -- Extraction.Extract.grad-mgpt-loss-e
-d_grad'45'mgpt'45'loss'45'e_398 :: MAlonzo.Code.Grad.T_EE_20
-d_grad'45'mgpt'45'loss'45'e_398
+d_grad'45'mgpt'45'loss'45'e_368 :: MAlonzo.Code.Grad.T_EE_20
+d_grad'45'mgpt'45'loss'45'e_368
   = coe
-      d_ee'45'OPT_260
+      d_ee'45'OPT_230
       (coe
          MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
          (coe
@@ -3945,7 +3897,7 @@ d_grad'45'mgpt'45'loss'45'e_398
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))
       (coe
-         d_ee'45'dedup_252
+         d_ee'45'dedup_222
          (coe
             MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
             (coe
@@ -4115,7 +4067,7 @@ d_grad'45'mgpt'45'loss'45'e_398
                                              (coe
                                                 MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))
          (coe
-            d_ee'45'OPT_260
+            d_ee'45'OPT_230
             (coe
                MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
                (coe
@@ -4469,9 +4421,9 @@ d_grad'45'mgpt'45'loss'45'e_398
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))))))))))
 -- Extraction.Extract.mgpt-loss-s
-d_mgpt'45'loss'45's_400 ::
+d_mgpt'45'loss'45's_370 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_mgpt'45'loss'45's_400
+d_mgpt'45'loss'45's_370
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
       (coe
@@ -4657,7 +4609,7 @@ d_mgpt'45'loss'45's_400
                   (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))
                (coe MAlonzo.Code.Lang.d_mgpt'45'loss'45'e_2140) (coe d_OPT_98))
             (coe
-               d_from'45'named_270
+               d_from'45'named_240
                (coe
                   MAlonzo.Code.Lang.C__'9657'__16
                   (coe
@@ -4741,27 +4693,27 @@ d_mgpt'45'loss'45's_400
                         MAlonzo.Code.Ar.d__'8855'__54 () erased MAlonzo.Code.Lang.d_SL_2108
                         MAlonzo.Code.Lang.d_VO_2114)))
                (coe
-                  C__'9657'__268
+                  C__'9657'__238
                   (coe
-                     C__'9657'__268
+                     C__'9657'__238
                      (coe
-                        C__'9657'__268
+                        C__'9657'__238
                         (coe
-                           C__'9657'__268
+                           C__'9657'__238
                            (coe
-                              C__'9657'__268
+                              C__'9657'__238
                               (coe
-                                 C__'9657'__268
+                                 C__'9657'__238
                                  (coe
-                                    C__'9657'__268
+                                    C__'9657'__238
                                     (coe
-                                       C__'9657'__268
+                                       C__'9657'__238
                                        (coe
-                                          C__'9657'__268
+                                          C__'9657'__238
                                           (coe
-                                             C__'9657'__268
+                                             C__'9657'__238
                                              (coe
-                                                C__'9657'__268 (coe C_ε_266)
+                                                C__'9657'__238 (coe C_ε_236)
                                                 ("mask" :: Data.Text.Text))
                                              ("wpe" :: Data.Text.Text))
                                           ("wqry" :: Data.Text.Text))
@@ -4775,9 +4727,9 @@ d_mgpt'45'loss'45's_400
                   ("target" :: Data.Text.Text))))
          (coe (0 :: Integer)))
 -- Extraction.Extract.mgpt-forward-s
-d_mgpt'45'forward'45's_402 ::
+d_mgpt'45'forward'45's_372 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_mgpt'45'forward'45's_402
+d_mgpt'45'forward'45's_372
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
       (coe
@@ -4951,7 +4903,7 @@ d_mgpt'45'forward'45's_402
                      MAlonzo.Code.Lang.d_VO_2114))
                (coe MAlonzo.Code.Lang.d_mgpt'45'forward'45'e_2118) (coe d_OPT_98))
             (coe
-               d_from'45'named_270
+               d_from'45'named_240
                (coe
                   MAlonzo.Code.Lang.C__'9657'__16
                   (coe
@@ -5027,25 +4979,25 @@ d_mgpt'45'forward'45's_402
                         MAlonzo.Code.Ar.d__'8855'__54 () erased MAlonzo.Code.Lang.d_SL_2108
                         MAlonzo.Code.Lang.d_ED_2102)))
                (coe
-                  C__'9657'__268
+                  C__'9657'__238
                   (coe
-                     C__'9657'__268
+                     C__'9657'__238
                      (coe
-                        C__'9657'__268
+                        C__'9657'__238
                         (coe
-                           C__'9657'__268
+                           C__'9657'__238
                            (coe
-                              C__'9657'__268
+                              C__'9657'__238
                               (coe
-                                 C__'9657'__268
+                                 C__'9657'__238
                                  (coe
-                                    C__'9657'__268
+                                    C__'9657'__238
                                     (coe
-                                       C__'9657'__268
+                                       C__'9657'__238
                                        (coe
-                                          C__'9657'__268
+                                          C__'9657'__238
                                           (coe
-                                             C__'9657'__268 (coe C_ε_266)
+                                             C__'9657'__238 (coe C_ε_236)
                                              ("mask" :: Data.Text.Text))
                                           ("wpe" :: Data.Text.Text))
                                        ("wqry" :: Data.Text.Text))
@@ -5058,11 +5010,11 @@ d_mgpt'45'forward'45's_402
                   ("wseq" :: Data.Text.Text))))
          (coe (0 :: Integer)))
 -- Extraction.Extract.grad-mgpt-loss-s
-d_grad'45'mgpt'45'loss'45's_404 ::
+d_grad'45'mgpt'45'loss'45's_374 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_grad'45'mgpt'45'loss'45's_404
+d_grad'45'mgpt'45'loss'45's_374
   = coe
-      d_pp_338
+      d_pp_308
       (coe
          MAlonzo.Code.Lang.d_ext_1248 (coe MAlonzo.Code.Lang.C_ε_14)
          (coe
@@ -5149,26 +5101,26 @@ d_grad'45'mgpt'45'loss'45's_404
       (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
       (coe MAlonzo.Code.Lang.d_mgpt'45'loss'45'e_2140)
       (coe
-         C__'9657'__268
+         C__'9657'__238
          (coe
-            C__'9657'__268
+            C__'9657'__238
             (coe
-               C__'9657'__268
+               C__'9657'__238
                (coe
-                  C__'9657'__268
+                  C__'9657'__238
                   (coe
-                     C__'9657'__268
+                     C__'9657'__238
                      (coe
-                        C__'9657'__268
+                        C__'9657'__238
                         (coe
-                           C__'9657'__268
+                           C__'9657'__238
                            (coe
-                              C__'9657'__268
+                              C__'9657'__238
                               (coe
-                                 C__'9657'__268
+                                 C__'9657'__238
                                  (coe
-                                    C__'9657'__268
-                                    (coe C__'9657'__268 (coe C_ε_266) ("mask" :: Data.Text.Text))
+                                    C__'9657'__238
+                                    (coe C__'9657'__238 (coe C_ε_236) ("mask" :: Data.Text.Text))
                                     ("wpe" :: Data.Text.Text))
                                  ("wqry" :: Data.Text.Text))
                               ("wkey" :: Data.Text.Text))

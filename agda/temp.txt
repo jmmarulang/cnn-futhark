@@ -1,6 +1,6 @@
 let′
-(Lang.E.let′
- (Lang.E.imap
+(Lang.E.imap
+ (Lang.E.let′
   (Lang.E.scaledown 16
    (Lang.E.sum
     (Lang.E.bin Lang.Bop.mul
@@ -39,16 +39,12 @@ let′
         (Lang.E.var
          (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
        (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-      (Lang.E.var Lang._∈_.here))))))
- (Lang.E.let′
-  (Lang.E.imap
-   (Lang.E.un Lang.Uop.squared
-    (Lang.E.bin Lang.Bop.plus
-     (Lang.E.sel (Lang.E.var (Lang._∈_.there Lang._∈_.here))
-      (Lang.E.var Lang._∈_.here))
-     (Lang.E.scaledown 100000 Lang.E.one))))
+      (Lang.E.var Lang._∈_.here)))))
   (Lang.E.let′
-   (Lang.E.imap
+   (Lang.E.un Lang.Uop.squared
+    (Lang.E.bin Lang.Bop.plus (Lang.E.var Lang._∈_.here)
+     (Lang.E.scaledown 100000 Lang.E.one)))
+   (Lang.E.let′
     (Lang.E.bin Lang.Bop.mul
      (Lang.E.sel
       (Lang.E.bin Lang.Bop.plus
@@ -67,18 +63,13 @@ let′
        (Lang.E.var
         (Lang._∈_.there
          (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
-      (Lang.E.var Lang._∈_.here))
+      (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
      (Lang.E.un Lang.Uop.inverse
-      (Lang.E.imaps
-       (Lang.E.sel
-        (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
-        (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))))
-   (Lang.E.imap
-    (Lang.E.sel (Lang.E.var (Lang._∈_.there Lang._∈_.here))
-     (Lang.E.var Lang._∈_.here))))))
+      (Lang.E.imaps (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))
+    (Lang.E.var Lang._∈_.here)))))
 (let′
- (Lang.E.let′
-  (Lang.E.imap
+ (Lang.E.imap
+  (Lang.E.let′
    (Lang.E.scaledown 16
     (Lang.E.sum
      (Lang.E.bin Lang.Bop.mul
@@ -91,29 +82,20 @@ let′
        (Lang.E.sel
         (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
         (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-       (Lang.E.var Lang._∈_.here))))))
-  (Lang.E.let′
-   (Lang.E.imap
-    (Lang.E.un Lang.Uop.squared
-     (Lang.E.bin Lang.Bop.plus
-      (Lang.E.sel (Lang.E.var (Lang._∈_.there Lang._∈_.here))
-       (Lang.E.var Lang._∈_.here))
-      (Lang.E.scaledown 100000 Lang.E.one))))
+       (Lang.E.var Lang._∈_.here)))))
    (Lang.E.let′
-    (Lang.E.imap
+    (Lang.E.un Lang.Uop.squared
+     (Lang.E.bin Lang.Bop.plus (Lang.E.var Lang._∈_.here)
+      (Lang.E.scaledown 100000 Lang.E.one)))
+    (Lang.E.let′
      (Lang.E.bin Lang.Bop.mul
       (Lang.E.sel
        (Lang.E.var
         (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-       (Lang.E.var Lang._∈_.here))
+       (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
       (Lang.E.un Lang.Uop.inverse
-       (Lang.E.imaps
-        (Lang.E.sel
-         (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
-         (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))))
-    (Lang.E.imap
-     (Lang.E.sel (Lang.E.var (Lang._∈_.there Lang._∈_.here))
-      (Lang.E.var Lang._∈_.here))))))
+       (Lang.E.imaps (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))
+     (Lang.E.var Lang._∈_.here)))))
  (let′
   (Lang.E.imap
    (Lang.E.imap
@@ -221,49 +203,44 @@ let′
      (Lang.E.imap
       (Lang.E.imapb Ar.Pointw₃.cons
        (Lang.E.sel
-        (Lang.E.sel
+        (Lang.E.let′
+         (Lang.E.imap
+          (Lang.E.imaps
+           (Lang.E.sum
+            (Lang.E.bin Lang.Bop.mul
+             (Lang.E.sels
+              (Lang.E.sel
+               (Lang.E.sel
+                (Lang.E.var
+                 (Lang._∈_.there
+                  (Lang._∈_.there
+                   (Lang._∈_.there
+                    (Lang._∈_.there
+                     (Lang._∈_.there
+                      (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))))
+                (Lang.E.var
+                 (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+               (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
+              (Lang.E.var Lang._∈_.here))
+             (Lang.E.sels
+              (Lang.E.sel
+               (Lang.E.sel
+                (Lang.E.var
+                 (Lang._∈_.there
+                  (Lang._∈_.there
+                   (Lang._∈_.there
+                    (Lang._∈_.there
+                     (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))
+                (Lang.E.var
+                 (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+               (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
+              (Lang.E.var Lang._∈_.here))))))
          (Lang.E.let′
-          (Lang.E.imap
-           (Lang.E.imap
-            (Lang.E.imaps
-             (Lang.E.sum
-              (Lang.E.bin Lang.Bop.mul
-               (Lang.E.sels
-                (Lang.E.sel
-                 (Lang.E.sel
-                  (Lang.E.var
-                   (Lang._∈_.there
-                    (Lang._∈_.there
-                     (Lang._∈_.there
-                      (Lang._∈_.there
-                       (Lang._∈_.there
-                        (Lang._∈_.there
-                         (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))))
-                  (Lang.E.var
-                   (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
-                 (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                (Lang.E.var Lang._∈_.here))
-               (Lang.E.sels
-                (Lang.E.sel
-                 (Lang.E.sel
-                  (Lang.E.var
-                   (Lang._∈_.there
-                    (Lang._∈_.there
-                     (Lang._∈_.there
-                      (Lang._∈_.there
-                       (Lang._∈_.there
-                        (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))))
-                  (Lang.E.var
-                   (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
-                 (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                (Lang.E.var Lang._∈_.here)))))))
-          (Lang.E.let′
-           (Lang.E.imap
-            (Lang.E.bin Lang.Bop.plus
-             (Lang.E.scaledown 2
-              (Lang.E.sel (Lang.E.var (Lang._∈_.there Lang._∈_.here))
-               (Lang.E.var Lang._∈_.here)))
-             (Lang.E.var
+          (Lang.E.bin Lang.Bop.plus
+           (Lang.E.scaledown 2 (Lang.E.var Lang._∈_.here))
+           (Lang.E.var
+            (Lang._∈_.there
+             (Lang._∈_.there
               (Lang._∈_.there
                (Lang._∈_.there
                 (Lang._∈_.there
@@ -278,122 +255,68 @@ let′
                          (Lang._∈_.there
                           (Lang._∈_.there
                            (Lang._∈_.there
-                            (Lang._∈_.there
-                             (Lang._∈_.there
-                              (Lang._∈_.there
-                               (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))))))))))))))))))
+                            (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))))))))))))))))
+          (Lang.E.let′
+           (Lang.E.imap
+            (Lang.E.let′
+             (Lang.E.maximum
+              (Lang.E.sels
+               (Lang.E.sel
+                (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
+               (Lang.E.var Lang._∈_.here)))
+             (Lang.E.let′
+              (Lang.E.un Lang.Uop.exp
+               (Lang.E.bin Lang.Bop.plus
+                (Lang.E.sel
+                 (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                 (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
+                (Lang.E.un Lang.Uop.neg
+                 (Lang.E.imaps (Lang.E.var (Lang._∈_.there Lang._∈_.here))))))
+              (Lang.E.let′
+               (Lang.E.sum
+                (Lang.E.sels (Lang.E.var (Lang._∈_.there Lang._∈_.here))
+                 (Lang.E.var Lang._∈_.here)))
+               (Lang.E.let′
+                (Lang.E.imaps
+                 (Lang.E.bin Lang.Bop.mul
+                  (Lang.E.sels
+                   (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                   (Lang.E.var Lang._∈_.here))
+                  (Lang.E.un Lang.Uop.inverse
+                   (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))
+                (Lang.E.var Lang._∈_.here))))))
            (Lang.E.let′
             (Lang.E.imap
-             (Lang.E.imap
-              (Lang.E.maximum
-               (Lang.E.sels
-                (Lang.E.sel
+             (Lang.E.imaps
+              (Lang.E.sum
+               (Lang.E.bin Lang.Bop.mul
+                (Lang.E.sels
                  (Lang.E.sel
                   (Lang.E.var
                    (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
                   (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                 (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                (Lang.E.var Lang._∈_.here)))))
-            (Lang.E.let′
-             (Lang.E.imap
-              (Lang.E.imap
-               (Lang.E.un Lang.Uop.exp
-                (Lang.E.bin Lang.Bop.plus
+                 (Lang.E.var Lang._∈_.here))
+                (Lang.E.sels
                  (Lang.E.sel
                   (Lang.E.sel
                    (Lang.E.var
-                    (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                   (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                  (Lang.E.var Lang._∈_.here))
-                 (Lang.E.un Lang.Uop.neg
-                  (Lang.E.imaps
-                   (Lang.E.sel
-                    (Lang.E.sel
-                     (Lang.E.var
-                      (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                     (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                    (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))))))
-             (Lang.E.let′
-              (Lang.E.imap
-               (Lang.E.imap
-                (Lang.E.sum
-                 (Lang.E.sels
-                  (Lang.E.sel
-                   (Lang.E.sel
-                    (Lang.E.var
-                     (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                    (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                   (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                  (Lang.E.var Lang._∈_.here)))))
-              (Lang.E.let′
-               (Lang.E.imap
-                (Lang.E.imap
-                 (Lang.E.imaps
-                  (Lang.E.bin Lang.Bop.mul
-                   (Lang.E.sels
-                    (Lang.E.sel
-                     (Lang.E.sel
-                      (Lang.E.var
+                    (Lang._∈_.there
+                     (Lang._∈_.there
+                      (Lang._∈_.there
                        (Lang._∈_.there
-                        (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
-                      (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                     (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                    (Lang.E.var Lang._∈_.here))
-                   (Lang.E.un Lang.Uop.inverse
-                    (Lang.E.sel
-                     (Lang.E.sel
-                      (Lang.E.var
-                       (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                      (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                     (Lang.E.var (Lang._∈_.there Lang._∈_.here))))))))
-               (Lang.E.let′
-                (Lang.E.imap
-                 (Lang.E.imap
-                  (Lang.E.sel
-                   (Lang.E.sel
-                    (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
-                    (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                   (Lang.E.var Lang._∈_.here))))
-                (Lang.E.let′
-                 (Lang.E.imap
-                  (Lang.E.imap
-                   (Lang.E.imaps
-                    (Lang.E.sum
-                     (Lang.E.bin Lang.Bop.mul
-                      (Lang.E.sels
-                       (Lang.E.sel
-                        (Lang.E.sel
-                         (Lang.E.var
-                          (Lang._∈_.there
-                           (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
-                         (Lang.E.var
-                          (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
-                        (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                       (Lang.E.var Lang._∈_.here))
-                      (Lang.E.sels
-                       (Lang.E.sel
-                        (Lang.E.sel
-                         (Lang.E.var
-                          (Lang._∈_.there
-                           (Lang._∈_.there
-                            (Lang._∈_.there
-                             (Lang._∈_.there
-                              (Lang._∈_.there
-                               (Lang._∈_.there
-                                (Lang._∈_.there
-                                 (Lang._∈_.there
-                                  (Lang._∈_.there
-                                   (Lang._∈_.there
-                                    (Lang._∈_.there
-                                     (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))))))))))
-                         (Lang.E.var
-                          (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
-                        (Lang.E.var Lang._∈_.here))
-                       (Lang.E.var (Lang._∈_.there Lang._∈_.here))))))))
-                 (Lang.E.imap
-                  (Lang.E.sel (Lang.E.var (Lang._∈_.there Lang._∈_.here))
-                   (Lang.E.var Lang._∈_.here)))))))))))
-         (Lang.E.var Lang._∈_.here))
+                        (Lang._∈_.there
+                         (Lang._∈_.there
+                          (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))))
+                   (Lang.E.var
+                    (Lang._∈_.there
+                     (Lang._∈_.there
+                      (Lang._∈_.there
+                       (Lang._∈_.there
+                        (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))))
+                  (Lang.E.var Lang._∈_.here))
+                 (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))))
+            (Lang.E.var Lang._∈_.here)))))
         (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))
      (let′
       (Lang.E.bin Lang.Bop.plus
@@ -431,8 +354,8 @@ let′
           (Lang._∈_.there
            (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))
       (let′
-       (Lang.E.let′
-        (Lang.E.imap
+       (Lang.E.imap
+        (Lang.E.let′
          (Lang.E.scaledown 16
           (Lang.E.sum
            (Lang.E.bin Lang.Bop.mul
@@ -445,29 +368,20 @@ let′
              (Lang.E.sel
               (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
               (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-             (Lang.E.var Lang._∈_.here))))))
-        (Lang.E.let′
-         (Lang.E.imap
-          (Lang.E.un Lang.Uop.squared
-           (Lang.E.bin Lang.Bop.plus
-            (Lang.E.sel (Lang.E.var (Lang._∈_.there Lang._∈_.here))
-             (Lang.E.var Lang._∈_.here))
-            (Lang.E.scaledown 100000 Lang.E.one))))
+             (Lang.E.var Lang._∈_.here)))))
          (Lang.E.let′
-          (Lang.E.imap
+          (Lang.E.un Lang.Uop.squared
+           (Lang.E.bin Lang.Bop.plus (Lang.E.var Lang._∈_.here)
+            (Lang.E.scaledown 100000 Lang.E.one)))
+          (Lang.E.let′
            (Lang.E.bin Lang.Bop.mul
             (Lang.E.sel
              (Lang.E.var
               (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-             (Lang.E.var Lang._∈_.here))
+             (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
             (Lang.E.un Lang.Uop.inverse
-             (Lang.E.imaps
-              (Lang.E.sel
-               (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
-               (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))))
-          (Lang.E.imap
-           (Lang.E.sel (Lang.E.var (Lang._∈_.there Lang._∈_.here))
-            (Lang.E.var Lang._∈_.here))))))
+             (Lang.E.imaps (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))
+           (Lang.E.var Lang._∈_.here)))))
        (let′
         (Lang.E.imap
          (Lang.E.imaps
@@ -833,8 +747,8 @@ let′
                       (Lang.E.imap
                        (Lang.E.imap
                         (Lang.E.un Lang.Uop.inverse
-                         (Lang.E.bin Lang.Bop.plus (Lang.E.sum Lang.E.one)
-                          (Lang.E.sum
+                         (Lang.E.sum
+                          (Lang.E.bin Lang.Bop.plus Lang.E.one
                            (Lang.E.un Lang.Uop.neg
                             (Lang.E.un Lang.Uop.ind-positive
                              (Lang.E.un Lang.Uop.neg
@@ -863,31 +777,18 @@ let′
                                    (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
                                   (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
                                  (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))))))))))
-                      (Lang.E.bin Lang.Bop.plus
-                       (Lang.E.imap
-                        (Lang.E.sum
-                         (Lang.E.bin Lang.Bop.mul
-                          (Lang.E.un Lang.Uop.exp
-                           (Lang.E.bin Lang.Bop.plus
-                            (Lang.E.sel
-                             (Lang.E.var
-                              (Lang._∈_.there
-                               (Lang._∈_.there
-                                (Lang._∈_.there
-                                 (Lang._∈_.there
-                                  (Lang._∈_.there
-                                   (Lang._∈_.there
-                                    (Lang._∈_.there
-                                     (Lang._∈_.there
-                                      (Lang._∈_.there
-                                       (Lang._∈_.there
-                                        (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))))))))
-                             (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                            (Lang.E.un Lang.Uop.neg
-                             (Lang.E.imaps
+                      (Lang.E.sum
+                       (Lang.E.sum
+                        (Lang.E.bin Lang.Bop.plus
+                         (Lang.E.imap
+                          (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                           (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                           (Lang.E.bin Lang.Bop.mul
+                            (Lang.E.un Lang.Uop.exp
+                             (Lang.E.bin Lang.Bop.plus
                               (Lang.E.sel
-                               (Lang.E.sel
-                                (Lang.E.var
+                               (Lang.E.var
+                                (Lang._∈_.there
                                  (Lang._∈_.there
                                   (Lang._∈_.there
                                    (Lang._∈_.there
@@ -897,38 +798,16 @@ let′
                                        (Lang._∈_.there
                                         (Lang._∈_.there
                                          (Lang._∈_.there
-                                          (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))))))))
-                                (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                               (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))))
-                          (Lang.E.sel
-                           (Lang.E.sel
-                            (Lang.E.var
-                             (Lang._∈_.there
-                              (Lang._∈_.there
-                               (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
-                            (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                           (Lang.E.var Lang._∈_.here)))))
-                       (Lang.E.imap
-                        (Lang.E.imaps
-                         (Lang.E.sum
-                          (Lang.E.bin Lang.Bop.mul
-                           (Lang.E.bin Lang.Bop.mul
-                            (Lang.E.sel
-                             (Lang.E.sel
-                              (Lang.E.var
-                               (Lang._∈_.there
-                                (Lang._∈_.there
-                                 (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
-                              (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                             (Lang.E.var Lang._∈_.here))
-                            (Lang.E.bin Lang.Bop.plus Lang.E.one
-                             (Lang.E.un Lang.Uop.neg
-                              (Lang.E.un Lang.Uop.ind-positive
-                               (Lang.E.un Lang.Uop.neg
-                                (Lang.E.bin Lang.Bop.plus
-                                 (Lang.E.sels
-                                  (Lang.E.sel
-                                   (Lang.E.var
+                                          (Lang._∈_.there
+                                           (Lang._∈_.there
+                                            (Lang._∈_.there Lang._∈_.here))))))))))))))
+                               (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
+                              (Lang.E.un Lang.Uop.neg
+                               (Lang.E.imaps
+                                (Lang.E.sel
+                                 (Lang.E.sel
+                                  (Lang.E.var
+                                   (Lang._∈_.there
                                     (Lang._∈_.there
                                      (Lang._∈_.there
                                       (Lang._∈_.there
@@ -939,26 +818,86 @@ let′
                                            (Lang._∈_.there
                                             (Lang._∈_.there
                                              (Lang._∈_.there
+                                              (Lang._∈_.there Lang._∈_.here)))))))))))))
+                                  (Lang.E.var
+                                   (Lang._∈_.there
+                                    (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                 (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))))
+                            (Lang.E.sel
+                             (Lang.E.sel
+                              (Lang.E.var
+                               (Lang._∈_.there
+                                (Lang._∈_.there
+                                 (Lang._∈_.there
+                                  (Lang._∈_.there
+                                   (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))
+                              (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
+                             (Lang.E.var (Lang._∈_.there Lang._∈_.here))))))
+                         (Lang.E.imap
+                          (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                           (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                           (Lang.E.imaps
+                            (Lang.E.bin Lang.Bop.mul
+                             (Lang.E.bin Lang.Bop.mul
+                              (Lang.E.sel
+                               (Lang.E.sel
+                                (Lang.E.var
+                                 (Lang._∈_.there
+                                  (Lang._∈_.there
+                                   (Lang._∈_.there
+                                    (Lang._∈_.there
+                                     (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))
+                                (Lang.E.var
+                                 (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                               (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
+                              (Lang.E.bin Lang.Bop.plus Lang.E.one
+                               (Lang.E.un Lang.Uop.neg
+                                (Lang.E.un Lang.Uop.ind-positive
+                                 (Lang.E.un Lang.Uop.neg
+                                  (Lang.E.bin Lang.Bop.plus
+                                   (Lang.E.sels
+                                    (Lang.E.sel
+                                     (Lang.E.var
+                                      (Lang._∈_.there
+                                       (Lang._∈_.there
+                                        (Lang._∈_.there
+                                         (Lang._∈_.there
+                                          (Lang._∈_.there
+                                           (Lang._∈_.there
+                                            (Lang._∈_.there
+                                             (Lang._∈_.there
                                               (Lang._∈_.there
                                                (Lang._∈_.there
-                                                (Lang._∈_.there Lang._∈_.here))))))))))))))
-                                   (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                  (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                 (Lang.E.un Lang.Uop.neg
-                                  (Lang.E.sel
-                                   (Lang.E.sel
-                                    (Lang.E.var
-                                     (Lang._∈_.there
+                                                (Lang._∈_.there
+                                                 (Lang._∈_.there
+                                                  (Lang._∈_.there
+                                                   (Lang._∈_.there Lang._∈_.here)))))))))))))))
+                                     (Lang.E.var
                                       (Lang._∈_.there
                                        (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
-                                    (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                   (Lang.E.var Lang._∈_.here)))))))))
-                           (Lang.E.sel
-                            (Lang.E.sel
-                             (Lang.E.var
-                              (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                             (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                            (Lang.E.var Lang._∈_.here))))))))))))))))
+                                    (Lang.E.var Lang._∈_.here))
+                                   (Lang.E.un Lang.Uop.neg
+                                    (Lang.E.sel
+                                     (Lang.E.sel
+                                      (Lang.E.var
+                                       (Lang._∈_.there
+                                        (Lang._∈_.there
+                                         (Lang._∈_.there
+                                          (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
+                                      (Lang.E.var
+                                       (Lang._∈_.there
+                                        (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                     (Lang.E.var
+                                      (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))))))
+                             (Lang.E.sel
+                              (Lang.E.sel
+                               (Lang.E.var
+                                (Lang._∈_.there
+                                 (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                               (Lang.E.var
+                                (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                              (Lang.E.var
+                               (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))))))))))))))))
              (let′
               (Lang.E.imap
                (Lang.E.imaps
@@ -1185,36 +1124,48 @@ let′
                                (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
                              (Lang.E.var Lang._∈_.here))
                             (Lang.E.scaledown 100000 Lang.E.one)))))))
-                      (Lang.E.bin Lang.Bop.plus
-                       (Lang.E.imap
-                        (Lang.E.bin Lang.Bop.mul
-                         (Lang.E.sel
-                          (Lang.E.var
-                           (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                          (Lang.E.var Lang._∈_.here))
-                         (Lang.E.un Lang.Uop.inverse
-                          (Lang.E.imaps
+                      (Lang.E.sum
+                       (Lang.E.bin Lang.Bop.plus
+                        (Lang.E.imap
+                         (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                          (Lang.E.var (Lang._∈_.there Lang._∈_.here))
+                          (Lang.E.bin Lang.Bop.mul
                            (Lang.E.sel
                             (Lang.E.var
                              (Lang._∈_.there
-                              (Lang._∈_.there
-                               (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
-                            (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))))
-                       (Lang.E.bin Lang.Bop.plus
-                        (Lang.E.imap
-                         (Lang.E.imaps
-                          (Lang.E.bin Lang.Bop.mul
-                           (Lang.E.scaledown 16
-                            (Lang.E.sel
-                             (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
-                             (Lang.E.var (Lang._∈_.there Lang._∈_.here))))
-                           (Lang.E.sels
-                            (Lang.E.sel
-                             (Lang.E.var
-                              (Lang._∈_.there
+                              (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                            (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
+                           (Lang.E.un Lang.Uop.inverse
+                            (Lang.E.imaps
+                             (Lang.E.sel
+                              (Lang.E.var
                                (Lang._∈_.there
                                 (Lang._∈_.there
                                  (Lang._∈_.there
+                                  (Lang._∈_.there
+                                   (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))
+                              (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))))
+                        (Lang.E.sum
+                         (Lang.E.bin Lang.Bop.plus
+                          (Lang.E.imap
+                           (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                            (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                            (Lang.E.imaps
+                             (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                              (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                              (Lang.E.bin Lang.Bop.mul
+                               (Lang.E.scaledown 16
+                                (Lang.E.sel
+                                 (Lang.E.var
+                                  (Lang._∈_.there
+                                   (Lang._∈_.there
+                                    (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                 (Lang.E.var
+                                  (Lang._∈_.there
+                                   (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
+                               (Lang.E.sels
+                                (Lang.E.sel
+                                 (Lang.E.var
                                   (Lang._∈_.there
                                    (Lang._∈_.there
                                     (Lang._∈_.there
@@ -1226,23 +1177,35 @@ let′
                                           (Lang._∈_.there
                                            (Lang._∈_.there
                                             (Lang._∈_.there
-                                             (Lang._∈_.there Lang._∈_.here)))))))))))))))))
-                             (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                            (Lang.E.var Lang._∈_.here)))))
-                        (Lang.E.imap
-                         (Lang.E.imaps
-                          (Lang.E.bin Lang.Bop.mul
-                           (Lang.E.scaledown 16
-                            (Lang.E.sel
-                             (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
-                             (Lang.E.var (Lang._∈_.there Lang._∈_.here))))
-                           (Lang.E.sels
-                            (Lang.E.sel
-                             (Lang.E.var
-                              (Lang._∈_.there
-                               (Lang._∈_.there
-                                (Lang._∈_.there
-                                 (Lang._∈_.there
+                                             (Lang._∈_.there
+                                              (Lang._∈_.there
+                                               (Lang._∈_.there
+                                                (Lang._∈_.there
+                                                 (Lang._∈_.there
+                                                  (Lang._∈_.there
+                                                   (Lang._∈_.there Lang._∈_.here)))))))))))))))))))
+                                 (Lang.E.var
+                                  (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                (Lang.E.var Lang._∈_.here)))))))
+                          (Lang.E.imap
+                           (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                            (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                            (Lang.E.imaps
+                             (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                              (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                              (Lang.E.bin Lang.Bop.mul
+                               (Lang.E.scaledown 16
+                                (Lang.E.sel
+                                 (Lang.E.var
+                                  (Lang._∈_.there
+                                   (Lang._∈_.there
+                                    (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                 (Lang.E.var
+                                  (Lang._∈_.there
+                                   (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
+                               (Lang.E.sels
+                                (Lang.E.sel
+                                 (Lang.E.var
                                   (Lang._∈_.there
                                    (Lang._∈_.there
                                     (Lang._∈_.there
@@ -1254,9 +1217,16 @@ let′
                                           (Lang._∈_.there
                                            (Lang._∈_.there
                                             (Lang._∈_.there
-                                             (Lang._∈_.there Lang._∈_.here)))))))))))))))))
-                             (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                            (Lang.E.var Lang._∈_.here)))))))))))))
+                                             (Lang._∈_.there
+                                              (Lang._∈_.there
+                                               (Lang._∈_.there
+                                                (Lang._∈_.there
+                                                 (Lang._∈_.there
+                                                  (Lang._∈_.there
+                                                   (Lang._∈_.there Lang._∈_.here)))))))))))))))))))
+                                 (Lang.E.var
+                                  (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                (Lang.E.var Lang._∈_.here)))))))))))))))))
                 (let′
                  (Lang.E.imap
                   (Lang.E.imap
@@ -1417,122 +1387,81 @@ let′
                         (Lang.E.let′
                          (Lang.E.imap
                           (Lang.E.imap
-                           (Lang.E.maximum
-                            (Lang.E.sels
-                             (Lang.E.sel
-                              (Lang.E.sel
-                               (Lang.E.var
-                                (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                               (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                              (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                             (Lang.E.var Lang._∈_.here)))))
-                         (Lang.E.let′
-                          (Lang.E.imap
-                           (Lang.E.imap
-                            (Lang.E.un Lang.Uop.exp
-                             (Lang.E.bin Lang.Bop.plus
+                           (Lang.E.let′
+                            (Lang.E.maximum
+                             (Lang.E.sels
                               (Lang.E.sel
                                (Lang.E.sel
                                 (Lang.E.var
                                  (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                               (Lang.E.var Lang._∈_.here))
-                              (Lang.E.un Lang.Uop.neg
-                               (Lang.E.imaps
-                                (Lang.E.sel
-                                 (Lang.E.sel
-                                  (Lang.E.var
-                                   (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                  (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                 (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))))))
-                          (Lang.E.let′
-                           (Lang.E.imap
-                            (Lang.E.imap
-                             (Lang.E.sum
-                              (Lang.E.sels
+                                (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
+                               (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
+                              (Lang.E.var Lang._∈_.here)))
+                            (Lang.E.let′
+                             (Lang.E.un Lang.Uop.exp
+                              (Lang.E.bin Lang.Bop.plus
                                (Lang.E.sel
                                 (Lang.E.sel
                                  (Lang.E.var
                                   (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
                                  (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
                                 (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                               (Lang.E.var Lang._∈_.here)))))
-                           (Lang.E.let′
-                            (Lang.E.imap
-                             (Lang.E.imap
-                              (Lang.E.imaps
-                               (Lang.E.bin Lang.Bop.mul
-                                (Lang.E.sels
-                                 (Lang.E.sel
-                                  (Lang.E.sel
-                                   (Lang.E.var
-                                    (Lang._∈_.there
-                                     (Lang._∈_.there
-                                      (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
-                                   (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                  (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                 (Lang.E.var Lang._∈_.here))
-                                (Lang.E.un Lang.Uop.inverse
-                                 (Lang.E.sel
-                                  (Lang.E.sel
-                                   (Lang.E.var
-                                    (Lang._∈_.there
-                                     (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                   (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                  (Lang.E.var (Lang._∈_.there Lang._∈_.here))))))))
-                            (Lang.E.let′
-                             (Lang.E.imap
-                              (Lang.E.imap
-                               (Lang.E.sel
-                                (Lang.E.sel
-                                 (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
-                                 (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                (Lang.E.var Lang._∈_.here))))
+                               (Lang.E.un Lang.Uop.neg
+                                (Lang.E.imaps (Lang.E.var (Lang._∈_.there Lang._∈_.here))))))
                              (Lang.E.let′
-                              (Lang.E.imap
-                               (Lang.E.sel
-                                (Lang.E.var
-                                 (Lang._∈_.there
-                                  (Lang._∈_.there
+                              (Lang.E.sum
+                               (Lang.E.sels (Lang.E.var (Lang._∈_.there Lang._∈_.here))
+                                (Lang.E.var Lang._∈_.here)))
+                              (Lang.E.let′
+                               (Lang.E.imaps
+                                (Lang.E.bin Lang.Bop.mul
+                                 (Lang.E.sels
+                                  (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                                  (Lang.E.var Lang._∈_.here))
+                                 (Lang.E.un Lang.Uop.inverse
+                                  (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))
+                               (Lang.E.var Lang._∈_.here)))))))
+                         (Lang.E.let′
+                          (Lang.E.imap
+                           (Lang.E.sel
+                            (Lang.E.var
+                             (Lang._∈_.there
+                              (Lang._∈_.there
+                               (Lang._∈_.there
+                                (Lang._∈_.there
+                                 (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))
+                            (Lang.E.var Lang._∈_.here)))
+                          (Lang.E.imap
+                           (Lang.E.imap
+                            (Lang.E.imaps
+                             (Lang.E.sum
+                              (Lang.E.bin Lang.Bop.mul
+                               (Lang.E.sels
+                                (Lang.E.sel
+                                 (Lang.E.sel
+                                  (Lang.E.var
+                                   (Lang._∈_.there
+                                    (Lang._∈_.there
+                                     (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                  (Lang.E.var
+                                   (Lang._∈_.there
+                                    (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                 (Lang.E.var Lang._∈_.here))
+                                (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
+                               (Lang.E.sels
+                                (Lang.E.sel
+                                 (Lang.E.sel
+                                  (Lang.E.var
                                    (Lang._∈_.there
                                     (Lang._∈_.there
                                      (Lang._∈_.there
-                                      (Lang._∈_.there
-                                       (Lang._∈_.there
-                                        (Lang._∈_.there
-                                         (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))))))
-                                (Lang.E.var Lang._∈_.here)))
-                              (Lang.E.imap
-                               (Lang.E.imap
-                                (Lang.E.imaps
-                                 (Lang.E.sum
-                                  (Lang.E.bin Lang.Bop.mul
-                                   (Lang.E.sels
-                                    (Lang.E.sel
-                                     (Lang.E.sel
-                                      (Lang.E.var
-                                       (Lang._∈_.there
-                                        (Lang._∈_.there
-                                         (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
-                                      (Lang.E.var
-                                       (Lang._∈_.there
-                                        (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
-                                     (Lang.E.var Lang._∈_.here))
-                                    (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                   (Lang.E.sels
-                                    (Lang.E.sel
-                                     (Lang.E.sel
-                                      (Lang.E.var
-                                       (Lang._∈_.there
-                                        (Lang._∈_.there
-                                         (Lang._∈_.there
-                                          (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
-                                      (Lang.E.var
-                                       (Lang._∈_.there
-                                        (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
-                                     (Lang.E.var Lang._∈_.here))
-                                    (Lang.E.var
-                                     (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))))))))))))
+                                      (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
+                                  (Lang.E.var
+                                   (Lang._∈_.there
+                                    (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                 (Lang.E.var Lang._∈_.here))
+                                (Lang.E.var
+                                 (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))))))))
                       (Lang.E.var Lang._∈_.here))
                      (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))
                   (let′
@@ -1938,8 +1867,8 @@ let′
                                     (Lang.E.imap
                                      (Lang.E.imap
                                       (Lang.E.un Lang.Uop.inverse
-                                       (Lang.E.bin Lang.Bop.plus (Lang.E.sum Lang.E.one)
-                                        (Lang.E.sum
+                                       (Lang.E.sum
+                                        (Lang.E.bin Lang.Bop.plus Lang.E.one
                                          (Lang.E.un Lang.Uop.neg
                                           (Lang.E.un Lang.Uop.ind-positive
                                            (Lang.E.un Lang.Uop.neg
@@ -1978,32 +1907,14 @@ let′
                                                 (Lang._∈_.there Lang._∈_.here)))))))))))))
                                     (Lang.E.let′
                                      (Lang.E.imap
-                                      (Lang.E.bin Lang.Bop.plus
-                                       (Lang.E.imap
-                                        (Lang.E.bin Lang.Bop.mul
-                                         (Lang.E.un Lang.Uop.exp
-                                          (Lang.E.bin Lang.Bop.plus
-                                           (Lang.E.sel
-                                            (Lang.E.sel
-                                             (Lang.E.var
-                                              (Lang._∈_.there
-                                               (Lang._∈_.there
-                                                (Lang._∈_.there
-                                                 (Lang._∈_.there
-                                                  (Lang._∈_.there
-                                                   (Lang._∈_.there
-                                                    (Lang._∈_.there
-                                                     (Lang._∈_.there
-                                                      (Lang._∈_.there
-                                                       (Lang._∈_.there
-                                                        (Lang._∈_.there
-                                                         (Lang._∈_.there
-                                                          (Lang._∈_.there
-                                                           Lang._∈_.here))))))))))))))
-                                             (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                            (Lang.E.var Lang._∈_.here))
-                                           (Lang.E.un Lang.Uop.neg
-                                            (Lang.E.imaps
+                                      (Lang.E.sum
+                                       (Lang.E.bin Lang.Bop.plus
+                                        (Lang.E.imap
+                                         (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                          (Lang.E.var (Lang._∈_.there Lang._∈_.here))
+                                          (Lang.E.bin Lang.Bop.mul
+                                           (Lang.E.un Lang.Uop.exp
+                                            (Lang.E.bin Lang.Bop.plus
                                              (Lang.E.sel
                                               (Lang.E.sel
                                                (Lang.E.var
@@ -2017,44 +1928,80 @@ let′
                                                        (Lang._∈_.there
                                                         (Lang._∈_.there
                                                          (Lang._∈_.there
-                                                          (Lang._∈_.there Lang._∈_.here))))))))))))
+                                                          (Lang._∈_.there
+                                                           (Lang._∈_.there
+                                                            (Lang._∈_.there
+                                                             (Lang._∈_.there
+                                                              Lang._∈_.here)))))))))))))))
                                                (Lang.E.var
                                                 (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                              (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))))
-                                         (Lang.E.sel
-                                          (Lang.E.sel
-                                           (Lang.E.var
-                                            (Lang._∈_.there
-                                             (Lang._∈_.there
-                                              (Lang._∈_.there
-                                               (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
-                                           (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                          (Lang.E.var Lang._∈_.here))))
-                                       (Lang.E.imap
-                                        (Lang.E.imaps
-                                         (Lang.E.bin Lang.Bop.mul
-                                          (Lang.E.bin Lang.Bop.mul
+                                              (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
+                                             (Lang.E.un Lang.Uop.neg
+                                              (Lang.E.imaps
+                                               (Lang.E.sel
+                                                (Lang.E.sel
+                                                 (Lang.E.var
+                                                  (Lang._∈_.there
+                                                   (Lang._∈_.there
+                                                    (Lang._∈_.there
+                                                     (Lang._∈_.there
+                                                      (Lang._∈_.there
+                                                       (Lang._∈_.there
+                                                        (Lang._∈_.there
+                                                         (Lang._∈_.there
+                                                          (Lang._∈_.there
+                                                           (Lang._∈_.there
+                                                            (Lang._∈_.there
+                                                             (Lang._∈_.there
+                                                              Lang._∈_.here)))))))))))))
+                                                 (Lang.E.var
+                                                  (Lang._∈_.there
+                                                   (Lang._∈_.there
+                                                    (Lang._∈_.there Lang._∈_.here)))))
+                                                (Lang.E.var
+                                                 (Lang._∈_.there
+                                                  (Lang._∈_.there Lang._∈_.here))))))))
                                            (Lang.E.sel
                                             (Lang.E.sel
                                              (Lang.E.var
                                               (Lang._∈_.there
                                                (Lang._∈_.there
                                                 (Lang._∈_.there
-                                                 (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
+                                                 (Lang._∈_.there
+                                                  (Lang._∈_.there
+                                                   (Lang._∈_.there Lang._∈_.here)))))))
                                              (Lang.E.var
                                               (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                            (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                           (Lang.E.bin Lang.Bop.plus Lang.E.one
-                                            (Lang.E.un Lang.Uop.neg
-                                             (Lang.E.un Lang.Uop.ind-positive
-                                              (Lang.E.un Lang.Uop.neg
-                                               (Lang.E.bin Lang.Bop.plus
-                                                (Lang.E.sels
-                                                 (Lang.E.sel
-                                                  (Lang.E.sel
-                                                   (Lang.E.var
+                                            (Lang.E.var (Lang._∈_.there Lang._∈_.here))))))
+                                        (Lang.E.imap
+                                         (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                          (Lang.E.var (Lang._∈_.there Lang._∈_.here))
+                                          (Lang.E.imaps
+                                           (Lang.E.bin Lang.Bop.mul
+                                            (Lang.E.bin Lang.Bop.mul
+                                             (Lang.E.sel
+                                              (Lang.E.sel
+                                               (Lang.E.var
+                                                (Lang._∈_.there
+                                                 (Lang._∈_.there
+                                                  (Lang._∈_.there
+                                                   (Lang._∈_.there
                                                     (Lang._∈_.there
-                                                     (Lang._∈_.there
+                                                     (Lang._∈_.there Lang._∈_.here)))))))
+                                               (Lang.E.var
+                                                (Lang._∈_.there
+                                                 (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                              (Lang.E.var
+                                               (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
+                                             (Lang.E.bin Lang.Bop.plus Lang.E.one
+                                              (Lang.E.un Lang.Uop.neg
+                                               (Lang.E.un Lang.Uop.ind-positive
+                                                (Lang.E.un Lang.Uop.neg
+                                                 (Lang.E.bin Lang.Bop.plus
+                                                  (Lang.E.sels
+                                                   (Lang.E.sel
+                                                    (Lang.E.sel
+                                                     (Lang.E.var
                                                       (Lang._∈_.there
                                                        (Lang._∈_.there
                                                         (Lang._∈_.there
@@ -2067,33 +2014,46 @@ let′
                                                                (Lang._∈_.there
                                                                 (Lang._∈_.there
                                                                  (Lang._∈_.there
-                                                                  Lang._∈_.here)))))))))))))))
-                                                   (Lang.E.var
-                                                    (Lang._∈_.there
-                                                     (Lang._∈_.there Lang._∈_.here))))
-                                                  (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                                 (Lang.E.var Lang._∈_.here))
-                                                (Lang.E.un Lang.Uop.neg
-                                                 (Lang.E.sel
-                                                  (Lang.E.sel
-                                                   (Lang.E.var
-                                                    (Lang._∈_.there
-                                                     (Lang._∈_.there
+                                                                  (Lang._∈_.there
+                                                                   (Lang._∈_.there
+                                                                    (Lang._∈_.there
+                                                                     Lang._∈_.here))))))))))))))))
+                                                     (Lang.E.var
                                                       (Lang._∈_.there
-                                                       (Lang._∈_.there Lang._∈_.here)))))
-                                                   (Lang.E.var
-                                                    (Lang._∈_.there
-                                                     (Lang._∈_.there Lang._∈_.here))))
-                                                  (Lang.E.var
-                                                   (Lang._∈_.there Lang._∈_.here))))))))))
-                                          (Lang.E.sel
-                                           (Lang.E.sel
-                                            (Lang.E.var
-                                             (Lang._∈_.there
-                                              (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                            (Lang.E.var
-                                             (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                           (Lang.E.var (Lang._∈_.there Lang._∈_.here))))))))
+                                                       (Lang._∈_.there
+                                                        (Lang._∈_.there Lang._∈_.here)))))
+                                                    (Lang.E.var
+                                                     (Lang._∈_.there
+                                                      (Lang._∈_.there Lang._∈_.here))))
+                                                   (Lang.E.var Lang._∈_.here))
+                                                  (Lang.E.un Lang.Uop.neg
+                                                   (Lang.E.sel
+                                                    (Lang.E.sel
+                                                     (Lang.E.var
+                                                      (Lang._∈_.there
+                                                       (Lang._∈_.there
+                                                        (Lang._∈_.there
+                                                         (Lang._∈_.there
+                                                          (Lang._∈_.there Lang._∈_.here))))))
+                                                     (Lang.E.var
+                                                      (Lang._∈_.there
+                                                       (Lang._∈_.there
+                                                        (Lang._∈_.there Lang._∈_.here)))))
+                                                    (Lang.E.var
+                                                     (Lang._∈_.there
+                                                      (Lang._∈_.there Lang._∈_.here)))))))))))
+                                            (Lang.E.sel
+                                             (Lang.E.sel
+                                              (Lang.E.var
+                                               (Lang._∈_.there
+                                                (Lang._∈_.there
+                                                 (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                              (Lang.E.var
+                                               (Lang._∈_.there
+                                                (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                             (Lang.E.var
+                                              (Lang._∈_.there
+                                               (Lang._∈_.there Lang._∈_.here)))))))))))
                                      (Lang.E.let′
                                       (Lang.E.imap
                                        (Lang.E.scaledown 2
@@ -2576,8 +2536,8 @@ let′
                                      (Lang.E.imap
                                       (Lang.E.imap
                                        (Lang.E.un Lang.Uop.inverse
-                                        (Lang.E.bin Lang.Bop.plus (Lang.E.sum Lang.E.one)
-                                         (Lang.E.sum
+                                        (Lang.E.sum
+                                         (Lang.E.bin Lang.Bop.plus Lang.E.one
                                           (Lang.E.un Lang.Uop.neg
                                            (Lang.E.un Lang.Uop.ind-positive
                                             (Lang.E.un Lang.Uop.neg
@@ -2616,32 +2576,14 @@ let′
                                                  (Lang._∈_.there Lang._∈_.here)))))))))))))
                                      (Lang.E.let′
                                       (Lang.E.imap
-                                       (Lang.E.bin Lang.Bop.plus
-                                        (Lang.E.imap
-                                         (Lang.E.bin Lang.Bop.mul
-                                          (Lang.E.un Lang.Uop.exp
-                                           (Lang.E.bin Lang.Bop.plus
-                                            (Lang.E.sel
-                                             (Lang.E.sel
-                                              (Lang.E.var
-                                               (Lang._∈_.there
-                                                (Lang._∈_.there
-                                                 (Lang._∈_.there
-                                                  (Lang._∈_.there
-                                                   (Lang._∈_.there
-                                                    (Lang._∈_.there
-                                                     (Lang._∈_.there
-                                                      (Lang._∈_.there
-                                                       (Lang._∈_.there
-                                                        (Lang._∈_.there
-                                                         (Lang._∈_.there
-                                                          (Lang._∈_.there
-                                                           (Lang._∈_.there
-                                                            Lang._∈_.here))))))))))))))
-                                              (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                             (Lang.E.var Lang._∈_.here))
-                                            (Lang.E.un Lang.Uop.neg
-                                             (Lang.E.imaps
+                                       (Lang.E.sum
+                                        (Lang.E.bin Lang.Bop.plus
+                                         (Lang.E.imap
+                                          (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                           (Lang.E.var (Lang._∈_.there Lang._∈_.here))
+                                           (Lang.E.bin Lang.Bop.mul
+                                            (Lang.E.un Lang.Uop.exp
+                                             (Lang.E.bin Lang.Bop.plus
                                               (Lang.E.sel
                                                (Lang.E.sel
                                                 (Lang.E.var
@@ -2655,23 +2597,39 @@ let′
                                                         (Lang._∈_.there
                                                          (Lang._∈_.there
                                                           (Lang._∈_.there
-                                                           (Lang._∈_.there Lang._∈_.here))))))))))))
+                                                           (Lang._∈_.there
+                                                            (Lang._∈_.there
+                                                             (Lang._∈_.there
+                                                              (Lang._∈_.there
+                                                               Lang._∈_.here)))))))))))))))
                                                 (Lang.E.var
                                                  (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                               (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))))
-                                          (Lang.E.sel
-                                           (Lang.E.sel
-                                            (Lang.E.var
-                                             (Lang._∈_.there
-                                              (Lang._∈_.there
-                                               (Lang._∈_.there
-                                                (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
-                                            (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                           (Lang.E.var Lang._∈_.here))))
-                                        (Lang.E.imap
-                                         (Lang.E.imaps
-                                          (Lang.E.bin Lang.Bop.mul
-                                           (Lang.E.bin Lang.Bop.mul
+                                               (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
+                                              (Lang.E.un Lang.Uop.neg
+                                               (Lang.E.imaps
+                                                (Lang.E.sel
+                                                 (Lang.E.sel
+                                                  (Lang.E.var
+                                                   (Lang._∈_.there
+                                                    (Lang._∈_.there
+                                                     (Lang._∈_.there
+                                                      (Lang._∈_.there
+                                                       (Lang._∈_.there
+                                                        (Lang._∈_.there
+                                                         (Lang._∈_.there
+                                                          (Lang._∈_.there
+                                                           (Lang._∈_.there
+                                                            (Lang._∈_.there
+                                                             (Lang._∈_.there
+                                                              (Lang._∈_.there
+                                                               Lang._∈_.here)))))))))))))
+                                                  (Lang.E.var
+                                                   (Lang._∈_.there
+                                                    (Lang._∈_.there
+                                                     (Lang._∈_.there Lang._∈_.here)))))
+                                                 (Lang.E.var
+                                                  (Lang._∈_.there
+                                                   (Lang._∈_.there Lang._∈_.here))))))))
                                             (Lang.E.sel
                                              (Lang.E.sel
                                               (Lang.E.var
@@ -2679,21 +2637,40 @@ let′
                                                 (Lang._∈_.there
                                                  (Lang._∈_.there
                                                   (Lang._∈_.there
-                                                   (Lang._∈_.there Lang._∈_.here))))))
+                                                   (Lang._∈_.there
+                                                    (Lang._∈_.there Lang._∈_.here)))))))
                                               (Lang.E.var
                                                (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                             (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                            (Lang.E.bin Lang.Bop.plus Lang.E.one
-                                             (Lang.E.un Lang.Uop.neg
-                                              (Lang.E.un Lang.Uop.ind-positive
-                                               (Lang.E.un Lang.Uop.neg
-                                                (Lang.E.bin Lang.Bop.plus
-                                                 (Lang.E.sels
-                                                  (Lang.E.sel
-                                                   (Lang.E.sel
-                                                    (Lang.E.var
+                                             (Lang.E.var (Lang._∈_.there Lang._∈_.here))))))
+                                         (Lang.E.imap
+                                          (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                           (Lang.E.var (Lang._∈_.there Lang._∈_.here))
+                                           (Lang.E.imaps
+                                            (Lang.E.bin Lang.Bop.mul
+                                             (Lang.E.bin Lang.Bop.mul
+                                              (Lang.E.sel
+                                               (Lang.E.sel
+                                                (Lang.E.var
+                                                 (Lang._∈_.there
+                                                  (Lang._∈_.there
+                                                   (Lang._∈_.there
+                                                    (Lang._∈_.there
                                                      (Lang._∈_.there
-                                                      (Lang._∈_.there
+                                                      (Lang._∈_.there Lang._∈_.here)))))))
+                                                (Lang.E.var
+                                                 (Lang._∈_.there
+                                                  (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                               (Lang.E.var
+                                                (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
+                                              (Lang.E.bin Lang.Bop.plus Lang.E.one
+                                               (Lang.E.un Lang.Uop.neg
+                                                (Lang.E.un Lang.Uop.ind-positive
+                                                 (Lang.E.un Lang.Uop.neg
+                                                  (Lang.E.bin Lang.Bop.plus
+                                                   (Lang.E.sels
+                                                    (Lang.E.sel
+                                                     (Lang.E.sel
+                                                      (Lang.E.var
                                                        (Lang._∈_.there
                                                         (Lang._∈_.there
                                                          (Lang._∈_.there
@@ -2706,33 +2683,46 @@ let′
                                                                 (Lang._∈_.there
                                                                  (Lang._∈_.there
                                                                   (Lang._∈_.there
-                                                                   Lang._∈_.here)))))))))))))))
-                                                    (Lang.E.var
-                                                     (Lang._∈_.there
-                                                      (Lang._∈_.there Lang._∈_.here))))
-                                                   (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                                  (Lang.E.var Lang._∈_.here))
-                                                 (Lang.E.un Lang.Uop.neg
-                                                  (Lang.E.sel
-                                                   (Lang.E.sel
-                                                    (Lang.E.var
-                                                     (Lang._∈_.there
-                                                      (Lang._∈_.there
+                                                                   (Lang._∈_.there
+                                                                    (Lang._∈_.there
+                                                                     (Lang._∈_.there
+                                                                      Lang._∈_.here))))))))))))))))
+                                                      (Lang.E.var
                                                        (Lang._∈_.there
-                                                        (Lang._∈_.there Lang._∈_.here)))))
-                                                    (Lang.E.var
-                                                     (Lang._∈_.there
-                                                      (Lang._∈_.there Lang._∈_.here))))
-                                                   (Lang.E.var
-                                                    (Lang._∈_.there Lang._∈_.here))))))))))
-                                           (Lang.E.sel
-                                            (Lang.E.sel
-                                             (Lang.E.var
-                                              (Lang._∈_.there
-                                               (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                             (Lang.E.var
-                                              (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                            (Lang.E.var (Lang._∈_.there Lang._∈_.here))))))))
+                                                        (Lang._∈_.there
+                                                         (Lang._∈_.there Lang._∈_.here)))))
+                                                     (Lang.E.var
+                                                      (Lang._∈_.there
+                                                       (Lang._∈_.there Lang._∈_.here))))
+                                                    (Lang.E.var Lang._∈_.here))
+                                                   (Lang.E.un Lang.Uop.neg
+                                                    (Lang.E.sel
+                                                     (Lang.E.sel
+                                                      (Lang.E.var
+                                                       (Lang._∈_.there
+                                                        (Lang._∈_.there
+                                                         (Lang._∈_.there
+                                                          (Lang._∈_.there
+                                                           (Lang._∈_.there Lang._∈_.here))))))
+                                                      (Lang.E.var
+                                                       (Lang._∈_.there
+                                                        (Lang._∈_.there
+                                                         (Lang._∈_.there Lang._∈_.here)))))
+                                                     (Lang.E.var
+                                                      (Lang._∈_.there
+                                                       (Lang._∈_.there Lang._∈_.here)))))))))))
+                                             (Lang.E.sel
+                                              (Lang.E.sel
+                                               (Lang.E.var
+                                                (Lang._∈_.there
+                                                 (Lang._∈_.there
+                                                  (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                               (Lang.E.var
+                                                (Lang._∈_.there
+                                                 (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                              (Lang.E.var
+                                               (Lang._∈_.there
+                                                (Lang._∈_.there Lang._∈_.here)))))))))))
                                       (Lang.E.let′
                                        (Lang.E.imap
                                         (Lang.E.scaledown 2
@@ -3123,37 +3113,50 @@ let′
                                      (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
                                   (Lang.E.var Lang._∈_.here))
                                  (Lang.E.scaledown 100000 Lang.E.one)))))))
-                           (Lang.E.bin Lang.Bop.plus
-                            (Lang.E.imap
-                             (Lang.E.bin Lang.Bop.mul
-                              (Lang.E.sel
-                               (Lang.E.var
-                                (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                               (Lang.E.var Lang._∈_.here))
-                              (Lang.E.un Lang.Uop.inverse
-                               (Lang.E.imaps
+                           (Lang.E.sum
+                            (Lang.E.bin Lang.Bop.plus
+                             (Lang.E.imap
+                              (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                               (Lang.E.var (Lang._∈_.there Lang._∈_.here))
+                               (Lang.E.bin Lang.Bop.mul
                                 (Lang.E.sel
                                  (Lang.E.var
                                   (Lang._∈_.there
                                    (Lang._∈_.there
-                                    (Lang._∈_.there
-                                     (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
-                                 (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))))
-                            (Lang.E.bin Lang.Bop.plus
-                             (Lang.E.imap
-                              (Lang.E.imaps
-                               (Lang.E.bin Lang.Bop.mul
-                                (Lang.E.scaledown 16
-                                 (Lang.E.sel
-                                  (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
-                                  (Lang.E.var (Lang._∈_.there Lang._∈_.here))))
-                                (Lang.E.sels
-                                 (Lang.E.sel
-                                  (Lang.E.var
-                                   (Lang._∈_.there
+                                    (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                 (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
+                                (Lang.E.un Lang.Uop.inverse
+                                 (Lang.E.imaps
+                                  (Lang.E.sel
+                                   (Lang.E.var
                                     (Lang._∈_.there
                                      (Lang._∈_.there
                                       (Lang._∈_.there
+                                       (Lang._∈_.there
+                                        (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))
+                                   (Lang.E.var
+                                    (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))))
+                             (Lang.E.sum
+                              (Lang.E.bin Lang.Bop.plus
+                               (Lang.E.imap
+                                (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                 (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                                 (Lang.E.imaps
+                                  (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                   (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                                   (Lang.E.bin Lang.Bop.mul
+                                    (Lang.E.scaledown 16
+                                     (Lang.E.sel
+                                      (Lang.E.var
+                                       (Lang._∈_.there
+                                        (Lang._∈_.there
+                                         (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                      (Lang.E.var
+                                       (Lang._∈_.there
+                                        (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
+                                    (Lang.E.sels
+                                     (Lang.E.sel
+                                      (Lang.E.var
                                        (Lang._∈_.there
                                         (Lang._∈_.there
                                          (Lang._∈_.there
@@ -3177,23 +3180,36 @@ let′
                                                            (Lang._∈_.there
                                                             (Lang._∈_.there
                                                              (Lang._∈_.there
-                                                              Lang._∈_.here))))))))))))))))))))))))))))
-                                  (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                 (Lang.E.var Lang._∈_.here)))))
-                             (Lang.E.imap
-                              (Lang.E.imaps
-                               (Lang.E.bin Lang.Bop.mul
-                                (Lang.E.scaledown 16
-                                 (Lang.E.sel
-                                  (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
-                                  (Lang.E.var (Lang._∈_.there Lang._∈_.here))))
-                                (Lang.E.sels
-                                 (Lang.E.sel
-                                  (Lang.E.var
-                                   (Lang._∈_.there
-                                    (Lang._∈_.there
-                                     (Lang._∈_.there
-                                      (Lang._∈_.there
+                                                              (Lang._∈_.there
+                                                               (Lang._∈_.there
+                                                                (Lang._∈_.there
+                                                                 (Lang._∈_.there
+                                                                  (Lang._∈_.there
+                                                                   (Lang._∈_.there
+                                                                    Lang._∈_.here))))))))))))))))))))))))))))))
+                                      (Lang.E.var
+                                       (Lang._∈_.there
+                                        (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                     (Lang.E.var Lang._∈_.here)))))))
+                               (Lang.E.imap
+                                (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                 (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                                 (Lang.E.imaps
+                                  (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                   (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                                   (Lang.E.bin Lang.Bop.mul
+                                    (Lang.E.scaledown 16
+                                     (Lang.E.sel
+                                      (Lang.E.var
+                                       (Lang._∈_.there
+                                        (Lang._∈_.there
+                                         (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                      (Lang.E.var
+                                       (Lang._∈_.there
+                                        (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
+                                    (Lang.E.sels
+                                     (Lang.E.sel
+                                      (Lang.E.var
                                        (Lang._∈_.there
                                         (Lang._∈_.there
                                          (Lang._∈_.there
@@ -3217,9 +3233,17 @@ let′
                                                            (Lang._∈_.there
                                                             (Lang._∈_.there
                                                              (Lang._∈_.there
-                                                              Lang._∈_.here))))))))))))))))))))))))))))
-                                  (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                 (Lang.E.var Lang._∈_.here)))))))))))))
+                                                              (Lang._∈_.there
+                                                               (Lang._∈_.there
+                                                                (Lang._∈_.there
+                                                                 (Lang._∈_.there
+                                                                  (Lang._∈_.there
+                                                                   (Lang._∈_.there
+                                                                    Lang._∈_.here))))))))))))))))))))))))))))))
+                                      (Lang.E.var
+                                       (Lang._∈_.there
+                                        (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                     (Lang.E.var Lang._∈_.here)))))))))))))))))
                      (env
                       (((((((((((ε ▹
                                  Lang.E.let′
@@ -3647,8 +3671,8 @@ let′
                                              (Lang.E.imap
                                               (Lang.E.imap
                                                (Lang.E.un Lang.Uop.inverse
-                                                (Lang.E.bin Lang.Bop.plus (Lang.E.sum Lang.E.one)
-                                                 (Lang.E.sum
+                                                (Lang.E.sum
+                                                 (Lang.E.bin Lang.Bop.plus Lang.E.one
                                                   (Lang.E.un Lang.Uop.neg
                                                    (Lang.E.un Lang.Uop.ind-positive
                                                     (Lang.E.un Lang.Uop.neg
@@ -3690,32 +3714,14 @@ let′
                                                          (Lang._∈_.there Lang._∈_.here)))))))))))))
                                              (Lang.E.let′
                                               (Lang.E.imap
-                                               (Lang.E.bin Lang.Bop.plus
-                                                (Lang.E.imap
-                                                 (Lang.E.bin Lang.Bop.mul
-                                                  (Lang.E.un Lang.Uop.exp
-                                                   (Lang.E.bin Lang.Bop.plus
-                                                    (Lang.E.sel
-                                                     (Lang.E.sel
-                                                      (Lang.E.var
-                                                       (Lang._∈_.there
-                                                        (Lang._∈_.there
-                                                         (Lang._∈_.there
-                                                          (Lang._∈_.there
-                                                           (Lang._∈_.there
-                                                            (Lang._∈_.there
-                                                             (Lang._∈_.there
-                                                              (Lang._∈_.there
-                                                               (Lang._∈_.there
-                                                                (Lang._∈_.there
-                                                                 (Lang._∈_.there
-                                                                  (Lang._∈_.there
-                                                                   (Lang._∈_.there
-                                                                    Lang._∈_.here))))))))))))))
-                                                      (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                                     (Lang.E.var Lang._∈_.here))
-                                                    (Lang.E.un Lang.Uop.neg
-                                                     (Lang.E.imaps
+                                               (Lang.E.sum
+                                                (Lang.E.bin Lang.Bop.plus
+                                                 (Lang.E.imap
+                                                  (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                                   (Lang.E.var (Lang._∈_.there Lang._∈_.here))
+                                                   (Lang.E.bin Lang.Bop.mul
+                                                    (Lang.E.un Lang.Uop.exp
+                                                     (Lang.E.bin Lang.Bop.plus
                                                       (Lang.E.sel
                                                        (Lang.E.sel
                                                         (Lang.E.var
@@ -3730,26 +3736,39 @@ let′
                                                                  (Lang._∈_.there
                                                                   (Lang._∈_.there
                                                                    (Lang._∈_.there
-                                                                    Lang._∈_.here))))))))))))
+                                                                    (Lang._∈_.there
+                                                                     (Lang._∈_.there
+                                                                      (Lang._∈_.there
+                                                                       Lang._∈_.here)))))))))))))))
                                                         (Lang.E.var
                                                          (Lang._∈_.there
                                                           (Lang._∈_.there Lang._∈_.here))))
-                                                       (Lang.E.var
-                                                        (Lang._∈_.there Lang._∈_.here)))))))
-                                                  (Lang.E.sel
-                                                   (Lang.E.sel
-                                                    (Lang.E.var
-                                                     (Lang._∈_.there
-                                                      (Lang._∈_.there
-                                                       (Lang._∈_.there
-                                                        (Lang._∈_.there
-                                                         (Lang._∈_.there Lang._∈_.here))))))
-                                                    (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                                   (Lang.E.var Lang._∈_.here))))
-                                                (Lang.E.imap
-                                                 (Lang.E.imaps
-                                                  (Lang.E.bin Lang.Bop.mul
-                                                   (Lang.E.bin Lang.Bop.mul
+                                                       (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
+                                                      (Lang.E.un Lang.Uop.neg
+                                                       (Lang.E.imaps
+                                                        (Lang.E.sel
+                                                         (Lang.E.sel
+                                                          (Lang.E.var
+                                                           (Lang._∈_.there
+                                                            (Lang._∈_.there
+                                                             (Lang._∈_.there
+                                                              (Lang._∈_.there
+                                                               (Lang._∈_.there
+                                                                (Lang._∈_.there
+                                                                 (Lang._∈_.there
+                                                                  (Lang._∈_.there
+                                                                   (Lang._∈_.there
+                                                                    (Lang._∈_.there
+                                                                     (Lang._∈_.there
+                                                                      (Lang._∈_.there
+                                                                       Lang._∈_.here)))))))))))))
+                                                          (Lang.E.var
+                                                           (Lang._∈_.there
+                                                            (Lang._∈_.there
+                                                             (Lang._∈_.there Lang._∈_.here)))))
+                                                         (Lang.E.var
+                                                          (Lang._∈_.there
+                                                           (Lang._∈_.there Lang._∈_.here))))))))
                                                     (Lang.E.sel
                                                      (Lang.E.sel
                                                       (Lang.E.var
@@ -3757,22 +3776,43 @@ let′
                                                         (Lang._∈_.there
                                                          (Lang._∈_.there
                                                           (Lang._∈_.there
-                                                           (Lang._∈_.there Lang._∈_.here))))))
+                                                           (Lang._∈_.there
+                                                            (Lang._∈_.there Lang._∈_.here)))))))
                                                       (Lang.E.var
                                                        (Lang._∈_.there
                                                         (Lang._∈_.there Lang._∈_.here))))
-                                                     (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                                    (Lang.E.bin Lang.Bop.plus Lang.E.one
-                                                     (Lang.E.un Lang.Uop.neg
-                                                      (Lang.E.un Lang.Uop.ind-positive
-                                                       (Lang.E.un Lang.Uop.neg
-                                                        (Lang.E.bin Lang.Bop.plus
-                                                         (Lang.E.sels
-                                                          (Lang.E.sel
-                                                           (Lang.E.sel
-                                                            (Lang.E.var
+                                                     (Lang.E.var (Lang._∈_.there Lang._∈_.here))))))
+                                                 (Lang.E.imap
+                                                  (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                                   (Lang.E.var (Lang._∈_.there Lang._∈_.here))
+                                                   (Lang.E.imaps
+                                                    (Lang.E.bin Lang.Bop.mul
+                                                     (Lang.E.bin Lang.Bop.mul
+                                                      (Lang.E.sel
+                                                       (Lang.E.sel
+                                                        (Lang.E.var
+                                                         (Lang._∈_.there
+                                                          (Lang._∈_.there
+                                                           (Lang._∈_.there
+                                                            (Lang._∈_.there
                                                              (Lang._∈_.there
-                                                              (Lang._∈_.there
+                                                              (Lang._∈_.there Lang._∈_.here)))))))
+                                                        (Lang.E.var
+                                                         (Lang._∈_.there
+                                                          (Lang._∈_.there
+                                                           (Lang._∈_.there Lang._∈_.here)))))
+                                                       (Lang.E.var
+                                                        (Lang._∈_.there
+                                                         (Lang._∈_.there Lang._∈_.here))))
+                                                      (Lang.E.bin Lang.Bop.plus Lang.E.one
+                                                       (Lang.E.un Lang.Uop.neg
+                                                        (Lang.E.un Lang.Uop.ind-positive
+                                                         (Lang.E.un Lang.Uop.neg
+                                                          (Lang.E.bin Lang.Bop.plus
+                                                           (Lang.E.sels
+                                                            (Lang.E.sel
+                                                             (Lang.E.sel
+                                                              (Lang.E.var
                                                                (Lang._∈_.there
                                                                 (Lang._∈_.there
                                                                  (Lang._∈_.there
@@ -3785,37 +3825,50 @@ let′
                                                                         (Lang._∈_.there
                                                                          (Lang._∈_.there
                                                                           (Lang._∈_.there
-                                                                           Lang._∈_.here)))))))))))))))
-                                                            (Lang.E.var
-                                                             (Lang._∈_.there
-                                                              (Lang._∈_.there Lang._∈_.here))))
-                                                           (Lang.E.var
-                                                            (Lang._∈_.there Lang._∈_.here)))
-                                                          (Lang.E.var Lang._∈_.here))
-                                                         (Lang.E.un Lang.Uop.neg
-                                                          (Lang.E.sel
-                                                           (Lang.E.sel
-                                                            (Lang.E.var
-                                                             (Lang._∈_.there
+                                                                           (Lang._∈_.there
+                                                                            (Lang._∈_.there
+                                                                             (Lang._∈_.there
+                                                                              Lang._∈_.here))))))))))))))))
+                                                              (Lang.E.var
+                                                               (Lang._∈_.there
+                                                                (Lang._∈_.there
+                                                                 (Lang._∈_.there Lang._∈_.here)))))
+                                                             (Lang.E.var
+                                                              (Lang._∈_.there
+                                                               (Lang._∈_.there Lang._∈_.here))))
+                                                            (Lang.E.var Lang._∈_.here))
+                                                           (Lang.E.un Lang.Uop.neg
+                                                            (Lang.E.sel
+                                                             (Lang.E.sel
+                                                              (Lang.E.var
+                                                               (Lang._∈_.there
+                                                                (Lang._∈_.there
+                                                                 (Lang._∈_.there
+                                                                  (Lang._∈_.there
+                                                                   (Lang._∈_.there
+                                                                    Lang._∈_.here))))))
+                                                              (Lang.E.var
+                                                               (Lang._∈_.there
+                                                                (Lang._∈_.there
+                                                                 (Lang._∈_.there Lang._∈_.here)))))
+                                                             (Lang.E.var
                                                               (Lang._∈_.there
                                                                (Lang._∈_.there
-                                                                (Lang._∈_.there Lang._∈_.here)))))
-                                                            (Lang.E.var
-                                                             (Lang._∈_.there
-                                                              (Lang._∈_.there Lang._∈_.here))))
-                                                           (Lang.E.var
-                                                            (Lang._∈_.there Lang._∈_.here))))))))))
-                                                   (Lang.E.sel
-                                                    (Lang.E.sel
-                                                     (Lang.E.var
-                                                      (Lang._∈_.there
+                                                                Lang._∈_.here)))))))))))
+                                                     (Lang.E.sel
+                                                      (Lang.E.sel
+                                                       (Lang.E.var
+                                                        (Lang._∈_.there
+                                                         (Lang._∈_.there
+                                                          (Lang._∈_.there
+                                                           (Lang._∈_.there Lang._∈_.here)))))
+                                                       (Lang.E.var
+                                                        (Lang._∈_.there
+                                                         (Lang._∈_.there
+                                                          (Lang._∈_.there Lang._∈_.here)))))
+                                                      (Lang.E.var
                                                        (Lang._∈_.there
-                                                        (Lang._∈_.there Lang._∈_.here))))
-                                                     (Lang.E.var
-                                                      (Lang._∈_.there
-                                                       (Lang._∈_.there Lang._∈_.here))))
-                                                    (Lang.E.var
-                                                     (Lang._∈_.there Lang._∈_.here))))))))
+                                                        (Lang._∈_.there Lang._∈_.here)))))))))))
                                               (Lang.E.sum
                                                (Lang.E.sel
                                                 (Lang.E.var (Lang._∈_.there Lang._∈_.here))
@@ -4091,40 +4144,54 @@ let′
                                               (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
                                            (Lang.E.var Lang._∈_.here))
                                           (Lang.E.scaledown 100000 Lang.E.one)))))))
-                                    (Lang.E.bin Lang.Bop.plus
-                                     (Lang.E.imap
-                                      (Lang.E.bin Lang.Bop.mul
-                                       (Lang.E.sel
-                                        (Lang.E.var
-                                         (Lang._∈_.there
-                                          (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                        (Lang.E.var Lang._∈_.here))
-                                       (Lang.E.un Lang.Uop.inverse
-                                        (Lang.E.imaps
+                                    (Lang.E.sum
+                                     (Lang.E.bin Lang.Bop.plus
+                                      (Lang.E.imap
+                                       (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                        (Lang.E.var (Lang._∈_.there Lang._∈_.here))
+                                        (Lang.E.bin Lang.Bop.mul
                                          (Lang.E.sel
                                           (Lang.E.var
                                            (Lang._∈_.there
                                             (Lang._∈_.there
-                                             (Lang._∈_.there
-                                              (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
-                                          (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))))
-                                     (Lang.E.bin Lang.Bop.plus
-                                      (Lang.E.imap
-                                       (Lang.E.imaps
-                                        (Lang.E.bin Lang.Bop.mul
-                                         (Lang.E.scaledown 16
-                                          (Lang.E.sel
-                                           (Lang.E.var
-                                            (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
-                                           (Lang.E.var (Lang._∈_.there Lang._∈_.here))))
-                                         (Lang.E.sels
-                                          (Lang.E.sel
-                                           (Lang.E.bin Lang.Bop.plus
+                                             (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                          (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
+                                         (Lang.E.un Lang.Uop.inverse
+                                          (Lang.E.imaps
+                                           (Lang.E.sel
                                             (Lang.E.var
                                              (Lang._∈_.there
                                               (Lang._∈_.there
                                                (Lang._∈_.there
                                                 (Lang._∈_.there
+                                                 (Lang._∈_.there
+                                                  (Lang._∈_.there Lang._∈_.here)))))))
+                                            (Lang.E.var
+                                             (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))))
+                                      (Lang.E.sum
+                                       (Lang.E.bin Lang.Bop.plus
+                                        (Lang.E.imap
+                                         (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                          (Lang.E.var
+                                           (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                                          (Lang.E.imaps
+                                           (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                            (Lang.E.var
+                                             (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                                            (Lang.E.bin Lang.Bop.mul
+                                             (Lang.E.scaledown 16
+                                              (Lang.E.sel
+                                               (Lang.E.var
+                                                (Lang._∈_.there
+                                                 (Lang._∈_.there
+                                                  (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                               (Lang.E.var
+                                                (Lang._∈_.there
+                                                 (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
+                                             (Lang.E.sels
+                                              (Lang.E.sel
+                                               (Lang.E.bin Lang.Bop.plus
+                                                (Lang.E.var
                                                  (Lang._∈_.there
                                                   (Lang._∈_.there
                                                    (Lang._∈_.there
@@ -4159,12 +4226,14 @@ let′
                                                                                 (Lang._∈_.there
                                                                                  (Lang._∈_.there
                                                                                   (Lang._∈_.there
-                                                                                   Lang._∈_.here)))))))))))))))))))))))))))))))))))))))
-                                            (Lang.E.var
-                                             (Lang._∈_.there
-                                              (Lang._∈_.there
-                                               (Lang._∈_.there
-                                                (Lang._∈_.there
+                                                                                   (Lang._∈_.there
+                                                                                    (Lang._∈_.there
+                                                                                     (Lang._∈_.there
+                                                                                      (Lang._∈_.there
+                                                                                       (Lang._∈_.there
+                                                                                        (Lang._∈_.there
+                                                                                         Lang._∈_.here)))))))))))))))))))))))))))))))))))))))))
+                                                (Lang.E.var
                                                  (Lang._∈_.there
                                                   (Lang._∈_.there
                                                    (Lang._∈_.there
@@ -4191,25 +4260,39 @@ let′
                                                                         (Lang._∈_.there
                                                                          (Lang._∈_.there
                                                                           (Lang._∈_.there
-                                                                           Lang._∈_.here))))))))))))))))))))))))))))))))
-                                           (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                          (Lang.E.var Lang._∈_.here)))))
-                                      (Lang.E.imap
-                                       (Lang.E.imaps
-                                        (Lang.E.bin Lang.Bop.mul
-                                         (Lang.E.scaledown 16
-                                          (Lang.E.sel
-                                           (Lang.E.var
-                                            (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
-                                           (Lang.E.var (Lang._∈_.there Lang._∈_.here))))
-                                         (Lang.E.sels
-                                          (Lang.E.sel
-                                           (Lang.E.bin Lang.Bop.plus
-                                            (Lang.E.var
-                                             (Lang._∈_.there
-                                              (Lang._∈_.there
-                                               (Lang._∈_.there
+                                                                           (Lang._∈_.there
+                                                                            (Lang._∈_.there
+                                                                             (Lang._∈_.there
+                                                                              (Lang._∈_.there
+                                                                               (Lang._∈_.there
+                                                                                (Lang._∈_.there
+                                                                                 Lang._∈_.here))))))))))))))))))))))))))))))))))
+                                               (Lang.E.var
                                                 (Lang._∈_.there
+                                                 (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                              (Lang.E.var Lang._∈_.here)))))))
+                                        (Lang.E.imap
+                                         (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                          (Lang.E.var
+                                           (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                                          (Lang.E.imaps
+                                           (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                            (Lang.E.var
+                                             (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                                            (Lang.E.bin Lang.Bop.mul
+                                             (Lang.E.scaledown 16
+                                              (Lang.E.sel
+                                               (Lang.E.var
+                                                (Lang._∈_.there
+                                                 (Lang._∈_.there
+                                                  (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                               (Lang.E.var
+                                                (Lang._∈_.there
+                                                 (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
+                                             (Lang.E.sels
+                                              (Lang.E.sel
+                                               (Lang.E.bin Lang.Bop.plus
+                                                (Lang.E.var
                                                  (Lang._∈_.there
                                                   (Lang._∈_.there
                                                    (Lang._∈_.there
@@ -4244,12 +4327,14 @@ let′
                                                                                 (Lang._∈_.there
                                                                                  (Lang._∈_.there
                                                                                   (Lang._∈_.there
-                                                                                   Lang._∈_.here)))))))))))))))))))))))))))))))))))))))
-                                            (Lang.E.var
-                                             (Lang._∈_.there
-                                              (Lang._∈_.there
-                                               (Lang._∈_.there
-                                                (Lang._∈_.there
+                                                                                   (Lang._∈_.there
+                                                                                    (Lang._∈_.there
+                                                                                     (Lang._∈_.there
+                                                                                      (Lang._∈_.there
+                                                                                       (Lang._∈_.there
+                                                                                        (Lang._∈_.there
+                                                                                         Lang._∈_.here)))))))))))))))))))))))))))))))))))))))))
+                                                (Lang.E.var
                                                  (Lang._∈_.there
                                                   (Lang._∈_.there
                                                    (Lang._∈_.there
@@ -4276,9 +4361,17 @@ let′
                                                                         (Lang._∈_.there
                                                                          (Lang._∈_.there
                                                                           (Lang._∈_.there
-                                                                           Lang._∈_.here))))))))))))))))))))))))))))))))
-                                           (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                          (Lang.E.var Lang._∈_.here))))))))))))
+                                                                           (Lang._∈_.there
+                                                                            (Lang._∈_.there
+                                                                             (Lang._∈_.there
+                                                                              (Lang._∈_.there
+                                                                               (Lang._∈_.there
+                                                                                (Lang._∈_.there
+                                                                                 Lang._∈_.here))))))))))))))))))))))))))))))))))
+                                               (Lang.E.var
+                                                (Lang._∈_.there
+                                                 (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                              (Lang.E.var Lang._∈_.here))))))))))))))))
                                ▹
                                Lang.E.imap
                                (Lang.E.imaps
@@ -4836,38 +4929,51 @@ let′
                                       (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
                                    (Lang.E.var Lang._∈_.here))
                                   (Lang.E.scaledown 100000 Lang.E.one)))))))
-                            (Lang.E.bin Lang.Bop.plus
-                             (Lang.E.imap
-                              (Lang.E.bin Lang.Bop.mul
-                               (Lang.E.sel
-                                (Lang.E.var
-                                 (Lang._∈_.there (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))
-                                (Lang.E.var Lang._∈_.here))
-                               (Lang.E.un Lang.Uop.inverse
-                                (Lang.E.imaps
+                            (Lang.E.sum
+                             (Lang.E.bin Lang.Bop.plus
+                              (Lang.E.imap
+                               (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                (Lang.E.var (Lang._∈_.there Lang._∈_.here))
+                                (Lang.E.bin Lang.Bop.mul
                                  (Lang.E.sel
                                   (Lang.E.var
                                    (Lang._∈_.there
                                     (Lang._∈_.there
-                                     (Lang._∈_.there
-                                      (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
-                                  (Lang.E.var (Lang._∈_.there Lang._∈_.here)))))))
-                             (Lang.E.bin Lang.Bop.plus
-                              (Lang.E.imap
-                               (Lang.E.imaps
-                                (Lang.E.bin Lang.Bop.mul
-                                 (Lang.E.scaledown 16
-                                  (Lang.E.sel
-                                   (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
-                                   (Lang.E.var (Lang._∈_.there Lang._∈_.here))))
-                                 (Lang.E.sels
-                                  (Lang.E.sel
-                                   (Lang.E.bin Lang.Bop.plus
+                                     (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                  (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
+                                 (Lang.E.un Lang.Uop.inverse
+                                  (Lang.E.imaps
+                                   (Lang.E.sel
                                     (Lang.E.var
                                      (Lang._∈_.there
                                       (Lang._∈_.there
                                        (Lang._∈_.there
                                         (Lang._∈_.there
+                                         (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))
+                                    (Lang.E.var
+                                     (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))))))
+                              (Lang.E.sum
+                               (Lang.E.bin Lang.Bop.plus
+                                (Lang.E.imap
+                                 (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                  (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                                  (Lang.E.imaps
+                                   (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                    (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                                    (Lang.E.bin Lang.Bop.mul
+                                     (Lang.E.scaledown 16
+                                      (Lang.E.sel
+                                       (Lang.E.var
+                                        (Lang._∈_.there
+                                         (Lang._∈_.there
+                                          (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                       (Lang.E.var
+                                        (Lang._∈_.there
+                                         (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
+                                     (Lang.E.sels
+                                      (Lang.E.sel
+                                       (Lang.E.bin Lang.Bop.plus
+                                        (Lang.E.var
                                          (Lang._∈_.there
                                           (Lang._∈_.there
                                            (Lang._∈_.there
@@ -4902,12 +5008,14 @@ let′
                                                                         (Lang._∈_.there
                                                                          (Lang._∈_.there
                                                                           (Lang._∈_.there
-                                                                           Lang._∈_.here)))))))))))))))))))))))))))))))))))))))
-                                    (Lang.E.var
-                                     (Lang._∈_.there
-                                      (Lang._∈_.there
-                                       (Lang._∈_.there
-                                        (Lang._∈_.there
+                                                                           (Lang._∈_.there
+                                                                            (Lang._∈_.there
+                                                                             (Lang._∈_.there
+                                                                              (Lang._∈_.there
+                                                                               (Lang._∈_.there
+                                                                                (Lang._∈_.there
+                                                                                 Lang._∈_.here)))))))))))))))))))))))))))))))))))))))))
+                                        (Lang.E.var
                                          (Lang._∈_.there
                                           (Lang._∈_.there
                                            (Lang._∈_.there
@@ -4934,24 +5042,37 @@ let′
                                                                 (Lang._∈_.there
                                                                  (Lang._∈_.there
                                                                   (Lang._∈_.there
-                                                                   Lang._∈_.here))))))))))))))))))))))))))))))))
-                                   (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                  (Lang.E.var Lang._∈_.here)))))
-                              (Lang.E.imap
-                               (Lang.E.imaps
-                                (Lang.E.bin Lang.Bop.mul
-                                 (Lang.E.scaledown 16
-                                  (Lang.E.sel
-                                   (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
-                                   (Lang.E.var (Lang._∈_.there Lang._∈_.here))))
-                                 (Lang.E.sels
-                                  (Lang.E.sel
-                                   (Lang.E.bin Lang.Bop.plus
-                                    (Lang.E.var
-                                     (Lang._∈_.there
-                                      (Lang._∈_.there
-                                       (Lang._∈_.there
+                                                                   (Lang._∈_.there
+                                                                    (Lang._∈_.there
+                                                                     (Lang._∈_.there
+                                                                      (Lang._∈_.there
+                                                                       (Lang._∈_.there
+                                                                        (Lang._∈_.there
+                                                                         Lang._∈_.here))))))))))))))))))))))))))))))))))
+                                       (Lang.E.var
                                         (Lang._∈_.there
+                                         (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                      (Lang.E.var Lang._∈_.here)))))))
+                                (Lang.E.imap
+                                 (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                  (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                                  (Lang.E.imaps
+                                   (Lang.E.zero-but (Lang.E.var Lang._∈_.here)
+                                    (Lang.E.var (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))
+                                    (Lang.E.bin Lang.Bop.mul
+                                     (Lang.E.scaledown 16
+                                      (Lang.E.sel
+                                       (Lang.E.var
+                                        (Lang._∈_.there
+                                         (Lang._∈_.there
+                                          (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                       (Lang.E.var
+                                        (Lang._∈_.there
+                                         (Lang._∈_.there (Lang._∈_.there Lang._∈_.here))))))
+                                     (Lang.E.sels
+                                      (Lang.E.sel
+                                       (Lang.E.bin Lang.Bop.plus
+                                        (Lang.E.var
                                          (Lang._∈_.there
                                           (Lang._∈_.there
                                            (Lang._∈_.there
@@ -4986,12 +5107,14 @@ let′
                                                                         (Lang._∈_.there
                                                                          (Lang._∈_.there
                                                                           (Lang._∈_.there
-                                                                           Lang._∈_.here)))))))))))))))))))))))))))))))))))))))
-                                    (Lang.E.var
-                                     (Lang._∈_.there
-                                      (Lang._∈_.there
-                                       (Lang._∈_.there
-                                        (Lang._∈_.there
+                                                                           (Lang._∈_.there
+                                                                            (Lang._∈_.there
+                                                                             (Lang._∈_.there
+                                                                              (Lang._∈_.there
+                                                                               (Lang._∈_.there
+                                                                                (Lang._∈_.there
+                                                                                 Lang._∈_.here)))))))))))))))))))))))))))))))))))))))))
+                                        (Lang.E.var
                                          (Lang._∈_.there
                                           (Lang._∈_.there
                                            (Lang._∈_.there
@@ -5018,9 +5141,17 @@ let′
                                                                 (Lang._∈_.there
                                                                  (Lang._∈_.there
                                                                   (Lang._∈_.there
-                                                                   Lang._∈_.here))))))))))))))))))))))))))))))))
-                                   (Lang.E.var (Lang._∈_.there Lang._∈_.here)))
-                                  (Lang.E.var Lang._∈_.here))))))))))))
+                                                                   (Lang._∈_.there
+                                                                    (Lang._∈_.there
+                                                                     (Lang._∈_.there
+                                                                      (Lang._∈_.there
+                                                                       (Lang._∈_.there
+                                                                        (Lang._∈_.there
+                                                                         Lang._∈_.here))))))))))))))))))))))))))))))))))
+                                       (Lang.E.var
+                                        (Lang._∈_.there
+                                         (Lang._∈_.there (Lang._∈_.there Lang._∈_.here)))))
+                                      (Lang.E.var Lang._∈_.here))))))))))))))))
                        ▹
                        Lang.E.imap
                        (Lang.E.imaps
