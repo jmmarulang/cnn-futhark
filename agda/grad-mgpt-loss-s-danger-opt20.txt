@@ -2,7 +2,6 @@ let x0 = (imap2 16 16 (\x1_0 x1_1 -> (let x2 = ((isum1 16 (\x5_0 -> ((wpe[x1_0][
 in (let x3 = (F.sqrt (x2 F.+ (one F./ fromi64 100000)))
 in (let x4 = (imap1 16 (\x6_0 -> ((wpe[x1_0][x6_0] F.+ wseq[x1_0][x6_0]) F.* (one F./ x3))))
 in x4[x1_1])))))
--- ix : s ++ p
 let x7 = (imap2 16 16 (\x8_0 x8_1 -> (let x9 = ((isum1 16 (\x12_0 -> (x0[x8_0][x12_0] F.* x0[x8_0][x12_0]))) F./ fromi64 16)
 in (let x10 = (F.sqrt (x9 F.+ (one F./ fromi64 100000)))
 in (let x11 = (imap1 16 (\x13_0 -> (x0[x8_0][x13_0] F.* (one F./ x10))))

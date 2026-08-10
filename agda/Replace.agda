@@ -57,5 +57,3 @@ module Test where
 
   ex-repl = replace ex₁ (var v₀ ⊞ var v₀) one
   -- let′ (let′ 𝟙 (var v₀ ⊞ var v₀)) (var v₀)
-
-open import Lang

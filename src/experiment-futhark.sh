@@ -8,6 +8,6 @@ export CC=gcc
 export CFLAGS="-O3 -std=c99 -ffast-math -march=native -mtune=native"
 # export CFLAGS="-O3 -ffast-math -march=native -mtune=native"
 
-futhark c --server futhark/microgpt.fut
+futhark c -v --server futhark/microgpt.fut
 
 python futhark/mainMGPT.py

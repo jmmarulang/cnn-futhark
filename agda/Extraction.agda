@@ -1,5 +1,5 @@
 {-# OPTIONS --backtracking-instance-search #-} -- only needed for tests
---{-# OPTIONS --warn=noUserWarning #-}
+-- {-# OPTIONS --warn=noUserWarning #-}
 module _ where
 
 open import Grad
@@ -45,6 +45,8 @@ module Extract where
   open RawMonadState {{...}} --public
   open RawMonad {{...}} --public
 
+  open import Data.Maybe hiding (_>>=_)
+
   instance
     _ = monad
     _ = applicative
@@ -85,16 +87,9 @@ module Extract where
   ee-inline : EE Γ Δ → EE Γ Δ
   ee-inline (env x) = env (env-norm-lets x)
   ee-inline (let′ x ρ) with δ ← ee-inline ρ | ee-count-uses δ v₀
-  ... | 0 = ee-sub δ (sub-id ▹ norm-lets x) -- does nothing?
-  ... | 1 = ee-sub δ (sub-id ▹ norm-lets x) -- why only for 1?
-  ... | _ = let′ (norm-lets x) δ
-
-  -- ee-inline' : EE Γ Δ → EE Γ Δ
-  -- ee-inline' (env x) = env x
-  -- ee-inline' (let′ x ρ) with δ ← ee-inline' ρ | ee-count-uses δ v₀
-  -- ... | 0 = ee-sub δ (sub-id ▹ x) -- does nothing?
-  -- ... | 1 = ee-sub δ (sub-id ▹ x) -- why only for 1?
-  -- ... | _ = let′ x δ
+  ... | 0 = ee-sub δ (sub-id ▹ inline x) -- does nothing?
+  -- ... | 1 = ee-sub δ (sub-id ▹ inline x) -- why only for 1?
+  ... | _ = let′ (inline x) δ
 
   env-replace : Env Γ Δ → (a b : E Δ is) → Env Γ Δ
   env-replace ε a b = ε

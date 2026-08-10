@@ -9,6 +9,10 @@ module _ where
   open import Relation.Nullary
   infixl 15 _▹_
 
+  cong₃ : {X Y Z W : Set} (f : X → Y → Z → W) → ∀ {x x₁ y y₁ z z₁}
+        → x ≡ x₁ → y ≡ y₁ → z ≡ z₁ → f x y z ≡ f x₁ y₁ z₁
+  cong₃ _ refl refl refl = refl
+  
   data IS : Set where
     ix  : S → IS
     ar  : S → IS
@@ -39,6 +43,9 @@ module _ where
   pattern v₁₁ = there v₁₀
   pattern v₁₂ = there v₁₁
   pattern v₁₃ = there v₁₂
+
+  v-inj : ∀ {ip} {x y : is ∈ Γ} → (there {ip = ip} x ≡ there y) → (x ≡ y)
+  v-inj refl = refl
 
   -- We only use this for variable comparison.
   _/_ : (Γ : Ctx) → is ∈ Γ → Ctx
@@ -153,10 +160,14 @@ module _ where
   𝟚 : E Γ (ar s)
   𝟚 = 𝟙 ⊞ 𝟙
 
+  var-inj : ∀ {x y : is ∈ Γ} → (var x ≡ var y) → (x ≡ y)
+  var-inj refl = refl
+
 module WkSub where
   open import Data.Nat using (ℕ; zero; suc; _+_)
   open import Relation.Binary.PropositionalEquality
   open import Function
+  open import Ar hiding (sum; slide; backslide; map ; imapb; selb)
 
   data _⊆_ : Ctx → Ctx → Set where
     ε    : ε ⊆ ε
@@ -214,6 +225,12 @@ module WkSub where
   wks : Sub Γ Δ → Γ ⊆ Ψ → Sub Ψ Δ
   wks ε p = ε
   wks (s ▹ x) p = (wks s p) ▹ wk p x
+
+  -- wkv-there-keep : (x : is ∈ Γ) (v : is ∈ Γ)
+  --   → wkv (keep (wk-/ x)) v ≡ there (wkv (wk-/ x) v)
+  -- wkv-there-keep = ?
+  -- b : there y ≡ wkv (keep (wk-/ x)) a
+
 
   sdrop : Sub Γ Δ → Sub (Γ ▹ is) Δ
   sdrop s = wks s (skip ⊆-eq)
@@ -301,6 +318,9 @@ module WkSub where
 
   -- We are not really using this, but this is a useful function to have.
   open import Data.Maybe
+  open import Data.Maybe.Properties
+  open import Data.Product hiding (map)
+
   strenv : (x : is ∈ Γ) (y : ip ∈ Γ) → Maybe (ip ∈ (Γ / x))
   strenv v₀ v₀ = nothing
   strenv v₀ (there y) = just y
@@ -354,11 +374,84 @@ module WkSub where
   stren (un x e) v = map (un x) (stren e v)
   stren (maximum e) v = map maximum (stren e (there v))
 
-  -- push-imaps : E Γ is → E Γ is
-  -- push-imaps (imaps {s = s} e) with (stren e here)
-  -- ... | just x = {!   !}
-  -- ... | nothing = {!   !}
-  -- push-imaps e = e
+  from-stren : E Γ is → (v : ip ∈ Γ) → E (Γ / v) is → E (Γ / v) is
+  from-stren e v e' = fromMaybe e' (stren e v)
+
+  strenv-inj₂ : ∀ {iq} (x : is ∈ Γ) {y : ip ∈ Γ} {y' : ip ∈ (Γ / x)}
+      → strenv (there {ip = iq} x) (there y) ≡ just (there y')
+      → strenv x y ≡ just y'
+  strenv-inj₂ (there x) {v₀} {v₀} eq = refl
+  strenv-inj₂ v₀ {there y} {y'} eq = cong just (v-inj (just-injective eq))
+  strenv-inj₂ (there x) {there y} {y'} eq with strenv x y | eq
+  ... | just a | b = cong just (v-inj (just-injective b))
+
+  var-stren-strenv : ∀ (x : is ∈ Γ) {y : ip ∈ Γ} {y' : ip ∈ (Γ / x)}
+    → stren (var y) x ≡ just (var y') → strenv x y ≡ just y'
+  var-stren-strenv v₀ {there y} {y'} refl = refl
+  var-stren-strenv (there x) {v₀} {v₀} eq = refl
+  var-stren-strenv (there x) {there y} {y'} eq with strenv x y | eq
+  ... | just a | refl = refl
+
+  strenv-∃ : (x : is ∈ Γ) (y : ip ∈ Γ)
+    → Maybe (∃ (λ (z : ip ∈ (Γ / x)) → y ≡ wkv (wk-/ x) z))
+  strenv-∃ v₀ v₀ = nothing
+  strenv-∃ v₀ (there y) = just (y , (cong there (sym (wkv-at-eq y))))
+  strenv-∃ (there x) v₀ = just (v₀ , refl)
+  strenv-∃ (there x) (there y) =
+    map (λ (a , eq) → there a , (cong there eq)) (strenv-∃ x y)
+
+  stren-∃ : (e : E Γ is) (v : ip ∈ Γ)
+    → Maybe (∃ λ (z : E (Γ / v) is) → e ≡ wk (wk-/ v) z)
+  stren-∃ (var x) v = map (λ (a , b) → _ , (cong var b)) (strenv-∃ v x)
+  stren-∃ zero v = just (zero , refl)
+  stren-∃ one v = just (one , refl)
+  stren-∃ (imaps e) v =
+    map (λ (a , b) → _ , (cong imaps b)) (stren-∃ e (there v))
+  stren-∃ (sels e e₁) v = do
+    (a , b) ← stren-∃ e v
+    (c , d) ← stren-∃ e₁ v
+    just (_ , (cong₂ sels b d))
+  stren-∃ (imap e) v =
+    map (λ (a , b) → _ , (cong imap b)) (stren-∃ e (there v))
+  stren-∃ (sel e e₁) v = do
+    (a , b) ← stren-∃ e v
+    (c , d) ← stren-∃ e₁ v
+    just (_ , (cong₂ sel b d))
+  stren-∃ (imapb x e) v =
+    map (λ (a , b) → _ , (cong (E.imapb x) b)) (stren-∃ e (there v))
+  stren-∃ (selb x e e₁) v = do
+    (a , b) ← stren-∃ e v
+    (c , d) ← stren-∃ e₁ v
+    just (_ , (cong₂ (E.selb x) b d))
+  stren-∃ (sum e) v =
+    map (λ (a , b) → _ , (cong E.sum b)) (stren-∃ e (there v))
+  stren-∃ (zero-but e e₁ e₂) v = do
+    (a , b) ← stren-∃ e v
+    (c , d) ← stren-∃ e₁ v
+    (e , f) ← stren-∃ e₂ v
+    just (_ , cong₃ zero-but b d f)
+  stren-∃ (slide e x e₁ x₁) v = do
+    (a , b) ← stren-∃ e v
+    (c , d) ← stren-∃ e₁ v
+    just (_ , (cong₂ (λ f g → E.slide f x g x₁) b d))
+  stren-∃ (backslide e e₁ x x₁) v = do
+    (a , b) ← stren-∃ e v
+    (c , d) ← stren-∃ e₁ v
+    just (_ , (cong₂ (λ f g → E.backslide f g x x₁) b d))
+  stren-∃ (bin x e e₁) v = do
+    (a , b) ← stren-∃ e v
+    (c , d) ← stren-∃ e₁ v
+    just (_ , (cong₂ (bin x) b d))
+  stren-∃ (scaledown x e) v =
+    map (λ (a , b) → _ , (cong (scaledown x) b)) (stren-∃ e v)
+  stren-∃ (un x e) v =
+    map (λ (a , b) → _ , (cong (un x) b)) (stren-∃ e v)
+  stren-∃ (maximum e) v =
+    map (λ (a , b) → _ , (cong E.maximum b)) (stren-∃ e (there v))
+  stren-∃ (let′ e e₁) v = do
+    (a , b) ← stren-∃ e v
+    (c , d) ← stren-∃ e₁ (there v)
+    just (_ , (cong₂ let′ b d))
 
   -- Get rid of lets that do not use their arguments.
   norm-lets : E Γ is → E Γ is
@@ -404,6 +497,31 @@ module WkSub where
   -- Jairo made
   count-uses (un x e) v = count-uses e v
   count-uses (maximum e) v = count-uses e (there v)
+
+  inline : E Γ is → E Γ is
+  inline e = norm-lets (inline' e) where
+    inline' : E Γ is → E Γ is
+    inline' (var x) = var x
+    inline' 𝟘 = 𝟘
+    inline' 𝟙 = 𝟙
+    inline' (imaps e) = imaps (inline' e)
+    inline' (sels e e₁) = sels (inline' e) (inline' e₁)
+    inline' (imap e) = imap (inline e)
+    inline' (sel e e₁) = sel (inline' e) (inline' e₁)
+    inline' (imapb x e) = imapb x (inline' e)
+    inline' (selb x e e₁) = selb x (inline' e) (inline' e₁)
+    inline' (sum e) = sum (inline' e)
+    inline' (zero-but e e₁ e₂) = (zero-but (inline' e) (inline' e₁) (inline' e₂))
+    inline' (slide e x e₁ x₁) = slide (inline' e) x (inline' e₁) x₁
+    inline' (backslide e e₁ x x₁) = backslide (inline' e) (inline' e₁) x x₁
+    inline' (bin x e e₁) = bin x (inline' e) (inline' e₁)
+    inline' (scaledown x e) = scaledown x (inline' e)
+    inline' (un x e) = un x (inline' e)
+    inline' (maximum e) = maximum (inline' e)
+    inline' (let′ e e₁) with a ← (inline' e₁) | count-uses a v₀
+    ... | 0 = sub a (sub-id ▹ (inline' e))
+    -- ... | 1 = sub a (sub-id ▹ (inline' e))
+    ... | _ = let′ (inline' e) a
 
 module Syntax where
   open import Data.List as L using (List; []; _∷_)
@@ -649,6 +767,10 @@ module Primitives where
       --       (scaledown 100000 one)
       --          )
       --       )
+
+      -- Let ms := scaledown (len s) (Sum (λ i → sels ⟨ x ⊠ x ⟩ i)) In
+      -- Let scale := sqrt (ms ⊞ (scaledown 100000 one)) In
+      -- Let r := ⟨ x ⟩ // Imaps (λ _ → scale) In r
 
       Let ms := scaledown (len s) (Sum (λ i → sels ⟨ x ⊠ x ⟩ i)) In
       Let scale := sqrt (ms ⊞ (scaledown 100000 one)) In

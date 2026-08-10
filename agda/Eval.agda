@@ -1,4 +1,4 @@
---{-# OPTIONS --warn=noUserWarning #-}
+-- {-# OPTIONS --warn=noUserWarning #-}
 open import Data.Product
 open import Data.Unit
 open import Data.Empty
@@ -92,6 +92,10 @@ module Eval (r : Real) where
 
   reflᵃ : ∀ {a : Ar s X} → a ≈ᵃ a
   reflᵃ i = refl
+
+  symˢ : {a b : ⟦ is ⟧ˢ} → a ≈ˢ b → b ≈ˢ a
+  symˢ {ix x} {a} {b} refl = refl
+  symˢ {ar x} {a} {b} eq i = sym (eq i)
 
   infix 4 _∙ᵃ_
   _∙ᵃ_ : {a b c : Ar s X} → a ≈ᵃ b → b ≈ᵃ c → a ≈ᵃ c
@@ -320,6 +324,45 @@ module Eval (r : Real) where
   eval-zb a i ρ with eval i ρ ≟ₚ eval i ρ
   ... | yes refl = λ _ → refl
   ... | no ¬p = ⊥-elim (¬p refl)
+
+  module Stren (rp : RealProp r) where
+    open RealProp rp
+    open WkSub hiding (_∙ˢ_)
+    open import Data.Maybe
+    open import Data.Maybe.Properties
+
+
+
+    -- eval-strenv : ∀ {Γ is ip} (x : is ∈ Γ) {y : ip ∈ Γ} {y' : ip ∈ (Γ / x)}
+    --   → strenv x y ≡ just y' → (ρ : ⟦ Γ ⟧ᶜ)
+    --   → lookup y ρ ≈ˢ lookup y' (wk-env (wk-/ x) ρ)
+    -- eval-strenv v₀ {there y} {y'} eq ρ rewrite (just-injective eq) =
+    --   symˢ (lookup-≈ᶜ wk-env-id y')
+    -- eval-strenv (there x) {v₀} {v₀} eq ρ = reflˢ
+    -- eval-strenv (there x) {there y} {v₀} eq ρ with strenv x y | eq
+    -- ... | just a | ()
+    -- ... | nothing | ()
+    -- eval-strenv (there x) {there y} {there y'} eq ρ =
+    --   eval-strenv x (strenv-inj₂ x eq) (ρ .proj₁)
+
+    -- open import LangEq
+
+    -- eval-stren : ∀ {Γ is} (x : is ∈ Γ) (y : E Γ is) (z : E (Γ / x) is)
+    --   → stren y x ≡ just z → (ρ : ⟦ Γ ⟧ᶜ)
+    --   → eval y ρ ≈ˢ eval z (wk-env (wk-/ x) ρ)
+    -- eval-stren x y z eq ρ = {!   !} ∙ˢ (eval-wk (wk-/ x) z ρ)
+
+    -- eval-stren : ∀ {Γ is} (x : is ∈ Γ) (y : E Γ is) (z : E (Γ / x) is)
+    --   → stren y x ≡ just z → (ρ : ⟦ Γ ⟧ᶜ)
+    --   → eval y ρ ≈ˢ eval z (wk-env (wk-/ x) ρ)
+    -- eval-stren x (var y) (var y') eq ρ = eval-strenv x (var-stren-strenv x eq) ρ
+    -- eval-stren x 𝟘 𝟘 eq ρ = reflˢ
+    -- eval-stren x 𝟙 𝟙 eq ρ = reflˢ
+    -- eval-stren x (sels e e₁) z eq ρ = {! z  !}
+    -- eval-stren x y z eq ρ 
+
+    -- ?0 :{!   !}eval y ρ ≈ˢ eval y' (wk-env (wk-/ x) ρ)
+
 
   module ZeroBut (rp : RealProp r) where
     open RealProp rp
