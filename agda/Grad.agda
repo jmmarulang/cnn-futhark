@@ -1,4 +1,4 @@
---{-# OPTIONS --warn=noUserWarning #-}
+-- {-# OPTIONS --warn=noUserWarning #-}
 module _ where
 
 module _ where
@@ -27,7 +27,7 @@ module _ where
     env : Env Γ Δ → EE Γ Δ
     let′ : E Δ (ar s) → EE Γ (Δ ▹ ar s) → EE Γ Δ
 
-  -- Weaken all expressions in the Env enironment
+  -- Weaken all expressions in the Env environment
   env-wk : Δ ⊆ Ψ → Env Γ Δ → Env Γ Ψ
   env-wk w ε = ε
   env-wk w (skip ρ) = skip (env-wk w ρ)
@@ -68,14 +68,6 @@ module _ where
 
   zero-ee : EE Γ Δ
   zero-ee = env (zero-env)
-
-  -- one-env : Env Γ Δ
-  -- one-env {ε} = ε
-  -- one-env {Γ ▹ ix x} = skip one-env
-  -- one-env {Γ ▹ ar x} = one-env ▹ one
-
-  -- one-ee : EE Γ Δ
-  -- one-ee = env (one-env)
 
   env-update+ : Env Γ Δ → (v : ar s ∈ Γ) → (t : E Δ (ar s)) → Env Γ Δ
   env-update+ (ρ ▹ x) v₀ t = ρ ▹ (x ⊞ t)
@@ -151,9 +143,6 @@ module _ where
   glet-sub : (v : ar s ∈ Δ) → Sub ((Δ / v) ▹ ar s) Δ
   glet-sub v₀ = sub-id
   glet-sub (there v) = skeep (glet-sub v) ∙ˢ sub-swap
--- Sub _Δ_530 (Γ ▹ ip)
--- Sub (((Γ ▹ ip) / there v) ▹ ar s) _Δ_530
--- Sub (((Γ ▹ ip) / there v) ▹ ar s) ((Γ / v) ▹ ar s ▹ ip)
 
   glet : (v : ar s ∈ Δ) → (x : E (Δ / v) (ar s)) → E Δ (ar p) → E (Δ / v) (ar p)
   glet v x e = let′ x $′ sub e (glet-sub v)
@@ -175,6 +164,14 @@ module _ where
 
   ee-let : (v : ar s ∈ Δ) (x : E (Δ / v) (ar s)) → EE Γ Δ → EE Γ (Δ / v)
   ee-let v x ρ = let′ x $ ee-sub ρ (glet-sub v)
+  open import Data.Maybe
+  {-# TERMINATING #-}
+  ee-map-sum' : EE Γ (Δ ▹ ix s) → EE Γ Δ
+  ee-map-sum' (env x) = env (env-map-sum x)
+  ee-map-sum' {s = s} (let′ {s = p} x ρ) with (stren-∃ x v₀)
+  ... | just (x' , eq) = let′ x' (ee-map-sum' (ee-sub ρ sub-swap))
+  ... | nothing = let′ (imap x) (ee-map-sum' {s = s}
+      (ee-sub ρ (skeep (sdrop sub-id) ▹ sel (var (there v₀)) (var v₀))))
 
   {-# TERMINATING #-} -- See GradTerm.agda where this is fixed
   grad-last : E Γ (ar s) → EE (Γ ▹ ar s) Γ → EE Γ Γ
@@ -188,6 +185,8 @@ module _ where
   grad-sum : (e s : E (Γ ▹ ix s) (ar p)) → EE Γ Γ → EE Γ Γ
   grad-sum e s δ = ee-plus δ $ ee-tail $ ee-map-sum (grad e s zero-ee)
 
+  grad-sum' : (e seed : E (Γ ▹ ix s) (ar p)) → EE Γ Γ → EE Γ Γ
+  grad-sum' e s δ = ee-plus δ $ ee-tail $ ee-map-sum' (grad e s zero-ee)
 
   -- maximum (sels (e ↑) (var v₀))
   grad {is = ix _} (var x) s δ = δ
@@ -195,15 +194,15 @@ module _ where
   grad zero s δ = δ
   grad one s δ = δ
 
-  grad (imaps e)              s δ = grad-sum e (sels     (s ↑) (var v₀)) δ -- why?
-  grad (imap e)               s δ = grad-sum e (sel      (s ↑) (var v₀)) δ
-  grad (E.imapb m e)          s δ = grad-sum e (E.selb m (s ↑) (var v₀)) δ
+  grad (imaps e)              s δ = grad-sum' e (sels     (s ↑) (var v₀)) δ -- why?
+  grad (imap e)               s δ = grad-sum' e (sel      (s ↑) (var v₀)) δ
+  grad (E.imapb m e)          s δ = grad-sum' e (E.selb m (s ↑) (var v₀)) δ
 
   grad (sels e i)             s δ = grad e (imaps     (zero-but (var v₀) (i ↑) (s ↑))) δ
   grad (sel e i)              s δ = grad e (imap      (zero-but (var v₀) (i ↑) (s ↑))) δ
   grad (E.selb m e i)         s δ = grad e (E.imapb m (zero-but (var v₀) (i ↑) (s ↑))) δ
 
-  grad (E.sum e)              s δ = grad-sum e (s ↑) δ
+  grad (E.sum e)              s δ = grad-sum' e (s ↑) δ
   grad (zero-but i j e)       s δ = grad e (zero-but i j s) δ
 
   grad (E.slide i p e su)     s δ = grad e (E.backslide i s su p) δ
@@ -231,7 +230,7 @@ module _ where
   grad (maximum {s = p} e)    s δ =
     let t = skip (skip ⊆-eq) in
     let′ (maximum {s = p} e) (let′ (𝟙/ (E.sum (𝕀0+ (wk (keep (skip ⊆-eq)) e ⊟ var (there v₀)))))
-      (ee-tail (ee-tail (grad-sum
+      (ee-tail (ee-tail (grad-sum'
         (wk (keep t) e)
         (
           wk (skip t) s ⊠
@@ -242,13 +241,6 @@ module _ where
           var (there v₀)
         )
         (ee-wk t (ee-wk-zero δ t))))))
-
-    -- let′ (maximum {s = p} e) (ee-tail (grad-sum (wk (keep (skip ⊆-eq)) e)
-    -- ((wk (skip (skip ⊆-eq)) s) ⊠ 𝕀0+ (wk (keep (skip ⊆-eq)) e ⊟ var (there v₀))) (ee-wk (skip ⊆-eq) (ee-wk-zero δ (skip ⊆-eq)))))
-  -- grad (maximum {s = p} e)    s δ = grad-sum e
-  --   (let′ (maximum {s = p} (e ↑)) ((wk (skip (skip ⊆-eq)) s) ⊠ 𝕀0+ ((e ↑) ⊟ var v₀))) δ
-  -- grad (maximum {s = p} e)    s δ =
-  --   grad-sum e ((s ↑) ⊠ (𝕀0+ (e ⊟ maximum {s = p} (e ↑))) ⊠ 𝟙/ (E.sum {s = p} ((e ↑) ⊟ maximum (wk (keep (skip (skip ⊆-eq))) e)))) δ
 
   grad-last′ v e (env ρ) = let
     w = env-lookup ρ v
