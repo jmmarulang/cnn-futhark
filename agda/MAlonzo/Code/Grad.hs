@@ -19,8 +19,6 @@ import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Equality
 import qualified MAlonzo.Code.Agda.Builtin.List
-import qualified MAlonzo.Code.Agda.Builtin.Maybe
-import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Ar
 import qualified MAlonzo.Code.Data.Nat.Base
 import qualified MAlonzo.Code.Data.Nat.Properties
@@ -837,114 +835,21 @@ d_ee'45'let_432 v0 v1 v2 v3 v4 v5
 d_ee'45'map'45'sum_440 ::
   MAlonzo.Code.Lang.T_Ctx_36 ->
   MAlonzo.Code.Lang.T_Ctx_36 -> [Integer] -> T_EE_20 -> T_EE_20
-d_ee'45'map'45'sum_440 v0 v1 v2 v3
-  = case coe v3 of
-      C_env_22 v6
-        -> coe
-             C_env_22 (coe du_env'45'map'45'sum_166 (coe v0) (coe v2) (coe v6))
-      C_let'8242'_24 v5 v7 v8
-        -> let v9
-                 = MAlonzo.Code.Lang.d_stren'45''8707'_1122
-                     (coe
-                        MAlonzo.Code.Lang.C__'9657'__40 (coe v1)
-                        (coe MAlonzo.Code.Lang.C_ix_32 (coe v2)))
-                     (coe MAlonzo.Code.Lang.C_ar_34 (coe v5))
-                     (coe MAlonzo.Code.Lang.C_ix_32 (coe v2)) (coe v7)
-                     (coe MAlonzo.Code.Lang.C_here_60) in
-           coe
-             (case coe v9 of
-                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v10
-                  -> case coe v10 of
-                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v11 v12
-                         -> coe
-                              C_let'8242'_24 v5 v11
-                              (d_ee'45'map'45'sum_440
-                                 (coe v0)
-                                 (coe
-                                    MAlonzo.Code.Lang.C__'9657'__40 (coe v1)
-                                    (coe MAlonzo.Code.Lang.C_ar_34 (coe v5)))
-                                 (coe v2)
-                                 (coe
-                                    d_ee'45'sub_404 (coe v0)
-                                    (coe
-                                       MAlonzo.Code.Lang.C__'9657'__40
-                                       (coe
-                                          MAlonzo.Code.Lang.C__'9657'__40 (coe v1)
-                                          (coe MAlonzo.Code.Lang.C_ix_32 (coe v2)))
-                                       (coe MAlonzo.Code.Lang.C_ar_34 (coe v5)))
-                                    (coe
-                                       MAlonzo.Code.Lang.C__'9657'__40
-                                       (coe
-                                          MAlonzo.Code.Lang.C__'9657'__40 (coe v1)
-                                          (coe MAlonzo.Code.Lang.C_ar_34 (coe v5)))
-                                       (coe MAlonzo.Code.Lang.C_ix_32 (coe v2)))
-                                    (coe v8)
-                                    (coe
-                                       MAlonzo.Code.Lang.d_sub'45'swap_840 (coe v1)
-                                       (coe MAlonzo.Code.Lang.C_ar_34 (coe v5))
-                                       (coe MAlonzo.Code.Lang.C_ix_32 (coe v2)))))
-                       _ -> MAlonzo.RTE.mazUnreachableError
-                MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
-                  -> coe
-                       C_let'8242'_24 (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v2 v5)
-                       (coe MAlonzo.Code.Lang.C_imap_226 v2 v5 v7)
-                       (d_ee'45'map'45'sum_440
-                          (coe v0)
-                          (coe
-                             MAlonzo.Code.Lang.C__'9657'__40 (coe v1)
-                             (coe
-                                MAlonzo.Code.Lang.C_ar_34
-                                (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v2 v5)))
-                          (coe v2)
-                          (coe
-                             d_ee'45'sub_404 (coe v0)
-                             (coe
-                                MAlonzo.Code.Lang.C__'9657'__40
-                                (coe
-                                   MAlonzo.Code.Lang.C__'9657'__40 (coe v1)
-                                   (coe MAlonzo.Code.Lang.C_ix_32 (coe v2)))
-                                (coe MAlonzo.Code.Lang.C_ar_34 (coe v5)))
-                             (coe
-                                MAlonzo.Code.Lang.C__'9657'__40
-                                (coe
-                                   MAlonzo.Code.Lang.C__'9657'__40 (coe v1)
-                                   (coe
-                                      MAlonzo.Code.Lang.C_ar_34
-                                      (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v2 v5)))
-                                (coe MAlonzo.Code.Lang.C_ix_32 (coe v2)))
-                             (coe v8)
-                             (coe
-                                MAlonzo.Code.Lang.C__'9657'__516
-                                (MAlonzo.Code.Lang.d_skeep_532
-                                   (coe
-                                      MAlonzo.Code.Lang.C__'9657'__40 (coe v1)
-                                      (coe
-                                         MAlonzo.Code.Lang.C_ar_34
-                                         (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v2 v5)))
-                                   (coe v1) (coe MAlonzo.Code.Lang.C_ix_32 (coe v2))
-                                   (coe
-                                      MAlonzo.Code.Lang.d_sdrop_528 (coe v1) (coe v1)
-                                      (coe
-                                         MAlonzo.Code.Lang.C_ar_34
-                                         (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v2 v5))
-                                      (coe MAlonzo.Code.Lang.d_sub'45'id_548 (coe v1))))
-                                (coe
-                                   MAlonzo.Code.Lang.C_sel_228 v2
-                                   (coe
-                                      MAlonzo.Code.Lang.C_var_216
-                                      (coe
-                                         MAlonzo.Code.Lang.C_there_62
-                                         (coe MAlonzo.Code.Lang.C_here_60)))
-                                   (coe
-                                      MAlonzo.Code.Lang.C_var_216
-                                      (coe MAlonzo.Code.Lang.C_here_60))))))
-                _ -> MAlonzo.RTE.mazUnreachableError)
-      _ -> MAlonzo.RTE.mazUnreachableError
+d_ee'45'map'45'sum_440 v0 ~v1 v2 v3
+  = du_ee'45'map'45'sum_440 v0 v2 v3
+du_ee'45'map'45'sum_440 ::
+  MAlonzo.Code.Lang.T_Ctx_36 -> [Integer] -> T_EE_20 -> T_EE_20
+du_ee'45'map'45'sum_440 v0 v1 v2
+  = coe
+      C_env_22
+      (coe
+         du_env'45'map'45'sum_166 (coe v0) (coe v1)
+         (coe du_ee'45'fold_174 (coe v0) (coe v2)))
 -- Grad._.grad-last
-d_grad'45'last_476 ::
+d_grad'45'last_444 ::
   MAlonzo.Code.Lang.T_Ctx_36 ->
   [Integer] -> MAlonzo.Code.Lang.T_E_214 -> T_EE_20 -> T_EE_20
-d_grad'45'last_476 v0 v1 v2 v3
+d_grad'45'last_444 v0 v1 v2 v3
   = case coe v3 of
       C_env_22 v6
         -> case coe v6 of
@@ -958,7 +863,7 @@ d_grad'45'last_476 v0 v1 v2 v3
                           (coe
                              v13
                              (coe
-                                d_grad_486
+                                d_grad_454
                                 (coe
                                    MAlonzo.Code.Lang.C__'9657'__40 (coe v0)
                                    (coe MAlonzo.Code.Lang.C_ar_34 (coe v1)))
@@ -992,7 +897,7 @@ d_grad'45'last_476 v0 v1 v2 v3
                  coe
                    (coe
                       v10
-                      (d_grad'45'last_476
+                      (d_grad'45'last_444
                          (coe
                             MAlonzo.Code.Lang.C__'9657'__40 (coe v0)
                             (coe MAlonzo.Code.Lang.C_ar_34 (coe v5)))
@@ -1020,12 +925,12 @@ d_grad'45'last_476 v0 v1 v2 v3
                                   (MAlonzo.Code.Lang.d_'8838''45'eq_494 (coe v0)))))))))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Grad._.grad-last′
-d_grad'45'last'8242'_480 ::
+d_grad'45'last'8242'_448 ::
   [Integer] ->
   MAlonzo.Code.Lang.T_Ctx_36 ->
   MAlonzo.Code.Lang.T__'8712'__58 ->
   MAlonzo.Code.Lang.T_E_214 -> T_EE_20 -> T_EE_20
-d_grad'45'last'8242'_480 v0 v1 v2 v3 v4
+d_grad'45'last'8242'_448 v0 v1 v2 v3 v4
   = case coe v4 of
       C_env_22 v7
         -> coe
@@ -1034,7 +939,7 @@ d_grad'45'last'8242'_480 v0 v1 v2 v3 v4
                 d_ee'45'let_432 (coe v0) (coe v1) (coe v1) (coe v2)
                 (coe du_env'45'lookup_324 (coe v1) (coe v7) (coe v2))
                 (coe
-                   d_grad_486 v1 (coe MAlonzo.Code.Lang.C_ar_34 (coe v0))
+                   d_grad_454 v1 (coe MAlonzo.Code.Lang.C_ar_34 (coe v0))
                    (MAlonzo.Code.Lang.d_wk_368
                       (coe MAlonzo.Code.Lang.du__'47'__102 (coe v1) (coe v2)) (coe v1)
                       (coe MAlonzo.Code.Lang.C_ar_34 (coe v0))
@@ -1062,7 +967,7 @@ d_grad'45'last'8242'_480 v0 v1 v2 v3 v4
                  coe
                    (coe
                       v11
-                      (d_grad'45'last'8242'_480
+                      (d_grad'45'last'8242'_448
                          (coe v0)
                          (coe
                             MAlonzo.Code.Lang.C__'9657'__40 (coe v1)
@@ -1076,12 +981,12 @@ d_grad'45'last'8242'_480 v0 v1 v2 v3 v4
                          (coe du_ee'45'push'45'zero_104 (coe v1) (coe v6) (coe v9))))))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Grad._.grad
-d_grad_486 ::
+d_grad_454 ::
   MAlonzo.Code.Lang.T_Ctx_36 ->
   MAlonzo.Code.Lang.T_IS_30 ->
   MAlonzo.Code.Lang.T_E_214 ->
   MAlonzo.Code.Lang.T_E_214 -> T_EE_20 -> T_EE_20
-d_grad_486 v0 v1 v2 v3
+d_grad_454 v0 v1 v2 v3
   = case coe v2 of
       MAlonzo.Code.Lang.C_var_216 v6
         -> case coe v1 of
@@ -1099,7 +1004,7 @@ d_grad_486 v0 v1 v2 v3
              MAlonzo.Code.Lang.C_ar_34 v7
                -> coe
                     (\ v8 ->
-                       d_grad'45'sum_492
+                       d_grad'45'sum_460
                          (coe v0) (coe v7) (coe MAlonzo.Code.Lang.d_unit_212) (coe v6)
                          (coe
                             MAlonzo.Code.Lang.C_sels_224 v7
@@ -1114,7 +1019,7 @@ d_grad_486 v0 v1 v2 v3
         -> coe
              (\ v8 ->
                 coe
-                  d_grad_486 v0 (coe MAlonzo.Code.Lang.C_ar_34 (coe v5)) v6
+                  d_grad_454 v0 (coe MAlonzo.Code.Lang.C_ar_34 (coe v5)) v6
                   (coe
                      MAlonzo.Code.Lang.C_imaps_222
                      (coe
@@ -1132,7 +1037,7 @@ d_grad_486 v0 v1 v2 v3
       MAlonzo.Code.Lang.C_imap_226 v5 v6 v7
         -> coe
              (\ v8 ->
-                d_grad'45'sum_492
+                d_grad'45'sum_460
                   (coe v0) (coe v5) (coe v6) (coe v7)
                   (coe
                      MAlonzo.Code.Lang.C_sel_228 v5
@@ -1151,7 +1056,7 @@ d_grad_486 v0 v1 v2 v3
                -> coe
                     (\ v10 ->
                        coe
-                         d_grad_486 v0
+                         d_grad_454 v0
                          (coe
                             MAlonzo.Code.Lang.C_ar_34
                             (coe MAlonzo.Code.Ar.d__'8855'__54 () erased v5 v9))
@@ -1175,7 +1080,7 @@ d_grad_486 v0 v1 v2 v3
              MAlonzo.Code.Lang.C_ar_34 v10
                -> coe
                     (\ v11 ->
-                       d_grad'45'sum_492
+                       d_grad'45'sum_460
                          (coe v0) (coe v4) (coe v5) (coe v9)
                          (coe
                             MAlonzo.Code.Lang.C_selb_232 v4 v10 v8
@@ -1192,7 +1097,7 @@ d_grad_486 v0 v1 v2 v3
                -> coe
                     (\ v12 ->
                        coe
-                         d_grad_486 v0 (coe MAlonzo.Code.Lang.C_ar_34 (coe v6)) v9
+                         d_grad_454 v0 (coe MAlonzo.Code.Lang.C_ar_34 (coe v6)) v9
                          (coe
                             MAlonzo.Code.Lang.C_imapb_230 v4 v11 v8
                             (coe
@@ -1212,7 +1117,7 @@ d_grad_486 v0 v1 v2 v3
              MAlonzo.Code.Lang.C_ar_34 v8
                -> coe
                     (\ v9 ->
-                       d_grad'45'sum_492
+                       d_grad'45'sum_460
                          (coe v0) (coe v5) (coe v8) (coe v7)
                          (coe
                             MAlonzo.Code.Lang.d__'8593'_500 v0 v1
@@ -1223,7 +1128,7 @@ d_grad_486 v0 v1 v2 v3
         -> coe
              (\ v10 ->
                 coe
-                  d_grad_486 v0 v1 v9
+                  d_grad_454 v0 v1 v9
                   (coe MAlonzo.Code.Lang.C_zero'45'but_236 v5 v7 v8 v3) v10)
       MAlonzo.Code.Lang.C_slide_238 v5 v6 v7 v9 v10 v11 v12
         -> case coe v1 of
@@ -1231,7 +1136,7 @@ d_grad_486 v0 v1 v2 v3
                -> coe
                     (\ v14 ->
                        coe
-                         d_grad_486 v0 (coe MAlonzo.Code.Lang.C_ar_34 (coe v7)) v11
+                         d_grad_454 v0 (coe MAlonzo.Code.Lang.C_ar_34 (coe v7)) v11
                          (coe MAlonzo.Code.Lang.C_backslide_240 v5 v13 v6 v9 v3 v12 v10)
                          v14)
              _ -> MAlonzo.RTE.mazUnreachableError
@@ -1241,7 +1146,7 @@ d_grad_486 v0 v1 v2 v3
                -> coe
                     (\ v14 ->
                        coe
-                         d_grad_486 v0 (coe MAlonzo.Code.Lang.C_ar_34 (coe v6)) v10
+                         d_grad_454 v0 (coe MAlonzo.Code.Lang.C_ar_34 (coe v6)) v10
                          (coe MAlonzo.Code.Lang.C_slide_238 v5 v7 v13 v9 v12 v3 v11) v14)
              _ -> MAlonzo.RTE.mazUnreachableError
       MAlonzo.Code.Lang.C_bin_242 v6 v7 v8
@@ -1249,28 +1154,28 @@ d_grad_486 v0 v1 v2 v3
              MAlonzo.Code.Lang.C_plus_190
                -> coe
                     (\ v9 ->
-                       coe d_grad_486 v0 v1 v7 v3 (coe d_grad_486 v0 v1 v8 v3 v9))
+                       coe d_grad_454 v0 v1 v7 v3 (coe d_grad_454 v0 v1 v8 v3 v9))
              MAlonzo.Code.Lang.C_mul_192
                -> coe
                     (\ v9 ->
                        coe
-                         d_grad_486 v0 v1 v7 (coe MAlonzo.Code.Lang.C_bin_242 v6 v3 v8)
+                         d_grad_454 v0 v1 v7 (coe MAlonzo.Code.Lang.C_bin_242 v6 v3 v8)
                          (coe
-                            d_grad_486 v0 v1 v8 (coe MAlonzo.Code.Lang.C_bin_242 v6 v3 v7) v9))
+                            d_grad_454 v0 v1 v8 (coe MAlonzo.Code.Lang.C_bin_242 v6 v3 v7) v9))
              _ -> MAlonzo.RTE.mazUnreachableError
       MAlonzo.Code.Lang.C_scaledown_244 v6 v7
         -> coe
-             d_grad_486 (coe v0) (coe v1) (coe v7)
+             d_grad_454 (coe v0) (coe v1) (coe v7)
              (coe MAlonzo.Code.Lang.C_scaledown_244 v6 v3)
       MAlonzo.Code.Lang.C_let'8242'_246 v5 v7 v8
         -> coe
              (\ v9 ->
-                d_grad'45'last_476
+                d_grad'45'last_444
                   (coe v0) (coe v5) (coe v7)
                   (coe
                      C_let'8242'_24 v5 v7
                      (coe
-                        d_grad_486
+                        d_grad_454
                         (coe
                            MAlonzo.Code.Lang.C__'9657'__40 (coe v0)
                            (coe MAlonzo.Code.Lang.C_ar_34 (coe v5)))
@@ -1298,7 +1203,7 @@ d_grad_486 v0 v1 v2 v3
                -> case coe v6 of
                     MAlonzo.Code.Lang.C_logistic_196
                       -> coe
-                           d_grad_486 (coe v0) (coe v1) (coe v7)
+                           d_grad_454 (coe v0) (coe v1) (coe v7)
                            (coe
                               MAlonzo.Code.Lang.C_let'8242'_246 v8
                               (coe MAlonzo.Code.Lang.C_un_248 v6 v7)
@@ -1320,13 +1225,13 @@ d_grad_486 v0 v1 v2 v3
                                           (coe MAlonzo.Code.Lang.C_here_60))))))
                     MAlonzo.Code.Lang.C_neg_198
                       -> coe
-                           d_grad_486 (coe v0) (coe v1) (coe v7)
+                           d_grad_454 (coe v0) (coe v1) (coe v7)
                            (coe MAlonzo.Code.Lang.C_un_248 v6 v3)
                     MAlonzo.Code.Lang.C_exp_200
                       -> coe
                            (\ v9 ->
                               coe
-                                d_grad_486 v0 v1 v7
+                                d_grad_454 v0 v1 v7
                                 (coe
                                    MAlonzo.Code.Lang.C_bin_242 (coe MAlonzo.Code.Lang.C_mul_192)
                                    (coe MAlonzo.Code.Lang.C_un_248 v6 v7) v3)
@@ -1335,7 +1240,7 @@ d_grad_486 v0 v1 v2 v3
                       -> coe
                            (\ v9 ->
                               coe
-                                d_grad_486 v0 v1 v7
+                                d_grad_454 v0 v1 v7
                                 (coe
                                    MAlonzo.Code.Lang.C_bin_242 (coe MAlonzo.Code.Lang.C_mul_192)
                                    (coe
@@ -1347,7 +1252,7 @@ d_grad_486 v0 v1 v2 v3
                       -> coe
                            (\ v9 ->
                               coe
-                                d_grad_486 v0 v1 v7
+                                d_grad_454 v0 v1 v7
                                 (coe
                                    MAlonzo.Code.Lang.du__'47''47'__324 (coe v3)
                                    (coe
@@ -1359,7 +1264,7 @@ d_grad_486 v0 v1 v2 v3
                       -> coe
                            (\ v9 ->
                               coe
-                                d_grad_486 v0 v1 v7
+                                d_grad_454 v0 v1 v7
                                 (coe
                                    MAlonzo.Code.Lang.C_un_248 (coe MAlonzo.Code.Lang.C_neg_198)
                                    (coe
@@ -1371,12 +1276,12 @@ d_grad_486 v0 v1 v2 v3
                     MAlonzo.Code.Lang.C_ind'45'positive_208
                       -> coe
                            (\ v9 ->
-                              coe d_grad_486 v0 v1 v7 (coe MAlonzo.Code.Lang.C_zero_218) v9)
+                              coe d_grad_454 v0 v1 v7 (coe MAlonzo.Code.Lang.C_zero_218) v9)
                     MAlonzo.Code.Lang.C_logarithm_210
                       -> coe
                            (\ v9 ->
                               coe
-                                d_grad_486 v0 v1 v7
+                                d_grad_454 v0 v1 v7
                                 (coe MAlonzo.Code.Lang.du__'47''47'__324 (coe v3) (coe v7)) v9)
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
@@ -1424,7 +1329,7 @@ d_grad_486 v0 v1 v2 v3
                                (coe
                                   du_ee'45'tail_52
                                   (coe
-                                     d_grad'45'sum_492
+                                     d_grad'45'sum_460
                                      (coe
                                         MAlonzo.Code.Lang.C__'9657'__40
                                         (coe MAlonzo.Code.Lang.C__'9657'__40 (coe v0) (coe v1))
@@ -1551,25 +1456,25 @@ d_grad_486 v0 v1 v2 v3
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Grad._.grad-sum
-d_grad'45'sum_492 ::
+d_grad'45'sum_460 ::
   MAlonzo.Code.Lang.T_Ctx_36 ->
   [Integer] ->
   [Integer] ->
   MAlonzo.Code.Lang.T_E_214 ->
   MAlonzo.Code.Lang.T_E_214 -> T_EE_20 -> T_EE_20
-d_grad'45'sum_492 v0 v1 v2 v3 v4 v5
+d_grad'45'sum_460 v0 v1 v2 v3 v4 v5
   = coe
       d_ee'45'plus_224 (coe v0) (coe v0) (coe v5)
       (coe
          du_ee'45'tail_52
          (coe
-            d_ee'45'map'45'sum_440
+            du_ee'45'map'45'sum_440
             (coe
                MAlonzo.Code.Lang.C__'9657'__40 (coe v0)
                (coe MAlonzo.Code.Lang.C_ix_32 (coe v1)))
-            (coe v0) (coe v1)
+            (coe v1)
             (coe
-               d_grad_486
+               d_grad_454
                (coe
                   MAlonzo.Code.Lang.C__'9657'__40 (coe v0)
                   (coe MAlonzo.Code.Lang.C_ix_32 (coe v1)))
@@ -1580,10 +1485,10 @@ d_grad'45'sum_492 v0 v1 v2 v3 v4 v5
                      MAlonzo.Code.Lang.C__'9657'__40 (coe v0)
                      (coe MAlonzo.Code.Lang.C_ix_32 (coe v1)))))))
 -- Grad.test
-d_test_726 :: T_EE_20
-d_test_726
+d_test_694 :: T_EE_20
+d_test_694
   = coe
-      d_grad_486
+      d_grad_454
       (coe
          MAlonzo.Code.Lang.C__'9657'__40 (coe MAlonzo.Code.Lang.C_ε_38)
          (coe

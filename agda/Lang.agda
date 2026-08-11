@@ -12,7 +12,7 @@ module _ where
   cong₃ : {X Y Z W : Set} (f : X → Y → Z → W) → ∀ {x x₁ y y₁ z z₁}
         → x ≡ x₁ → y ≡ y₁ → z ≡ z₁ → f x y z ≡ f x₁ y₁ z₁
   cong₃ _ refl refl refl = refl
-  
+
   data IS : Set where
     ix  : S → IS
     ar  : S → IS
@@ -743,7 +743,8 @@ module Primitives where
       Let maxs := Max {s} (λ i → sels ⟨ x ⟩ i) In
       Let exps := 𝕖^ (⟨ x ⟩ ⊟ tiles maxs) In
       Let total := Sum {s} (λ i → sels exps i) In
-      Let r := Imaps (λ i → sels exps i // total) In r
+      --Let r := Imaps (λ i → sels exps i // total) In r
+      Imaps (λ i → sels exps i // total)
 
       -- Imaps λ i →
       -- (sels ⟨ 𝕖^ (x) ⟩ i) // Sum {s} (λ i → sels ⟨ 𝕖^ (x) ⟩ i)
@@ -774,7 +775,8 @@ module Primitives where
 
       Let ms := scaledown (len s) (Sum (λ i → sels ⟨ x ⊠ x ⟩ i)) In
       Let scale := sqrt (ms ⊞ (scaledown 100000 one)) In
-      Let r := ⟨ x ⟩ // Imaps (λ _ → scale) In r
+      --Let r := ⟨ x ⟩ // Imaps (λ _ → scale) In r
+      ⟨ x ⟩ // Imaps (λ _ → scale)
 
     m-rmsnorm : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
     m-rmsnorm {s} {p} {Γ} x = Imap {s} λ i → rmsnorm (sel ⟨ x ⟩ i)
@@ -832,7 +834,8 @@ module Primitives where
       Let hqks := matmult {sl} hqs hks In
       Let masked := (scaledown sc hqks) ⊞ ⟨ mask ⟩ In
       Let sf := m-softmax {sl} masked In
-      Let r := matmul {sl} sf ⟨ hvs ⟩ In r
+      --Let r := matmul {sl} sf ⟨ hvs ⟩ In r
+      matmul {sl} sf ⟨ hvs ⟩
 
     mh-attention : ∀ {Γ} (sc : ℕ)
                    (mask : E Γ (ar (sl ⊗ sl)))
@@ -862,7 +865,8 @@ module Primitives where
                    (p : GPT-Params Γ vo ed sl fd) (wseq : E Γ (ar (sl ⊗ ed)))
                    → ah * hd ≈ ed → E Γ (ar (sl ⊗ vo))
     mgpt-forward {sl} {vo} {ed} {fd} {ah} {hd} {Γ} sc mask p wseq pr =
-      Let seq := m-rmsnorm {sl} ((p .wpe) ⊞ wseq) In
+      Let wpe-wseq := (p .wpe) ⊞ wseq In
+      Let seq := m-rmsnorm {sl} wpe-wseq In
       -- layer pass
       Let nseq := m-rmsnorm {sl} seq In
         -- attention block
@@ -883,7 +887,8 @@ module Primitives where
       Let dseq := m-linear {u = ed} {p = sl} ⟨ p .wdown ⟩ aseq In
       Let lseq := dseq ⊞ cseq In
       -- build logits
-      Let logits := m-linear {u = vo} {p = sl} ⟨ p .wvoc ⟩ lseq In logits
+      --Let logits := m-linear {u = vo} {p = sl} ⟨ p .wvoc ⟩ lseq In logits
+      m-linear {u = vo} {p = sl} ⟨ p .wvoc ⟩ lseq
 
     cross-entropy : ∀ {Γ} (logits target : E Γ (ar s)) → (E Γ (ar []))
     cross-entropy {s} logits target =
@@ -911,7 +916,9 @@ module Primitives where
                    (p : GPT-Params Γ vo ed sl fd) (wseq : E Γ (ar (sl ⊗ ed)))
                    (target : E Γ (ar (sl ⊗ vo))) → ah * hd ≈ ed → E Γ (ar [])
     mgpt-loss {sl} {vo} {ed} {fd} {ah} {hd} {Γ} sc mask p wseq target pr =
-      Let seq := m-rmsnorm {sl} ((p .wpe) ⊞ wseq) In
+
+      Let wpe-wseq := (p .wpe) ⊞ wseq In
+      Let seq := m-rmsnorm {sl} wpe-wseq In
       -- layer pass
       Let nseq := m-rmsnorm {sl} seq In
         -- attention block
@@ -936,7 +943,8 @@ module Primitives where
       -- calculate losses
       Let losses := m-cross-entropy {sl} logits ⟨ target ⟩ In
       -- average loss
-      Let loss := avg losses In loss
+      --Let loss := avg losses In loss
+      avg losses
 
     ED = ι 16 ; AH = ι 4 ; HD = ι 4 ; SL = ι 16 ; FD = ι 64 ; SC = 2 ; VO = ι 27
 

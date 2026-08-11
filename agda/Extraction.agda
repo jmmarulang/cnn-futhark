@@ -151,6 +151,44 @@ module Extract where
   -- nodedup-pp : E Γ (ar s) → NamedEnv Γ → String
   -- nodedup-pp e ρ = nodedup-ee-fut ({- env-norm-lets $ -} grad e one zero-ee) ρ
 
+  module Pretty where
+    import PP
+
+    named-ppenv : NamedEnv Γ → PP.FEnv Γ
+    named-ppenv ε = _
+    named-ppenv (ρ ▹ x) = named-ppenv ρ , x
+
+    pretty-env′ : Env Γ Δ → NamedEnv Γ → NamedEnv Δ → State ℕ String
+    pretty-env′ ε ρ ν = return ""
+    pretty-env′ (skip e) (ρ ▹ _) ν = pretty-env′ e ρ ν
+    pretty-env′ (e ▹ x) (ρ ▹ n) ν = do
+      r ← pretty-env′ e ρ ν
+      v ← PP.pp x (named-ppenv ν)
+      return $ printf "%s\n\nlet d%s = %s" r n v
+
+    pretty-ee′ : EE Γ Δ → NamedEnv Γ → NamedEnv Δ → State ℕ String
+    pretty-ee′ (env ρ) = pretty-env′ ρ
+    pretty-ee′ (let′ {s = s} x e) ρ ν = do
+      c ← get
+      modify suc
+      v ← PP.pp x (named-ppenv ν)
+      let n = fresh-var c
+      r ← pretty-ee′ e ρ (ν ▹ n)
+      return $ printf "let %s = %s\n\n%s" n v r
+
+    pretty-ee : EE Γ Γ → NamedEnv Γ → String
+    pretty-ee e ρ =
+      let 
+        ee = ee-OPT $ ee-dedup $ ee-OPT e
+        r  = runState (pretty-ee′ ee ρ ρ) 0
+      in proj₂ r
+
+
+    pretty : E Γ (ar s) → NamedEnv Γ → String
+    pretty e ρ = pretty-ee ({- env-norm-lets $ -} grad e one zero-ee) ρ
+
+
+
   -- Examples
   -- ========
   conv-e : E _ _
@@ -159,6 +197,7 @@ module Extract where
                       logi t -- wrapped inside a logistic?
 
   grad-conv-e = pp conv-e (ε ▹ "img" ▹ "k1")
+
   {-
   "let x0 = (imap2 4 4 (\\ x2_0 x2_1 -> (isum2 2 2 (\\ x1_0 x1_1 -> (img[(x1_0 + x2_0)][(x1_1 + x2_1)] F.* k1[x1_0][x1_1])))))
   let x3 = (let x4 = (imap2 4 4 (\\ x6_0 x6_1 -> (logistics x0[x6_0][x6_1])))
@@ -281,5 +320,9 @@ module Extract where
 
   grad-mgpt-loss-s : String
   grad-mgpt-loss-s = pp Primitives.Microgpt.mgpt-loss-e
+    (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup"
+       ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target")
+
+  grad-mgpt-loss-pp = Pretty.pretty Primitives.Microgpt.mgpt-loss-e
     (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup"
        ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target")
