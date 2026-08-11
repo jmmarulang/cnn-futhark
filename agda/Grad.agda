@@ -10,6 +10,7 @@ module _ where
   open import Function
   open import Ar
   open import Lang
+  open import Data.Maybe
   open WkSub
 
   -- Tel Γ Δ is a telescope where the first expression
@@ -91,9 +92,6 @@ module _ where
           map-let (skip ν) = skip (map-let ν)
           map-let (ν ▹ e) =  map-let ν ▹ let′ x e
 
-  ee-map-sum : EE Γ (Δ ▹ ix s) → EE Γ Δ
-  ee-map-sum ρ = env (env-map-sum (ee-fold ρ))
-
   env-plus : (ρ ν : Env Γ Δ) → Env Γ Δ
   env-plus ε ν = ν
   env-plus (skip ρ) (skip ν) = skip (env-plus ρ ν)
@@ -164,13 +162,16 @@ module _ where
 
   ee-let : (v : ar s ∈ Δ) (x : E (Δ / v) (ar s)) → EE Γ Δ → EE Γ (Δ / v)
   ee-let v x ρ = let′ x $ ee-sub ρ (glet-sub v)
-  open import Data.Maybe
+
+  -- ee-map-sum : EE Γ (Δ ▹ ix s) → EE Γ Δ
+  -- ee-map-sum ρ = env (env-map-sum (ee-fold ρ))
+
   {-# TERMINATING #-}
-  ee-map-sum' : EE Γ (Δ ▹ ix s) → EE Γ Δ
-  ee-map-sum' (env x) = env (env-map-sum x)
-  ee-map-sum' {s = s} (let′ {s = p} x ρ) with (stren-∃ x v₀)
-  ... | just (x' , eq) = let′ x' (ee-map-sum' (ee-sub ρ sub-swap))
-  ... | nothing = let′ (imap x) (ee-map-sum' {s = s}
+  ee-map-sum : EE Γ (Δ ▹ ix s) → EE Γ Δ
+  ee-map-sum (env x) = env (env-map-sum x)
+  ee-map-sum {s = s} (let′ {s = p} x ρ) with (stren-∃ x v₀)
+  ... | just (x' , eq) = let′ x' (ee-map-sum (ee-sub ρ sub-swap))
+  ... | nothing = let′ (imap x) (ee-map-sum {s = s}
       (ee-sub ρ (skeep (sdrop sub-id) ▹ sel (var (there v₀)) (var v₀))))
 
   {-# TERMINATING #-} -- See GradTerm.agda where this is fixed
@@ -182,11 +183,11 @@ module _ where
 
   grad : (e s : E Γ is) → EE Γ Γ → EE Γ Γ
 
-  grad-sum : (e s : E (Γ ▹ ix s) (ar p)) → EE Γ Γ → EE Γ Γ
-  grad-sum e s δ = ee-plus δ $ ee-tail $ ee-map-sum (grad e s zero-ee)
+  -- grad-sum : (e s : E (Γ ▹ ix s) (ar p)) → EE Γ Γ → EE Γ Γ
+  -- grad-sum e s δ = ee-plus δ $ ee-tail $ ee-map-sum (grad e s zero-ee)
 
-  grad-sum' : (e seed : E (Γ ▹ ix s) (ar p)) → EE Γ Γ → EE Γ Γ
-  grad-sum' e s δ = ee-plus δ $ ee-tail $ ee-map-sum' (grad e s zero-ee)
+  grad-sum : (e seed : E (Γ ▹ ix s) (ar p)) → EE Γ Γ → EE Γ Γ
+  grad-sum e s δ = ee-plus δ $ ee-tail $ ee-map-sum (grad e s zero-ee)
 
   -- maximum (sels (e ↑) (var v₀))
   grad {is = ix _} (var x) s δ = δ
@@ -194,15 +195,15 @@ module _ where
   grad zero s δ = δ
   grad one s δ = δ
 
-  grad (imaps e)              s δ = grad-sum' e (sels     (s ↑) (var v₀)) δ -- why?
-  grad (imap e)               s δ = grad-sum' e (sel      (s ↑) (var v₀)) δ
-  grad (E.imapb m e)          s δ = grad-sum' e (E.selb m (s ↑) (var v₀)) δ
+  grad (imaps e)              s δ = grad-sum e (sels     (s ↑) (var v₀)) δ -- why?
+  grad (imap e)               s δ = grad-sum e (sel      (s ↑) (var v₀)) δ
+  grad (E.imapb m e)          s δ = grad-sum e (E.selb m (s ↑) (var v₀)) δ
 
   grad (sels e i)             s δ = grad e (imaps     (zero-but (var v₀) (i ↑) (s ↑))) δ
   grad (sel e i)              s δ = grad e (imap      (zero-but (var v₀) (i ↑) (s ↑))) δ
   grad (E.selb m e i)         s δ = grad e (E.imapb m (zero-but (var v₀) (i ↑) (s ↑))) δ
 
-  grad (E.sum e)              s δ = grad-sum' e (s ↑) δ
+  grad (E.sum e)              s δ = grad-sum e (s ↑) δ
   grad (zero-but i j e)       s δ = grad e (zero-but i j s) δ
 
   grad (E.slide i p e su)     s δ = grad e (E.backslide i s su p) δ
@@ -210,6 +211,8 @@ module _ where
 
   grad (e ⊞ e₁)               s   = grad e s ∘ grad e₁ s
   grad (e ⊠ e₁)               s   = grad e (s ⊠ e₁) ∘ grad e₁ (s ⊠ e)
+  -- grad (e ⊞ e₁)               s δ = ee-plus (grad e s δ) (grad e₁ s δ) --grad e s ∘ grad e₁ s
+  -- grad (e ⊠ e₁)               s δ = ee-plus (grad e (s ⊠ e₁) δ) (grad e₁ (s ⊠ e) δ) --grad e (s ⊠ e₁) ∘ grad e₁ (s ⊠ e)
   grad (scaledown x e)        s   = grad e (scaledown x s)
   grad (⊟ e)                  s   = grad e (⊟ s)
   grad (logi e)               s   = grad e (let′ (logi e) ((s ↑) ⊠ var v₀ ⊠ (one ⊞ ⊟ (var v₀))))
@@ -230,7 +233,7 @@ module _ where
   grad (maximum {s = p} e)    s δ =
     let t = skip (skip ⊆-eq) in
     let′ (maximum {s = p} e) (let′ (𝟙/ (E.sum (𝕀0+ (wk (keep (skip ⊆-eq)) e ⊟ var (there v₀)))))
-      (ee-tail (ee-tail (grad-sum'
+      (ee-tail (ee-tail (grad-sum
         (wk (keep t) e)
         (
           wk (skip t) s ⊠
