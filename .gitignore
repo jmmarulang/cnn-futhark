@@ -4,3 +4,4 @@ src/input/MNIST
 .vscode
 agda/MAlonzo
 agda/*.agdai
+src/futhark/__pycache__
