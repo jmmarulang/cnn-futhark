@@ -86,10 +86,10 @@ module Extract where
 
   ee-inline : EE Γ Δ → EE Γ Δ
   ee-inline (env x) = env (env-norm-lets x)
-  ee-inline (let′ x ρ) with δ ← ee-inline ρ | ee-count-uses δ v₀
-  ... | 0 = ee-sub δ (sub-id ▹ inline x) -- does nothing?
-  -- ... | 1 = ee-sub δ (sub-id ▹ inline x) -- why only for 1?
-  ... | _ = let′ (inline x) δ
+  ee-inline (let′ x ρ) with δ ← ee-inline ρ | ee-count-uses δ v₀ | x
+  ... | 0 | _ = ee-sub δ (sub-id ▹ inline x) -- does nothing?
+  ... | _ | var b = ee-sub δ (sub-id ▹ var b) --ee-sub δ (sub-id ▹ inline x) -- why only for 1?
+  ... | _ | _ = let′ (inline x) δ
 
   env-replace : Env Γ Δ → (a b : E Δ is) → Env Γ Δ
   env-replace ε a b = ε
@@ -100,9 +100,19 @@ module Extract where
   ee-replace (env ρ) x y = env (env-replace ρ x y)
   ee-replace (let′ e e₁) x y = let′ (replace e x y) (ee-replace e₁ (x ↑) (y ↑))
 
+  env-replace-let : Env Γ Δ → Env Γ Δ
+  env-replace-let ε = ε
+  env-replace-let (skip ρ) = skip (env-replace-let ρ)
+  env-replace-let (ρ ▹ x) = (env-replace-let ρ) ▹ replace-let x
+
   ee-dedup : EE Γ Δ → EE Γ Δ
-  ee-dedup (env x) = env x
-  ee-dedup (let′ x e) = let′ x (ee-replace (ee-dedup e) (x ↑) (var v₀))
+  ee-dedup (env ρ) = env (env-replace-let ρ)
+  ee-dedup (let′ x ρ) = let x' = (replace-let x) in
+    let′ x' (ee-replace (ee-dedup ρ) (x' ↑) (var v₀))
+
+  -- ee-dedup : EE Γ Δ → EE Γ Δ
+  -- ee-dedup (env x) = env x
+  -- ee-dedup (let′ x e) = let′ x (ee-replace (ee-dedup e) (x ↑) (var v₀))
 
   ee-OPT : EE Γ Δ → EE Γ Δ
   ee-OPT ρ = ee-inline $ ee-opt (ee-inline (ee-opt $ ee-inline ρ)) --??
@@ -178,11 +188,10 @@ module Extract where
 
     pretty-ee : EE Γ Γ → NamedEnv Γ → String
     pretty-ee e ρ =
-      let 
+      let
         ee = ee-OPT $ ee-dedup $ ee-OPT e
         r  = runState (pretty-ee′ ee ρ ρ) 0
       in proj₂ r
-
 
     pretty : E Γ (ar s) → NamedEnv Γ → String
     pretty e ρ = pretty-ee ({- env-norm-lets $ -} grad e one zero-ee) ρ

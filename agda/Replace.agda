@@ -1,5 +1,5 @@
 {-# OPTIONS  --backtracking-instance-search #-}
---{-# OPTIONS --warn=noUserWarning #-}
+-- {-# OPTIONS --warn=noUserWarning #-}
 
 module _ where
 module _ where
@@ -43,6 +43,30 @@ module _ where
   -- Jairo made
   replace (un x₁ e) x y | nothing = un x₁ (replace e x y)
   replace (maximum e) x y | nothing = maximum (replace e (x ↑) (y ↑))
+
+  replace-let : (e : E Γ is) → E Γ is
+  replace-let (let′ e e₁) = let e' = (replace-let e) in
+    let′ e' (replace (replace-let e₁) (e' ↑) (var v₀)) -- is this correct?
+  replace-let (var x) = var x
+  replace-let 𝟘 = 𝟘
+  replace-let 𝟙 = 𝟙
+  replace-let (imaps e) = imaps (replace-let e)
+  replace-let (sels e e₁) = sels (replace-let e) (replace-let e₁)
+  replace-let (imap e) = imap (replace-let e)
+  replace-let (sel e e₁) = sel (replace-let e) (replace-let e₁)
+  replace-let (E.imapb x e) = E.imapb x (replace-let e)
+  replace-let (E.selb x e e₁) = E.selb x (replace-let e) (replace-let e₁)
+  replace-let (E.sum e) = E.sum (replace-let e)
+  replace-let (zero-but e e₁ e₂) =
+    zero-but (replace-let e) (replace-let e₁) (replace-let e₂)
+  replace-let (E.slide e x e₁ x₁) =
+    E.slide (replace-let e) x (replace-let e₁) x₁
+  replace-let (E.backslide e e₁ x x₁) =
+    E.backslide (replace-let e) (replace-let e₁) x x₁
+  replace-let (bin x e e₁) = bin x (replace-let e) (replace-let e₁)
+  replace-let (scaledown x e) = scaledown x (replace-let e)
+  replace-let (un x e) = un x (replace-let e)
+  replace-let (maximum e) = maximum (replace-let e)
 
 module Test where
   open import Data.List

@@ -518,10 +518,11 @@ module WkSub where
     inline' (scaledown x e) = scaledown x (inline' e)
     inline' (un x e) = un x (inline' e)
     inline' (maximum e) = maximum (inline' e)
-    inline' (let′ e e₁) with a ← (inline' e₁) | count-uses a v₀
-    ... | 0 = sub a (sub-id ▹ (inline' e))
-    -- ... | 1 = sub a (sub-id ▹ (inline' e))
-    ... | _ = let′ (inline' e) a
+    inline' (let′ e e₁) with a ← (inline' e₁) | count-uses a v₀ | e
+    ... | 0 | _ = sub a (sub-id ▹ (inline' e))
+    ... | _ | var b = sub a (sub-id ▹ (var b))
+    -- ... | 1 | _ = sub a (sub-id ▹ (inline' e))
+    ... | _ | _ = let′ (inline' e) a
 
 module Syntax where
   open import Data.List as L using (List; []; _∷_)
@@ -772,8 +773,8 @@ module Primitives where
       -- Let ms := scaledown (len s) (Sum (λ i → sels ⟨ x ⊠ x ⟩ i)) In
       -- Let scale := sqrt (ms ⊞ (scaledown 100000 one)) In
       -- Let r := ⟨ x ⟩ // Imaps (λ _ → scale) In r
-
-      Let ms := scaledown (len s) (Sum (λ i → sels ⟨ x ⊠ x ⟩ i)) In
+      Let xx := x ⊠ x In
+      Let ms := scaledown (len s) (Sum (λ i → sels xx i)) In
       Let scale := sqrt (ms ⊞ (scaledown 100000 one)) In
       --Let r := ⟨ x ⟩ // Imaps (λ _ → scale) In r
       ⟨ x ⟩ // Imaps (λ _ → scale)
@@ -892,9 +893,9 @@ module Primitives where
 
     cross-entropy : ∀ {Γ} (logits target : E Γ (ar s)) → (E Γ (ar []))
     cross-entropy {s} logits target =
-      (⊟ (Sum λ i → sels (ln (softmax ⟨ logits ⟩)) i ⊠ sels ⟨ target ⟩ i))
-      -- Let lnsf := ln (softmax logits) In
-      -- (⊟ (Sum λ i → sels lnsf i ⊠ sels ⟨ target ⟩ i))
+      -- (⊟ (Sum λ i → sels (ln (softmax ⟨ logits ⟩)) i ⊠ sels ⟨ target ⟩ i))
+      Let lnsf := ln (softmax logits) In
+      (⊟ (Sum λ i → sels lnsf i ⊠ sels ⟨ target ⟩ i))
 
     m-cross-entropy : ∀ {Γ} (logits target : E Γ (ar (s ⊗ p))) → (E Γ (ar s))
     m-cross-entropy {s} {p} logits target =

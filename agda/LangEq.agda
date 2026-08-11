@@ -662,51 +662,82 @@ module _ where
   open import Data.Unit
   open import Data.Empty
 
-  IsE₂ : ∀ {Γ' Γ is ip} (x : E Γ' is) (e : E Γ ip) → Set
-  IsE₂ {_} {Γ} {_} {_} (var x) e = (∃ λ v → e ≡ var v)
-  IsE₂ {_} {Γ} {ar s} {ix q} x e = ⊥
-  IsE₂ {_} {Γ} {ar s} {ar q} 𝟘 e = (e ≡ zero)
-  IsE₂ {_} {Γ} {ar s} {ar q} 𝟙 e = (e ≡ one)
-  IsE₂ {_} {Γ} {ar s} {ar q} (imaps x) e = (∃ λ u → e ≡ imaps u)
-  IsE₂ {_} {Γ} {ar s} {ar p} (sels x x₁) e = (Σ (p ≡ []) λ eq → ∃₂ λ t u → subst (E Γ ∘ ar) eq e ≡ sels {s = s} t u)
-  IsE₂ {_} {Γ} {ar s} {ar q} (imap x) e = (∃₂ λ s p → Σ (s L.++ p ≡ q) λ eq → ∃ λ u → subst (E Γ ∘ ar) (sym eq) e ≡ imap {s = s} u)
-  IsE₂ {_} {Γ} {ar s} {ar p} (sel x x₁) e =  (∃ λ s → ∃₂ λ t u → e ≡ sel {s = s}{p} t u)
-  IsE₂ {_} {Γ} {ar s} {ar q} (E.imapb x x₁) e = (∃₂ λ s p → Σ (s * p ≈ q) λ pf → ∃ λ t → e ≡ E.imapb pf t)
-  IsE₂ {_} {Γ} {ar s} {ar p} (E.selb x x₁ x₂) e = (∃₂ λ s q → Σ (s * p ≈ q) λ pf → ∃₂ λ t u → e ≡ E.selb pf t u)
-  IsE₂ {_} {Γ} {ar s} {ar q} (E.sum x) e = (∃₂ λ s t → e ≡ E.sum {s = s} t)
-  IsE₂ {_} {Γ} {ar s} {ar q} (zero-but x x₁ x₂) e = (∃₂ λ s i → ∃₂ λ j u → e ≡ zero-but {s = s} i j u)
-  IsE₂ {_} {Γ} {ar s} {ar q} (E.slide x x₁ x₂ x₃) e = (∃₂ λ s′ p′ → ∃₂ λ r′ t → ∃₂ λ x′ t₁ → ∃ λ x₁ → e ≡ E.slide {s = s′}{p′}{r′} t x′ t₁ x₁)
-  IsE₂ {_} {Γ} {ar s} {ar q} (E.backslide x x₁ x₂ x₃) e = (∃₂ λ s′ u′ → ∃₂ λ p′ t → ∃₂ λ t₁ x → ∃ λ x₁ → e ≡ E.backslide {s = s′}{u = u′}{p = p′} t t₁ x x₁)
-  IsE₂ {_} {Γ} {ar s} {ar q} (bin x x₁ x₂) e = (∃₂ λ o t → ∃ λ t₁ → e ≡ bin o t t₁)
-  IsE₂ {_} {Γ} {ar s} {ar q} (scaledown x x₁) e = (∃₂ λ x t  → e ≡ scaledown x t)
-  IsE₂ {_} {Γ} {ar s} {ar q} (let′ x x₁) e = (∃₂ λ s′ t → ∃ λ t₁ → e ≡ let′ {s = s′} t t₁)
-  IsE₂ {_} {Γ} {ar s} {ar q} (un x x₁) e = (∃ λ t → ∃ λ t₁ → e ≡ un t t₁)
-  IsE₂ {_} {Γ} {ar s} {ar q} (maximum x) e = (∃₂ λ s t → e ≡ maximum {s = s} t)
-  -- IsE₂ {_} {Γ} {ar s} {ar q} (var x) e = (∃ λ v → e ≡ var v)
+  -- IsE₂ : ∀ {Γ' Γ is ip} (x : E Γ' is) (e : E Γ ip) → Set
+  -- IsE₂ {_} {Γ} {_} {_} (var x) e = (∃ λ v → e ≡ var v)
+  -- IsE₂ {_} {Γ} {ar s} {ix q} x e = ⊥
+  -- IsE₂ {_} {Γ} {ar s} {ar q} 𝟘 e = (e ≡ zero)
+  -- IsE₂ {_} {Γ} {ar s} {ar q} 𝟙 e = (e ≡ one)
+  -- IsE₂ {_} {Γ} {ar s} {ar q} (imaps x) e = (∃ λ u → e ≡ imaps u)
+  -- IsE₂ {_} {Γ} {ar s} {ar p} (sels x x₁) e = (Σ (p ≡ []) λ eq → ∃₂ λ t u → subst (E Γ ∘ ar) eq e ≡ sels {s = s} t u)
+  -- IsE₂ {_} {Γ} {ar s} {ar q} (imap x) e = (∃₂ λ s p → Σ (s L.++ p ≡ q) λ eq → ∃ λ u → subst (E Γ ∘ ar) (sym eq) e ≡ imap {s = s} u)
+  -- IsE₂ {_} {Γ} {ar s} {ar p} (sel x x₁) e =  (∃ λ s → ∃₂ λ t u → e ≡ sel {s = s}{p} t u)
+  -- IsE₂ {_} {Γ} {ar s} {ar q} (E.imapb x x₁) e = (∃₂ λ s p → Σ (s * p ≈ q) λ pf → ∃ λ t → e ≡ E.imapb pf t)
+  -- IsE₂ {_} {Γ} {ar s} {ar p} (E.selb x x₁ x₂) e = (∃₂ λ s q → Σ (s * p ≈ q) λ pf → ∃₂ λ t u → e ≡ E.selb pf t u)
+  -- IsE₂ {_} {Γ} {ar s} {ar q} (E.sum x) e = (∃₂ λ s t → e ≡ E.sum {s = s} t)
+  -- IsE₂ {_} {Γ} {ar s} {ar q} (zero-but x x₁ x₂) e = (∃₂ λ s i → ∃₂ λ j u → e ≡ zero-but {s = s} i j u)
+  -- IsE₂ {_} {Γ} {ar s} {ar q} (E.slide x x₁ x₂ x₃) e = (∃₂ λ s′ p′ → ∃₂ λ r′ t → ∃₂ λ x′ t₁ → ∃ λ x₁ → e ≡ E.slide {s = s′}{p′}{r′} t x′ t₁ x₁)
+  -- IsE₂ {_} {Γ} {ar s} {ar q} (E.backslide x x₁ x₂ x₃) e = (∃₂ λ s′ u′ → ∃₂ λ p′ t → ∃₂ λ t₁ x → ∃ λ x₁ → e ≡ E.backslide {s = s′}{u = u′}{p = p′} t t₁ x x₁)
+  -- IsE₂ {_} {Γ} {ar s} {ar q} (bin x x₁ x₂) e = (∃₂ λ o t → ∃ λ t₁ → e ≡ bin o t t₁)
+  -- IsE₂ {_} {Γ} {ar s} {ar q} (scaledown x x₁) e = (∃₂ λ x t  → e ≡ scaledown x t)
+  -- IsE₂ {_} {Γ} {ar s} {ar q} (let′ x x₁) e = (∃₂ λ s′ t → ∃ λ t₁ → e ≡ let′ {s = s′} t t₁)
+  -- IsE₂ {_} {Γ} {ar s} {ar q} (un x x₁) e = (∃ λ t → ∃ λ t₁ → e ≡ un t t₁)
+  -- IsE₂ {_} {Γ} {ar s} {ar q} (maximum x) e = (∃₂ λ s t → e ≡ maximum {s = s} t)
+  -- -- IsE₂ {_} {Γ} {ar s} {ar q} (var x) e = (∃ λ v → e ≡ var v)
 
-  isE₂ : ∀ {Γ' Γ is} (x : E Γ' is) (e : E Γ is) → Dec (IsE₂ x e)
-  isE₂ {_} {_} {ar s} 𝟘 e = isZero e
-  isE₂ {_} {_} {ar s} 𝟙 e = isOne e
-  isE₂ {_} {_} {ar s} (imaps x) e = isImaps e
-  isE₂ {_} {_} {ar s} (sels x x₁) e = isSels e s
-  isE₂ {_} {_} {ar s} (imap x) e = isImap e
-  isE₂ {_} {_} {ar s} (sel x x₁) e = isSel e
-  isE₂ {_} {_} {ar s} (E.imapb x x₁) e = isImapb e
-  isE₂ {_} {_} {ar s} (E.selb x x₁ x₂) e = isSelb e
-  isE₂ {_} {_} {ar s} (E.sum x) e = isSum e
-  isE₂ {_} {_} {ar s} (zero-but x x₁ x₂) e = isZeroBut e
-  isE₂ {_} {_} {ar s} (E.slide x x₁ x₂ x₃) e = isSlide e
-  isE₂ {_} {_} {ar s} (E.backslide x x₁ x₂ x₃) e = isBackslide e
-  isE₂ {_} {_} {ar s} (bin x x₁ x₂) e = isBin e
-  isE₂ {_} {_} {ar s} (scaledown x x₁) e = isScaledown e
-  isE₂ {_} {_} {ar s} (let′ x x₁) e = isLet e
-  isE₂ {_} {_} {ar s} (un x x₁) e = isUn e
-  isE₂ {_} {_} {ar s} (maximum x) e = isMaximum e
-  isE₂ {_} {_} {ix s} (var x) e = isVar e
-  isE₂ {_} {_} {ar s} (var x) e = isVar e
+  -- isE₂ : ∀ {Γ' Γ is} (x : E Γ' is) (e : E Γ is) → Dec (IsE₂ x e)
+  -- isE₂ {_} {_} {ar s} 𝟘 e = isZero e
+  -- isE₂ {_} {_} {ar s} 𝟙 e = isOne e
+  -- isE₂ {_} {_} {ar s} (imaps x) e = isImaps e
+  -- isE₂ {_} {_} {ar s} (sels x x₁) e = isSels e s
+  -- isE₂ {_} {_} {ar s} (imap x) e = isImap e
+  -- isE₂ {_} {_} {ar s} (sel x x₁) e = isSel e
+  -- isE₂ {_} {_} {ar s} (E.imapb x x₁) e = isImapb e
+  -- isE₂ {_} {_} {ar s} (E.selb x x₁ x₂) e = isSelb e
+  -- isE₂ {_} {_} {ar s} (E.sum x) e = isSum e
+  -- isE₂ {_} {_} {ar s} (zero-but x x₁ x₂) e = isZeroBut e
+  -- isE₂ {_} {_} {ar s} (E.slide x x₁ x₂ x₃) e = isSlide e
+  -- isE₂ {_} {_} {ar s} (E.backslide x x₁ x₂ x₃) e = isBackslide e
+  -- isE₂ {_} {_} {ar s} (bin x x₁ x₂) e = isBin e
+  -- isE₂ {_} {_} {ar s} (scaledown x x₁) e = isScaledown e
+  -- isE₂ {_} {_} {ar s} (let′ x x₁) e = isLet e
+  -- isE₂ {_} {_} {ar s} (un x x₁) e = isUn e
+  -- isE₂ {_} {_} {ar s} (maximum x) e = isMaximum e
+  -- isE₂ {_} {_} {ix s} (var x) e = isVar e
+  -- isE₂ {_} {_} {ar s} (var x) e = isVar e
 
   open import Data.Maybe renaming (map to mmap)
   open import Data.Maybe.Properties
+
+  -- foo' : ∀ {s p q r} → ((E (Γ ▹ ix s) (ar p)) → (E Γ (ar r)))
+  --   → (E (Γ ▹ ix s) (ar q)) → (E (Γ ▹ ix s ▹ ar q) (ar p))
+  --   → (E Γ (ar r))
+  let-out-f : ∀ {is p r} → (∀ {Δ} → (E (Δ ▹ is) (ar p)) → (E Δ (ar r)))
+    → (E (Γ ▹ is) (ar p)) → (E Γ (ar r))
+  let-out-f f e with (isLet e)
+  ... | no _ = f e
+  ... | yes (r , a , b , refl) with (stren-∃ a v₀)
+  ... | just (a' , eq) = let′ a' (f (sub b sub-swap))
+  ... | nothing = f e
+
+  let-out : E Γ is → E Γ is
+  let-out (imaps e) = let-out-f imaps (let-out e)
+  let-out (imap e) = let-out-f imap (let-out e)
+  let-out (imapb x e) = let-out-f (E.imapb x) (let-out e)
+  let-out (sum e) = let-out-f E.sum (let-out e)
+  let-out (maximum e) = let-out-f maximum (let-out e)
+  let-out (let′ e e₁) = let′ (let-out e) (let-out e₁) -- Do something here?
+  let-out (var x) = var x
+  let-out 𝟘 = 𝟘
+  let-out 𝟙 = 𝟙
+  let-out (sels e e₁) = sels (let-out e) (let-out e₁)
+  let-out (sel e e₁) = sel (let-out e) (let-out e₁)
+  let-out (selb x e e₁) = E.selb x (let-out e) (let-out e₁)
+  let-out (zero-but e e₁ e₂) = zero-but (let-out e) (let-out e₁) (let-out e₂)
+  let-out (slide e x e₁ x₁) = E.slide (let-out e) x (let-out e₁) x₁
+  let-out (backslide e e₁ x x₁) = E.backslide (let-out e) (let-out e₁) x x₁
+  let-out (bin x e e₁) = bin x (let-out e) (let-out e₁)
+  let-out (scaledown x e) = scaledown x (let-out e)
+  let-out (un x e) = un x (let-out e)
 
   -- strenv? : (x : is ∈ Γ) (y : ip ∈ Γ)
   --   → Dec (∃ (λ (z : ip ∈ (Γ / x)) → y ≡ wkv (wk-/ x) z))

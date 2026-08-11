@@ -170,8 +170,8 @@ except :
 # except :
 #     print("It refused")
 
-#-------------------------------------
-# PROBS
+# #-------------------------------------
+# # PROBS
 
 # input
 # # doc = list("wakuntchapinka")
@@ -210,7 +210,7 @@ except :
 # mplogits = np.array([[val.data for val in logits] for logits in mplogits])
 # mpprobs = np.array([softmax(logits) for logits in mplogits])
 
-# # #---------
+# # # #---------
 
 # barWidth = 0.25
 # lfprobs = mfprobs[0]

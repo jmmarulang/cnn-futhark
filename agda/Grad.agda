@@ -84,13 +84,24 @@ module _ where
   env-map-sum (skip ρ) = skip (env-map-sum ρ)
   env-map-sum (ρ ▹ x) = env-map-sum ρ ▹ E.sum x
 
+  -- ee-fold : EE Γ Δ → Env Γ Δ
+  -- ee-fold (env x) = x
+  -- ee-fold {Δ = Δ} (let′ {s = s} x ρ) = map-let (ee-fold ρ)
+  --   where map-let : ∀ {Γ} → Env Γ (Δ ▹ ar s) → Env Γ Δ
+  --         map-let ε = ε
+  --         map-let (skip ν) = skip (map-let ν)
+  --         map-let (ν ▹ e) =  map-let ν ▹ let′ x e
+
   ee-fold : EE Γ Δ → Env Γ Δ
   ee-fold (env x) = x
   ee-fold {Δ = Δ} (let′ {s = s} x ρ) = map-let (ee-fold ρ)
     where map-let : ∀ {Γ} → Env Γ (Δ ▹ ar s) → Env Γ Δ
           map-let ε = ε
           map-let (skip ν) = skip (map-let ν)
-          map-let (ν ▹ e) =  map-let ν ▹ let′ x e
+          map-let (ν ▹ e) with (stren-∃ e v₀)
+          ... | just (e' , _) = map-let ν ▹ e'
+          ... | nothing = map-let ν ▹ let′ x e
+            --map-let ν ▹ let′ x e
 
   env-plus : (ρ ν : Env Γ Δ) → Env Γ Δ
   env-plus ε ν = ν
@@ -171,8 +182,10 @@ module _ where
   ee-map-sum (env x) = env (env-map-sum x)
   ee-map-sum {s = s} (let′ {s = p} x ρ) with (stren-∃ x v₀)
   ... | just (x' , eq) = let′ x' (ee-map-sum (ee-sub ρ sub-swap))
-  ... | nothing = let′ (imap x) (ee-map-sum {s = s}
-      (ee-sub ρ (skeep (sdrop sub-id) ▹ sel (var (there v₀)) (var v₀))))
+  -- ... | nothing = env (env-map-sum (ee-fold (let′ {s = p} x ρ)))
+  ... | nothing = 
+        let′ (imap x) (ee-map-sum {s = s}
+          (ee-sub ρ (skeep (sdrop sub-id) ▹ sel (var (there v₀)) (var v₀))))
 
   {-# TERMINATING #-} -- See GradTerm.agda where this is fixed
   grad-last : E Γ (ar s) → EE (Γ ▹ ar s) Γ → EE Γ Γ
