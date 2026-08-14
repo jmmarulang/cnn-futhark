@@ -68,6 +68,35 @@ module _ where
   replace-let (un x e) = un x (replace-let e)
   replace-let (maximum e) = maximum (replace-let e)
 
+  -- inline : E Γ is → E Γ is
+  -- inline e = norm-lets (inline' e) where
+  --   inline' : E Γ is → E Γ is
+  --   inline' (var x) = var x
+  --   inline' 𝟘 = 𝟘
+  --   inline' 𝟙 = 𝟙
+  --   inline' (imaps e) = imaps (inline' e)
+  --   inline' (sels e e₁) = sels (inline' e) (inline' e₁)
+  --   inline' (imap e) = imap (inline e)
+  --   inline' (sel e e₁) = sel (inline' e) (inline' e₁)
+  --   inline' (imapb x e) = E.imapb x (inline' e)
+  --   inline' (selb x e e₁) = E.selb x (inline' e) (inline' e₁)
+  --   inline' (sum e) = E.sum (inline' e)
+  --   inline' (zero-but e e₁ e₂) = (zero-but (inline' e) (inline' e₁) (inline' e₂))
+  --   inline' (slide e x e₁ x₁) = E.slide (inline' e) x (inline' e₁) x₁
+  --   inline' (backslide e e₁ x x₁) = E.backslide (inline' e) (inline' e₁) x x₁
+  --   inline' (bin x e e₁) = bin x (inline' e) (inline' e₁)
+  --   inline' (scaledown x e) = scaledown x (inline' e)
+  --   inline' (un x e) = un x (inline' e)
+  --   inline' (maximum e) = maximum (inline' e)
+  --   inline' (let′ e e₁) with a ← (inline' e₁) | count-uses a v₀ | e
+  --   ... | 0 | _ = sub a (sub-id ▹ (inline' e))
+  --   ... | _ | var b = sub a (sub-id ▹ (var b))
+  --   ... | _ | zero = sub a (sub-id ▹ zero)
+  --   ... | _ | one = sub a (sub-id ▹ one)
+  --   -- ... | 1 | (imap b) = let t = sel b (var {! here  !}) in {!   !}
+  --   -- ... | 1 | _ = sub a (sub-id ▹ (inline' e))
+  --   ... | _ | _ = let′ (inline' e) a
+
 module Test where
   open import Data.List
 

@@ -652,15 +652,82 @@ module _ where
   ... | no ¬p = nothing
   ... | yes refl = a ≟ᵉ b >>= just ∘ (refl ,_)
 
-
-  open WkSub hiding (_∙ˢ_)
-  -- stren? : ∀ {Γ is} (x : is ∈ Γ) (y : E Γ is) → Dec (∃ (λ y' → stren y x ≡ just y'))
-  -- stren? x y with (stren y x)
-  -- ... | just a = yes (a , refl)
-  -- ... | nothing = no λ ()
-
   open import Data.Unit
   open import Data.Empty
+  open import Data.Maybe renaming (map to mmap)
+  open import Data.Maybe.Properties
+  open import Data.Nat using (ℕ; zero; suc; _+_)
+  open WkSub hiding (_∙ˢ_)
+
+  count-selv : E Γ is → ip ∈ Γ → ℕ
+  count-selv (sels e e₁) v with isVar e
+  ... | no a = count-selv e v
+  ... | yes (w , refl) with eq? w v
+  ... | veq = 1
+  ... | _ = 0
+  count-selv (sel e e₁) v with isVar e
+  ... | no a = count-selv e v
+  ... | yes (w , refl) with eq? w v
+  ... | veq = 1
+  ... | _ = 0
+  count-selv (selb x e e₁) v with isVar e
+  ... | no a = count-selv e v
+  ... | yes (w , refl) with eq? w v
+  ... | veq = 1
+  ... | _ = 0
+  count-selv (imaps e) v = count-selv e (there v)
+  count-selv (imap e) v = count-selv e (there v)
+  count-selv (imapb x e) v = count-selv e (there v)
+  count-selv (sum e) v = count-selv e (there v)
+  count-selv (maximum e) v = count-selv e (there v)
+  count-selv (zero-but i j e) v = count-selv e v
+  count-selv (slide i x e x₁) v = count-selv e v
+  count-selv (backslide i e x x₁) v = count-selv e v
+  count-selv (bin x e e₁) v = (count-selv e v) + (count-selv e₁ v)
+  count-selv (scaledown x e) v = count-selv e v
+  count-selv (let′ e e₁) v = count-selv e v + count-selv e₁ (there v)
+  count-selv (un x e) v = count-selv e v
+  count-selv e v = 0
+
+  test-count : ℕ
+  test-count = count-selv {Γ = ε ▹ ar unit ▹ ix unit} {is = ar unit} (sels (var v₁) (var v₀) ⊞ sels (var v₁) (var v₀)) v₁
+
+  inline : E Γ is → E Γ is
+  inline e = norm-lets (inline' e) where
+    inline' : E Γ is → E Γ is
+    inline' (var x) = var x
+    inline' 𝟘 = 𝟘
+    inline' 𝟙 = 𝟙
+    inline' (imaps e) = imaps (inline' e)
+    inline' (sels e e₁) = sels (inline' e) (inline' e₁)
+    inline' (imap e) = imap (inline e)
+    inline' (sel e e₁) = sel (inline' e) (inline' e₁)
+    inline' (imapb x e) = E.imapb x (inline' e)
+    inline' (selb x e e₁) = E.selb x (inline' e) (inline' e₁)
+    inline' (sum e) = E.sum (inline' e)
+    inline' (zero-but e e₁ e₂) = (zero-but (inline' e) (inline' e₁) (inline' e₂))
+    inline' (slide e x e₁ x₁) = E.slide (inline' e) x (inline' e₁) x₁
+    inline' (backslide e e₁ x x₁) = E.backslide (inline' e) (inline' e₁) x x₁
+    inline' (bin x e e₁) = bin x (inline' e) (inline' e₁)
+    inline' (scaledown x e) = scaledown x (inline' e)
+    inline' (un x e) = un x (inline' e)
+    inline' (maximum e) = maximum (inline' e)
+    inline' (let′ e e₁) with a ← (inline' e₁) | count-uses a v₀ | count-selv a v₀ | e
+    ... | 0 | _ | _ = sub a (sub-id ▹ (inline' e))
+    ... | _ | _ | var v = sub a (sub-id ▹ (var v))
+    ... | _ | _ | zero = sub a (sub-id ▹ zero)
+    ... | _ | _ | one = sub a (sub-id ▹ one)
+    ... | 1 | 1 | _ = sub a (sub-id ▹ inline' e)
+    ... | _ | _ | _ = let′ (inline' e) a
+    -- ... | _ | _ = let′ (inline' e) a
+
+  -- _⊆?_ : (Γ Δ : Ctx) → Dec (Γ ⊆ Δ)
+  -- ε ⊆? Δ = yes ⊆-ε
+  -- (Γ ▹ x) ⊆? ε = no λ ()
+  -- (Γ ▹ x) ⊆? (Δ ▹ y) with (x ≟ⁱ y)
+  -- ... | yes refl = map′ (λ s → keep s) ⊆-inj (Γ ⊆? Δ)
+  -- ... | no f = no (λ s → {!   !})
+
 
   -- IsE₂ : ∀ {Γ' Γ is ip} (x : E Γ' is) (e : E Γ ip) → Set
   -- IsE₂ {_} {Γ} {_} {_} (var x) e = (∃ λ v → e ≡ var v)
@@ -705,178 +772,3 @@ module _ where
   -- isE₂ {_} {_} {ix s} (var x) e = isVar e
   -- isE₂ {_} {_} {ar s} (var x) e = isVar e
 
-  open import Data.Maybe renaming (map to mmap)
-  open import Data.Maybe.Properties
-
-  -- foo' : ∀ {s p q r} → ((E (Γ ▹ ix s) (ar p)) → (E Γ (ar r)))
-  --   → (E (Γ ▹ ix s) (ar q)) → (E (Γ ▹ ix s ▹ ar q) (ar p))
-  --   → (E Γ (ar r))
-  let-out-f : ∀ {is p r} → (∀ {Δ} → (E (Δ ▹ is) (ar p)) → (E Δ (ar r)))
-    → (E (Γ ▹ is) (ar p)) → (E Γ (ar r))
-  let-out-f f e with (isLet e)
-  ... | no _ = f e
-  ... | yes (r , a , b , refl) with (stren-∃ a v₀)
-  ... | just (a' , eq) = let′ a' (f (sub b sub-swap))
-  ... | nothing = f e
-
-  let-out : E Γ is → E Γ is
-  let-out (imaps e) = let-out-f imaps (let-out e)
-  let-out (imap e) = let-out-f imap (let-out e)
-  let-out (imapb x e) = let-out-f (E.imapb x) (let-out e)
-  let-out (sum e) = let-out-f E.sum (let-out e)
-  let-out (maximum e) = let-out-f maximum (let-out e)
-  let-out (let′ e e₁) = let′ (let-out e) (let-out e₁) -- Do something here?
-  let-out (var x) = var x
-  let-out 𝟘 = 𝟘
-  let-out 𝟙 = 𝟙
-  let-out (sels e e₁) = sels (let-out e) (let-out e₁)
-  let-out (sel e e₁) = sel (let-out e) (let-out e₁)
-  let-out (selb x e e₁) = E.selb x (let-out e) (let-out e₁)
-  let-out (zero-but e e₁ e₂) = zero-but (let-out e) (let-out e₁) (let-out e₂)
-  let-out (slide e x e₁ x₁) = E.slide (let-out e) x (let-out e₁) x₁
-  let-out (backslide e e₁ x x₁) = E.backslide (let-out e) (let-out e₁) x x₁
-  let-out (bin x e e₁) = bin x (let-out e) (let-out e₁)
-  let-out (scaledown x e) = scaledown x (let-out e)
-  let-out (un x e) = un x (let-out e)
-
-  -- strenv? : (x : is ∈ Γ) (y : ip ∈ Γ)
-  --   → Dec (∃ (λ (z : ip ∈ (Γ / x)) → y ≡ wkv (wk-/ x) z))
-  -- strenv? v₀ v₀ = no λ ()
-  -- strenv? v₀ (there y) = yes (y , cong there (sym (wkv-at-eq y)))
-  -- strenv? (there x) v₀ = yes (v₀ , refl)
-  -- strenv? (there x) (there y) =
-  --   map′ f g (strenv? x y) where
-  --     f : _
-  --     f (a , b) = there a , cong there b
-
-  --     g : _
-  --     g (there a , b) = _ , v-inj b
-
-  -- stren-∃ : (e : E Γ is) (v : ip ∈ Γ)
-  --   → Maybe (∃ λ (z : E (Γ / v) is) → e ≡ wk (wk-/ v) z)
-  -- stren-∃ (var x) v =
-  --   mmap (λ (a , b) → _ , (cong var b)) (dec⇒maybe (strenv? v x))
-  -- stren-∃ zero v = just (zero , refl)
-  -- stren-∃ one v = just (one , refl)
-  -- stren-∃ (imaps e) v =
-  --   mmap (λ (a , b) → _ , (cong imaps b)) (stren-∃ e (there v))
-  -- stren-∃ (sels e e₁) v = do
-  --   (a , b) ← stren-∃ e v
-  --   (c , d) ← stren-∃ e₁ v
-  --   just (_ , (cong₂ sels b d))
-  -- stren-∃ (imap e) v =
-  --   mmap (λ (a , b) → _ , (cong imap b)) (stren-∃ e (there v))
-  -- stren-∃ (sel e e₁) v = do
-  --   (a , b) ← stren-∃ e v
-  --   (c , d) ← stren-∃ e₁ v
-  --   just (_ , (cong₂ sel b d))
-  -- stren-∃ (imapb x e) v =
-  --   mmap (λ (a , b) → _ , (cong (E.imapb x) b)) (stren-∃ e (there v))
-  -- stren-∃ (selb x e e₁) v = do
-  --   (a , b) ← stren-∃ e v
-  --   (c , d) ← stren-∃ e₁ v
-  --   just (_ , (cong₂ (E.selb x) b d))
-  -- stren-∃ (sum e) v =
-  --   mmap (λ (a , b) → _ , (cong E.sum b)) (stren-∃ e (there v))
-  -- stren-∃ (zero-but e e₁ e₂) v = do
-  --   (a , b) ← stren-∃ e v
-  --   (c , d) ← stren-∃ e₁ v
-  --   (e , f) ← stren-∃ e₂ v
-  --   just (_ , cong₃ zero-but b d f)
-  -- stren-∃ (slide e x e₁ x₁) v = do
-  --   (a , b) ← stren-∃ e v
-  --   (c , d) ← stren-∃ e₁ v
-  --   just (_ , (cong₂ (λ f g → E.slide f x g x₁) b d))
-  -- stren-∃ (backslide e e₁ x x₁) v = do
-  --   (a , b) ← stren-∃ e v
-  --   (c , d) ← stren-∃ e₁ v
-  --   just (_ , (cong₂ (λ f g → E.backslide f g x x₁) b d))
-  -- stren-∃ (bin x e e₁) v = do
-  --   (a , b) ← stren-∃ e v
-  --   (c , d) ← stren-∃ e₁ v
-  --   just (_ , (cong₂ (bin x) b d))
-  -- stren-∃ (scaledown x e) v =
-  --   mmap (λ (a , b) → _ , (cong (scaledown x) b)) (stren-∃ e v)
-  -- stren-∃ (un x e) v =
-  --   mmap (λ (a , b) → _ , (cong (un x) b)) (stren-∃ e v)
-  -- stren-∃ (maximum e) v =
-  --   mmap (λ (a , b) → _ , (cong E.maximum b)) (stren-∃ e (there v))
-  -- stren-∃ (let′ e e₁) v = do
-  --   (a , b) ← stren-∃ e v
-  --   (c , d) ← stren-∃ e₁ (there v)
-  --   just (_ , (cong₂ let′ b d))
-
-  -- stren? : (e : E Γ is) (v : ip ∈ Γ)
-  --   → Dec (∃ λ (z : E (Γ / v) is) → e ≡ wk (wk-/ v) z)
-  -- stren? (var x) v = map′ f g (strenv? v x) where
-  --   f : _
-  --   f (a , b) = _ , cong var b
-  --   g : _
-  --   g (var x , refl) = x , refl
-  -- stren? zero v = yes (zero , refl)
-  -- stren? one v = yes (one , refl)
-  -- stren? (imaps e) v = map′ f g (stren? e (there v)) where
-  --   f : _
-  --   f (a , b) = _ , (cong imaps b)
-
-  --   g : _
-  --   g (imaps a , refl) = a , refl
-  -- stren? {Γ = Γ} (imap e) v = map′ f g (stren? e (there v)) where
-  --   f : _
-  --   f (a , b) = _ , (cong imap b)
-
-  --   g : ∃ (λ z → imap e ≡ wk (wk-/ v) z) →
-  --     ∃ (λ z → e ≡ wk (wk-/ (there v)) z)
-  --   g (a , b) = {!   !}
-  -- stren? e v = {!   !}
-
-  -- ∃stren : (e : E Γ is) (v : ip ∈ Γ)
-  --   → Maybe (∃ λ (z : E (Γ / v) is) → IsE₂ e z)
-  -- ∃stren (var x) v =
-  --   mmap (λ (a , b , c) → _ , _ , c) (∃strenv v x)
-  -- ∃stren zero v = just {!   !}
-  -- ∃stren e v = {!   !}
-
-  -- strenv-eq-eq : ∀ (x : is ∈ Γ) (z : ip ∈ (Γ / x))
-  --   → strenv x (wkv (wk-/ x) z) ≡ just z
-  -- strenv-eq-eq v₀ z = cong just (wkv-at-eq z)
-  -- strenv-eq-eq (there x) v₀ = refl
-  -- strenv-eq-eq (there x) (there z)
-  --   with (strenv x (wkv (wk-/ x) z)) | (strenv-eq-eq x z)
-  -- ... | just a | b = cong just (cong there (just-injective b))
-
-  -- strenv-eq-eq : ∀ (x : is ∈ Γ) {y : ip ∈ Γ} {z : ip ∈ (Γ / x)}
-  --   → strenv x y ≡ just z → y ≡ wkv (wk-/ x) z
-  -- strenv-eq-eq v₀ {there y} {z} refl = cong there (sym (wkv-at-eq z))
-  -- strenv-eq-eq (there x) {v₀} {v₀} eq = refl
-  -- strenv-eq-eq (there x) {there y} {v₀} eq with (strenv x y) | eq
-  -- ... | just a | ()
-  -- ... | nothing | ()
-  -- strenv-eq-eq (there x) {there y} {there z} eq =
-  --   cong there (strenv-eq-eq x (strenv-inj₂ x eq))
-
-  -- stren-eq-eq : ∀ {Γ is ip} (x : is ∈ Γ) {y : E Γ ip} {z : E (Γ / x) ip}
-  --   → stren y x ≡ just z → IsE₂ y z
-  -- stren-eq-eq {_} {_} {ix s} x {var y} {var z} eq = z , refl
-  -- stren-eq-eq {_} {_} {ar s} x {var y} {z} eq = {!   !}
-  -- stren-eq-eq {_} {_} {ar s} x {y} {z} eq = {!   !}
-
-  -- stren-eq-eq : ∀ {Γ is ip} (x : is ∈ Γ) {y : E Γ ip} {z : E (Γ / x) ip}
-  --     → stren y x ≡ just z → y ≡ wk (wk-/ x) z
-  -- stren-eq-eq x {var y} {var z} eq =
-  --   cong var (strenv-eq-eq x (var-stren-strenv x eq))
-  -- -- stren-eq-eq x {𝟘} {𝟘} eq = refl
-  -- -- stren-eq-eq x {one} {one} eq = refl
-  -- -- stren-eq-eq {_} {_} {ar s} x {var} {zero} eq = {! eq  !}
-  -- -- stren-eq-eq {_} {_} {ar s} (there x) {var (there y)} {z} eq = {!   !}
-  -- stren-eq-eq {_} {_} {ar s} x {y} {z} eq with (stren y x) | z | eq | y
-  -- ... | just a | b | eq' | d = {!   !}
-
-
-  -- stren-eq-eq v₀ {var (there y)} {var z} refl =
-  --   cong (λ x → var (there x)) (sym (wkv-at-eq y))
-  -- stren-eq-eq (there x) {var v₀} {var z} eq with (just-injective eq)
-  -- ... | refl = refl
-  -- stren-eq-eq (there x) {var (there y)} {var v₀} eq = {!   !}
-  -- stren-eq-eq (there x) {var (there y)} {var (there z)} eq = {!   !}
-  -- stren-eq-eq x {y} {z} eq = {!   !}

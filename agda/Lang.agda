@@ -1,4 +1,7 @@
 {-# OPTIONS  --backtracking-instance-search #-}
+
+
+
 -- {-# OPTIONS --warn=noUserWarning #-}
 module _ where
 module _ where
@@ -211,12 +214,32 @@ module WkSub where
   ⊆-eq {ε} = ε
   ⊆-eq {Γ ▹ x} = keep ⊆-eq
 
+  ⊆-ε : ε ⊆ Γ
+  ⊆-ε {ε} = ε
+  ⊆-ε {Γ ▹ x} = skip ⊆-ε
+
+  ⊆-inj : (Γ ▹ is) ⊆ (Δ ▹ ip) → Γ ⊆ Δ
+  ⊆-inj (skip s) = s ∙ʷ skip ⊆-eq
+  ⊆-inj (keep s) = s ∙ʷ ⊆-eq
+
+  open import Data.Empty
+
+
   _↑ : E Γ is → E (Γ ▹ ip) is
   _↑ = wk (skip ⊆-eq)
 
   wk-/ : (v : is ∈ Γ) → (Γ / v) ⊆ Γ
   wk-/ v₀ = skip ⊆-eq
   wk-/ (there v) = keep (wk-/ v)
+
+  -- ⊆-swap : (Γ ▹ is ▹ ip) ⊆ (Γ ▹ ip ▹ is)
+  -- ⊆-swap {ε} {is} {ip} = keep {!   !} ∙ʷ {!   !}
+  -- ⊆-swap {Γ ▹ x} {is} {ip} = {!   !}
+    -- keep (keep (⊆-inj $ ⊆-inj s))
+
+  -- ⊆-inj-ix : (Γ ▹ is) ⊆ (Γ ▹ ip) → is ≡ ip
+  -- ⊆-inj-ix {ε} (keep s) = refl
+  -- ⊆-inj-ix {Γ ▹ x} {is} {ip} s = ⊆-inj-ix {Γ} {!   !}
 
   data Sub (Γ : Ctx) : Ctx → Set where
     ε   : Sub Γ ε
@@ -321,76 +344,76 @@ module WkSub where
   open import Data.Maybe.Properties
   open import Data.Product hiding (map)
 
-  strenv : (x : is ∈ Γ) (y : ip ∈ Γ) → Maybe (ip ∈ (Γ / x))
-  strenv v₀ v₀ = nothing
-  strenv v₀ (there y) = just y
-  strenv (there x) v₀ = just v₀
-  strenv (there x) (there y) = map there (strenv x y)
+  -- strenv : (x : is ∈ Γ) (y : ip ∈ Γ) → Maybe (ip ∈ (Γ / x))
+  -- strenv v₀ v₀ = nothing
+  -- strenv v₀ (there y) = just y
+  -- strenv (there x) v₀ = just v₀
+  -- strenv (there x) (there y) = map there (strenv x y)
 
-  stren : E Γ is → (v : ip ∈ Γ) → Maybe (E (Γ / v) is)
-  stren (var x) v = map var (strenv v x)
-  stren zero v = just zero
-  stren one v = just one
-  stren (imaps e) v = map imaps (stren e (there v))
-  stren (sels e e₁) v = do
-    l ← stren e v
-    r ← stren e₁ v
-    just (sels l r)
-  stren (imap e) v = map imap (stren e (there v))
-  stren (sel e e₁) v = do
-    l ← stren e v
-    r ← stren e₁ v
-    just (sel l r)
-  stren (imapb x e) v = map (imapb x) (stren e (there v))
-  stren (selb x e e₁) v = do
-    l ← stren e v
-    r ← stren e₁ v
-    just (selb x l r)
-  stren (sum e) v = map sum (stren e (there v))
-  stren (zero-but e e₁ e₂) v = do
-    a ← stren e v
-    b ← stren e₁ v
-    c ← stren e₂ v
-    just (zero-but a b c)
-  stren (slide e x e₁ x₁) v = do
-    a ← stren e v
-    b ← stren e₁ v
-    just (slide a x b x₁)
-  stren (backslide e e₁ x x₁) v = do
-    a ← stren e v
-    b ← stren e₁ v
-    just (backslide a b x x₁)
-  stren (bin x e e₁) v = do
-    a ← stren e v
-    b ← stren e₁ v
-    just (bin x a b)
-  stren (scaledown x e) v = map (scaledown x) (stren e v)
-  stren (⊟ e) v = map ⊟_ (stren e v)
-  stren (let′ e e₁) v = do
-    a ← stren e v
-    b ← stren e₁ (there v)
-    just (let′ a b)
-  -- Jairo made
-  stren (un x e) v = map (un x) (stren e v)
-  stren (maximum e) v = map maximum (stren e (there v))
+  -- stren : E Γ is → (v : ip ∈ Γ) → Maybe (E (Γ / v) is)
+  -- stren (var x) v = map var (strenv v x)
+  -- stren zero v = just zero
+  -- stren one v = just one
+  -- stren (imaps e) v = map imaps (stren e (there v))
+  -- stren (sels e e₁) v = do
+  --   l ← stren e v
+  --   r ← stren e₁ v
+  --   just (sels l r)
+  -- stren (imap e) v = map imap (stren e (there v))
+  -- stren (sel e e₁) v = do
+  --   l ← stren e v
+  --   r ← stren e₁ v
+  --   just (sel l r)
+  -- stren (imapb x e) v = map (imapb x) (stren e (there v))
+  -- stren (selb x e e₁) v = do
+  --   l ← stren e v
+  --   r ← stren e₁ v
+  --   just (selb x l r)
+  -- stren (sum e) v = map sum (stren e (there v))
+  -- stren (zero-but e e₁ e₂) v = do
+  --   a ← stren e v
+  --   b ← stren e₁ v
+  --   c ← stren e₂ v
+  --   just (zero-but a b c)
+  -- stren (slide e x e₁ x₁) v = do
+  --   a ← stren e v
+  --   b ← stren e₁ v
+  --   just (slide a x b x₁)
+  -- stren (backslide e e₁ x x₁) v = do
+  --   a ← stren e v
+  --   b ← stren e₁ v
+  --   just (backslide a b x x₁)
+  -- stren (bin x e e₁) v = do
+  --   a ← stren e v
+  --   b ← stren e₁ v
+  --   just (bin x a b)
+  -- stren (scaledown x e) v = map (scaledown x) (stren e v)
+  -- stren (⊟ e) v = map ⊟_ (stren e v)
+  -- stren (let′ e e₁) v = do
+  --   a ← stren e v
+  --   b ← stren e₁ (there v)
+  --   just (let′ a b)
+  -- -- Jairo made
+  -- stren (un x e) v = map (un x) (stren e v)
+  -- stren (maximum e) v = map maximum (stren e (there v))
 
-  from-stren : E Γ is → (v : ip ∈ Γ) → E (Γ / v) is → E (Γ / v) is
-  from-stren e v e' = fromMaybe e' (stren e v)
+  -- from-stren : E Γ is → (v : ip ∈ Γ) → E (Γ / v) is → E (Γ / v) is
+  -- from-stren e v e' = fromMaybe e' (stren e v)
 
-  strenv-inj₂ : ∀ {iq} (x : is ∈ Γ) {y : ip ∈ Γ} {y' : ip ∈ (Γ / x)}
-      → strenv (there {ip = iq} x) (there y) ≡ just (there y')
-      → strenv x y ≡ just y'
-  strenv-inj₂ (there x) {v₀} {v₀} eq = refl
-  strenv-inj₂ v₀ {there y} {y'} eq = cong just (v-inj (just-injective eq))
-  strenv-inj₂ (there x) {there y} {y'} eq with strenv x y | eq
-  ... | just a | b = cong just (v-inj (just-injective b))
+  -- strenv-inj₂ : ∀ {iq} (x : is ∈ Γ) {y : ip ∈ Γ} {y' : ip ∈ (Γ / x)}
+  --     → strenv (there {ip = iq} x) (there y) ≡ just (there y')
+  --     → strenv x y ≡ just y'
+  -- strenv-inj₂ (there x) {v₀} {v₀} eq = refl
+  -- strenv-inj₂ v₀ {there y} {y'} eq = cong just (v-inj (just-injective eq))
+  -- strenv-inj₂ (there x) {there y} {y'} eq with strenv x y | eq
+  -- ... | just a | b = cong just (v-inj (just-injective b))
 
-  var-stren-strenv : ∀ (x : is ∈ Γ) {y : ip ∈ Γ} {y' : ip ∈ (Γ / x)}
-    → stren (var y) x ≡ just (var y') → strenv x y ≡ just y'
-  var-stren-strenv v₀ {there y} {y'} refl = refl
-  var-stren-strenv (there x) {v₀} {v₀} eq = refl
-  var-stren-strenv (there x) {there y} {y'} eq with strenv x y | eq
-  ... | just a | refl = refl
+  -- var-stren-strenv : ∀ (x : is ∈ Γ) {y : ip ∈ Γ} {y' : ip ∈ (Γ / x)}
+  --   → stren (var y) x ≡ just (var y') → strenv x y ≡ just y'
+  -- var-stren-strenv v₀ {there y} {y'} refl = refl
+  -- var-stren-strenv (there x) {v₀} {v₀} eq = refl
+  -- var-stren-strenv (there x) {there y} {y'} eq with strenv x y | eq
+  -- ... | just a | refl = refl
 
   strenv-∃ : (x : is ∈ Γ) (y : ip ∈ Γ)
     → Maybe (∃ (λ (z : ip ∈ (Γ / x)) → y ≡ wkv (wk-/ x) z))
@@ -453,6 +476,12 @@ module WkSub where
     (c , d) ← stren-∃ e₁ (there v)
     just (_ , (cong₂ let′ b d))
 
+  stren : (e : E Γ is) (v : ip ∈ Γ)
+    → Maybe (E (Γ / v) is)
+  stren e v = do 
+    (a , _) ← (stren-∃ e v)
+    just a
+
   -- Get rid of lets that do not use their arguments.
   norm-lets : E Γ is → E Γ is
   norm-lets (var x) = (var x)
@@ -498,31 +527,178 @@ module WkSub where
   count-uses (un x e) v = count-uses e v
   count-uses (maximum e) v = count-uses e (there v)
 
-  inline : E Γ is → E Γ is
-  inline e = norm-lets (inline' e) where
-    inline' : E Γ is → E Γ is
-    inline' (var x) = var x
-    inline' 𝟘 = 𝟘
-    inline' 𝟙 = 𝟙
-    inline' (imaps e) = imaps (inline' e)
-    inline' (sels e e₁) = sels (inline' e) (inline' e₁)
-    inline' (imap e) = imap (inline e)
-    inline' (sel e e₁) = sel (inline' e) (inline' e₁)
-    inline' (imapb x e) = imapb x (inline' e)
-    inline' (selb x e e₁) = selb x (inline' e) (inline' e₁)
-    inline' (sum e) = sum (inline' e)
-    inline' (zero-but e e₁ e₂) = (zero-but (inline' e) (inline' e₁) (inline' e₂))
-    inline' (slide e x e₁ x₁) = slide (inline' e) x (inline' e₁) x₁
-    inline' (backslide e e₁ x x₁) = backslide (inline' e) (inline' e₁) x x₁
-    inline' (bin x e e₁) = bin x (inline' e) (inline' e₁)
-    inline' (scaledown x e) = scaledown x (inline' e)
-    inline' (un x e) = un x (inline' e)
-    inline' (maximum e) = maximum (inline' e)
-    inline' (let′ e e₁) with a ← (inline' e₁) | count-uses a v₀ | e
-    ... | 0 | _ = sub a (sub-id ▹ (inline' e))
-    ... | _ | var b = sub a (sub-id ▹ (var b))
-    -- ... | 1 | _ = sub a (sub-id ▹ (inline' e))
-    ... | _ | _ = let′ (inline' e) a
+  --   count-sels' : E Γ is → ip ∈ Γ → ℕ → ℕ
+  --   count-sels' (sels e (var i)) v count with eq? i v
+  --   ... | veq = (count-sels' e v count) + 1
+  --   ... | neq .i y = count
+  --   count-sels' (sel e (var i)) v count with eq? i v
+  --   ... | veq = (count-sels' e v count) + 1
+  --   ... | neq .i y = count
+  --   count-sels' (selb x e (var i)) v count with eq? i v
+  --   ... | veq = (count-sels' e v count) + 1
+  --   ... | neq .i y = count
+  --   count-sels' e v count = count
+
+  -- inline : E Γ is → E Γ is
+  -- inline e = norm-lets (inline' e) where
+  --   inline' : E Γ is → E Γ is
+  --   inline' (var x) = var x
+  --   inline' 𝟘 = 𝟘
+  --   inline' 𝟙 = 𝟙
+  --   inline' (imaps e) = imaps (inline' e)
+  --   inline' (sels e e₁) = sels (inline' e) (inline' e₁)
+  --   inline' (imap e) = imap (inline e)
+  --   inline' (sel e e₁) = sel (inline' e) (inline' e₁)
+  --   inline' (imapb x e) = imapb x (inline' e)
+  --   inline' (selb x e e₁) = selb x (inline' e) (inline' e₁)
+  --   inline' (sum e) = sum (inline' e)
+  --   inline' (zero-but e e₁ e₂) = (zero-but (inline' e) (inline' e₁) (inline' e₂))
+  --   inline' (slide e x e₁ x₁) = slide (inline' e) x (inline' e₁) x₁
+  --   inline' (backslide e e₁ x x₁) = backslide (inline' e) (inline' e₁) x x₁
+  --   inline' (bin x e e₁) = bin x (inline' e) (inline' e₁)
+  --   inline' (scaledown x e) = scaledown x (inline' e)
+  --   inline' (un x e) = un x (inline' e)
+  --   inline' (maximum e) = maximum (inline' e)
+  --   inline' (let′ e e₁) with a ← (inline' e₁) | count-uses a v₀ | e
+  --   ... | 0 | _ = sub a (sub-id ▹ (inline' e))
+  --   ... | _ | var b = sub a (sub-id ▹ (var b))
+  --   ... | _ | zero = sub a (sub-id ▹ zero)
+  --   ... | _ | one = sub a (sub-id ▹ one)
+  --   -- ... | 1 | (imap b) = {!   !}
+  --   -- ... | 1 | _ = sub a (sub-id ▹ (inline' e))
+  --   ... | _ | _ = let′ (inline' e) a
+
+  -- e-map : {Γ : Ctx} → (∀ {Δ ip} → Γ ⊆ Δ → E Δ ip → E Δ ip) → E Γ is → E Γ is
+  -- e-map f (imaps e) = f ⊆-eq (imaps (e-map (λ s x → f (s ∙ʷ skip ⊆-eq) x) e))
+  -- e-map f (imap e) = f ⊆-eq (imap (e-map (λ s x → f (s ∙ʷ skip ⊆-eq) x) e))
+  -- e-map f (imapb x e) = f ⊆-eq (imapb x (e-map (λ s x → f (s ∙ʷ skip ⊆-eq) x) e))
+  -- e-map f (sum e) = f ⊆-eq (sum (e-map (λ s x → f (s ∙ʷ skip ⊆-eq) x) e))
+  -- e-map f (maximum e) = f ⊆-eq (maximum (e-map (λ s x → f (s ∙ʷ skip ⊆-eq) x) e))
+  -- e-map f (sels e e₁) = f ⊆-eq (sels (e-map f e) (e-map f e₁))
+  -- e-map f (sel e e₁) = f ⊆-eq (sel (e-map f e) (e-map f e₁))
+  -- e-map f (selb x e e₁) = f ⊆-eq (selb x (e-map f e) (e-map f e₁))
+  -- e-map f (zero-but e e₁ e₂) = f ⊆-eq (zero-but (e-map f e) (e-map f e₁) (e-map f e₂))
+  -- e-map f (slide e x e₁ x₁) = f ⊆-eq (slide (e-map f e) x (e-map f e₁) x₁)
+  -- e-map f (backslide e e₁ x x₁) = f ⊆-eq (backslide (e-map f e) (e-map f e₁) x x₁)
+  -- e-map f (bin x e e₁) = f ⊆-eq (bin x (e-map f e) (e-map f e₁))
+  -- e-map f (scaledown x e) = f ⊆-eq (scaledown x (e-map f e))
+  -- e-map f (let′ e e₁) = f ⊆-eq (let′ (e-map f e) (e-map (λ s x → f (s ∙ʷ skip ⊆-eq) x) e₁))
+  -- e-map f (un x e) = f ⊆-eq (un x (e-map f e))
+  -- e-map f e = f ⊆-eq e
+
+  -- e-map-∃ : {Γ : Ctx} {A : ∀ {Δ ip} → E Δ ip → Set}
+  --   → (∀ {Δ ip} → (e : E Δ ip) → A e)
+  --   → (e : E Γ is) → ∃ (λ (x : E Γ is) → A x)
+  -- -- e-map-∃ f (imaps e) = _ , f (imaps (proj₁ (e-map-∃ f e)))
+  -- e-map-∃ f (imaps e) = _ , f (imaps (proj₁ (e-map-∃ f e)))
+  -- e-map-∃ f (imap e) = _ , f (imap (proj₁ (e-map-∃ f e)))
+  -- e-map-∃ f (imapb x e) = _ , f (imapb x (proj₁ (e-map-∃ f e)))
+  -- e-map-∃ f (sum e) = _ , f (sum (proj₁ (e-map-∃ f e)))
+  -- e-map-∃ f (maximum e) = _ , f (maximum (proj₁ (e-map-∃ f e)))
+  -- e-map-∃ f (sels e e₁) = _ , f (sels (proj₁ (e-map-∃ f e)) (proj₁ (e-map-∃ f e₁)))
+  -- e-map-∃ f (sel e e₁) = _ , f (sel (proj₁ (e-map-∃ f e)) (proj₁ (e-map-∃ f e₁)))
+  -- e-map-∃ f (selb x e e₁) = _ , f (selb x (proj₁ (e-map-∃ f e)) (proj₁ (e-map-∃ f e₁)))
+  -- e-map-∃ f (zero-but e e₁ e₂) = _ , f (zero-but (proj₁ (e-map-∃ f e)) (proj₁ (e-map-∃ f e₁)) (proj₁ (e-map-∃ f e₂)))
+  -- e-map-∃ f (slide e x e₁ x₁) = _ , f (slide (proj₁ (e-map-∃ f e)) x (proj₁ (e-map-∃ f e₁)) x₁)
+  -- e-map-∃ f (backslide e e₁ x x₁) = _ , f (backslide (proj₁ (e-map-∃ f e)) (proj₁ (e-map-∃ f e₁)) x x₁)
+  -- e-map-∃ f (bin x e e₁) = _ , f (bin x (proj₁ (e-map-∃ f e)) (proj₁ (e-map-∃ f e₁)))
+  -- e-map-∃ f (scaledown x e) = _ , f (scaledown x (proj₁ (e-map-∃ f e)))
+  -- e-map-∃ f (let′ e e₁) = _ , f (let′ (proj₁ (e-map-∃ f e)) (proj₁ (e-map-∃ f e₁)))
+  -- e-map-∃ f (un x e) = _ , f (un x (proj₁ (e-map-∃ f e)))
+  -- e-map-∃ f e = _ , f e
+
+  -- e-map-∃ : {Γ : Ctx} {A : ∀ {Δ ip} → E Δ ip → Set}
+  --   → (∀ {Δ ip} → (e : E Δ ip) → ∃ (λ (x : E Δ ip) → A x))
+  --   → (e : E Γ is) → ∃ (λ (x : E Γ is) → A x)
+  -- e-map-∃ f (imaps e) = f (imaps (proj₁ (f (proj₁ (e-map-∃ f e)))))
+  -- e-map-∃ f (imap e) = f (imap (proj₁ (f (proj₁ (e-map-∃ f e)))))
+  -- e-map-∃ f (imapb x e) = f (imapb x (proj₁ (f (proj₁ (e-map-∃ f e)))))
+  -- e-map-∃ f (sum e) = f (sum (proj₁ (f (proj₁ (e-map-∃ f e)))))
+  -- e-map-∃ f (maximum e) = f (maximum (proj₁ (f (proj₁ (e-map-∃ f e)))))
+  -- e-map-∃ f (sels e e₁) = f (sels (proj₁ (f (proj₁ (e-map-∃ f e)))) (proj₁ (f (proj₁ (e-map-∃ f e₁)))))
+  -- e-map-∃ f (sel e e₁) = f (sel (proj₁ (f (proj₁ (e-map-∃ f e)))) (proj₁ (f (proj₁ (e-map-∃ f e₁)))))
+  -- e-map-∃ f (selb x e e₁) = f (selb x (proj₁ (f (proj₁ (e-map-∃ f e)))) (proj₁ (f (proj₁ (e-map-∃ f e₁)))))
+  -- e-map-∃ f (zero-but e e₁ e₂) = f (zero-but (proj₁ (f (proj₁ (e-map-∃ f e)))) (proj₁ (f (proj₁ (e-map-∃ f e₁)))) (proj₁ (f (proj₁ (e-map-∃ f e₂)))))
+  -- e-map-∃ f (slide e x e₁ x₁) = f (slide (proj₁ (f (proj₁ (e-map-∃ f e)))) x (proj₁ (f (proj₁ (e-map-∃ f e₁)))) x₁)
+  -- e-map-∃ f (backslide e e₁ x x₁) = f (backslide (proj₁ (f (proj₁ (e-map-∃ f e)))) (proj₁ (f (proj₁ (e-map-∃ f e₁)))) x x₁)
+  -- e-map-∃ f (bin x e e₁) = f (bin x (proj₁ (f (proj₁ (e-map-∃ f e)))) (proj₁ (f (proj₁ (e-map-∃ f e₁)))))
+  -- e-map-∃ f (scaledown x e) = f (scaledown x (proj₁ (f (proj₁ (e-map-∃ f e)))))
+  -- e-map-∃ f (let′ e e₁) = f (let′ (proj₁ (f (proj₁ (e-map-∃ f e)))) (proj₁ (f (proj₁ (e-map-∃ f e₁)))))
+  -- e-map-∃ f (un x e) = f (un x (proj₁ (f (proj₁ (e-map-∃ f e)))))
+  -- e-map-∃ f e = f e
+
+  -- e-map-∃ : {Γ : Ctx} {P : ∀ {Δ ip} → E Δ ip → Set}
+  --   → (∀ {Δ ip} → (e : E Δ ip) → ∃ (λ (x : E Δ ip) → P x))
+  --   → (e : E Γ is) → ∃ (λ (x : E Γ is) → P x)
+  -- e-map-∃ f e = {!   !} , {!   !}
+
+  -- e-elim : {P : Ctx → IS → Set}
+  --   → (∀ {is} → P ε is )
+  --   → (∀ Γ ip {is} → P Γ is → P (Γ ▹ ip) is)
+  --   → (∀ Γ {is} → P Γ is)
+  -- e-elim base ind ε = base
+  -- e-elim base ind (Γ ▹ ip) = ind Γ ip (e-elim base ind Γ)
+
+  -- e-elim : {P : ∀ {Γ is} → E Γ is → Set}
+  --   → (∀ {Γ s} → P {Γ} {ar s} zero) --zero
+  --   → (∀ {Γ s} → P {Γ} {ar s} one) --one
+  --   → (∀ {Γ is} (v : is ∈ Γ) → P {Γ } {is} (var v)) --var
+  --   → (∀ {Γ s} (e : E (Γ ▹ ix s) (ar unit))  → P (imaps e)) --imaps
+  --   → (∀ {Γ s} (e : E (Γ ▹ ix s) (ar p))  → P (imap e)) --imap
+  --   → (∀ {Γ s p q} (x : s * p ≈ q) (e : E (Γ ▹ ix s) (ar p))  → P (imapb x e)) --imapb
+  --   → (∀ {Γ s p q} (e : E Γ (ar s)) (i : E Γ (ix s))  → P (imapb x e)) --sels
+  --   -- → (∀ {Γ} → (f : ) → (e : ) → P _ _ (f e)) --zero-but
+  --   -- → (∀ {Γ} → (f : ) → (e : ) → P _ _ (f e)) --slide
+  --   -- → (∀ {Γ} → (f : ) → (e : ) → P _ _ (f e)) --backslide
+  -- e-elim = {!   !}
+
+  -- e-map : {A : Ctx → IS → Set} → (∀ {Δ ip} → E Δ ip → A Δ ip) → E Γ is → A Γ is
+  -- e-map f e = proj₂ (e-map-∃ (λ x → x , (f x)) e)
+
+  -- e-map-⊆ : (∀ {Δ ip} → E Δ ip → Γ ⊆ Δ → E Δ ip) → E Γ is → E Γ is
+  -- e-map-⊆ {is = is} f e = (e-map f e) ⊆-eq
+
+  -- count-sels : E Γ is → ip ∈ Γ → ℕ
+  -- count-sels e v = e-map count-sels' e v 0 where
+  --   count-sels' : E Γ is → ip ∈ Γ → ℕ → ℕ
+  --   count-sels' (sels e (var i)) v count with eq? i v
+  --   ... | veq = (count-sels' e v count) + 1
+  --   ... | neq .i y = count
+  --   count-sels' (sel e (var i)) v count with eq? i v
+  --   ... | veq = (count-sels' e v count) + 1
+  --   ... | neq .i y = count
+  --   count-sels' (selb x e (var i)) v count with eq? i v
+  --   ... | veq = (count-sels' e v count) + 1
+  --   ... | neq .i y = count
+  --   count-sels' e v count = count
+
+  -- test-count : ℕ
+  -- test-count = count-sels {Γ = ε ▹ ix unit} {is = ar unit} (sels one (var v₀) ⊞ sels one (var v₀)) v₀
+  -- -- WkSub.test-count
+
+  -- inline : E Γ is → E Γ is
+  -- inline e = norm-lets (e-map inline' e) where
+  --   inline' : E Γ is → E Γ is
+  --   inline' (let′ e e₁) with a ← (inline' e₁) | count-uses a v₀ | e
+  --   ... | 0 | _ = sub a (sub-id ▹ (inline' e))
+  --   ... | _ | var b = sub a (sub-id ▹ (var b))
+  --   ... | _ | zero = sub a (sub-id ▹ zero)
+  --   ... | _ | one = sub a (sub-id ▹ one)
+  --   -- ... | 1 | (imap b) = {!   !}
+  --   -- ... | 1 | _ = sub a (sub-id ▹ (inline' e))
+  --   ... | _ | _ = let′ (inline' e) a
+  --   inline' e = e
+
+  -- e-map₂ : (∀ {Δ ip iq} → Γ ⊆ Δ → E Δ ip → E Δ iq → E Δ ip)
+  --        → (∀ {Δ ip iq} → Γ ⊆ Δ → E Δ iq → E Δ ip → E Δ ip)
+  --        → E Γ is → E Γ ir → E Γ is
+  -- e-map₂ f g a b =
+  --   f ⊆-eq (e-map (λ s x → f s x (wk s b)) a)
+  --          (e-map (λ s x → g s (wk s a) x) b)
+
+  -- e-mapr₂ : (∀ {Δ ip iq} → Γ ⊆ Δ → E Δ ip → E Δ iq → E Δ ip)
+  --        → E Γ is → E Γ ir → E Γ is
+  -- e-mapr₂ f a b = e-map₂ f (λ s x y → f s y x) a b
 
 module Syntax where
   open import Data.List as L using (List; []; _∷_)
@@ -744,8 +920,8 @@ module Primitives where
       Let maxs := Max {s} (λ i → sels ⟨ x ⟩ i) In
       Let exps := 𝕖^ (⟨ x ⟩ ⊟ tiles maxs) In
       Let total := Sum {s} (λ i → sels exps i) In
-      --Let r := Imaps (λ i → sels exps i // total) In r
-      Imaps (λ i → sels exps i // total)
+      exps // tiles total
+      -- Imaps (λ i → sels exps i // total)
 
       -- Imaps λ i →
       -- (sels ⟨ 𝕖^ (x) ⟩ i) // Sum {s} (λ i → sels ⟨ 𝕖^ (x) ⟩ i)
@@ -759,25 +935,13 @@ module Primitives where
 
     rmsnorm : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
     rmsnorm {s = s} x =
-      -- Imaps λ i →
-      --   (sels ⟨ x ⟩ i)
-      --   ⊠
-      --   𝟙/ (
-      --     sqrt (
-      --       scaledown (len s) (Sum (λ i → sels ⟨ x ⟩ i ⊠ sels ⟨ x ⟩ i))
-      --       ⊞
-      --       (scaledown 100000 one)
-      --          )
-      --       )
-
-      -- Let ms := scaledown (len s) (Sum (λ i → sels ⟨ x ⊠ x ⟩ i)) In
-      -- Let scale := sqrt (ms ⊞ (scaledown 100000 one)) In
-      -- Let r := ⟨ x ⟩ // Imaps (λ _ → scale) In r
       Let xx := x ⊠ x In
       Let ms := scaledown (len s) (Sum (λ i → sels xx i)) In
+      -- Let scale := sqrt ((scaledown (len s) (Sum (λ i → sels xx i))) ⊞ (scaledown 100000 one)) In
       Let scale := sqrt (ms ⊞ (scaledown 100000 one)) In
-      --Let r := ⟨ x ⟩ // Imaps (λ _ → scale) In r
       ⟨ x ⟩ // Imaps (λ _ → scale)
+      -- Let scale := sqrt ((scaledown (len s) (Sum (λ i → sels ⟨ x ⊠ x ⟩ i))) ⊞ (scaledown 100000 one)) In
+      -- ⟨ x ⟩ // Imaps (λ _ → scale)
 
     m-rmsnorm : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
     m-rmsnorm {s} {p} {Γ} x = Imap {s} λ i → rmsnorm (sel ⟨ x ⟩ i)
@@ -832,11 +996,17 @@ module Primitives where
                   → E Γ (ar (sl ⊗ hd))
     attention {sl} {hd} {Γ} sc mask hqs hks hvs =
       -- matmul {sl} (m-softmax {sl} ((scaledown sc (matmult {sl} hqs hks)) ⊞ mask)) hvs
+      -- Let sf := m-softmax {sl} ((scaledown sc (matmult {sl} hqs hks)) ⊞ ⟨ mask ⟩) In
+
+      -- matmul {sl} (m-softmax {sl} ((scaledown sc (matmult {sl} hqs hks)) ⊞ ⟨ mask ⟩)) ⟨ hvs ⟩
+
       Let hqks := matmult {sl} hqs hks In
       Let masked := (scaledown sc hqks) ⊞ ⟨ mask ⟩ In
-      Let sf := m-softmax {sl} masked In
-      --Let r := matmul {sl} sf ⟨ hvs ⟩ In r
-      matmul {sl} sf ⟨ hvs ⟩
+      -- Let masked := (scaledown sc (matmult {sl} hqs hks)) ⊞ ⟨ mask ⟩ In
+      -- Let sf := m-softmax {sl} (masked) In
+      -- Let sf := m-softmax {sl} ((scaledown sc (matmult {sl} hqs hks)) ⊞ ⟨ mask ⟩) In
+      matmul {sl} (m-softmax {sl} (masked)) ⟨ hvs ⟩
+      -- matmul {sl} sf ⟨ hvs ⟩
 
     mh-attention : ∀ {Γ} (sc : ℕ)
                    (mask : E Γ (ar (sl ⊗ sl)))
@@ -951,6 +1121,9 @@ module Primitives where
 
     PR : AH * HD ≈ ED
     PR = cons
+
+    rmsnorm-e : E _ _
+    rmsnorm-e = Lcon (ar (ι 5 ⊗ ι 6) ∷ []) (ar (ι 5 ⊗ ι 6)) ε (λ x → rmsnorm {s = ι 5 ⊗ ι 6} x)
 
     mgpt-forward-e : E _ _
     mgpt-forward-e = Lcon (ar (SL ⊗ SL) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷

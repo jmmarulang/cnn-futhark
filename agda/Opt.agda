@@ -36,6 +36,81 @@ module Opt (r : Real) (rp : RealProp r) where
   ++-inj₂ {[]} eq = eq
   ++-inj₂ {x ∷ s} eq = ++-inj₂ (∷-inj₂ eq)
 
+  let-out-stren : ∀ {p r q is}
+    → ((E (Γ ▹ ar q ▹ is) (ar p)) → (E (Γ ▹ ar q) (ar r)))
+    → ((E (Γ ▹ is) (ar p)) → (E Γ (ar r)))
+    → (E (Γ ▹ is) (ar q)) → (E (Γ ▹ is ▹ ar q) (ar p)) → (E Γ (ar r))
+  let-out-stren f g a b with (stren-∃ a v₀)
+  ... | just (a' , _) = let′ a' (f (sub b sub-swap))
+  ... | nothing = g (let′ a b)
+
+  let-out-is : ∀ {is p r} → (∀ {Δ} → (E (Δ ▹ is) (ar p)) → (E Δ (ar r)))
+    → (E (Γ ▹ is) (ar p)) → (E Γ (ar r))
+  let-out-is f (let′ a b) = let-out-stren f f a b
+  let-out-is f e = f e
+
+  let-out : E Γ is → E Γ is
+  let-out (imaps e) = let-out-is imaps (let-out e)
+  let-out (imap e) = let-out-is imap (let-out e)
+  let-out (imapb x e) = let-out-is (E.imapb x) (let-out e)
+  let-out (sum e) = let-out-is E.sum (let-out e)
+  let-out (maximum e) = let-out-is maximum (let-out e)
+  -- let-out (let′ e (let′ a b)) =
+  --   let e' = (let-out e) in
+  --   let a' = (let-out a) in
+  --   let b' = (let-out b) in
+  --   let-out-stren (λ x → let′ (e' ↑) x) (λ x → let′ e' x) a' b'
+  let-out (let′ e e₁) = let′ (let-out e) (let-out e₁)
+  let-out (sels (let′ a b) e₁) = let′ a (sels b (e₁ ↑))
+  let-out (sels e e₁) = sels (let-out e) (let-out e₁)
+  let-out (sel e e₁) = sel (let-out e) (let-out e₁)
+  let-out (selb x e e₁) = E.selb x (let-out e) (let-out e₁)
+  let-out (zero-but e e₁ (let′ a b)) = let′ a (zero-but (e ↑) (e₁ ↑) b)
+  let-out (zero-but e e₁ e₂) = zero-but (let-out e) (let-out e₁) (let-out e₂)
+  let-out (bin x (let′ a b) e₁) = let′ (let-out a) (bin x (let-out b) ((let-out e₁) ↑))
+  let-out (bin x e e₁) with (isLet e₁)
+  ... | yes (r , a , b , refl) = let′ (let-out a) (bin x ((let-out e) ↑) (let-out b))
+  ... | no _ = bin x (let-out e) (let-out e₁)
+  let-out (scaledown x e) = scaledown x (let-out e)
+  let-out (un x e) = un x (let-out e)
+  let-out (slide e x e₁ x₁) = E.slide (let-out e) x (let-out e₁) x₁
+  let-out (backslide e e₁ x x₁) = E.backslide (let-out e) (let-out e₁) x x₁
+  let-out (var x) = var x
+  let-out 𝟘 = 𝟘
+  let-out 𝟙 = 𝟙
+
+  -- let-out : E Γ is → E Γ is
+  -- let-out e = e-map let-out' e where
+  --   let-out' : E Γ is → E Γ is
+  --   let-out' (imaps e) = let-out-is imaps (let-out' e)
+  --   let-out' (imap e) = let-out-is imap (let-out' e)
+  --   let-out' (imapb x e) = let-out-is (E.imapb x) (let-out' e)
+  --   let-out' (sum e) = let-out-is E.sum (let-out' e)
+  --   let-out' (maximum e) = let-out-is maximum (let-out' e)
+  --   -- let-out' (let′ e (let′ a b)) =
+  --   --   let e' = (let-out' e) in
+  --   --   let a' = (let-out' a) in
+  --   --   let b' = (let-out' b) in
+  --   --   let-out'-stren (λ x → let′ (e' ↑) x) (λ x → let′ e' x) a' b'
+  --   let-out' (let′ e e₁) = let′ (let-out' e) (let-out' e₁)
+  --   let-out' (sels (let′ a b) e₁) = let′ a (sels b (e₁ ↑))
+  --   let-out' (zero-but e e₁ (let′ a b)) = let′ a (zero-but (e ↑) (e₁ ↑) b)
+  --   let-out' (bin x (let′ a b) e₁) = let′ (let-out' a) (bin x (let-out' b) ((let-out' e₁) ↑))
+  --   let-out' (bin x e e₁) with (isLet e₁)
+  --   ... | yes (r , a , b , refl) = let′ (let-out' a) (bin x ((let-out' e) ↑) (let-out' b))
+  --   ... | no _ = bin x (let-out' e) (let-out' e₁)
+  --   let-out' e = e
+
+  -- sumv-zero-but : E Γ is → (ix s) ∈ Γ → E Γ is
+  -- sumv-zero-but e v = e-mapr₂ (λ _ x y → sumv-zero-but' x y) e (var v) where
+  --   sumv-zero-but' : E Γ is → E Γ ip → E Γ is
+  --   sumv-zero-but' {is = ar s} (zero-but (var i) (var j) a) (var v) with eq? v i | eq? v j
+  --   ... | veq | veq = a
+  --   ... | veq | neq ._ k = {!   !}
+  --   ... | neq .v y | c = {!   !}
+  --   sumv-zero-but' a b = a
+
+
   opt : (e : E Γ is) → ∃ λ e′ → (e ≈ᵉ e′)
   opt (var x) = var x , reflᵉ (var x)
   opt zero = zero , reflᵉ zero
@@ -476,6 +551,11 @@ module Opt (r : Real) (rp : RealProp r) where
       ... | no _ | q' rewrite q' = ÷-nul λ tt → b (fromℕ-inj tt)
   ... | a , p = scaledown x a , λ ρ j → cong (_÷ fromℕ x) (p ρ j)
   opt (⊟ e) with opt e
+  ... | (zero-but i j a) , p = (zero-but i j (⊟ a)) , foo where
+    foo : _
+    foo ρ k with eval i ρ ≟ₚ eval j ρ | (cong -_ (p ρ k))
+    ... | yes b | eq = eq
+    ... | no b | eq = eq ∙ minus-idʳ
   ... | a , p = ⊟ a , λ ρ j → cong -_ (p ρ j)
   opt (let′ e e₁) with opt e | opt e₁
   ... | a , p | b , q with isVar a

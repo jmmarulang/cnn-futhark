@@ -20,7 +20,8 @@ module Optimise where
   open import Opt r rp public
 
   doopt : E Γ is → E Γ is
-  doopt e = opt e .proj₁
+  doopt e = let-out
+    (opt e .proj₁)
 
   multiopt : E Γ is → ℕ → E Γ is
   multiopt e 0 = e
@@ -46,6 +47,8 @@ module Extract where
   open RawMonad {{...}} --public
 
   open import Data.Maybe hiding (_>>=_)
+
+  open import LangEq
 
   instance
     _ = monad
@@ -79,6 +82,15 @@ module Extract where
   ee-count-uses (env ρ) = env-count-uses ρ
   ee-count-uses (let′ x ρ) v = count-uses x v + ee-count-uses ρ (there v)
 
+  env-count-selv : Env Γ Δ → is ∈ Δ → ℕ
+  env-count-selv ε v = 0
+  env-count-selv (skip ρ) v = env-count-selv ρ v
+  env-count-selv (ρ ▹ x) v = env-count-selv ρ v + count-selv x v
+
+  ee-count-selv : EE Γ Δ → is ∈ Δ → ℕ
+  ee-count-selv (env ρ) = env-count-selv ρ
+  ee-count-selv (let′ x ρ) v = count-selv x v + ee-count-selv ρ (there v)
+
   env-norm-lets : Env Γ Δ → Env Γ Δ
   env-norm-lets ε = ε
   env-norm-lets (skip x) = skip (env-norm-lets x)
@@ -86,10 +98,13 @@ module Extract where
 
   ee-inline : EE Γ Δ → EE Γ Δ
   ee-inline (env x) = env (env-norm-lets x)
-  ee-inline (let′ x ρ) with δ ← ee-inline ρ | ee-count-uses δ v₀ | x
-  ... | 0 | _ = ee-sub δ (sub-id ▹ inline x) -- does nothing?
-  ... | _ | var b = ee-sub δ (sub-id ▹ var b) --ee-sub δ (sub-id ▹ inline x) -- why only for 1?
-  ... | _ | _ = let′ (inline x) δ
+  ee-inline (let′ e ρ) with δ ← ee-inline ρ | ee-count-uses δ v₀ | ee-count-selv δ v₀ | e
+  ... | 0 | _ | _ = ee-sub δ (sub-id ▹ inline e) -- does nothing?
+  ... | _ | _ | var b = ee-sub δ (sub-id ▹ var b) --ee-sub δ (sub-id ▹ inline x)
+  ... | _ | _ | zero = ee-sub δ (sub-id ▹ zero) --ee-sub δ (sub-id ▹ inline x)
+  ... | _ | _ | one = ee-sub δ (sub-id ▹ one) --ee-sub δ (sub-id ▹ inline x)
+  ... | 1 | 1 | _ = ee-sub δ (sub-id ▹ inline e)
+  ... | _ | _ | _ = let′ (inline e) δ
 
   env-replace : Env Γ Δ → (a b : E Δ is) → Env Γ Δ
   env-replace ε a b = ε
@@ -109,6 +124,20 @@ module Extract where
   ee-dedup (env ρ) = env (env-replace-let ρ)
   ee-dedup (let′ x ρ) = let x' = (replace-let x) in
     let′ x' (ee-replace (ee-dedup ρ) (x' ↑) (var v₀))
+
+  -- env-let-out : Env Γ Δ → Env Γ Δ
+  -- env-let-out ε = ε
+  -- env-let-out (skip ρ) = skip (env-let-out ρ)
+  -- env-let-out (ρ ▹ x) = (env-let-out ρ) ▹ (let-out x)
+
+  -- {-# TERMINATING #-}
+  -- ee-let-out : EE Γ Δ → EE Γ Δ
+  -- ee-let-out (env ρ) = env ρ
+  -- ee-let-out (let′ x (env ρ)) = let′ x (env ρ)
+  -- ee-let-out (let′ x (let′ y ρ)) with (stren y v₀)
+  -- -- ... | just (y' , _) = let′ y' (let′ (x ↑) (ee-sub (ee-let-out ρ) sub-swap))
+  -- ... | just y' = let′ y' (ee-let-out (let′ (x ↑) (ee-sub ρ sub-swap)))
+  -- ... | nothing = (let′ x (ee-let-out (let′ y  ρ)))
 
   -- ee-dedup : EE Γ Δ → EE Γ Δ
   -- ee-dedup (env x) = env x
@@ -146,8 +175,11 @@ module Extract where
     return $ printf "let %s = %s\n%s" n v r
 
   -- Apply optimisations and generate the code.
+  ee-clean : EE Γ Γ → _
+  ee-clean e = ee-dedup $ ee-OPT $ ee-dedup $ ee-OPT e
+
   ee-fut : EE Γ Γ → NamedEnv Γ → String
-  ee-fut e ρ = proj₂ $ runState (ee-fut′ (ee-OPT $ ee-dedup $ ee-OPT e) ρ ρ) 0
+  ee-fut e ρ = proj₂ $ runState (ee-fut′ (ee-clean e) ρ ρ) 0
 
   -- nodedup-ee-fut : EE Γ Γ → NamedEnv Γ → String
   -- nodedup-ee-fut e ρ = proj₂ $ runState (ee-fut′ (ee-opt $ ee-opt e) ρ ρ) 0
@@ -184,7 +216,7 @@ module Extract where
       v ← PP.pp x (named-ppenv ν)
       let n = fresh-var c
       r ← pretty-ee′ e ρ (ν ▹ n)
-      return $ printf "let %s = %s\n\n%s" n v r
+      return $ printf "elet %s = %s\n\n%s" n v r
 
     pretty-ee : EE Γ Γ → NamedEnv Γ → String
     pretty-ee e ρ =
@@ -193,10 +225,11 @@ module Extract where
         r  = runState (pretty-ee′ ee ρ ρ) 0
       in proj₂ r
 
+    ee-pretty : EE Γ Γ → NamedEnv Γ → String
+    ee-pretty e ρ = pretty-ee (ee-clean e) ρ
+
     pretty : E Γ (ar s) → NamedEnv Γ → String
-    pretty e ρ = pretty-ee ({- env-norm-lets $ -} grad e one zero-ee) ρ
-
-
+    pretty e ρ = ee-pretty ({- env-norm-lets $ -} grad e one zero-ee) ρ
 
   -- Examples
   -- ========
@@ -265,67 +298,24 @@ module Extract where
   grad-cnn-s = pp Primitives.Cnn.cnn (ε ▹ "inp" ▹ "k1" ▹ "b1" ▹ "k2" ▹ "b2" ▹ "fc" ▹ "b" ▹ "target" )
 
   -- Jairo made
-  -- grad-avg-ee : EE (ε ▹ ar Microgpt.SL) (ε ▹ ar Microgpt.SL)
-  -- grad-avg-ee = ee-opt $ ee-dedup $ grad Primitives.Microgpt.avg-e one zero-ee
-
-  -- grad-avg-s : String
-  -- grad-avg-s = pp Primitives.Microgpt.avg-e (ε ▹ "inp")
-
-  -- grad-test-sels-s : String
-  -- grad-test-sels-s = pp Primitives.Microgpt.test-sels-e (ε ▹ "inp")
-
-  -- grad-test-let-ee : EE _ _
-  -- grad-test-let-ee = ee-opt $ ee-dedup $ grad Primitives.Microgpt.test-let-e one zero-ee
-
-  -- grad-test2-let-s : String
-  -- grad-test2-let-s = pp Primitives.Microgpt.test2-let ε
-
-  -- grad-test-let-s : String
-  -- grad-test-let-s = pp Primitives.Microgpt.test-let-e (ε ▹ "inp")
-
-  -- grad-test3-let-s : String
-  -- grad-test3-let-s = pp Primitives.Microgpt.test3-let-e (ε ▹ "inp")
-
-  -- -- grad-nodedup-test-let-s : String
-  -- -- grad-nodedup-test-let-s = nodedup-pp Primitives.Microgpt.test-let-e (ε ▹ "inp")
-
-  -- cross-entropy-s : String
-  -- cross-entropy-s = proj₂ (runState (to-str Primitives.Microgpt.cross-entropy-e (from-named (ε ▹ "inp" ▹ "target"))) 0)
-
-  -- grad-cross-entropy-s : String
-  -- grad-cross-entropy-s = pp Primitives.Microgpt.cross-entropy-e (ε ▹ "inp" ▹ "target")
 
   -- m-softmax-s : String
   -- m-softmax-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.m-softmax-e OPT) (from-named (ε ▹ "inp"))) 0)
 
-  -- sel-zb-s : String
-  -- sel-zb-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.sel-zb-e OPT) (from-named (ε ▹ "inp"))) 0)
+  grad-rmsnorm-s : String
+  grad-rmsnorm-s = pp Primitives.Microgpt.rmsnorm-e (ε ▹ "inp")
 
-  -- x64-s : String
-  -- x64-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.x64-e OPT) (from-named (ε ▹ "inp"))) 0)
-
-  -- imap-imapb-sum-zerobut-s : String
-  -- imap-imapb-sum-zerobut-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.imap-imapb-sum-zerobut-e OPT) (from-named (ε ▹ "inp"))) 0)
-
-  -- sum-imap-imapb-zerobut-s : String
-  -- sum-imap-imapb-zerobut-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.sum-imap-imapb-zerobut-e OPT) (from-named (ε ▹ "inp"))) 0)
-
-  -- unblock-tok-s : String
-  -- unblock-tok-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.unblock-tok-e OPT) (from-named (ε ▹ "inp"))) 0)
-
-  -- let-test-s : String
-  -- let-test-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.let-test-e OPT) (from-named (ε ▹ "inp"))) 0)
+  grad-rmsnorm-pp : String
+  grad-rmsnorm-pp = Pretty.pretty Primitives.Microgpt.rmsnorm-e (ε ▹ "inp")
 
   grad-mgpt-loss-e = ee-OPT $ ee-dedup $ ee-OPT (grad Primitives.Microgpt.mgpt-loss-e one zero-ee)
 
   mgpt-loss-s : String
   mgpt-loss-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.mgpt-loss-e OPT) ((from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target")))) 0)
 
-  -- mgpt-loss-s : String
-  -- mgpt-loss-s = proj₂ (runState (to-str Primitives.Microgpt.mgpt-loss-e (from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target"))) 0)
-
   mgpt-forward-s : String
   mgpt-forward-s = proj₂ (runState (to-str ( multiopt Primitives.Microgpt.mgpt-forward-e OPT) (from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq"))) 0)
+
 
   grad-mgpt-loss-s : String
   grad-mgpt-loss-s = pp Primitives.Microgpt.mgpt-loss-e

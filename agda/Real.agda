@@ -38,6 +38,7 @@ record RealProp (r : Real) : Set where
     *-neutʳ : ∀ {x} → x * fromℕ 1 ≡ x
     *-nulˡ : ∀ {x} → fromℕ 0 * x ≡ fromℕ 0
     *-nulʳ : ∀ {x} → x * fromℕ 0 ≡ fromℕ 0
+    minus-idʳ : - fromℕ 0 ≡ fromℕ 0
     ÷-nul : ∀ {x} → (x ≡ fromℕ 0 → ⊥) → fromℕ 0 ÷ x ≡ fromℕ 0
     fromℕ-inj : ∀ {x y} → (fromℕ x ≡ fromℕ y) → (x ≡ y)
     +-medial : ∀ {x y z w } → x + y + (z + w) ≡ x + z + (y + w)

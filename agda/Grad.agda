@@ -183,7 +183,7 @@ module _ where
   ee-map-sum {s = s} (let′ {s = p} x ρ) with (stren-∃ x v₀)
   ... | just (x' , eq) = let′ x' (ee-map-sum (ee-sub ρ sub-swap))
   -- ... | nothing = env (env-map-sum (ee-fold (let′ {s = p} x ρ)))
-  ... | nothing = 
+  ... | nothing =
         let′ (imap x) (ee-map-sum {s = s}
           (ee-sub ρ (skeep (sdrop sub-id) ▹ sel (var (there v₀)) (var v₀))))
 
@@ -224,8 +224,9 @@ module _ where
 
   grad (e ⊞ e₁)               s   = grad e s ∘ grad e₁ s
   grad (e ⊠ e₁)               s   = grad e (s ⊠ e₁) ∘ grad e₁ (s ⊠ e)
-  -- grad (e ⊞ e₁)               s δ = ee-plus (grad e s δ) (grad e₁ s δ) --grad e s ∘ grad e₁ s
-  -- grad (e ⊠ e₁)               s δ = ee-plus (grad e (s ⊠ e₁) δ) (grad e₁ (s ⊠ e) δ) --grad e (s ⊠ e₁) ∘ grad e₁ (s ⊠ e)
+  -- grad (e ⊠ e₁)               s  δ =
+  --   let a = (EE.let′ (s ⊠ e) (ee-tail (grad (e₁ ↑) (var v₀) (ee-push-zero $′ ee-wk (skip ⊆-eq) δ)))) in
+  --   (EE.let′ (s ⊠ e₁) (ee-tail (grad (e ↑) (var v₀) (ee-push-zero $′ ee-wk (skip ⊆-eq) a))))
   grad (scaledown x e)        s   = grad e (scaledown x s)
   grad (⊟ e)                  s   = grad e (⊟ s)
   grad (logi e)               s   = grad e (let′ (logi e) ((s ↑) ⊠ var v₀ ⊠ (one ⊞ ⊟ (var v₀))))
