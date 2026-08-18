@@ -1124,6 +1124,9 @@ module Primitives where
     softmax-inline-e : E _ _
     softmax-inline-e = Lcon (ar (ι 5 ⊗ ι 6) ∷ []) (ar (ι 5 ⊗ ι 6)) ε (λ x → softmax-inline {s = ι 5 ⊗ ι 6} x)
 
+    maximum-e : E _ _
+    maximum-e = Lcon (ar (ι 2) ∷ ar (ι 2 ⊗ ι 2) ∷ []) (ar (ι 2)) ε (λ i x → Max {s = ι 2} λ i → sel x i)
+
     test : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
     test {s = s} x = softmax x
       -- -- tiles $ Sum {s} (λ i → sels ⟨ x ⟩ i)

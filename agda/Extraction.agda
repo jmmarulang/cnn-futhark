@@ -61,7 +61,7 @@ module Extract where
   open Primitives
   open WkSub
 
-  OPT = 20
+  OPT = 00
 
   -- Show Env (e.g. after running grad) where optimisations are applied
   -- to every expression in the list.
@@ -328,8 +328,8 @@ module Extract where
   grad-softmax-pp : String
   grad-softmax-pp = Pretty.pretty Primitives.Microgpt.softmax-e (ε ▹ "j" ▹ "inp")
 
-  grad-softmax-inline-pp : String
-  grad-softmax-inline-pp = Pretty.pretty Primitives.Microgpt.softmax-inline-e (ε ▹ "inp")
+  grad-maximum-pp : String
+  grad-maximum-pp = Pretty.seed-pretty Primitives.Microgpt.maximum-e (var v₁) (ε ▹ "j" ▹ "inp")
 
   grad-div-pp : String
   grad-div-pp = Pretty.pretty Primitives.Microgpt.div-e (ε ▹ "x" ▹ "y")

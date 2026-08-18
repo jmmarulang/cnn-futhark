@@ -1,14 +1,6 @@
-elet x0 = max λ x1 → sels inp x1
-elet x2 = exp (inp + - (imaps λ x3 → x0))
-elet x4 = sum λ x5 → sels x2 x5
-elet x6 = let x7 = (imap λ x8 → x4 * x4) in - (sum λ x9 → sels x2 x9 * inv (sel x7 x9))
-elet x10 = imaps λ x11 → inv x4 + x6
-let dinp =
-let x12 = (imap λ x13 → max λ x14 → sels (sels inp x13) x14) in
-let x15 = (imap λ x16 → inv (sum λ x17 → 1 + - (ind-positive (- (sel x12 x16 + - (sels (sels inp x16) x17)))))) in
-(imaps λ x18 → imaps λ x19 → sels (sels x2 x18) x19 *
-sels (sels x10 x18) x19 + sel x15 x18 * -
-(sum λ x20 → sels (sels x2 x20) x19 * sels (sels x10 x20) x19) * (1 + - (ind-positive (- (sel x12 x18 + - (sels (sels inp x18) x19))))))
+let dinp = 0 + (sum λ x1 → 0 + (imap λ x2 → (zero-but x2 x1 (let x3 = (max λ x4 → sels (sel inp x1) x4) in
+let x5 = inv (sum λ x6 → 1 + - (ind-positive (- (x3 + - (sels (sel inp x1) x6))))) in
+(imaps λ x7 → x5 * sels j x7 * (1 + - (ind-positive (- (x3 + - (sels (sel inp x1) x7))))))))))"
 ----
 static void softmax_backward(float *dlogits, const float *probs, const float *dprobs, int n) {
     -- // d/dlogits[i] = probs[i] * (dprobs[i] - sum_j(probs[j] * dprobs[j]))
