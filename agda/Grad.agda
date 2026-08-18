@@ -243,11 +243,14 @@ module _ where
   grad (sqrt e)               s δ = grad e (s // (𝟚 ⊠ sqrt e)) δ
   grad (𝟙/ e)                 s δ = grad e (let′(e ⊠ e) (⊟ ((s ↑) // (var v₀)))) δ
   grad (ln e)                 s δ = grad e (s // e) δ
-  grad (maximum {s = p} e)    s δ = -- Is this correct?
-    let t = let′ (maximum {s = p} (e ↑)) (
-            let′ (𝟙/ $ E.sum {s = p} $ 𝕀≤ (e ↑ ↑) (var v₁))
-            (var v₀ ⊠ (s ↑ ↑ ↑) ⊠ 𝕀≤ (e ↑ ↑) (var v₁)))
-    in grad-sum e t δ
+  grad (maximum {s = p} e)    s δ = ?
+    -- let maxs = maximum $ sels (e ↑) (var v₀) in
+    -- let scale = 𝟙/ $ E.sum $ 𝕀≤ (var v₁) (sels (e ↑ ↑) (var v₀)) in
+    -- let s↑ = sels (s ↑ ↑ ↑ ↑) (var v₀) in
+    -- let comp = 𝕀≤ (var v₂) (sels (e ↑ ↑ ↑) (var v₀)) in
+    -- let r = let′ maxs (let′ scale (imaps $ var v₁ ⊠ s↑ ⊠ comp)) in
+    -- grad-sum e r δ
+
   grad-last′ v e (env ρ) = let
     w = env-lookup ρ v
     t = grad (wk (wk-/ v) e) (var v) (env (env-wk (wk-/ v) ρ))

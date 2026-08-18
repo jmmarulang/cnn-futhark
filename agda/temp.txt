@@ -1,19 +1,14 @@
 elet x0 = max λ x1 → sels inp x1
-elet x14 = inv (sum λ x15 → 1 + - (ind-positive (- (sels inp x15 + - x0))))
-let dinp = imaps λ x16 → sels x2 x16 * sels x9 x16 + x12 * (1 + - (ind-positive (- (sels inp x16 + - x0)))) * x14
-----
-elet x0 = max λ x1 → sels inp x1
 elet x2 = exp (inp + - (imaps λ x3 → x0))
 elet x4 = sum λ x5 → sels x2 x5
-elet x6 = let x7 = (imap λ x8 → x4 * x4) in
-    - (sum λ x9 → sels x2 x9 * inv (sel x7 x9))
+elet x6 = let x7 = (imap λ x8 → x4 * x4) in - (sum λ x9 → sels x2 x9 * inv (sel x7 x9))
 elet x10 = imaps λ x11 → inv x4 + x6
-elet x12 = - (sum λ x13 → sels x2 x13 * sels x10 x13)
--- let dj = 0
 let dinp =
-let x14 = (imap λ x15 → max λ x16 → sels inp x15) in
-let x17 = (imap λ x18 → inv (sum λ x19 → 1 + - (ind-positive (- (sels inp x18 + - (sel x14 x18)))))) in
-(imaps λ x20 → sels x2 x20 * sels x10 x20 + sel x17 x20 * x12 * (1 + - (ind-positive (- (sels inp x20 + - (sel x14 x20))))))
+let x12 = (imap λ x13 → max λ x14 → sels (sels inp x13) x14) in
+let x15 = (imap λ x16 → inv (sum λ x17 → 1 + - (ind-positive (- (sel x12 x16 + - (sels (sels inp x16) x17)))))) in
+(imaps λ x18 → imaps λ x19 → sels (sels x2 x18) x19 *
+sels (sels x10 x18) x19 + sel x15 x18 * -
+(sum λ x20 → sels (sels x2 x20) x19 * sels (sels x10 x20) x19) * (1 + - (ind-positive (- (sel x12 x18 + - (sels (sels inp x18) x19))))))
 ----
 static void softmax_backward(float *dlogits, const float *probs, const float *dprobs, int n) {
     -- // d/dlogits[i] = probs[i] * (dprobs[i] - sum_j(probs[j] * dprobs[j]))
@@ -25,11 +20,11 @@ static void softmax_backward(float *dlogits, const float *probs, const float *dp
     }
 }
 ----
-let x0 = (imap2 5 6 (\\x1_0 x1_1 -> (F.exp inp[x1_0][x1_1])))
-let x2 = (isum2 5 6 (\\x3_0 x3_1 -> x0[x3_0][x3_1]))
-let x4 = (isum2 5 6 (\\x5_0 x5_1 -> (F.neg (x0[x5_0][x5_1] F.* (one F./ (x2 F.* x2))))))
-let x6 = (imap2 5 6 (\\x7_0 x7_1 -> ((one F./ x2) F.+ x4)))
-let dinp = (imap2 5 6 (\\x8_0 x8_1 -> (x0[x8_0][x8_1] F.* x6[x8_0][x8_1])))
+let x0 = (imap2 5 6 (\x1_0 x1_1 -> (F.exp inp[x1_0][x1_1])))
+let x2 = (isum2 5 6 (\x3_0 x3_1 -> x0[x3_0][x3_1]))
+let x4 = (isum2 5 6 (\x5_0 x5_1 -> (F.neg (x0[x5_0][x5_1] F.* (one F./ (x2 F.* x2))))))
+let x6 = (imap2 5 6 (\x7_0 x7_1 -> ((one F./ x2) F.+ x4)))
+let dinp = (imap2 5 6 (\x8_0 x8_1 -> (x0[x8_0][x8_1] F.* x6[x8_0][x8_1])))
 -----
 static void softmax_forward(float *x, int n) {
     float max_val = x[0];
