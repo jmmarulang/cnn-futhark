@@ -101,7 +101,7 @@ module _ where
           map-let (ν ▹ e) with (stren-∃ e v₀)
           ... | just (e' , _) = map-let ν ▹ e'
           ... | nothing = map-let ν ▹ let′ x e
-            --map-let ν ▹ let′ x e
+            -- map-let ν ▹ let′ x e
 
   env-plus : (ρ ν : Env Γ Δ) → Env Γ Δ
   env-plus ε ν = ν
@@ -180,12 +180,14 @@ module _ where
   {-# TERMINATING #-}
   ee-map-sum : EE Γ (Δ ▹ ix s) → EE Γ Δ
   ee-map-sum (env x) = env (env-map-sum x)
+  -- ee-map-sum {s = s} (let′ {s = p} x ρ) =
+  --   env (env-map-sum (ee-fold (let′ {s = p} x ρ)))
   ee-map-sum {s = s} (let′ {s = p} x ρ) with (stren-∃ x v₀)
   ... | just (x' , eq) = let′ x' (ee-map-sum (ee-sub ρ sub-swap))
-  -- ... | nothing = env (env-map-sum (ee-fold (let′ {s = p} x ρ)))
-  ... | nothing =
-        let′ (imap x) (ee-map-sum {s = s}
-          (ee-sub ρ (skeep (sdrop sub-id) ▹ sel (var (there v₀)) (var v₀))))
+  ... | nothing = env (env-map-sum (ee-fold (let′ {s = p} x ρ)))
+  -- ... | nothing =
+  --       let′ (imap x) (ee-map-sum {s = s}
+  --         (ee-sub ρ (skeep (sdrop sub-id) ▹ sel (var (there v₀)) (var v₀))))
 
   {-# TERMINATING #-} -- See GradTerm.agda where this is fixed
   grad-last : E Γ (ar s) → EE (Γ ▹ ar s) Γ → EE Γ Γ
@@ -224,9 +226,6 @@ module _ where
 
   grad (e ⊞ e₁)               s   = grad e s ∘ grad e₁ s
   grad (e ⊠ e₁)               s   = grad e (s ⊠ e₁) ∘ grad e₁ (s ⊠ e)
-  -- grad (e ⊠ e₁)               s  δ =
-  --   let a = (EE.let′ (s ⊠ e) (ee-tail (grad (e₁ ↑) (var v₀) (ee-push-zero $′ ee-wk (skip ⊆-eq) δ)))) in
-  --   (EE.let′ (s ⊠ e₁) (ee-tail (grad (e ↑) (var v₀) (ee-push-zero $′ ee-wk (skip ⊆-eq) a))))
   grad (scaledown x e)        s   = grad e (scaledown x s)
   grad (⊟ e)                  s   = grad e (⊟ s)
   grad (logi e)               s   = grad e (let′ (logi e) ((s ↑) ⊠ var v₀ ⊠ (one ⊞ ⊟ (var v₀))))
@@ -286,16 +285,5 @@ open import Data.List as L using (List; []; _∷_)
 test : EE (ε ▹ ar (2 ∷ [])) _
 test = grad (Lang.Primitives.Microgpt.softmax {s = 2 ∷ []} ((var (v₀)))) one zero-ee
 
-
-{-
-env
-((ε ▹ (𝟘 ⊞ E.sum 𝟘)) ▹
- (𝟘 ⊞
-  E.sum
-  (𝟘 ⊞
-   𝟙 ⊠ (𝟙 ⊞ (⊟ 𝕀+ (ln (var v₁) ⊞ (⊟ maximum (ln (var v₂)))))) ⊠
-   𝟙/ (E.sum (ln (var v₂) ⊞ (⊟ maximum (ln (var v₃)))))
-   ⊠ 𝟙/ (var v₁))))
--}
 
 

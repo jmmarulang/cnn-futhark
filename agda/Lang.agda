@@ -478,7 +478,7 @@ module WkSub where
 
   stren : (e : E Γ is) (v : ip ∈ Γ)
     → Maybe (E (Γ / v) is)
-  stren e v = do 
+  stren e v = do
     (a , _) ← (stren-∃ e v)
     just a
 
@@ -872,6 +872,9 @@ module Primitives where
     tiles : ∀ {Γ} → E Γ (ar []) → E Γ (ar s)
     tiles x = Imaps (λ _ → ⟨ x ⟩)
 
+    tile : ∀ {Γ} → E Γ (ar s) → E Γ (ar (p ⊗ s))
+    tile x = Imap (λ _ → ⟨ x ⟩)
+
     iswap : ∀ {Γ} → E Γ (ar (s ⊗ u)) → E Γ (ar (u ⊗ s))
     iswap {s} {u} x = Imap {u} λ i → Imaps {s} λ j → sels (sel ⟨ x ⟩ j) i
 
@@ -888,69 +891,53 @@ module Primitives where
 
     matmult : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (r ⊗ s)) → E Γ (ar (u ⊗ r))
     matmult {u} {s} {r} w1 w2 =
-      -- m-linear {r} w2 w1
-
-      -- Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
-      -- sels (sel ⟨ w1 ⟩ i) k ⊠ sels (sel ⟨ w2 ⟩ j) k
-
       Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
       sels ((sel ⟨ w1 ⟩ i) ⊠ (sel ⟨ w2 ⟩ j)) k
 
     matmul : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ r)) → E Γ (ar (u ⊗ r))
     matmul {u} {s} {r} w1 w2 =
-      -- m-linear {r} (iswap {s} w2) w1
-      -- Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
-      --   sels (sel ⟨ w1 ⟩ i ⊠ sel (iswap {s} ⟨ w2 ⟩) j) k
-      -- Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
-      -- sel {!   !} k
       Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
       sels (sel ⟨ w1 ⟩ i) k ⊠ sels (sel ⟨ w2 ⟩ k) j
+
+    stabilize : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
+    stabilize {s = s} x = x ⊟ tiles (Max {s} (λ i → sels ⟨ x ⟩ i))
 
     -- Is this correct?
     softmax : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
     softmax {s = s} x =
-      -- Let exps := 𝕖^ (x) In
-      -- Let total := Imaps {s} (λ i → Sum {s} (λ i → sels exps i)) In
-      -- Let r := exps // total In r
-
-      -- Let exps := 𝕖^ (x) In
+      Let exps := 𝕖^ x In
+      Let total := (Sum {s} (λ i → sels exps i)) In
+      -- Let itotal := 𝟙/ total In
+      exps ⊠ (tiles $ 𝟙/ total)
+      -- Let maxs := Max {s} (λ i → sels ⟨ x ⟩ i) In
+      -- Let exps := 𝕖^ (⟨ x ⟩ ⊟ tiles maxs) In
       -- Let total := Sum {s} (λ i → sels exps i) In
-      -- Let r := exps // (Imaps λ _ → total) In r
+      -- exps // tiles total
 
-      Let maxs := Max {s} (λ i → sels ⟨ x ⟩ i) In
-      Let exps := 𝕖^ (⟨ x ⟩ ⊟ tiles maxs) In
-      Let total := Sum {s} (λ i → sels exps i) In
-      exps // tiles total
-      -- Imaps (λ i → sels exps i // total)
-
-      -- Imaps λ i →
-      -- (sels ⟨ 𝕖^ (x) ⟩ i) // Sum {s} (λ i → sels ⟨ 𝕖^ (x) ⟩ i)
+    -- m-stabilize : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
+    -- m-stabilize {s = s} x = Imap {s} λ i → stabilize (sel ⟨ x ⟩ i)
 
     m-softmax : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
-    m-softmax {s} {p} {Γ} x = Imap {s} λ i → softmax (sel ⟨ x ⟩ i)
-      -- Let m-exps := Imap {s} (λ i → 𝕖^ (sel ⟨ x ⟩ i)) In
-      -- Let m-total := Imap {s} (λ i → Sum {p} (λ j → sels (sel m-exps i) j)) In
-      -- Let r := Imap {s} (λ i → Imaps {p} (λ j →
-        -- (sels (sel m-exps i) j) // sel m-total i)) In r
+    m-softmax {s} {p} {Γ} x =
+      Imap {s} λ i → (softmax (sel ⟨ x ⟩ i))
+
+      -- Let maxs := Imap {s} (λ i → Imaps {p} (λ j → Max (λ k → sels (sel ⟨ x ⟩ i) k))) In
+      -- Imap {s} λ i → (softmax (sel ⟨ x ⟩ i ⊟ sel maxs i))
+
+      -- Imap {s} λ i → (
+      --   Let xi := sel ⟨ x ⟩ i In
+      --   Let maxs := Max (λ j → sels xi j) In
+      --   softmax (xi ⊟ (tiles maxs)))
 
     rmsnorm : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
     rmsnorm {s = s} x =
       Let xx := x ⊠ x In
       Let ms := scaledown (len s) (Sum (λ i → sels xx i)) In
-      -- Let scale := sqrt ((scaledown (len s) (Sum (λ i → sels xx i))) ⊞ (scaledown 100000 one)) In
       Let scale := sqrt (ms ⊞ (scaledown 100000 one)) In
-      ⟨ x ⟩ // Imaps (λ _ → scale)
-      -- Let scale := sqrt ((scaledown (len s) (Sum (λ i → sels ⟨ x ⊠ x ⟩ i))) ⊞ (scaledown 100000 one)) In
-      -- ⟨ x ⟩ // Imaps (λ _ → scale)
+      Imaps λ i → (sels ⟨ x ⟩ i) // scale
 
     m-rmsnorm : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
     m-rmsnorm {s} {p} {Γ} x = Imap {s} λ i → rmsnorm (sel ⟨ x ⟩ i)
-      -- Let m-ms := Imap {s} (λ i → scaledown (len s)
-      --   (Sum (λ j → (sels (sel ⟨ x ⟩ i) j) ⊠ sels (sel ⟨ x ⟩ i) j))) In
-      -- Let m-scale := Imap {s} (λ i → sqrt
-      --   (sel m-ms i ⊞ (scaledown 100000 one))) In
-      -- Let r := Imap {s} (λ i → Imaps (λ j →
-      --   sels (sel ⟨ x ⟩ i) j // sel m-scale i)) In r
 
     avg : ∀ {Γ} → E Γ (ar s) → E Γ (ar [])
     avg {s} x = scaledown (len s) (Sum λ i → sels ⟨ x ⟩ i)
@@ -995,17 +982,14 @@ module Primitives where
                    (qs ks vs : E Γ (ar (sl ⊗ hd)))
                   → E Γ (ar (sl ⊗ hd))
     attention {sl} {hd} {Γ} sc mask hqs hks hvs =
-      -- matmul {sl} (m-softmax {sl} ((scaledown sc (matmult {sl} hqs hks)) ⊞ mask)) hvs
-      -- Let sf := m-softmax {sl} ((scaledown sc (matmult {sl} hqs hks)) ⊞ ⟨ mask ⟩) In
-
-      -- matmul {sl} (m-softmax {sl} ((scaledown sc (matmult {sl} hqs hks)) ⊞ ⟨ mask ⟩)) ⟨ hvs ⟩
-
       Let hqks := matmult {sl} hqs hks In
       Let masked := (scaledown sc hqks) ⊞ ⟨ mask ⟩ In
-      -- Let masked := (scaledown sc (matmult {sl} hqs hks)) ⊞ ⟨ mask ⟩ In
+      Let maxs := Imap {sl} (λ i → tiles (Max (λ j → sels (sel masked i) j))) In
+      Let sf := m-softmax {sl} (masked ⊟ maxs) In
+      matmul {sl} sf ⟨ hvs ⟩
+      -- Let hqks := matmult {sl} hqs hks In
+      -- Let masked := (scaledown sc hqks) ⊞ ⟨ mask ⟩ In
       -- Let sf := m-softmax {sl} (masked) In
-      -- Let sf := m-softmax {sl} ((scaledown sc (matmult {sl} hqs hks)) ⊞ ⟨ mask ⟩) In
-      matmul {sl} (m-softmax {sl} (masked)) ⟨ hvs ⟩
       -- matmul {sl} sf ⟨ hvs ⟩
 
     mh-attention : ∀ {Γ} (sc : ℕ)
@@ -1063,9 +1047,10 @@ module Primitives where
 
     cross-entropy : ∀ {Γ} (logits target : E Γ (ar s)) → (E Γ (ar []))
     cross-entropy {s} logits target =
-      -- (⊟ (Sum λ i → sels (ln (softmax ⟨ logits ⟩)) i ⊠ sels ⟨ target ⟩ i))
-      Let lnsf := ln (softmax logits) In
+      -- Let lnsf := ln (softmax (stabilize logits)) In
+      Let lnsf := ln (softmax (logits)) In
       (⊟ (Sum λ i → sels lnsf i ⊠ sels ⟨ target ⟩ i))
+      -- (⊟ (Sum λ i → sels (ln (softmax ⟨ logits ⟩)) i ⊠ sels ⟨ target ⟩ i))
 
     m-cross-entropy : ∀ {Γ} (logits target : E Γ (ar (s ⊗ p))) → (E Γ (ar s))
     m-cross-entropy {s} {p} logits target =
@@ -1125,6 +1110,31 @@ module Primitives where
     rmsnorm-e : E _ _
     rmsnorm-e = Lcon (ar (ι 5 ⊗ ι 6) ∷ []) (ar (ι 5 ⊗ ι 6)) ε (λ x → rmsnorm {s = ι 5 ⊗ ι 6} x)
 
+    div-e : E _ _
+    div-e = Lcon (ar (ι 6) ∷ ar (ι 6) ∷ []) (ar (ι 6)) ε (λ x y → (x ⊞ y) // (x ⊞ y))
+
+    softmax-e : E _ _
+    softmax-e = Lcon (ar (ι 5 ⊗ ι 6) ∷ []) (ar (ι 5 ⊗ ι 6)) ε (λ x → softmax {s = ι 5 ⊗ ι 6} x)
+
+    softmax-inline : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
+    softmax-inline {s = s} x = (𝕖^ x) // tiles (Sum {s} (λ i → sels (𝕖^ ⟨ x ⟩) i))
+
+    softmax-inline-e : E _ _
+    softmax-inline-e = Lcon (ar (ι 5 ⊗ ι 6) ∷ []) (ar (ι 5 ⊗ ι 6)) ε (λ x → softmax-inline {s = ι 5 ⊗ ι 6} x)
+
+    test : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
+    test {s = s} x = softmax x
+      -- -- tiles $ Sum {s} (λ i → sels ⟨ x ⟩ i)
+      -- Let total := Sum {s} (λ i → sels ⟨ x ⟩ i) In
+      -- Let r := ⟨ x ⟩ ⊠ tiles total In
+      -- Sum (λ i → sels r i)
+
+    test-e : E _ _
+    test-e = Lcon (ar (ι 5) ∷ ar (ι 5) ∷ []) (ar (ι 5)) ε (λ s x → test {s = ι 5} x)
+
+    id-e : E _ _
+    id-e = Lcon (ar (ι 5 ⊗ ι 6) ∷ []) (ar (ι 5 ⊗ ι 6)) ε (λ x → x)
+
     mgpt-forward-e : E _ _
     mgpt-forward-e = Lcon (ar (SL ⊗ SL) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
                   ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
@@ -1143,6 +1153,6 @@ module Primitives where
         mgpt-loss {sl = SL} SC mask
           (to-gptp wpe wqry wkey wval wout wup wdown wvoc) wseq target PR
 
-    let-test : ∀ {Γ} → E Γ (ar SL) → E Γ (ar [])
-    let-test x =
-      Let a := (Let b := Imaps (λ i → sels ⟨ x ⟩ i) In scaledown 2 b) In Sum (λ i → sel a i)
+    -- let-test : ∀ {Γ} → E Γ (ar SL) → E Γ (ar [])
+    -- let-test x =
+    --   Let a := (Let b := Imaps (λ i → sels ⟨ x ⟩ i) In scaledown 2 b) In Sum (λ i → sel a i)

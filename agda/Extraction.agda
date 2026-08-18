@@ -20,8 +20,9 @@ module Optimise where
   open import Opt r rp public
 
   doopt : E Γ is → E Γ is
-  doopt e = let-out
-    (opt e .proj₁)
+  doopt e = danger-opt e
+
+    -- (opt e .proj₁)
 
   multiopt : E Γ is → ℕ → E Γ is
   multiopt e 0 = e
@@ -103,7 +104,7 @@ module Extract where
   ... | _ | _ | var b = ee-sub δ (sub-id ▹ var b) --ee-sub δ (sub-id ▹ inline x)
   ... | _ | _ | zero = ee-sub δ (sub-id ▹ zero) --ee-sub δ (sub-id ▹ inline x)
   ... | _ | _ | one = ee-sub δ (sub-id ▹ one) --ee-sub δ (sub-id ▹ inline x)
-  ... | 1 | 1 | _ = ee-sub δ (sub-id ▹ inline e)
+  -- ... | 1 | 1 | _ = ee-sub δ (sub-id ▹ inline e)
   ... | _ | _ | _ = let′ (inline e) δ
 
   env-replace : Env Γ Δ → (a b : E Δ is) → Env Γ Δ
@@ -231,6 +232,9 @@ module Extract where
     pretty : E Γ (ar s) → NamedEnv Γ → String
     pretty e ρ = ee-pretty ({- env-norm-lets $ -} grad e one zero-ee) ρ
 
+    seed-pretty : E Γ (ar s) → E Γ (ar s) → NamedEnv Γ → String
+    seed-pretty e s ρ = ee-pretty ({- env-norm-lets $ -} grad e s zero-ee) ρ
+
   -- Examples
   -- ========
   conv-e : E _ _
@@ -308,6 +312,28 @@ module Extract where
   grad-rmsnorm-pp : String
   grad-rmsnorm-pp = Pretty.pretty Primitives.Microgpt.rmsnorm-e (ε ▹ "inp")
 
+  grad-test-pp : String
+  grad-test-pp = Pretty.seed-pretty Primitives.Microgpt.test-e (var v₁) (ε ▹ "j" ▹ "inp")
+  -- grad-test-pp = Pretty.seed-pretty Primitives.Microgpt.test-e (var v₀) (ε ▹ "s" ▹ "inp")
+
+  grad-test-s : String
+  grad-test-s = pp Primitives.Microgpt.test-e (ε ▹ "s" ▹ "inp")
+
+  grad-id-pp : String
+  grad-id-pp = Pretty.pretty Primitives.Microgpt.id-e (ε ▹ "inp")
+
+  grad-softmax-s : String
+  grad-softmax-s = pp Primitives.Microgpt.softmax-e (ε ▹ "inp")
+
+  grad-softmax-pp : String
+  grad-softmax-pp = Pretty.pretty Primitives.Microgpt.softmax-e (ε ▹ "inp")
+
+  grad-softmax-inline-pp : String
+  grad-softmax-inline-pp = Pretty.pretty Primitives.Microgpt.softmax-inline-e (ε ▹ "inp")
+
+  grad-div-pp : String
+  grad-div-pp = Pretty.pretty Primitives.Microgpt.div-e (ε ▹ "x" ▹ "y")
+
   grad-mgpt-loss-e = ee-OPT $ ee-dedup $ ee-OPT (grad Primitives.Microgpt.mgpt-loss-e one zero-ee)
 
   mgpt-loss-s : String
@@ -325,3 +351,6 @@ module Extract where
   grad-mgpt-loss-pp = Pretty.pretty Primitives.Microgpt.mgpt-loss-e
     (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup"
        ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target")
+
+  -- grad-inv : String
+  -- grad-inv = Pretty.pretty (Lcon {!   !} {!   !} {!   !} {!   !}) {!   !}

@@ -1,193 +1,29 @@
-let x0 = wpe + wseq
-
-let x1 = imap λ x2 → let x3 = scaledown 16 (sum λ x4 → sels (sel x0 x2) x4 * sels (sel x0 x2) x4) in
-let x5 = sqrt (x3 + scaledown 100000 1) in
-sel x0 x2 * inv (imaps λ x6 → x5)
-
-let x7 = imap λ x8 → let x9 = scaledown 16 (sum λ x10 → sels (sel x1 x8) x10 * sels (sel x1 x8) x10) in
-let x11 = sqrt (x9 + scaledown 100000 1) in
-sel x1 x8 * inv (imaps λ x12 → x11)
-
-let x13 = imap λ x14 → imaps λ x15 → sum λ x16 → sels (sel wqry x15) x16 * sels (sel x7 x14) x16
-
-let x17 = imap λ x18 → imaps λ x19 → sum λ x20 → sels (sel wkey x19) x20 * sels (sel x7 x18) x20
-
-let x21 = imap λ x22 → imaps λ x23 → sum λ x24 → sels (sel wval x23) x24 * sels (sel x7 x22) x24
-
-let x25 = imap λ x26 → imap λ x27 → selb (sel x13 x27) x26
-
-let x28 = imap λ x29 → imap λ x30 → selb (sel x17 x30) x29
-
-let x31 = imap λ x32 → imap λ x33 → selb (sel x21 x33) x32
-
-let x34 = imap λ x35 → let x36 = (imap λ x37 → imaps λ x38 → sum λ x39 → sels (sel (sel x25 x35) x37) x39 * sels (sel (sel x28 x35) x38) x39) in
-let x40 = scaledown 2 x36 + mask in
-let x41 = (imap λ x42 → let x43 = (max λ x44 → sels (sel x40 x42) x44) in
-let x45 = exp (sel x40 x42 + - (imaps λ x46 → x43)) in
-let x47 = (sum λ x48 → sels x45 x48) in
-(imaps λ x49 → sels x45 x49 * inv x47)) in
-(imap λ x50 → imaps λ x51 → sum λ x52 → sels (sel x41 x50) x52 * sels (sel (sel x31 x35) x52) x51)
-
-let x53 = imap λ x54 → imapb λ x55 → sel (sel x34 x55) x54
-
-let x56 = imap λ x57 → imaps λ x58 → sum λ x59 → sels (sel wout x58) x59 * sels (sel x53 x57) x59
-
-let x60 = x56 + x1
-
-let x61 = imap λ x62 → let x63 = scaledown 16 (sum λ x64 → sels (sel x60 x62) x64 * sels (sel x60 x62) x64) in
-let x65 = sqrt (x63 + scaledown 100000 1) in
-sel x60 x62 * inv (imaps λ x66 → x65)
-
-let x67 = imap λ x68 → imaps λ x69 → sum λ x70 → sels (sel wup x69) x70 * sels (sel x61 x68) x70
-
-let x71 = relu x67
-
-let x72 = imap λ x73 → imaps λ x74 → sum λ x75 → sels (sel wdown x74) x75 * sels (sel x71 x73) x75
-
-let x76 = x72 + x60
-
-let x77 = imap λ x78 → imaps λ x79 → sum λ x80 → sels (sel wvoc x79) x80 * sels (sel x76 x78) x80
-
-let x81 = imaps λ x82 → scaledown 16 1
-
-let x83 = imap λ x84 → max λ x85 → sels (sel x77 x84) x85
-
-let x86 = imap λ x87 → exp (sel x77 x87 + - (imaps λ x88 → sel x83 x87))
-
-let x89 = imap λ x90 → sum λ x91 → sels (sel x86 x90) x91
-
-let x92 = imap λ x93 → imap λ x94 → sum λ x95 → - (zero-but x95 x94 (- (sels x81 x93) * sels (sel target x93) x94 * sels (inv (let x96 = (max λ x97 → sels (sel x77 x93) x97) in
-let x98 = exp (sel x77 x93 + - (imaps λ x99 → x96)) in
-let x100 = (sum λ x101 → sels x98 x101) in
-(imaps λ x102 → sels x98 x102 * inv x100))) x95 * sels (sel x86 x93) x95 * inv (sel x89 x93 * sel x89 x93)))
-
-let x103 = imap λ x104 → imap λ x105 → imaps λ x106 → zero-but x106 x105 (- (sels x81 x104) * sels (sel target x104) x105 * sels (inv (let x107 = (max λ x108 → sels (sel x77 x104) x108) in
-let x109 = exp (sel x77 x104 + - (imaps λ x110 → x107)) in
-let x111 = (sum λ x112 → sels x109 x112) in
-(imaps λ x113 → sels x109 x113 * inv x111))) x106 * inv (sel x89 x104)) + sel (sel x92 x104) x105
-
-let x114 = imap λ x115 → imap λ x116 → sum λ x117 → sels (- (exp (sel x77 x115 + - (imaps λ x118 → sel x83 x115)) * sel (sel x103 x115) x116)) x117
-
-let x119 = x83
-
-let x120 = imap λ x121 → inv (sum λ x122 → 1 + - (ind-positive (- (sels (sel x77 x121) x122 + - (sel x119 x121)))))
-
-let x123 = imap λ x124 → imaps λ x125 → sum λ x126 → sels (exp (sel x77 x124 + - (imaps λ x127 → sel x83 x124))) x125 * sels (sel (sel x103 x124) x126) x125 + sel (sel x114 x124) x126 * (1 + - (ind-positive (- (sels (sel x77 x124) x125 + - (sel x119 x124))))) * sel x120 x124
-
-let x128 = imap λ x129 → imaps λ x130 → sum λ x131 → sels (sel x123 x129) x131 * sels (sel wvoc x131) x130
-
-let x132 = x128
-
-let x133 = imap λ x134 → imaps λ x135 → sum λ x136 → sels (sel x132 x134) x136 * sels (sel wdown x136) x135
-
-let x137 = ind-positive x67 * x133
-
-let x138 = imap λ x139 → imaps λ x140 → sum λ x141 → sels (sel x137 x139) x141 * sels (sel wup x141) x140
-
-let x142 = imap λ x143 → scaledown 16 (sum λ x144 → sels (sel x60 x143) x144 * sels (sel x60 x143) x144)
-
-let x145 = imap λ x146 → sqrt (sel x142 x146 + scaledown 100000 1)
-
-let x147 = imap λ x148 → sum λ x149 → sels (- (sel x138 x148 * sel x60 x148 * inv (imaps λ x150 → sel x145 x148 * sel x145 x148))) x149
-
-let x151 = imap λ x152 → sel x147 x152 * inv ((1 + 1) * sqrt (sel x142 x152 + scaledown 100000 1))
-
-let x153 = imap λ x154 → imaps λ x155 → sels (sel x132 x154) x155 + sels (sel x138 x154) x155 * sels (inv (imaps λ x156 → sel x145 x154)) x155 + scaledown 16 (sel x151 x154) * sels (sel x60 x154) x155 + scaledown 16 (sel x151 x154) * sels (sel x60 x154) x155
-
-let x157 = x153
-
-let x158 = imap λ x159 → imaps λ x160 → sum λ x161 → sels (sel x157 x159) x161 * sels (sel wout x161) x160
-
-let x162 = imap λ x163 → imap λ x164 → selb (sel x158 x164) x163
-
-let x165 = imap λ x166 → imap λ x167 → imaps λ x168 → sum λ x169 → sels (sel (sel x25 x166) x167) x169 * sels (sel (sel x28 x166) x168) x169
-
-let x170 = imap λ x171 → scaledown 2 (sel x165 x171) + mask
-
-let x172 = imap λ x173 → imap λ x174 → let x175 = (max λ x176 → sels (sel (sel x170 x173) x174) x176) in
-let x177 = exp (sel (sel x170 x173) x174 + - (imaps λ x178 → x175)) in
-let x179 = (sum λ x180 → sels x177 x180) in
-(imaps λ x181 → sels x177 x181 * inv x179)
-
-let x182 = imap λ x183 → imap λ x184 → imaps λ x185 → sum λ x186 → sels (sel (sel x162 x183) x184) x186 * sels (sel (sel x31 x183) x185) x186
-
-let x187 = imap λ x188 → imap λ x189 → max λ x190 → sels (sel (sel x170 x188) x189) x190
-
-let x191 = imap λ x192 → imap λ x193 → exp (sel (sel x170 x192) x193 + - (imaps λ x194 → sel (sel x187 x192) x193))
-
-let x195 = imap λ x196 → imap λ x197 → sum λ x198 → sels (sel (sel x191 x196) x197) x198
-
-let x199 = imap λ x200 → imap λ x201 → sum λ x202 → - (sels (sel (sel x182 x200) x201) x202 * sels (sel (sel x191 x200) x201) x202 * inv (sel (sel x195 x200) x201 * sel (sel x195 x200) x201))
-
-let x203 = imap λ x204 → imap λ x205 → imaps λ x206 → sels (sel (sel x182 x204) x205) x206 * inv (sel (sel x195 x204) x205) + sel (sel x199 x204) x205
-
-let x207 = imap λ x208 → imap λ x209 → sum λ x210 → sels (- (exp (sel (sel x170 x208) x209 + - (imaps λ x211 → sel (sel x187 x208) x209)) * sel (sel x203 x208) x209)) x210
-
-let x212 = x187
-
-let x213 = imap λ x214 → imap λ x215 → inv (sum λ x216 → 1 + - (ind-positive (- (sels (sel (sel x170 x214) x215) x216 + - (sel (sel x212 x214) x215)))))
-
-let x217 = imap λ x218 → imap λ x219 → imaps λ x220 → sels (exp (sel (sel x170 x218) x219 + - (imaps λ x221 → sel (sel x187 x218) x219))) x220 * sels (sel (sel x203 x218) x219) x220 + sel (sel x207 x218) x219 * (1 + - (ind-positive (- (sels (sel (sel x170 x218) x219) x220 + - (sel (sel x212 x218) x219))))) * sel (sel x213 x218) x219
-
-let x222 = imap λ x223 → scaledown 2 (sel x217 x223)
-
-let x224 = imap λ x225 → imap λ x226 → imaps λ x227 → sum λ x228 → sels (sel (sel x162 x225) x228) x227 * sels (sel (sel x172 x225) x228) x226
-
-let x229 = imap λ x230 → imap λ x231 → imaps λ x232 → sum λ x233 → sels (sel (sel x222 x230) x233) x231 * sels (sel (sel x25 x230) x233) x232
-
-let x234 = imap λ x235 → imap λ x236 → imaps λ x237 → sum λ x238 → sels (sel (sel x222 x235) x236) x238 * sels (sel (sel x28 x235) x238) x237
-
-let x239 = imap λ x240 → imapb λ x241 → sel (sel x224 x241) x240
-
-let x242 = imap λ x243 → imapb λ x244 → sel (sel x229 x244) x243
-
-let x245 = imap λ x246 → imapb λ x247 → sel (sel x234 x247) x246
-
-let x248 = imap λ x249 → imaps λ x250 → (sum λ x251 → sels (sel x239 x249) x251 * sels (sel wval x251) x250) + (sum λ x252 → sels (sel x242 x249) x252 * sels (sel wkey x252) x250) + (sum λ x253 → sels (sel x245 x249) x253 * sels (sel wqry x253) x250)
-
-let x254 = imap λ x255 → scaledown 16 (sum λ x256 → sels (sel x1 x255) x256 * sels (sel x1 x255) x256)
-
-let x257 = imap λ x258 → sqrt (sel x254 x258 + scaledown 100000 1)
-
-let x259 = imap λ x260 → sum λ x261 → sels (- (sel x248 x260 * sel x1 x260 * inv (imaps λ x262 → sel x257 x260 * sel x257 x260))) x261
-
-let x263 = imap λ x264 → sel x259 x264 * inv ((1 + 1) * sqrt (sel x254 x264 + scaledown 100000 1))
-
-let x265 = imap λ x266 → imaps λ x267 → sels (sel x157 x266) x267 + sels (sel x248 x266) x267 * sels (inv (imaps λ x268 → sel x257 x266)) x267 + scaledown 16 (sel x263 x266) * sels (sel x1 x266) x267 + scaledown 16 (sel x263 x266) * sels (sel x1 x266) x267
-
-let x269 = imap λ x270 → scaledown 16 (sum λ x271 → sels (sel x0 x270) x271 * sels (sel x0 x270) x271)
-
-let x272 = imap λ x273 → sqrt (sel x269 x273 + scaledown 100000 1)
-
-let x274 = imap λ x275 → sum λ x276 → sels (- (sel x265 x275 * sel x0 x275 * inv (imaps λ x277 → sel x272 x275 * sel x272 x275))) x276
-
-let x278 = imap λ x279 → sel x274 x279 * inv ((1 + 1) * sqrt (sel x269 x279 + scaledown 100000 1))
-
-let x280 = imap λ x281 → imaps λ x282 → sels (sel x265 x281) x282 * sels (inv (imaps λ x283 → sel x272 x281)) x282 + scaledown 16 (sel x278 x281) * sels (sel x0 x281) x282 + scaledown 16 (sel x278 x281) * sels (sel x0 x281) x282
-
-
-
-let dmask = sum λ x284 → sel x217 x284
-
-let dwpe = x280
-
-let dwqry = imap λ x285 → imaps λ x286 → sum λ x287 → sels (sel x245 x287) x285 * sels (sel x7 x287) x286
-
-let dwkey = imap λ x288 → imaps λ x289 → sum λ x290 → sels (sel x242 x290) x288 * sels (sel x7 x290) x289
-
-let dwval = imap λ x291 → imaps λ x292 → sum λ x293 → sels (sel x239 x293) x291 * sels (sel x7 x293) x292
-
-let dwout = imap λ x294 → imaps λ x295 → sum λ x296 → sels (sel x157 x296) x294 * sels (sel x53 x296) x295
-
-let dwup = imap λ x297 → imaps λ x298 → sum λ x299 → sels (sel x137 x299) x297 * sels (sel x61 x299) x298
-
-let dwdown = imap λ x300 → imaps λ x301 → sum λ x302 → sels (sel x132 x302) x300 * sels (sel x71 x302) x301
-
-let dwvoc = imap λ x303 → imaps λ x304 → sum λ x305 → sels (sel x123 x305) x303 * sels (sel x76 x305) x304
-
-let dwseq = x280
-
-let dtarget = imap λ x306 → imaps λ x307 → - (sels x81 x306) * sels (ln (let x308 = (max λ x309 → sels (sel x77 x306) x309) in
-let x310 = exp (sel x77 x306 + - (imaps λ x311 → x308)) in
-let x312 = (sum λ x313 → sels x310 x313) in
-(imaps λ x314 → sels x310 x314 * inv x312))) x307
+elet x0 = exp inp
+elet x1 = sum λ x2 → sels x0 x2
+elet x3 = - (sels x0 j * inv (x1 * x1))
+elet x4 = imaps λ x5 → (zero-but x5 j (inv x1)) + x3
+let dinp = x0 * x4
+----
+static void softmax_backward(float *dlogits, const float *probs, const float *dprobs, int n) {
+    -- // d/dlogits[i] = probs[i] * (dprobs[i] - sum_j(probs[j] * dprobs[j]))
+    -- // d/dlogits[i] = probs[i] * (1 - probs[i])
+    float dot = 0.0f;
+    for (int j = 0; j < n; j++) dot += probs[j] * dprobs[j];
+    for (int i = 0; i < n; i++) {
+        dlogits[i] = probs[i] * (dprobs[i] - dot);
+    }
+}
+----
+let x0 = (imap2 5 6 (\\x1_0 x1_1 -> (F.exp inp[x1_0][x1_1])))
+let x2 = (isum2 5 6 (\\x3_0 x3_1 -> x0[x3_0][x3_1]))
+let x4 = (isum2 5 6 (\\x5_0 x5_1 -> (F.neg (x0[x5_0][x5_1] F.* (one F./ (x2 F.* x2))))))
+let x6 = (imap2 5 6 (\\x7_0 x7_1 -> ((one F./ x2) F.+ x4)))
+let dinp = (imap2 5 6 (\\x8_0 x8_1 -> (x0[x8_0][x8_1] F.* x6[x8_0][x8_1])))
+-----
+static void softmax_forward(float *x, int n) {
+    float max_val = x[0];
+    for (int i = 1; i < n; i++) if (x[i] > max_val) max_val = x[i];
+    float sum = 0.0f;
+    for (int i = 0; i < n; i++) { x[i] = expf(x[i] - max_val); sum += x[i]; }
+    for (int i = 0; i < n; i++) x[i] /= sum;
+}

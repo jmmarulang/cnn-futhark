@@ -44,17 +44,17 @@ module Opt (r : Real) (rp : RealProp r) where
   ... | just (a' , _) = let′ a' (f (sub b sub-swap))
   ... | nothing = g (let′ a b)
 
-  let-out-is : ∀ {is p r} → (∀ {Δ} → (E (Δ ▹ is) (ar p)) → (E Δ (ar r)))
+  let-out-step : ∀ {is p r} → (∀ {Δ} → (E (Δ ▹ is) (ar p)) → (E Δ (ar r)))
     → (E (Γ ▹ is) (ar p)) → (E Γ (ar r))
-  let-out-is f (let′ a b) = let-out-stren f f a b
-  let-out-is f e = f e
+  let-out-step f (let′ a b) = let-out-stren f f a b
+  let-out-step f e = f e
 
   let-out : E Γ is → E Γ is
-  let-out (imaps e) = let-out-is imaps (let-out e)
-  let-out (imap e) = let-out-is imap (let-out e)
-  let-out (imapb x e) = let-out-is (E.imapb x) (let-out e)
-  let-out (sum e) = let-out-is E.sum (let-out e)
-  let-out (maximum e) = let-out-is maximum (let-out e)
+  let-out (imaps e) = let-out-step imaps (let-out e)
+  let-out (imap e) = let-out-step imap (let-out e)
+  let-out (imapb x e) = let-out-step (E.imapb x) (let-out e)
+  let-out (sum e) = let-out-step E.sum (let-out e)
+  let-out (maximum e) = let-out-step maximum (let-out e)
   -- let-out (let′ e (let′ a b)) =
   --   let e' = (let-out e) in
   --   let a' = (let-out a) in
@@ -75,41 +75,90 @@ module Opt (r : Real) (rp : RealProp r) where
   let-out (un x e) = un x (let-out e)
   let-out (slide e x e₁ x₁) = E.slide (let-out e) x (let-out e₁) x₁
   let-out (backslide e e₁ x x₁) = E.backslide (let-out e) (let-out e₁) x x₁
-  let-out (var x) = var x
-  let-out 𝟘 = 𝟘
-  let-out 𝟙 = 𝟙
+  let-out e = e
 
-  -- let-out : E Γ is → E Γ is
-  -- let-out e = e-map let-out' e where
-  --   let-out' : E Γ is → E Γ is
-  --   let-out' (imaps e) = let-out-is imaps (let-out' e)
-  --   let-out' (imap e) = let-out-is imap (let-out' e)
-  --   let-out' (imapb x e) = let-out-is (E.imapb x) (let-out' e)
-  --   let-out' (sum e) = let-out-is E.sum (let-out' e)
-  --   let-out' (maximum e) = let-out-is maximum (let-out' e)
-  --   -- let-out' (let′ e (let′ a b)) =
-  --   --   let e' = (let-out' e) in
-  --   --   let a' = (let-out' a) in
-  --   --   let b' = (let-out' b) in
-  --   --   let-out'-stren (λ x → let′ (e' ↑) x) (λ x → let′ e' x) a' b'
-  --   let-out' (let′ e e₁) = let′ (let-out' e) (let-out' e₁)
-  --   let-out' (sels (let′ a b) e₁) = let′ a (sels b (e₁ ↑))
-  --   let-out' (zero-but e e₁ (let′ a b)) = let′ a (zero-but (e ↑) (e₁ ↑) b)
-  --   let-out' (bin x (let′ a b) e₁) = let′ (let-out' a) (bin x (let-out' b) ((let-out' e₁) ↑))
-  --   let-out' (bin x e e₁) with (isLet e₁)
-  --   ... | yes (r , a , b , refl) = let′ (let-out' a) (bin x ((let-out' e) ↑) (let-out' b))
-  --   ... | no _ = bin x (let-out' e) (let-out' e₁)
-  --   let-out' e = e
+  -- TODO : Incomplete
+  sum-in : E Γ is → E Γ is
+  sum-in (E.sum (a ⊠ b)) with
+    a' ← (sum-in a) | b' ← (sum-in b) | (stren a' v₀) | (stren (sum-in b) v₀)
+  ... | just c | _ = c ⊠ E.sum b'
+  ... | _ | just d = (E.sum a') ⊠ d
+  ... | _ | _ = E.sum (a' ⊠ b')
+  sum-in (E.sum (⊟ e)) = ⊟ E.sum (sum-in e)
 
-  -- sumv-zero-but : E Γ is → (ix s) ∈ Γ → E Γ is
-  -- sumv-zero-but e v = e-mapr₂ (λ _ x y → sumv-zero-but' x y) e (var v) where
-  --   sumv-zero-but' : E Γ is → E Γ ip → E Γ is
-  --   sumv-zero-but' {is = ar s} (zero-but (var i) (var j) a) (var v) with eq? v i | eq? v j
-  --   ... | veq | veq = a
-  --   ... | veq | neq ._ k = {!   !}
-  --   ... | neq .v y | c = {!   !}
-  --   sumv-zero-but' a b = a
+  sum-in (E.sum e) = E.sum (sum-in e)
+  sum-in (imaps e) = imaps (sum-in e)
+  sum-in (imap e) = imap (sum-in e)
+  sum-in (imapb x e) = E.imapb x (sum-in e)
+  sum-in (sels e e₁) = sels (sum-in e) (sum-in e₁)
+  sum-in (sel e e₁) = sel (sum-in e) (sum-in e₁)
+  sum-in (E.selb x e e₁) = E.selb x (sum-in e) (sum-in e₁)
+  sum-in (zero-but e e₁ e₂) = zero-but e e₁ (sum-in e₂)
+  sum-in (E.slide e x e₁ x₁) = E.slide (sum-in e) x (sum-in e₁) x₁
+  sum-in (E.backslide e e₁ x x₁) = E.backslide (sum-in e) (sum-in e₁) x x₁
+  sum-in (bin x e e₁) = bin x (sum-in e) (sum-in e₁)
+  sum-in (scaledown x e) = scaledown x (sum-in e)
+  sum-in (let′ e e₁) = let′ (sum-in e) (sum-in e₁)
+  sum-in (un x e) = un x (sum-in e)
+  sum-in (maximum e) = maximum (sum-in e)
+  sum-in e = e
 
+  -- selx-in-step : ∀ {s p r} → (E Γ (ar s) → E Γ (ix p) → E Γ (ar r))
+  --   → E Γ (ar s) → E Γ (ix p) → E Γ (ar r)
+  -- selx-in-step {s = s} {p = p} {r = r} f (imaps e) i with (s ≟ˢ p) | (r ≟ˢ unit)
+  -- ... | yes refl | yes refl = sub e (sub-id ▹ i)
+  -- ... | _ | _ = f (imaps e) i
+  -- selx-in-step f (imap e) i = {!   !}
+  -- selx-in-step f (sel e e₁) i = {!   !}
+  -- selx-in-step f (E.imapb x e) i = {!   !}
+  -- selx-in-step f (E.selb x e e₁) i = {!   !}
+  -- selx-in-step f (E.sum e) i = {!   !}
+  -- selx-in-step f (zero-but e e₁ e₂) i = {!   !}
+  -- selx-in-step f (E.slide e x e₁ x₁) i = {!   !}
+  -- selx-in-step f (E.backslide e e₁ x x₁) i = {!   !}
+  -- selx-in-step f (bin x e e₁) i = {!   !}
+  -- selx-in-step f (scaledown x e) i = {!   !}
+  -- selx-in-step f (let′ e e₁) i = {!   !}
+  -- selx-in-step f (un x e) i = {!   !}
+  -- selx-in-step f (maximum e) i = {!   !}
+  -- selx-in-step f (sels e e₁) i = {!   !}
+  -- selx-in-step f e i = f e i
+
+  -- selx-in : E Γ is → E Γ is
+  -- selx-in (sels (imaps e) i) = sub (selx-in e) (sub-id ▹ i)
+  -- -- selx-in (sels (sels e e₁) i) = {!   !}
+  -- selx-in (sels (imap e) i) = sub {!  selx-in e !} {!   !}
+  -- selx-in (sels (sel e e₁) i) = {!   !}
+  -- selx-in (sels (E.imapb x e) i) = {!   !}
+  -- selx-in (sels (E.selb x e e₁) i) = {!   !}
+  -- selx-in (sels (E.sum e) i) = {!   !}
+  -- selx-in (sels (zero-but e e₁ e₂) i) = {!   !}
+  -- selx-in (sels (E.slide e x e₁ x₁) i) = {!   !}
+  -- selx-in (sels (E.backslide e e₁ x x₁) i) = {!   !}
+  -- selx-in (sels (bin x e e₁) i) = {!   !}
+  -- selx-in (sels (scaledown x e) i) = {!   !}
+  -- selx-in (sels (let′ e e₁) i) = {!   !}
+  -- selx-in (sels (un x e) i) = {!   !}
+  -- selx-in (sels (maximum e) i) = {!   !}
+  -- selx-in (sels e i) = sels (selx-in e) i
+
+  -- selx-in (sel e i) = {!   !}
+
+  -- selx-in (E.selb x e i) = {!   !}
+
+  -- selx-in (let′ e e₁) = let′ (selx-in e) (selx-in e₁) -- Do something here?
+  -- selx-in (imaps e) = imaps (selx-in e)
+  -- selx-in (imap e) = imap (selx-in e)
+  -- selx-in (E.imapb x e) = E.imapb x (selx-in e)
+  -- selx-in (E.sum e) = E.sum (selx-in e)
+  -- selx-in (maximum e) = maximum (selx-in e)
+  -- selx-in (zero-but e e₁ e₂) = zero-but (selx-in e) (selx-in e₁) (selx-in e₂)
+  -- selx-in (E.slide e x e₁ x₁) = E.slide (selx-in e) x (selx-in e₁) x₁
+  -- selx-in (E.backslide e e₁ x x₁) = E.backslide (selx-in e) (selx-in e₁) x x₁
+  -- selx-in (bin x e e₁) = bin x (selx-in e) (selx-in e₁)
+  -- selx-in (scaledown x e) = scaledown x (selx-in e)
+  -- selx-in (un x e) = un x (selx-in e)
+  -- selx-in e = e
 
   opt : (e : E Γ is) → ∃ λ e′ → (e ≈ᵉ e′)
   opt (var x) = var x , reflᵉ (var x)
@@ -141,19 +190,13 @@ module Opt (r : Real) (rp : RealProp r) where
   opt (imaps e) | t , p = imaps t , λ ρ i → p (ρ , i) []
 
   opt (sels e e₁) with opt e | opt e₁
-
-  --... | zero | i = zero
   ... | (zero , p)        | (i , q) = zero , λ ρ i → p ρ _
-  --... | one | i = one
   ... | (one , p)         | (i , q) = one , λ ρ i → p ρ _
-  --... | imapₛ e | i = sub here e i
   ... | (imaps e₂ , p)    | (i , q) = sub e₂ (sub-id ▹ i)
                           , λ {ρ [] → p ρ (eval e₁ ρ)
                                     ∙ cong (λ t → eval e₂ (ρ , t) []) (q ρ)
                                     ∙ sym (eval-sub e₂ ρ (sub-id ▹ i) []
                                            ∙ eval-cong e₂ (sub-env-id ▹ refl) [])}
-  -- [no div/mod] ... | imapb m e | i = selₛ (sub here e (div m i)) (mod m i)
-  -- ... | bin op a b | i = bin op (selₛ a i) (selₛ b i)
   ... | (a ⊞ b , p) | (i , q) = (sels a i) ⊞ (sels b i)
                               , λ ρ j → p ρ (eval e₁ ρ)
                                         ∙ cong₂ _+_ (cong (eval a ρ) (q ρ)) (cong (eval b ρ) (q ρ))
@@ -182,8 +225,9 @@ module Opt (r : Real) (rp : RealProp r) where
             go ρ u with eval i ρ ≟ₚ eval j ρ | p ρ (eval e₁ ρ)
             ... | yes _ | p′ = p′ ∙ cong (eval a ρ) (q ρ)
             ... | no _ | p′ = p′
-  -- [no ix-plus] ... | slide i pl a su | k = selₛ a (ix-plus i k su pl)
-  -- ... | a | i = selₛ a ic
+  ... | (⊟ e₂ , p) | (i , q) = (⊟ (sels e₂ i)) , λ ρ j → (p _ _) ∙ cong (λ x → - (eval e₂ ρ x)) (q _)
+  ... | (𝟙/ e₂ , p) | (i , q) = (𝟙/ (sels e₂ i)) , λ ρ j → (p _ _) ∙ cong (λ x → fromℕ 1 ÷  (eval e₂ ρ x)) (q _)
+
   opt (sels e e₁) | (a , p) | (i , q) = sels a i , λ ρ j → p ρ (eval e₁ ρ) ∙ cong (eval a ρ) (q ρ)
 
 -- Jairo made
@@ -325,6 +369,11 @@ module Opt (r : Real) (rp : RealProp r) where
   --       (sym (sum-inv {s = s} _+_ (fromℕ 0) i))
   --       (sym (sum-inv {s = s} _+_ (fromℕ 0) i))
 
+  -- ... | ⊟ a , pf = (⊟ (E.sum a))
+  --   , λ ρ j →
+  --   sum-inv _+_ (fromℕ 0) {λ i → eval e (ρ , i)} j
+  --   ∙ sum-cong _+_ (fromℕ 0) (λ i → pf ((_ , i)) j)
+  --   ∙ {!   !}
   ... | let′ {s = q} a b , pf = (let′ (imap a) (E.sum {s = s}
     (sub b (skeep (sdrop sub-id) ▹ sel (var v₁) (var v₀))))) , foo where
       foo : _
@@ -593,3 +642,8 @@ module Opt (r : Real) (rp : RealProp r) where
               , λ ρ j → sum-inv _∨_ -∞ᵣ {(λ i₁ → eval e (ρ , i₁))} j
                         ∙ sum-cong _∨_ -∞ᵣ {λ j₁ → eval e (ρ , j₁) j} (λ i → p (ρ , i) j)
                         ∙ (sym (sum-inv _∨_ -∞ᵣ {λ i → eval a (ρ , i)} j))
+
+  danger-opt : E Γ is → E Γ is
+  danger-opt e =
+    -- (opt e .proj₁)
+    let-out $ sum-in $ (opt e .proj₁)

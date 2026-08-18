@@ -115,7 +115,7 @@ module _ where
     a ← ppx (1 + precApp) e ρ
     b ← ppx (1 + precApp) e₁ ρ
     c ← ppx (1 + precApp) e₂ ρ
-    return (pars (does (p >? precApp)) $ printf "zero-but %s %s %s" a b c)
+    return (pars (does (p >? precApp)) $ printf "(zero-but %s %s %s)" a b c)
 
   ppx p (E.slide e x e₁ x₁) ρ = do
     a ← ppx (1 + precApp) e ρ
