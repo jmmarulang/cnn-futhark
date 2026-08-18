@@ -83,14 +83,14 @@ module Extract where
   ee-count-uses (env ρ) = env-count-uses ρ
   ee-count-uses (let′ x ρ) v = count-uses x v + ee-count-uses ρ (there v)
 
-  env-count-selv : Env Γ Δ → is ∈ Δ → ℕ
-  env-count-selv ε v = 0
-  env-count-selv (skip ρ) v = env-count-selv ρ v
-  env-count-selv (ρ ▹ x) v = env-count-selv ρ v + count-selv x v
+  env-count-sels : Env Γ Δ → is ∈ Δ → ℕ
+  env-count-sels ε v = 0
+  env-count-sels (skip ρ) v = env-count-sels ρ v
+  env-count-sels (ρ ▹ x) v = env-count-sels ρ v + count-sels x v
 
-  ee-count-selv : EE Γ Δ → is ∈ Δ → ℕ
-  ee-count-selv (env ρ) = env-count-selv ρ
-  ee-count-selv (let′ x ρ) v = count-selv x v + ee-count-selv ρ (there v)
+  ee-count-sels : EE Γ Δ → is ∈ Δ → ℕ
+  ee-count-sels (env ρ) = env-count-sels ρ
+  ee-count-sels (let′ x ρ) v = count-sels x v + ee-count-sels ρ (there v)
 
   env-norm-lets : Env Γ Δ → Env Γ Δ
   env-norm-lets ε = ε
@@ -99,12 +99,12 @@ module Extract where
 
   ee-inline : EE Γ Δ → EE Γ Δ
   ee-inline (env x) = env (env-norm-lets x)
-  ee-inline (let′ e ρ) with δ ← ee-inline ρ | ee-count-uses δ v₀ | ee-count-selv δ v₀ | e
+  ee-inline (let′ e ρ) with δ ← ee-inline ρ | ee-count-uses δ v₀ | ee-count-sels δ v₀ | e
   ... | 0 | _ | _ = ee-sub δ (sub-id ▹ inline e) -- does nothing?
   ... | _ | _ | var b = ee-sub δ (sub-id ▹ var b) --ee-sub δ (sub-id ▹ inline x)
   ... | _ | _ | zero = ee-sub δ (sub-id ▹ zero) --ee-sub δ (sub-id ▹ inline x)
   ... | _ | _ | one = ee-sub δ (sub-id ▹ one) --ee-sub δ (sub-id ▹ inline x)
-  -- ... | 1 | 1 | _ = ee-sub δ (sub-id ▹ inline e)
+  ... | 1 | 1 | _ = ee-sub δ (sub-id ▹ inline e)
   ... | _ | _ | _ = let′ (inline e) δ
 
   env-replace : Env Γ Δ → (a b : E Δ is) → Env Γ Δ
@@ -323,10 +323,10 @@ module Extract where
   grad-id-pp = Pretty.pretty Primitives.Microgpt.id-e (ε ▹ "inp")
 
   grad-softmax-s : String
-  grad-softmax-s = pp Primitives.Microgpt.softmax-e (ε ▹ "inp")
+  grad-softmax-s = pp Primitives.Microgpt.softmax-e (ε ▹ "j" ▹ "inp")
 
   grad-softmax-pp : String
-  grad-softmax-pp = Pretty.pretty Primitives.Microgpt.softmax-e (ε ▹ "inp")
+  grad-softmax-pp = Pretty.pretty Primitives.Microgpt.softmax-e (ε ▹ "j" ▹ "inp")
 
   grad-softmax-inline-pp : String
   grad-softmax-inline-pp = Pretty.pretty Primitives.Microgpt.softmax-inline-e (ε ▹ "inp")

@@ -659,38 +659,62 @@ module _ where
   open import Data.Nat using (ℕ; zero; suc; _+_)
   open WkSub hiding (_∙ˢ_)
 
-  count-selv : E Γ is → ip ∈ Γ → ℕ
-  count-selv (sels e e₁) v with isVar e
-  ... | no a = count-selv e v
-  ... | yes (w , refl) with eq? w v
-  ... | veq = 1
-  ... | _ = 0
-  count-selv (sel e e₁) v with isVar e
-  ... | no a = count-selv e v
-  ... | yes (w , refl) with eq? w v
-  ... | veq = 1
-  ... | _ = 0
-  count-selv (selb x e e₁) v with isVar e
-  ... | no a = count-selv e v
-  ... | yes (w , refl) with eq? w v
-  ... | veq = 1
-  ... | _ = 0
-  count-selv (imaps e) v = count-selv e (there v)
-  count-selv (imap e) v = count-selv e (there v)
-  count-selv (imapb x e) v = count-selv e (there v)
-  count-selv (sum e) v = count-selv e (there v)
-  count-selv (maximum e) v = count-selv e (there v)
-  count-selv (zero-but i j e) v = count-selv e v
-  count-selv (slide i x e x₁) v = count-selv e v
-  count-selv (backslide i e x x₁) v = count-selv e v
-  count-selv (bin x e e₁) v = (count-selv e v) + (count-selv e₁ v)
-  count-selv (scaledown x e) v = count-selv e v
-  count-selv (let′ e e₁) v = count-selv e v + count-selv e₁ (there v)
-  count-selv (un x e) v = count-selv e v
-  count-selv e v = 0
+  -- chain-selx? : E Γ is → ip ∈ Γ → ℕ
 
-  test-count : ℕ
-  test-count = count-selv {Γ = ε ▹ ar unit ▹ ix unit} {is = ar unit} (sels (var v₁) (var v₀) ⊞ sels (var v₁) (var v₀)) v₁
+  count-sels : E Γ is → ip ∈ Γ → ℕ
+  count-sels (sels e e₁) v with isVar e
+  ... | no a = count-sels e v
+  ... | yes (w , refl) with eq? w v
+  ... | veq = 1
+  ... | _ = 0
+  count-sels (sel e e₁) v = count-sels e v
+  count-sels (selb x e e₁) v = count-sels e v
+  count-sels (imaps e) v = count-sels e (there v)
+  count-sels (imap e) v = count-sels e (there v)
+  count-sels (imapb x e) v = count-sels e (there v)
+  count-sels (sum e) v = count-sels e (there v)
+  count-sels (maximum e) v = count-sels e (there v)
+  count-sels (zero-but i j e) v = count-sels e v
+  count-sels (slide i x e x₁) v = count-sels e v
+  count-sels (backslide i e x x₁) v = count-sels e v
+  count-sels (bin x e e₁) v = (count-sels e v) + (count-sels e₁ v)
+  count-sels (scaledown x e) v = count-sels e v
+  count-sels (let′ e e₁) v = count-sels e v + count-sels e₁ (there v)
+  count-sels (un x e) v = count-sels e v
+  count-sels e v = 0
+
+  -- count-selv : E Γ is → ip ∈ Γ → ℕ
+  -- count-selv (sels e e₁) v with isVar e
+  -- ... | no a = count-selv e v
+  -- ... | yes (w , refl) with eq? w v
+  -- ... | veq = 1
+  -- ... | _ = 0
+  -- count-selv (sel e e₁) v with isVar e
+  -- ... | no a = count-selv e v
+  -- ... | yes (w , refl) with eq? w v
+  -- ... | veq = 1
+  -- ... | _ = 0
+  -- count-selv (selb x e e₁) v with isVar e
+  -- ... | no a = count-selv e v
+  -- ... | yes (w , refl) with eq? w v
+  -- ... | veq = 1
+  -- ... | _ = 0
+  -- count-selv (imaps e) v = count-selv e (there v)
+  -- count-selv (imap e) v = count-selv e (there v)
+  -- count-selv (imapb x e) v = count-selv e (there v)
+  -- count-selv (sum e) v = count-selv e (there v)
+  -- count-selv (maximum e) v = count-selv e (there v)
+  -- count-selv (zero-but i j e) v = count-selv e v
+  -- count-selv (slide i x e x₁) v = count-selv e v
+  -- count-selv (backslide i e x x₁) v = count-selv e v
+  -- count-selv (bin x e e₁) v = (count-selv e v) + (count-selv e₁ v)
+  -- count-selv (scaledown x e) v = count-selv e v
+  -- count-selv (let′ e e₁) v = count-selv e v + count-selv e₁ (there v)
+  -- count-selv (un x e) v = count-selv e v
+  -- count-selv e v = 0
+
+  -- test-count : ℕ
+  -- test-count = count-selv {Γ = ε ▹ ar unit ▹ ix unit} {is = ar unit} (sels (var v₁) (var v₀) ⊞ sels (var v₁) (var v₀)) v₁
 
   inline : E Γ is → E Γ is
   inline e = norm-lets (inline' e) where
@@ -712,14 +736,13 @@ module _ where
     inline' (scaledown x e) = scaledown x (inline' e)
     inline' (un x e) = un x (inline' e)
     inline' (maximum e) = maximum (inline' e)
-    inline' (let′ e e₁) with a ← (inline' e₁) | count-uses a v₀ | count-selv a v₀ | e
+    inline' (let′ e e₁) with a ← (inline' e₁) | count-uses a v₀ | count-sels a v₀ | e
     ... | 0 | _ | _ = sub a (sub-id ▹ (inline' e))
     ... | _ | _ | var v = sub a (sub-id ▹ (var v))
     ... | _ | _ | zero = sub a (sub-id ▹ zero)
     ... | _ | _ | one = sub a (sub-id ▹ one)
     ... | 1 | 1 | _ = sub a (sub-id ▹ inline' e)
     ... | _ | _ | _ = let′ (inline' e) a
-    -- ... | _ | _ = let′ (inline' e) a
 
   -- _⊆?_ : (Γ Δ : Ctx) → Dec (Γ ⊆ Δ)
   -- ε ⊆? Δ = yes ⊆-ε

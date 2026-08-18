@@ -13,132 +13,123 @@ import futhark_server
 seed = 40
 random.seed(seed)
 
-xs = [mp.to_val(2) , mp.to_val(3)]
-total = xs[0] + xs[1]
-rs = [x * total for x in xs]
-rs[0].backward()
-rs[1].backward()
-dxs = [x.grad for x in xs]
+def softmax(logits):
+    max_val = max(val for val in logits)
+    exps = [np.exp(val - max_val) for val in logits]
+    total = np.sum(exps)
+    return [e / total for e in exps]
 
-print(dxs)
+futhark = "futhark/microgpt"
+# print(futhark)
 
-# def softmax(logits):
-#     max_val = max(val for val in logits)
-#     exps = [np.exp(val - max_val) for val in logits]
-#     total = np.sum(exps)
-#     return [e / total for e in exps]
+# Data
+file = open('input-mgpt/input.txt')
+docs = [line.strip() for line in file if line.strip()]
+random.shuffle(docs)
 
-# futhark = "futhark/microgpt"
-# # print(futhark)
+# Tokenizer
+uchars = sorted(set(''.join(docs)))
+BOS = len(uchars)
+vocab_size = len(uchars) + 1
+vocab = uchars + ["end"]
 
-# # Data
-# file = open('input-mgpt/input.txt')
-# docs = [line.strip() for line in file if line.strip()]
-# random.shuffle(docs)
+# Initialize the parameters, to store the knowledge of the model
+ed = 16     # width of the network (embedding dimension)
+sl = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
+ah = 4      # number of attention heads
+hd = ed // ah # derived dimension of each head
+big_num = 1000000000000000
 
-# # Tokenizer
-# uchars = sorted(set(''.join(docs)))
-# BOS = len(uchars)
-# vocab_size = len(uchars) + 1
-# vocab = uchars + ["end"]
+dimdic = {'wte' : (vocab_size, ed), 'wpe' : (sl, ed),
+          'wqry' : (ed, ed), 'wkey' : (ed, ed), 'wval' : (ed, ed),
+          'wout' : (ed, ed), 'wup' : (4 * ed, ed), 'wdown' :(ed, 4 * ed),
+          'wvoc': (vocab_size, ed)}
 
-# # Initialize the parameters, to store the knowledge of the model
-# ed = 16     # width of the network (embedding dimension)
-# sl = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
-# ah = 4      # number of attention heads
-# hd = ed // ah # derived dimension of each head
-# big_num = 1000000000000000
+ran_matrix = lambda nout, nin, std=0.08: \
+    np.array([[random.gauss(0, std) for _ in range(nin)] for _ in range(nout)])
 
-# dimdic = {'wte' : (vocab_size, ed), 'wpe' : (sl, ed),
-#           'wqry' : (ed, ed), 'wkey' : (ed, ed), 'wval' : (ed, ed),
-#           'wout' : (ed, ed), 'wup' : (4 * ed, ed), 'wdown' :(ed, 4 * ed),
-#           'wvoc': (vocab_size, ed)}
+fwdic = {}
+fmdic = {}
+fvdic = {}
+pmdic = {}
+pvdic = {}
 
-# ran_matrix = lambda nout, nin, std=0.08: \
-#     np.array([[random.gauss(0, std) for _ in range(nin)] for _ in range(nout)])
+for k , dim in dimdic.items():
+    fwdic[k] = ran_matrix(*dim)
+    fmdic[k] = np.zeros(dim)
+    fvdic[k] = np.zeros(dim)
+    pmdic[k] = np.zeros(dim)
+    pvdic[k] = np.zeros(dim)
+pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
 
-# fwdic = {}
-# fmdic = {}
-# fvdic = {}
-# pmdic = {}
-# pvdic = {}
+ones = np.ones((sl,sl))
+cau_mask = (ones - np.tril(ones))
 
-# for k , dim in dimdic.items():
-#     fwdic[k] = ran_matrix(*dim)
-#     fmdic[k] = np.zeros(dim)
-#     fvdic[k] = np.zeros(dim)
-#     pmdic[k] = np.zeros(dim)
-#     pvdic[k] = np.zeros(dim)
-# pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
+num_steps = 500
 
-# ones = np.ones((sl,sl))
-# cau_mask = (ones - np.tril(ones))
+#-------------------------------------
+# TRAINING FUT
 
-# num_steps = 50
+print("Hold on to your morses")
 
-# #-------------------------------------
-# # TRAINING FUT
+# Preprocessing
+masks = np.zeros((num_steps, sl, sl)).astype(np.float64)
+dls = np.zeros((num_steps)).astype(np.int64)
+seqs = np.zeros((num_steps, sl)).astype(np.int64, copy=False)
 
-# print("Hold on to your morses")
+for step in range(num_steps):
+    # doc lengths
+    doc = docs[step % len(docs)]
+    dl = len(doc) + 2
+    dls[step] = dl
+    # Masking
+    pad_mask = np.ones((sl,sl))
+    for i in range(dl):
+        pad_mask[i][ 0 : dl] = 0
+    mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
+    mask = -1*mask*big_num
+    masks[step] = mask
 
-# # Preprocessing
-# masks = np.zeros((num_steps, sl, sl)).astype(np.float64)
-# dls = np.zeros((num_steps)).astype(np.int64)
-# seqs = np.zeros((num_steps, sl)).astype(np.int64, copy=False)
+with futhark_server.Server(futhark) as server:
+    server.put_value('num_steps',
+                     np.array(num_steps).astype(np.int64, copy=False))
+    for k , data in fwdic.items():
+        server.put_value(k, data)
+    server.cmd_call('to_params', 'p', *fwdic.keys())
+    server.cmd_call('zero_params', 'mp')
+    server.cmd_call('zero_params', 'vp')
+    server.put_value('masks', masks)
+    server.put_value('dls', dls)
 
-# for step in range(num_steps):
-#     # doc lengths
-#     doc = docs[step % len(docs)]
-#     dl = len(doc) + 2
-#     dls[step] = dl
-#     # Masking
-#     pad_mask = np.ones((sl,sl))
-#     for i in range(dl):
-#         pad_mask[i][ 0 : dl] = 0
-#     mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
-#     mask = -1*mask*big_num
-#     masks[step] = mask
+    # start timer
+    start = time.time()
+    # Tokenization
+    for step in range(num_steps):
+        doc = docs[step % len(docs)]
+        dl = len(doc) + 2
+        tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+        # Padding
+        ftokens = tokens + ([BOS] * (sl - dl))
+        seqs[step] = ftokens
+    server.put_value('seqs', seqs)
+    server.cmd_call('train', 'p_mp_vp', 'p', 'mp', 'vp', 'masks',
+                    'dls', 'seqs')
+    end = time.time()
+    print("fgrad time", end - start)
+    p_mp_vp = server.get_value('p_mp_vp')
 
-# with futhark_server.Server(futhark) as server:
-#     server.put_value('num_steps',
-#                      np.array(num_steps).astype(np.int64, copy=False))
-#     for k , data in fwdic.items():
-#         server.put_value(k, data)
-#     server.cmd_call('to_params', 'p', *fwdic.keys())
-#     server.cmd_call('zero_params', 'mp')
-#     server.cmd_call('zero_params', 'vp')
-#     server.put_value('masks', masks)
-#     server.put_value('dls', dls)
+for i , k in enumerate(dimdic.keys()):
+    fwdic[k] = p_mp_vp[i]
+    fmdic[k] = p_mp_vp[i + 9]
+    fmdic[k] = p_mp_vp[i + 18]
 
-#     # start timer
-#     start = time.time()
-#     # Tokenization
-#     for step in range(num_steps):
-#         doc = docs[step % len(docs)]
-#         dl = len(doc) + 2
-#         tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
-#         # Padding
-#         ftokens = tokens + ([BOS] * (sl - dl))
-#         seqs[step] = ftokens
-#     server.put_value('seqs', seqs)
-#     server.cmd_call('train', 'p_mp_vp', 'p', 'mp', 'vp', 'masks',
-#                     'dls', 'seqs')
-#     end = time.time()
-#     print("fgrad time", end - start)
-#     p_mp_vp = server.get_value('p_mp_vp')
-
-# for i , k in enumerate(dimdic.keys()):
-#     fwdic[k] = p_mp_vp[i]
-#     fmdic[k] = p_mp_vp[i + 9]
-#     fmdic[k] = p_mp_vp[i + 18]
-
-# try:
-#     np.save("fwdic.npy", fwdic, allow_pickle=True)
-#     file = open('fwdic.txt', 'wt')
-#     file.write(str(fwdic))
-#     file.close()
-# except :
-#     print("It refused")
+try:
+    np.save("fwdic.npy", fwdic, allow_pickle=True)
+    file = open('fwdic.txt', 'wt')
+    file.write(str(fwdic))
+    file.close()
+except :
+    print("It refused")
 
 # #-------------------------------------
 # # TRAINING PY

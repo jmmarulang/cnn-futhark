@@ -160,6 +160,9 @@ module _ where
   𝕀0+ : (E Γ (ar s)) → E Γ (ar s)
   𝕀0+ a = 𝕀0- (⊟ a)
 
+  𝕀≤ : (E Γ (ar s)) → (E Γ (ar s)) → E Γ (ar s)
+  𝕀≤ a b = 𝕀0+ (a ⊟ b)
+
   𝟚 : E Γ (ar s)
   𝟚 = 𝟙 ⊞ 𝟙
 
@@ -899,20 +902,19 @@ module Primitives where
       Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
       sels (sel ⟨ w1 ⟩ i) k ⊠ sels (sel ⟨ w2 ⟩ k) j
 
-    stabilize : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
-    stabilize {s = s} x = x ⊟ tiles (Max {s} (λ i → sels ⟨ x ⟩ i))
+    -- stabilize : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
+    -- stabilize {s = s} x = x ⊟ tiles (Max {s} (λ i → sels ⟨ x ⟩ i))
 
     -- Is this correct?
     softmax : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
     softmax {s = s} x =
-      Let exps := 𝕖^ x In
-      Let total := (Sum {s} (λ i → sels exps i)) In
-      -- Let itotal := 𝟙/ total In
-      exps ⊠ (tiles $ 𝟙/ total)
-      -- Let maxs := Max {s} (λ i → sels ⟨ x ⟩ i) In
-      -- Let exps := 𝕖^ (⟨ x ⟩ ⊟ tiles maxs) In
+      -- Let exps := 𝕖^ x In
       -- Let total := Sum {s} (λ i → sels exps i) In
-      -- exps // tiles total
+      -- exps ⊠ (tiles $ 𝟙/ total)
+      Let maxs := Max {s} (λ i → sels ⟨ x ⟩ i) In
+      Let exps := 𝕖^ (⟨ x ⟩ ⊟ tiles maxs) In
+      Let total := Sum {s} (λ i → sels exps i) In
+      exps ⊠ (tiles $ 𝟙/ total)
 
     -- m-stabilize : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
     -- m-stabilize {s = s} x = Imap {s} λ i → stabilize (sel ⟨ x ⟩ i)
@@ -982,15 +984,15 @@ module Primitives where
                    (qs ks vs : E Γ (ar (sl ⊗ hd)))
                   → E Γ (ar (sl ⊗ hd))
     attention {sl} {hd} {Γ} sc mask hqs hks hvs =
-      Let hqks := matmult {sl} hqs hks In
-      Let masked := (scaledown sc hqks) ⊞ ⟨ mask ⟩ In
-      Let maxs := Imap {sl} (λ i → tiles (Max (λ j → sels (sel masked i) j))) In
-      Let sf := m-softmax {sl} (masked ⊟ maxs) In
-      matmul {sl} sf ⟨ hvs ⟩
       -- Let hqks := matmult {sl} hqs hks In
       -- Let masked := (scaledown sc hqks) ⊞ ⟨ mask ⟩ In
-      -- Let sf := m-softmax {sl} (masked) In
+      -- Let maxs := Imap {sl} (λ i → tiles (Max (λ j → sels (sel masked i) j))) In
+      -- Let sf := m-softmax {sl} (masked ⊟ maxs) In
       -- matmul {sl} sf ⟨ hvs ⟩
+      Let hqks := matmult {sl} hqs hks In
+      Let masked := (scaledown sc hqks) ⊞ ⟨ mask ⟩ In
+      Let sf := m-softmax {sl} (masked) In
+      matmul {sl} sf ⟨ hvs ⟩
 
     mh-attention : ∀ {Γ} (sc : ℕ)
                    (mask : E Γ (ar (sl ⊗ sl)))
@@ -1114,7 +1116,7 @@ module Primitives where
     div-e = Lcon (ar (ι 6) ∷ ar (ι 6) ∷ []) (ar (ι 6)) ε (λ x y → (x ⊞ y) // (x ⊞ y))
 
     softmax-e : E _ _
-    softmax-e = Lcon (ar (ι 5 ⊗ ι 6) ∷ []) (ar (ι 5 ⊗ ι 6)) ε (λ x → softmax {s = ι 5 ⊗ ι 6} x)
+    softmax-e = Lcon (ar (ι 2) ∷ ar (ι 2) ∷ []) (ar (ι 2)) ε (λ i x → softmax {s = ι 2} x)
 
     softmax-inline : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
     softmax-inline {s = s} x = (𝕖^ x) // tiles (Sum {s} (λ i → sels (𝕖^ ⟨ x ⟩) i))

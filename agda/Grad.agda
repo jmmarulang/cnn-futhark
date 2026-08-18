@@ -184,10 +184,10 @@ module _ where
   --   env (env-map-sum (ee-fold (let′ {s = p} x ρ)))
   ee-map-sum {s = s} (let′ {s = p} x ρ) with (stren-∃ x v₀)
   ... | just (x' , eq) = let′ x' (ee-map-sum (ee-sub ρ sub-swap))
-  ... | nothing = env (env-map-sum (ee-fold (let′ {s = p} x ρ)))
-  -- ... | nothing =
-  --       let′ (imap x) (ee-map-sum {s = s}
-  --         (ee-sub ρ (skeep (sdrop sub-id) ▹ sel (var (there v₀)) (var v₀))))
+  -- ... | nothing = env (env-map-sum (ee-fold (let′ {s = p} x ρ)))
+  ... | nothing =
+        let′ (imap x) (ee-map-sum {s = s}
+          (ee-sub ρ (skeep (sdrop sub-id) ▹ sel (var (there v₀)) (var v₀))))
 
   {-# TERMINATING #-} -- See GradTerm.agda where this is fixed
   grad-last : E Γ (ar s) → EE (Γ ▹ ar s) Γ → EE Γ Γ
@@ -241,23 +241,13 @@ module _ where
   grad (𝕀+ e)                 s δ = grad e 𝟘 δ -- is this correct?
   grad (𝕖^ e)                 s δ = grad e ((𝕖^ e) ⊠ s) δ
   grad (sqrt e)               s δ = grad e (s // (𝟚 ⊠ sqrt e)) δ
-  grad (𝟙/ e)                 s δ = grad e (⊟ (s // (e ⊠ e))) δ
+  grad (𝟙/ e)                 s δ = grad e (let′(e ⊠ e) (⊟ ((s ↑) // (var v₀)))) δ
   grad (ln e)                 s δ = grad e (s // e) δ
-  grad (maximum {s = p} e)    s δ =
-    let t = skip (skip ⊆-eq) in
-    let′ (maximum {s = p} e) (let′ (𝟙/ (E.sum (𝕀0+ (wk (keep (skip ⊆-eq)) e ⊟ var (there v₀)))))
-      (ee-tail (ee-tail (grad-sum
-        (wk (keep t) e)
-        (
-          wk (skip t) s ⊠
-          𝕀0+ (
-            wk (keep t) e ⊟
-            var (there (there v₀))
-            ) ⊠
-          var (there v₀)
-        )
-        (ee-wk t (ee-wk-zero δ t))))))
-
+  grad (maximum {s = p} e)    s δ = -- Is this correct?
+    let t = let′ (maximum {s = p} (e ↑)) (
+            let′ (𝟙/ $ E.sum {s = p} $ 𝕀≤ (e ↑ ↑) (var v₁))
+            (var v₀ ⊠ (s ↑ ↑ ↑) ⊠ 𝕀≤ (e ↑ ↑) (var v₁)))
+    in grad-sum e t δ
   grad-last′ v e (env ρ) = let
     w = env-lookup ρ v
     t = grad (wk (wk-/ v) e) (var v) (env (env-wk (wk-/ v) ρ))
@@ -270,6 +260,20 @@ module _ where
   grad-last e (let′ x ρ) = let
       t = let′ x $′ ee-tail $′ grad-last (e ↑) (ee-wk-zero ρ (keep (skip ⊆-eq)))
     in t
+
+-- let t = skip (skip ⊆-eq) in
+    -- let′ (maximum {s = p} e) (let′ (𝟙/ (E.sum (𝕀0+ (wk (keep (skip ⊆-eq)) e ⊟ var (there v₀)))))
+    --   (ee-tail (ee-tail (grad-sum
+    --     (wk (keep t) e)
+    --     (
+    --       wk (skip t) s ⊠
+    --       𝕀0+ (
+    --         wk (keep t) e ⊟
+    --         var (there (there v₀))
+    --         ) ⊠
+    --       var (there v₀)
+    --     )
+    --     (ee-wk t (ee-wk-zero δ t))))))
 
 open import Lang
 open import Opt
