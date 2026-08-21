@@ -42,7 +42,7 @@ module _ where
   replace (let′ e e₁) x y | nothing = let′ (replace e x y) (replace e₁ (x ↑) (y ↑))
   -- Jairo made
   replace (un x₁ e) x y | nothing = un x₁ (replace e x y)
-  replace (maximum e) x y | nothing = maximum (replace e (x ↑) (y ↑))
+  replace (argmax sn e) x y | nothing = argmax sn (replace e x y)
 
   replace-let : (e : E Γ is) → E Γ is
   replace-let (let′ e e₁) = let e' = (replace-let e) in
@@ -66,7 +66,7 @@ module _ where
   replace-let (bin x e e₁) = bin x (replace-let e) (replace-let e₁)
   replace-let (scaledown x e) = scaledown x (replace-let e)
   replace-let (un x e) = un x (replace-let e)
-  replace-let (maximum e) = maximum (replace-let e)
+  replace-let (argmax sn e) = argmax sn (replace-let e)
 
   -- inline : E Γ is → E Γ is
   -- inline e = norm-lets (inline' e) where

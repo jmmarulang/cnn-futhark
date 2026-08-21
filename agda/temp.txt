@@ -1,6 +1,10 @@
-let dinp = 0 + (sum λ x1 → 0 + (imap λ x2 → (zero-but x2 x1 (let x3 = (max λ x4 → sels (sel inp x1) x4) in
-let x5 = inv (sum λ x6 → 1 + - (ind-positive (- (x3 + - (sels (sel inp x1) x6))))) in
-(imaps λ x7 → x5 * sels j x7 * (1 + - (ind-positive (- (x3 + - (sels (sel inp x1) x7))))))))))"
+elet x0 = sels f (argmax f)
+elet x1 = exp (f + - (imaps λ x2 → x0))
+elet x3 = sum λ x4 → sels x1 x4
+elet x5 = sum λ x6 → - (((sels f' x6 * sels x1 x6) * inv ((x3 * x3))))
+elet x7 = imaps λ x8 → (sels f' x8 * inv x3) + x5
+elet x9 = sum λ x10 → - ((sels x1 x10 * sels x7 x10))
+let df = imaps λ x11 → (sels x1 x11 * sels x7 x11) + (zero-but x11 (argmax f) x9)
 ----
 static void softmax_backward(float *dlogits, const float *probs, const float *dprobs, int n) {
     -- // d/dlogits[i] = probs[i] * (dprobs[i] - sum_j(probs[j] * dprobs[j]))
@@ -11,12 +15,6 @@ static void softmax_backward(float *dlogits, const float *probs, const float *dp
         dlogits[i] = probs[i] * (dprobs[i] - dot);
     }
 }
-----
-let x0 = (imap2 5 6 (\x1_0 x1_1 -> (F.exp inp[x1_0][x1_1])))
-let x2 = (isum2 5 6 (\x3_0 x3_1 -> x0[x3_0][x3_1]))
-let x4 = (isum2 5 6 (\x5_0 x5_1 -> (F.neg (x0[x5_0][x5_1] F.* (one F./ (x2 F.* x2))))))
-let x6 = (imap2 5 6 (\x7_0 x7_1 -> ((one F./ x2) F.+ x4)))
-let dinp = (imap2 5 6 (\x8_0 x8_1 -> (x0[x8_0][x8_1] F.* x6[x8_0][x8_1])))
 -----
 static void softmax_forward(float *x, int n) {
     float max_val = x[0];

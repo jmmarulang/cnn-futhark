@@ -396,6 +396,10 @@ module _ where
     ∙ sum₁-cong {n = s} _⊙_ e λ i →
       sym (sum-dist _⊙_ e {λ j → a (i ++ j)} neul prop))
 
+  lastIx : suc p ≈ s → P s
+  lastIx {p} {[]} pr = []
+  lastIx {p ∷ ps} {x ∷ s} (cons {p = _} ⦃ refl ⦄ ⦃ b ⦄) = F.fromℕ p ∷ (lastIx b)
+
 module ArTests where
   imap : (s : S) → (P s → X) → Ar s X
   imap s f = f

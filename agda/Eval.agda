@@ -1,4 +1,5 @@
 -- {-# OPTIONS --warn=noUserWarning #-}
+{-# OPTIONS --allow-unsolved-metas #-}
 open import Data.Product
 open import Data.Unit
 open import Data.Empty
@@ -8,14 +9,16 @@ open import Data.List as L using (List; []; _∷_)
 open import Data.List.Relation.Unary.All as All using (All; []; _∷_)
 open import Relation.Binary.PropositionalEquality
 open import Relation.Nullary
+open import Data.Product.Properties
 open import Function
 
 open import Ar
 open import Lang
 open import Real
 
-module Eval (r : Real) where
+module Eval (r : Real) (rp : RealProp r) where
   open Real.Real r
+  open RealProp rp
 
   ⟦_⟧ˢ : IS → Set
   ⟦ ix s ⟧ˢ = P s
@@ -34,11 +37,22 @@ module Eval (r : Real) where
   ... | yes _ = x i
   ... | no _ = fromℕ 0
 
-
   zb : (i j : P s) → ⟦ ar p ⟧ˢ → ⟦ ar p ⟧ˢ
   zb i j x with i ≟ₚ j
   ... | yes _ = x
   ... | no _ = K (fromℕ 0)
+
+  -- could be modified to make it commutatitve
+  max-pair : (R × P s) → (R × P s) → (R × P s)
+  max-pair (r1 , i1) (r2 , i2) with (r1 ≤ᵣ? r2)
+  ... | yes _ = (r2 , i2)
+  ... | no _ = (r1 , i1)
+
+  maximum-pair : suc p ≈ s → Ar s R → (R × P s)
+  maximum-pair pr f = Ar.sum max-pair (-∞ᵣ , lastIx pr) λ i → (f i) , i
+
+  ixmaximum : suc p ≈ s → Ar s R → P s
+  ixmaximum pr f = proj₂ (maximum-pair pr f)
 
   eval : E Γ is → ⟦ Γ ⟧ᶜ → ⟦ is ⟧ˢ
   eval (var x) ρ = lookup x ρ
@@ -52,9 +66,6 @@ module Eval (r : Real) where
   eval (E.selb x e e₁) ρ = Ar.selb (eval e ρ) x (eval e₁ ρ)
   eval (E.sum e) ρ = Ar.sum (Ar.zipWith _+_) (Ar.K (fromℕ 0)) (λ i → eval e (ρ , i))
   eval (zero-but e e₁ e₂) ρ = zb (eval e ρ) (eval e₁ ρ) (eval e₂ ρ)
-  --with eval e ρ ≟ₚ eval e₁ ρ
-  --... | yes _ = eval e₂ ρ
-  --... | no  _ = Ar.K (fromℕ 0)
   eval (E.slide e x e₁ x₁) ρ = Ar.slide (eval e ρ) x (eval e₁ ρ) x₁
   eval (E.backslide e e₁ x x₁) ρ = Ar.backslide (eval e ρ) (eval e₁ ρ) x (fromℕ 0) x₁
   eval (logi e) ρ = Ar.map logisticʳ (eval e ρ)
@@ -70,7 +81,7 @@ module Eval (r : Real) where
   eval (sqrt e) ρ = Ar.map √_ (eval e ρ)
   eval (𝟙/ e) ρ = Ar.map 1/_ (eval e ρ)
   eval (ln e) ρ = Ar.map log (eval e ρ)
-  eval (maximum e) ρ = Ar.sum (Ar.zipWith _∨_) (Ar.K (-∞ᵣ)) (λ i → eval e (ρ , i))
+  eval (argmax pf e) ρ = ixmaximum pf (eval e ρ)
 
   _≈ᵃ_ : Ar s X → Ar s X → Set
   a ≈ᵃ b = ∀ i → a i ≡ b i
@@ -162,10 +173,15 @@ module Eval (r : Real) where
   eval-cong (sqrt e) eq i = cong √_ (eval-cong e eq i)
   eval-cong (𝟙/ e) eq i = cong 1/_ (eval-cong e eq i)
   eval-cong (ln e) eq i = cong log (eval-cong e eq i)
-  eval-cong (maximum e) eq i = sum-inv _∨_ (-∞ᵣ) {λ i → eval e (_ , i)} i
-                             ∙ sum-cong _∨_ (-∞ᵣ) {(λ j → eval e (_ , j) i)}
-                                            (λ j → eval-cong e (eq ▹ refl) i)
-                             ∙ sym (sum-inv _∨_ (-∞ᵣ) {λ i → eval e (_ , i)} i)
+  eval-cong (argmax pf e) eq = {!   !}
+    -- cong proj₂ (sum-cong max-pair (-∞ᵣ , lastIx pf)
+    --    λ i → ×-≡,≡→≡ (eval-cong e eq i , refl))
+
+
+    -- sum-inv _∨_ (-∞ᵣ) {λ i → eval e (_ , i)} i
+    --                          ∙ sum-cong _∨_ (-∞ᵣ) {(λ j → eval e (_ , j) i)}
+    --                                         (λ j → eval-cong e (eq ▹ refl) i)
+    --                          ∙ sym (sum-inv _∨_ (-∞ᵣ) {λ i → eval e (_ , i)} i)
 
   open WkSub hiding (_∙ˢ_)
 
@@ -228,9 +244,12 @@ module Eval (r : Real) where
   eval-wk w (sqrt e) ρ = Ar.map-cong √_ (eval-wk w e ρ)
   eval-wk w (𝟙/ e) ρ = Ar.map-cong 1/_ (eval-wk w e ρ)
   eval-wk w (ln e) ρ = Ar.map-cong log (eval-wk w e ρ)
-  eval-wk w (maximum e) ρ i = sum-inv _∨_ (-∞ᵣ) {(λ i₁ → eval (wk (keep w) e) (ρ , i₁))} i
-                            ∙ sum-cong _∨_ (-∞ᵣ) (λ t → eval-wk (keep w) e (ρ , t) i)
-                            ∙ sym (sum-inv _∨_ (-∞ᵣ) {(λ i₁ → eval e (wk-env w ρ , i₁))} i)
+  eval-wk w (argmax pf e) ρ = {!   !}
+    -- cong proj₂ (sum-cong max-pair ((-∞ᵣ , lastIx pf))
+    --    λ i → ×-≡,≡→≡ (eval-wk w e ρ i , refl))
+    -- sum-inv _∨_ (-∞ᵣ) {(λ i₁ → eval (wk (keep w) e) (ρ , i₁))} i
+    --                         ∙ sum-cong _∨_ (-∞ᵣ) (λ t → eval-wk (keep w) e (ρ , t) i)
+    --                         ∙ sym (sum-inv _∨_ (-∞ᵣ) {(λ i₁ → eval e (wk-env w ρ , i₁))} i)
 
   sub-env-wks : (s : Sub Γ Δ) → (w : Γ ⊆ Ψ) → ∀ ρ → sub-env (wks s w) ρ ≈ᶜ sub-env s (wk-env w ρ)
   sub-env-wks ε w _ = ε
@@ -312,13 +331,16 @@ module Eval (r : Real) where
   eval-sub (sqrt e) ρ s i = cong √_ (eval-sub e ρ s i)
   eval-sub (𝟙/ e) ρ s i = cong 1/_ (eval-sub e ρ s i)
   eval-sub (ln e) ρ s i = cong log (eval-sub e ρ s i)
-  eval-sub (maximum e) ρ s i = sum-inv _∨_ (-∞ᵣ) {(λ i₁ → eval (sub e (wks s (skip ⊆-eq) ▹ var v₀)) (ρ , i₁))} i
-                             ∙ sum-cong _∨_ (-∞ᵣ)
-                                            {(λ j → eval (sub e (wks s (skip ⊆-eq) ▹ var v₀)) (ρ , j) i)}
-                                            (λ j → eval-sub e (ρ , j) ((wks s (skip ⊆-eq) ▹ var v₀)) i
-                                                   ∙ eval-cong e ((sub-env-wks s (skip ⊆-eq) (ρ , j)
-                                                                   ∙ᶜ sub-env-cong s wk-env-id) ▹ refl) i)
-                             ∙ sym (sum-inv _∨_ (-∞ᵣ){λ i₁ → eval e (sub-env s ρ , i₁)} i)
+  eval-sub (argmax pf e) ρ s = {!   !}
+    -- cong proj₂ (sum-cong max-pair ((-∞ᵣ , lastIx pf))
+    --    λ i → ×-≡,≡→≡ (eval-sub e ρ s i , refl))
+    -- sum-inv _∨_ (-∞ᵣ) {(λ i₁ → eval (sub e (wks s (skip ⊆-eq) ▹ var v₀)) (ρ , i₁))} i
+    --                          ∙ sum-cong _∨_ (-∞ᵣ)
+    --                                         {(λ j → eval (sub e (wks s (skip ⊆-eq) ▹ var v₀)) (ρ , j) i)}
+    --                                         (λ j → eval-sub e (ρ , j) ((wks s (skip ⊆-eq) ▹ var v₀)) i
+    --                                                ∙ eval-cong e ((sub-env-wks s (skip ⊆-eq) (ρ , j)
+    --                                                                ∙ᶜ sub-env-cong s wk-env-id) ▹ refl) i)
+    --                          ∙ sym (sum-inv _∨_ (-∞ᵣ){λ i₁ → eval e (sub-env s ρ , i₁)} i)
 
   eval-zb : (a : E Γ (ar s)) (i : E Γ (ix p)) → ∀ ρ → eval (zero-but i i a) ρ ≈ᵃ eval a ρ
   eval-zb a i ρ with eval i ρ ≟ₚ eval i ρ
@@ -364,8 +386,8 @@ module Eval (r : Real) where
     -- ?0 :{!   !}eval y ρ ≈ˢ eval y' (wk-env (wk-/ x) ρ)
 
 
-  module ZeroBut (rp : RealProp r) where
-    open RealProp rp
+  module ZeroBut where
+    -- open RealProp rp
 
     zbs-suc-r : (i : P (n ∷ [])) (j : P (n ∷ [])) (is js : P s) (t : P (n ∷ s) → R)
               → zbs (j ++ js) (i ++ is) (t) ≡ zbs js is (λ ks → zbs (j) (i) (λ k → t (k ++ ks)))

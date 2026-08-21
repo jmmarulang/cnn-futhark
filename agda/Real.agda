@@ -1,6 +1,7 @@
 open import Data.Nat using (ℕ)
 open import Relation.Binary.PropositionalEquality
 open import Data.Empty
+open import Relation.Nullary
 
 record Real : Set₁ where
   field
@@ -40,6 +41,11 @@ record RealProp (r : Real) : Set where
     *-nulʳ : ∀ {x} → x * fromℕ 0 ≡ fromℕ 0
     minus-idʳ : - fromℕ 0 ≡ fromℕ 0
     ÷-nul : ∀ {x} → (x ≡ fromℕ 0 → ⊥) → fromℕ 0 ÷ x ≡ fromℕ 0
+    *-÷-cut : ∀ {x y} → (x * (fromℕ 1 ÷ (x * y))) ≡ fromℕ 1 ÷ y -- wrong for x = 0
     fromℕ-inj : ∀ {x y} → (fromℕ x ≡ fromℕ y) → (x ≡ y)
     +-medial : ∀ {x y z w } → x + y + (z + w) ≡ x + z + (y + w)
+    _≡ᵣ?_ : ∀ (a b : R) → Dec (a ≡ b)
+
+  _≤ᵣ?_ : ∀ (a b : R) → Dec (b ≡ (a ∨ b))
+  a ≤ᵣ? b = _ ≡ᵣ? _
 

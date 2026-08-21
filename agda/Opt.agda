@@ -1,4 +1,5 @@
 -- {-# OPTIONS --warn=noUserWarning #-}
+{-# OPTIONS --allow-unsolved-metas #-}
 open import Data.Product
 open import Data.Unit
 open import Data.Empty
@@ -9,6 +10,7 @@ open import Relation.Binary.PropositionalEquality
 open import Relation.Nullary
 open import Function
 open import Data.Nat.Properties using (_≟_)
+open import Data.Product.Properties
 
 open import Ar
 open import Lang
@@ -24,8 +26,8 @@ module Opt (r : Real) (rp : RealProp r) where
   open Real.Real r
   open RealProp rp
 
-  open import Eval r
-  open ZeroBut rp
+  open import Eval r rp
+  open ZeroBut
   open WkSub hiding (_∙ˢ_)
   open import Data.Maybe
 
@@ -54,7 +56,6 @@ module Opt (r : Real) (rp : RealProp r) where
   let-out (imap e) = let-out-step imap (let-out e)
   let-out (imapb x e) = let-out-step (E.imapb x) (let-out e)
   let-out (sum e) = let-out-step E.sum (let-out e)
-  let-out (maximum e) = let-out-step maximum (let-out e)
   -- let-out (let′ e (let′ a b)) =
   --   let e' = (let-out e) in
   --   let a' = (let-out a) in
@@ -100,7 +101,6 @@ module Opt (r : Real) (rp : RealProp r) where
   sum-in (scaledown x e) = scaledown x (sum-in e)
   sum-in (let′ e e₁) = let′ (sum-in e) (sum-in e₁)
   sum-in (un x e) = un x (sum-in e)
-  sum-in (maximum e) = maximum (sum-in e)
   sum-in e = e
 
   -- selx-in-step : ∀ {s p r} → (E Γ (ar s) → E Γ (ix p) → E Γ (ar r))
@@ -581,8 +581,13 @@ module Opt (r : Real) (rp : RealProp r) where
                                             (sym (eval-wk (skip ⊆-eq) b (ρ , j) j
                                                   ∙ eval-cong b (wk-env-id) j
                                                   ∙ (sym (q ρ j))))
+  ... | no _ with isUn b
+  ... | yes (inverse , (c ⊠ d) , refl) =
+    maybe′
+      (λ eq → 𝟙/ d , λ ρ i → cong₂ _*_ (p _ _ ∙ cong (λ x → eval x _ _) eq) (q _ _) ∙ *-÷-cut)
+      (a ⊠ b , λ ρ j → cong₂ _*_ (p ρ j) (q ρ j)) (a ≟ᵉ c)
+  ... | yes (u , c , refl) = a ⊠ b , λ ρ j → cong₂ _*_ (p ρ j) (q ρ j)
   ... | no _ = a ⊠ b , λ ρ j → cong₂ _*_ (p ρ j) (q ρ j)
-  -- ... | a , p | b , q = a ⊠ b , λ ρ j → cong₂ _*_ (p ρ j) (q ρ j) --what about b = 1?
   opt (scaledown x e) with opt e
   -- Jairo Made
   ... | (imaps {s = s} a) , q = imaps (scaledown x a)
@@ -637,13 +642,10 @@ module Opt (r : Real) (rp : RealProp r) where
   ... | a , p = 𝕀+ a , (λ ρ i → cong I+ (p ρ i))
   opt (ln e) with opt e
   ... | a , p = ln a , (λ ρ i → cong log (p ρ i))
-  opt (maximum {s = s} e) with opt e
-  ... | a , p = maximum a
-              , λ ρ j → sum-inv _∨_ -∞ᵣ {(λ i₁ → eval e (ρ , i₁))} j
-                        ∙ sum-cong _∨_ -∞ᵣ {λ j₁ → eval e (ρ , j₁) j} (λ i → p (ρ , i) j)
-                        ∙ (sym (sum-inv _∨_ -∞ᵣ {λ i → eval a (ρ , i)} j))
+  opt (argmax pf e) with opt e
+  ... | a , p = (argmax pf a) , λ ρ → cong proj₂ (sum-cong max-pair (-∞ᵣ , lastIx pf) λ i → ×-≡,≡→≡ (p ρ i , refl))
 
   danger-opt : E Γ is → E Γ is
   danger-opt e =
-    -- (opt e .proj₁)
-    let-out $ sum-in $ (opt e .proj₁)
+    (opt e .proj₁)
+    -- let-out $ sum-in $ (opt e .proj₁)

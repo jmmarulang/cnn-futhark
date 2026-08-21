@@ -135,7 +135,7 @@ module _ where
   ppx p (e ⊠ e₁) ρ = do
     a ← ppx (precMul) e ρ
     b ← ppx (precMul) e₁ ρ
-    return (pars (does (p >? precMul)) $ printf "%s * %s" a b)
+    return (pars (does (p >? precMul)) $ printf "(%s * %s)" a b)
 
   ppx p (scaledown x e) ρ = do
     a ← ppx (1 + precApp) e ρ
@@ -151,10 +151,11 @@ module _ where
     a ← ppx (1 + precApp) e ρ
     return (pars (does (p >? precApp)) $ printf "%s %s" (uop x) a)
 
-  ppx p (maximum e) ρ = do
-    iv ← fresh-var
-    a ← ppx 0 e (ρ , iv)
-    return (pars (does (p >? precImap)) (printf "max λ %s → %s" iv a))
+  ppx p (argmax sn e) ρ = do
+    -- iv ← fresh-var
+    a ← ppx 0 e ρ
+    a ← ppx 0 e ρ
+    return (pars (does (p >? precImap)) (printf "argmax %s" a))
 
 
   pp : E Γ is → FEnv Γ → State ℕ (Sem is)

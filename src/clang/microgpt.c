@@ -117,7 +117,7 @@ static float *malloc_floats(int n) {
 // Hyperparameters (globals, set from CLI)
 static int n_embd = 16;
 static int n_layer = 1;
-static int block_size = 8;
+static int block_size = 16;
 static int num_steps = 500;
 static int n_head = 4;
 static double learning_rate = 1e-2;

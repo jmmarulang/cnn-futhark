@@ -178,10 +178,10 @@ module _ where
   to-sum s  i e = printf "(isum%u %s (\\%s -> %s))" (dim s) (shape-args s)
                          (ix-join i " ") e
 
-  to-maximum : (s : S) → (i : Ix s) → (e : String) → String
-  to-maximum [] i e = e
-  to-maximum s  i e = printf "(imaximum%u %s (\\%s -> %s))" (dim s) (shape-args s)
-                         (ix-join i " ") e
+  -- to-maximum : (s : S) → (i : Ix s) → (e : String) → String
+  -- to-maximum [] i e = e
+  -- to-maximum s  i e = printf "(imaximum%u %s (\\%s -> %s))" (dim s) (shape-args s)
+  --                        (ix-join i " ") e
 
   ix-plus : s + p ≈ r → (suc_≈_ p u)
           → (i : Ix s)
@@ -219,6 +219,15 @@ module _ where
     -- (i : Fin m) (j : Fin n)  (k : Fin (m * n))  k = i * n + j
     printf "((%s * %s) + %s)" i (show-nat n) j
     ∷ from-div-mod eq is js
+
+  to-argmax : (s : S) → Ix s → (e : String) → Ix s
+  to-argmax s i = to-argmax' 0 s where
+    to-argmax' : ℕ → (p : S) → (e : String) → Ix p
+    to-argmax' pi [] e = []
+    to-argmax' pi (p ∷ ps) e =
+      printf "(argmax%u_%u %s (\\%s -> %s))"
+        (dim s) pi (shape-args s) (ix-join i " ") e
+      ∷ (to-argmax' (suc pi) ps e)
 
   -- Generate a new name for an external array
   mkar : String → Ix s → State ℕ ((String → String) × String)
@@ -391,12 +400,23 @@ module _ where
     return λ i → do
       f , a′ ← a i
       return (f , printf "(F.log %s)" a′)
-  to-fut (maximum {s = s} e) ρ = do
-    i ← iv s
-    b ← to-fut e (ρ , i)
-    return λ j → do
-      f , b′ ← b j
-      return (id , to-maximum s i (f b′))
+  to-fut (argmax {s = s} pf e) ρ = do
+    a ← to-fut e ρ
+    i ← iv $ s
+    f , b ← a i
+    return (to-argmax s i b)
+  -- to-fut (argmax {n = n} pf e) ρ = do
+  --   a ← to-fut e ρ
+  --   i ← iv $ ι n
+  --   f , b ← a i
+  --   -- f or no f?
+  --   return (printf "(argmax %s (\\%s -> %s))" (shape-args (ι n)) (ix-join i " ") b ∷ [])
+    -- do
+    -- i ← iv s
+    -- b ← to-fut e (ρ , i)
+    -- return λ j → do
+    --   f , b′ ← b j
+    --   return (id , to-maximum s i (f b′))
 
 module Test where
   open import Relation.Binary.PropositionalEquality

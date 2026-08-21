@@ -241,9 +241,10 @@ module _ where
   grad (𝕀+ e)                 s δ = grad e 𝟘 δ -- is this correct?
   grad (𝕖^ e)                 s δ = grad e ((𝕖^ e) ⊠ s) δ
   grad (sqrt e)               s δ = grad e (s // (𝟚 ⊠ sqrt e)) δ
-  grad (𝟙/ e)                 s δ = grad e (let′(e ⊠ e) (⊟ ((s ↑) // (var v₀)))) δ
+  -- grad (𝟙/ e)                 s δ = grad e (let′(e ⊠ e) (⊟ ((s ↑) // (var v₀)))) δ
+  grad (𝟙/ e)                 s δ = grad e (⊟ (s // (e ⊠ e))) δ
   grad (ln e)                 s δ = grad e (s // e) δ
-  grad (maximum {s = p} e)    s δ =
+  grad (argmax pf e)    s δ = δ
       -- let e₁ = wk (keep (skip ⊆-eq)) e in
       -- let e₂ = wk (keep (skip (skip ⊆-eq))) e in
       -- let s↑ = s ↑ ↑ ↑ in
@@ -255,12 +256,12 @@ module _ where
       -- {!  grad-sum !} --ee-tail $ ee-tail $ grad-sum e₂ (var v₁ ⊠ {!   !} ⊠ 𝕀≤ (var v₂) e₂) δ₁
       -- ))
 
-    let maxs = maximum $ sels (e ↑) (var v₀) in
-    let scale = 𝟙/ $ E.sum $ 𝕀≤ (var v₁) (sels (e ↑ ↑) (var v₀)) in
-    let s↑ = sels (s ↑ ↑ ↑ ↑) (var v₀) in
-    let comp = 𝕀≤ (var v₂) (sels (e ↑ ↑ ↑) (var v₀)) in
-    let r = let′ maxs (let′ scale (imaps $ var v₁ ⊠ s↑ ⊠ comp)) in
-    grad-sum e r δ
+    -- let maxs = maximum $ sels (e ↑) (var v₀) in
+    -- let scale = 𝟙/ $ E.sum $ 𝕀≤ (var v₁) (sels (e ↑ ↑) (var v₀)) in
+    -- let s↑ = sels (s ↑ ↑ ↑ ↑) (var v₀) in
+    -- let comp = 𝕀≤ (var v₂) (sels (e ↑ ↑ ↑) (var v₀)) in
+    -- let r = let′ maxs (let′ scale (imaps $ var v₁ ⊠ s↑ ⊠ comp)) in
+    -- grad-sum e r δ
 
   grad-last′ v e (env ρ) = let
     w = env-lookup ρ v
@@ -300,8 +301,8 @@ open import Data.List.Relation.Unary.All
 
 open import Data.List as L using (List; []; _∷_)
 
-test : EE (ε ▹ ar (2 ∷ [])) _
-test = grad (Lang.Primitives.Microgpt.softmax {s = 2 ∷ []} ((var (v₀)))) one zero-ee
+-- test : EE (ε ▹ ar (2 ∷ [])) _
+-- test = grad (Lang.Primitives.Microgpt.softmax {s = 2 ∷ []} ((var (v₀)))) one zero-ee
 
 
 

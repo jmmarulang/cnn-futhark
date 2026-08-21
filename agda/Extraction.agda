@@ -61,7 +61,7 @@ module Extract where
   open Primitives
   open WkSub
 
-  OPT = 00
+  OPT = 20
 
   -- Show Env (e.g. after running grad) where optimisations are applied
   -- to every expression in the list.
@@ -312,12 +312,12 @@ module Extract where
   grad-rmsnorm-pp : String
   grad-rmsnorm-pp = Pretty.pretty Primitives.Microgpt.rmsnorm-e (ε ▹ "inp")
 
-  grad-test-pp : String
-  grad-test-pp = Pretty.seed-pretty Primitives.Microgpt.test-e (var v₁) (ε ▹ "j" ▹ "inp")
+  -- grad-test-pp : String
+  -- grad-test-pp = Pretty.seed-pretty Primitives.Microgpt.test-e (var v₁) (ε ▹ "j" ▹ "inp")
   -- grad-test-pp = Pretty.seed-pretty Primitives.Microgpt.test-e (var v₀) (ε ▹ "s" ▹ "inp")
 
-  grad-test-s : String
-  grad-test-s = pp Primitives.Microgpt.test-e (ε ▹ "s" ▹ "inp")
+  test-s : String
+  test-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.test-e OPT) (from-named (ε ▹ "inp"))) 0)
 
   grad-id-pp : String
   grad-id-pp = Pretty.pretty Primitives.Microgpt.id-e (ε ▹ "inp")
@@ -326,10 +326,10 @@ module Extract where
   grad-softmax-s = pp Primitives.Microgpt.softmax-e (ε ▹ "j" ▹ "inp")
 
   grad-softmax-pp : String
-  grad-softmax-pp = Pretty.pretty Primitives.Microgpt.softmax-e (ε ▹ "j" ▹ "inp")
+  grad-softmax-pp = Pretty.seed-pretty Primitives.Microgpt.softmax-e (var v₁) (ε ▹ "f'" ▹ "f")
 
-  grad-maximum-pp : String
-  grad-maximum-pp = Pretty.seed-pretty Primitives.Microgpt.maximum-e (var v₁) (ε ▹ "j" ▹ "inp")
+  -- grad-maximum-pp : String
+  -- grad-maximum-pp = Pretty.seed-pretty Primitives.Microgpt.maximum-e (var v₁) (ε ▹ "j" ▹ "inp")
 
   grad-div-pp : String
   grad-div-pp = Pretty.pretty Primitives.Microgpt.div-e (ε ▹ "x" ▹ "y")

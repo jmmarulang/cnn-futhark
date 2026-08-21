@@ -113,7 +113,7 @@ module _ where
   isVar (let′ e e₁) = no λ ()
   -- Jairo made
   isVar (un x e) = no λ ()
-  isVar (maximum e) = no λ ()
+  isVar (argmax pf e) = no λ ()
 
   isZero : (e : E Γ (ar s)) → Dec (e ≡ zero)
   isZero zero = yes refl
@@ -134,7 +134,7 @@ module _ where
   isZero (let′ e e₁) = no λ ()
   -- Jairo made
   isZero (un x e) = no λ ()
-  isZero (maximum e) = no λ ()
+  -- isZero (argmax pf e) = no λ ()
 
   isOne : (e : E Γ (ar s)) → Dec (e ≡ one)
   isOne zero = no λ ()
@@ -155,7 +155,7 @@ module _ where
   isOne (let′ e e₁) = no λ ()
   -- Jairo made
   isOne (un x e) = no λ ()
-  isOne (maximum e) = no λ ()
+  -- isOne (argmax pf e) = no λ ()
 
   isImap : (e : E Γ (ar q))
          → Dec (∃₂ λ s p
@@ -177,7 +177,7 @@ module _ where
   isImap (scaledown x e) = no λ { (_ , _ , refl , _ , ()) }
   isImap (let′ e e₁) = no λ { (_ , _ , refl , _ , ()) }
   isImap (un x e) = no λ { (_ , _ , refl , _ , ()) }
-  isImap (maximum e) = no λ { (_ , _ , refl , _ , ()) }
+  -- isImap (argmax pf e) = no λ { (_ , _ , refl , _ , ()) }
 
 
   isImaps : (e : E Γ (ar s)) → Dec (∃ λ u → e ≡ imaps u)
@@ -198,7 +198,7 @@ module _ where
   isImaps (scaledown x e) = no λ ()
   isImaps (let′ e e₁) = no λ ()
   isImaps (un x e) = no λ ()
-  isImaps (maximum e) = no λ ()
+  -- isImaps (argmax pf e) = no λ ()
 
   isZeroBut : (e : E Γ (ar p)) → Dec (∃₂ λ s i → ∃₂ λ j u → e ≡ zero-but {s = s} i j u)
   isZeroBut (var x) = no λ ()
@@ -218,7 +218,7 @@ module _ where
   isZeroBut (scaledown x e) = no λ ()
   isZeroBut (let′ e e₁) = no λ ()
   isZeroBut (un x e) = no λ ()
-  isZeroBut (maximum e) = no λ ()
+  -- isZeroBut (argmax pf e) = no λ ()
 
   isSels : (e : E Γ (ar p)) (s : S) → Dec (Σ (p ≡ []) λ eq → ∃₂ λ t u → subst (E Γ ∘ ar) eq e ≡ sels {s = s} t u)
   isSels (var x) s = no λ { (refl , _ , _ , ()) }
@@ -244,7 +244,7 @@ module _ where
   isSels (scaledown x e) s = no λ { (refl , _ , _ , ()) }
   isSels (let′ e e₁) s = no λ { (refl , _ , _ , ()) }
   isSels (un x e) s = no λ { (refl , _ , _ , ()) }
-  isSels (maximum e) s = no λ { (refl , _ , _ , ()) }
+  -- isSels (argmax pf e) s = no λ { (refl , _ , _ , ()) }
 
   isSel :  (e : E Γ (ar p)) → Dec (∃ λ s → ∃₂ λ t u → e ≡ sel {s = s}{p} t u)
   isSel (var x) = no λ { (_ , _ , _ , ()) }
@@ -264,7 +264,7 @@ module _ where
   isSel (scaledown x e) = no λ { (_ , _ , _ , ()) }
   isSel (let′ e e₁) = no λ { (_ , _ , _ , ()) }
   isSel (un x e) = no λ { (_ , _ , _ , ()) }
-  isSel (maximum e) = no λ { (_ , _ , _ , ()) }
+  -- isSel (argmax pf e) = no λ { (_ , _ , _ , ()) }
 
   isImapb : (e : E Γ (ar q)) → Dec (∃₂ λ s p → Σ (s * p ≈ q) λ pf → ∃ λ t → e ≡ E.imapb pf t)
   isImapb (var x) = no λ { (_ , _ , _ , _ , ()) }
@@ -284,7 +284,7 @@ module _ where
   isImapb (scaledown x e) = no λ { (_ , _ , _ , _ , ()) }
   isImapb (let′ e e₁) = no λ { (_ , _ , _ , _ , ()) }
   isImapb (un x e) = no λ { (_ , _ , _ , _ , ()) }
-  isImapb (maximum e) = no λ { (_ , _ , _ , _ , ()) }
+  -- isImapb (argmax pf e) = no λ { (_ , _ , _ , _ , ()) }
 
   isSelb : (e : E Γ (ar p)) → Dec (∃₂ λ s q → Σ (s * p ≈ q) λ pf → ∃₂ λ t u → e ≡ E.selb pf t u)
   isSelb (var x) = no λ { (_ , _ , _ , _ , _ , ()) }
@@ -304,7 +304,7 @@ module _ where
   isSelb (scaledown x e) = no λ { (_ , _ , _ , _ , _ , ()) }
   isSelb (let′ e e₁) = no λ { (_ , _ , _ , _ , _ , ()) }
   isSelb (un x e) = no λ { (_ , _ , _ , _ , _ , ()) }
-  isSelb (maximum e) = no λ { (_ , _ , _ , _ , _ , ()) }
+  -- isSelb (argmax pf e) = no λ { (_ , _ , _ , _ , _ , ()) }
 
   isSum : (e : E Γ (ar p)) → Dec (∃₂ λ s t → e ≡ E.sum {s = s} t)
   isSum (var x) = no λ ()
@@ -324,27 +324,11 @@ module _ where
   isSum (scaledown x e) = no λ ()
   isSum (let′ e e₁) = no λ ()
   isSum (un x e) = no λ ()
-  isSum (maximum e) = no λ ()
+  -- isSum (argmax pf e) = no λ ()
 
-  isMaximum : (e : E Γ (ar p)) → Dec (∃₂ λ s t → e ≡ maximum {s = s} t)
-  isMaximum (var x) = no λ ()
-  isMaximum zero = no λ ()
-  isMaximum one = no λ ()
-  isMaximum (imaps e) = no λ ()
-  isMaximum (sels e e₁) = no λ ()
-  isMaximum (imap e) = no λ ()
-  isMaximum (sel e e₁) = no λ ()
-  isMaximum (E.imapb x e) = no λ ()
-  isMaximum (E.selb x e e₁) = no λ ()
-  isMaximum (E.sum e) = no λ ()
-  isMaximum (zero-but e e₁ e₂) = no λ ()
-  isMaximum (E.slide e x e₁ x₁) = no λ ()
-  isMaximum (E.backslide e e₁ x x₁) = no λ ()
-  isMaximum (bin x e e₁) = no λ ()
-  isMaximum (scaledown x e) = no λ ()
-  isMaximum (let′ e e₁) = no λ ()
-  isMaximum (un x e) = no λ ()
-  isMaximum (maximum e) = yes (_ , e , refl)
+  isArgmax : (e : E Γ (ix p)) → Dec (∃ λ p → ∃₂ λ pf t → e ≡ argmax {p = p} pf t)
+  isArgmax (var x) = no λ ()
+  isArgmax (argmax pf e) = yes (_ , pf , e , refl)
 
   isSlide : (e : E Γ (ar u)) → Dec (∃₂ λ s′ p′ → ∃₂ λ r′ t → ∃₂ λ x′ t₁ → ∃ λ x₁ → e ≡ E.slide {s = s′}{p′}{r′} t x′ t₁ x₁)
   isSlide (var x) = no λ ()
@@ -366,7 +350,7 @@ module _ where
   isSlide (⊟ e) = no λ ()
   isSlide (let′ e e₁) = no λ ()
   isSlide (un x e) = no λ ()
-  isSlide (maximum e) = no λ ()
+  -- isSlide (argmax pf e) = no λ ()
 
   isBackslide : (e : E Γ (ar r))
               → Dec (∃₂ λ s′ u′ → ∃₂ λ p′ t → ∃₂ λ t₁ x → ∃ λ x₁
@@ -390,7 +374,7 @@ module _ where
   isBackslide (⊟ e) = no λ ()
   isBackslide (let′ e e₁) = no λ ()
   isBackslide (un x e) = no λ ()
-  isBackslide (maximum e) = no λ ()
+  -- isBackslide (argmax pf e) = no λ ()
 
   isUn : (e : E Γ (ar s)) → Dec (∃ λ t → ∃ λ t₁ → e ≡ un t t₁)
   isUn (var x) = no λ ()
@@ -410,7 +394,7 @@ module _ where
   isUn (scaledown x e) = no λ ()
   isUn (let′ e e₁) = no λ ()
   isUn (un x e) = yes (x , e , refl)
-  isUn (maximum e) = no λ ()
+  -- isUn (argmax pf e) = no λ ()
 
   isBin : (e : E Γ (ar s)) → Dec (∃₂ λ o t → ∃ λ t₁ → e ≡ bin o t t₁)
   isBin (var x) = no λ ()
@@ -432,7 +416,7 @@ module _ where
   isBin (⊟ e) = no λ ()
   isBin (let′ e e₁) = no λ ()
   isBin (un x e) = no λ ()
-  isBin (maximum e) = no λ ()
+  -- isBin (argmax pf e) = no λ ()
 
   isScaledown : (e : E Γ (ar s)) → Dec (∃₂ λ x t  → e ≡ scaledown x t)
   isScaledown (var x) = no λ ()
@@ -454,30 +438,7 @@ module _ where
   isScaledown (⊟ e) = no λ ()
   isScaledown (let′ e e₁) = no λ ()
   isScaledown (un x e) = no λ ()
-  isScaledown (maximum e) = no λ ()
-
-  {-
-  isMinus : (e : E Γ (ar s)) → Dec (∃ λ t  → e ≡ ⊟ t)
-  isMinus (var x) = no λ ()
-  isMinus zero = no λ ()
-  isMinus one = no λ ()
-  isMinus (imaps e) = no λ ()
-  isMinus (sels e e₁) = no λ ()
-  isMinus (imap e) = no λ ()
-  isMinus (sel e e₁) = no λ ()
-  isMinus (E.imapb x e) = no λ ()
-  isMinus (E.selb x e e₁) = no λ ()
-  isMinus (E.sum e) = no λ ()
-  isMinus (zero-but e e₁ e₂) = no λ ()
-  isMinus (E.slide e x e₁ x₁) = no λ ()
-  isMinus (E.backslide e e₁ x x₁) = no λ ()
-  isMinus (logi e) = no λ ()
-  isMinus (bin x e e₁) = no λ ()
-  isMinus (scaledown x e) = no λ ()
-  isMinus (⊟ e) = yes (e , refl)
-  isMinus (let′ e e₁) = no λ ()
-  isMinus = {!   !}
-  -}
+  -- isScaledown (argmax pf e) = no λ ()
 
   isLet : (e : E Γ (ar p)) → Dec (∃₂ λ s′ t → ∃ λ t₁ → e ≡ let′ {s = s′} t t₁)
   isLet (var x) = no λ ()
@@ -499,7 +460,7 @@ module _ where
   isLet (⊟ e) = no λ ()
   isLet (let′ e e₁) = yes (_ , e , e₁ , refl)
   isLet (un x e) = no λ ()
-  isLet (maximum e) = no λ ()
+  -- isLet (argmax pf e) = no λ ()
 
   unvar : {x y : is ∈ Γ} → var x ≡ var y → x ≡ y
   unvar refl = refl
@@ -641,11 +602,13 @@ module _ where
     -- do
     -- et ← e ≟ᵉ t -- ???
     -- just (cong (un o) et)
-  maximum {s = s} e ≟ᵉ u with isMaximum u
-  ... | no ¬p = nothing
-  ... | yes (s′ , u , refl) with s ≟ˢ s′
-  ... | no ¬p = nothing
-  ... | yes refl = e ≟ᵉ u >>= just ∘ (cong maximum)
+  argmax {p = p} pf e ≟ᵉ u with isArgmax u
+  ... | no _ = nothing
+  ... | yes (p′ , pf′ , u , refl) with p ≟ˢ p′
+  ... | no _ = nothing
+  ... | yes refl with e ≟ᵉ u
+  ... | just refl rewrite (suc≈-uniq pf pf′) = just refl
+  ... | nothing = nothing
 
   e-eq? : (a : E Γ is) (b : E Γ ip) → Maybe (Σ (is ≡ ip) λ pp → subst (E Γ) pp a ≡ b)
   e-eq? {is = is}{ip} a b with is ≟ⁱ ip
@@ -673,7 +636,7 @@ module _ where
   count-sels (imap e) v = count-sels e (there v)
   count-sels (imapb x e) v = count-sels e (there v)
   count-sels (sum e) v = count-sels e (there v)
-  count-sels (maximum e) v = count-sels e (there v)
+  count-sels (argmax pf e) v = count-sels e v
   count-sels (zero-but i j e) v = count-sels e v
   count-sels (slide i x e x₁) v = count-sels e v
   count-sels (backslide i e x x₁) v = count-sels e v
@@ -703,7 +666,7 @@ module _ where
   -- count-selv (imap e) v = count-selv e (there v)
   -- count-selv (imapb x e) v = count-selv e (there v)
   -- count-selv (sum e) v = count-selv e (there v)
-  -- count-selv (maximum e) v = count-selv e (there v)
+  -- count-selv (argmax pf e) v = count-selv e (there v)
   -- count-selv (zero-but i j e) v = count-selv e v
   -- count-selv (slide i x e x₁) v = count-selv e v
   -- count-selv (backslide i e x x₁) v = count-selv e v
@@ -735,7 +698,7 @@ module _ where
     inline' (bin x e e₁) = bin x (inline' e) (inline' e₁)
     inline' (scaledown x e) = scaledown x (inline' e)
     inline' (un x e) = un x (inline' e)
-    inline' (maximum e) = maximum (inline' e)
+    inline' (argmax pf e) = argmax pf (inline' e)
     inline' (let′ e e₁) with a ← (inline' e₁) | count-uses a v₀ | count-sels a v₀ | e
     ... | 0 | _ | _ = sub a (sub-id ▹ (inline' e))
     ... | _ | _ | var v = sub a (sub-id ▹ (var v))
