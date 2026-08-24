@@ -178,10 +178,10 @@ module _ where
   to-sum s  i e = printf "(isum%u %s (\\%s -> %s))" (dim s) (shape-args s)
                          (ix-join i " ") e
 
-  -- to-maximum : (s : S) → (i : Ix s) → (e : String) → String
-  -- to-maximum [] i e = e
-  -- to-maximum s  i e = printf "(imaximum%u %s (\\%s -> %s))" (dim s) (shape-args s)
-  --                        (ix-join i " ") e
+  to-softmax : (s : S) → (i : Ix s) → (e : String) → String
+  to-softmax [] i e = e
+  to-softmax s  i e = printf "(isoftmax%u %s (\\%s -> %s))" (dim s) (shape-args s)
+                         (ix-join i " ") e
 
   ix-plus : s + p ≈ r → (suc_≈_ p u)
           → (i : Ix s)
@@ -369,11 +369,11 @@ module _ where
       f , a′ ← a i
       return (f , printf "(one F./ %s)" a′)
 
-  to-fut (𝕖^ e) ρ = do
-    a ← to-fut e ρ
-    return λ i → do
-      f , a′ ← a i
-      return (f , printf "(F.exp %s)" a′)
+  -- to-fut (𝕖^ e) ρ = do
+  --   a ← to-fut e ρ
+  --   return λ i → do
+  --     f , a′ ← a i
+  --     return (f , printf "(F.exp %s)" a′)
 
   to-fut (relu e) ρ = do
     a ← to-fut e ρ
@@ -400,23 +400,25 @@ module _ where
     return λ i → do
       f , a′ ← a i
       return (f , printf "(F.log %s)" a′)
-  to-fut (argmax {s = s} pf e) ρ = do
+  to-fut (un {s = s} softmax e) ρ = return λ i → do
     a ← to-fut e ρ
-    i ← iv $ s
-    f , b ← a i
-    return (to-argmax s i b)
-  -- to-fut (argmax {n = n} pf e) ρ = do
-  --   a ← to-fut e ρ
-  --   i ← iv $ ι n
-  --   f , b ← a i
-  --   -- f or no f?
-  --   return (printf "(argmax %s (\\%s -> %s))" (shape-args (ι n)) (ix-join i " ") b ∷ [])
-    -- do
+    f , a′ ← a i
+    return ({!   !} , {!   !})
+
     -- i ← iv s
-    -- b ← to-fut e (ρ , i)
+    -- a ← to-fut e ρ
     -- return λ j → do
-    --   f , b′ ← b j
-    --   return (id , to-maximum s i (f b′))
+    --   f , a′ ← a i
+    --   return (id , to-softmax s i a′)
+    -- a ← to-fut e ρ
+    -- return λ i → do
+    --   f , a′ ← a i
+    --   return (id , printf "(softmax %s)" (f a′))
+  -- to-fut (ℙ e) ρ = do
+  --   a ← to-fut e ρ
+  --   return λ i → do
+  --     f , a′ ← a i
+  --     return (f , printf "(softmax %s)" a′)
 
 module Test where
   open import Relation.Binary.PropositionalEquality

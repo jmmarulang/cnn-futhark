@@ -1,15 +1,1 @@
-elet x0 = sels f (argmax f)
-elet x1 = imaps λ x2 → sels f x2 + (- x0)
-elet x3 = imaps λ x4 → (- 
-((
-(exp (sels x1 x4)) * 
-((inv (sum λ x5 → (exp (sels x1 x5)))) * 
-((sum λ x6 → ((exp (sels x1 x6)) * sels f' x6)) * 
-(inv (sum λ x7 → (exp (sels x1 x7)))))))))
-+ 
-(
-(exp (sels x1 x4)) *
-(sels f' x4 * 
-(inv (sum λ x8 → (exp (sels x1 x8))))))
-elet x9 = (- (sum λ x10 → sels x3 x10))
-let df = imaps λ x11 → sels x3 x11 + (zero-but x11 (argmax f) x9)
+(imap2 5 3 (\x0_0 x0_1 -> (softmax f[x0_0][x0_1])))

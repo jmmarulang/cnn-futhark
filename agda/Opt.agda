@@ -105,7 +105,6 @@ module Opt (r : Real) (rp : RealProp r) where
 
   -- Incomplete
   sels-in : E Γ is → E Γ is
-  sels-in (sels (𝕖^ e) e₁) = 𝕖^ (sels (sels-in e) (sels-in e₁))
   sels-in (sels (⊟ e) e₁) = ⊟ (sels (sels-in e) (sels-in e₁))
   sels-in (sels (a ⊞ b) e₁) = (sels (sels-in a) (sels-in e₁)) ⊞ (sels (sels-in b) (sels-in e₁))
   sels-in (sels e e₁) = (sels (sels-in e) (sels-in e₁))
@@ -122,7 +121,6 @@ module Opt (r : Real) (rp : RealProp r) where
   sels-in (scaledown x e) = (scaledown x (sels-in e))
   sels-in (let′ e e₁) = (let′ (sels-in e) (sels-in e₁))
   sels-in (un x e) = (un x (sels-in e))
-  sels-in (argmax x e) = (argmax x (sels-in e))
   sels-in e = e
 
   danger-opt' : E Γ is → E Γ is
@@ -170,7 +168,6 @@ module Opt (r : Real) (rp : RealProp r) where
   danger-opt' (E.slide e x e₁ x₁) = (E.slide (danger-opt' e) x (danger-opt' e₁) x₁)
   danger-opt' (E.backslide e e₁ x x₁) = (E.backslide (danger-opt' e) (danger-opt' e₁) x x₁)
   danger-opt' (let′ e e₁) = (let′ (danger-opt' e) (danger-opt' e₁))
-  danger-opt' (argmax x e) = (argmax x (danger-opt' e))
   danger-opt' e = e
 
   opt : (e : E Γ is) → ∃ λ e′ → (e ≈ᵉ e′)
@@ -654,8 +651,6 @@ module Opt (r : Real) (rp : RealProp r) where
 
   ... | _ = let′ a b
           , λ ρ j → q (ρ , eval e ρ) j ∙ eval-cong b (reflᶜ ▹ p ρ) j
-  opt (𝕖^ e) with opt e
-  ... | a , p = 𝕖^ a , λ ρ i → cong e^_ (p ρ i)
   opt (relu e) with opt e
   ... | a , p = relu a , (λ ρ i → cong (_∨_ 0ᵣ) (p ρ i))
   opt (sqrt e) with opt e
@@ -666,8 +661,8 @@ module Opt (r : Real) (rp : RealProp r) where
   ... | a , p = 𝕀+ a , (λ ρ i → cong I+ (p ρ i))
   opt (ln e) with opt e
   ... | a , p = ln a , (λ ρ i → cong log (p ρ i))
-  opt (argmax pf e) with opt e
-  ... | a , p = (argmax pf a) , λ ρ → cong proj₂ (sum-cong max-pair (-∞ᵣ , lastIx pf) λ i → ×-≡,≡→≡ (p ρ i , refl))
+  opt (ℙ e) with opt e
+  ... | a , p = ℙ a , (λ ρ i → cong {!   !} (p ρ i))
 
   danger-opt : E Γ is → E Γ is
   danger-opt e =

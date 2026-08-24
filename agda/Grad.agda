@@ -219,9 +219,6 @@ module _ where
   grad (imap e)               s δ = grad-sum e (sel      (s ↑) (var v₀)) δ
   grad (E.imapb m e)          s δ = grad-sum e (E.selb m (s ↑) (var v₀)) δ
 
-  -- grad (sels e (argmax sp e₁)) s δ =
-  --   let′ (imaps (zero-but (var v₀) ((argmax sp e₁) ↑) (s ↑)))
-  --        (ee-tail (grad (e ↑) (var v₀) (ee-wk (skip ⊆-eq) (ee-push-zero δ))))
   grad (sels e i)             s δ = grad e (imaps     (zero-but (var v₀) (i ↑) (s ↑))) δ
   grad (sel e i)              s δ = grad e (imap      (zero-but (var v₀) (i ↑) (s ↑))) δ
   grad (E.selb m e i)         s δ = grad e (E.imapb m (zero-but (var v₀) (i ↑) (s ↑))) δ
@@ -247,30 +244,15 @@ module _ where
   -- Jairo made
   grad (relu e)               s δ = grad e ((𝕀+ e) ⊠ s) δ -- is this correct?
   grad (𝕀+ e)                 s δ = grad e 𝟘 δ -- is this correct?
-  grad (𝕖^ e)                 s δ = grad e ((𝕖^ e) ⊠ s) δ
   grad (sqrt e)               s δ = grad e (s // (𝟚 ⊠ sqrt e)) δ
-  -- grad (𝟙/ e)                 s δ = grad e (let′(e ⊠ e) (⊟ ((s ↑) // (var v₀)))) δ
-  -- grad (𝟙/ e)                 s δ = grad e (⊟ (s // (e ⊠ e))) δ
   grad (𝟙/ e)                 s δ = grad e (⊟ (( 𝟙/ e) ⊠ (s // e))) δ
   grad (ln e)                 s δ = grad e (s // e) δ
-  grad (argmax pf e)    s δ = δ
-      -- let e₁ = wk (keep (skip ⊆-eq)) e in
-      -- let e₂ = wk (keep (skip (skip ⊆-eq))) e in
-      -- let s↑ = s ↑ ↑ ↑ in
-      -- let δ₁ = ee-wk (skip (skip ⊆-eq)) (ee-wk-zero δ (skip (skip ⊆-eq))) in
-      -- let r = grad-sum {!   !} {!   !} {!   !} in
-      -- let t = grad-last {!   !} (let′ (maximum e) r) in t
-      -- let′ (maximum e) (
-      -- let′ (𝟙/ $ (E.sum $ 𝕀≤ (var v₁) e₁)) (
-      -- {!  grad-sum !} --ee-tail $ ee-tail $ grad-sum e₂ (var v₁ ⊠ {!   !} ⊠ 𝕀≤ (var v₂) e₂) δ₁
-      -- ))
 
-    -- let maxs = maximum $ sels (e ↑) (var v₀) in
-    -- let scale = 𝟙/ $ E.sum $ 𝕀≤ (var v₁) (sels (e ↑ ↑) (var v₀)) in
-    -- let s↑ = sels (s ↑ ↑ ↑ ↑) (var v₀) in
-    -- let comp = 𝕀≤ (var v₂) (sels (e ↑ ↑ ↑) (var v₀)) in
-    -- let r = let′ maxs (let′ scale (imaps $ var v₁ ⊠ s↑ ⊠ comp)) in
-    -- grad-sum e r δ
+  grad (ℙ e)                  s δ =
+    let
+      δ' = ee-push-zero (ee-wk (skip ⊆-eq) δ)
+      f = ee-tail ∘ EE.let′ (E.sum $ (sels ((s ⊠ (ℙ e)) ↑) (var v₀)))
+    in f $ grad (e ↑) ((ℙ (e ↑)) ⊠ ((s ↑) ⊟ imaps (var v₁))) δ'
 
   grad-last′ v e (env ρ) = let
     w = env-lookup ρ v
@@ -284,34 +266,6 @@ module _ where
   grad-last e (let′ x ρ) = let
       t = let′ x $′ ee-tail $′ grad-last (e ↑) (ee-wk-zero ρ (keep (skip ⊆-eq)))
     in t
-
--- let t = skip (skip ⊆-eq) in
-    -- let′ (maximum {s = p} e) (let′ (𝟙/ (E.sum (𝕀0+ (wk (keep (skip ⊆-eq)) e ⊟ var (there v₀)))))
-    --   (ee-tail (ee-tail (grad-sum
-    --     (wk (keep t) e)
-    --     (
-    --       wk (skip t) s ⊠
-    --       𝕀0+ (
-    --         wk (keep t) e ⊟
-    --         var (there (there v₀))
-    --         ) ⊠
-    --       var (there v₀)
-    --     )
-    --     (ee-wk t (ee-wk-zero δ t))))))
-
-open import Lang
-open import Opt
-open import Real
-open import Ar
-open import Data.List
-open import Data.Product
-open import Data.Fin
-open import Data.List.Relation.Unary.All
-
-open import Data.List as L using (List; []; _∷_)
-
--- test : EE (ε ▹ ar (2 ∷ [])) _
--- test = grad (Lang.Primitives.Microgpt.softmax {s = 2 ∷ []} ((var (v₀)))) one zero-ee
 
 
 

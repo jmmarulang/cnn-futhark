@@ -92,9 +92,16 @@ module _ where
 
   -- Jairo made
   data Uop : Set where
-    logistic neg
+    logistic
+      neg
     -- Jairo made
-      exp rectifier squared inverse ind-positive logarithm -- What happends with undefined terms like squared -2?
+      -- exp
+      rectifier 
+      squared 
+      inverse 
+      ind-positive 
+      logarithm
+      softmax
       : Uop
 
   unit : S
@@ -125,20 +132,20 @@ module _ where
     let′       : E Γ (ar s) → E (Γ ▹ ar s) (ar p) → E Γ (ar p)
     -- Jairo made
     un         : Uop → E Γ (ar s) → E Γ (ar s)
-    argmax    : suc p ≈ s → E Γ (ar s) → E Γ (ix s)
-    -- argmax    : {n m : ℕ} → suc ι m ≈ ι n → E Γ (ar $ ι n) → E Γ (ix $ ι n)
+    -- argmax    : suc p ≈ s → E Γ (ar s) → E Γ (ix s)
 
   pattern 𝟙 = one
   pattern 𝟘 = zero
 
   pattern ⊟_ a = un neg a
-  pattern 𝕖^_ a = un exp a
+  -- pattern 𝕖^_ a = un exp a
   pattern logi a = un logistic a
   pattern sqrt a = un squared a
   pattern 𝟙/ a = un inverse a
   pattern relu a = un rectifier a
   pattern ln a = un logarithm a
   pattern 𝕀+ a = un ind-positive a
+  pattern ℙ a = un softmax a
 
   pattern _⊞_ a b = bin plus a b
   pattern _⊠_ a b = bin mul a b
@@ -168,8 +175,8 @@ module _ where
   𝟚 : E Γ (ar s)
   𝟚 = 𝟙 ⊞ 𝟙
 
-  sels-max : suc p ≈ s → E Γ (ar s) → E Γ (ar [])
-  sels-max pf e = sels e (argmax pf e)
+  -- sels-max : suc p ≈ s → E Γ (ar s) → E Γ (ar [])
+  -- sels-max pf e = sels e (argmax pf e)
 
   -- maxs : suc p ≈ s → E (Γ ▹ ix s) (ar []) → E Γ (ar [])
   -- maxs pf e = sels-max pf (imaps e)
@@ -215,8 +222,7 @@ module WkSub where
   wk s (let′ e e₁) = let′ (wk s e) (wk (keep s) e₁)
   -- Jairo made
   wk s (un x e) = un x (wk s e)
-  wk s (argmax pf e) = argmax pf (wk s e)
-  -- wk s (argmax e) = maximum (wk (keep s) e)
+  -- wk s (argmax pf e) = argmax pf (wk s e)
 
   _∙ʷ_ : Δ ⊆ Ψ → Γ ⊆ Δ → Γ ⊆ Ψ
   s ∙ʷ ε = s
@@ -288,7 +294,7 @@ module WkSub where
   sub (let′ e e₁) s = let′ (sub e s) (sub e₁ (skeep s))
   -- Jairo made
   sub (un x e) s = un x (sub e s)
-  sub (argmax pf e) s = argmax pf (sub e s)
+  -- sub (argmax pf e) s = argmax pf (sub e s)
 
   _∙ˢ_ : Sub Δ Ψ → Sub Γ Δ → Sub Γ Ψ
   ε ∙ˢ t = ε
@@ -331,7 +337,7 @@ module WkSub where
   sub-at-id (let′ e e₁) = cong₂ let′ (sub-at-id e) (sub-at-id e₁)
   -- Jairo made
   sub-at-id (un x e) = cong (un x) (sub-at-id e)
-  sub-at-id (argmax pf e) = cong (argmax pf) (sub-at-id e)
+  -- sub-at-id (argmax pf e) = cong (argmax pf) (sub-at-id e)
 
   sub-ε : (e : E ε is) → sub e ε ≡ e
   sub-ε e = sub-at-id e
@@ -398,8 +404,8 @@ module WkSub where
     map (λ (a , b) → _ , (cong (scaledown x) b)) (stren-∃ e v)
   stren-∃ (un x e) v =
     map (λ (a , b) → _ , (cong (un x) b)) (stren-∃ e v)
-  stren-∃ (argmax pf e) v =
-    map (λ (a , b) → _ , (cong (argmax pf) b)) (stren-∃ e v)
+  -- stren-∃ (argmax pf e) v =
+  --   map (λ (a , b) → _ , (cong (argmax pf) b)) (stren-∃ e v)
   stren-∃ (let′ e e₁) v = do
     (a , b) ← stren-∃ e v
     (c , d) ← stren-∃ e₁ (there v)
@@ -431,7 +437,7 @@ module WkSub where
   norm-lets (let′ e e₁) = maybe id (let′ (norm-lets e) (norm-lets e₁)) (stren (norm-lets e₁) v₀)
   -- Jairo made
   norm-lets (un x e) = un x (norm-lets e)
-  norm-lets (argmax pf e) = argmax pf (norm-lets e)
+  -- norm-lets (argmax pf e) = argmax pf (norm-lets e)
 
   count-uses : E Γ is → ip ∈ Γ → ℕ
   count-uses (var x) v with eq? x v
@@ -454,7 +460,7 @@ module WkSub where
   count-uses (let′ e e₁) v = count-uses e v + count-uses e₁ (there v)
   -- Jairo made
   count-uses (un x e) v = count-uses e v
-  count-uses (argmax pf e) v = count-uses e v -- Is this correct?
+  -- count-uses (argmax pf e) v = count-uses e v -- Is this correct?
 
 
 module Syntax where
@@ -656,24 +662,9 @@ module Primitives where
       Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
       sels (sel ⟨ w1 ⟩ i) k ⊠ sels (sel ⟨ w2 ⟩ k) j
 
-    -- Is this correct?
-    softmax : ∀ {Γ} → suc p ≈ s → E Γ (ar s) → E Γ (ar s)
-    softmax {s = s} pf x =
-      -- Let exps := 𝕖^ x In
-      -- Let total := Sum {s} (λ i → sels exps i) In
-      -- exps ⊠ (tiles $ 𝟙/ total)
-
-      Let ms := sels-max pf x In
-      (𝕖^ (⟨ x ⟩ ⊟ tiles ms)) ⊠ (tiles $ 𝟙/ (Sum {s} (λ i → sels (𝕖^ (⟨ x ⟩ ⊟ tiles ms)) i)))
-
-      -- Let ms := sels-max pf x In
-      -- Let exps := 𝕖^ (⟨ x ⟩ ⊟ (tiles ms)) In
-      -- Let total := 𝟙/ (Sum {s} (λ i → sels exps i)) In
-      -- exps ⊠ (tiles total)
-
-    m-softmax : ∀ {Γ} → suc u ≈ p → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
-    m-softmax {Γ} {p = p} {s = s} pf x =
-      Imap λ i → (softmax pf (sel ⟨ x ⟩ i))
+    m-softmax : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
+    m-softmax {s = s} {p = p} x =
+      Imap {s = s} λ i → ℙ (sel ⟨ x ⟩ i)
 
     rmsnorm : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
     rmsnorm {s = s} x =
@@ -726,25 +717,20 @@ module Primitives where
     attention : ∀ {Γ} → (sc : ℕ) →
                    (mask : E Γ (ar (sl ⊗ sl)))
                    (qs ks vs : E Γ (ar (sl ⊗ hd)))
-                  → suc u ≈ sl → E Γ (ar (sl ⊗ hd))
-    attention {sl} {hd} {Γ} sc mask hqs hks hvs pf =
-      -- Let hqks := matmult {sl} hqs hks In
-      -- Let masked := (scaledown sc hqks) ⊞ ⟨ mask ⟩ In
-      -- Let maxs := Imap {sl} (λ i → tiles (Max (λ j → sels (sel masked i) j))) In
-      -- Let sf := m-softmax {sl} (masked ⊟ maxs) In
-      -- matmul {sl} sf ⟨ hvs ⟩
+                  → E Γ (ar (sl ⊗ hd))
+    attention {sl} {hd} {Γ} sc mask hqs hks hvs =
       Let hqks := matmult {sl} hqs hks In
       Let masked := (scaledown sc hqks) ⊞ ⟨ mask ⟩ In
-      Let sf := m-softmax pf (masked) In
+      Let sf := m-softmax {s = sl} (masked) In
       matmul {sl} sf ⟨ hvs ⟩
 
     mh-attention : ∀ {Γ} → (sc : ℕ)
                    (mask : E Γ (ar (sl ⊗ sl)))
                    (qs ks vs : E Γ (ar (ah ⊗ (sl ⊗ hd))))
-                  → suc u ≈ sl → E Γ (ar (ah ⊗ (sl ⊗ hd)))
-    mh-attention {sl} {ah} {hd} {Γ} sc mask bqs bks bvs pf =
+                   → E Γ (ar (ah ⊗ (sl ⊗ hd)))
+    mh-attention {sl} {ah} {hd} {Γ} sc mask bqs bks bvs =
       Imap {ah} λ i →
-      attention sc ⟨ mask ⟩ (sel ⟨ bqs ⟩ i) (sel ⟨ bks ⟩ i) (sel ⟨ bvs ⟩ i) pf
+      attention {sl = sl} sc ⟨ mask ⟩ (sel ⟨ bqs ⟩ i) (sel ⟨ bks ⟩ i) (sel ⟨ bvs ⟩ i)
 
     block-tok : ∀ {Γ} → E Γ (ar ed) → ah * hd ≈ ed → E Γ (ar (ah ⊗ hd))
     block-tok {ed} {ah} {hd} {Γ} x pr = Imap {ah} λ i → selb pr ⟨ x ⟩ i
@@ -764,8 +750,8 @@ module Primitives where
 
     mgpt-forward : ∀ {ah hd : S} {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
                    (p : GPT-Params Γ vo ed sl fd) (wseq : E Γ (ar (sl ⊗ ed)))
-                   → ah * hd ≈ ed → suc u ≈ sl → E Γ (ar (sl ⊗ vo))
-    mgpt-forward {sl} {vo} {ed} {fd} {ah} {hd} {Γ} sc mask p wseq pr pf =
+                   → ah * hd ≈ ed → E Γ (ar (sl ⊗ vo))
+    mgpt-forward {sl} {vo} {ed} {fd} {ah} {hd} {Γ} sc mask p wseq pr =
       Let wpe-wseq := (p .wpe) ⊞ wseq In
       Let seq := m-rmsnorm {sl} wpe-wseq In
       -- layer pass
@@ -777,7 +763,7 @@ module Primitives where
       Let bqs := block-vec qs pr In
       Let bks := block-vec ks pr In
       Let bvs := block-vec vs pr In
-      Let battn := mh-attention {sl} {hd} sc ⟨ mask ⟩ bqs bks bvs pf In
+      Let battn := mh-attention {sl} {ah} sc ⟨ mask ⟩ bqs bks bvs In
       Let attn := unblock-vec battn pr In
       Let oseq := m-linear {u = ed} {p = sl} ⟨ p .wout ⟩ attn In
       Let cseq := oseq ⊞ seq In
@@ -791,21 +777,19 @@ module Primitives where
       --Let logits := m-linear {u = vo} {p = sl} ⟨ p .wvoc ⟩ lseq In logits
       m-linear {u = vo} {p = sl} ⟨ p .wvoc ⟩ lseq
 
-    cross-entropy : ∀ {Γ} (logits target : E Γ (ar s)) → suc u ≈ s → (E Γ (ar []))
-    cross-entropy {s} logits target pf =
-      -- Let lnsf := ln (softmax (stabilize logits)) In
-      Let lnsf := ln (softmax pf (logits)) In
+    cross-entropy : ∀ {Γ} (logits target : E Γ (ar s)) → (E Γ (ar []))
+    cross-entropy {s} logits target =
+      Let lnsf := ln (ℙ logits) In
       (⊟ (Sum λ i → sels lnsf i ⊠ sels ⟨ target ⟩ i))
-      -- (⊟ (Sum λ i → sels (ln (softmax ⟨ logits ⟩)) i ⊠ sels ⟨ target ⟩ i))
 
-    m-cross-entropy : ∀ {Γ} (logits target : E Γ (ar (s ⊗ p))) → suc u ≈ p → (E Γ (ar s))
-    m-cross-entropy {s} {p} logits target pf =
-      Imaps λ i → cross-entropy {p} (sel ⟨ logits ⟩ i) (sel ⟨ target ⟩ i) pf
+    m-cross-entropy : ∀ {Γ} (logits target : E Γ (ar (s ⊗ p))) → (E Γ (ar s))
+    m-cross-entropy {s} {p} logits target =
+      Imaps λ i → cross-entropy {p} (sel ⟨ logits ⟩ i) (sel ⟨ target ⟩ i)
 
     mgpt-loss : ∀ {ah hd : S} {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
                    (p : GPT-Params Γ vo ed sl fd) (wseq : E Γ (ar (sl ⊗ ed)))
-                   (target : E Γ (ar (sl ⊗ vo))) → ah * hd ≈ ed → suc u ≈ sl → suc r ≈ vo → E Γ (ar [])
-    mgpt-loss {sl = sl} {vo = vo} {ed = ed} {ah = ah} sc mask p wseq target eq1 eq2 eq3 =
+                   (target : E Γ (ar (sl ⊗ vo))) → ah * hd ≈ ed → E Γ (ar [])
+    mgpt-loss {sl = sl} {vo = vo} {ed = ed} {ah = ah} sc mask p wseq target eq1 =
 
       Let wpe-wseq := (p .wpe) ⊞ wseq In
       Let seq := m-rmsnorm {sl} wpe-wseq In
@@ -818,7 +802,7 @@ module Primitives where
       Let bqs := block-vec qs eq1 In
       Let bks := block-vec ks eq1 In
       Let bvs := block-vec vs eq1 In
-      Let battn := mh-attention {sl} {ah} sc ⟨ mask ⟩ bqs bks bvs eq2 In
+      Let battn := mh-attention {sl} {ah} sc ⟨ mask ⟩ bqs bks bvs In
       Let attn := unblock-vec battn eq1 In
       Let oseq := m-linear {u = ed} {p = sl} ⟨ p .wout ⟩ attn In
       Let cseq := oseq ⊞ seq In
@@ -831,7 +815,7 @@ module Primitives where
       -- build logits
       Let logits := m-linear {u = vo} {p = sl} ⟨ p .wvoc ⟩ lseq In
       -- calculate losses
-      Let losses := m-cross-entropy {sl} logits ⟨ target ⟩ eq3 In
+      Let losses := m-cross-entropy {sl} logits ⟨ target ⟩ In
       -- average loss
       --Let loss := avg losses In loss
       avg losses
@@ -851,28 +835,13 @@ module Primitives where
     div-e = Lcon (ar (ι 6) ∷ ar (ι 6) ∷ []) (ar (ι 6)) ε (λ x y → (x ⊞ y) // (x ⊞ y))
 
     softmax-e : E _ _
-    softmax-e = Lcon (ar (ι 2) ∷ ar (ι 2) ∷ []) (ar (ι 2)) ε (λ i x → softmax {s = ι 2} cons x)
+    softmax-e = Lcon (ar (ι 2) ∷ ar (ι 2) ∷ []) (ar (ι 2)) ε (λ i x → ℙ x)
 
-    softmax-inline : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
-    softmax-inline {s = s} x = (𝕖^ x) // tiles (Sum {s} (λ i → sels (𝕖^ ⟨ x ⟩) i))
-
-    softmax-inline-e : E _ _
-    softmax-inline-e = Lcon (ar (ι 5 ⊗ ι 6) ∷ []) (ar (ι 5 ⊗ ι 6)) ε (λ x → softmax-inline {s = ι 5 ⊗ ι 6} x)
-
-    -- maximum-e : E _ _
-    -- maximum-e = Lcon (ar (ι 2) ∷ ar (ι 2 ⊗ ι 2) ∷ []) (ar (ι 2)) ε (λ i x → Max {s = ι 2} λ i → sel x i)
-
-    test : ∀ {Γ} → E Γ (ar $ ι 5 ⊗ ι 3) → E Γ (ar [])
-    test x = sels-max cons x
-      -- Let a := x ⊞ one In Imaps λ i → sels-max cons (sel a i)
-      -- Imaps λ i → sels-max cons (sel ⟨ x ⟩ i)
-      -- -- tiles $ Sum {s} (λ i → sels ⟨ x ⟩ i)
-      -- Let total := Sum {s} (λ i → sels ⟨ x ⟩ i) In
-      -- Let r := ⟨ x ⟩ ⊠ tiles total In
-      -- Sum (λ i → sels r i)
+    test : ∀ {Γ} → E Γ (ar $ ι 5 ⊗ ι 3) → E Γ (ar $ ι 5 ⊗ ι 3)
+    test x = ℙ x
 
     test-e : E _ _
-    test-e = Lcon (ar (ι 5 ⊗ ι 3) ∷ []) (ar []) ε (λ x → test x)
+    test-e = Lcon (ar (ι 5 ⊗ ι 3) ∷ []) (ar (ι 5 ⊗ ι 3)) ε (λ x → test x)
 
     id-e : E _ _
     id-e = Lcon (ar (ι 5 ⊗ ι 6) ∷ []) (ar (ι 5 ⊗ ι 6)) ε (λ x → x)
@@ -884,7 +853,7 @@ module Primitives where
                   ar (SL ⊗ ED) ∷ []) (ar (SL ⊗ VO)) ε
       λ mask wpe wqry wkey wval wout wup wdown wvoc wseq  →
         mgpt-forward {sl = SL} SC mask
-          (to-gptp wpe wqry wkey wval wout wup wdown wvoc) wseq PR PF
+          (to-gptp wpe wqry wkey wval wout wup wdown wvoc) wseq PR
 
     mgpt-loss-e : E _ _
     mgpt-loss-e = Lcon (ar (SL ⊗ SL) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
@@ -893,8 +862,4 @@ module Primitives where
                   ar (SL ⊗ ED) ∷ ar (SL ⊗ VO) ∷ []) (ar []) ε
       λ mask wpe wqry wkey wval wout wup wdown wvoc wseq target →
         mgpt-loss {sl = SL} SC mask
-          (to-gptp wpe wqry wkey wval wout wup wdown wvoc) wseq target PR PF cons
-
-    -- let-test : ∀ {Γ} → E Γ (ar SL) → E Γ (ar [])
-    -- let-test x =
-    --   Let a := (Let b := Imaps (λ i → sels ⟨ x ⟩ i) In scaledown 2 b) In Sum (λ i → sel a i)
+          (to-gptp wpe wqry wkey wval wout wup wdown wvoc) wseq target PR

@@ -31,7 +31,6 @@ module _ where
   _≟ᵘ_ : (a b : Uop) → Dec (a ≡ b)
   logistic ≟ᵘ logistic = yes refl
   logistic ≟ᵘ neg = no λ ()
-  logistic ≟ᵘ exp = no λ ()
   logistic ≟ᵘ rectifier = no λ ()
   logistic ≟ᵘ squared = no λ ()
   logistic ≟ᵘ inverse = no λ ()
@@ -39,23 +38,13 @@ module _ where
   logistic ≟ᵘ logarithm = no λ ()
   neg ≟ᵘ logistic = no λ ()
   neg ≟ᵘ neg = yes refl
-  neg ≟ᵘ exp = no λ ()
   neg ≟ᵘ rectifier = no λ ()
   neg ≟ᵘ squared = no λ ()
   neg ≟ᵘ inverse = no λ ()
   neg ≟ᵘ ind-positive = no λ ()
   neg ≟ᵘ logarithm = no λ ()
-  exp ≟ᵘ logistic = no λ ()
-  exp ≟ᵘ neg = no λ ()
-  exp ≟ᵘ exp = yes refl
-  exp ≟ᵘ rectifier = no λ ()
-  exp ≟ᵘ squared = no λ ()
-  exp ≟ᵘ inverse = no λ ()
-  exp ≟ᵘ ind-positive = no λ ()
-  exp ≟ᵘ logarithm = no λ ()
   rectifier ≟ᵘ logistic = no λ ()
   rectifier ≟ᵘ neg = no λ ()
-  rectifier ≟ᵘ exp = no λ ()
   rectifier ≟ᵘ rectifier = yes refl
   rectifier ≟ᵘ squared = no λ ()
   rectifier ≟ᵘ inverse = no λ ()
@@ -63,7 +52,6 @@ module _ where
   rectifier ≟ᵘ logarithm = no λ ()
   squared ≟ᵘ logistic = no λ ()
   squared ≟ᵘ neg = no λ ()
-  squared ≟ᵘ exp = no λ ()
   squared ≟ᵘ rectifier = no λ ()
   squared ≟ᵘ squared = yes refl
   squared ≟ᵘ inverse = no λ ()
@@ -71,7 +59,6 @@ module _ where
   squared ≟ᵘ logarithm = no λ ()
   inverse ≟ᵘ logistic = no λ ()
   inverse ≟ᵘ neg = no λ ()
-  inverse ≟ᵘ exp = no λ ()
   inverse ≟ᵘ rectifier = no λ ()
   inverse ≟ᵘ squared = no λ ()
   inverse ≟ᵘ inverse = yes refl
@@ -79,7 +66,6 @@ module _ where
   inverse ≟ᵘ logarithm = no λ ()
   ind-positive ≟ᵘ logistic = no λ ()
   ind-positive ≟ᵘ neg = no λ ()
-  ind-positive ≟ᵘ exp = no λ ()
   ind-positive ≟ᵘ rectifier = no λ ()
   ind-positive ≟ᵘ squared = no λ ()
   ind-positive ≟ᵘ inverse = no λ ()
@@ -87,12 +73,27 @@ module _ where
   ind-positive ≟ᵘ logarithm = no λ ()
   logarithm ≟ᵘ logistic = no λ ()
   logarithm ≟ᵘ neg = no λ ()
-  logarithm ≟ᵘ exp = no λ ()
   logarithm ≟ᵘ rectifier = no λ ()
   logarithm ≟ᵘ squared = no λ ()
   logarithm ≟ᵘ inverse = no λ ()
   logarithm ≟ᵘ ind-positive = no λ ()
   logarithm ≟ᵘ logarithm = yes refl
+  softmax ≟ᵘ logistic = no λ ()
+  softmax ≟ᵘ neg = no λ ()
+  softmax ≟ᵘ rectifier = no λ ()
+  softmax ≟ᵘ squared = no λ ()
+  softmax ≟ᵘ inverse = no λ ()
+  softmax ≟ᵘ ind-positive = no λ ()
+  softmax ≟ᵘ logarithm = no λ ()
+  logistic ≟ᵘ softmax = no λ ()
+  neg ≟ᵘ softmax = no λ ()
+  rectifier ≟ᵘ softmax = no λ ()
+  squared ≟ᵘ softmax = no λ ()
+  inverse ≟ᵘ softmax = no λ ()
+  ind-positive ≟ᵘ softmax = no λ ()
+  logarithm ≟ᵘ softmax = no λ ()
+  softmax ≟ᵘ softmax = yes refl
+
 
   isVar : (e : E Γ is) → Dec (∃ λ v → e ≡ var v)
   isVar (var x) = yes (x , refl)
@@ -113,7 +114,6 @@ module _ where
   isVar (let′ e e₁) = no λ ()
   -- Jairo made
   isVar (un x e) = no λ ()
-  isVar (argmax pf e) = no λ ()
 
   isZero : (e : E Γ (ar s)) → Dec (e ≡ zero)
   isZero zero = yes refl
@@ -325,10 +325,6 @@ module _ where
   isSum (let′ e e₁) = no λ ()
   isSum (un x e) = no λ ()
   -- isSum (argmax pf e) = no λ ()
-
-  isArgmax : (e : E Γ (ix p)) → Dec (∃ λ p → ∃₂ λ pf t → e ≡ argmax {p = p} pf t)
-  isArgmax (var x) = no λ ()
-  isArgmax (argmax pf e) = yes (_ , pf , e , refl)
 
   isSlide : (e : E Γ (ar u)) → Dec (∃₂ λ s′ p′ → ∃₂ λ r′ t → ∃₂ λ x′ t₁ → ∃ λ x₁ → e ≡ E.slide {s = s′}{p′}{r′} t x′ t₁ x₁)
   isSlide (var x) = no λ ()
@@ -612,13 +608,6 @@ module _ where
     -- do
     -- et ← e ≟ᵉ t -- ???
     -- just (cong (un o) et)
-  argmax {p = p} pf e ≟ᵉ u with isArgmax u
-  ... | no _ = nothing
-  ... | yes (p′ , pf′ , u , refl) with p ≟ˢ p′
-  ... | no _ = nothing
-  ... | yes refl with e ≟ᵉ u
-  ... | just refl rewrite (suc≈-uniq pf pf′) = just refl
-  ... | nothing = nothing
 
   -- test : (e : E (Γ ▹ ix s)) → inv (sum e)
 
@@ -648,7 +637,6 @@ module _ where
   count-sels (imap e) v = count-sels e (there v)
   count-sels (imapb x e) v = count-sels e (there v)
   count-sels (sum e) v = count-sels e (there v)
-  count-sels (argmax pf e) v = count-sels e v
   count-sels (zero-but i j e) v = count-sels e v
   count-sels (slide i x e x₁) v = count-sels e v
   count-sels (backslide i e x x₁) v = count-sels e v
@@ -710,13 +698,12 @@ module _ where
     inline' (bin x e e₁) = bin x (inline' e) (inline' e₁)
     inline' (scaledown x e) = scaledown x (inline' e)
     inline' (un x e) = un x (inline' e)
-    inline' (argmax pf e) = argmax pf (inline' e)
     inline' (let′ e e₁) with a ← (inline' e₁) | count-uses a v₀ | count-sels a v₀ | e
     ... | 0 | _ | _ = sub a (sub-id ▹ (inline' e))
     ... | _ | _ | var v = sub a (sub-id ▹ (var v))
     ... | _ | _ | zero = sub a (sub-id ▹ zero)
     ... | _ | _ | one = sub a (sub-id ▹ one)
-    ... | 1 | 0 | _ = sub a (sub-id ▹ inline' e)
+    -- ... | 1 | 0 | _ = sub a (sub-id ▹ inline' e)
     ... | 1 | 1 | _ = sub a (sub-id ▹ inline' e)
     ... | _ | _ | _ = let′ (inline' e) a
 

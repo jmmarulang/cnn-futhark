@@ -57,12 +57,13 @@ module _ where
   uop : Uop → String
   uop logistic = "log"
   uop neg = "-"
-  uop exp = "exp"
+  -- uop exp = "exp"
   uop rectifier = "relu"
   uop squared = "sqrt"
   uop inverse = "inv"
   uop ind-positive = "ind-positive"
   uop logarithm = "ln"
+  uop softmax = "softmax"
 
   pars : Bool → String → String
   pars true = printf "(%s)"
@@ -151,11 +152,11 @@ module _ where
     a ← ppx (1 + precApp) e ρ
     return (pars (does (p >? precApp)) $ printf "(%s %s)" (uop x) a)
 
-  ppx p (argmax sn e) ρ = do
-    -- iv ← fresh-var
-    a ← ppx 0 e ρ
-    a ← ppx 0 e ρ
-    return (pars (does (p >? precImap)) (printf "argmax %s" a))
+  -- ppx p (argmax sn e) ρ = do
+  --   -- iv ← fresh-var
+  --   a ← ppx 0 e ρ
+  --   a ← ppx 0 e ρ
+  --   return (pars (does (p >? precImap)) (printf "argmax %s" a))
 
 
   pp : E Γ is → FEnv Γ → State ℕ (Sem is)

@@ -77,11 +77,10 @@ module Eval (r : Real) (rp : RealProp r) where
   -- Jairo made
   eval (relu e) ρ = Ar.map (_∨_ 0ᵣ) (eval e ρ)
   eval (𝕀+ e) ρ = Ar.map I+ (eval e ρ)
-  eval (𝕖^ e) ρ = Ar.map e^_ (eval e ρ)
   eval (sqrt e) ρ = Ar.map √_ (eval e ρ)
   eval (𝟙/ e) ρ = Ar.map 1/_ (eval e ρ)
   eval (ln e) ρ = Ar.map log (eval e ρ)
-  eval (argmax pf e) ρ = ixmaximum pf (eval e ρ)
+  eval (ℙ e) ρ = {!   !}
 
   _≈ᵃ_ : Ar s X → Ar s X → Set
   a ≈ᵃ b = ∀ i → a i ≡ b i
@@ -169,19 +168,10 @@ module Eval (r : Real) (rp : RealProp r) where
   -- Jairo made
   eval-cong (relu e) eq i = cong (_∨_ 0ᵣ) (eval-cong e eq i)
   eval-cong (𝕀+ e) eq i = cong I+ (eval-cong e eq i)
-  eval-cong (𝕖^ e) eq i = cong e^_ (eval-cong e eq i)
   eval-cong (sqrt e) eq i = cong √_ (eval-cong e eq i)
   eval-cong (𝟙/ e) eq i = cong 1/_ (eval-cong e eq i)
   eval-cong (ln e) eq i = cong log (eval-cong e eq i)
-  eval-cong (argmax pf e) eq = {!   !}
-    -- cong proj₂ (sum-cong max-pair (-∞ᵣ , lastIx pf)
-    --    λ i → ×-≡,≡→≡ (eval-cong e eq i , refl))
-
-
-    -- sum-inv _∨_ (-∞ᵣ) {λ i → eval e (_ , i)} i
-    --                          ∙ sum-cong _∨_ (-∞ᵣ) {(λ j → eval e (_ , j) i)}
-    --                                         (λ j → eval-cong e (eq ▹ refl) i)
-    --                          ∙ sym (sum-inv _∨_ (-∞ᵣ) {λ i → eval e (_ , i)} i)
+  eval-cong (ℙ e) = {!   !}
 
   open WkSub hiding (_∙ˢ_)
 
@@ -240,16 +230,10 @@ module Eval (r : Real) (rp : RealProp r) where
   -- Jairo made
   eval-wk w (relu e) ρ = Ar.map-cong (_∨_ 0ᵣ) (eval-wk w e ρ)
   eval-wk w (𝕀+ e) ρ = Ar.map-cong I+ (eval-wk w e ρ)
-  eval-wk w (𝕖^ e) ρ = Ar.map-cong e^_ (eval-wk w e ρ)
   eval-wk w (sqrt e) ρ = Ar.map-cong √_ (eval-wk w e ρ)
   eval-wk w (𝟙/ e) ρ = Ar.map-cong 1/_ (eval-wk w e ρ)
   eval-wk w (ln e) ρ = Ar.map-cong log (eval-wk w e ρ)
-  eval-wk w (argmax pf e) ρ = {!   !}
-    -- cong proj₂ (sum-cong max-pair ((-∞ᵣ , lastIx pf))
-    --    λ i → ×-≡,≡→≡ (eval-wk w e ρ i , refl))
-    -- sum-inv _∨_ (-∞ᵣ) {(λ i₁ → eval (wk (keep w) e) (ρ , i₁))} i
-    --                         ∙ sum-cong _∨_ (-∞ᵣ) (λ t → eval-wk (keep w) e (ρ , t) i)
-    --                         ∙ sym (sum-inv _∨_ (-∞ᵣ) {(λ i₁ → eval e (wk-env w ρ , i₁))} i)
+  eval-wk w (ℙ e) = {!   !}
 
   sub-env-wks : (s : Sub Γ Δ) → (w : Γ ⊆ Ψ) → ∀ ρ → sub-env (wks s w) ρ ≈ᶜ sub-env s (wk-env w ρ)
   sub-env-wks ε w _ = ε
@@ -327,20 +311,10 @@ module Eval (r : Real) (rp : RealProp r) where
   -- Jairo made
   eval-sub (relu e) ρ s i = cong (_∨_ 0ᵣ) (eval-sub e ρ s i)
   eval-sub (𝕀+ e) ρ s i = cong I+ (eval-sub e ρ s i)
-  eval-sub (𝕖^ e) ρ s i = cong e^_ (eval-sub e ρ s i)
   eval-sub (sqrt e) ρ s i = cong √_ (eval-sub e ρ s i)
   eval-sub (𝟙/ e) ρ s i = cong 1/_ (eval-sub e ρ s i)
   eval-sub (ln e) ρ s i = cong log (eval-sub e ρ s i)
-  eval-sub (argmax pf e) ρ s = {!   !}
-    -- cong proj₂ (sum-cong max-pair ((-∞ᵣ , lastIx pf))
-    --    λ i → ×-≡,≡→≡ (eval-sub e ρ s i , refl))
-    -- sum-inv _∨_ (-∞ᵣ) {(λ i₁ → eval (sub e (wks s (skip ⊆-eq) ▹ var v₀)) (ρ , i₁))} i
-    --                          ∙ sum-cong _∨_ (-∞ᵣ)
-    --                                         {(λ j → eval (sub e (wks s (skip ⊆-eq) ▹ var v₀)) (ρ , j) i)}
-    --                                         (λ j → eval-sub e (ρ , j) ((wks s (skip ⊆-eq) ▹ var v₀)) i
-    --                                                ∙ eval-cong e ((sub-env-wks s (skip ⊆-eq) (ρ , j)
-    --                                                                ∙ᶜ sub-env-cong s wk-env-id) ▹ refl) i)
-    --                          ∙ sym (sum-inv _∨_ (-∞ᵣ){λ i₁ → eval e (sub-env s ρ , i₁)} i)
+  eval-sub (ℙ e) = {!   !}
 
   eval-zb : (a : E Γ (ar s)) (i : E Γ (ix p)) → ∀ ρ → eval (zero-but i i a) ρ ≈ᵃ eval a ρ
   eval-zb a i ρ with eval i ρ ≟ₚ eval i ρ
@@ -352,39 +326,6 @@ module Eval (r : Real) (rp : RealProp r) where
     open WkSub hiding (_∙ˢ_)
     open import Data.Maybe
     open import Data.Maybe.Properties
-
-
-
-    -- eval-strenv : ∀ {Γ is ip} (x : is ∈ Γ) {y : ip ∈ Γ} {y' : ip ∈ (Γ / x)}
-    --   → strenv x y ≡ just y' → (ρ : ⟦ Γ ⟧ᶜ)
-    --   → lookup y ρ ≈ˢ lookup y' (wk-env (wk-/ x) ρ)
-    -- eval-strenv v₀ {there y} {y'} eq ρ rewrite (just-injective eq) =
-    --   symˢ (lookup-≈ᶜ wk-env-id y')
-    -- eval-strenv (there x) {v₀} {v₀} eq ρ = reflˢ
-    -- eval-strenv (there x) {there y} {v₀} eq ρ with strenv x y | eq
-    -- ... | just a | ()
-    -- ... | nothing | ()
-    -- eval-strenv (there x) {there y} {there y'} eq ρ =
-    --   eval-strenv x (strenv-inj₂ x eq) (ρ .proj₁)
-
-    -- open import LangEq
-
-    -- eval-stren : ∀ {Γ is} (x : is ∈ Γ) (y : E Γ is) (z : E (Γ / x) is)
-    --   → stren y x ≡ just z → (ρ : ⟦ Γ ⟧ᶜ)
-    --   → eval y ρ ≈ˢ eval z (wk-env (wk-/ x) ρ)
-    -- eval-stren x y z eq ρ = {!   !} ∙ˢ (eval-wk (wk-/ x) z ρ)
-
-    -- eval-stren : ∀ {Γ is} (x : is ∈ Γ) (y : E Γ is) (z : E (Γ / x) is)
-    --   → stren y x ≡ just z → (ρ : ⟦ Γ ⟧ᶜ)
-    --   → eval y ρ ≈ˢ eval z (wk-env (wk-/ x) ρ)
-    -- eval-stren x (var y) (var y') eq ρ = eval-strenv x (var-stren-strenv x eq) ρ
-    -- eval-stren x 𝟘 𝟘 eq ρ = reflˢ
-    -- eval-stren x 𝟙 𝟙 eq ρ = reflˢ
-    -- eval-stren x (sels e e₁) z eq ρ = {! z  !}
-    -- eval-stren x y z eq ρ 
-
-    -- ?0 :{!   !}eval y ρ ≈ˢ eval y' (wk-env (wk-/ x) ρ)
-
 
   module ZeroBut where
     -- open RealProp rp

@@ -304,27 +304,17 @@ module Extract where
 
   -- Jairo made
 
-  -- m-softmax-s : String
-  -- m-softmax-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.m-softmax-e OPT) (from-named (ε ▹ "inp"))) 0)
-
   grad-rmsnorm-s : String
   grad-rmsnorm-s = pp Primitives.Microgpt.rmsnorm-e (ε ▹ "inp")
 
   grad-rmsnorm-pp : String
   grad-rmsnorm-pp = Pretty.pretty Primitives.Microgpt.rmsnorm-e (ε ▹ "inp")
 
-  -- grad-test-pp : String
-  -- grad-test-pp = Pretty.seed-pretty Primitives.Microgpt.test-e (var v₁) (ε ▹ "j" ▹ "inp")
-  -- grad-test-pp = Pretty.seed-pretty Primitives.Microgpt.test-e (var v₀) (ε ▹ "s" ▹ "inp")
-
   test-s : String
-  test-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.test-e OPT) (from-named (ε ▹ "inp"))) 0)
+  test-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.test-e OPT) (from-named (ε ▹ "f"))) 0)
 
   grad-id-pp : String
   grad-id-pp = Pretty.pretty Primitives.Microgpt.id-e (ε ▹ "inp")
-
-  grad-softmax-s : String
-  grad-softmax-s = pp Primitives.Microgpt.softmax-e (ε ▹ "j" ▹ "inp")
 
   grad-softmax-pp : String
   grad-softmax-pp = Pretty.seed-pretty Primitives.Microgpt.softmax-e (var v₁) (ε ▹ "f'" ▹ "f")
