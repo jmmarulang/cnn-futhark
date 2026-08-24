@@ -203,6 +203,10 @@ module _ where
   ... | no ¬q = no λ { refl → ¬q refl }
   ... | yes refl = yes refl
 
+  -- ≟ₚ-sym : (i : P s) → ∃ λ eq → i ≟ₚ i ≡ yes eq
+  -- ≟ₚ-sym [] = refl , refl
+  -- ≟ₚ-sym (i ∷ is) = refl , {!   !}
+
   inject-left : Fin (suc m) → Fin (suc (n + m))
   inject-left {m} {n} i rewrite +-comm n m  = inject+ _ i
 

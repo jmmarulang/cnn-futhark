@@ -1,25 +1,9 @@
 elet x0 = sels f (argmax f)
-elet x1 = exp (f + - (imaps λ x2 → x0))
-elet x3 = sum λ x4 → sels x1 x4
-elet x5 = sum λ x6 → - (((sels f' x6 * sels x1 x6) * inv ((x3 * x3))))
-elet x7 = imaps λ x8 → (sels f' x8 * inv x3) + x5
-elet x9 = sum λ x10 → - ((sels x1 x10 * sels x7 x10))
-let df = imaps λ x11 → (sels x1 x11 * sels x7 x11) + (zero-but x11 (argmax f) x9)
-----
-static void softmax_backward(float *dlogits, const float *probs, const float *dprobs, int n) {
-    -- // d/dlogits[i] = probs[i] * (dprobs[i] - sum_j(probs[j] * dprobs[j]))
-    -- // d/dlogits[i] = probs[i] * (1 - probs[i])
-    float dot = 0.0f;
-    for (int j = 0; j < n; j++) dot += probs[j] * dprobs[j];
-    for (int i = 0; i < n; i++) {
-        dlogits[i] = probs[i] * (dprobs[i] - dot);
-    }
-}
------
-static void softmax_forward(float *x, int n) {
-    float max_val = x[0];
-    for (int i = 1; i < n; i++) if (x[i] > max_val) max_val = x[i];
-    float sum = 0.0f;
-    for (int i = 0; i < n; i++) { x[i] = expf(x[i] - max_val); sum += x[i]; }
-    for (int i = 0; i < n; i++) x[i] /= sum;
-}
+elet x1 = imaps λ x2 → sels f x2 + (- x0)
+elet x3 = (exp x1)
+elet x4 = sum λ x5 → sels x3 x5
+elet x6 = (- (((inv x4) * ((inv x4) * (sum λ x7 → (sels x3 x7 * sels f' x7))))))
+elet x8 = imaps λ x9 → ((inv x4) * sels f' x9) + x6
+elet x10 = (x3 * x8)
+elet x11 = (- (sum λ x12 → sels x10 x12))
+let df = imaps λ x13 → sels x10 x13 + (zero-but x13 (argmax f) x11)

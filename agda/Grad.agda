@@ -114,6 +114,11 @@ module _ where
   ee-plus (env ρ) (let′ x ν) = let′ x (ee-plus (ee-wk (skip ⊆-eq) (env ρ)) ν) -- TODO : substituve replicated let bindings
   ee-plus (let′ x ρ) ν = let′ x (ee-plus ρ (ee-wk (skip ⊆-eq) ν))
 
+  -- ee-plus : (ρ ν : EE Γ Δ) → EE Γ Δ
+  -- ee-plus (env ρ) (env ν) = env (env-plus ρ ν)
+  -- ee-plus (env ρ) (let′ x ν) = let′ x (ee-plus (ee-wk (skip ⊆-eq) (env ρ)) ν) -- TODO : substituve replicated let bindings
+  -- ee-plus (let′ x ρ) ν = let′ x (ee-plus ρ (ee-wk (skip ⊆-eq) ν))
+
   -- This is a section that implements a terminating version
   -- of the ee-plus.
   let-depth : EE Γ Δ → ℕ
@@ -214,6 +219,9 @@ module _ where
   grad (imap e)               s δ = grad-sum e (sel      (s ↑) (var v₀)) δ
   grad (E.imapb m e)          s δ = grad-sum e (E.selb m (s ↑) (var v₀)) δ
 
+  -- grad (sels e (argmax sp e₁)) s δ =
+  --   let′ (imaps (zero-but (var v₀) ((argmax sp e₁) ↑) (s ↑)))
+  --        (ee-tail (grad (e ↑) (var v₀) (ee-wk (skip ⊆-eq) (ee-push-zero δ))))
   grad (sels e i)             s δ = grad e (imaps     (zero-but (var v₀) (i ↑) (s ↑))) δ
   grad (sel e i)              s δ = grad e (imap      (zero-but (var v₀) (i ↑) (s ↑))) δ
   grad (E.selb m e i)         s δ = grad e (E.imapb m (zero-but (var v₀) (i ↑) (s ↑))) δ
@@ -225,7 +233,7 @@ module _ where
   grad (E.backslide i e su p) s δ = grad e (E.slide i p s su) δ
 
   grad (e ⊞ e₁)               s   = grad e s ∘ grad e₁ s
-  grad (e ⊠ e₁)               s   = grad e (s ⊠ e₁) ∘ grad e₁ (s ⊠ e)
+  grad (e ⊠ e₁)               s   = grad e (s ⊠ e₁) ∘ grad e₁ (e ⊠ s)
   grad (scaledown x e)        s   = grad e (scaledown x s)
   grad (⊟ e)                  s   = grad e (⊟ s)
   grad (logi e)               s   = grad e (let′ (logi e) ((s ↑) ⊠ var v₀ ⊠ (one ⊞ ⊟ (var v₀))))
@@ -242,7 +250,8 @@ module _ where
   grad (𝕖^ e)                 s δ = grad e ((𝕖^ e) ⊠ s) δ
   grad (sqrt e)               s δ = grad e (s // (𝟚 ⊠ sqrt e)) δ
   -- grad (𝟙/ e)                 s δ = grad e (let′(e ⊠ e) (⊟ ((s ↑) // (var v₀)))) δ
-  grad (𝟙/ e)                 s δ = grad e (⊟ (s // (e ⊠ e))) δ
+  -- grad (𝟙/ e)                 s δ = grad e (⊟ (s // (e ⊠ e))) δ
+  grad (𝟙/ e)                 s δ = grad e (⊟ (( 𝟙/ e) ⊠ (s // e))) δ
   grad (ln e)                 s δ = grad e (s // e) δ
   grad (argmax pf e)    s δ = δ
       -- let e₁ = wk (keep (skip ⊆-eq)) e in

@@ -149,7 +149,7 @@ module _ where
 
   ppx p (un x e) ρ = do
     a ← ppx (1 + precApp) e ρ
-    return (pars (does (p >? precApp)) $ printf "%s %s" (uop x) a)
+    return (pars (does (p >? precApp)) $ printf "(%s %s)" (uop x) a)
 
   ppx p (argmax sn e) ρ = do
     -- iv ← fresh-var

@@ -101,10 +101,11 @@ module Extract where
   ee-inline (env x) = env (env-norm-lets x)
   ee-inline (let′ e ρ) with δ ← ee-inline ρ | ee-count-uses δ v₀ | ee-count-sels δ v₀ | e
   ... | 0 | _ | _ = ee-sub δ (sub-id ▹ inline e) -- does nothing?
-  ... | _ | _ | var b = ee-sub δ (sub-id ▹ var b) --ee-sub δ (sub-id ▹ inline x)
-  ... | _ | _ | zero = ee-sub δ (sub-id ▹ zero) --ee-sub δ (sub-id ▹ inline x)
-  ... | _ | _ | one = ee-sub δ (sub-id ▹ one) --ee-sub δ (sub-id ▹ inline x)
+  ... | _ | _ | var b = ee-sub δ (sub-id ▹ var b)
+  ... | _ | _ | zero = ee-sub δ (sub-id ▹ zero)
+  ... | _ | _ | one = ee-sub δ (sub-id ▹ one)
   ... | 1 | 1 | _ = ee-sub δ (sub-id ▹ inline e)
+  -- ... | 1 | 0 | _ = ee-sub δ (sub-id ▹ inline e)
   ... | _ | _ | _ = let′ (inline e) δ
 
   env-replace : Env Γ Δ → (a b : E Δ is) → Env Γ Δ

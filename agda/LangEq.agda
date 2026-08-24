@@ -396,6 +396,16 @@ module _ where
   isUn (un x e) = yes (x , e , refl)
   -- isUn (argmax pf e) = no λ ()
 
+  un-inj : {a b : E Γ (ar s)} → {x y : Uop} → (un x a ≡ un y b) → (x ≡ y)
+  un-inj {a = a} {b = b} {x = x} {y = y} refl = refl
+
+  isInv : (e : E Γ (ar s)) → Dec (∃ λ t → e ≡ 𝟙/ t)
+  isInv e with (isUn e)
+  ... | no a = no (λ z → a (inverse , z))
+  ... | yes (x , e , refl) with x ≟ᵘ inverse
+  ... | yes refl = yes (e , refl)
+  ... | no a = no λ (b , c) → a (un-inj c)
+
   isBin : (e : E Γ (ar s)) → Dec (∃₂ λ o t → ∃ λ t₁ → e ≡ bin o t t₁)
   isBin (var x) = no λ ()
   isBin zero = no λ ()
@@ -610,6 +620,8 @@ module _ where
   ... | just refl rewrite (suc≈-uniq pf pf′) = just refl
   ... | nothing = nothing
 
+  -- test : (e : E (Γ ▹ ix s)) → inv (sum e)
+
   e-eq? : (a : E Γ is) (b : E Γ ip) → Maybe (Σ (is ≡ ip) λ pp → subst (E Γ) pp a ≡ b)
   e-eq? {is = is}{ip} a b with is ≟ⁱ ip
   ... | no ¬p = nothing
@@ -704,6 +716,7 @@ module _ where
     ... | _ | _ | var v = sub a (sub-id ▹ (var v))
     ... | _ | _ | zero = sub a (sub-id ▹ zero)
     ... | _ | _ | one = sub a (sub-id ▹ one)
+    ... | 1 | 0 | _ = sub a (sub-id ▹ inline' e)
     ... | 1 | 1 | _ = sub a (sub-id ▹ inline' e)
     ... | _ | _ | _ = let′ (inline' e) a
 
