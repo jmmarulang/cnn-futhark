@@ -125,38 +125,20 @@ module Opt (r : Real) (rp : RealProp r) where
   sels-in (argmax x e) = (argmax x (sels-in e))
   sels-in e = e
 
-  -- a hack
-  inv-left : E Γ is → E Γ is
-  inv-left (e ⊠ (𝟙/ e₁)) = (𝟙/ (inv-left e₁)) ⊠ (inv-left e)
-  inv-left (a ⊠ ((𝟙/ b) ⊠ c)) = (𝟙/ (inv-left b)) ⊠ (((inv-left a)) ⊠ (inv-left c))
-  inv-left (bin x e e₁) = (bin x (inv-left e) (inv-left e₁))
-  inv-left (var x) = (var x)
-  inv-left 𝟘 = 𝟘
-  inv-left 𝟙 = 𝟙
-  inv-left (imaps e) = (imaps (inv-left e))
-  inv-left (sels e e₁) = (sels (inv-left e) (inv-left e₁))
-  inv-left (imap e) = (imap (inv-left e))
-  inv-left (sel e e₁) = (sel (inv-left e) (inv-left e₁))
-  inv-left (E.imapb x e) = (E.imapb x (inv-left e))
-  inv-left (E.selb x e e₁) = (E.selb x (inv-left e) (inv-left e₁))
-  inv-left (E.sum e) = (E.sum (inv-left e))
-  inv-left (zero-but e e₁ e₂) = (zero-but (inv-left e) (inv-left e₁) (inv-left e₂))
-  inv-left (E.slide e x e₁ x₁) = (E.slide (inv-left e) x (inv-left e₁) x₁)
-  inv-left (E.backslide e e₁ x x₁) = (E.backslide (inv-left e) (inv-left e₁) x x₁)
-  inv-left (scaledown x e) = (scaledown x (inv-left e))
-  inv-left (let′ e e₁) = (let′ (inv-left e) (inv-left e₁))
-  inv-left (un x e) = (un x (inv-left e))
-  inv-left (argmax x e) = (argmax x (inv-left e))
-
   danger-opt' : E Γ is → E Γ is
   danger-opt' (a ⊠ (b ⊠ c)) with
     a' ← danger-opt' a | b' ← danger-opt' b | c' ← danger-opt' c | z ← danger-opt' (b ⊠ c)
-    | a' ≟ᵉ (𝟙/ b')
-  ... | just refl = c'
-  ... | _ = (a' ⊠ z)
+    | a' ≟ᵉ (𝟙/ b') | (𝟙/ a') ≟ᵉ b'
+  ... | nothing | nothing = (a' ⊠ z)
+  ... | _ | _ = c'
   danger-opt' (a ⊞ (⊟ b)) with a' ← danger-opt' a | b' ← danger-opt' b | a' ≟ᵉ b'
   ... | just x = zero
   ... | nothing = a' ⊞ (⊟ b')
+  danger-opt' ((a ⊠ b) ⊞ (c ⊠ d)) with a' ← danger-opt' a | c' ← danger-opt' c
+    | x ← danger-opt' (a ⊠ b) | y ← danger-opt' (c ⊠ d) | z ← danger-opt' (b ⊞ d)
+    | a' ≟ᵉ c'
+  ... | just refl = a' ⊠ z
+  ... | _ = x ⊞ y
   danger-opt' (zero-but e e₁ zero) = zero
   danger-opt' (zero-but e e₁ e₂) = (zero-but (danger-opt' e) (danger-opt' e₁) (danger-opt' e₂))
   danger-opt' (bin x e e₁) = (bin x (danger-opt' e) (danger-opt' e₁))
@@ -175,10 +157,13 @@ module Opt (r : Real) (rp : RealProp r) where
     | d' ← (danger-opt' d) | (stren c' v₀)
   ... | just e = e ⊠ (E.sum (a' ⊠ (b' ⊠ d')))
   ... | _ = E.sum (a' ⊠ (b' ⊠ (c' ⊠ d')))
-  -- danger-opt' (E.sum (a ⊠ (b ⊠ c))) with
-  --   a' ← (danger-opt' a) | b' ← (danger-opt' b) | c' ← (danger-opt' c) | (stren  b' v₀)
-  -- ... | just b' = b' ⊠ (E.sum (a' ⊠ c'))
-  -- ... | _ = E.sum (a' ⊠ (b' ⊠ c'))
+  danger-opt' (E.sum (a ⊠ (b ⊠ c))) with
+    a' ← (danger-opt' a) | b' ← (danger-opt' b) | c' ← (danger-opt' c) | (stren  c' v₀)
+  ... | just c' = c' ⊠ (E.sum (a' ⊠ b'))
+  ... | _ = E.sum (a' ⊠ (b' ⊠ c'))
+  danger-opt' (E.sum (a ⊞ (zero-but i (var v₀) b))) with (stren i v₀)
+  ... | just i' = (E.sum (danger-opt' a)) ⊞ (sub (danger-opt' b) (sub-id ▹ i'))
+  ... | _ = E.sum ((danger-opt' a) ⊞ (zero-but (danger-opt' i) (var v₀) (danger-opt' b)))
   danger-opt' (E.sum e) = E.sum (danger-opt' e)
   danger-opt' (sel e e₁) = (sel (danger-opt' e) (danger-opt' e₁))
   danger-opt' (E.selb x e e₁) = (E.selb x (danger-opt' e) (danger-opt' e₁))
@@ -619,7 +604,7 @@ module Opt (r : Real) (rp : RealProp r) where
   ... | yes (neg , c , refl) = (⊟ (a ⊠ c)) , λ ρ i → (cong₂ _*_ (p ρ i) (q ρ i)) ∙ minus-*-pushʳ
   ... | yes (u , c , refl) = a ⊠ b , λ ρ j → cong₂ _*_ (p ρ j) (q ρ j)
   ... | no _ with isZeroBut b
-  ... | yes (_ , i , j , c , refl) = zero-but i j (a ⊠ b) , foo
+  ... | yes (_ , i , j , c , refl) = zero-but i j (a ⊠ c) , foo
     where
     foo : _
     foo ρ k with eval i ρ ≟ₚ eval j ρ | (p ρ k) | (q ρ k)
@@ -687,4 +672,4 @@ module Opt (r : Real) (rp : RealProp r) where
   danger-opt : E Γ is → E Γ is
   danger-opt e =
     -- (opt e .proj₁)
-    danger-opt' $ inv-left $ sels-in $ let-out $ sum-in $ (opt e .proj₁)
+    danger-opt' $ sels-in $ let-out $ sum-in $ (opt e .proj₁)

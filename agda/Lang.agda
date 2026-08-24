@@ -667,16 +667,9 @@ module Primitives where
       (𝕖^ (⟨ x ⟩ ⊟ tiles ms)) ⊠ (tiles $ 𝟙/ (Sum {s} (λ i → sels (𝕖^ (⟨ x ⟩ ⊟ tiles ms)) i)))
 
       -- Let ms := sels-max pf x In
-      -- Let x-ms := Imaps (λ i → (sels ⟨ x ⟩ i) ⊟ ms) In
-      -- Let exps := 𝕖^ (x-ms) In
-      -- Let total := Sum {s} (λ i → sels exps i) In
-      -- Imaps (λ i → (sels exps i) ⊠ (𝟙/ total))
-
-      -- Let ms := sels-max pf x In
-      -- Let x-ms := Imaps (λ i → (sels ⟨ x ⟩ i) ⊟ ms) In
-      -- -- Let exps := 𝕖^ (x-ms) In
-      -- Let total := Sum {s} (λ i → sels (𝕖^ (x-ms)) i) In
-      -- Imaps (λ i → (sels (𝕖^ (x-ms)) i) ⊠ (𝟙/ total))
+      -- Let exps := 𝕖^ (⟨ x ⟩ ⊟ (tiles ms)) In
+      -- Let total := 𝟙/ (Sum {s} (λ i → sels exps i)) In
+      -- exps ⊠ (tiles total)
 
     m-softmax : ∀ {Γ} → suc u ≈ p → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
     m-softmax {Γ} {p = p} {s = s} pf x =

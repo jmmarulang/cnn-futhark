@@ -1,9 +1,15 @@
 elet x0 = sels f (argmax f)
 elet x1 = imaps λ x2 → sels f x2 + (- x0)
-elet x3 = (exp x1)
-elet x4 = sum λ x5 → sels x3 x5
-elet x6 = (- (((inv x4) * ((inv x4) * (sum λ x7 → (sels x3 x7 * sels f' x7))))))
-elet x8 = imaps λ x9 → ((inv x4) * sels f' x9) + x6
-elet x10 = (x3 * x8)
-elet x11 = (- (sum λ x12 → sels x10 x12))
-let df = imaps λ x13 → sels x10 x13 + (zero-but x13 (argmax f) x11)
+elet x3 = imaps λ x4 → (- 
+((
+(exp (sels x1 x4)) * 
+((inv (sum λ x5 → (exp (sels x1 x5)))) * 
+((sum λ x6 → ((exp (sels x1 x6)) * sels f' x6)) * 
+(inv (sum λ x7 → (exp (sels x1 x7)))))))))
++ 
+(
+(exp (sels x1 x4)) *
+(sels f' x4 * 
+(inv (sum λ x8 → (exp (sels x1 x8))))))
+elet x9 = (- (sum λ x10 → sels x3 x10))
+let df = imaps λ x11 → sels x3 x11 + (zero-but x11 (argmax f) x9)
