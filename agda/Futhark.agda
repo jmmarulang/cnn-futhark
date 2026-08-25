@@ -178,10 +178,15 @@ module _ where
   to-sum s  i e = printf "(isum%u %s (\\%s -> %s))" (dim s) (shape-args s)
                          (ix-join i " ") e
 
-  to-softmax : (s : S) → (i : Ix s) → (e : String) → String
-  to-softmax [] i e = e
-  to-softmax s  i e = printf "(isoftmax%u %s (\\%s -> %s))" (dim s) (shape-args s)
+  to-max : (s : S) → (i : Ix s) → (e : String) → String
+  to-max [] i e = e
+  to-max s  i e = printf "(imaximum%u %s (\\%s -> %s))" (dim s) (shape-args s)
                          (ix-join i " ") e
+
+  -- to-exp : (s : S) → (i : Ix s) → (e : String) → String
+  -- to-exp [] i e = e
+  -- to-exp s  i e = printf "(imaximum%u %s (\\%s -> %s))" (dim s) (shape-args s)
+  --                        (ix-join i " ") e
 
   ix-plus : s + p ≈ r → (suc_≈_ p u)
           → (i : Ix s)
@@ -220,14 +225,14 @@ module _ where
     printf "((%s * %s) + %s)" i (show-nat n) j
     ∷ from-div-mod eq is js
 
-  to-argmax : (s : S) → Ix s → (e : String) → Ix s
-  to-argmax s i = to-argmax' 0 s where
-    to-argmax' : ℕ → (p : S) → (e : String) → Ix p
-    to-argmax' pi [] e = []
-    to-argmax' pi (p ∷ ps) e =
-      printf "(argmax%u_%u %s (\\%s -> %s))"
-        (dim s) pi (shape-args s) (ix-join i " ") e
-      ∷ (to-argmax' (suc pi) ps e)
+  -- to-argmax : (s : S) → Ix s → (e : String) → Ix s
+  -- to-argmax s i = to-argmax' 0 s where
+  --   to-argmax' : ℕ → (p : S) → (e : String) → Ix p
+  --   to-argmax' pi [] e = []
+  --   to-argmax' pi (p ∷ ps) e =
+  --     printf "(argmax%u_%u %s (\\%s -> %s))"
+  --       (dim s) pi (shape-args s) (ix-join i " ") e
+  --     ∷ (to-argmax' (suc pi) ps e)
 
   -- Generate a new name for an external array
   mkar : String → Ix s → State ℕ ((String → String) × String)
@@ -369,17 +374,10 @@ module _ where
       f , a′ ← a i
       return (f , printf "(one F./ %s)" a′)
 
-  -- to-fut (𝕖^ e) ρ = do
-  --   a ← to-fut e ρ
-  --   return λ i → do
-  --     f , a′ ← a i
-  --     return (f , printf "(F.exp %s)" a′)
-
   to-fut (relu e) ρ = do
     a ← to-fut e ρ
     return λ i → do
       f , a′ ← a i
-      -- return (f , printf "(if (zero F.<= %s) then %s else zero)" a′ a′) --use max?
       return (f , printf "F.max %s zero" a′)
 
   to-fut (sqrt e) ρ = do
@@ -400,25 +398,28 @@ module _ where
     return λ i → do
       f , a′ ← a i
       return (f , printf "(F.log %s)" a′)
-  to-fut (un {s = s} softmax e) ρ = return λ i → do
+  to-fut (un {s = s} softmax e) ρ = do
+    c₁ ← get
+    i₁ ← iv s
+    c₂ ← get
+    i₂ ← iv s
+    c₃ ← get
+    i₃ ← iv s
+    let max = fresh-var c₁
+    let exps = fresh-var c₂
+    let total = fresh-var c₃
     a ← to-fut e ρ
-    f , a′ ← a i
-    return ({!   !} , {!   !})
-
-    -- i ← iv s
-    -- a ← to-fut e ρ
-    -- return λ j → do
-    --   f , a′ ← a i
-    --   return (id , to-softmax s i a′)
-    -- a ← to-fut e ρ
-    -- return λ i → do
-    --   f , a′ ← a i
-    --   return (id , printf "(softmax %s)" (f a′))
-  -- to-fut (ℙ e) ρ = do
-  --   a ← to-fut e ρ
-  --   return λ i → do
-  --     f , a′ ← a i
-  --     return (f , printf "(softmax %s)" a′)
+    return λ i₄ → do
+      _ , a′₁ ← a i₁
+      _ , a′₂ ← a i₂
+      f , _ ← a i₄
+      return (
+        printf "(let %s = %s\nin %s)" max (to-max s i₁ a′₁) ∘
+        printf "(let %s = %s \nin %s)" exps
+          (to-imap s i₂ (printf "F.exp (%s F.+ F.neg %s)" a′₂ max)) ∘
+        printf "(let %s = %s\nin %s)" total (to-sum s i₃ (to-sel i₃ exps)) ∘
+        f
+        , printf "(%s F./ %s)" (to-sel i₄ exps) total)
 
 module Test where
   open import Relation.Binary.PropositionalEquality
@@ -441,11 +442,11 @@ module Test where
   _,,_ = _,′_
 
   test-e : E _ _
-  test-e = Lcon (ar (5 ∷ 5 ∷ []) ∷ ix (5 ∷ 5 ∷ []) ∷ []) (ar ([])) ε
-           λ a j → sel (Let x := a ⊞ a In x ⊞ a) j
+  test-e = Lcon (ar (5 ∷ []) ∷ []) (ar (5 ∷ [])) ε
+           λ e → ℙ e
 
   test-s : String
-  test-s = proj₂ (runState (to-str test-e ((_ , mkar "a"), ("i1" ∷ "i2" ∷ []))) 0)
+  test-s = proj₂ (runState (to-str test-e (_ , mkar "f")) 0)
 
   loss-e : E _ _
   loss-e = Lcon (ar (5 ∷ []) ∷ ar (5 ∷ []) ∷ []) (ar (5 ∷ [])) ε

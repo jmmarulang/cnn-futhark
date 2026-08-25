@@ -175,15 +175,6 @@ module _ where
   𝟚 : E Γ (ar s)
   𝟚 = 𝟙 ⊞ 𝟙
 
-  -- sels-max : suc p ≈ s → E Γ (ar s) → E Γ (ar [])
-  -- sels-max pf e = sels e (argmax pf e)
-
-  -- maxs : suc p ≈ s → E (Γ ▹ ix s) (ar []) → E Γ (ar [])
-  -- maxs pf e = sels-max pf (imaps e)
-
-  -- sels-max : {n m : ℕ} → suc ι m ≈ ι n → E Γ (ar $ ι n) → E Γ (ar [])
-  -- sels-max pf e = sels e (argmax pf e)
-
   var-inj : ∀ {x y : is ∈ Γ} → (var x ≡ var y) → (x ≡ y)
   var-inj refl = refl
 

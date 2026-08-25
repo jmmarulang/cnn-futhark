@@ -1,5 +1,5 @@
 -- {-# OPTIONS --warn=noUserWarning #-}
-{-# OPTIONS --allow-unsolved-metas #-}
+-- {-# OPTIONS --allow-unsolved-metas #-}
 open import Data.Product
 open import Data.Unit
 open import Data.Empty
@@ -42,17 +42,11 @@ module Eval (r : Real) (rp : RealProp r) where
   ... | yes _ = x
   ... | no _ = K (fromℕ 0)
 
-  -- could be modified to make it commutatitve
-  max-pair : (R × P s) → (R × P s) → (R × P s)
-  max-pair (r1 , i1) (r2 , i2) with (r1 ≤ᵣ? r2)
-  ... | yes _ = (r2 , i2)
-  ... | no _ = (r1 , i1)
-
-  maximum-pair : suc p ≈ s → Ar s R → (R × P s)
-  maximum-pair pr f = Ar.sum max-pair (-∞ᵣ , lastIx pr) λ i → (f i) , i
-
-  ixmaximum : suc p ≈ s → Ar s R → P s
-  ixmaximum pr f = proj₂ (maximum-pair pr f)
+  Softmax : ⟦ ar p ⟧ˢ → ⟦ ar p ⟧ˢ
+  Softmax {p = p} a = Ar.map (λ x → x ÷ total) exps where
+    exps = Ar.map (e^_) a
+    total : R
+    total = Ar.sum _+_ (fromℕ 0) exps
 
   eval : E Γ is → ⟦ Γ ⟧ᶜ → ⟦ is ⟧ˢ
   eval (var x) ρ = lookup x ρ
@@ -80,7 +74,7 @@ module Eval (r : Real) (rp : RealProp r) where
   eval (sqrt e) ρ = Ar.map √_ (eval e ρ)
   eval (𝟙/ e) ρ = Ar.map 1/_ (eval e ρ)
   eval (ln e) ρ = Ar.map log (eval e ρ)
-  eval (ℙ e) ρ = {!   !}
+  eval (ℙ e) ρ = Softmax (eval e ρ)
 
   _≈ᵃ_ : Ar s X → Ar s X → Set
   a ≈ᵃ b = ∀ i → a i ≡ b i
@@ -171,7 +165,8 @@ module Eval (r : Real) (rp : RealProp r) where
   eval-cong (sqrt e) eq i = cong √_ (eval-cong e eq i)
   eval-cong (𝟙/ e) eq i = cong 1/_ (eval-cong e eq i)
   eval-cong (ln e) eq i = cong log (eval-cong e eq i)
-  eval-cong (ℙ e) = {!   !}
+  eval-cong (ℙ e) eq i = cong₂ _÷_ (cong e^_ (eval-cong e eq i))
+    ((sum-cong _+_ _ {e^_ ∘ eval e _} (cong e^_ ∘ eval-cong e eq)))
 
   open WkSub hiding (_∙ˢ_)
 
@@ -233,7 +228,8 @@ module Eval (r : Real) (rp : RealProp r) where
   eval-wk w (sqrt e) ρ = Ar.map-cong √_ (eval-wk w e ρ)
   eval-wk w (𝟙/ e) ρ = Ar.map-cong 1/_ (eval-wk w e ρ)
   eval-wk w (ln e) ρ = Ar.map-cong log (eval-wk w e ρ)
-  eval-wk w (ℙ e) = {!   !}
+  eval-wk w (ℙ e) ρ i = cong₂ _÷_ (cong e^_ (eval-wk w e ρ i))
+    (sum-cong _+_ _ {e^_ ∘ eval (wk w e) ρ} (cong e^_ ∘ eval-wk w e ρ))
 
   sub-env-wks : (s : Sub Γ Δ) → (w : Γ ⊆ Ψ) → ∀ ρ → sub-env (wks s w) ρ ≈ᶜ sub-env s (wk-env w ρ)
   sub-env-wks ε w _ = ε
@@ -314,7 +310,8 @@ module Eval (r : Real) (rp : RealProp r) where
   eval-sub (sqrt e) ρ s i = cong √_ (eval-sub e ρ s i)
   eval-sub (𝟙/ e) ρ s i = cong 1/_ (eval-sub e ρ s i)
   eval-sub (ln e) ρ s i = cong log (eval-sub e ρ s i)
-  eval-sub (ℙ e) = {!   !}
+  eval-sub (ℙ e) ρ s i = cong₂ _÷_ (cong e^_ (eval-sub e ρ s i))
+    (sum-cong _+_ _ {e^_ ∘ eval (sub e s) ρ} (cong e^_ ∘ eval-sub e ρ s))
 
   eval-zb : (a : E Γ (ar s)) (i : E Γ (ix p)) → ∀ ρ → eval (zero-but i i a) ρ ≈ᵃ eval a ρ
   eval-zb a i ρ with eval i ρ ≟ₚ eval i ρ

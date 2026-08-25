@@ -1,5 +1,5 @@
 -- {-# OPTIONS --warn=noUserWarning #-}
-{-# OPTIONS --allow-unsolved-metas #-}
+-- {-# OPTIONS --allow-unsolved-metas #-}
 open import Data.Product
 open import Data.Unit
 open import Data.Empty
