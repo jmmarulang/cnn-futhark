@@ -45,7 +45,6 @@ module Eval (r : Real) (rp : RealProp r) where
   Softmax : ⟦ ar p ⟧ˢ → ⟦ ar p ⟧ˢ
   Softmax {p = p} a = Ar.map (λ x → x ÷ total) exps where
     exps = Ar.map (e^_) a
-    total : R
     total = Ar.sum _+_ (fromℕ 0) exps
 
   eval : E Γ is → ⟦ Γ ⟧ᶜ → ⟦ is ⟧ˢ

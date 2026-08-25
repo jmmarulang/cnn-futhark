@@ -148,7 +148,8 @@ module Opt (r : Real) (rp : RealProp r) where
   ... | _ | _ | yes (x , a , refl) = scaledown x (imaps a)
   ... | _ | _ | _ = imaps e'
   danger-opt' (imap zero) = zero
-  danger-opt' (imap e) = imap (danger-opt' e)
+  danger-opt' (imap {s = s} {p = p} e) = imap (danger-opt' e)
+    -- imap {s = s} (imaps (sels (sel {! e ↑  !} {!   !}) {!   !})) --imap (danger-opt' e)
   danger-opt' (E.imapb x e) = E.imapb x (danger-opt' e)
   danger-opt' (E.sum (a ⊠ (b ⊠ (c ⊠ d)))) with
     a' ← (danger-opt' a) | b' ← (danger-opt' b) | c' ← (danger-opt' c)

@@ -399,37 +399,39 @@ module _ where
       f , a′ ← a i
       return (f , printf "(F.log %s)" a′)
 
-  -- to-fut (un {s = s} softmax e) ρ = do
-  --   c ← get
-  --   i ← iv s
-  --   let sf = fresh-var c
-  --   a ← to-fut e ρ
-  --   return λ j → do
-  --     f , a′ ← a j
-  --     return (printf "(let %s = %s\nin %s)" sf (to-softmax s i a′) ∘ f , to-sel j sf)
-
   to-fut (un {s = s} softmax e) ρ = do
-    c₁ ← get
-    i₁ ← iv s
-    c₂ ← get
-    i₂ ← iv s
-    c₃ ← get
-    i₃ ← iv s
-    let max = fresh-var c₁
-    let exps = fresh-var c₂
-    let total = fresh-var c₃
+    c ← get
+    i ← iv s
+    let sf = fresh-var c
     a ← to-fut e ρ
-    return λ i₄ → do
-      _ , a′₁ ← a i₁
-      _ , a′₂ ← a i₂
-      f , _ ← a i₄
-      return (
-        printf "(let %s = %s\nin %s)" max (to-max s i₁ a′₁) ∘
-        printf "(let %s = %s \nin %s)" exps
-          (to-imap s i₂ (printf "F.exp (%s F.+ F.neg %s)" a′₂ max)) ∘
-        printf "(let %s = %s\nin %s)" total (to-sum s i₃ (to-sel i₃ exps)) ∘
-        f
-        , printf "(%s F./ %s)" (to-sel i₄ exps) total)
+    return λ j → do
+      _ , a′ ← a i
+      f , _ ← a j
+      return (printf "(let %s = %s\nin %s)" sf (to-softmax s i a′) ∘ f , to-sel j sf)
+      -- return (id , to-softmax a′)
+
+  -- to-fut (un {s = s} softmax e) ρ = do
+  --   c₁ ← get
+  --   i₁ ← iv s
+  --   c₂ ← get
+  --   i₂ ← iv s
+  --   c₃ ← get
+  --   i₃ ← iv s
+  --   let max = fresh-var c₁
+  --   let exps = fresh-var c₂
+  --   let total = fresh-var c₃
+  --   a ← to-fut e ρ
+  --   return λ i₄ → do
+  --     _ , a′₁ ← a i₁
+  --     _ , a′₂ ← a i₂
+  --     f , _ ← a i₄
+  --     return (
+  --       printf "(let %s = %s\nin %s)" max (to-max s i₁ a′₁) ∘
+  --       printf "(let %s = %s \nin %s)" exps
+  --         (to-imap s i₂ (printf "F.exp (%s F.+ F.neg %s)" a′₂ max)) ∘
+  --       printf "(let %s = %s\nin %s)" total (to-sum s i₃ (to-sel i₃ exps)) ∘
+  --       f
+  --       , printf "(%s F./ %s)" (to-sel i₄ exps) total)
 
 module Test where
   open import Relation.Binary.PropositionalEquality
