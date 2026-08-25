@@ -183,10 +183,10 @@ module _ where
   to-max s  i e = printf "(imaximum%u %s (\\%s -> %s))" (dim s) (shape-args s)
                          (ix-join i " ") e
 
-  -- to-exp : (s : S) → (i : Ix s) → (e : String) → String
-  -- to-exp [] i e = e
-  -- to-exp s  i e = printf "(imaximum%u %s (\\%s -> %s))" (dim s) (shape-args s)
-  --                        (ix-join i " ") e
+  to-softmax : (s : S) → (i : Ix s) → (e : String) → String
+  to-softmax [] i e = e
+  to-softmax s  i e = printf "(isoftmax%u %s (\\%s -> %s))" (dim s) (shape-args s)
+                         (ix-join i " ") e
 
   ix-plus : s + p ≈ r → (suc_≈_ p u)
           → (i : Ix s)
@@ -398,6 +398,16 @@ module _ where
     return λ i → do
       f , a′ ← a i
       return (f , printf "(F.log %s)" a′)
+
+  -- to-fut (un {s = s} softmax e) ρ = do
+  --   c ← get
+  --   i ← iv s
+  --   let sf = fresh-var c
+  --   a ← to-fut e ρ
+  --   return λ j → do
+  --     f , a′ ← a j
+  --     return (printf "(let %s = %s\nin %s)" sf (to-softmax s i a′) ∘ f , to-sel j sf)
+
   to-fut (un {s = s} softmax e) ρ = do
     c₁ ← get
     i₁ ← iv s
@@ -443,7 +453,7 @@ module Test where
 
   test-e : E _ _
   test-e = Lcon (ar (5 ∷ []) ∷ []) (ar (5 ∷ [])) ε
-           λ e → ℙ e
+           λ e → (ℙ (e ⊠ e)) ⊞ e
 
   test-s : String
   test-s = proj₂ (runState (to-str test-e (_ , mkar "f")) 0)

@@ -6368,15 +6368,15 @@ struct memblock {
 };
 struct constants {
     int dummy;
-    struct memblock mem_87791;
-    struct memblock mem_87792;
-    struct memblock mem_87793;
-    struct memblock mem_87794;
-    struct memblock mem_87795;
-    struct memblock mem_87796;
-    struct memblock mem_87797;
-    struct memblock mem_87798;
-    struct memblock mem_87799;
+    struct memblock mem_86828;
+    struct memblock mem_86829;
+    struct memblock mem_86830;
+    struct memblock mem_86831;
+    struct memblock mem_86832;
+    struct memblock mem_86833;
+    struct memblock mem_86834;
+    struct memblock mem_86835;
+    struct memblock mem_86836;
 };
 #define NUM_TUNING_PARAMS 0
 static const char *tuning_param_names[] = {NULL};
@@ -7057,12 +7057,12 @@ GEN_LMAD_COPY(8b, uint64_t)
 
 #define FUTHARK_FUN_ATTR static
 
-FUTHARK_FUN_ATTR int futrts_adam_opt_w_10264(struct futhark_context *ctx, struct memblock *mem_out_p_89860, struct memblock *mem_out_p_89861, struct memblock *mem_out_p_89862, struct memblock w_mem_87800, struct memblock mw_mem_87801, struct memblock vw_mem_87802, struct memblock dw_mem_87803, int64_t n_62936, int64_t m_62937, int64_t step_62942, double lt_r_62943);
-FUTHARK_FUN_ATTR int futrts_adam_opt_w_10265(struct futhark_context *ctx, struct memblock *mem_out_p_89865, struct memblock *mem_out_p_89866, struct memblock *mem_out_p_89867, struct memblock w_mem_87800, struct memblock mw_mem_87801, struct memblock vw_mem_87802, struct memblock dw_mem_87803, int64_t n_63969, int64_t m_63970, int64_t step_63975, double lt_r_63976);
-FUTHARK_FUN_ATTR int futrts_entry_forward_seq(struct futhark_context *ctx, struct memblock *mem_out_p_89870, struct memblock wdown_mem_87800, struct memblock wkey_mem_87801, struct memblock wout_mem_87802, struct memblock wpe_mem_87803, struct memblock wqry_mem_87804, struct memblock wte_mem_87805, struct memblock wup_mem_87806, struct memblock wval_mem_87807, struct memblock wvoc_mem_87808, struct memblock tokens_mem_87809, struct memblock mask_mem_87810);
-FUTHARK_FUN_ATTR int futrts_entry_to_params(struct futhark_context *ctx, struct memblock *mem_out_p_89924, struct memblock *mem_out_p_89925, struct memblock *mem_out_p_89926, struct memblock *mem_out_p_89927, struct memblock *mem_out_p_89928, struct memblock *mem_out_p_89929, struct memblock *mem_out_p_89930, struct memblock *mem_out_p_89931, struct memblock *mem_out_p_89932, struct memblock wte_mem_87800, struct memblock wpe_mem_87801, struct memblock wqry_mem_87802, struct memblock wkey_mem_87803, struct memblock wval_mem_87804, struct memblock wout_mem_87805, struct memblock wup_mem_87806, struct memblock wdown_mem_87807, struct memblock wvoc_mem_87808);
-FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memblock *mem_out_p_89933, struct memblock *mem_out_p_89934, struct memblock *mem_out_p_89935, struct memblock *mem_out_p_89936, struct memblock *mem_out_p_89937, struct memblock *mem_out_p_89938, struct memblock *mem_out_p_89939, struct memblock *mem_out_p_89940, struct memblock *mem_out_p_89941, struct memblock *mem_out_p_89942, struct memblock *mem_out_p_89943, struct memblock *mem_out_p_89944, struct memblock *mem_out_p_89945, struct memblock *mem_out_p_89946, struct memblock *mem_out_p_89947, struct memblock *mem_out_p_89948, struct memblock *mem_out_p_89949, struct memblock *mem_out_p_89950, struct memblock *mem_out_p_89951, struct memblock *mem_out_p_89952, struct memblock *mem_out_p_89953, struct memblock *mem_out_p_89954, struct memblock *mem_out_p_89955, struct memblock *mem_out_p_89956, struct memblock *mem_out_p_89957, struct memblock *mem_out_p_89958, struct memblock *mem_out_p_89959, struct memblock wdown_mem_87800, struct memblock wkey_mem_87801, struct memblock wout_mem_87802, struct memblock wpe_mem_87803, struct memblock wqry_mem_87804, struct memblock wte_mem_87805, struct memblock wup_mem_87806, struct memblock wval_mem_87807, struct memblock wvoc_mem_87808, struct memblock wdown_mem_87809, struct memblock wkey_mem_87810, struct memblock wout_mem_87811, struct memblock wpe_mem_87812, struct memblock wqry_mem_87813, struct memblock wte_mem_87814, struct memblock wup_mem_87815, struct memblock wval_mem_87816, struct memblock wvoc_mem_87817, struct memblock wdown_mem_87818, struct memblock wkey_mem_87819, struct memblock wout_mem_87820, struct memblock wpe_mem_87821, struct memblock wqry_mem_87822, struct memblock wte_mem_87823, struct memblock wup_mem_87824, struct memblock wval_mem_87825, struct memblock wvoc_mem_87826, struct memblock masks_mem_87827, struct memblock dls_mem_87828, struct memblock seqs_mem_87829);
-FUTHARK_FUN_ATTR int futrts_entry_zzero_params(struct futhark_context *ctx, struct memblock *mem_out_p_90122, struct memblock *mem_out_p_90123, struct memblock *mem_out_p_90124, struct memblock *mem_out_p_90125, struct memblock *mem_out_p_90126, struct memblock *mem_out_p_90127, struct memblock *mem_out_p_90128, struct memblock *mem_out_p_90129, struct memblock *mem_out_p_90130);
+FUTHARK_FUN_ATTR int futrts_adam_opt_w_10203(struct futhark_context *ctx, struct memblock *mem_out_p_88923, struct memblock *mem_out_p_88924, struct memblock *mem_out_p_88925, struct memblock w_mem_86837, struct memblock mw_mem_86838, struct memblock vw_mem_86839, struct memblock dw_mem_86840, int64_t n_62521, int64_t m_62522, int64_t step_62527, double lt_r_62528);
+FUTHARK_FUN_ATTR int futrts_adam_opt_w_10204(struct futhark_context *ctx, struct memblock *mem_out_p_88928, struct memblock *mem_out_p_88929, struct memblock *mem_out_p_88930, struct memblock w_mem_86837, struct memblock mw_mem_86838, struct memblock vw_mem_86839, struct memblock dw_mem_86840, int64_t n_63554, int64_t m_63555, int64_t step_63560, double lt_r_63561);
+FUTHARK_FUN_ATTR int futrts_entry_forward_seq(struct futhark_context *ctx, struct memblock *mem_out_p_88933, struct memblock wdown_mem_86837, struct memblock wkey_mem_86838, struct memblock wout_mem_86839, struct memblock wpe_mem_86840, struct memblock wqry_mem_86841, struct memblock wte_mem_86842, struct memblock wup_mem_86843, struct memblock wval_mem_86844, struct memblock wvoc_mem_86845, struct memblock tokens_mem_86846, struct memblock mask_mem_86847);
+FUTHARK_FUN_ATTR int futrts_entry_to_params(struct futhark_context *ctx, struct memblock *mem_out_p_88987, struct memblock *mem_out_p_88988, struct memblock *mem_out_p_88989, struct memblock *mem_out_p_88990, struct memblock *mem_out_p_88991, struct memblock *mem_out_p_88992, struct memblock *mem_out_p_88993, struct memblock *mem_out_p_88994, struct memblock *mem_out_p_88995, struct memblock wte_mem_86837, struct memblock wpe_mem_86838, struct memblock wqry_mem_86839, struct memblock wkey_mem_86840, struct memblock wval_mem_86841, struct memblock wout_mem_86842, struct memblock wup_mem_86843, struct memblock wdown_mem_86844, struct memblock wvoc_mem_86845);
+FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memblock *mem_out_p_88996, struct memblock *mem_out_p_88997, struct memblock *mem_out_p_88998, struct memblock *mem_out_p_88999, struct memblock *mem_out_p_89000, struct memblock *mem_out_p_89001, struct memblock *mem_out_p_89002, struct memblock *mem_out_p_89003, struct memblock *mem_out_p_89004, struct memblock *mem_out_p_89005, struct memblock *mem_out_p_89006, struct memblock *mem_out_p_89007, struct memblock *mem_out_p_89008, struct memblock *mem_out_p_89009, struct memblock *mem_out_p_89010, struct memblock *mem_out_p_89011, struct memblock *mem_out_p_89012, struct memblock *mem_out_p_89013, struct memblock *mem_out_p_89014, struct memblock *mem_out_p_89015, struct memblock *mem_out_p_89016, struct memblock *mem_out_p_89017, struct memblock *mem_out_p_89018, struct memblock *mem_out_p_89019, struct memblock *mem_out_p_89020, struct memblock *mem_out_p_89021, struct memblock *mem_out_p_89022, struct memblock wdown_mem_86837, struct memblock wkey_mem_86838, struct memblock wout_mem_86839, struct memblock wpe_mem_86840, struct memblock wqry_mem_86841, struct memblock wte_mem_86842, struct memblock wup_mem_86843, struct memblock wval_mem_86844, struct memblock wvoc_mem_86845, struct memblock wdown_mem_86846, struct memblock wkey_mem_86847, struct memblock wout_mem_86848, struct memblock wpe_mem_86849, struct memblock wqry_mem_86850, struct memblock wte_mem_86851, struct memblock wup_mem_86852, struct memblock wval_mem_86853, struct memblock wvoc_mem_86854, struct memblock wdown_mem_86855, struct memblock wkey_mem_86856, struct memblock wout_mem_86857, struct memblock wpe_mem_86858, struct memblock wqry_mem_86859, struct memblock wte_mem_86860, struct memblock wup_mem_86861, struct memblock wval_mem_86862, struct memblock wvoc_mem_86863, struct memblock masks_mem_86864, struct memblock dls_mem_86865, struct memblock seqs_mem_86866);
+FUTHARK_FUN_ATTR int futrts_entry_zzero_params(struct futhark_context *ctx, struct memblock *mem_out_p_89188, struct memblock *mem_out_p_89189, struct memblock *mem_out_p_89190, struct memblock *mem_out_p_89191, struct memblock *mem_out_p_89192, struct memblock *mem_out_p_89193, struct memblock *mem_out_p_89194, struct memblock *mem_out_p_89195, struct memblock *mem_out_p_89196);
 
 static int init_constants(struct futhark_context *ctx)
 {
@@ -7070,132 +7070,132 @@ static int init_constants(struct futhark_context *ctx)
     
     int err = 0;
     
-    #define mem_87791 (ctx->constants->mem_87791)
-    #define mem_87792 (ctx->constants->mem_87792)
-    #define mem_87793 (ctx->constants->mem_87793)
-    #define mem_87794 (ctx->constants->mem_87794)
-    #define mem_87795 (ctx->constants->mem_87795)
-    #define mem_87796 (ctx->constants->mem_87796)
-    #define mem_87797 (ctx->constants->mem_87797)
-    #define mem_87798 (ctx->constants->mem_87798)
-    #define mem_87799 (ctx->constants->mem_87799)
-    mem_87791.references = NULL;
-    mem_87792.references = NULL;
-    mem_87793.references = NULL;
-    mem_87794.references = NULL;
-    mem_87795.references = NULL;
-    mem_87796.references = NULL;
-    mem_87797.references = NULL;
-    mem_87798.references = NULL;
-    mem_87799.references = NULL;
+    #define mem_86828 (ctx->constants->mem_86828)
+    #define mem_86829 (ctx->constants->mem_86829)
+    #define mem_86830 (ctx->constants->mem_86830)
+    #define mem_86831 (ctx->constants->mem_86831)
+    #define mem_86832 (ctx->constants->mem_86832)
+    #define mem_86833 (ctx->constants->mem_86833)
+    #define mem_86834 (ctx->constants->mem_86834)
+    #define mem_86835 (ctx->constants->mem_86835)
+    #define mem_86836 (ctx->constants->mem_86836)
+    mem_86828.references = NULL;
+    mem_86829.references = NULL;
+    mem_86830.references = NULL;
+    mem_86831.references = NULL;
+    mem_86832.references = NULL;
+    mem_86833.references = NULL;
+    mem_86834.references = NULL;
+    mem_86835.references = NULL;
+    mem_86836.references = NULL;
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_87791, (int64_t) 3456, "mem_87791")) {
+    if (memblock_alloc(ctx, &mem_86828, (int64_t) 3456, "mem_86828")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t nest_i_89842 = 0; nest_i_89842 < (int64_t) 27; nest_i_89842++) {
-        for (int64_t nest_i_89843 = 0; nest_i_89843 < (int64_t) 16; nest_i_89843++) {
-            ((double *) mem_87791.mem)[nest_i_89842 * (int64_t) 16 + nest_i_89843] = 0.0;
+    for (int64_t nest_i_88905 = 0; nest_i_88905 < (int64_t) 27; nest_i_88905++) {
+        for (int64_t nest_i_88906 = 0; nest_i_88906 < (int64_t) 16; nest_i_88906++) {
+            ((double *) mem_86828.mem)[nest_i_88905 * (int64_t) 16 + nest_i_88906] = 0.0;
         }
     }
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_87792, (int64_t) 2048, "mem_87792")) {
+    if (memblock_alloc(ctx, &mem_86829, (int64_t) 2048, "mem_86829")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t nest_i_89844 = 0; nest_i_89844 < (int64_t) 16; nest_i_89844++) {
-        for (int64_t nest_i_89845 = 0; nest_i_89845 < (int64_t) 16; nest_i_89845++) {
-            ((double *) mem_87792.mem)[nest_i_89844 * (int64_t) 16 + nest_i_89845] = 0.0;
+    for (int64_t nest_i_88907 = 0; nest_i_88907 < (int64_t) 16; nest_i_88907++) {
+        for (int64_t nest_i_88908 = 0; nest_i_88908 < (int64_t) 16; nest_i_88908++) {
+            ((double *) mem_86829.mem)[nest_i_88907 * (int64_t) 16 + nest_i_88908] = 0.0;
         }
     }
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_87793, (int64_t) 2048, "mem_87793")) {
+    if (memblock_alloc(ctx, &mem_86830, (int64_t) 2048, "mem_86830")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t nest_i_89846 = 0; nest_i_89846 < (int64_t) 16; nest_i_89846++) {
-        for (int64_t nest_i_89847 = 0; nest_i_89847 < (int64_t) 16; nest_i_89847++) {
-            ((double *) mem_87793.mem)[nest_i_89846 * (int64_t) 16 + nest_i_89847] = 0.0;
+    for (int64_t nest_i_88909 = 0; nest_i_88909 < (int64_t) 16; nest_i_88909++) {
+        for (int64_t nest_i_88910 = 0; nest_i_88910 < (int64_t) 16; nest_i_88910++) {
+            ((double *) mem_86830.mem)[nest_i_88909 * (int64_t) 16 + nest_i_88910] = 0.0;
         }
     }
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_87794, (int64_t) 2048, "mem_87794")) {
+    if (memblock_alloc(ctx, &mem_86831, (int64_t) 2048, "mem_86831")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t nest_i_89848 = 0; nest_i_89848 < (int64_t) 16; nest_i_89848++) {
-        for (int64_t nest_i_89849 = 0; nest_i_89849 < (int64_t) 16; nest_i_89849++) {
-            ((double *) mem_87794.mem)[nest_i_89848 * (int64_t) 16 + nest_i_89849] = 0.0;
+    for (int64_t nest_i_88911 = 0; nest_i_88911 < (int64_t) 16; nest_i_88911++) {
+        for (int64_t nest_i_88912 = 0; nest_i_88912 < (int64_t) 16; nest_i_88912++) {
+            ((double *) mem_86831.mem)[nest_i_88911 * (int64_t) 16 + nest_i_88912] = 0.0;
         }
     }
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_87795, (int64_t) 2048, "mem_87795")) {
+    if (memblock_alloc(ctx, &mem_86832, (int64_t) 2048, "mem_86832")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t nest_i_89850 = 0; nest_i_89850 < (int64_t) 16; nest_i_89850++) {
-        for (int64_t nest_i_89851 = 0; nest_i_89851 < (int64_t) 16; nest_i_89851++) {
-            ((double *) mem_87795.mem)[nest_i_89850 * (int64_t) 16 + nest_i_89851] = 0.0;
+    for (int64_t nest_i_88913 = 0; nest_i_88913 < (int64_t) 16; nest_i_88913++) {
+        for (int64_t nest_i_88914 = 0; nest_i_88914 < (int64_t) 16; nest_i_88914++) {
+            ((double *) mem_86832.mem)[nest_i_88913 * (int64_t) 16 + nest_i_88914] = 0.0;
         }
     }
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_87796, (int64_t) 2048, "mem_87796")) {
+    if (memblock_alloc(ctx, &mem_86833, (int64_t) 2048, "mem_86833")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t nest_i_89852 = 0; nest_i_89852 < (int64_t) 16; nest_i_89852++) {
-        for (int64_t nest_i_89853 = 0; nest_i_89853 < (int64_t) 16; nest_i_89853++) {
-            ((double *) mem_87796.mem)[nest_i_89852 * (int64_t) 16 + nest_i_89853] = 0.0;
+    for (int64_t nest_i_88915 = 0; nest_i_88915 < (int64_t) 16; nest_i_88915++) {
+        for (int64_t nest_i_88916 = 0; nest_i_88916 < (int64_t) 16; nest_i_88916++) {
+            ((double *) mem_86833.mem)[nest_i_88915 * (int64_t) 16 + nest_i_88916] = 0.0;
         }
     }
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_87797, (int64_t) 8192, "mem_87797")) {
+    if (memblock_alloc(ctx, &mem_86834, (int64_t) 8192, "mem_86834")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t nest_i_89854 = 0; nest_i_89854 < (int64_t) 64; nest_i_89854++) {
-        for (int64_t nest_i_89855 = 0; nest_i_89855 < (int64_t) 16; nest_i_89855++) {
-            ((double *) mem_87797.mem)[nest_i_89854 * (int64_t) 16 + nest_i_89855] = 0.0;
+    for (int64_t nest_i_88917 = 0; nest_i_88917 < (int64_t) 64; nest_i_88917++) {
+        for (int64_t nest_i_88918 = 0; nest_i_88918 < (int64_t) 16; nest_i_88918++) {
+            ((double *) mem_86834.mem)[nest_i_88917 * (int64_t) 16 + nest_i_88918] = 0.0;
         }
     }
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_87798, (int64_t) 8192, "mem_87798")) {
+    if (memblock_alloc(ctx, &mem_86835, (int64_t) 8192, "mem_86835")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t nest_i_89856 = 0; nest_i_89856 < (int64_t) 16; nest_i_89856++) {
-        for (int64_t nest_i_89857 = 0; nest_i_89857 < (int64_t) 64; nest_i_89857++) {
-            ((double *) mem_87798.mem)[nest_i_89856 * (int64_t) 64 + nest_i_89857] = 0.0;
+    for (int64_t nest_i_88919 = 0; nest_i_88919 < (int64_t) 16; nest_i_88919++) {
+        for (int64_t nest_i_88920 = 0; nest_i_88920 < (int64_t) 64; nest_i_88920++) {
+            ((double *) mem_86835.mem)[nest_i_88919 * (int64_t) 64 + nest_i_88920] = 0.0;
         }
     }
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_87799, (int64_t) 3456, "mem_87799")) {
+    if (memblock_alloc(ctx, &mem_86836, (int64_t) 3456, "mem_86836")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t nest_i_89858 = 0; nest_i_89858 < (int64_t) 27; nest_i_89858++) {
-        for (int64_t nest_i_89859 = 0; nest_i_89859 < (int64_t) 16; nest_i_89859++) {
-            ((double *) mem_87799.mem)[nest_i_89858 * (int64_t) 16 + nest_i_89859] = 0.0;
+    for (int64_t nest_i_88921 = 0; nest_i_88921 < (int64_t) 27; nest_i_88921++) {
+        for (int64_t nest_i_88922 = 0; nest_i_88922 < (int64_t) 16; nest_i_88922++) {
+            ((double *) mem_86836.mem)[nest_i_88921 * (int64_t) 16 + nest_i_88922] = 0.0;
         }
     }
-    #undef mem_87791
-    #undef mem_87792
-    #undef mem_87793
-    #undef mem_87794
-    #undef mem_87795
-    #undef mem_87796
-    #undef mem_87797
-    #undef mem_87798
-    #undef mem_87799
+    #undef mem_86828
+    #undef mem_86829
+    #undef mem_86830
+    #undef mem_86831
+    #undef mem_86832
+    #undef mem_86833
+    #undef mem_86834
+    #undef mem_86835
+    #undef mem_86836
     
   cleanup:
     return err;
@@ -7203,23 +7203,23 @@ static int init_constants(struct futhark_context *ctx)
 static int free_constants(struct futhark_context *ctx)
 {
     (void) ctx;
-    if (memblock_unref(ctx, &ctx->constants->mem_87791, "ctx->constants->mem_87791") != 0)
+    if (memblock_unref(ctx, &ctx->constants->mem_86828, "ctx->constants->mem_86828") != 0)
         return 1;
-    if (memblock_unref(ctx, &ctx->constants->mem_87792, "ctx->constants->mem_87792") != 0)
+    if (memblock_unref(ctx, &ctx->constants->mem_86829, "ctx->constants->mem_86829") != 0)
         return 1;
-    if (memblock_unref(ctx, &ctx->constants->mem_87793, "ctx->constants->mem_87793") != 0)
+    if (memblock_unref(ctx, &ctx->constants->mem_86830, "ctx->constants->mem_86830") != 0)
         return 1;
-    if (memblock_unref(ctx, &ctx->constants->mem_87794, "ctx->constants->mem_87794") != 0)
+    if (memblock_unref(ctx, &ctx->constants->mem_86831, "ctx->constants->mem_86831") != 0)
         return 1;
-    if (memblock_unref(ctx, &ctx->constants->mem_87795, "ctx->constants->mem_87795") != 0)
+    if (memblock_unref(ctx, &ctx->constants->mem_86832, "ctx->constants->mem_86832") != 0)
         return 1;
-    if (memblock_unref(ctx, &ctx->constants->mem_87796, "ctx->constants->mem_87796") != 0)
+    if (memblock_unref(ctx, &ctx->constants->mem_86833, "ctx->constants->mem_86833") != 0)
         return 1;
-    if (memblock_unref(ctx, &ctx->constants->mem_87797, "ctx->constants->mem_87797") != 0)
+    if (memblock_unref(ctx, &ctx->constants->mem_86834, "ctx->constants->mem_86834") != 0)
         return 1;
-    if (memblock_unref(ctx, &ctx->constants->mem_87798, "ctx->constants->mem_87798") != 0)
+    if (memblock_unref(ctx, &ctx->constants->mem_86835, "ctx->constants->mem_86835") != 0)
         return 1;
-    if (memblock_unref(ctx, &ctx->constants->mem_87799, "ctx->constants->mem_87799") != 0)
+    if (memblock_unref(ctx, &ctx->constants->mem_86836, "ctx->constants->mem_86836") != 0)
         return 1;
     return 0;
 }
@@ -9900,8134 +9900,7949 @@ struct futhark_opaque_tup3_tup9_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f6
     return obj;
 }
 
-FUTHARK_FUN_ATTR int futrts_adam_opt_w_10264(struct futhark_context *ctx, struct memblock *mem_out_p_89860, struct memblock *mem_out_p_89861, struct memblock *mem_out_p_89862, struct memblock w_mem_87800, struct memblock mw_mem_87801, struct memblock vw_mem_87802, struct memblock dw_mem_87803, int64_t n_62936, int64_t m_62937, int64_t step_62942, double lt_r_62943)
+FUTHARK_FUN_ATTR int futrts_adam_opt_w_10203(struct futhark_context *ctx, struct memblock *mem_out_p_88923, struct memblock *mem_out_p_88924, struct memblock *mem_out_p_88925, struct memblock w_mem_86837, struct memblock mw_mem_86838, struct memblock vw_mem_86839, struct memblock dw_mem_86840, int64_t n_62521, int64_t m_62522, int64_t step_62527, double lt_r_62528)
 {
     (void) ctx;
     
     int err = 0;
-    int64_t mem_87844_cached_sizze_89863 = 0;
-    unsigned char *mem_87844 = NULL;
-    int64_t mem_87847_cached_sizze_89864 = 0;
-    unsigned char *mem_87847 = NULL;
-    struct memblock mem_87882;
+    int64_t mem_86881_cached_sizze_88926 = 0;
+    unsigned char *mem_86881 = NULL;
+    int64_t mem_86884_cached_sizze_88927 = 0;
+    unsigned char *mem_86884 = NULL;
+    struct memblock mem_86919;
     
-    mem_87882.references = NULL;
+    mem_86919.references = NULL;
     
-    struct memblock mem_87809;
+    struct memblock mem_86846;
     
-    mem_87809.references = NULL;
+    mem_86846.references = NULL;
     
-    struct memblock mem_87806;
+    struct memblock mem_86843;
     
-    mem_87806.references = NULL;
+    mem_86843.references = NULL;
     
-    struct memblock mem_out_89542;
+    struct memblock mem_out_88610;
     
-    mem_out_89542.references = NULL;
+    mem_out_88610.references = NULL;
     
-    struct memblock mem_out_89541;
+    struct memblock mem_out_88609;
     
-    mem_out_89541.references = NULL;
+    mem_out_88609.references = NULL;
     
-    struct memblock mem_out_89540;
+    struct memblock mem_out_88608;
     
-    mem_out_89540.references = NULL;
+    mem_out_88608.references = NULL;
     
-    struct memblock mem_87791 = ctx->constants->mem_87791;
-    struct memblock mem_87792 = ctx->constants->mem_87792;
-    struct memblock mem_87793 = ctx->constants->mem_87793;
-    struct memblock mem_87794 = ctx->constants->mem_87794;
-    struct memblock mem_87795 = ctx->constants->mem_87795;
-    struct memblock mem_87796 = ctx->constants->mem_87796;
-    struct memblock mem_87797 = ctx->constants->mem_87797;
-    struct memblock mem_87798 = ctx->constants->mem_87798;
-    struct memblock mem_87799 = ctx->constants->mem_87799;
-    
-    // futhark/microgpt.fut:4:11-25
-    
-    int64_t binop_x_87804 = (int64_t) 8 * n_62936;
+    struct memblock mem_86828 = ctx->constants->mem_86828;
+    struct memblock mem_86829 = ctx->constants->mem_86829;
+    struct memblock mem_86830 = ctx->constants->mem_86830;
+    struct memblock mem_86831 = ctx->constants->mem_86831;
+    struct memblock mem_86832 = ctx->constants->mem_86832;
+    struct memblock mem_86833 = ctx->constants->mem_86833;
+    struct memblock mem_86834 = ctx->constants->mem_86834;
+    struct memblock mem_86835 = ctx->constants->mem_86835;
+    struct memblock mem_86836 = ctx->constants->mem_86836;
     
     // futhark/microgpt.fut:4:11-25
     
-    int64_t bytes_87805 = m_62937 * binop_x_87804;
+    int64_t binop_x_86841 = (int64_t) 8 * n_62521;
     
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_87806, bytes_87805, "mem_87806")) {
+    
+    int64_t bytes_86842 = m_62522 * binop_x_86841;
+    
+    // futhark/microgpt.fut:4:11-25
+    if (memblock_alloc(ctx, &mem_86843, bytes_86842, "mem_86843")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_87809, bytes_87805, "mem_87809")) {
+    if (memblock_alloc(ctx, &mem_86846, bytes_86842, "mem_86846")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_86975 = 0; i_86975 < n_62936; i_86975++) {
+    for (int64_t i_86010 = 0; i_86010 < n_62521; i_86010++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_86968 = 0; i_86968 < m_62937; i_86968++) {
+        for (int64_t i_86003 = 0; i_86003 < m_62522; i_86003++) {
             // futhark/microgpt.fut:4:11-25
             
-            double zt_rhs_83072 = ((double *) mw_mem_87801.mem)[i_86975 * m_62937 + i_86968];
+            double zt_rhs_82291 = ((double *) mw_mem_86838.mem)[i_86010 * m_62522 + i_86003];
             
-            // futhark/microgpt.fut:395:10-20
+            // futhark/microgpt.fut:392:10-20
             
-            double zp_lhs_83073 = 0.85 * zt_rhs_83072;
-            
-            // futhark/microgpt.fut:4:11-25
-            
-            double zt_rhs_83074 = ((double *) dw_mem_87803.mem)[i_86975 * m_62937 + i_86968];
-            
-            // futhark/microgpt.fut:395:35-45
-            
-            double zp_rhs_83075 = 0.15000000000000002 * zt_rhs_83074;
-            
-            // futhark/microgpt.fut:395:21-45
-            
-            double lifted_lambda_res_83076 = zp_lhs_83073 + zp_rhs_83075;
+            double zp_lhs_82292 = 0.85 * zt_rhs_82291;
             
             // futhark/microgpt.fut:4:11-25
             
-            double zt_rhs_83083 = ((double *) vw_mem_87802.mem)[i_86975 * m_62937 + i_86968];
+            double zt_rhs_82293 = ((double *) dw_mem_86840.mem)[i_86010 * m_62522 + i_86003];
             
-            // futhark/microgpt.fut:397:10-20
+            // futhark/microgpt.fut:392:35-45
             
-            double zp_lhs_83084 = 0.99 * zt_rhs_83083;
+            double zp_rhs_82294 = 0.15000000000000002 * zt_rhs_82293;
             
-            // futhark/microgpt.fut:397:35-45
+            // futhark/microgpt.fut:392:21-45
             
-            double zt_lhs_83086 = 1.0000000000000009e-2 * zt_rhs_83074;
+            double lifted_lambda_res_82295 = zp_lhs_82292 + zp_rhs_82294;
             
-            // futhark/microgpt.fut:397:46-56
+            // futhark/microgpt.fut:4:11-25
             
-            double zp_rhs_83087 = zt_rhs_83074 * zt_lhs_83086;
+            double zt_rhs_82302 = ((double *) vw_mem_86839.mem)[i_86010 * m_62522 + i_86003];
             
-            // futhark/microgpt.fut:397:21-56
+            // futhark/microgpt.fut:394:10-20
             
-            double lifted_lambda_res_83088 = zp_lhs_83084 + zp_rhs_83087;
+            double zp_lhs_82303 = 0.99 * zt_rhs_82302;
             
-            ((double *) mem_87806.mem)[i_86975 * m_62937 + i_86968] = lifted_lambda_res_83088;
-            ((double *) mem_87809.mem)[i_86975 * m_62937 + i_86968] = lifted_lambda_res_83076;
+            // futhark/microgpt.fut:394:35-45
+            
+            double zt_lhs_82305 = 1.0000000000000009e-2 * zt_rhs_82293;
+            
+            // futhark/microgpt.fut:394:46-56
+            
+            double zp_rhs_82306 = zt_rhs_82293 * zt_lhs_82305;
+            
+            // futhark/microgpt.fut:394:21-56
+            
+            double lifted_lambda_res_82307 = zp_lhs_82303 + zp_rhs_82306;
+            
+            ((double *) mem_86843.mem)[i_86010 * m_62522 + i_86003] = lifted_lambda_res_82307;
+            ((double *) mem_86846.mem)[i_86010 * m_62522 + i_86003] = lifted_lambda_res_82295;
         }
     }
     // futhark/microgpt.fut:66:26-45
     
-    double i64_res_67995 = sitofp_i64_f64(step_62942);
+    double i64_res_67594 = sitofp_i64_f64(step_62527);
     
-    // futhark/microgpt.fut:399:54-57
+    // futhark/microgpt.fut:396:54-57
     
-    double ztzt_rhs_67996 = 1.0 + i64_res_67995;
+    double ztzt_rhs_67595 = 1.0 + i64_res_67594;
     
-    // futhark/microgpt.fut:399:30-57
+    // futhark/microgpt.fut:396:30-57
     
-    double zm_rhs_67997 = fpow64(0.85, ztzt_rhs_67996);
+    double zm_rhs_67596 = fpow64(0.85, ztzt_rhs_67595);
     
-    // futhark/microgpt.fut:399:23-57
+    // futhark/microgpt.fut:396:23-57
     
-    double zs_rhs_67998 = 1.0 - zm_rhs_67997;
+    double zs_rhs_67597 = 1.0 - zm_rhs_67596;
     
-    // futhark/microgpt.fut:401:31-58
+    // futhark/microgpt.fut:398:31-58
     
-    double zm_rhs_68036 = fpow64(0.99, ztzt_rhs_67996);
+    double zm_rhs_67635 = fpow64(0.99, ztzt_rhs_67595);
     
-    // futhark/microgpt.fut:401:23-58
+    // futhark/microgpt.fut:398:23-58
     
-    double zs_rhs_68037 = 1.0 - zm_rhs_68036;
+    double zs_rhs_67636 = 1.0 - zm_rhs_67635;
     
     // futhark/microgpt.fut:4:11-25
-    if (mem_87844_cached_sizze_89863 < bytes_87805) {
-        err = lexical_realloc(ctx, &mem_87844, &mem_87844_cached_sizze_89863, bytes_87805);
+    if (mem_86881_cached_sizze_88926 < bytes_86842) {
+        err = lexical_realloc(ctx, &mem_86881, &mem_86881_cached_sizze_88926, bytes_86842);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87847_cached_sizze_89864 < bytes_87805) {
-        err = lexical_realloc(ctx, &mem_87847, &mem_87847_cached_sizze_89864, bytes_87805);
+    if (mem_86884_cached_sizze_88927 < bytes_86842) {
+        err = lexical_realloc(ctx, &mem_86884, &mem_86884_cached_sizze_88927, bytes_86842);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_86989 = 0; i_86989 < n_62936; i_86989++) {
+    for (int64_t i_86024 = 0; i_86024 < n_62521; i_86024++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_86982 = 0; i_86982 < m_62937; i_86982++) {
+        for (int64_t i_86017 = 0; i_86017 < m_62522; i_86017++) {
             // futhark/microgpt.fut:4:11-25
             
-            double zs_lhs_83108 = ((double *) mem_87809.mem)[i_86989 * m_62937 + i_86982];
+            double zs_lhs_82327 = ((double *) mem_86846.mem)[i_86024 * m_62522 + i_86017];
             
-            // futhark/microgpt.fut:399:18-57
+            // futhark/microgpt.fut:396:18-57
             
-            double lifted_lambda_res_83109 = zs_lhs_83108 / zs_rhs_67998;
+            double lifted_lambda_res_82328 = zs_lhs_82327 / zs_rhs_67597;
             
             // futhark/microgpt.fut:4:11-25
             
-            double zs_lhs_83116 = ((double *) mem_87806.mem)[i_86989 * m_62937 + i_86982];
+            double zs_lhs_82335 = ((double *) mem_86843.mem)[i_86024 * m_62522 + i_86017];
             
-            // futhark/microgpt.fut:401:18-58
+            // futhark/microgpt.fut:398:18-58
             
-            double lifted_lambda_res_83117 = zs_lhs_83116 / zs_rhs_68037;
+            double lifted_lambda_res_82336 = zs_lhs_82335 / zs_rhs_67636;
             
-            ((double *) mem_87844)[i_86989 * m_62937 + i_86982] = lifted_lambda_res_83117;
-            ((double *) mem_87847)[i_86989 * m_62937 + i_86982] = lifted_lambda_res_83109;
+            ((double *) mem_86881)[i_86024 * m_62522 + i_86017] = lifted_lambda_res_82336;
+            ((double *) mem_86884)[i_86024 * m_62522 + i_86017] = lifted_lambda_res_82328;
         }
     }
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_87882, bytes_87805, "mem_87882")) {
+    if (memblock_alloc(ctx, &mem_86919, bytes_86842, "mem_86919")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_86998 = 0; i_86998 < n_62936; i_86998++) {
+    for (int64_t i_86033 = 0; i_86033 < n_62521; i_86033++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_86994 = 0; i_86994 < m_62937; i_86994++) {
+        for (int64_t i_86029 = 0; i_86029 < m_62522; i_86029++) {
             // futhark/microgpt.fut:4:11-25
             
-            double zm_lhs_67114 = ((double *) w_mem_87800.mem)[i_86998 * m_62937 + i_86994];
-            
-            // futhark/microgpt.fut:4:11-25
-            
-            double zt_rhs_67115 = ((double *) mem_87847)[i_86998 * m_62937 + i_86994];
-            
-            // futhark/microgpt.fut:403:21-34
-            
-            double zs_lhs_67116 = lt_r_62943 * zt_rhs_67115;
+            double zm_lhs_66662 = ((double *) w_mem_86837.mem)[i_86033 * m_62522 + i_86029];
             
             // futhark/microgpt.fut:4:11-25
             
-            double ztzt_lhs_67117 = ((double *) mem_87844)[i_86998 * m_62937 + i_86994];
+            double zt_rhs_66663 = ((double *) mem_86884)[i_86033 * m_62522 + i_86029];
             
-            // futhark/microgpt.fut:403:51-57
+            // futhark/microgpt.fut:400:21-34
             
-            double zp_lhs_67118 = fpow64(ztzt_lhs_67117, 0.5);
+            double zs_lhs_66664 = lt_r_62528 * zt_rhs_66663;
             
-            // futhark/microgpt.fut:403:59-71
+            // futhark/microgpt.fut:4:11-25
             
-            double zs_rhs_67119 = 1.0e-8 + zp_lhs_67118;
+            double ztzt_lhs_66665 = ((double *) mem_86881)[i_86033 * m_62522 + i_86029];
             
-            // futhark/microgpt.fut:403:35-71
+            // futhark/microgpt.fut:400:51-57
             
-            double zm_rhs_67120 = zs_lhs_67116 / zs_rhs_67119;
+            double zp_lhs_66666 = fpow64(ztzt_lhs_66665, 0.5);
             
-            // futhark/microgpt.fut:403:13-71
+            // futhark/microgpt.fut:400:59-71
             
-            double lifted_lambda_res_67121 = zm_lhs_67114 - zm_rhs_67120;
+            double zs_rhs_66667 = 1.0e-8 + zp_lhs_66666;
             
-            ((double *) mem_87882.mem)[i_86998 * m_62937 + i_86994] = lifted_lambda_res_67121;
+            // futhark/microgpt.fut:400:35-71
+            
+            double zm_rhs_66668 = zs_lhs_66664 / zs_rhs_66667;
+            
+            // futhark/microgpt.fut:400:13-71
+            
+            double lifted_lambda_res_66669 = zm_lhs_66662 - zm_rhs_66668;
+            
+            ((double *) mem_86919.mem)[i_86033 * m_62522 + i_86029] = lifted_lambda_res_66669;
         }
     }
-    if (memblock_set(ctx, &mem_out_89540, &mem_87882, "mem_87882") != 0)
+    if (memblock_set(ctx, &mem_out_88608, &mem_86919, "mem_86919") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89541, &mem_87809, "mem_87809") != 0)
+    if (memblock_set(ctx, &mem_out_88609, &mem_86846, "mem_86846") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89542, &mem_87806, "mem_87806") != 0)
+    if (memblock_set(ctx, &mem_out_88610, &mem_86843, "mem_86843") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89860, &mem_out_89540, "mem_out_89540") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88923, &mem_out_88608, "mem_out_88608") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89861, &mem_out_89541, "mem_out_89541") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88924, &mem_out_88609, "mem_out_88609") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89862, &mem_out_89542, "mem_out_89542") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88925, &mem_out_88610, "mem_out_88610") != 0)
         return 1;
     
   cleanup:
     {
-        free(mem_87844);
-        free(mem_87847);
-        if (memblock_unref(ctx, &mem_87882, "mem_87882") != 0)
+        free(mem_86881);
+        free(mem_86884);
+        if (memblock_unref(ctx, &mem_86919, "mem_86919") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_87809, "mem_87809") != 0)
+        if (memblock_unref(ctx, &mem_86846, "mem_86846") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_87806, "mem_87806") != 0)
+        if (memblock_unref(ctx, &mem_86843, "mem_86843") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89542, "mem_out_89542") != 0)
+        if (memblock_unref(ctx, &mem_out_88610, "mem_out_88610") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89541, "mem_out_89541") != 0)
+        if (memblock_unref(ctx, &mem_out_88609, "mem_out_88609") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89540, "mem_out_89540") != 0)
+        if (memblock_unref(ctx, &mem_out_88608, "mem_out_88608") != 0)
             return 1;
     }
     return err;
 }
-FUTHARK_FUN_ATTR int futrts_adam_opt_w_10265(struct futhark_context *ctx, struct memblock *mem_out_p_89865, struct memblock *mem_out_p_89866, struct memblock *mem_out_p_89867, struct memblock w_mem_87800, struct memblock mw_mem_87801, struct memblock vw_mem_87802, struct memblock dw_mem_87803, int64_t n_63969, int64_t m_63970, int64_t step_63975, double lt_r_63976)
+FUTHARK_FUN_ATTR int futrts_adam_opt_w_10204(struct futhark_context *ctx, struct memblock *mem_out_p_88928, struct memblock *mem_out_p_88929, struct memblock *mem_out_p_88930, struct memblock w_mem_86837, struct memblock mw_mem_86838, struct memblock vw_mem_86839, struct memblock dw_mem_86840, int64_t n_63554, int64_t m_63555, int64_t step_63560, double lt_r_63561)
 {
     (void) ctx;
     
     int err = 0;
-    int64_t mem_87844_cached_sizze_89868 = 0;
-    unsigned char *mem_87844 = NULL;
-    int64_t mem_87847_cached_sizze_89869 = 0;
-    unsigned char *mem_87847 = NULL;
-    struct memblock mem_87882;
+    int64_t mem_86881_cached_sizze_88931 = 0;
+    unsigned char *mem_86881 = NULL;
+    int64_t mem_86884_cached_sizze_88932 = 0;
+    unsigned char *mem_86884 = NULL;
+    struct memblock mem_86919;
     
-    mem_87882.references = NULL;
+    mem_86919.references = NULL;
     
-    struct memblock mem_87809;
+    struct memblock mem_86846;
     
-    mem_87809.references = NULL;
+    mem_86846.references = NULL;
     
-    struct memblock mem_87806;
+    struct memblock mem_86843;
     
-    mem_87806.references = NULL;
+    mem_86843.references = NULL;
     
-    struct memblock mem_out_89542;
+    struct memblock mem_out_88610;
     
-    mem_out_89542.references = NULL;
+    mem_out_88610.references = NULL;
     
-    struct memblock mem_out_89541;
+    struct memblock mem_out_88609;
     
-    mem_out_89541.references = NULL;
+    mem_out_88609.references = NULL;
     
-    struct memblock mem_out_89540;
+    struct memblock mem_out_88608;
     
-    mem_out_89540.references = NULL;
+    mem_out_88608.references = NULL;
     
-    struct memblock mem_87791 = ctx->constants->mem_87791;
-    struct memblock mem_87792 = ctx->constants->mem_87792;
-    struct memblock mem_87793 = ctx->constants->mem_87793;
-    struct memblock mem_87794 = ctx->constants->mem_87794;
-    struct memblock mem_87795 = ctx->constants->mem_87795;
-    struct memblock mem_87796 = ctx->constants->mem_87796;
-    struct memblock mem_87797 = ctx->constants->mem_87797;
-    struct memblock mem_87798 = ctx->constants->mem_87798;
-    struct memblock mem_87799 = ctx->constants->mem_87799;
-    
-    // futhark/microgpt.fut:4:11-25
-    
-    int64_t binop_x_87804 = (int64_t) 8 * n_63969;
+    struct memblock mem_86828 = ctx->constants->mem_86828;
+    struct memblock mem_86829 = ctx->constants->mem_86829;
+    struct memblock mem_86830 = ctx->constants->mem_86830;
+    struct memblock mem_86831 = ctx->constants->mem_86831;
+    struct memblock mem_86832 = ctx->constants->mem_86832;
+    struct memblock mem_86833 = ctx->constants->mem_86833;
+    struct memblock mem_86834 = ctx->constants->mem_86834;
+    struct memblock mem_86835 = ctx->constants->mem_86835;
+    struct memblock mem_86836 = ctx->constants->mem_86836;
     
     // futhark/microgpt.fut:4:11-25
     
-    int64_t bytes_87805 = m_63970 * binop_x_87804;
+    int64_t binop_x_86841 = (int64_t) 8 * n_63554;
     
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_87806, bytes_87805, "mem_87806")) {
+    
+    int64_t bytes_86842 = m_63555 * binop_x_86841;
+    
+    // futhark/microgpt.fut:4:11-25
+    if (memblock_alloc(ctx, &mem_86843, bytes_86842, "mem_86843")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_87809, bytes_87805, "mem_87809")) {
+    if (memblock_alloc(ctx, &mem_86846, bytes_86842, "mem_86846")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_86975 = 0; i_86975 < n_63969; i_86975++) {
+    for (int64_t i_86010 = 0; i_86010 < n_63554; i_86010++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_86968 = 0; i_86968 < m_63970; i_86968++) {
+        for (int64_t i_86003 = 0; i_86003 < m_63555; i_86003++) {
             // futhark/microgpt.fut:4:11-25
             
-            double zt_rhs_83072 = ((double *) mw_mem_87801.mem)[i_86975 * m_63970 + i_86968];
+            double zt_rhs_82291 = ((double *) mw_mem_86838.mem)[i_86010 * m_63555 + i_86003];
             
-            // futhark/microgpt.fut:395:10-20
+            // futhark/microgpt.fut:392:10-20
             
-            double zp_lhs_83073 = 0.85 * zt_rhs_83072;
-            
-            // futhark/microgpt.fut:4:11-25
-            
-            double zt_rhs_83074 = ((double *) dw_mem_87803.mem)[i_86975 * m_63970 + i_86968];
-            
-            // futhark/microgpt.fut:395:35-45
-            
-            double zp_rhs_83075 = 0.15000000000000002 * zt_rhs_83074;
-            
-            // futhark/microgpt.fut:395:21-45
-            
-            double lifted_lambda_res_83076 = zp_lhs_83073 + zp_rhs_83075;
+            double zp_lhs_82292 = 0.85 * zt_rhs_82291;
             
             // futhark/microgpt.fut:4:11-25
             
-            double zt_rhs_83083 = ((double *) vw_mem_87802.mem)[i_86975 * m_63970 + i_86968];
+            double zt_rhs_82293 = ((double *) dw_mem_86840.mem)[i_86010 * m_63555 + i_86003];
             
-            // futhark/microgpt.fut:397:10-20
+            // futhark/microgpt.fut:392:35-45
             
-            double zp_lhs_83084 = 0.99 * zt_rhs_83083;
+            double zp_rhs_82294 = 0.15000000000000002 * zt_rhs_82293;
             
-            // futhark/microgpt.fut:397:35-45
+            // futhark/microgpt.fut:392:21-45
             
-            double zt_lhs_83086 = 1.0000000000000009e-2 * zt_rhs_83074;
+            double lifted_lambda_res_82295 = zp_lhs_82292 + zp_rhs_82294;
             
-            // futhark/microgpt.fut:397:46-56
+            // futhark/microgpt.fut:4:11-25
             
-            double zp_rhs_83087 = zt_rhs_83074 * zt_lhs_83086;
+            double zt_rhs_82302 = ((double *) vw_mem_86839.mem)[i_86010 * m_63555 + i_86003];
             
-            // futhark/microgpt.fut:397:21-56
+            // futhark/microgpt.fut:394:10-20
             
-            double lifted_lambda_res_83088 = zp_lhs_83084 + zp_rhs_83087;
+            double zp_lhs_82303 = 0.99 * zt_rhs_82302;
             
-            ((double *) mem_87806.mem)[i_86975 * m_63970 + i_86968] = lifted_lambda_res_83088;
-            ((double *) mem_87809.mem)[i_86975 * m_63970 + i_86968] = lifted_lambda_res_83076;
+            // futhark/microgpt.fut:394:35-45
+            
+            double zt_lhs_82305 = 1.0000000000000009e-2 * zt_rhs_82293;
+            
+            // futhark/microgpt.fut:394:46-56
+            
+            double zp_rhs_82306 = zt_rhs_82293 * zt_lhs_82305;
+            
+            // futhark/microgpt.fut:394:21-56
+            
+            double lifted_lambda_res_82307 = zp_lhs_82303 + zp_rhs_82306;
+            
+            ((double *) mem_86843.mem)[i_86010 * m_63555 + i_86003] = lifted_lambda_res_82307;
+            ((double *) mem_86846.mem)[i_86010 * m_63555 + i_86003] = lifted_lambda_res_82295;
         }
     }
     // futhark/microgpt.fut:66:26-45
     
-    double i64_res_67995 = sitofp_i64_f64(step_63975);
+    double i64_res_67594 = sitofp_i64_f64(step_63560);
     
-    // futhark/microgpt.fut:399:54-57
+    // futhark/microgpt.fut:396:54-57
     
-    double ztzt_rhs_67996 = 1.0 + i64_res_67995;
+    double ztzt_rhs_67595 = 1.0 + i64_res_67594;
     
-    // futhark/microgpt.fut:399:30-57
+    // futhark/microgpt.fut:396:30-57
     
-    double zm_rhs_67997 = fpow64(0.85, ztzt_rhs_67996);
+    double zm_rhs_67596 = fpow64(0.85, ztzt_rhs_67595);
     
-    // futhark/microgpt.fut:399:23-57
+    // futhark/microgpt.fut:396:23-57
     
-    double zs_rhs_67998 = 1.0 - zm_rhs_67997;
+    double zs_rhs_67597 = 1.0 - zm_rhs_67596;
     
-    // futhark/microgpt.fut:401:31-58
+    // futhark/microgpt.fut:398:31-58
     
-    double zm_rhs_68036 = fpow64(0.99, ztzt_rhs_67996);
+    double zm_rhs_67635 = fpow64(0.99, ztzt_rhs_67595);
     
-    // futhark/microgpt.fut:401:23-58
+    // futhark/microgpt.fut:398:23-58
     
-    double zs_rhs_68037 = 1.0 - zm_rhs_68036;
+    double zs_rhs_67636 = 1.0 - zm_rhs_67635;
     
     // futhark/microgpt.fut:4:11-25
-    if (mem_87844_cached_sizze_89868 < bytes_87805) {
-        err = lexical_realloc(ctx, &mem_87844, &mem_87844_cached_sizze_89868, bytes_87805);
+    if (mem_86881_cached_sizze_88931 < bytes_86842) {
+        err = lexical_realloc(ctx, &mem_86881, &mem_86881_cached_sizze_88931, bytes_86842);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87847_cached_sizze_89869 < bytes_87805) {
-        err = lexical_realloc(ctx, &mem_87847, &mem_87847_cached_sizze_89869, bytes_87805);
+    if (mem_86884_cached_sizze_88932 < bytes_86842) {
+        err = lexical_realloc(ctx, &mem_86884, &mem_86884_cached_sizze_88932, bytes_86842);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_86989 = 0; i_86989 < n_63969; i_86989++) {
+    for (int64_t i_86024 = 0; i_86024 < n_63554; i_86024++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_86982 = 0; i_86982 < m_63970; i_86982++) {
+        for (int64_t i_86017 = 0; i_86017 < m_63555; i_86017++) {
             // futhark/microgpt.fut:4:11-25
             
-            double zs_lhs_83108 = ((double *) mem_87809.mem)[i_86989 * m_63970 + i_86982];
+            double zs_lhs_82327 = ((double *) mem_86846.mem)[i_86024 * m_63555 + i_86017];
             
-            // futhark/microgpt.fut:399:18-57
+            // futhark/microgpt.fut:396:18-57
             
-            double lifted_lambda_res_83109 = zs_lhs_83108 / zs_rhs_67998;
+            double lifted_lambda_res_82328 = zs_lhs_82327 / zs_rhs_67597;
             
             // futhark/microgpt.fut:4:11-25
             
-            double zs_lhs_83116 = ((double *) mem_87806.mem)[i_86989 * m_63970 + i_86982];
+            double zs_lhs_82335 = ((double *) mem_86843.mem)[i_86024 * m_63555 + i_86017];
             
-            // futhark/microgpt.fut:401:18-58
+            // futhark/microgpt.fut:398:18-58
             
-            double lifted_lambda_res_83117 = zs_lhs_83116 / zs_rhs_68037;
+            double lifted_lambda_res_82336 = zs_lhs_82335 / zs_rhs_67636;
             
-            ((double *) mem_87844)[i_86989 * m_63970 + i_86982] = lifted_lambda_res_83117;
-            ((double *) mem_87847)[i_86989 * m_63970 + i_86982] = lifted_lambda_res_83109;
+            ((double *) mem_86881)[i_86024 * m_63555 + i_86017] = lifted_lambda_res_82336;
+            ((double *) mem_86884)[i_86024 * m_63555 + i_86017] = lifted_lambda_res_82328;
         }
     }
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_87882, bytes_87805, "mem_87882")) {
+    if (memblock_alloc(ctx, &mem_86919, bytes_86842, "mem_86919")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_86998 = 0; i_86998 < n_63969; i_86998++) {
+    for (int64_t i_86033 = 0; i_86033 < n_63554; i_86033++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_86994 = 0; i_86994 < m_63970; i_86994++) {
+        for (int64_t i_86029 = 0; i_86029 < m_63555; i_86029++) {
             // futhark/microgpt.fut:4:11-25
             
-            double zm_lhs_67114 = ((double *) w_mem_87800.mem)[i_86998 * m_63970 + i_86994];
-            
-            // futhark/microgpt.fut:4:11-25
-            
-            double zt_rhs_67115 = ((double *) mem_87847)[i_86998 * m_63970 + i_86994];
-            
-            // futhark/microgpt.fut:403:21-34
-            
-            double zs_lhs_67116 = lt_r_63976 * zt_rhs_67115;
+            double zm_lhs_66662 = ((double *) w_mem_86837.mem)[i_86033 * m_63555 + i_86029];
             
             // futhark/microgpt.fut:4:11-25
             
-            double ztzt_lhs_67117 = ((double *) mem_87844)[i_86998 * m_63970 + i_86994];
+            double zt_rhs_66663 = ((double *) mem_86884)[i_86033 * m_63555 + i_86029];
             
-            // futhark/microgpt.fut:403:51-57
+            // futhark/microgpt.fut:400:21-34
             
-            double zp_lhs_67118 = fpow64(ztzt_lhs_67117, 0.5);
+            double zs_lhs_66664 = lt_r_63561 * zt_rhs_66663;
             
-            // futhark/microgpt.fut:403:59-71
+            // futhark/microgpt.fut:4:11-25
             
-            double zs_rhs_67119 = 1.0e-8 + zp_lhs_67118;
+            double ztzt_lhs_66665 = ((double *) mem_86881)[i_86033 * m_63555 + i_86029];
             
-            // futhark/microgpt.fut:403:35-71
+            // futhark/microgpt.fut:400:51-57
             
-            double zm_rhs_67120 = zs_lhs_67116 / zs_rhs_67119;
+            double zp_lhs_66666 = fpow64(ztzt_lhs_66665, 0.5);
             
-            // futhark/microgpt.fut:403:13-71
+            // futhark/microgpt.fut:400:59-71
             
-            double lifted_lambda_res_67121 = zm_lhs_67114 - zm_rhs_67120;
+            double zs_rhs_66667 = 1.0e-8 + zp_lhs_66666;
             
-            ((double *) mem_87882.mem)[i_86998 * m_63970 + i_86994] = lifted_lambda_res_67121;
+            // futhark/microgpt.fut:400:35-71
+            
+            double zm_rhs_66668 = zs_lhs_66664 / zs_rhs_66667;
+            
+            // futhark/microgpt.fut:400:13-71
+            
+            double lifted_lambda_res_66669 = zm_lhs_66662 - zm_rhs_66668;
+            
+            ((double *) mem_86919.mem)[i_86033 * m_63555 + i_86029] = lifted_lambda_res_66669;
         }
     }
-    if (memblock_set(ctx, &mem_out_89540, &mem_87882, "mem_87882") != 0)
+    if (memblock_set(ctx, &mem_out_88608, &mem_86919, "mem_86919") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89541, &mem_87809, "mem_87809") != 0)
+    if (memblock_set(ctx, &mem_out_88609, &mem_86846, "mem_86846") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89542, &mem_87806, "mem_87806") != 0)
+    if (memblock_set(ctx, &mem_out_88610, &mem_86843, "mem_86843") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89865, &mem_out_89540, "mem_out_89540") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88928, &mem_out_88608, "mem_out_88608") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89866, &mem_out_89541, "mem_out_89541") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88929, &mem_out_88609, "mem_out_88609") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89867, &mem_out_89542, "mem_out_89542") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88930, &mem_out_88610, "mem_out_88610") != 0)
         return 1;
     
   cleanup:
     {
-        free(mem_87844);
-        free(mem_87847);
-        if (memblock_unref(ctx, &mem_87882, "mem_87882") != 0)
+        free(mem_86881);
+        free(mem_86884);
+        if (memblock_unref(ctx, &mem_86919, "mem_86919") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_87809, "mem_87809") != 0)
+        if (memblock_unref(ctx, &mem_86846, "mem_86846") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_87806, "mem_87806") != 0)
+        if (memblock_unref(ctx, &mem_86843, "mem_86843") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89542, "mem_out_89542") != 0)
+        if (memblock_unref(ctx, &mem_out_88610, "mem_out_88610") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89541, "mem_out_89541") != 0)
+        if (memblock_unref(ctx, &mem_out_88609, "mem_out_88609") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89540, "mem_out_89540") != 0)
+        if (memblock_unref(ctx, &mem_out_88608, "mem_out_88608") != 0)
             return 1;
     }
     return err;
 }
-FUTHARK_FUN_ATTR int futrts_entry_forward_seq(struct futhark_context *ctx, struct memblock *mem_out_p_89870, struct memblock wdown_mem_87800, struct memblock wkey_mem_87801, struct memblock wout_mem_87802, struct memblock wpe_mem_87803, struct memblock wqry_mem_87804, struct memblock wte_mem_87805, struct memblock wup_mem_87806, struct memblock wval_mem_87807, struct memblock wvoc_mem_87808, struct memblock tokens_mem_87809, struct memblock mask_mem_87810)
+FUTHARK_FUN_ATTR int futrts_entry_forward_seq(struct futhark_context *ctx, struct memblock *mem_out_p_88933, struct memblock wdown_mem_86837, struct memblock wkey_mem_86838, struct memblock wout_mem_86839, struct memblock wpe_mem_86840, struct memblock wqry_mem_86841, struct memblock wte_mem_86842, struct memblock wup_mem_86843, struct memblock wval_mem_86844, struct memblock wvoc_mem_86845, struct memblock tokens_mem_86846, struct memblock mask_mem_86847)
 {
     (void) ctx;
     
     int err = 0;
-    int64_t mem_87811_cached_sizze_89871 = 0;
-    unsigned char *mem_87811 = NULL;
-    int64_t mem_87816_cached_sizze_89872 = 0;
-    unsigned char *mem_87816 = NULL;
-    int64_t mem_87827_cached_sizze_89873 = 0;
-    unsigned char *mem_87827 = NULL;
-    int64_t mem_87832_cached_sizze_89874 = 0;
-    unsigned char *mem_87832 = NULL;
-    int64_t mem_87843_cached_sizze_89875 = 0;
-    unsigned char *mem_87843 = NULL;
-    int64_t mem_87848_cached_sizze_89876 = 0;
-    unsigned char *mem_87848 = NULL;
-    int64_t mem_87855_cached_sizze_89877 = 0;
-    unsigned char *mem_87855 = NULL;
-    int64_t mem_87866_cached_sizze_89878 = 0;
-    unsigned char *mem_87866 = NULL;
-    int64_t mem_87871_cached_sizze_89879 = 0;
-    unsigned char *mem_87871 = NULL;
-    int64_t mem_87878_cached_sizze_89880 = 0;
-    unsigned char *mem_87878 = NULL;
-    int64_t mem_87889_cached_sizze_89881 = 0;
-    unsigned char *mem_87889 = NULL;
-    int64_t mem_87890_cached_sizze_89882 = 0;
-    unsigned char *mem_87890 = NULL;
-    int64_t mem_87891_cached_sizze_89883 = 0;
-    unsigned char *mem_87891 = NULL;
-    int64_t mem_87904_cached_sizze_89884 = 0;
-    unsigned char *mem_87904 = NULL;
-    int64_t mem_87905_cached_sizze_89885 = 0;
-    unsigned char *mem_87905 = NULL;
-    int64_t mem_87906_cached_sizze_89886 = 0;
-    unsigned char *mem_87906 = NULL;
-    int64_t mem_87937_cached_sizze_89887 = 0;
-    unsigned char *mem_87937 = NULL;
-    int64_t mem_87938_cached_sizze_89888 = 0;
-    unsigned char *mem_87938 = NULL;
-    int64_t mem_87939_cached_sizze_89889 = 0;
-    unsigned char *mem_87939 = NULL;
-    int64_t mem_87955_cached_sizze_89890 = 0;
-    unsigned char *mem_87955 = NULL;
-    int64_t mem_87956_cached_sizze_89891 = 0;
-    unsigned char *mem_87956 = NULL;
-    int64_t mem_87957_cached_sizze_89892 = 0;
-    unsigned char *mem_87957 = NULL;
-    int64_t mem_87970_cached_sizze_89893 = 0;
-    unsigned char *mem_87970 = NULL;
-    int64_t mem_87971_cached_sizze_89894 = 0;
-    unsigned char *mem_87971 = NULL;
-    int64_t mem_87972_cached_sizze_89895 = 0;
-    unsigned char *mem_87972 = NULL;
-    int64_t mem_88018_cached_sizze_89896 = 0;
-    unsigned char *mem_88018 = NULL;
-    int64_t mem_88024_cached_sizze_89897 = 0;
-    unsigned char *mem_88024 = NULL;
-    int64_t mem_88029_cached_sizze_89898 = 0;
-    unsigned char *mem_88029 = NULL;
-    int64_t mem_88040_cached_sizze_89899 = 0;
-    unsigned char *mem_88040 = NULL;
-    int64_t mem_88045_cached_sizze_89900 = 0;
-    unsigned char *mem_88045 = NULL;
-    int64_t mem_88056_cached_sizze_89901 = 0;
-    unsigned char *mem_88056 = NULL;
-    int64_t mem_88061_cached_sizze_89902 = 0;
-    unsigned char *mem_88061 = NULL;
-    int64_t mem_88068_cached_sizze_89903 = 0;
-    unsigned char *mem_88068 = NULL;
-    int64_t mem_88079_cached_sizze_89904 = 0;
-    unsigned char *mem_88079 = NULL;
-    int64_t mem_88084_cached_sizze_89905 = 0;
-    unsigned char *mem_88084 = NULL;
-    int64_t mem_88100_cached_sizze_89906 = 0;
-    unsigned char *mem_88100 = NULL;
-    int64_t mem_88105_cached_sizze_89907 = 0;
-    unsigned char *mem_88105 = NULL;
-    int64_t mem_88116_cached_sizze_89908 = 0;
-    unsigned char *mem_88116 = NULL;
-    int64_t mem_88121_cached_sizze_89909 = 0;
-    unsigned char *mem_88121 = NULL;
-    int64_t mem_88132_cached_sizze_89910 = 0;
-    unsigned char *mem_88132 = NULL;
-    int64_t mem_88137_cached_sizze_89911 = 0;
-    unsigned char *mem_88137 = NULL;
-    int64_t mem_88148_cached_sizze_89912 = 0;
-    unsigned char *mem_88148 = NULL;
-    int64_t mem_88153_cached_sizze_89913 = 0;
-    unsigned char *mem_88153 = NULL;
-    int64_t mem_88160_cached_sizze_89914 = 0;
-    unsigned char *mem_88160 = NULL;
-    int64_t mem_88171_cached_sizze_89915 = 0;
-    unsigned char *mem_88171 = NULL;
-    int64_t mem_88176_cached_sizze_89916 = 0;
-    unsigned char *mem_88176 = NULL;
-    int64_t mem_88187_cached_sizze_89917 = 0;
-    unsigned char *mem_88187 = NULL;
-    int64_t mem_88192_cached_sizze_89918 = 0;
-    unsigned char *mem_88192 = NULL;
-    int64_t mem_88203_cached_sizze_89919 = 0;
-    unsigned char *mem_88203 = NULL;
-    int64_t mem_88208_cached_sizze_89920 = 0;
-    unsigned char *mem_88208 = NULL;
-    int64_t mem_88219_cached_sizze_89921 = 0;
-    unsigned char *mem_88219 = NULL;
-    int64_t mem_88224_cached_sizze_89922 = 0;
-    unsigned char *mem_88224 = NULL;
-    int64_t mem_88240_cached_sizze_89923 = 0;
-    unsigned char *mem_88240 = NULL;
-    struct memblock mem_88235;
+    int64_t mem_86848_cached_sizze_88934 = 0;
+    unsigned char *mem_86848 = NULL;
+    int64_t mem_86853_cached_sizze_88935 = 0;
+    unsigned char *mem_86853 = NULL;
+    int64_t mem_86864_cached_sizze_88936 = 0;
+    unsigned char *mem_86864 = NULL;
+    int64_t mem_86869_cached_sizze_88937 = 0;
+    unsigned char *mem_86869 = NULL;
+    int64_t mem_86880_cached_sizze_88938 = 0;
+    unsigned char *mem_86880 = NULL;
+    int64_t mem_86885_cached_sizze_88939 = 0;
+    unsigned char *mem_86885 = NULL;
+    int64_t mem_86892_cached_sizze_88940 = 0;
+    unsigned char *mem_86892 = NULL;
+    int64_t mem_86903_cached_sizze_88941 = 0;
+    unsigned char *mem_86903 = NULL;
+    int64_t mem_86908_cached_sizze_88942 = 0;
+    unsigned char *mem_86908 = NULL;
+    int64_t mem_86915_cached_sizze_88943 = 0;
+    unsigned char *mem_86915 = NULL;
+    int64_t mem_86926_cached_sizze_88944 = 0;
+    unsigned char *mem_86926 = NULL;
+    int64_t mem_86927_cached_sizze_88945 = 0;
+    unsigned char *mem_86927 = NULL;
+    int64_t mem_86928_cached_sizze_88946 = 0;
+    unsigned char *mem_86928 = NULL;
+    int64_t mem_86941_cached_sizze_88947 = 0;
+    unsigned char *mem_86941 = NULL;
+    int64_t mem_86942_cached_sizze_88948 = 0;
+    unsigned char *mem_86942 = NULL;
+    int64_t mem_86943_cached_sizze_88949 = 0;
+    unsigned char *mem_86943 = NULL;
+    int64_t mem_86974_cached_sizze_88950 = 0;
+    unsigned char *mem_86974 = NULL;
+    int64_t mem_86975_cached_sizze_88951 = 0;
+    unsigned char *mem_86975 = NULL;
+    int64_t mem_86976_cached_sizze_88952 = 0;
+    unsigned char *mem_86976 = NULL;
+    int64_t mem_86992_cached_sizze_88953 = 0;
+    unsigned char *mem_86992 = NULL;
+    int64_t mem_86993_cached_sizze_88954 = 0;
+    unsigned char *mem_86993 = NULL;
+    int64_t mem_86994_cached_sizze_88955 = 0;
+    unsigned char *mem_86994 = NULL;
+    int64_t mem_87007_cached_sizze_88956 = 0;
+    unsigned char *mem_87007 = NULL;
+    int64_t mem_87008_cached_sizze_88957 = 0;
+    unsigned char *mem_87008 = NULL;
+    int64_t mem_87009_cached_sizze_88958 = 0;
+    unsigned char *mem_87009 = NULL;
+    int64_t mem_87055_cached_sizze_88959 = 0;
+    unsigned char *mem_87055 = NULL;
+    int64_t mem_87061_cached_sizze_88960 = 0;
+    unsigned char *mem_87061 = NULL;
+    int64_t mem_87066_cached_sizze_88961 = 0;
+    unsigned char *mem_87066 = NULL;
+    int64_t mem_87077_cached_sizze_88962 = 0;
+    unsigned char *mem_87077 = NULL;
+    int64_t mem_87082_cached_sizze_88963 = 0;
+    unsigned char *mem_87082 = NULL;
+    int64_t mem_87093_cached_sizze_88964 = 0;
+    unsigned char *mem_87093 = NULL;
+    int64_t mem_87098_cached_sizze_88965 = 0;
+    unsigned char *mem_87098 = NULL;
+    int64_t mem_87105_cached_sizze_88966 = 0;
+    unsigned char *mem_87105 = NULL;
+    int64_t mem_87116_cached_sizze_88967 = 0;
+    unsigned char *mem_87116 = NULL;
+    int64_t mem_87121_cached_sizze_88968 = 0;
+    unsigned char *mem_87121 = NULL;
+    int64_t mem_87137_cached_sizze_88969 = 0;
+    unsigned char *mem_87137 = NULL;
+    int64_t mem_87142_cached_sizze_88970 = 0;
+    unsigned char *mem_87142 = NULL;
+    int64_t mem_87153_cached_sizze_88971 = 0;
+    unsigned char *mem_87153 = NULL;
+    int64_t mem_87158_cached_sizze_88972 = 0;
+    unsigned char *mem_87158 = NULL;
+    int64_t mem_87169_cached_sizze_88973 = 0;
+    unsigned char *mem_87169 = NULL;
+    int64_t mem_87174_cached_sizze_88974 = 0;
+    unsigned char *mem_87174 = NULL;
+    int64_t mem_87185_cached_sizze_88975 = 0;
+    unsigned char *mem_87185 = NULL;
+    int64_t mem_87190_cached_sizze_88976 = 0;
+    unsigned char *mem_87190 = NULL;
+    int64_t mem_87197_cached_sizze_88977 = 0;
+    unsigned char *mem_87197 = NULL;
+    int64_t mem_87208_cached_sizze_88978 = 0;
+    unsigned char *mem_87208 = NULL;
+    int64_t mem_87213_cached_sizze_88979 = 0;
+    unsigned char *mem_87213 = NULL;
+    int64_t mem_87224_cached_sizze_88980 = 0;
+    unsigned char *mem_87224 = NULL;
+    int64_t mem_87229_cached_sizze_88981 = 0;
+    unsigned char *mem_87229 = NULL;
+    int64_t mem_87240_cached_sizze_88982 = 0;
+    unsigned char *mem_87240 = NULL;
+    int64_t mem_87245_cached_sizze_88983 = 0;
+    unsigned char *mem_87245 = NULL;
+    int64_t mem_87256_cached_sizze_88984 = 0;
+    unsigned char *mem_87256 = NULL;
+    int64_t mem_87261_cached_sizze_88985 = 0;
+    unsigned char *mem_87261 = NULL;
+    int64_t mem_87277_cached_sizze_88986 = 0;
+    unsigned char *mem_87277 = NULL;
+    struct memblock mem_87272;
     
-    mem_88235.references = NULL;
+    mem_87272.references = NULL;
     
-    struct memblock mem_out_89540;
+    struct memblock mem_out_88608;
     
-    mem_out_89540.references = NULL;
+    mem_out_88608.references = NULL;
     
-    struct memblock mem_87791 = ctx->constants->mem_87791;
-    struct memblock mem_87792 = ctx->constants->mem_87792;
-    struct memblock mem_87793 = ctx->constants->mem_87793;
-    struct memblock mem_87794 = ctx->constants->mem_87794;
-    struct memblock mem_87795 = ctx->constants->mem_87795;
-    struct memblock mem_87796 = ctx->constants->mem_87796;
-    struct memblock mem_87797 = ctx->constants->mem_87797;
-    struct memblock mem_87798 = ctx->constants->mem_87798;
-    struct memblock mem_87799 = ctx->constants->mem_87799;
+    struct memblock mem_86828 = ctx->constants->mem_86828;
+    struct memblock mem_86829 = ctx->constants->mem_86829;
+    struct memblock mem_86830 = ctx->constants->mem_86830;
+    struct memblock mem_86831 = ctx->constants->mem_86831;
+    struct memblock mem_86832 = ctx->constants->mem_86832;
+    struct memblock mem_86833 = ctx->constants->mem_86833;
+    struct memblock mem_86834 = ctx->constants->mem_86834;
+    struct memblock mem_86835 = ctx->constants->mem_86835;
+    struct memblock mem_86836 = ctx->constants->mem_86836;
     
     // futhark/microgpt.fut:4:11-25
-    if (mem_87811_cached_sizze_89871 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_87811, &mem_87811_cached_sizze_89871, (int64_t) 2048);
+    if (mem_86848_cached_sizze_88934 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_86848, &mem_86848_cached_sizze_88934, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87816_cached_sizze_89872 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_87816, &mem_87816_cached_sizze_89872, (int64_t) 128);
+    if (mem_86853_cached_sizze_88935 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_86853, &mem_86853_cached_sizze_88935, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_86970 = 0; i_86970 < (int64_t) 16; i_86970++) {
-        // futhark/microgpt.fut:380:41-50
+    for (int64_t i_86005 = 0; i_86005 < (int64_t) 16; i_86005++) {
+        // futhark/microgpt.fut:377:41-50
         
-        int64_t tmp_77409 = ((int64_t *) tokens_mem_87809.mem)[i_86970];
+        int64_t tmp_76841 = ((int64_t *) tokens_mem_86846.mem)[i_86005];
         
-        // futhark/microgpt.fut:380:37-51
+        // futhark/microgpt.fut:377:37-51
         
-        bool x_77410 = sle64((int64_t) 0, tmp_77409);
+        bool x_76842 = sle64((int64_t) 0, tmp_76841);
         
-        // futhark/microgpt.fut:380:37-51
+        // futhark/microgpt.fut:377:37-51
         
-        bool y_77411 = slt64(tmp_77409, (int64_t) 27);
+        bool y_76843 = slt64(tmp_76841, (int64_t) 27);
         
-        // futhark/microgpt.fut:380:37-51
+        // futhark/microgpt.fut:377:37-51
         
-        bool bounds_check_77412 = x_77410 && y_77411;
+        bool bounds_check_76844 = x_76842 && y_76843;
         
-        // futhark/microgpt.fut:380:37-51
+        // futhark/microgpt.fut:377:37-51
         
-        bool index_certs_77413;
+        bool index_certs_76845;
         
-        if (!bounds_check_77412) {
-            set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_77409, "] out of bounds for array of shape [", (long long) (int64_t) 27, "].", "-> #0  futhark/microgpt.fut:380:37-51\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:380:16-55\n"));
+        if (!bounds_check_76844) {
+            set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_76841, "] out of bounds for array of shape [", (long long) (int64_t) 27, "].", "-> #0  futhark/microgpt.fut:377:37-51\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:377:16-55\n"));
             err = FUTHARK_PROGRAM_ERROR;
             goto cleanup;
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_86966 = 0; i_86966 < (int64_t) 16; i_86966++) {
+        for (int64_t i_86001 = 0; i_86001 < (int64_t) 16; i_86001++) {
             // futhark/microgpt.fut:4:11-25
             
-            double lifted_lambda_res_77420 = ((double *) wte_mem_87805.mem)[tmp_77409 * (int64_t) 16 + i_86966];
+            double lifted_lambda_res_76852 = ((double *) wte_mem_86842.mem)[tmp_76841 * (int64_t) 16 + i_86001];
             
-            ((double *) mem_87816)[i_86966] = lifted_lambda_res_77420;
+            ((double *) mem_86853)[i_86001] = lifted_lambda_res_76852;
         }
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87811, i_86970 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87816, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_86848, i_86005 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_86853, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87827_cached_sizze_89873 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_87827, &mem_87827_cached_sizze_89873, (int64_t) 2048);
+    if (mem_86864_cached_sizze_88936 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_86864, &mem_86864_cached_sizze_88936, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87832_cached_sizze_89874 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_87832, &mem_87832_cached_sizze_89874, (int64_t) 128);
+    if (mem_86869_cached_sizze_88937 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_86869, &mem_86869_cached_sizze_88937, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_86978 = 0; i_86978 < (int64_t) 16; i_86978++) {
+    for (int64_t i_86013 = 0; i_86013 < (int64_t) 16; i_86013++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_86974 = 0; i_86974 < (int64_t) 16; i_86974++) {
+        for (int64_t i_86009 = 0; i_86009 < (int64_t) 16; i_86009++) {
             // futhark/microgpt.fut:4:11-25
             
-            double zp_lhs_77452 = ((double *) wpe_mem_87803.mem)[i_86978 * (int64_t) 16 + i_86974];
+            double zp_lhs_76884 = ((double *) wpe_mem_86840.mem)[i_86013 * (int64_t) 16 + i_86009];
             
             // futhark/microgpt.fut:4:11-25
             
-            double zp_rhs_77453 = ((double *) mem_87811)[i_86978 * (int64_t) 16 + i_86974];
+            double zp_rhs_76885 = ((double *) mem_86848)[i_86013 * (int64_t) 16 + i_86009];
             
-            // futhark/microgpt.fut:142:42-82
+            // futhark/microgpt.fut:148:42-82
             
-            double zp_res_77454 = zp_lhs_77452 + zp_rhs_77453;
+            double zp_res_76886 = zp_lhs_76884 + zp_rhs_76885;
             
-            ((double *) mem_87832)[i_86974] = zp_res_77454;
+            ((double *) mem_86869)[i_86009] = zp_res_76886;
         }
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87827, i_86978 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87832, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_86864, i_86013 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_86869, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87843_cached_sizze_89875 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_87843, &mem_87843_cached_sizze_89875, (int64_t) 2048);
+    if (mem_86880_cached_sizze_88938 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_86880, &mem_86880_cached_sizze_88938, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87848_cached_sizze_89876 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_87848, &mem_87848_cached_sizze_89876, (int64_t) 128);
+    if (mem_86885_cached_sizze_88939 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_86885, &mem_86885_cached_sizze_88939, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87855_cached_sizze_89877 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_87855, &mem_87855_cached_sizze_89877, (int64_t) 128);
+    if (mem_86892_cached_sizze_88940 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_86892, &mem_86892_cached_sizze_88940, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_86990 = 0; i_86990 < (int64_t) 16; i_86990++) {
+    for (int64_t i_86025 = 0; i_86025 < (int64_t) 16; i_86025++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_86982 = 0; i_86982 < (int64_t) 16; i_86982++) {
+        for (int64_t i_86017 = 0; i_86017 < (int64_t) 16; i_86017++) {
             // futhark/microgpt.fut:4:11-25
             
-            double zt_lhs_77469 = ((double *) mem_87827)[i_86990 * (int64_t) 16 + i_86982];
+            double zt_lhs_76901 = ((double *) mem_86864)[i_86025 * (int64_t) 16 + i_86017];
             
-            // futhark/microgpt.fut:143:77-114
+            // futhark/microgpt.fut:149:77-114
             
-            double zt_res_77470 = zt_lhs_77469 * zt_lhs_77469;
+            double zt_res_76902 = zt_lhs_76901 * zt_lhs_76901;
             
-            ((double *) mem_87848)[i_86982] = zt_res_77470;
+            ((double *) mem_86885)[i_86017] = zt_res_76902;
         }
         // futhark/microgpt.fut:71:13-49
         
-        double defunc_0_lifted_lambda_res_77472;
-        double r_77474 = 0.0;
+        double defunc_0_lifted_lambda_res_76904;
+        double r_76906 = 0.0;
         
-        for (int64_t i_77473 = 0; i_77473 < (int64_t) 16; i_77473++) {
-            // futhark/microgpt.fut:144:37-47
+        for (int64_t i_76905 = 0; i_76905 < (int64_t) 16; i_76905++) {
+            // futhark/microgpt.fut:150:37-47
             
-            double lifted_lambda_res_77475 = ((double *) mem_87848)[i_77473];
+            double lifted_lambda_res_76907 = ((double *) mem_86885)[i_76905];
             
             // futhark/microgpt.fut:71:40-49
             
-            double zp_res_77476 = r_77474 + lifted_lambda_res_77475;
-            double r_tmp_89547 = zp_res_77476;
+            double zp_res_76908 = r_76906 + lifted_lambda_res_76907;
+            double r_tmp_88615 = zp_res_76908;
             
-            r_77474 = r_tmp_89547;
+            r_76906 = r_tmp_88615;
         }
-        defunc_0_lifted_lambda_res_77472 = r_77474;
-        // futhark/microgpt.fut:144:17-64
+        defunc_0_lifted_lambda_res_76904 = r_76906;
+        // futhark/microgpt.fut:150:17-64
         
-        double zs_res_77477 = defunc_0_lifted_lambda_res_77472 / 16.0;
+        double zs_res_76909 = defunc_0_lifted_lambda_res_76904 / 16.0;
         
-        // futhark/microgpt.fut:145:24-55
+        // futhark/microgpt.fut:151:24-55
         
-        double zp_res_77478 = 1.0e-5 + zs_res_77477;
+        double zp_res_76910 = 1.0e-5 + zs_res_76909;
         
-        // futhark/microgpt.fut:145:16-55
+        // futhark/microgpt.fut:151:16-55
         
-        double sqrt_res_77479 = futrts_sqrt64(zp_res_77478);
+        double sqrt_res_76911 = futrts_sqrt64(zp_res_76910);
         
-        // futhark/microgpt.fut:146:27-38
+        // futhark/microgpt.fut:152:27-38
         
-        double zs_res_77480 = 1.0 / sqrt_res_77479;
+        double zs_res_76912 = 1.0 / sqrt_res_76911;
         
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_86986 = 0; i_86986 < (int64_t) 16; i_86986++) {
+        for (int64_t i_86021 = 0; i_86021 < (int64_t) 16; i_86021++) {
             // futhark/microgpt.fut:4:11-25
             
-            double zt_lhs_77487 = ((double *) mem_87827)[i_86990 * (int64_t) 16 + i_86986];
+            double zt_lhs_76919 = ((double *) mem_86864)[i_86025 * (int64_t) 16 + i_86021];
             
-            // futhark/microgpt.fut:146:5-38
+            // futhark/microgpt.fut:152:5-38
             
-            double zt_res_77488 = zs_res_77480 * zt_lhs_77487;
+            double zt_res_76920 = zs_res_76912 * zt_lhs_76919;
             
-            ((double *) mem_87855)[i_86986] = zt_res_77488;
+            ((double *) mem_86892)[i_86021] = zt_res_76920;
         }
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87843, i_86990 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87855, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_86880, i_86025 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_86892, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87866_cached_sizze_89878 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_87866, &mem_87866_cached_sizze_89878, (int64_t) 2048);
+    if (mem_86903_cached_sizze_88941 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_86903, &mem_86903_cached_sizze_88941, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87871_cached_sizze_89879 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_87871, &mem_87871_cached_sizze_89879, (int64_t) 128);
+    if (mem_86908_cached_sizze_88942 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_86908, &mem_86908_cached_sizze_88942, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87878_cached_sizze_89880 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_87878, &mem_87878_cached_sizze_89880, (int64_t) 128);
+    if (mem_86915_cached_sizze_88943 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_86915, &mem_86915_cached_sizze_88943, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_87002 = 0; i_87002 < (int64_t) 16; i_87002++) {
+    for (int64_t i_86037 = 0; i_86037 < (int64_t) 16; i_86037++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_86994 = 0; i_86994 < (int64_t) 16; i_86994++) {
+        for (int64_t i_86029 = 0; i_86029 < (int64_t) 16; i_86029++) {
             // futhark/microgpt.fut:4:11-25
             
-            double zt_lhs_77503 = ((double *) mem_87843)[i_87002 * (int64_t) 16 + i_86994];
+            double zt_lhs_76935 = ((double *) mem_86880)[i_86037 * (int64_t) 16 + i_86029];
             
-            // futhark/microgpt.fut:147:77-114
+            // futhark/microgpt.fut:153:77-114
             
-            double zt_res_77504 = zt_lhs_77503 * zt_lhs_77503;
+            double zt_res_76936 = zt_lhs_76935 * zt_lhs_76935;
             
-            ((double *) mem_87871)[i_86994] = zt_res_77504;
+            ((double *) mem_86908)[i_86029] = zt_res_76936;
         }
         // futhark/microgpt.fut:71:13-49
         
-        double defunc_0_lifted_lambda_res_77506;
-        double r_77508 = 0.0;
+        double defunc_0_lifted_lambda_res_76938;
+        double r_76940 = 0.0;
         
-        for (int64_t i_77507 = 0; i_77507 < (int64_t) 16; i_77507++) {
-            // futhark/microgpt.fut:148:37-47
+        for (int64_t i_76939 = 0; i_76939 < (int64_t) 16; i_76939++) {
+            // futhark/microgpt.fut:154:37-47
             
-            double lifted_lambda_res_77509 = ((double *) mem_87871)[i_77507];
+            double lifted_lambda_res_76941 = ((double *) mem_86908)[i_76939];
             
             // futhark/microgpt.fut:71:40-49
             
-            double zp_res_77510 = r_77508 + lifted_lambda_res_77509;
-            double r_tmp_89551 = zp_res_77510;
+            double zp_res_76942 = r_76940 + lifted_lambda_res_76941;
+            double r_tmp_88619 = zp_res_76942;
             
-            r_77508 = r_tmp_89551;
+            r_76940 = r_tmp_88619;
         }
-        defunc_0_lifted_lambda_res_77506 = r_77508;
-        // futhark/microgpt.fut:148:17-64
+        defunc_0_lifted_lambda_res_76938 = r_76940;
+        // futhark/microgpt.fut:154:17-64
         
-        double zs_res_77511 = defunc_0_lifted_lambda_res_77506 / 16.0;
+        double zs_res_76943 = defunc_0_lifted_lambda_res_76938 / 16.0;
         
-        // futhark/microgpt.fut:149:24-55
+        // futhark/microgpt.fut:155:24-55
         
-        double zp_res_77512 = 1.0e-5 + zs_res_77511;
+        double zp_res_76944 = 1.0e-5 + zs_res_76943;
         
-        // futhark/microgpt.fut:149:16-55
+        // futhark/microgpt.fut:155:16-55
         
-        double sqrt_res_77513 = futrts_sqrt64(zp_res_77512);
+        double sqrt_res_76945 = futrts_sqrt64(zp_res_76944);
         
-        // futhark/microgpt.fut:150:27-38
+        // futhark/microgpt.fut:156:27-38
         
-        double zs_res_77514 = 1.0 / sqrt_res_77513;
+        double zs_res_76946 = 1.0 / sqrt_res_76945;
         
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_86998 = 0; i_86998 < (int64_t) 16; i_86998++) {
+        for (int64_t i_86033 = 0; i_86033 < (int64_t) 16; i_86033++) {
             // futhark/microgpt.fut:4:11-25
             
-            double zt_lhs_77521 = ((double *) mem_87843)[i_87002 * (int64_t) 16 + i_86998];
+            double zt_lhs_76953 = ((double *) mem_86880)[i_86037 * (int64_t) 16 + i_86033];
             
-            // futhark/microgpt.fut:150:5-38
+            // futhark/microgpt.fut:156:5-38
             
-            double zt_res_77522 = zs_res_77514 * zt_lhs_77521;
+            double zt_res_76954 = zs_res_76946 * zt_lhs_76953;
             
-            ((double *) mem_87878)[i_86998] = zt_res_77522;
+            ((double *) mem_86915)[i_86033] = zt_res_76954;
         }
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87866, i_87002 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87878, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_86903, i_86037 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_86915, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87889_cached_sizze_89881 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_87889, &mem_87889_cached_sizze_89881, (int64_t) 2048);
+    if (mem_86926_cached_sizze_88944 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_86926, &mem_86926_cached_sizze_88944, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87890_cached_sizze_89882 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_87890, &mem_87890_cached_sizze_89882, (int64_t) 2048);
+    if (mem_86927_cached_sizze_88945 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_86927, &mem_86927_cached_sizze_88945, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87891_cached_sizze_89883 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_87891, &mem_87891_cached_sizze_89883, (int64_t) 2048);
+    if (mem_86928_cached_sizze_88946 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_86928, &mem_86928_cached_sizze_88946, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87904_cached_sizze_89884 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_87904, &mem_87904_cached_sizze_89884, (int64_t) 128);
+    if (mem_86941_cached_sizze_88947 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_86941, &mem_86941_cached_sizze_88947, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87905_cached_sizze_89885 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_87905, &mem_87905_cached_sizze_89885, (int64_t) 128);
+    if (mem_86942_cached_sizze_88948 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_86942, &mem_86942_cached_sizze_88948, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87906_cached_sizze_89886 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_87906, &mem_87906_cached_sizze_89886, (int64_t) 128);
+    if (mem_86943_cached_sizze_88949 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_86943, &mem_86943_cached_sizze_88949, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_87020 = 0; i_87020 < (int64_t) 16; i_87020++) {
+    for (int64_t i_86055 = 0; i_86055 < (int64_t) 16; i_86055++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87010 = 0; i_87010 < (int64_t) 16; i_87010++) {
+        for (int64_t i_86045 = 0; i_86045 < (int64_t) 16; i_86045++) {
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_83291;
-            double r_83293 = 0.0;
+            double defunc_0_lifted_lambda_res_82510;
+            double r_82512 = 0.0;
             
-            for (int64_t i_83292 = 0; i_83292 < (int64_t) 16; i_83292++) {
+            for (int64_t i_82511 = 0; i_82511 < (int64_t) 16; i_82511++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_lhs_83294 = ((double *) wqry_mem_87804.mem)[i_87010 * (int64_t) 16 + i_83292];
+                double zt_lhs_82513 = ((double *) wqry_mem_86841.mem)[i_86045 * (int64_t) 16 + i_82511];
                 
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_rhs_83295 = ((double *) mem_87866)[i_87020 * (int64_t) 16 + i_83292];
+                double zt_rhs_82514 = ((double *) mem_86903)[i_86055 * (int64_t) 16 + i_82511];
                 
-                // futhark/microgpt.fut:151:66-105
+                // futhark/microgpt.fut:157:66-105
                 
-                double zt_res_83296 = zt_lhs_83294 * zt_rhs_83295;
+                double zt_res_82515 = zt_lhs_82513 * zt_rhs_82514;
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_83297 = r_83293 + zt_res_83296;
-                double r_tmp_89559 = zp_res_83297;
+                double zp_res_82516 = r_82512 + zt_res_82515;
+                double r_tmp_88627 = zp_res_82516;
                 
-                r_83293 = r_tmp_89559;
+                r_82512 = r_tmp_88627;
             }
-            defunc_0_lifted_lambda_res_83291 = r_83293;
+            defunc_0_lifted_lambda_res_82510 = r_82512;
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_83304;
-            double r_83306 = 0.0;
+            double defunc_0_lifted_lambda_res_82523;
+            double r_82525 = 0.0;
             
-            for (int64_t i_83305 = 0; i_83305 < (int64_t) 16; i_83305++) {
+            for (int64_t i_82524 = 0; i_82524 < (int64_t) 16; i_82524++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_lhs_83307 = ((double *) wkey_mem_87801.mem)[i_87010 * (int64_t) 16 + i_83305];
+                double zt_lhs_82526 = ((double *) wkey_mem_86838.mem)[i_86045 * (int64_t) 16 + i_82524];
                 
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_rhs_83308 = ((double *) mem_87866)[i_87020 * (int64_t) 16 + i_83305];
+                double zt_rhs_82527 = ((double *) mem_86903)[i_86055 * (int64_t) 16 + i_82524];
                 
-                // futhark/microgpt.fut:152:66-105
+                // futhark/microgpt.fut:158:66-105
                 
-                double zt_res_83309 = zt_lhs_83307 * zt_rhs_83308;
+                double zt_res_82528 = zt_lhs_82526 * zt_rhs_82527;
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_83310 = r_83306 + zt_res_83309;
-                double r_tmp_89560 = zp_res_83310;
+                double zp_res_82529 = r_82525 + zt_res_82528;
+                double r_tmp_88628 = zp_res_82529;
                 
-                r_83306 = r_tmp_89560;
+                r_82525 = r_tmp_88628;
             }
-            defunc_0_lifted_lambda_res_83304 = r_83306;
+            defunc_0_lifted_lambda_res_82523 = r_82525;
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_83320;
-            double r_83322 = 0.0;
+            double defunc_0_lifted_lambda_res_82539;
+            double r_82541 = 0.0;
             
-            for (int64_t i_83321 = 0; i_83321 < (int64_t) 16; i_83321++) {
+            for (int64_t i_82540 = 0; i_82540 < (int64_t) 16; i_82540++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_lhs_83323 = ((double *) wval_mem_87807.mem)[i_87010 * (int64_t) 16 + i_83321];
+                double zt_lhs_82542 = ((double *) wval_mem_86844.mem)[i_86045 * (int64_t) 16 + i_82540];
                 
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_rhs_83324 = ((double *) mem_87866)[i_87020 * (int64_t) 16 + i_83321];
+                double zt_rhs_82543 = ((double *) mem_86903)[i_86055 * (int64_t) 16 + i_82540];
                 
-                // futhark/microgpt.fut:153:66-105
+                // futhark/microgpt.fut:159:66-105
                 
-                double zt_res_83325 = zt_lhs_83323 * zt_rhs_83324;
+                double zt_res_82544 = zt_lhs_82542 * zt_rhs_82543;
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_83326 = r_83322 + zt_res_83325;
-                double r_tmp_89561 = zp_res_83326;
+                double zp_res_82545 = r_82541 + zt_res_82544;
+                double r_tmp_88629 = zp_res_82545;
                 
-                r_83322 = r_tmp_89561;
+                r_82541 = r_tmp_88629;
             }
-            defunc_0_lifted_lambda_res_83320 = r_83322;
-            ((double *) mem_87904)[i_87010] = defunc_0_lifted_lambda_res_83320;
-            ((double *) mem_87905)[i_87010] = defunc_0_lifted_lambda_res_83304;
-            ((double *) mem_87906)[i_87010] = defunc_0_lifted_lambda_res_83291;
+            defunc_0_lifted_lambda_res_82539 = r_82541;
+            ((double *) mem_86941)[i_86045] = defunc_0_lifted_lambda_res_82539;
+            ((double *) mem_86942)[i_86045] = defunc_0_lifted_lambda_res_82523;
+            ((double *) mem_86943)[i_86045] = defunc_0_lifted_lambda_res_82510;
         }
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87889, i_87020 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87904, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87890, i_87020 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87905, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87891, i_87020 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87906, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_86926, i_86055 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_86941, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_86927, i_86055 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_86942, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_86928, i_86055 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_86943, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87937_cached_sizze_89887 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_87937, &mem_87937_cached_sizze_89887, (int64_t) 2048);
+    if (mem_86974_cached_sizze_88950 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_86974, &mem_86974_cached_sizze_88950, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87938_cached_sizze_89888 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_87938, &mem_87938_cached_sizze_89888, (int64_t) 2048);
+    if (mem_86975_cached_sizze_88951 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_86975, &mem_86975_cached_sizze_88951, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87939_cached_sizze_89889 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_87939, &mem_87939_cached_sizze_89889, (int64_t) 2048);
+    if (mem_86976_cached_sizze_88952 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_86976, &mem_86976_cached_sizze_88952, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87955_cached_sizze_89890 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_87955, &mem_87955_cached_sizze_89890, (int64_t) 512);
+    if (mem_86992_cached_sizze_88953 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_86992, &mem_86992_cached_sizze_88953, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87956_cached_sizze_89891 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_87956, &mem_87956_cached_sizze_89891, (int64_t) 512);
+    if (mem_86993_cached_sizze_88954 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_86993, &mem_86993_cached_sizze_88954, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87957_cached_sizze_89892 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_87957, &mem_87957_cached_sizze_89892, (int64_t) 512);
+    if (mem_86994_cached_sizze_88955 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_86994, &mem_86994_cached_sizze_88955, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87970_cached_sizze_89893 < (int64_t) 32) {
-        err = lexical_realloc(ctx, &mem_87970, &mem_87970_cached_sizze_89893, (int64_t) 32);
+    if (mem_87007_cached_sizze_88956 < (int64_t) 32) {
+        err = lexical_realloc(ctx, &mem_87007, &mem_87007_cached_sizze_88956, (int64_t) 32);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87971_cached_sizze_89894 < (int64_t) 32) {
-        err = lexical_realloc(ctx, &mem_87971, &mem_87971_cached_sizze_89894, (int64_t) 32);
+    if (mem_87008_cached_sizze_88957 < (int64_t) 32) {
+        err = lexical_realloc(ctx, &mem_87008, &mem_87008_cached_sizze_88957, (int64_t) 32);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87972_cached_sizze_89895 < (int64_t) 32) {
-        err = lexical_realloc(ctx, &mem_87972, &mem_87972_cached_sizze_89895, (int64_t) 32);
+    if (mem_87009_cached_sizze_88958 < (int64_t) 32) {
+        err = lexical_realloc(ctx, &mem_87009, &mem_87009_cached_sizze_88958, (int64_t) 32);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_87050 = 0; i_87050 < (int64_t) 4; i_87050++) {
-        // futhark/microgpt.fut:154:69-72
+    for (int64_t i_86085 = 0; i_86085 < (int64_t) 4; i_86085++) {
+        // futhark/microgpt.fut:160:69-72
         
-        int64_t zp_lhs_83166 = mul64((int64_t) 4, i_87050);
+        int64_t zp_lhs_82385 = mul64((int64_t) 4, i_86085);
         
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87040 = 0; i_87040 < (int64_t) 16; i_87040++) {
+        for (int64_t i_86075 = 0; i_86075 < (int64_t) 16; i_86075++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87030 = 0; i_87030 < (int64_t) 4; i_87030++) {
-                // futhark/microgpt.fut:154:74-81
+            for (int64_t i_86065 = 0; i_86065 < (int64_t) 4; i_86065++) {
+                // futhark/microgpt.fut:160:74-81
                 
-                int64_t tmp_83484 = add64(zp_lhs_83166, i_87030);
+                int64_t tmp_82703 = add64(zp_lhs_82385, i_86065);
                 
-                // futhark/microgpt.fut:154:51-83
+                // futhark/microgpt.fut:160:51-83
                 
-                bool x_83485 = sle64((int64_t) 0, tmp_83484);
+                bool x_82704 = sle64((int64_t) 0, tmp_82703);
                 
-                // futhark/microgpt.fut:154:51-83
+                // futhark/microgpt.fut:160:51-83
                 
-                bool y_83486 = slt64(tmp_83484, (int64_t) 16);
+                bool y_82705 = slt64(tmp_82703, (int64_t) 16);
                 
-                // futhark/microgpt.fut:154:51-83
+                // futhark/microgpt.fut:160:51-83
                 
-                bool bounds_check_83487 = x_83485 && y_83486;
+                bool bounds_check_82706 = x_82704 && y_82705;
                 
-                // futhark/microgpt.fut:154:51-83
+                // futhark/microgpt.fut:160:51-83
                 
-                bool index_certs_83488;
+                bool index_certs_82707;
                 
-                if (!bounds_check_83487) {
-                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_83484, "] out of bounds for array of shape [", (long long) (int64_t) 16, "].", "-> #0  futhark/microgpt.fut:154:51-83\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:15:29-44\n   #6  futhark/microgpt.fut:4:11-25\n   #7  futhark/microgpt.fut:15:15-45\n   #8  futhark/microgpt.fut:154:15-84\n   #9  futhark/microgpt.fut:381:7-72\n"));
+                if (!bounds_check_82706) {
+                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_82703, "] out of bounds for array of shape [", (long long) (int64_t) 16, "].", "-> #0  futhark/microgpt.fut:160:51-83\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:15:29-44\n   #6  futhark/microgpt.fut:4:11-25\n   #7  futhark/microgpt.fut:15:15-45\n   #8  futhark/microgpt.fut:160:15-84\n   #9  futhark/microgpt.fut:378:7-72\n"));
                     err = FUTHARK_PROGRAM_ERROR;
                     goto cleanup;
                 }
                 // futhark/microgpt.fut:4:11-25
                 
-                double lifted_lambda_res_83489 = ((double *) mem_87891)[i_87040 * (int64_t) 16 + tmp_83484];
+                double lifted_lambda_res_82708 = ((double *) mem_86928)[i_86075 * (int64_t) 16 + tmp_82703];
                 
                 // futhark/microgpt.fut:4:11-25
                 
-                double lifted_lambda_res_83497 = ((double *) mem_87890)[i_87040 * (int64_t) 16 + tmp_83484];
+                double lifted_lambda_res_82716 = ((double *) mem_86927)[i_86075 * (int64_t) 16 + tmp_82703];
                 
                 // futhark/microgpt.fut:4:11-25
                 
-                double lifted_lambda_res_83508 = ((double *) mem_87889)[i_87040 * (int64_t) 16 + tmp_83484];
+                double lifted_lambda_res_82727 = ((double *) mem_86926)[i_86075 * (int64_t) 16 + tmp_82703];
                 
-                ((double *) mem_87970)[i_87030] = lifted_lambda_res_83508;
-                ((double *) mem_87971)[i_87030] = lifted_lambda_res_83497;
-                ((double *) mem_87972)[i_87030] = lifted_lambda_res_83489;
+                ((double *) mem_87007)[i_86065] = lifted_lambda_res_82727;
+                ((double *) mem_87008)[i_86065] = lifted_lambda_res_82716;
+                ((double *) mem_87009)[i_86065] = lifted_lambda_res_82708;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87955, i_87040 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87970, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87956, i_87040 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87971, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87957, i_87040 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87972, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_86992, i_86075 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87007, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_86993, i_86075 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87008, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_86994, i_86075 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87009, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
         }
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_87937, i_87050 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_87955, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_87938, i_87050 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_87956, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_87939, i_87050 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_87957, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_86974, i_86085 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_86992, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_86975, i_86085 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_86993, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_86976, i_86085 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_86994, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88018_cached_sizze_89896 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88018, &mem_88018_cached_sizze_89896, (int64_t) 2048);
+    if (mem_87055_cached_sizze_88959 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87055, &mem_87055_cached_sizze_88959, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88024_cached_sizze_89897 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88024, &mem_88024_cached_sizze_89897, (int64_t) 2048);
+    if (mem_87061_cached_sizze_88960 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87061, &mem_87061_cached_sizze_88960, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88029_cached_sizze_89898 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88029, &mem_88029_cached_sizze_89898, (int64_t) 128);
+    if (mem_87066_cached_sizze_88961 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87066, &mem_87066_cached_sizze_88961, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88040_cached_sizze_89899 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88040, &mem_88040_cached_sizze_89899, (int64_t) 2048);
+    if (mem_87077_cached_sizze_88962 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87077, &mem_87077_cached_sizze_88962, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88045_cached_sizze_89900 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88045, &mem_88045_cached_sizze_89900, (int64_t) 128);
+    if (mem_87082_cached_sizze_88963 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87082, &mem_87082_cached_sizze_88963, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88056_cached_sizze_89901 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88056, &mem_88056_cached_sizze_89901, (int64_t) 2048);
+    if (mem_87093_cached_sizze_88964 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87093, &mem_87093_cached_sizze_88964, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88061_cached_sizze_89902 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88061, &mem_88061_cached_sizze_89902, (int64_t) 128);
+    if (mem_87098_cached_sizze_88965 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87098, &mem_87098_cached_sizze_88965, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88068_cached_sizze_89903 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88068, &mem_88068_cached_sizze_89903, (int64_t) 128);
+    if (mem_87105_cached_sizze_88966 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87105, &mem_87105_cached_sizze_88966, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88079_cached_sizze_89904 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88079, &mem_88079_cached_sizze_89904, (int64_t) 512);
+    if (mem_87116_cached_sizze_88967 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_87116, &mem_87116_cached_sizze_88967, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88084_cached_sizze_89905 < (int64_t) 32) {
-        err = lexical_realloc(ctx, &mem_88084, &mem_88084_cached_sizze_89905, (int64_t) 32);
+    if (mem_87121_cached_sizze_88968 < (int64_t) 32) {
+        err = lexical_realloc(ctx, &mem_87121, &mem_87121_cached_sizze_88968, (int64_t) 32);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_87094 = 0; i_87094 < (int64_t) 4; i_87094++) {
+    for (int64_t i_86129 = 0; i_86129 < (int64_t) 4; i_86129++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87060 = 0; i_87060 < (int64_t) 16; i_87060++) {
+        for (int64_t i_86095 = 0; i_86095 < (int64_t) 16; i_86095++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87056 = 0; i_87056 < (int64_t) 16; i_87056++) {
+            for (int64_t i_86091 = 0; i_86091 < (int64_t) 16; i_86091++) {
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_77667;
-                double r_77669 = 0.0;
+                double defunc_0_lifted_lambda_res_77099;
+                double r_77101 = 0.0;
                 
-                for (int64_t i_77668 = 0; i_77668 < (int64_t) 4; i_77668++) {
+                for (int64_t i_77100 = 0; i_77100 < (int64_t) 4; i_77100++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_77670 = ((double *) mem_87939)[i_87094 * (int64_t) 64 + i_87060 * (int64_t) 4 + i_77668];
+                    double zt_lhs_77102 = ((double *) mem_86976)[i_86129 * (int64_t) 64 + i_86095 * (int64_t) 4 + i_77100];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_77671 = ((double *) mem_87938)[i_87094 * (int64_t) 64 + i_87056 * (int64_t) 4 + i_77668];
+                    double zt_rhs_77103 = ((double *) mem_86975)[i_86129 * (int64_t) 64 + i_86091 * (int64_t) 4 + i_77100];
                     
-                    // futhark/microgpt.fut:157:113-164
+                    // futhark/microgpt.fut:163:113-164
                     
-                    double zt_res_77672 = zt_lhs_77670 * zt_rhs_77671;
+                    double zt_res_77104 = zt_lhs_77102 * zt_rhs_77103;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_77673 = r_77669 + zt_res_77672;
-                    double r_tmp_89574 = zp_res_77673;
+                    double zp_res_77105 = r_77101 + zt_res_77104;
+                    double r_tmp_88642 = zp_res_77105;
                     
-                    r_77669 = r_tmp_89574;
+                    r_77101 = r_tmp_88642;
                 }
-                defunc_0_lifted_lambda_res_77667 = r_77669;
-                ((double *) mem_88029)[i_87056] = defunc_0_lifted_lambda_res_77667;
+                defunc_0_lifted_lambda_res_77099 = r_77101;
+                ((double *) mem_87066)[i_86091] = defunc_0_lifted_lambda_res_77099;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88024, i_87060 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88029, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87061, i_86095 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87066, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87068 = 0; i_87068 < (int64_t) 16; i_87068++) {
+        for (int64_t i_86103 = 0; i_86103 < (int64_t) 16; i_86103++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87064 = 0; i_87064 < (int64_t) 16; i_87064++) {
+            for (int64_t i_86099 = 0; i_86099 < (int64_t) 16; i_86099++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double zs_lhs_77688 = ((double *) mem_88024)[i_87068 * (int64_t) 16 + i_87064];
+                double zs_lhs_77120 = ((double *) mem_87061)[i_86103 * (int64_t) 16 + i_86099];
                 
-                // futhark/microgpt.fut:158:47-78
+                // futhark/microgpt.fut:164:47-78
                 
-                double zs_res_77689 = zs_lhs_77688 / 2.0;
+                double zs_res_77121 = zs_lhs_77120 / 2.0;
                 
                 // futhark/microgpt.fut:4:11-25
                 
-                double zp_rhs_77690 = ((double *) mask_mem_87810.mem)[i_87068 * (int64_t) 16 + i_87064];
+                double zp_rhs_77122 = ((double *) mask_mem_86847.mem)[i_86103 * (int64_t) 16 + i_86099];
                 
-                // futhark/microgpt.fut:158:65-102
+                // futhark/microgpt.fut:164:65-102
                 
-                double zp_res_77691 = zs_res_77689 + zp_rhs_77690;
+                double zp_res_77123 = zs_res_77121 + zp_rhs_77122;
                 
-                ((double *) mem_88045)[i_87064] = zp_res_77691;
+                ((double *) mem_87082)[i_86099] = zp_res_77123;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88040, i_87068 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88045, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87077, i_86103 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87082, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87082 = 0; i_87082 < (int64_t) 16; i_87082++) {
-            // futhark/microgpt.fut:115:13-33
+        for (int64_t i_86117 = 0; i_86117 < (int64_t) 16; i_86117++) {
+            // futhark/microgpt.fut:103:13-33
             
-            double defunc_0_reduce_res_83581;
-            double redout_87070 = -INFINITY;
+            double defunc_0_reduce_res_82800;
+            double redout_86105 = -INFINITY;
             
-            for (int64_t i_87071 = 0; i_87071 < (int64_t) 16; i_87071++) {
+            for (int64_t i_86106 = 0; i_86106 < (int64_t) 16; i_86106++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double lifted_lambda_res_83535 = ((double *) mem_88040)[i_87082 * (int64_t) 16 + i_87071];
+                double lifted_lambda_res_82754 = ((double *) mem_87077)[i_86117 * (int64_t) 16 + i_86106];
                 
-                // futhark/microgpt.fut:115:13-33
+                // futhark/microgpt.fut:103:13-33
                 
-                double max_res_77712 = fmax64(lifted_lambda_res_83535, redout_87070);
-                double redout_tmp_89578 = max_res_77712;
+                double max_res_77144 = fmax64(lifted_lambda_res_82754, redout_86105);
+                double redout_tmp_88646 = max_res_77144;
                 
-                redout_87070 = redout_tmp_89578;
+                redout_86105 = redout_tmp_88646;
             }
-            defunc_0_reduce_res_83581 = redout_87070;
-            // futhark/microgpt.fut:160:65-74
+            defunc_0_reduce_res_82800 = redout_86105;
+            // futhark/microgpt.fut:166:65-74
             
-            double neg_res_77713 = -defunc_0_reduce_res_83581;
+            double neg_res_77145 = -defunc_0_reduce_res_82800;
             
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87074 = 0; i_87074 < (int64_t) 16; i_87074++) {
+            for (int64_t i_86109 = 0; i_86109 < (int64_t) 16; i_86109++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double zp_lhs_77720 = ((double *) mem_88040)[i_87082 * (int64_t) 16 + i_87074];
+                double zp_lhs_77152 = ((double *) mem_87077)[i_86117 * (int64_t) 16 + i_86109];
                 
-                // futhark/microgpt.fut:160:43-74
+                // futhark/microgpt.fut:166:43-74
                 
-                double zp_res_77721 = neg_res_77713 + zp_lhs_77720;
+                double zp_res_77153 = neg_res_77145 + zp_lhs_77152;
                 
-                // futhark/microgpt.fut:160:36-74
+                // futhark/microgpt.fut:166:36-74
                 
-                double exp_res_77722 = futrts_exp64(zp_res_77721);
+                double exp_res_77154 = futrts_exp64(zp_res_77153);
                 
-                ((double *) mem_88061)[i_87074] = exp_res_77722;
+                ((double *) mem_87098)[i_86109] = exp_res_77154;
             }
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_77724;
-            double r_77726 = 0.0;
+            double defunc_0_lifted_lambda_res_77156;
+            double r_77158 = 0.0;
             
-            for (int64_t i_77725 = 0; i_77725 < (int64_t) 16; i_77725++) {
-                // futhark/microgpt.fut:161:36-46
+            for (int64_t i_77157 = 0; i_77157 < (int64_t) 16; i_77157++) {
+                // futhark/microgpt.fut:167:36-46
                 
-                double lifted_lambda_res_77727 = ((double *) mem_88061)[i_77725];
+                double lifted_lambda_res_77159 = ((double *) mem_87098)[i_77157];
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_77728 = r_77726 + lifted_lambda_res_77727;
-                double r_tmp_89580 = zp_res_77728;
+                double zp_res_77160 = r_77158 + lifted_lambda_res_77159;
+                double r_tmp_88648 = zp_res_77160;
                 
-                r_77726 = r_tmp_89580;
+                r_77158 = r_tmp_88648;
             }
-            defunc_0_lifted_lambda_res_77724 = r_77726;
+            defunc_0_lifted_lambda_res_77156 = r_77158;
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87078 = 0; i_87078 < (int64_t) 16; i_87078++) {
-                // futhark/microgpt.fut:162:5-15
+            for (int64_t i_86113 = 0; i_86113 < (int64_t) 16; i_86113++) {
+                // futhark/microgpt.fut:168:5-15
                 
-                double zs_lhs_77735 = ((double *) mem_88061)[i_87078];
+                double zs_lhs_77167 = ((double *) mem_87098)[i_86113];
                 
-                // futhark/microgpt.fut:162:5-23
+                // futhark/microgpt.fut:168:5-23
                 
-                double zs_res_77736 = zs_lhs_77735 / defunc_0_lifted_lambda_res_77724;
+                double zs_res_77168 = zs_lhs_77167 / defunc_0_lifted_lambda_res_77156;
                 
-                ((double *) mem_88068)[i_87078] = zs_res_77736;
+                ((double *) mem_87105)[i_86113] = zs_res_77168;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88056, i_87082 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88068, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87093, i_86117 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87105, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87090 = 0; i_87090 < (int64_t) 16; i_87090++) {
+        for (int64_t i_86125 = 0; i_86125 < (int64_t) 16; i_86125++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87086 = 0; i_87086 < (int64_t) 4; i_87086++) {
+            for (int64_t i_86121 = 0; i_86121 < (int64_t) 4; i_86121++) {
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_77751;
-                double r_77753 = 0.0;
+                double defunc_0_lifted_lambda_res_77183;
+                double r_77185 = 0.0;
                 
-                for (int64_t i_77752 = 0; i_77752 < (int64_t) 16; i_77752++) {
+                for (int64_t i_77184 = 0; i_77184 < (int64_t) 16; i_77184++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_77754 = ((double *) mem_88056)[i_87090 * (int64_t) 16 + i_77752];
+                    double zt_lhs_77186 = ((double *) mem_87093)[i_86125 * (int64_t) 16 + i_77184];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_77755 = ((double *) mem_87937)[i_87094 * (int64_t) 64 + i_77752 * (int64_t) 4 + i_87086];
+                    double zt_rhs_77187 = ((double *) mem_86974)[i_86129 * (int64_t) 64 + i_77184 * (int64_t) 4 + i_86121];
                     
-                    // futhark/microgpt.fut:163:26-71
+                    // futhark/microgpt.fut:169:26-71
                     
-                    double zt_res_77756 = zt_lhs_77754 * zt_rhs_77755;
+                    double zt_res_77188 = zt_lhs_77186 * zt_rhs_77187;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_77757 = r_77753 + zt_res_77756;
-                    double r_tmp_89584 = zp_res_77757;
+                    double zp_res_77189 = r_77185 + zt_res_77188;
+                    double r_tmp_88652 = zp_res_77189;
                     
-                    r_77753 = r_tmp_89584;
+                    r_77185 = r_tmp_88652;
                 }
-                defunc_0_lifted_lambda_res_77751 = r_77753;
-                ((double *) mem_88084)[i_87086] = defunc_0_lifted_lambda_res_77751;
+                defunc_0_lifted_lambda_res_77183 = r_77185;
+                ((double *) mem_87121)[i_86121] = defunc_0_lifted_lambda_res_77183;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88079, i_87090 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88084, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87116, i_86125 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87121, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
         }
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88018, i_87094 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_88079, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_87055, i_86129 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_87116, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88100_cached_sizze_89906 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88100, &mem_88100_cached_sizze_89906, (int64_t) 2048);
+    if (mem_87137_cached_sizze_88969 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87137, &mem_87137_cached_sizze_88969, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88105_cached_sizze_89907 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88105, &mem_88105_cached_sizze_89907, (int64_t) 128);
+    if (mem_87142_cached_sizze_88970 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87142, &mem_87142_cached_sizze_88970, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_87102 = 0; i_87102 < (int64_t) 16; i_87102++) {
+    for (int64_t i_86137 = 0; i_86137 < (int64_t) 16; i_86137++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87098 = 0; i_87098 < (int64_t) 16; i_87098++) {
-            // futhark/microgpt.fut:164:55-58
+        for (int64_t i_86133 = 0; i_86133 < (int64_t) 16; i_86133++) {
+            // futhark/microgpt.fut:170:55-58
             
-            int64_t tmp_77769 = sdiv64(i_87098, (int64_t) 4);
+            int64_t tmp_77201 = sdiv64(i_86133, (int64_t) 4);
             
-            // futhark/microgpt.fut:164:45-60
+            // futhark/microgpt.fut:170:45-60
             
-            bool x_77770 = sle64((int64_t) 0, tmp_77769);
+            bool x_77202 = sle64((int64_t) 0, tmp_77201);
             
-            // futhark/microgpt.fut:164:45-60
+            // futhark/microgpt.fut:170:45-60
             
-            bool y_77771 = slt64(tmp_77769, (int64_t) 4);
+            bool y_77203 = slt64(tmp_77201, (int64_t) 4);
             
-            // futhark/microgpt.fut:164:45-60
+            // futhark/microgpt.fut:170:45-60
             
-            bool bounds_check_77772 = x_77770 && y_77771;
+            bool bounds_check_77204 = x_77202 && y_77203;
             
-            // futhark/microgpt.fut:164:45-60
+            // futhark/microgpt.fut:170:45-60
             
-            bool index_certs_77773;
+            bool index_certs_77205;
             
-            if (!bounds_check_77772) {
-                set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_77769, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:164:45-60\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:164:16-81\n   #6  futhark/microgpt.fut:381:7-72\n"));
+            if (!bounds_check_77204) {
+                set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_77201, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:170:45-60\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:170:16-81\n   #6  futhark/microgpt.fut:378:7-72\n"));
                 err = FUTHARK_PROGRAM_ERROR;
                 goto cleanup;
             }
-            // futhark/microgpt.fut:164:75-78
+            // futhark/microgpt.fut:170:75-78
             
-            int64_t tmp_77774 = smod64(i_87098, (int64_t) 4);
+            int64_t tmp_77206 = smod64(i_86133, (int64_t) 4);
             
-            // futhark/microgpt.fut:164:45-80
+            // futhark/microgpt.fut:170:45-80
             
-            bool x_77775 = sle64((int64_t) 0, tmp_77774);
+            bool x_77207 = sle64((int64_t) 0, tmp_77206);
             
-            // futhark/microgpt.fut:164:45-80
+            // futhark/microgpt.fut:170:45-80
             
-            bool y_77776 = slt64(tmp_77774, (int64_t) 4);
+            bool y_77208 = slt64(tmp_77206, (int64_t) 4);
             
-            // futhark/microgpt.fut:164:45-80
+            // futhark/microgpt.fut:170:45-80
             
-            bool bounds_check_77777 = x_77775 && y_77776;
+            bool bounds_check_77209 = x_77207 && y_77208;
             
-            // futhark/microgpt.fut:164:45-80
+            // futhark/microgpt.fut:170:45-80
             
-            bool index_certs_77778;
+            bool index_certs_77210;
             
-            if (!bounds_check_77777) {
-                set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_77774, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:164:45-80\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:164:16-81\n   #6  futhark/microgpt.fut:381:7-72\n"));
+            if (!bounds_check_77209) {
+                set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_77206, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:170:45-80\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:170:16-81\n   #6  futhark/microgpt.fut:378:7-72\n"));
                 err = FUTHARK_PROGRAM_ERROR;
                 goto cleanup;
             }
             // futhark/microgpt.fut:4:11-25
             
-            double lifted_lambda_res_77779 = ((double *) mem_88018)[tmp_77769 * (int64_t) 64 + i_87102 * (int64_t) 4 + tmp_77774];
+            double lifted_lambda_res_77211 = ((double *) mem_87055)[tmp_77201 * (int64_t) 64 + i_86137 * (int64_t) 4 + tmp_77206];
             
-            ((double *) mem_88105)[i_87098] = lifted_lambda_res_77779;
+            ((double *) mem_87142)[i_86133] = lifted_lambda_res_77211;
         }
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_88100, i_87102 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88105, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87137, i_86137 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87142, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88116_cached_sizze_89908 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88116, &mem_88116_cached_sizze_89908, (int64_t) 2048);
+    if (mem_87153_cached_sizze_88971 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87153, &mem_87153_cached_sizze_88971, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88121_cached_sizze_89909 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88121, &mem_88121_cached_sizze_89909, (int64_t) 128);
+    if (mem_87158_cached_sizze_88972 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87158, &mem_87158_cached_sizze_88972, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_87110 = 0; i_87110 < (int64_t) 16; i_87110++) {
+    for (int64_t i_86145 = 0; i_86145 < (int64_t) 16; i_86145++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87106 = 0; i_87106 < (int64_t) 16; i_87106++) {
+        for (int64_t i_86141 = 0; i_86141 < (int64_t) 16; i_86141++) {
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_77794;
-            double r_77796 = 0.0;
+            double defunc_0_lifted_lambda_res_77226;
+            double r_77228 = 0.0;
             
-            for (int64_t i_77795 = 0; i_77795 < (int64_t) 16; i_77795++) {
+            for (int64_t i_77227 = 0; i_77227 < (int64_t) 16; i_77227++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_lhs_77797 = ((double *) wout_mem_87802.mem)[i_87106 * (int64_t) 16 + i_77795];
+                double zt_lhs_77229 = ((double *) wout_mem_86839.mem)[i_86141 * (int64_t) 16 + i_77227];
                 
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_rhs_77798 = ((double *) mem_88100)[i_87110 * (int64_t) 16 + i_77795];
+                double zt_rhs_77230 = ((double *) mem_87137)[i_86145 * (int64_t) 16 + i_77227];
                 
-                // futhark/microgpt.fut:165:67-107
+                // futhark/microgpt.fut:171:67-107
                 
-                double zt_res_77799 = zt_lhs_77797 * zt_rhs_77798;
+                double zt_res_77231 = zt_lhs_77229 * zt_rhs_77230;
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_77800 = r_77796 + zt_res_77799;
-                double r_tmp_89589 = zp_res_77800;
+                double zp_res_77232 = r_77228 + zt_res_77231;
+                double r_tmp_88657 = zp_res_77232;
                 
-                r_77796 = r_tmp_89589;
+                r_77228 = r_tmp_88657;
             }
-            defunc_0_lifted_lambda_res_77794 = r_77796;
-            ((double *) mem_88121)[i_87106] = defunc_0_lifted_lambda_res_77794;
+            defunc_0_lifted_lambda_res_77226 = r_77228;
+            ((double *) mem_87158)[i_86141] = defunc_0_lifted_lambda_res_77226;
         }
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_88116, i_87110 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88121, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87153, i_86145 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87158, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88132_cached_sizze_89910 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88132, &mem_88132_cached_sizze_89910, (int64_t) 2048);
+    if (mem_87169_cached_sizze_88973 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87169, &mem_87169_cached_sizze_88973, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88137_cached_sizze_89911 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88137, &mem_88137_cached_sizze_89911, (int64_t) 128);
+    if (mem_87174_cached_sizze_88974 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87174, &mem_87174_cached_sizze_88974, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_87118 = 0; i_87118 < (int64_t) 16; i_87118++) {
+    for (int64_t i_86153 = 0; i_86153 < (int64_t) 16; i_86153++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87114 = 0; i_87114 < (int64_t) 16; i_87114++) {
+        for (int64_t i_86149 = 0; i_86149 < (int64_t) 16; i_86149++) {
             // futhark/microgpt.fut:4:11-25
             
-            double zp_lhs_77815 = ((double *) mem_88116)[i_87118 * (int64_t) 16 + i_87114];
+            double zp_lhs_77247 = ((double *) mem_87153)[i_86153 * (int64_t) 16 + i_86149];
             
             // futhark/microgpt.fut:4:11-25
             
-            double zp_rhs_77816 = ((double *) mem_87843)[i_87118 * (int64_t) 16 + i_87114];
+            double zp_rhs_77248 = ((double *) mem_86880)[i_86153 * (int64_t) 16 + i_86149];
             
-            // futhark/microgpt.fut:166:46-84
+            // futhark/microgpt.fut:172:46-84
             
-            double zp_res_77817 = zp_lhs_77815 + zp_rhs_77816;
+            double zp_res_77249 = zp_lhs_77247 + zp_rhs_77248;
             
-            ((double *) mem_88137)[i_87114] = zp_res_77817;
+            ((double *) mem_87174)[i_86149] = zp_res_77249;
         }
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_88132, i_87118 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88137, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87169, i_86153 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87174, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88148_cached_sizze_89912 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88148, &mem_88148_cached_sizze_89912, (int64_t) 2048);
+    if (mem_87185_cached_sizze_88975 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87185, &mem_87185_cached_sizze_88975, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88153_cached_sizze_89913 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88153, &mem_88153_cached_sizze_89913, (int64_t) 128);
+    if (mem_87190_cached_sizze_88976 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87190, &mem_87190_cached_sizze_88976, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88160_cached_sizze_89914 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88160, &mem_88160_cached_sizze_89914, (int64_t) 128);
+    if (mem_87197_cached_sizze_88977 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87197, &mem_87197_cached_sizze_88977, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_87130 = 0; i_87130 < (int64_t) 16; i_87130++) {
+    for (int64_t i_86165 = 0; i_86165 < (int64_t) 16; i_86165++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87122 = 0; i_87122 < (int64_t) 16; i_87122++) {
+        for (int64_t i_86157 = 0; i_86157 < (int64_t) 16; i_86157++) {
             // futhark/microgpt.fut:4:11-25
             
-            double zt_lhs_77832 = ((double *) mem_88132)[i_87130 * (int64_t) 16 + i_87122];
+            double zt_lhs_77264 = ((double *) mem_87169)[i_86165 * (int64_t) 16 + i_86157];
             
-            // futhark/microgpt.fut:167:78-117
+            // futhark/microgpt.fut:173:78-117
             
-            double zt_res_77833 = zt_lhs_77832 * zt_lhs_77832;
+            double zt_res_77265 = zt_lhs_77264 * zt_lhs_77264;
             
-            ((double *) mem_88153)[i_87122] = zt_res_77833;
+            ((double *) mem_87190)[i_86157] = zt_res_77265;
         }
         // futhark/microgpt.fut:71:13-49
         
-        double defunc_0_lifted_lambda_res_77835;
-        double r_77837 = 0.0;
+        double defunc_0_lifted_lambda_res_77267;
+        double r_77269 = 0.0;
         
-        for (int64_t i_77836 = 0; i_77836 < (int64_t) 16; i_77836++) {
-            // futhark/microgpt.fut:168:37-47
+        for (int64_t i_77268 = 0; i_77268 < (int64_t) 16; i_77268++) {
+            // futhark/microgpt.fut:174:37-47
             
-            double lifted_lambda_res_77838 = ((double *) mem_88153)[i_77836];
+            double lifted_lambda_res_77270 = ((double *) mem_87190)[i_77268];
             
             // futhark/microgpt.fut:71:40-49
             
-            double zp_res_77839 = r_77837 + lifted_lambda_res_77838;
-            double r_tmp_89594 = zp_res_77839;
+            double zp_res_77271 = r_77269 + lifted_lambda_res_77270;
+            double r_tmp_88662 = zp_res_77271;
             
-            r_77837 = r_tmp_89594;
+            r_77269 = r_tmp_88662;
         }
-        defunc_0_lifted_lambda_res_77835 = r_77837;
-        // futhark/microgpt.fut:168:17-64
+        defunc_0_lifted_lambda_res_77267 = r_77269;
+        // futhark/microgpt.fut:174:17-64
         
-        double zs_res_77840 = defunc_0_lifted_lambda_res_77835 / 16.0;
+        double zs_res_77272 = defunc_0_lifted_lambda_res_77267 / 16.0;
         
-        // futhark/microgpt.fut:169:24-55
+        // futhark/microgpt.fut:175:24-55
         
-        double zp_res_77841 = 1.0e-5 + zs_res_77840;
+        double zp_res_77273 = 1.0e-5 + zs_res_77272;
         
-        // futhark/microgpt.fut:169:16-55
+        // futhark/microgpt.fut:175:16-55
         
-        double sqrt_res_77842 = futrts_sqrt64(zp_res_77841);
+        double sqrt_res_77274 = futrts_sqrt64(zp_res_77273);
         
-        // futhark/microgpt.fut:170:28-39
+        // futhark/microgpt.fut:176:28-39
         
-        double zs_res_77843 = 1.0 / sqrt_res_77842;
+        double zs_res_77275 = 1.0 / sqrt_res_77274;
         
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87126 = 0; i_87126 < (int64_t) 16; i_87126++) {
+        for (int64_t i_86161 = 0; i_86161 < (int64_t) 16; i_86161++) {
             // futhark/microgpt.fut:4:11-25
             
-            double zt_lhs_77850 = ((double *) mem_88132)[i_87130 * (int64_t) 16 + i_87126];
+            double zt_lhs_77282 = ((double *) mem_87169)[i_86165 * (int64_t) 16 + i_86161];
             
-            // futhark/microgpt.fut:170:5-39
+            // futhark/microgpt.fut:176:5-39
             
-            double zt_res_77851 = zs_res_77843 * zt_lhs_77850;
+            double zt_res_77283 = zs_res_77275 * zt_lhs_77282;
             
-            ((double *) mem_88160)[i_87126] = zt_res_77851;
+            ((double *) mem_87197)[i_86161] = zt_res_77283;
         }
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_88148, i_87130 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88160, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87185, i_86165 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87197, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88171_cached_sizze_89915 < (int64_t) 8192) {
-        err = lexical_realloc(ctx, &mem_88171, &mem_88171_cached_sizze_89915, (int64_t) 8192);
+    if (mem_87208_cached_sizze_88978 < (int64_t) 8192) {
+        err = lexical_realloc(ctx, &mem_87208, &mem_87208_cached_sizze_88978, (int64_t) 8192);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88176_cached_sizze_89916 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88176, &mem_88176_cached_sizze_89916, (int64_t) 512);
+    if (mem_87213_cached_sizze_88979 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_87213, &mem_87213_cached_sizze_88979, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_87138 = 0; i_87138 < (int64_t) 16; i_87138++) {
+    for (int64_t i_86173 = 0; i_86173 < (int64_t) 16; i_86173++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87134 = 0; i_87134 < (int64_t) 64; i_87134++) {
+        for (int64_t i_86169 = 0; i_86169 < (int64_t) 64; i_86169++) {
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_77867;
-            double r_77869 = 0.0;
+            double defunc_0_lifted_lambda_res_77299;
+            double r_77301 = 0.0;
             
-            for (int64_t i_77868 = 0; i_77868 < (int64_t) 16; i_77868++) {
+            for (int64_t i_77300 = 0; i_77300 < (int64_t) 16; i_77300++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_lhs_77870 = ((double *) wup_mem_87806.mem)[i_87134 * (int64_t) 16 + i_77868];
+                double zt_lhs_77302 = ((double *) wup_mem_86843.mem)[i_86169 * (int64_t) 16 + i_77300];
                 
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_rhs_77871 = ((double *) mem_88148)[i_87138 * (int64_t) 16 + i_77868];
+                double zt_rhs_77303 = ((double *) mem_87185)[i_86173 * (int64_t) 16 + i_77300];
                 
-                // futhark/microgpt.fut:171:67-106
+                // futhark/microgpt.fut:177:67-106
                 
-                double zt_res_77872 = zt_lhs_77870 * zt_rhs_77871;
+                double zt_res_77304 = zt_lhs_77302 * zt_rhs_77303;
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_77873 = r_77869 + zt_res_77872;
-                double r_tmp_89598 = zp_res_77873;
+                double zp_res_77305 = r_77301 + zt_res_77304;
+                double r_tmp_88666 = zp_res_77305;
                 
-                r_77869 = r_tmp_89598;
+                r_77301 = r_tmp_88666;
             }
-            defunc_0_lifted_lambda_res_77867 = r_77869;
-            ((double *) mem_88176)[i_87134] = defunc_0_lifted_lambda_res_77867;
+            defunc_0_lifted_lambda_res_77299 = r_77301;
+            ((double *) mem_87213)[i_86169] = defunc_0_lifted_lambda_res_77299;
         }
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_88171, i_87138 * (int64_t) 64, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88176, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 64});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87208, i_86173 * (int64_t) 64, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87213, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 64});
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88187_cached_sizze_89917 < (int64_t) 8192) {
-        err = lexical_realloc(ctx, &mem_88187, &mem_88187_cached_sizze_89917, (int64_t) 8192);
+    if (mem_87224_cached_sizze_88980 < (int64_t) 8192) {
+        err = lexical_realloc(ctx, &mem_87224, &mem_87224_cached_sizze_88980, (int64_t) 8192);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88192_cached_sizze_89918 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88192, &mem_88192_cached_sizze_89918, (int64_t) 512);
+    if (mem_87229_cached_sizze_88981 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_87229, &mem_87229_cached_sizze_88981, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_87146 = 0; i_87146 < (int64_t) 16; i_87146++) {
+    for (int64_t i_86181 = 0; i_86181 < (int64_t) 16; i_86181++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87142 = 0; i_87142 < (int64_t) 64; i_87142++) {
+        for (int64_t i_86177 = 0; i_86177 < (int64_t) 64; i_86177++) {
             // futhark/microgpt.fut:4:11-25
             
-            double max_arg0_77888 = ((double *) mem_88171)[i_87146 * (int64_t) 64 + i_87142];
+            double max_arg0_77320 = ((double *) mem_87208)[i_86181 * (int64_t) 64 + i_86177];
             
-            // futhark/microgpt.fut:172:45-73
+            // futhark/microgpt.fut:178:45-73
             
-            double max_res_77889 = fmax64(0.0, max_arg0_77888);
+            double max_res_77321 = fmax64(0.0, max_arg0_77320);
             
-            ((double *) mem_88192)[i_87142] = max_res_77889;
+            ((double *) mem_87229)[i_86177] = max_res_77321;
         }
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_88187, i_87146 * (int64_t) 64, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88192, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 64});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87224, i_86181 * (int64_t) 64, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87229, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 64});
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88203_cached_sizze_89919 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88203, &mem_88203_cached_sizze_89919, (int64_t) 2048);
+    if (mem_87240_cached_sizze_88982 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87240, &mem_87240_cached_sizze_88982, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88208_cached_sizze_89920 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88208, &mem_88208_cached_sizze_89920, (int64_t) 128);
+    if (mem_87245_cached_sizze_88983 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87245, &mem_87245_cached_sizze_88983, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_87154 = 0; i_87154 < (int64_t) 16; i_87154++) {
+    for (int64_t i_86189 = 0; i_86189 < (int64_t) 16; i_86189++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87150 = 0; i_87150 < (int64_t) 16; i_87150++) {
+        for (int64_t i_86185 = 0; i_86185 < (int64_t) 16; i_86185++) {
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_77904;
-            double r_77906 = 0.0;
+            double defunc_0_lifted_lambda_res_77336;
+            double r_77338 = 0.0;
             
-            for (int64_t i_77905 = 0; i_77905 < (int64_t) 64; i_77905++) {
+            for (int64_t i_77337 = 0; i_77337 < (int64_t) 64; i_77337++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_lhs_77907 = ((double *) wdown_mem_87800.mem)[i_87150 * (int64_t) 64 + i_77905];
+                double zt_lhs_77339 = ((double *) wdown_mem_86837.mem)[i_86185 * (int64_t) 64 + i_77337];
                 
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_rhs_77908 = ((double *) mem_88187)[i_87154 * (int64_t) 64 + i_77905];
+                double zt_rhs_77340 = ((double *) mem_87224)[i_86189 * (int64_t) 64 + i_77337];
                 
-                // futhark/microgpt.fut:173:67-108
+                // futhark/microgpt.fut:179:67-108
                 
-                double zt_res_77909 = zt_lhs_77907 * zt_rhs_77908;
+                double zt_res_77341 = zt_lhs_77339 * zt_rhs_77340;
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_77910 = r_77906 + zt_res_77909;
-                double r_tmp_89603 = zp_res_77910;
+                double zp_res_77342 = r_77338 + zt_res_77341;
+                double r_tmp_88671 = zp_res_77342;
                 
-                r_77906 = r_tmp_89603;
+                r_77338 = r_tmp_88671;
             }
-            defunc_0_lifted_lambda_res_77904 = r_77906;
-            ((double *) mem_88208)[i_87150] = defunc_0_lifted_lambda_res_77904;
+            defunc_0_lifted_lambda_res_77336 = r_77338;
+            ((double *) mem_87245)[i_86185] = defunc_0_lifted_lambda_res_77336;
         }
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_88203, i_87154 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88208, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87240, i_86189 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87245, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88219_cached_sizze_89921 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88219, &mem_88219_cached_sizze_89921, (int64_t) 2048);
+    if (mem_87256_cached_sizze_88984 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87256, &mem_87256_cached_sizze_88984, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88224_cached_sizze_89922 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88224, &mem_88224_cached_sizze_89922, (int64_t) 128);
+    if (mem_87261_cached_sizze_88985 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87261, &mem_87261_cached_sizze_88985, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_87162 = 0; i_87162 < (int64_t) 16; i_87162++) {
+    for (int64_t i_86197 = 0; i_86197 < (int64_t) 16; i_86197++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87158 = 0; i_87158 < (int64_t) 16; i_87158++) {
+        for (int64_t i_86193 = 0; i_86193 < (int64_t) 16; i_86193++) {
             // futhark/microgpt.fut:4:11-25
             
-            double zp_lhs_77925 = ((double *) mem_88203)[i_87162 * (int64_t) 16 + i_87158];
+            double zp_lhs_77357 = ((double *) mem_87240)[i_86197 * (int64_t) 16 + i_86193];
             
             // futhark/microgpt.fut:4:11-25
             
-            double zp_rhs_77926 = ((double *) mem_88132)[i_87162 * (int64_t) 16 + i_87158];
+            double zp_rhs_77358 = ((double *) mem_87169)[i_86197 * (int64_t) 16 + i_86193];
             
-            // futhark/microgpt.fut:174:46-85
+            // futhark/microgpt.fut:180:46-85
             
-            double zp_res_77927 = zp_lhs_77925 + zp_rhs_77926;
+            double zp_res_77359 = zp_lhs_77357 + zp_rhs_77358;
             
-            ((double *) mem_88224)[i_87158] = zp_res_77927;
+            ((double *) mem_87261)[i_86193] = zp_res_77359;
         }
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_88219, i_87162 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88224, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87256, i_86197 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87261, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
     }
     // futhark/microgpt.fut:4:11-25
-    if (memblock_alloc(ctx, &mem_88235, (int64_t) 3456, "mem_88235")) {
+    if (memblock_alloc(ctx, &mem_87272, (int64_t) 3456, "mem_87272")) {
         err = 1;
         goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88240_cached_sizze_89923 < (int64_t) 216) {
-        err = lexical_realloc(ctx, &mem_88240, &mem_88240_cached_sizze_89923, (int64_t) 216);
+    if (mem_87277_cached_sizze_88986 < (int64_t) 216) {
+        err = lexical_realloc(ctx, &mem_87277, &mem_87277_cached_sizze_88986, (int64_t) 216);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    for (int64_t i_87170 = 0; i_87170 < (int64_t) 16; i_87170++) {
+    for (int64_t i_86205 = 0; i_86205 < (int64_t) 16; i_86205++) {
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87166 = 0; i_87166 < (int64_t) 27; i_87166++) {
+        for (int64_t i_86201 = 0; i_86201 < (int64_t) 27; i_86201++) {
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_77943;
-            double r_77945 = 0.0;
+            double defunc_0_lifted_lambda_res_77375;
+            double r_77377 = 0.0;
             
-            for (int64_t i_77944 = 0; i_77944 < (int64_t) 16; i_77944++) {
+            for (int64_t i_77376 = 0; i_77376 < (int64_t) 16; i_77376++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_lhs_77946 = ((double *) wvoc_mem_87808.mem)[i_87166 * (int64_t) 16 + i_77944];
+                double zt_lhs_77378 = ((double *) wvoc_mem_86845.mem)[i_86201 * (int64_t) 16 + i_77376];
                 
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_rhs_77947 = ((double *) mem_88219)[i_87170 * (int64_t) 16 + i_77944];
+                double zt_rhs_77379 = ((double *) mem_87256)[i_86205 * (int64_t) 16 + i_77376];
                 
-                // futhark/microgpt.fut:175:56-96
+                // futhark/microgpt.fut:181:56-96
                 
-                double zt_res_77948 = zt_lhs_77946 * zt_rhs_77947;
+                double zt_res_77380 = zt_lhs_77378 * zt_rhs_77379;
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_77949 = r_77945 + zt_res_77948;
-                double r_tmp_89608 = zp_res_77949;
+                double zp_res_77381 = r_77377 + zt_res_77380;
+                double r_tmp_88676 = zp_res_77381;
                 
-                r_77945 = r_tmp_89608;
+                r_77377 = r_tmp_88676;
             }
-            defunc_0_lifted_lambda_res_77943 = r_77945;
-            ((double *) mem_88240)[i_87166] = defunc_0_lifted_lambda_res_77943;
+            defunc_0_lifted_lambda_res_77375 = r_77377;
+            ((double *) mem_87277)[i_86201] = defunc_0_lifted_lambda_res_77375;
         }
-        lmad_copy_8b(ctx, 1, (uint64_t *) mem_88235.mem, i_87170 * (int64_t) 27, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88240, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 27});
+        lmad_copy_8b(ctx, 1, (uint64_t *) mem_87272.mem, i_86205 * (int64_t) 27, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87277, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 27});
     }
-    if (memblock_set(ctx, &mem_out_89540, &mem_88235, "mem_88235") != 0)
+    if (memblock_set(ctx, &mem_out_88608, &mem_87272, "mem_87272") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89870, &mem_out_89540, "mem_out_89540") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88933, &mem_out_88608, "mem_out_88608") != 0)
         return 1;
     
   cleanup:
     {
-        free(mem_87811);
-        free(mem_87816);
-        free(mem_87827);
-        free(mem_87832);
-        free(mem_87843);
-        free(mem_87848);
-        free(mem_87855);
-        free(mem_87866);
-        free(mem_87871);
-        free(mem_87878);
-        free(mem_87889);
-        free(mem_87890);
-        free(mem_87891);
-        free(mem_87904);
-        free(mem_87905);
-        free(mem_87906);
-        free(mem_87937);
-        free(mem_87938);
-        free(mem_87939);
-        free(mem_87955);
-        free(mem_87956);
-        free(mem_87957);
-        free(mem_87970);
-        free(mem_87971);
-        free(mem_87972);
-        free(mem_88018);
-        free(mem_88024);
-        free(mem_88029);
-        free(mem_88040);
-        free(mem_88045);
-        free(mem_88056);
-        free(mem_88061);
-        free(mem_88068);
-        free(mem_88079);
-        free(mem_88084);
-        free(mem_88100);
-        free(mem_88105);
-        free(mem_88116);
-        free(mem_88121);
-        free(mem_88132);
-        free(mem_88137);
-        free(mem_88148);
-        free(mem_88153);
-        free(mem_88160);
-        free(mem_88171);
-        free(mem_88176);
-        free(mem_88187);
-        free(mem_88192);
-        free(mem_88203);
-        free(mem_88208);
-        free(mem_88219);
-        free(mem_88224);
-        free(mem_88240);
-        if (memblock_unref(ctx, &mem_88235, "mem_88235") != 0)
+        free(mem_86848);
+        free(mem_86853);
+        free(mem_86864);
+        free(mem_86869);
+        free(mem_86880);
+        free(mem_86885);
+        free(mem_86892);
+        free(mem_86903);
+        free(mem_86908);
+        free(mem_86915);
+        free(mem_86926);
+        free(mem_86927);
+        free(mem_86928);
+        free(mem_86941);
+        free(mem_86942);
+        free(mem_86943);
+        free(mem_86974);
+        free(mem_86975);
+        free(mem_86976);
+        free(mem_86992);
+        free(mem_86993);
+        free(mem_86994);
+        free(mem_87007);
+        free(mem_87008);
+        free(mem_87009);
+        free(mem_87055);
+        free(mem_87061);
+        free(mem_87066);
+        free(mem_87077);
+        free(mem_87082);
+        free(mem_87093);
+        free(mem_87098);
+        free(mem_87105);
+        free(mem_87116);
+        free(mem_87121);
+        free(mem_87137);
+        free(mem_87142);
+        free(mem_87153);
+        free(mem_87158);
+        free(mem_87169);
+        free(mem_87174);
+        free(mem_87185);
+        free(mem_87190);
+        free(mem_87197);
+        free(mem_87208);
+        free(mem_87213);
+        free(mem_87224);
+        free(mem_87229);
+        free(mem_87240);
+        free(mem_87245);
+        free(mem_87256);
+        free(mem_87261);
+        free(mem_87277);
+        if (memblock_unref(ctx, &mem_87272, "mem_87272") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89540, "mem_out_89540") != 0)
+        if (memblock_unref(ctx, &mem_out_88608, "mem_out_88608") != 0)
             return 1;
     }
     return err;
 }
-FUTHARK_FUN_ATTR int futrts_entry_to_params(struct futhark_context *ctx, struct memblock *mem_out_p_89924, struct memblock *mem_out_p_89925, struct memblock *mem_out_p_89926, struct memblock *mem_out_p_89927, struct memblock *mem_out_p_89928, struct memblock *mem_out_p_89929, struct memblock *mem_out_p_89930, struct memblock *mem_out_p_89931, struct memblock *mem_out_p_89932, struct memblock wte_mem_87800, struct memblock wpe_mem_87801, struct memblock wqry_mem_87802, struct memblock wkey_mem_87803, struct memblock wval_mem_87804, struct memblock wout_mem_87805, struct memblock wup_mem_87806, struct memblock wdown_mem_87807, struct memblock wvoc_mem_87808)
+FUTHARK_FUN_ATTR int futrts_entry_to_params(struct futhark_context *ctx, struct memblock *mem_out_p_88987, struct memblock *mem_out_p_88988, struct memblock *mem_out_p_88989, struct memblock *mem_out_p_88990, struct memblock *mem_out_p_88991, struct memblock *mem_out_p_88992, struct memblock *mem_out_p_88993, struct memblock *mem_out_p_88994, struct memblock *mem_out_p_88995, struct memblock wte_mem_86837, struct memblock wpe_mem_86838, struct memblock wqry_mem_86839, struct memblock wkey_mem_86840, struct memblock wval_mem_86841, struct memblock wout_mem_86842, struct memblock wup_mem_86843, struct memblock wdown_mem_86844, struct memblock wvoc_mem_86845)
 {
     (void) ctx;
     
     int err = 0;
-    struct memblock mem_out_89548;
+    struct memblock mem_out_88616;
     
-    mem_out_89548.references = NULL;
+    mem_out_88616.references = NULL;
     
-    struct memblock mem_out_89547;
+    struct memblock mem_out_88615;
     
-    mem_out_89547.references = NULL;
+    mem_out_88615.references = NULL;
     
-    struct memblock mem_out_89546;
+    struct memblock mem_out_88614;
     
-    mem_out_89546.references = NULL;
+    mem_out_88614.references = NULL;
     
-    struct memblock mem_out_89545;
+    struct memblock mem_out_88613;
     
-    mem_out_89545.references = NULL;
+    mem_out_88613.references = NULL;
     
-    struct memblock mem_out_89544;
+    struct memblock mem_out_88612;
     
-    mem_out_89544.references = NULL;
+    mem_out_88612.references = NULL;
     
-    struct memblock mem_out_89543;
+    struct memblock mem_out_88611;
     
-    mem_out_89543.references = NULL;
+    mem_out_88611.references = NULL;
     
-    struct memblock mem_out_89542;
+    struct memblock mem_out_88610;
     
-    mem_out_89542.references = NULL;
+    mem_out_88610.references = NULL;
     
-    struct memblock mem_out_89541;
+    struct memblock mem_out_88609;
     
-    mem_out_89541.references = NULL;
+    mem_out_88609.references = NULL;
     
-    struct memblock mem_out_89540;
+    struct memblock mem_out_88608;
     
-    mem_out_89540.references = NULL;
+    mem_out_88608.references = NULL;
     
-    struct memblock mem_87791 = ctx->constants->mem_87791;
-    struct memblock mem_87792 = ctx->constants->mem_87792;
-    struct memblock mem_87793 = ctx->constants->mem_87793;
-    struct memblock mem_87794 = ctx->constants->mem_87794;
-    struct memblock mem_87795 = ctx->constants->mem_87795;
-    struct memblock mem_87796 = ctx->constants->mem_87796;
-    struct memblock mem_87797 = ctx->constants->mem_87797;
-    struct memblock mem_87798 = ctx->constants->mem_87798;
-    struct memblock mem_87799 = ctx->constants->mem_87799;
+    struct memblock mem_86828 = ctx->constants->mem_86828;
+    struct memblock mem_86829 = ctx->constants->mem_86829;
+    struct memblock mem_86830 = ctx->constants->mem_86830;
+    struct memblock mem_86831 = ctx->constants->mem_86831;
+    struct memblock mem_86832 = ctx->constants->mem_86832;
+    struct memblock mem_86833 = ctx->constants->mem_86833;
+    struct memblock mem_86834 = ctx->constants->mem_86834;
+    struct memblock mem_86835 = ctx->constants->mem_86835;
+    struct memblock mem_86836 = ctx->constants->mem_86836;
     
-    if (memblock_set(ctx, &mem_out_89540, &wdown_mem_87807, "wdown_mem_87807") != 0)
+    if (memblock_set(ctx, &mem_out_88608, &wdown_mem_86844, "wdown_mem_86844") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89541, &wkey_mem_87803, "wkey_mem_87803") != 0)
+    if (memblock_set(ctx, &mem_out_88609, &wkey_mem_86840, "wkey_mem_86840") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89542, &wout_mem_87805, "wout_mem_87805") != 0)
+    if (memblock_set(ctx, &mem_out_88610, &wout_mem_86842, "wout_mem_86842") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89543, &wpe_mem_87801, "wpe_mem_87801") != 0)
+    if (memblock_set(ctx, &mem_out_88611, &wpe_mem_86838, "wpe_mem_86838") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89544, &wqry_mem_87802, "wqry_mem_87802") != 0)
+    if (memblock_set(ctx, &mem_out_88612, &wqry_mem_86839, "wqry_mem_86839") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89545, &wte_mem_87800, "wte_mem_87800") != 0)
+    if (memblock_set(ctx, &mem_out_88613, &wte_mem_86837, "wte_mem_86837") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89546, &wup_mem_87806, "wup_mem_87806") != 0)
+    if (memblock_set(ctx, &mem_out_88614, &wup_mem_86843, "wup_mem_86843") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89547, &wval_mem_87804, "wval_mem_87804") != 0)
+    if (memblock_set(ctx, &mem_out_88615, &wval_mem_86841, "wval_mem_86841") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89548, &wvoc_mem_87808, "wvoc_mem_87808") != 0)
+    if (memblock_set(ctx, &mem_out_88616, &wvoc_mem_86845, "wvoc_mem_86845") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89924, &mem_out_89540, "mem_out_89540") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88987, &mem_out_88608, "mem_out_88608") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89925, &mem_out_89541, "mem_out_89541") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88988, &mem_out_88609, "mem_out_88609") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89926, &mem_out_89542, "mem_out_89542") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88989, &mem_out_88610, "mem_out_88610") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89927, &mem_out_89543, "mem_out_89543") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88990, &mem_out_88611, "mem_out_88611") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89928, &mem_out_89544, "mem_out_89544") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88991, &mem_out_88612, "mem_out_88612") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89929, &mem_out_89545, "mem_out_89545") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88992, &mem_out_88613, "mem_out_88613") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89930, &mem_out_89546, "mem_out_89546") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88993, &mem_out_88614, "mem_out_88614") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89931, &mem_out_89547, "mem_out_89547") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88994, &mem_out_88615, "mem_out_88615") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89932, &mem_out_89548, "mem_out_89548") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88995, &mem_out_88616, "mem_out_88616") != 0)
         return 1;
     
   cleanup:
     {
-        if (memblock_unref(ctx, &mem_out_89548, "mem_out_89548") != 0)
+        if (memblock_unref(ctx, &mem_out_88616, "mem_out_88616") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89547, "mem_out_89547") != 0)
+        if (memblock_unref(ctx, &mem_out_88615, "mem_out_88615") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89546, "mem_out_89546") != 0)
+        if (memblock_unref(ctx, &mem_out_88614, "mem_out_88614") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89545, "mem_out_89545") != 0)
+        if (memblock_unref(ctx, &mem_out_88613, "mem_out_88613") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89544, "mem_out_89544") != 0)
+        if (memblock_unref(ctx, &mem_out_88612, "mem_out_88612") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89543, "mem_out_89543") != 0)
+        if (memblock_unref(ctx, &mem_out_88611, "mem_out_88611") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89542, "mem_out_89542") != 0)
+        if (memblock_unref(ctx, &mem_out_88610, "mem_out_88610") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89541, "mem_out_89541") != 0)
+        if (memblock_unref(ctx, &mem_out_88609, "mem_out_88609") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89540, "mem_out_89540") != 0)
+        if (memblock_unref(ctx, &mem_out_88608, "mem_out_88608") != 0)
             return 1;
     }
     return err;
 }
-FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memblock *mem_out_p_89933, struct memblock *mem_out_p_89934, struct memblock *mem_out_p_89935, struct memblock *mem_out_p_89936, struct memblock *mem_out_p_89937, struct memblock *mem_out_p_89938, struct memblock *mem_out_p_89939, struct memblock *mem_out_p_89940, struct memblock *mem_out_p_89941, struct memblock *mem_out_p_89942, struct memblock *mem_out_p_89943, struct memblock *mem_out_p_89944, struct memblock *mem_out_p_89945, struct memblock *mem_out_p_89946, struct memblock *mem_out_p_89947, struct memblock *mem_out_p_89948, struct memblock *mem_out_p_89949, struct memblock *mem_out_p_89950, struct memblock *mem_out_p_89951, struct memblock *mem_out_p_89952, struct memblock *mem_out_p_89953, struct memblock *mem_out_p_89954, struct memblock *mem_out_p_89955, struct memblock *mem_out_p_89956, struct memblock *mem_out_p_89957, struct memblock *mem_out_p_89958, struct memblock *mem_out_p_89959, struct memblock wdown_mem_87800, struct memblock wkey_mem_87801, struct memblock wout_mem_87802, struct memblock wpe_mem_87803, struct memblock wqry_mem_87804, struct memblock wte_mem_87805, struct memblock wup_mem_87806, struct memblock wval_mem_87807, struct memblock wvoc_mem_87808, struct memblock wdown_mem_87809, struct memblock wkey_mem_87810, struct memblock wout_mem_87811, struct memblock wpe_mem_87812, struct memblock wqry_mem_87813, struct memblock wte_mem_87814, struct memblock wup_mem_87815, struct memblock wval_mem_87816, struct memblock wvoc_mem_87817, struct memblock wdown_mem_87818, struct memblock wkey_mem_87819, struct memblock wout_mem_87820, struct memblock wpe_mem_87821, struct memblock wqry_mem_87822, struct memblock wte_mem_87823, struct memblock wup_mem_87824, struct memblock wval_mem_87825, struct memblock wvoc_mem_87826, struct memblock masks_mem_87827, struct memblock dls_mem_87828, struct memblock seqs_mem_87829)
+FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memblock *mem_out_p_88996, struct memblock *mem_out_p_88997, struct memblock *mem_out_p_88998, struct memblock *mem_out_p_88999, struct memblock *mem_out_p_89000, struct memblock *mem_out_p_89001, struct memblock *mem_out_p_89002, struct memblock *mem_out_p_89003, struct memblock *mem_out_p_89004, struct memblock *mem_out_p_89005, struct memblock *mem_out_p_89006, struct memblock *mem_out_p_89007, struct memblock *mem_out_p_89008, struct memblock *mem_out_p_89009, struct memblock *mem_out_p_89010, struct memblock *mem_out_p_89011, struct memblock *mem_out_p_89012, struct memblock *mem_out_p_89013, struct memblock *mem_out_p_89014, struct memblock *mem_out_p_89015, struct memblock *mem_out_p_89016, struct memblock *mem_out_p_89017, struct memblock *mem_out_p_89018, struct memblock *mem_out_p_89019, struct memblock *mem_out_p_89020, struct memblock *mem_out_p_89021, struct memblock *mem_out_p_89022, struct memblock wdown_mem_86837, struct memblock wkey_mem_86838, struct memblock wout_mem_86839, struct memblock wpe_mem_86840, struct memblock wqry_mem_86841, struct memblock wte_mem_86842, struct memblock wup_mem_86843, struct memblock wval_mem_86844, struct memblock wvoc_mem_86845, struct memblock wdown_mem_86846, struct memblock wkey_mem_86847, struct memblock wout_mem_86848, struct memblock wpe_mem_86849, struct memblock wqry_mem_86850, struct memblock wte_mem_86851, struct memblock wup_mem_86852, struct memblock wval_mem_86853, struct memblock wvoc_mem_86854, struct memblock wdown_mem_86855, struct memblock wkey_mem_86856, struct memblock wout_mem_86857, struct memblock wpe_mem_86858, struct memblock wqry_mem_86859, struct memblock wte_mem_86860, struct memblock wup_mem_86861, struct memblock wval_mem_86862, struct memblock wvoc_mem_86863, struct memblock masks_mem_86864, struct memblock dls_mem_86865, struct memblock seqs_mem_86866)
 {
     (void) ctx;
     
     int err = 0;
-    int64_t mem_87938_cached_sizze_89960 = 0;
-    unsigned char *mem_87938 = NULL;
-    int64_t mem_87939_cached_sizze_89961 = 0;
-    unsigned char *mem_87939 = NULL;
-    int64_t mem_87948_cached_sizze_89962 = 0;
-    unsigned char *mem_87948 = NULL;
-    int64_t mem_87955_cached_sizze_89963 = 0;
-    unsigned char *mem_87955 = NULL;
-    int64_t mem_87970_cached_sizze_89964 = 0;
-    unsigned char *mem_87970 = NULL;
-    int64_t mem_87971_cached_sizze_89965 = 0;
-    unsigned char *mem_87971 = NULL;
-    int64_t mem_87980_cached_sizze_89966 = 0;
-    unsigned char *mem_87980 = NULL;
-    int64_t mem_87987_cached_sizze_89967 = 0;
-    unsigned char *mem_87987 = NULL;
-    int64_t mem_88002_cached_sizze_89968 = 0;
+    int64_t mem_86975_cached_sizze_89023 = 0;
+    unsigned char *mem_86975 = NULL;
+    int64_t mem_86976_cached_sizze_89024 = 0;
+    unsigned char *mem_86976 = NULL;
+    int64_t mem_86985_cached_sizze_89025 = 0;
+    unsigned char *mem_86985 = NULL;
+    int64_t mem_86992_cached_sizze_89026 = 0;
+    unsigned char *mem_86992 = NULL;
+    int64_t mem_87007_cached_sizze_89027 = 0;
+    unsigned char *mem_87007 = NULL;
+    int64_t mem_87008_cached_sizze_89028 = 0;
+    unsigned char *mem_87008 = NULL;
+    int64_t mem_87017_cached_sizze_89029 = 0;
+    unsigned char *mem_87017 = NULL;
+    int64_t mem_87024_cached_sizze_89030 = 0;
+    unsigned char *mem_87024 = NULL;
+    int64_t mem_87039_cached_sizze_89031 = 0;
+    unsigned char *mem_87039 = NULL;
+    int64_t mem_87040_cached_sizze_89032 = 0;
+    unsigned char *mem_87040 = NULL;
+    int64_t mem_87049_cached_sizze_89033 = 0;
+    unsigned char *mem_87049 = NULL;
+    int64_t mem_87050_cached_sizze_89034 = 0;
+    unsigned char *mem_87050 = NULL;
+    int64_t mem_87071_cached_sizze_89035 = 0;
+    unsigned char *mem_87071 = NULL;
+    int64_t mem_87072_cached_sizze_89036 = 0;
+    unsigned char *mem_87072 = NULL;
+    int64_t mem_87073_cached_sizze_89037 = 0;
+    unsigned char *mem_87073 = NULL;
+    int64_t mem_87085_cached_sizze_89038 = 0;
+    unsigned char *mem_87085 = NULL;
+    int64_t mem_87086_cached_sizze_89039 = 0;
+    unsigned char *mem_87086 = NULL;
+    int64_t mem_87110_cached_sizze_89040 = 0;
+    unsigned char *mem_87110 = NULL;
+    int64_t mem_87111_cached_sizze_89041 = 0;
+    unsigned char *mem_87111 = NULL;
+    int64_t mem_87112_cached_sizze_89042 = 0;
+    unsigned char *mem_87112 = NULL;
+    int64_t mem_87113_cached_sizze_89043 = 0;
+    unsigned char *mem_87113 = NULL;
+    int64_t mem_87129_cached_sizze_89044 = 0;
+    unsigned char *mem_87129 = NULL;
+    int64_t mem_87130_cached_sizze_89045 = 0;
+    unsigned char *mem_87130 = NULL;
+    int64_t mem_87131_cached_sizze_89046 = 0;
+    unsigned char *mem_87131 = NULL;
+    int64_t mem_87165_cached_sizze_89047 = 0;
+    unsigned char *mem_87165 = NULL;
+    int64_t mem_87166_cached_sizze_89048 = 0;
+    unsigned char *mem_87166 = NULL;
+    int64_t mem_87167_cached_sizze_89049 = 0;
+    unsigned char *mem_87167 = NULL;
+    int64_t mem_87183_cached_sizze_89050 = 0;
+    unsigned char *mem_87183 = NULL;
+    int64_t mem_87184_cached_sizze_89051 = 0;
+    unsigned char *mem_87184 = NULL;
+    int64_t mem_87185_cached_sizze_89052 = 0;
+    unsigned char *mem_87185 = NULL;
+    int64_t mem_87198_cached_sizze_89053 = 0;
+    unsigned char *mem_87198 = NULL;
+    int64_t mem_87199_cached_sizze_89054 = 0;
+    unsigned char *mem_87199 = NULL;
+    int64_t mem_87200_cached_sizze_89055 = 0;
+    unsigned char *mem_87200 = NULL;
+    int64_t mem_87246_cached_sizze_89056 = 0;
+    unsigned char *mem_87246 = NULL;
+    int64_t mem_87247_cached_sizze_89057 = 0;
+    unsigned char *mem_87247 = NULL;
+    int64_t mem_87258_cached_sizze_89058 = 0;
+    unsigned char *mem_87258 = NULL;
+    int64_t mem_87259_cached_sizze_89059 = 0;
+    unsigned char *mem_87259 = NULL;
+    int64_t mem_87268_cached_sizze_89060 = 0;
+    unsigned char *mem_87268 = NULL;
+    int64_t mem_87269_cached_sizze_89061 = 0;
+    unsigned char *mem_87269 = NULL;
+    int64_t mem_87290_cached_sizze_89062 = 0;
+    unsigned char *mem_87290 = NULL;
+    int64_t mem_87295_cached_sizze_89063 = 0;
+    unsigned char *mem_87295 = NULL;
+    int64_t mem_87306_cached_sizze_89064 = 0;
+    unsigned char *mem_87306 = NULL;
+    int64_t mem_87311_cached_sizze_89065 = 0;
+    unsigned char *mem_87311 = NULL;
+    int64_t mem_87318_cached_sizze_89066 = 0;
+    unsigned char *mem_87318 = NULL;
+    int64_t mem_87329_cached_sizze_89067 = 0;
+    unsigned char *mem_87329 = NULL;
+    int64_t mem_87334_cached_sizze_89068 = 0;
+    unsigned char *mem_87334 = NULL;
+    int64_t mem_87355_cached_sizze_89069 = 0;
+    unsigned char *mem_87355 = NULL;
+    int64_t mem_87360_cached_sizze_89070 = 0;
+    unsigned char *mem_87360 = NULL;
+    int64_t mem_87371_cached_sizze_89071 = 0;
+    unsigned char *mem_87371 = NULL;
+    int64_t mem_87376_cached_sizze_89072 = 0;
+    unsigned char *mem_87376 = NULL;
+    int64_t mem_87387_cached_sizze_89073 = 0;
+    unsigned char *mem_87387 = NULL;
+    int64_t mem_87392_cached_sizze_89074 = 0;
+    unsigned char *mem_87392 = NULL;
+    int64_t mem_87403_cached_sizze_89075 = 0;
+    unsigned char *mem_87403 = NULL;
+    int64_t mem_87404_cached_sizze_89076 = 0;
+    unsigned char *mem_87404 = NULL;
+    int64_t mem_87413_cached_sizze_89077 = 0;
+    unsigned char *mem_87413 = NULL;
+    int64_t mem_87414_cached_sizze_89078 = 0;
+    unsigned char *mem_87414 = NULL;
+    int64_t mem_87435_cached_sizze_89079 = 0;
+    unsigned char *mem_87435 = NULL;
+    int64_t mem_87436_cached_sizze_89080 = 0;
+    unsigned char *mem_87436 = NULL;
+    int64_t mem_87444_cached_sizze_89081 = 0;
+    unsigned char *mem_87444 = NULL;
+    int64_t mem_87458_cached_sizze_89082 = 0;
+    unsigned char *mem_87458 = NULL;
+    int64_t mem_87463_cached_sizze_89083 = 0;
+    unsigned char *mem_87463 = NULL;
+    int64_t mem_87474_cached_sizze_89084 = 0;
+    unsigned char *mem_87474 = NULL;
+    int64_t mem_87479_cached_sizze_89085 = 0;
+    unsigned char *mem_87479 = NULL;
+    int64_t mem_87490_cached_sizze_89086 = 0;
+    unsigned char *mem_87490 = NULL;
+    int64_t mem_87495_cached_sizze_89087 = 0;
+    unsigned char *mem_87495 = NULL;
+    int64_t mem_87506_cached_sizze_89088 = 0;
+    unsigned char *mem_87506 = NULL;
+    int64_t mem_87511_cached_sizze_89089 = 0;
+    unsigned char *mem_87511 = NULL;
+    int64_t mem_87522_cached_sizze_89090 = 0;
+    unsigned char *mem_87522 = NULL;
+    int64_t mem_87523_cached_sizze_89091 = 0;
+    unsigned char *mem_87523 = NULL;
+    int64_t mem_87532_cached_sizze_89092 = 0;
+    unsigned char *mem_87532 = NULL;
+    int64_t mem_87533_cached_sizze_89093 = 0;
+    unsigned char *mem_87533 = NULL;
+    int64_t mem_87546_cached_sizze_89094 = 0;
+    unsigned char *mem_87546 = NULL;
+    int64_t mem_87547_cached_sizze_89095 = 0;
+    unsigned char *mem_87547 = NULL;
+    int64_t mem_87568_cached_sizze_89096 = 0;
+    unsigned char *mem_87568 = NULL;
+    int64_t mem_87575_cached_sizze_89097 = 0;
+    unsigned char *mem_87575 = NULL;
+    int64_t mem_87580_cached_sizze_89098 = 0;
+    unsigned char *mem_87580 = NULL;
+    int64_t mem_87591_cached_sizze_89099 = 0;
+    unsigned char *mem_87591 = NULL;
+    int64_t mem_87596_cached_sizze_89100 = 0;
+    unsigned char *mem_87596 = NULL;
+    int64_t mem_87607_cached_sizze_89101 = 0;
+    unsigned char *mem_87607 = NULL;
+    int64_t mem_87608_cached_sizze_89102 = 0;
+    unsigned char *mem_87608 = NULL;
+    int64_t mem_87617_cached_sizze_89103 = 0;
+    unsigned char *mem_87617 = NULL;
+    int64_t mem_87618_cached_sizze_89104 = 0;
+    unsigned char *mem_87618 = NULL;
+    int64_t mem_87639_cached_sizze_89105 = 0;
+    unsigned char *mem_87639 = NULL;
+    int64_t mem_87644_cached_sizze_89106 = 0;
+    unsigned char *mem_87644 = NULL;
+    int64_t mem_87655_cached_sizze_89107 = 0;
+    unsigned char *mem_87655 = NULL;
+    int64_t mem_87660_cached_sizze_89108 = 0;
+    unsigned char *mem_87660 = NULL;
+    int64_t mem_87671_cached_sizze_89109 = 0;
+    unsigned char *mem_87671 = NULL;
+    int64_t mem_87672_cached_sizze_89110 = 0;
+    unsigned char *mem_87672 = NULL;
+    int64_t mem_87685_cached_sizze_89111 = 0;
+    unsigned char *mem_87685 = NULL;
+    int64_t mem_87692_cached_sizze_89112 = 0;
+    unsigned char *mem_87692 = NULL;
+    int64_t mem_87702_cached_sizze_89113 = 0;
+    unsigned char *mem_87702 = NULL;
+    int64_t mem_87707_cached_sizze_89114 = 0;
+    unsigned char *mem_87707 = NULL;
+    int64_t mem_87718_cached_sizze_89115 = 0;
+    unsigned char *mem_87718 = NULL;
+    int64_t mem_87719_cached_sizze_89116 = 0;
+    unsigned char *mem_87719 = NULL;
+    int64_t mem_87728_cached_sizze_89117 = 0;
+    unsigned char *mem_87728 = NULL;
+    int64_t mem_87729_cached_sizze_89118 = 0;
+    unsigned char *mem_87729 = NULL;
+    int64_t mem_87750_cached_sizze_89119 = 0;
+    unsigned char *mem_87750 = NULL;
+    int64_t mem_87751_cached_sizze_89120 = 0;
+    unsigned char *mem_87751 = NULL;
+    int64_t mem_87762_cached_sizze_89121 = 0;
+    unsigned char *mem_87762 = NULL;
+    int64_t mem_87763_cached_sizze_89122 = 0;
+    unsigned char *mem_87763 = NULL;
+    int64_t mem_87772_cached_sizze_89123 = 0;
+    unsigned char *mem_87772 = NULL;
+    int64_t mem_87779_cached_sizze_89124 = 0;
+    unsigned char *mem_87779 = NULL;
+    int64_t mem_87804_cached_sizze_89125 = 0;
+    unsigned char *mem_87804 = NULL;
+    int64_t mem_87805_cached_sizze_89126 = 0;
+    unsigned char *mem_87805 = NULL;
+    int64_t mem_87816_cached_sizze_89127 = 0;
+    unsigned char *mem_87816 = NULL;
+    int64_t mem_87817_cached_sizze_89128 = 0;
+    unsigned char *mem_87817 = NULL;
+    int64_t mem_87826_cached_sizze_89129 = 0;
+    unsigned char *mem_87826 = NULL;
+    int64_t mem_87833_cached_sizze_89130 = 0;
+    unsigned char *mem_87833 = NULL;
+    int64_t mem_87840_cached_sizze_89131 = 0;
+    unsigned char *mem_87840 = NULL;
+    int64_t mem_87865_cached_sizze_89132 = 0;
+    unsigned char *mem_87865 = NULL;
+    int64_t mem_87866_cached_sizze_89133 = 0;
+    unsigned char *mem_87866 = NULL;
+    int64_t mem_87877_cached_sizze_89134 = 0;
+    unsigned char *mem_87877 = NULL;
+    int64_t mem_87878_cached_sizze_89135 = 0;
+    unsigned char *mem_87878 = NULL;
+    int64_t mem_87887_cached_sizze_89136 = 0;
+    unsigned char *mem_87887 = NULL;
+    int64_t mem_87894_cached_sizze_89137 = 0;
+    unsigned char *mem_87894 = NULL;
+    int64_t mem_87919_cached_sizze_89138 = 0;
+    unsigned char *mem_87919 = NULL;
+    int64_t mem_87924_cached_sizze_89139 = 0;
+    unsigned char *mem_87924 = NULL;
+    int64_t mem_87935_cached_sizze_89140 = 0;
+    unsigned char *mem_87935 = NULL;
+    int64_t mem_87941_cached_sizze_89141 = 0;
+    unsigned char *mem_87941 = NULL;
+    int64_t mem_87946_cached_sizze_89142 = 0;
+    unsigned char *mem_87946 = NULL;
+    int64_t mem_87962_cached_sizze_89143 = 0;
+    unsigned char *mem_87962 = NULL;
+    int64_t mem_87968_cached_sizze_89144 = 0;
+    unsigned char *mem_87968 = NULL;
+    int64_t mem_87973_cached_sizze_89145 = 0;
+    unsigned char *mem_87973 = NULL;
+    int64_t mem_87989_cached_sizze_89146 = 0;
+    unsigned char *mem_87989 = NULL;
+    int64_t mem_87990_cached_sizze_89147 = 0;
+    unsigned char *mem_87990 = NULL;
+    int64_t mem_88001_cached_sizze_89148 = 0;
+    unsigned char *mem_88001 = NULL;
+    int64_t mem_88002_cached_sizze_89149 = 0;
     unsigned char *mem_88002 = NULL;
-    int64_t mem_88003_cached_sizze_89969 = 0;
-    unsigned char *mem_88003 = NULL;
-    int64_t mem_88012_cached_sizze_89970 = 0;
+    int64_t mem_88011_cached_sizze_89150 = 0;
+    unsigned char *mem_88011 = NULL;
+    int64_t mem_88012_cached_sizze_89151 = 0;
     unsigned char *mem_88012 = NULL;
-    int64_t mem_88013_cached_sizze_89971 = 0;
-    unsigned char *mem_88013 = NULL;
-    int64_t mem_88034_cached_sizze_89972 = 0;
-    unsigned char *mem_88034 = NULL;
-    int64_t mem_88035_cached_sizze_89973 = 0;
-    unsigned char *mem_88035 = NULL;
-    int64_t mem_88036_cached_sizze_89974 = 0;
-    unsigned char *mem_88036 = NULL;
-    int64_t mem_88048_cached_sizze_89975 = 0;
-    unsigned char *mem_88048 = NULL;
-    int64_t mem_88049_cached_sizze_89976 = 0;
-    unsigned char *mem_88049 = NULL;
-    int64_t mem_88073_cached_sizze_89977 = 0;
-    unsigned char *mem_88073 = NULL;
-    int64_t mem_88074_cached_sizze_89978 = 0;
-    unsigned char *mem_88074 = NULL;
-    int64_t mem_88075_cached_sizze_89979 = 0;
-    unsigned char *mem_88075 = NULL;
-    int64_t mem_88076_cached_sizze_89980 = 0;
-    unsigned char *mem_88076 = NULL;
-    int64_t mem_88077_cached_sizze_89981 = 0;
-    unsigned char *mem_88077 = NULL;
-    int64_t mem_88096_cached_sizze_89982 = 0;
-    unsigned char *mem_88096 = NULL;
-    int64_t mem_88097_cached_sizze_89983 = 0;
-    unsigned char *mem_88097 = NULL;
-    int64_t mem_88098_cached_sizze_89984 = 0;
-    unsigned char *mem_88098 = NULL;
-    int64_t mem_88135_cached_sizze_89985 = 0;
-    unsigned char *mem_88135 = NULL;
-    int64_t mem_88136_cached_sizze_89986 = 0;
-    unsigned char *mem_88136 = NULL;
-    int64_t mem_88137_cached_sizze_89987 = 0;
-    unsigned char *mem_88137 = NULL;
-    int64_t mem_88153_cached_sizze_89988 = 0;
-    unsigned char *mem_88153 = NULL;
-    int64_t mem_88154_cached_sizze_89989 = 0;
-    unsigned char *mem_88154 = NULL;
-    int64_t mem_88155_cached_sizze_89990 = 0;
+    int64_t mem_88043_cached_sizze_89152 = 0;
+    unsigned char *mem_88043 = NULL;
+    int64_t mem_88044_cached_sizze_89153 = 0;
+    unsigned char *mem_88044 = NULL;
+    int64_t mem_88045_cached_sizze_89154 = 0;
+    unsigned char *mem_88045 = NULL;
+    int64_t mem_88058_cached_sizze_89155 = 0;
+    unsigned char *mem_88058 = NULL;
+    int64_t mem_88059_cached_sizze_89156 = 0;
+    unsigned char *mem_88059 = NULL;
+    int64_t mem_88060_cached_sizze_89157 = 0;
+    unsigned char *mem_88060 = NULL;
+    int64_t mem_88091_cached_sizze_89158 = 0;
+    unsigned char *mem_88091 = NULL;
+    int64_t mem_88092_cached_sizze_89159 = 0;
+    unsigned char *mem_88092 = NULL;
+    int64_t mem_88093_cached_sizze_89160 = 0;
+    unsigned char *mem_88093 = NULL;
+    int64_t mem_88094_cached_sizze_89161 = 0;
+    unsigned char *mem_88094 = NULL;
+    int64_t mem_88111_cached_sizze_89162 = 0;
+    unsigned char *mem_88111 = NULL;
+    int64_t mem_88112_cached_sizze_89163 = 0;
+    unsigned char *mem_88112 = NULL;
+    int64_t mem_88113_cached_sizze_89164 = 0;
+    unsigned char *mem_88113 = NULL;
+    int64_t mem_88114_cached_sizze_89165 = 0;
+    unsigned char *mem_88114 = NULL;
+    int64_t mem_88155_cached_sizze_89166 = 0;
     unsigned char *mem_88155 = NULL;
-    int64_t mem_88168_cached_sizze_89991 = 0;
-    unsigned char *mem_88168 = NULL;
-    int64_t mem_88169_cached_sizze_89992 = 0;
+    int64_t mem_88156_cached_sizze_89167 = 0;
+    unsigned char *mem_88156 = NULL;
+    int64_t mem_88169_cached_sizze_89168 = 0;
     unsigned char *mem_88169 = NULL;
-    int64_t mem_88170_cached_sizze_89993 = 0;
-    unsigned char *mem_88170 = NULL;
-    int64_t mem_88216_cached_sizze_89994 = 0;
+    int64_t mem_88176_cached_sizze_89169 = 0;
+    unsigned char *mem_88176 = NULL;
+    int64_t mem_88186_cached_sizze_89170 = 0;
+    unsigned char *mem_88186 = NULL;
+    int64_t mem_88191_cached_sizze_89171 = 0;
+    unsigned char *mem_88191 = NULL;
+    int64_t mem_88202_cached_sizze_89172 = 0;
+    unsigned char *mem_88202 = NULL;
+    int64_t mem_88203_cached_sizze_89173 = 0;
+    unsigned char *mem_88203 = NULL;
+    int64_t mem_88216_cached_sizze_89174 = 0;
     unsigned char *mem_88216 = NULL;
-    int64_t mem_88217_cached_sizze_89995 = 0;
-    unsigned char *mem_88217 = NULL;
-    int64_t mem_88228_cached_sizze_89996 = 0;
-    unsigned char *mem_88228 = NULL;
-    int64_t mem_88229_cached_sizze_89997 = 0;
-    unsigned char *mem_88229 = NULL;
-    int64_t mem_88238_cached_sizze_89998 = 0;
+    int64_t mem_88223_cached_sizze_89175 = 0;
+    unsigned char *mem_88223 = NULL;
+    int64_t mem_88233_cached_sizze_89176 = 0;
+    unsigned char *mem_88233 = NULL;
+    int64_t mem_88238_cached_sizze_89177 = 0;
     unsigned char *mem_88238 = NULL;
-    int64_t mem_88239_cached_sizze_89999 = 0;
-    unsigned char *mem_88239 = NULL;
-    int64_t mem_88260_cached_sizze_90000 = 0;
+    int64_t mem_88249_cached_sizze_89178 = 0;
+    unsigned char *mem_88249 = NULL;
+    int64_t mem_88250_cached_sizze_89179 = 0;
+    unsigned char *mem_88250 = NULL;
+    int64_t mem_88259_cached_sizze_89180 = 0;
+    unsigned char *mem_88259 = NULL;
+    int64_t mem_88260_cached_sizze_89181 = 0;
     unsigned char *mem_88260 = NULL;
-    int64_t mem_88265_cached_sizze_90001 = 0;
-    unsigned char *mem_88265 = NULL;
-    int64_t mem_88276_cached_sizze_90002 = 0;
-    unsigned char *mem_88276 = NULL;
-    int64_t mem_88281_cached_sizze_90003 = 0;
+    int64_t mem_88281_cached_sizze_89182 = 0;
     unsigned char *mem_88281 = NULL;
-    int64_t mem_88288_cached_sizze_90004 = 0;
-    unsigned char *mem_88288 = NULL;
-    int64_t mem_88299_cached_sizze_90005 = 0;
-    unsigned char *mem_88299 = NULL;
-    int64_t mem_88304_cached_sizze_90006 = 0;
-    unsigned char *mem_88304 = NULL;
-    int64_t mem_88325_cached_sizze_90007 = 0;
-    unsigned char *mem_88325 = NULL;
-    int64_t mem_88326_cached_sizze_90008 = 0;
-    unsigned char *mem_88326 = NULL;
-    int64_t mem_88334_cached_sizze_90009 = 0;
-    unsigned char *mem_88334 = NULL;
-    int64_t mem_88348_cached_sizze_90010 = 0;
-    unsigned char *mem_88348 = NULL;
-    int64_t mem_88353_cached_sizze_90011 = 0;
-    unsigned char *mem_88353 = NULL;
-    int64_t mem_88364_cached_sizze_90012 = 0;
-    unsigned char *mem_88364 = NULL;
-    int64_t mem_88369_cached_sizze_90013 = 0;
-    unsigned char *mem_88369 = NULL;
-    int64_t mem_88380_cached_sizze_90014 = 0;
-    unsigned char *mem_88380 = NULL;
-    int64_t mem_88381_cached_sizze_90015 = 0;
-    unsigned char *mem_88381 = NULL;
-    int64_t mem_88390_cached_sizze_90016 = 0;
-    unsigned char *mem_88390 = NULL;
-    int64_t mem_88391_cached_sizze_90017 = 0;
-    unsigned char *mem_88391 = NULL;
-    int64_t mem_88412_cached_sizze_90018 = 0;
-    unsigned char *mem_88412 = NULL;
-    int64_t mem_88413_cached_sizze_90019 = 0;
-    unsigned char *mem_88413 = NULL;
-    int64_t mem_88421_cached_sizze_90020 = 0;
-    unsigned char *mem_88421 = NULL;
-    int64_t mem_88435_cached_sizze_90021 = 0;
-    unsigned char *mem_88435 = NULL;
-    int64_t mem_88436_cached_sizze_90022 = 0;
-    unsigned char *mem_88436 = NULL;
-    int64_t mem_88444_cached_sizze_90023 = 0;
-    unsigned char *mem_88444 = NULL;
-    int64_t mem_88458_cached_sizze_90024 = 0;
-    unsigned char *mem_88458 = NULL;
-    int64_t mem_88463_cached_sizze_90025 = 0;
-    unsigned char *mem_88463 = NULL;
-    int64_t mem_88474_cached_sizze_90026 = 0;
-    unsigned char *mem_88474 = NULL;
-    int64_t mem_88479_cached_sizze_90027 = 0;
-    unsigned char *mem_88479 = NULL;
-    int64_t mem_88490_cached_sizze_90028 = 0;
-    unsigned char *mem_88490 = NULL;
-    int64_t mem_88495_cached_sizze_90029 = 0;
-    unsigned char *mem_88495 = NULL;
-    int64_t mem_88506_cached_sizze_90030 = 0;
-    unsigned char *mem_88506 = NULL;
-    int64_t mem_88510_cached_sizze_90031 = 0;
-    unsigned char *mem_88510 = NULL;
-    int64_t mem_88511_cached_sizze_90032 = 0;
-    unsigned char *mem_88511 = NULL;
-    int64_t mem_88527_cached_sizze_90033 = 0;
-    unsigned char *mem_88527 = NULL;
-    int64_t mem_88532_cached_sizze_90034 = 0;
-    unsigned char *mem_88532 = NULL;
-    int64_t mem_88533_cached_sizze_90035 = 0;
-    unsigned char *mem_88533 = NULL;
-    int64_t mem_88546_cached_sizze_90036 = 0;
-    unsigned char *mem_88546 = NULL;
-    int64_t mem_88557_cached_sizze_90037 = 0;
-    unsigned char *mem_88557 = NULL;
-    int64_t mem_88562_cached_sizze_90038 = 0;
-    unsigned char *mem_88562 = NULL;
-    int64_t mem_88573_cached_sizze_90039 = 0;
-    unsigned char *mem_88573 = NULL;
-    int64_t mem_88574_cached_sizze_90040 = 0;
-    unsigned char *mem_88574 = NULL;
-    int64_t mem_88583_cached_sizze_90041 = 0;
-    unsigned char *mem_88583 = NULL;
-    int64_t mem_88584_cached_sizze_90042 = 0;
-    unsigned char *mem_88584 = NULL;
-    int64_t mem_88605_cached_sizze_90043 = 0;
-    unsigned char *mem_88605 = NULL;
-    int64_t mem_88610_cached_sizze_90044 = 0;
-    unsigned char *mem_88610 = NULL;
-    int64_t mem_88621_cached_sizze_90045 = 0;
-    unsigned char *mem_88621 = NULL;
-    int64_t mem_88626_cached_sizze_90046 = 0;
-    unsigned char *mem_88626 = NULL;
-    int64_t mem_88637_cached_sizze_90047 = 0;
-    unsigned char *mem_88637 = NULL;
-    int64_t mem_88644_cached_sizze_90048 = 0;
-    unsigned char *mem_88644 = NULL;
-    int64_t mem_88651_cached_sizze_90049 = 0;
-    unsigned char *mem_88651 = NULL;
-    int64_t mem_88661_cached_sizze_90050 = 0;
-    unsigned char *mem_88661 = NULL;
-    int64_t mem_88666_cached_sizze_90051 = 0;
-    unsigned char *mem_88666 = NULL;
-    int64_t mem_88677_cached_sizze_90052 = 0;
-    unsigned char *mem_88677 = NULL;
-    int64_t mem_88678_cached_sizze_90053 = 0;
-    unsigned char *mem_88678 = NULL;
-    int64_t mem_88687_cached_sizze_90054 = 0;
-    unsigned char *mem_88687 = NULL;
-    int64_t mem_88688_cached_sizze_90055 = 0;
-    unsigned char *mem_88688 = NULL;
-    int64_t mem_88709_cached_sizze_90056 = 0;
-    unsigned char *mem_88709 = NULL;
-    int64_t mem_88710_cached_sizze_90057 = 0;
-    unsigned char *mem_88710 = NULL;
-    int64_t mem_88721_cached_sizze_90058 = 0;
-    unsigned char *mem_88721 = NULL;
-    int64_t mem_88722_cached_sizze_90059 = 0;
-    unsigned char *mem_88722 = NULL;
-    int64_t mem_88731_cached_sizze_90060 = 0;
-    unsigned char *mem_88731 = NULL;
-    int64_t mem_88738_cached_sizze_90061 = 0;
-    unsigned char *mem_88738 = NULL;
-    int64_t mem_88763_cached_sizze_90062 = 0;
-    unsigned char *mem_88763 = NULL;
-    int64_t mem_88764_cached_sizze_90063 = 0;
-    unsigned char *mem_88764 = NULL;
-    int64_t mem_88775_cached_sizze_90064 = 0;
-    unsigned char *mem_88775 = NULL;
-    int64_t mem_88776_cached_sizze_90065 = 0;
-    unsigned char *mem_88776 = NULL;
-    int64_t mem_88785_cached_sizze_90066 = 0;
-    unsigned char *mem_88785 = NULL;
-    int64_t mem_88792_cached_sizze_90067 = 0;
-    unsigned char *mem_88792 = NULL;
-    int64_t mem_88799_cached_sizze_90068 = 0;
-    unsigned char *mem_88799 = NULL;
-    int64_t mem_88824_cached_sizze_90069 = 0;
-    unsigned char *mem_88824 = NULL;
-    int64_t mem_88825_cached_sizze_90070 = 0;
-    unsigned char *mem_88825 = NULL;
-    int64_t mem_88835_cached_sizze_90071 = 0;
-    unsigned char *mem_88835 = NULL;
-    int64_t mem_88836_cached_sizze_90072 = 0;
-    unsigned char *mem_88836 = NULL;
-    int64_t mem_88844_cached_sizze_90073 = 0;
-    unsigned char *mem_88844 = NULL;
-    int64_t mem_88851_cached_sizze_90074 = 0;
-    unsigned char *mem_88851 = NULL;
-    int64_t mem_88874_cached_sizze_90075 = 0;
-    unsigned char *mem_88874 = NULL;
-    int64_t mem_88880_cached_sizze_90076 = 0;
-    unsigned char *mem_88880 = NULL;
-    int64_t mem_88885_cached_sizze_90077 = 0;
-    unsigned char *mem_88885 = NULL;
-    int64_t mem_88892_cached_sizze_90078 = 0;
-    unsigned char *mem_88892 = NULL;
-    int64_t mem_88908_cached_sizze_90079 = 0;
-    unsigned char *mem_88908 = NULL;
-    int64_t mem_88914_cached_sizze_90080 = 0;
-    unsigned char *mem_88914 = NULL;
-    int64_t mem_88919_cached_sizze_90081 = 0;
-    unsigned char *mem_88919 = NULL;
-    int64_t mem_88935_cached_sizze_90082 = 0;
-    unsigned char *mem_88935 = NULL;
-    int64_t mem_88936_cached_sizze_90083 = 0;
-    unsigned char *mem_88936 = NULL;
-    int64_t mem_88947_cached_sizze_90084 = 0;
-    unsigned char *mem_88947 = NULL;
-    int64_t mem_88948_cached_sizze_90085 = 0;
-    unsigned char *mem_88948 = NULL;
-    int64_t mem_88957_cached_sizze_90086 = 0;
-    unsigned char *mem_88957 = NULL;
-    int64_t mem_88958_cached_sizze_90087 = 0;
-    unsigned char *mem_88958 = NULL;
-    int64_t mem_88989_cached_sizze_90088 = 0;
-    unsigned char *mem_88989 = NULL;
-    int64_t mem_88990_cached_sizze_90089 = 0;
-    unsigned char *mem_88990 = NULL;
-    int64_t mem_88991_cached_sizze_90090 = 0;
-    unsigned char *mem_88991 = NULL;
-    int64_t mem_89004_cached_sizze_90091 = 0;
-    unsigned char *mem_89004 = NULL;
-    int64_t mem_89005_cached_sizze_90092 = 0;
-    unsigned char *mem_89005 = NULL;
-    int64_t mem_89006_cached_sizze_90093 = 0;
-    unsigned char *mem_89006 = NULL;
-    int64_t mem_89037_cached_sizze_90094 = 0;
-    unsigned char *mem_89037 = NULL;
-    int64_t mem_89038_cached_sizze_90095 = 0;
-    unsigned char *mem_89038 = NULL;
-    int64_t mem_89039_cached_sizze_90096 = 0;
-    unsigned char *mem_89039 = NULL;
-    int64_t mem_89040_cached_sizze_90097 = 0;
-    unsigned char *mem_89040 = NULL;
-    int64_t mem_89057_cached_sizze_90098 = 0;
-    unsigned char *mem_89057 = NULL;
-    int64_t mem_89058_cached_sizze_90099 = 0;
-    unsigned char *mem_89058 = NULL;
-    int64_t mem_89059_cached_sizze_90100 = 0;
-    unsigned char *mem_89059 = NULL;
-    int64_t mem_89060_cached_sizze_90101 = 0;
-    unsigned char *mem_89060 = NULL;
-    int64_t mem_89101_cached_sizze_90102 = 0;
-    unsigned char *mem_89101 = NULL;
-    int64_t mem_89108_cached_sizze_90103 = 0;
-    unsigned char *mem_89108 = NULL;
-    int64_t mem_89115_cached_sizze_90104 = 0;
-    unsigned char *mem_89115 = NULL;
-    int64_t mem_89125_cached_sizze_90105 = 0;
-    unsigned char *mem_89125 = NULL;
-    int64_t mem_89130_cached_sizze_90106 = 0;
-    unsigned char *mem_89130 = NULL;
-    int64_t mem_89141_cached_sizze_90107 = 0;
-    unsigned char *mem_89141 = NULL;
-    int64_t mem_89148_cached_sizze_90108 = 0;
-    unsigned char *mem_89148 = NULL;
-    int64_t mem_89155_cached_sizze_90109 = 0;
-    unsigned char *mem_89155 = NULL;
-    int64_t mem_89165_cached_sizze_90110 = 0;
-    unsigned char *mem_89165 = NULL;
-    int64_t mem_89170_cached_sizze_90111 = 0;
-    unsigned char *mem_89170 = NULL;
-    int64_t mem_89181_cached_sizze_90112 = 0;
-    unsigned char *mem_89181 = NULL;
-    int64_t mem_89182_cached_sizze_90113 = 0;
-    unsigned char *mem_89182 = NULL;
-    int64_t mem_89191_cached_sizze_90114 = 0;
-    unsigned char *mem_89191 = NULL;
-    int64_t mem_89192_cached_sizze_90115 = 0;
-    unsigned char *mem_89192 = NULL;
-    int64_t mem_89213_cached_sizze_90116 = 0;
-    unsigned char *mem_89213 = NULL;
-    int64_t mem_89218_cached_sizze_90117 = 0;
-    unsigned char *mem_89218 = NULL;
-    int64_t mem_89229_cached_sizze_90118 = 0;
-    unsigned char *mem_89229 = NULL;
-    int64_t mem_89230_cached_sizze_90119 = 0;
-    unsigned char *mem_89230 = NULL;
-    int64_t mem_89239_cached_sizze_90120 = 0;
-    unsigned char *mem_89239 = NULL;
-    int64_t mem_89240_cached_sizze_90121 = 0;
-    unsigned char *mem_89240 = NULL;
-    struct memblock mem_param_tmp_89593;
-    
-    mem_param_tmp_89593.references = NULL;
-    
-    struct memblock mem_param_tmp_89592;
-    
-    mem_param_tmp_89592.references = NULL;
-    
-    struct memblock mem_param_tmp_89591;
-    
-    mem_param_tmp_89591.references = NULL;
-    
-    struct memblock mem_param_tmp_89590;
-    
-    mem_param_tmp_89590.references = NULL;
-    
-    struct memblock mem_param_tmp_89589;
-    
-    mem_param_tmp_89589.references = NULL;
-    
-    struct memblock mem_param_tmp_89588;
-    
-    mem_param_tmp_89588.references = NULL;
-    
-    struct memblock mem_param_tmp_89587;
-    
-    mem_param_tmp_89587.references = NULL;
-    
-    struct memblock mem_param_tmp_89586;
-    
-    mem_param_tmp_89586.references = NULL;
-    
-    struct memblock mem_param_tmp_89585;
-    
-    mem_param_tmp_89585.references = NULL;
-    
-    struct memblock mem_param_tmp_89584;
-    
-    mem_param_tmp_89584.references = NULL;
+    int64_t mem_88286_cached_sizze_89183 = 0;
+    unsigned char *mem_88286 = NULL;
+    int64_t mem_88297_cached_sizze_89184 = 0;
+    unsigned char *mem_88297 = NULL;
+    int64_t mem_88298_cached_sizze_89185 = 0;
+    unsigned char *mem_88298 = NULL;
+    int64_t mem_88307_cached_sizze_89186 = 0;
+    unsigned char *mem_88307 = NULL;
+    int64_t mem_88308_cached_sizze_89187 = 0;
+    unsigned char *mem_88308 = NULL;
+    struct memblock mem_param_tmp_88661;
     
-    struct memblock mem_param_tmp_89583;
+    mem_param_tmp_88661.references = NULL;
     
-    mem_param_tmp_89583.references = NULL;
+    struct memblock mem_param_tmp_88660;
     
-    struct memblock mem_param_tmp_89582;
+    mem_param_tmp_88660.references = NULL;
     
-    mem_param_tmp_89582.references = NULL;
+    struct memblock mem_param_tmp_88659;
     
-    struct memblock mem_param_tmp_89581;
+    mem_param_tmp_88659.references = NULL;
     
-    mem_param_tmp_89581.references = NULL;
+    struct memblock mem_param_tmp_88658;
     
-    struct memblock mem_param_tmp_89580;
+    mem_param_tmp_88658.references = NULL;
     
-    mem_param_tmp_89580.references = NULL;
+    struct memblock mem_param_tmp_88657;
     
-    struct memblock mem_param_tmp_89579;
+    mem_param_tmp_88657.references = NULL;
     
-    mem_param_tmp_89579.references = NULL;
+    struct memblock mem_param_tmp_88656;
     
-    struct memblock mem_param_tmp_89578;
+    mem_param_tmp_88656.references = NULL;
     
-    mem_param_tmp_89578.references = NULL;
+    struct memblock mem_param_tmp_88655;
     
-    struct memblock mem_param_tmp_89577;
+    mem_param_tmp_88655.references = NULL;
     
-    mem_param_tmp_89577.references = NULL;
+    struct memblock mem_param_tmp_88654;
     
-    struct memblock mem_param_tmp_89576;
+    mem_param_tmp_88654.references = NULL;
     
-    mem_param_tmp_89576.references = NULL;
+    struct memblock mem_param_tmp_88653;
     
-    struct memblock mem_param_tmp_89575;
+    mem_param_tmp_88653.references = NULL;
     
-    mem_param_tmp_89575.references = NULL;
+    struct memblock mem_param_tmp_88652;
     
-    struct memblock mem_param_tmp_89574;
+    mem_param_tmp_88652.references = NULL;
     
-    mem_param_tmp_89574.references = NULL;
+    struct memblock mem_param_tmp_88651;
     
-    struct memblock mem_param_tmp_89573;
+    mem_param_tmp_88651.references = NULL;
     
-    mem_param_tmp_89573.references = NULL;
+    struct memblock mem_param_tmp_88650;
     
-    struct memblock mem_param_tmp_89572;
+    mem_param_tmp_88650.references = NULL;
     
-    mem_param_tmp_89572.references = NULL;
+    struct memblock mem_param_tmp_88649;
     
-    struct memblock mem_param_tmp_89571;
+    mem_param_tmp_88649.references = NULL;
     
-    mem_param_tmp_89571.references = NULL;
+    struct memblock mem_param_tmp_88648;
     
-    struct memblock mem_param_tmp_89570;
+    mem_param_tmp_88648.references = NULL;
     
-    mem_param_tmp_89570.references = NULL;
+    struct memblock mem_param_tmp_88647;
     
-    struct memblock mem_param_tmp_89569;
+    mem_param_tmp_88647.references = NULL;
     
-    mem_param_tmp_89569.references = NULL;
+    struct memblock mem_param_tmp_88646;
     
-    struct memblock mem_param_tmp_89568;
+    mem_param_tmp_88646.references = NULL;
     
-    mem_param_tmp_89568.references = NULL;
+    struct memblock mem_param_tmp_88645;
     
-    struct memblock mem_param_tmp_89567;
+    mem_param_tmp_88645.references = NULL;
     
-    mem_param_tmp_89567.references = NULL;
+    struct memblock mem_param_tmp_88644;
     
-    struct memblock ext_mem_89357;
+    mem_param_tmp_88644.references = NULL;
     
-    ext_mem_89357.references = NULL;
+    struct memblock mem_param_tmp_88643;
     
-    struct memblock ext_mem_89358;
+    mem_param_tmp_88643.references = NULL;
     
-    ext_mem_89358.references = NULL;
+    struct memblock mem_param_tmp_88642;
     
-    struct memblock ext_mem_89359;
+    mem_param_tmp_88642.references = NULL;
     
-    ext_mem_89359.references = NULL;
+    struct memblock mem_param_tmp_88641;
     
-    struct memblock mem_89355;
+    mem_param_tmp_88641.references = NULL;
     
-    mem_89355.references = NULL;
+    struct memblock mem_param_tmp_88640;
     
-    struct memblock mem_89353;
+    mem_param_tmp_88640.references = NULL;
     
-    mem_89353.references = NULL;
+    struct memblock mem_param_tmp_88639;
     
-    struct memblock mem_89351;
+    mem_param_tmp_88639.references = NULL;
     
-    mem_89351.references = NULL;
+    struct memblock mem_param_tmp_88638;
     
-    struct memblock mem_89349;
+    mem_param_tmp_88638.references = NULL;
     
-    mem_89349.references = NULL;
+    struct memblock mem_param_tmp_88637;
     
-    struct memblock ext_mem_89346;
+    mem_param_tmp_88637.references = NULL;
     
-    ext_mem_89346.references = NULL;
+    struct memblock mem_param_tmp_88636;
     
-    struct memblock ext_mem_89347;
+    mem_param_tmp_88636.references = NULL;
     
-    ext_mem_89347.references = NULL;
+    struct memblock mem_param_tmp_88635;
     
-    struct memblock ext_mem_89348;
+    mem_param_tmp_88635.references = NULL;
     
-    ext_mem_89348.references = NULL;
+    struct memblock ext_mem_88425;
     
-    struct memblock mem_89344;
+    ext_mem_88425.references = NULL;
     
-    mem_89344.references = NULL;
+    struct memblock ext_mem_88426;
     
-    struct memblock mem_89342;
+    ext_mem_88426.references = NULL;
     
-    mem_89342.references = NULL;
+    struct memblock ext_mem_88427;
     
-    struct memblock mem_89340;
+    ext_mem_88427.references = NULL;
     
-    mem_89340.references = NULL;
+    struct memblock mem_88423;
     
-    struct memblock mem_89338;
+    mem_88423.references = NULL;
     
-    mem_89338.references = NULL;
+    struct memblock mem_88421;
     
-    struct memblock ext_mem_89335;
+    mem_88421.references = NULL;
     
-    ext_mem_89335.references = NULL;
+    struct memblock mem_88419;
     
-    struct memblock ext_mem_89336;
+    mem_88419.references = NULL;
     
-    ext_mem_89336.references = NULL;
+    struct memblock mem_88417;
     
-    struct memblock ext_mem_89337;
+    mem_88417.references = NULL;
     
-    ext_mem_89337.references = NULL;
+    struct memblock ext_mem_88414;
     
-    struct memblock mem_89333;
+    ext_mem_88414.references = NULL;
     
-    mem_89333.references = NULL;
+    struct memblock ext_mem_88415;
     
-    struct memblock mem_89331;
+    ext_mem_88415.references = NULL;
     
-    mem_89331.references = NULL;
+    struct memblock ext_mem_88416;
     
-    struct memblock mem_89329;
+    ext_mem_88416.references = NULL;
     
-    mem_89329.references = NULL;
+    struct memblock mem_88412;
     
-    struct memblock mem_89327;
+    mem_88412.references = NULL;
     
-    mem_89327.references = NULL;
+    struct memblock mem_88410;
     
-    struct memblock ext_mem_89324;
+    mem_88410.references = NULL;
     
-    ext_mem_89324.references = NULL;
+    struct memblock mem_88408;
     
-    struct memblock ext_mem_89325;
+    mem_88408.references = NULL;
     
-    ext_mem_89325.references = NULL;
+    struct memblock mem_88406;
     
-    struct memblock ext_mem_89326;
+    mem_88406.references = NULL;
     
-    ext_mem_89326.references = NULL;
+    struct memblock ext_mem_88403;
     
-    struct memblock mem_89322;
+    ext_mem_88403.references = NULL;
     
-    mem_89322.references = NULL;
+    struct memblock ext_mem_88404;
     
-    struct memblock mem_89320;
+    ext_mem_88404.references = NULL;
     
-    mem_89320.references = NULL;
+    struct memblock ext_mem_88405;
     
-    struct memblock mem_89318;
+    ext_mem_88405.references = NULL;
     
-    mem_89318.references = NULL;
+    struct memblock mem_88401;
     
-    struct memblock mem_89316;
+    mem_88401.references = NULL;
     
-    mem_89316.references = NULL;
+    struct memblock mem_88399;
     
-    struct memblock ext_mem_89313;
+    mem_88399.references = NULL;
     
-    ext_mem_89313.references = NULL;
+    struct memblock mem_88397;
     
-    struct memblock ext_mem_89314;
+    mem_88397.references = NULL;
     
-    ext_mem_89314.references = NULL;
+    struct memblock mem_88395;
     
-    struct memblock ext_mem_89315;
+    mem_88395.references = NULL;
     
-    ext_mem_89315.references = NULL;
+    struct memblock ext_mem_88392;
     
-    struct memblock mem_89311;
+    ext_mem_88392.references = NULL;
     
-    mem_89311.references = NULL;
+    struct memblock ext_mem_88393;
     
-    struct memblock mem_89309;
+    ext_mem_88393.references = NULL;
     
-    mem_89309.references = NULL;
+    struct memblock ext_mem_88394;
     
-    struct memblock mem_89307;
+    ext_mem_88394.references = NULL;
     
-    mem_89307.references = NULL;
+    struct memblock mem_88390;
     
-    struct memblock mem_89305;
+    mem_88390.references = NULL;
     
-    mem_89305.references = NULL;
+    struct memblock mem_88388;
     
-    struct memblock ext_mem_89302;
+    mem_88388.references = NULL;
     
-    ext_mem_89302.references = NULL;
+    struct memblock mem_88386;
     
-    struct memblock ext_mem_89303;
+    mem_88386.references = NULL;
     
-    ext_mem_89303.references = NULL;
+    struct memblock mem_88384;
     
-    struct memblock ext_mem_89304;
+    mem_88384.references = NULL;
     
-    ext_mem_89304.references = NULL;
+    struct memblock ext_mem_88381;
     
-    struct memblock mem_89300;
+    ext_mem_88381.references = NULL;
     
-    mem_89300.references = NULL;
+    struct memblock ext_mem_88382;
     
-    struct memblock mem_89298;
+    ext_mem_88382.references = NULL;
     
-    mem_89298.references = NULL;
+    struct memblock ext_mem_88383;
     
-    struct memblock mem_89296;
+    ext_mem_88383.references = NULL;
     
-    mem_89296.references = NULL;
+    struct memblock mem_88379;
     
-    struct memblock mem_89294;
+    mem_88379.references = NULL;
     
-    mem_89294.references = NULL;
+    struct memblock mem_88377;
     
-    struct memblock ext_mem_89291;
+    mem_88377.references = NULL;
     
-    ext_mem_89291.references = NULL;
+    struct memblock mem_88375;
     
-    struct memblock ext_mem_89292;
+    mem_88375.references = NULL;
     
-    ext_mem_89292.references = NULL;
+    struct memblock mem_88373;
     
-    struct memblock ext_mem_89293;
+    mem_88373.references = NULL;
     
-    ext_mem_89293.references = NULL;
+    struct memblock ext_mem_88370;
     
-    struct memblock mem_89289;
+    ext_mem_88370.references = NULL;
     
-    mem_89289.references = NULL;
+    struct memblock ext_mem_88371;
     
-    struct memblock mem_89287;
+    ext_mem_88371.references = NULL;
     
-    mem_89287.references = NULL;
+    struct memblock ext_mem_88372;
     
-    struct memblock mem_89285;
+    ext_mem_88372.references = NULL;
     
-    mem_89285.references = NULL;
+    struct memblock mem_88368;
     
-    struct memblock mem_89283;
+    mem_88368.references = NULL;
     
-    mem_89283.references = NULL;
+    struct memblock mem_88366;
     
-    struct memblock ext_mem_89280;
+    mem_88366.references = NULL;
     
-    ext_mem_89280.references = NULL;
+    struct memblock mem_88364;
     
-    struct memblock ext_mem_89281;
+    mem_88364.references = NULL;
     
-    ext_mem_89281.references = NULL;
+    struct memblock mem_88362;
     
-    struct memblock ext_mem_89282;
+    mem_88362.references = NULL;
     
-    ext_mem_89282.references = NULL;
+    struct memblock ext_mem_88359;
     
-    struct memblock mem_89278;
+    ext_mem_88359.references = NULL;
     
-    mem_89278.references = NULL;
+    struct memblock ext_mem_88360;
     
-    struct memblock mem_89276;
+    ext_mem_88360.references = NULL;
     
-    mem_89276.references = NULL;
+    struct memblock ext_mem_88361;
     
-    struct memblock mem_89274;
+    ext_mem_88361.references = NULL;
     
-    mem_89274.references = NULL;
+    struct memblock mem_88357;
     
-    struct memblock mem_89272;
+    mem_88357.references = NULL;
     
-    mem_89272.references = NULL;
+    struct memblock mem_88355;
     
-    struct memblock ext_mem_89269;
+    mem_88355.references = NULL;
     
-    ext_mem_89269.references = NULL;
+    struct memblock mem_88353;
     
-    struct memblock ext_mem_89270;
+    mem_88353.references = NULL;
     
-    ext_mem_89270.references = NULL;
+    struct memblock mem_88351;
     
-    struct memblock ext_mem_89271;
+    mem_88351.references = NULL;
     
-    ext_mem_89271.references = NULL;
+    struct memblock ext_mem_88348;
     
-    struct memblock mem_89267;
+    ext_mem_88348.references = NULL;
     
-    mem_89267.references = NULL;
+    struct memblock ext_mem_88349;
     
-    struct memblock mem_89265;
+    ext_mem_88349.references = NULL;
     
-    mem_89265.references = NULL;
+    struct memblock ext_mem_88350;
     
-    struct memblock mem_89263;
+    ext_mem_88350.references = NULL;
     
-    mem_89263.references = NULL;
+    struct memblock mem_88346;
     
-    struct memblock mem_89261;
+    mem_88346.references = NULL;
     
-    mem_89261.references = NULL;
+    struct memblock mem_88344;
     
-    struct memblock mem_param_87937;
+    mem_88344.references = NULL;
     
-    mem_param_87937.references = NULL;
+    struct memblock mem_88342;
     
-    struct memblock mem_param_87933;
+    mem_88342.references = NULL;
     
-    mem_param_87933.references = NULL;
+    struct memblock mem_88340;
     
-    struct memblock mem_param_87929;
+    mem_88340.references = NULL;
     
-    mem_param_87929.references = NULL;
+    struct memblock ext_mem_88337;
     
-    struct memblock mem_param_87925;
+    ext_mem_88337.references = NULL;
     
-    mem_param_87925.references = NULL;
+    struct memblock ext_mem_88338;
     
-    struct memblock mem_param_87921;
+    ext_mem_88338.references = NULL;
     
-    mem_param_87921.references = NULL;
+    struct memblock ext_mem_88339;
     
-    struct memblock mem_param_87917;
+    ext_mem_88339.references = NULL;
     
-    mem_param_87917.references = NULL;
+    struct memblock mem_88335;
     
-    struct memblock mem_param_87913;
+    mem_88335.references = NULL;
     
-    mem_param_87913.references = NULL;
+    struct memblock mem_88333;
     
-    struct memblock mem_param_87909;
+    mem_88333.references = NULL;
     
-    mem_param_87909.references = NULL;
+    struct memblock mem_88331;
     
-    struct memblock mem_param_87905;
+    mem_88331.references = NULL;
     
-    mem_param_87905.references = NULL;
+    struct memblock mem_88329;
     
-    struct memblock mem_param_87901;
+    mem_88329.references = NULL;
     
-    mem_param_87901.references = NULL;
+    struct memblock mem_param_86974;
     
-    struct memblock mem_param_87897;
+    mem_param_86974.references = NULL;
     
-    mem_param_87897.references = NULL;
+    struct memblock mem_param_86970;
     
-    struct memblock mem_param_87893;
+    mem_param_86970.references = NULL;
     
-    mem_param_87893.references = NULL;
+    struct memblock mem_param_86966;
     
-    struct memblock mem_param_87889;
+    mem_param_86966.references = NULL;
     
-    mem_param_87889.references = NULL;
+    struct memblock mem_param_86962;
     
-    struct memblock mem_param_87885;
+    mem_param_86962.references = NULL;
     
-    mem_param_87885.references = NULL;
+    struct memblock mem_param_86958;
     
-    struct memblock mem_param_87881;
+    mem_param_86958.references = NULL;
     
-    mem_param_87881.references = NULL;
+    struct memblock mem_param_86954;
     
-    struct memblock mem_param_87877;
+    mem_param_86954.references = NULL;
     
-    mem_param_87877.references = NULL;
+    struct memblock mem_param_86950;
     
-    struct memblock mem_param_87873;
+    mem_param_86950.references = NULL;
     
-    mem_param_87873.references = NULL;
+    struct memblock mem_param_86946;
     
-    struct memblock mem_param_87869;
+    mem_param_86946.references = NULL;
     
-    mem_param_87869.references = NULL;
+    struct memblock mem_param_86942;
     
-    struct memblock mem_param_87865;
+    mem_param_86942.references = NULL;
     
-    mem_param_87865.references = NULL;
+    struct memblock mem_param_86938;
     
-    struct memblock mem_param_87861;
+    mem_param_86938.references = NULL;
     
-    mem_param_87861.references = NULL;
+    struct memblock mem_param_86934;
     
-    struct memblock mem_param_87857;
+    mem_param_86934.references = NULL;
     
-    mem_param_87857.references = NULL;
+    struct memblock mem_param_86930;
     
-    struct memblock mem_param_87853;
+    mem_param_86930.references = NULL;
     
-    mem_param_87853.references = NULL;
+    struct memblock mem_param_86926;
     
-    struct memblock mem_param_87849;
+    mem_param_86926.references = NULL;
     
-    mem_param_87849.references = NULL;
+    struct memblock mem_param_86922;
     
-    struct memblock mem_param_87845;
+    mem_param_86922.references = NULL;
     
-    mem_param_87845.references = NULL;
+    struct memblock mem_param_86918;
     
-    struct memblock mem_param_87841;
+    mem_param_86918.references = NULL;
     
-    mem_param_87841.references = NULL;
+    struct memblock mem_param_86914;
     
-    struct memblock mem_param_87837;
+    mem_param_86914.references = NULL;
     
-    mem_param_87837.references = NULL;
+    struct memblock mem_param_86910;
     
-    struct memblock mem_param_87833;
+    mem_param_86910.references = NULL;
     
-    mem_param_87833.references = NULL;
+    struct memblock mem_param_86906;
     
-    struct memblock ext_mem_89441;
+    mem_param_86906.references = NULL;
     
-    ext_mem_89441.references = NULL;
+    struct memblock mem_param_86902;
     
-    struct memblock ext_mem_89442;
+    mem_param_86902.references = NULL;
     
-    ext_mem_89442.references = NULL;
+    struct memblock mem_param_86898;
     
-    struct memblock ext_mem_89443;
+    mem_param_86898.references = NULL;
     
-    ext_mem_89443.references = NULL;
+    struct memblock mem_param_86894;
     
-    struct memblock ext_mem_89444;
+    mem_param_86894.references = NULL;
     
-    ext_mem_89444.references = NULL;
+    struct memblock mem_param_86890;
     
-    struct memblock ext_mem_89445;
+    mem_param_86890.references = NULL;
     
-    ext_mem_89445.references = NULL;
+    struct memblock mem_param_86886;
     
-    struct memblock ext_mem_89446;
+    mem_param_86886.references = NULL;
     
-    ext_mem_89446.references = NULL;
+    struct memblock mem_param_86882;
     
-    struct memblock ext_mem_89447;
+    mem_param_86882.references = NULL;
     
-    ext_mem_89447.references = NULL;
+    struct memblock mem_param_86878;
     
-    struct memblock ext_mem_89448;
+    mem_param_86878.references = NULL;
     
-    ext_mem_89448.references = NULL;
+    struct memblock mem_param_86874;
     
-    struct memblock ext_mem_89449;
+    mem_param_86874.references = NULL;
     
-    ext_mem_89449.references = NULL;
+    struct memblock mem_param_86870;
     
-    struct memblock ext_mem_89450;
+    mem_param_86870.references = NULL;
     
-    ext_mem_89450.references = NULL;
+    struct memblock ext_mem_88509;
     
-    struct memblock ext_mem_89451;
+    ext_mem_88509.references = NULL;
     
-    ext_mem_89451.references = NULL;
+    struct memblock ext_mem_88510;
     
-    struct memblock ext_mem_89452;
+    ext_mem_88510.references = NULL;
     
-    ext_mem_89452.references = NULL;
+    struct memblock ext_mem_88511;
     
-    struct memblock ext_mem_89453;
+    ext_mem_88511.references = NULL;
     
-    ext_mem_89453.references = NULL;
+    struct memblock ext_mem_88512;
     
-    struct memblock ext_mem_89454;
+    ext_mem_88512.references = NULL;
     
-    ext_mem_89454.references = NULL;
+    struct memblock ext_mem_88513;
     
-    struct memblock ext_mem_89455;
+    ext_mem_88513.references = NULL;
     
-    ext_mem_89455.references = NULL;
+    struct memblock ext_mem_88514;
     
-    struct memblock ext_mem_89456;
+    ext_mem_88514.references = NULL;
     
-    ext_mem_89456.references = NULL;
+    struct memblock ext_mem_88515;
     
-    struct memblock ext_mem_89457;
+    ext_mem_88515.references = NULL;
     
-    ext_mem_89457.references = NULL;
+    struct memblock ext_mem_88516;
     
-    struct memblock ext_mem_89458;
+    ext_mem_88516.references = NULL;
     
-    ext_mem_89458.references = NULL;
+    struct memblock ext_mem_88517;
     
-    struct memblock ext_mem_89459;
+    ext_mem_88517.references = NULL;
     
-    ext_mem_89459.references = NULL;
+    struct memblock ext_mem_88518;
     
-    struct memblock ext_mem_89460;
+    ext_mem_88518.references = NULL;
     
-    ext_mem_89460.references = NULL;
+    struct memblock ext_mem_88519;
     
-    struct memblock ext_mem_89461;
+    ext_mem_88519.references = NULL;
     
-    ext_mem_89461.references = NULL;
+    struct memblock ext_mem_88520;
     
-    struct memblock ext_mem_89462;
+    ext_mem_88520.references = NULL;
     
-    ext_mem_89462.references = NULL;
+    struct memblock ext_mem_88521;
     
-    struct memblock ext_mem_89463;
+    ext_mem_88521.references = NULL;
     
-    ext_mem_89463.references = NULL;
+    struct memblock ext_mem_88522;
     
-    struct memblock ext_mem_89464;
+    ext_mem_88522.references = NULL;
     
-    ext_mem_89464.references = NULL;
+    struct memblock ext_mem_88523;
     
-    struct memblock ext_mem_89465;
+    ext_mem_88523.references = NULL;
     
-    ext_mem_89465.references = NULL;
+    struct memblock ext_mem_88524;
     
-    struct memblock ext_mem_89466;
+    ext_mem_88524.references = NULL;
     
-    ext_mem_89466.references = NULL;
+    struct memblock ext_mem_88525;
     
-    struct memblock ext_mem_89467;
+    ext_mem_88525.references = NULL;
     
-    ext_mem_89467.references = NULL;
+    struct memblock ext_mem_88526;
     
-    struct memblock mem_out_89566;
+    ext_mem_88526.references = NULL;
     
-    mem_out_89566.references = NULL;
+    struct memblock ext_mem_88527;
     
-    struct memblock mem_out_89565;
+    ext_mem_88527.references = NULL;
     
-    mem_out_89565.references = NULL;
+    struct memblock ext_mem_88528;
     
-    struct memblock mem_out_89564;
+    ext_mem_88528.references = NULL;
     
-    mem_out_89564.references = NULL;
+    struct memblock ext_mem_88529;
     
-    struct memblock mem_out_89563;
+    ext_mem_88529.references = NULL;
     
-    mem_out_89563.references = NULL;
+    struct memblock ext_mem_88530;
     
-    struct memblock mem_out_89562;
+    ext_mem_88530.references = NULL;
     
-    mem_out_89562.references = NULL;
+    struct memblock ext_mem_88531;
     
-    struct memblock mem_out_89561;
+    ext_mem_88531.references = NULL;
     
-    mem_out_89561.references = NULL;
+    struct memblock ext_mem_88532;
     
-    struct memblock mem_out_89560;
+    ext_mem_88532.references = NULL;
     
-    mem_out_89560.references = NULL;
+    struct memblock ext_mem_88533;
     
-    struct memblock mem_out_89559;
+    ext_mem_88533.references = NULL;
     
-    mem_out_89559.references = NULL;
+    struct memblock ext_mem_88534;
     
-    struct memblock mem_out_89558;
+    ext_mem_88534.references = NULL;
     
-    mem_out_89558.references = NULL;
+    struct memblock ext_mem_88535;
     
-    struct memblock mem_out_89557;
+    ext_mem_88535.references = NULL;
     
-    mem_out_89557.references = NULL;
+    struct memblock mem_out_88634;
     
-    struct memblock mem_out_89556;
+    mem_out_88634.references = NULL;
     
-    mem_out_89556.references = NULL;
+    struct memblock mem_out_88633;
     
-    struct memblock mem_out_89555;
+    mem_out_88633.references = NULL;
     
-    mem_out_89555.references = NULL;
+    struct memblock mem_out_88632;
     
-    struct memblock mem_out_89554;
+    mem_out_88632.references = NULL;
     
-    mem_out_89554.references = NULL;
+    struct memblock mem_out_88631;
     
-    struct memblock mem_out_89553;
+    mem_out_88631.references = NULL;
     
-    mem_out_89553.references = NULL;
+    struct memblock mem_out_88630;
     
-    struct memblock mem_out_89552;
+    mem_out_88630.references = NULL;
     
-    mem_out_89552.references = NULL;
+    struct memblock mem_out_88629;
     
-    struct memblock mem_out_89551;
+    mem_out_88629.references = NULL;
     
-    mem_out_89551.references = NULL;
+    struct memblock mem_out_88628;
     
-    struct memblock mem_out_89550;
+    mem_out_88628.references = NULL;
     
-    mem_out_89550.references = NULL;
+    struct memblock mem_out_88627;
     
-    struct memblock mem_out_89549;
+    mem_out_88627.references = NULL;
     
-    mem_out_89549.references = NULL;
+    struct memblock mem_out_88626;
     
-    struct memblock mem_out_89548;
+    mem_out_88626.references = NULL;
     
-    mem_out_89548.references = NULL;
+    struct memblock mem_out_88625;
     
-    struct memblock mem_out_89547;
+    mem_out_88625.references = NULL;
     
-    mem_out_89547.references = NULL;
+    struct memblock mem_out_88624;
     
-    struct memblock mem_out_89546;
+    mem_out_88624.references = NULL;
     
-    mem_out_89546.references = NULL;
+    struct memblock mem_out_88623;
     
-    struct memblock mem_out_89545;
+    mem_out_88623.references = NULL;
     
-    mem_out_89545.references = NULL;
+    struct memblock mem_out_88622;
     
-    struct memblock mem_out_89544;
+    mem_out_88622.references = NULL;
     
-    mem_out_89544.references = NULL;
+    struct memblock mem_out_88621;
     
-    struct memblock mem_out_89543;
+    mem_out_88621.references = NULL;
     
-    mem_out_89543.references = NULL;
+    struct memblock mem_out_88620;
     
-    struct memblock mem_out_89542;
+    mem_out_88620.references = NULL;
     
-    mem_out_89542.references = NULL;
+    struct memblock mem_out_88619;
     
-    struct memblock mem_out_89541;
+    mem_out_88619.references = NULL;
     
-    mem_out_89541.references = NULL;
+    struct memblock mem_out_88618;
     
-    struct memblock mem_out_89540;
+    mem_out_88618.references = NULL;
     
-    mem_out_89540.references = NULL;
+    struct memblock mem_out_88617;
     
-    struct memblock mem_87791 = ctx->constants->mem_87791;
-    struct memblock mem_87792 = ctx->constants->mem_87792;
-    struct memblock mem_87793 = ctx->constants->mem_87793;
-    struct memblock mem_87794 = ctx->constants->mem_87794;
-    struct memblock mem_87795 = ctx->constants->mem_87795;
-    struct memblock mem_87796 = ctx->constants->mem_87796;
-    struct memblock mem_87797 = ctx->constants->mem_87797;
-    struct memblock mem_87798 = ctx->constants->mem_87798;
-    struct memblock mem_87799 = ctx->constants->mem_87799;
+    mem_out_88617.references = NULL;
     
+    struct memblock mem_out_88616;
+    
+    mem_out_88616.references = NULL;
+    
+    struct memblock mem_out_88615;
+    
+    mem_out_88615.references = NULL;
+    
+    struct memblock mem_out_88614;
+    
+    mem_out_88614.references = NULL;
+    
+    struct memblock mem_out_88613;
+    
+    mem_out_88613.references = NULL;
+    
+    struct memblock mem_out_88612;
+    
+    mem_out_88612.references = NULL;
+    
+    struct memblock mem_out_88611;
+    
+    mem_out_88611.references = NULL;
+    
+    struct memblock mem_out_88610;
+    
+    mem_out_88610.references = NULL;
+    
+    struct memblock mem_out_88609;
+    
+    mem_out_88609.references = NULL;
+    
+    struct memblock mem_out_88608;
+    
+    mem_out_88608.references = NULL;
+    
+    struct memblock mem_86828 = ctx->constants->mem_86828;
+    struct memblock mem_86829 = ctx->constants->mem_86829;
+    struct memblock mem_86830 = ctx->constants->mem_86830;
+    struct memblock mem_86831 = ctx->constants->mem_86831;
+    struct memblock mem_86832 = ctx->constants->mem_86832;
+    struct memblock mem_86833 = ctx->constants->mem_86833;
+    struct memblock mem_86834 = ctx->constants->mem_86834;
+    struct memblock mem_86835 = ctx->constants->mem_86835;
+    struct memblock mem_86836 = ctx->constants->mem_86836;
+    
+    // futhark/microgpt.fut:4:11-25
+    if (mem_86975_cached_sizze_89023 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_86975, &mem_86975_cached_sizze_89023, (int64_t) 2048);
+        if (err != FUTHARK_SUCCESS)
+            goto cleanup;
+    }
+    // futhark/microgpt.fut:4:11-25
+    if (mem_86976_cached_sizze_89024 < (int64_t) 3456) {
+        err = lexical_realloc(ctx, &mem_86976, &mem_86976_cached_sizze_89024, (int64_t) 3456);
+        if (err != FUTHARK_SUCCESS)
+            goto cleanup;
+    }
+    // futhark/microgpt.fut:4:11-25
+    if (mem_86985_cached_sizze_89025 < (int64_t) 216) {
+        err = lexical_realloc(ctx, &mem_86985, &mem_86985_cached_sizze_89025, (int64_t) 216);
+        if (err != FUTHARK_SUCCESS)
+            goto cleanup;
+    }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87938_cached_sizze_89960 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_87938, &mem_87938_cached_sizze_89960, (int64_t) 2048);
+    if (mem_86992_cached_sizze_89026 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_86992, &mem_86992_cached_sizze_89026, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87939_cached_sizze_89961 < (int64_t) 3456) {
-        err = lexical_realloc(ctx, &mem_87939, &mem_87939_cached_sizze_89961, (int64_t) 3456);
+    if (mem_87007_cached_sizze_89027 < (int64_t) 3456) {
+        err = lexical_realloc(ctx, &mem_87007, &mem_87007_cached_sizze_89027, (int64_t) 3456);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87948_cached_sizze_89962 < (int64_t) 216) {
-        err = lexical_realloc(ctx, &mem_87948, &mem_87948_cached_sizze_89962, (int64_t) 216);
+    if (mem_87008_cached_sizze_89028 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87008, &mem_87008_cached_sizze_89028, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87955_cached_sizze_89963 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_87955, &mem_87955_cached_sizze_89963, (int64_t) 128);
+    if (mem_87017_cached_sizze_89029 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87017, &mem_87017_cached_sizze_89029, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87970_cached_sizze_89964 < (int64_t) 3456) {
-        err = lexical_realloc(ctx, &mem_87970, &mem_87970_cached_sizze_89964, (int64_t) 3456);
+    if (mem_87024_cached_sizze_89030 < (int64_t) 216) {
+        err = lexical_realloc(ctx, &mem_87024, &mem_87024_cached_sizze_89030, (int64_t) 216);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87971_cached_sizze_89965 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_87971, &mem_87971_cached_sizze_89965, (int64_t) 2048);
+    if (mem_87039_cached_sizze_89031 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87039, &mem_87039_cached_sizze_89031, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87980_cached_sizze_89966 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_87980, &mem_87980_cached_sizze_89966, (int64_t) 128);
+    if (mem_87040_cached_sizze_89032 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87040, &mem_87040_cached_sizze_89032, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_87987_cached_sizze_89967 < (int64_t) 216) {
-        err = lexical_realloc(ctx, &mem_87987, &mem_87987_cached_sizze_89967, (int64_t) 216);
+    if (mem_87049_cached_sizze_89033 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87049, &mem_87049_cached_sizze_89033, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88002_cached_sizze_89968 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88002, &mem_88002_cached_sizze_89968, (int64_t) 2048);
+    if (mem_87050_cached_sizze_89034 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87050, &mem_87050_cached_sizze_89034, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88003_cached_sizze_89969 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88003, &mem_88003_cached_sizze_89969, (int64_t) 2048);
+    if (mem_87071_cached_sizze_89035 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87071, &mem_87071_cached_sizze_89035, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88012_cached_sizze_89970 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88012, &mem_88012_cached_sizze_89970, (int64_t) 128);
+    if (mem_87072_cached_sizze_89036 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87072, &mem_87072_cached_sizze_89036, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88013_cached_sizze_89971 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88013, &mem_88013_cached_sizze_89971, (int64_t) 128);
+    if (mem_87073_cached_sizze_89037 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87073, &mem_87073_cached_sizze_89037, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88034_cached_sizze_89972 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88034, &mem_88034_cached_sizze_89972, (int64_t) 128);
+    if (mem_87085_cached_sizze_89038 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87085, &mem_87085_cached_sizze_89038, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88035_cached_sizze_89973 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88035, &mem_88035_cached_sizze_89973, (int64_t) 2048);
+    if (mem_87086_cached_sizze_89039 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87086, &mem_87086_cached_sizze_89039, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88036_cached_sizze_89974 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88036, &mem_88036_cached_sizze_89974, (int64_t) 2048);
+    if (mem_87110_cached_sizze_89040 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87110, &mem_87110_cached_sizze_89040, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88048_cached_sizze_89975 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88048, &mem_88048_cached_sizze_89975, (int64_t) 128);
+    if (mem_87111_cached_sizze_89041 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87111, &mem_87111_cached_sizze_89041, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88049_cached_sizze_89976 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88049, &mem_88049_cached_sizze_89976, (int64_t) 128);
+    if (mem_87112_cached_sizze_89042 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87112, &mem_87112_cached_sizze_89042, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88073_cached_sizze_89977 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88073, &mem_88073_cached_sizze_89977, (int64_t) 128);
+    if (mem_87113_cached_sizze_89043 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87113, &mem_87113_cached_sizze_89043, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88074_cached_sizze_89978 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88074, &mem_88074_cached_sizze_89978, (int64_t) 128);
+    if (mem_87129_cached_sizze_89044 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87129, &mem_87129_cached_sizze_89044, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88075_cached_sizze_89979 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88075, &mem_88075_cached_sizze_89979, (int64_t) 2048);
+    if (mem_87130_cached_sizze_89045 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87130, &mem_87130_cached_sizze_89045, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88076_cached_sizze_89980 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88076, &mem_88076_cached_sizze_89980, (int64_t) 2048);
+    if (mem_87131_cached_sizze_89046 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87131, &mem_87131_cached_sizze_89046, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88077_cached_sizze_89981 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88077, &mem_88077_cached_sizze_89981, (int64_t) 2048);
+    if (mem_87165_cached_sizze_89047 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87165, &mem_87165_cached_sizze_89047, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88096_cached_sizze_89982 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88096, &mem_88096_cached_sizze_89982, (int64_t) 128);
+    if (mem_87166_cached_sizze_89048 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87166, &mem_87166_cached_sizze_89048, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88097_cached_sizze_89983 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88097, &mem_88097_cached_sizze_89983, (int64_t) 128);
+    if (mem_87167_cached_sizze_89049 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87167, &mem_87167_cached_sizze_89049, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88098_cached_sizze_89984 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88098, &mem_88098_cached_sizze_89984, (int64_t) 128);
+    if (mem_87183_cached_sizze_89050 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_87183, &mem_87183_cached_sizze_89050, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88135_cached_sizze_89985 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88135, &mem_88135_cached_sizze_89985, (int64_t) 2048);
+    if (mem_87184_cached_sizze_89051 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_87184, &mem_87184_cached_sizze_89051, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88136_cached_sizze_89986 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88136, &mem_88136_cached_sizze_89986, (int64_t) 2048);
+    if (mem_87185_cached_sizze_89052 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_87185, &mem_87185_cached_sizze_89052, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88137_cached_sizze_89987 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88137, &mem_88137_cached_sizze_89987, (int64_t) 2048);
+    if (mem_87198_cached_sizze_89053 < (int64_t) 32) {
+        err = lexical_realloc(ctx, &mem_87198, &mem_87198_cached_sizze_89053, (int64_t) 32);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88153_cached_sizze_89988 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88153, &mem_88153_cached_sizze_89988, (int64_t) 512);
+    if (mem_87199_cached_sizze_89054 < (int64_t) 32) {
+        err = lexical_realloc(ctx, &mem_87199, &mem_87199_cached_sizze_89054, (int64_t) 32);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88154_cached_sizze_89989 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88154, &mem_88154_cached_sizze_89989, (int64_t) 512);
+    if (mem_87200_cached_sizze_89055 < (int64_t) 32) {
+        err = lexical_realloc(ctx, &mem_87200, &mem_87200_cached_sizze_89055, (int64_t) 32);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88155_cached_sizze_89990 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88155, &mem_88155_cached_sizze_89990, (int64_t) 512);
+    if (mem_87246_cached_sizze_89056 < (int64_t) 8192) {
+        err = lexical_realloc(ctx, &mem_87246, &mem_87246_cached_sizze_89056, (int64_t) 8192);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88168_cached_sizze_89991 < (int64_t) 32) {
-        err = lexical_realloc(ctx, &mem_88168, &mem_88168_cached_sizze_89991, (int64_t) 32);
+    if (mem_87247_cached_sizze_89057 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87247, &mem_87247_cached_sizze_89057, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88169_cached_sizze_89992 < (int64_t) 32) {
-        err = lexical_realloc(ctx, &mem_88169, &mem_88169_cached_sizze_89992, (int64_t) 32);
+    if (mem_87258_cached_sizze_89058 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87258, &mem_87258_cached_sizze_89058, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88170_cached_sizze_89993 < (int64_t) 32) {
-        err = lexical_realloc(ctx, &mem_88170, &mem_88170_cached_sizze_89993, (int64_t) 32);
+    if (mem_87259_cached_sizze_89059 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87259, &mem_87259_cached_sizze_89059, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88216_cached_sizze_89994 < (int64_t) 8192) {
-        err = lexical_realloc(ctx, &mem_88216, &mem_88216_cached_sizze_89994, (int64_t) 8192);
+    if (mem_87268_cached_sizze_89060 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87268, &mem_87268_cached_sizze_89060, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88217_cached_sizze_89995 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88217, &mem_88217_cached_sizze_89995, (int64_t) 2048);
+    if (mem_87269_cached_sizze_89061 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87269, &mem_87269_cached_sizze_89061, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88228_cached_sizze_89996 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88228, &mem_88228_cached_sizze_89996, (int64_t) 2048);
+    if (mem_87290_cached_sizze_89062 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87290, &mem_87290_cached_sizze_89062, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88229_cached_sizze_89997 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88229, &mem_88229_cached_sizze_89997, (int64_t) 2048);
+    if (mem_87295_cached_sizze_89063 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87295, &mem_87295_cached_sizze_89063, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88238_cached_sizze_89998 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88238, &mem_88238_cached_sizze_89998, (int64_t) 128);
+    if (mem_87306_cached_sizze_89064 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87306, &mem_87306_cached_sizze_89064, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88239_cached_sizze_89999 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88239, &mem_88239_cached_sizze_89999, (int64_t) 128);
+    if (mem_87311_cached_sizze_89065 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87311, &mem_87311_cached_sizze_89065, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88260_cached_sizze_90000 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88260, &mem_88260_cached_sizze_90000, (int64_t) 2048);
+    if (mem_87318_cached_sizze_89066 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87318, &mem_87318_cached_sizze_89066, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88265_cached_sizze_90001 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88265, &mem_88265_cached_sizze_90001, (int64_t) 128);
+    if (mem_87329_cached_sizze_89067 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_87329, &mem_87329_cached_sizze_89067, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88276_cached_sizze_90002 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88276, &mem_88276_cached_sizze_90002, (int64_t) 2048);
+    if (mem_87334_cached_sizze_89068 < (int64_t) 32) {
+        err = lexical_realloc(ctx, &mem_87334, &mem_87334_cached_sizze_89068, (int64_t) 32);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88281_cached_sizze_90003 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88281, &mem_88281_cached_sizze_90003, (int64_t) 128);
+    if (mem_87355_cached_sizze_89069 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87355, &mem_87355_cached_sizze_89069, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88288_cached_sizze_90004 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88288, &mem_88288_cached_sizze_90004, (int64_t) 128);
+    if (mem_87360_cached_sizze_89070 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87360, &mem_87360_cached_sizze_89070, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88299_cached_sizze_90005 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88299, &mem_88299_cached_sizze_90005, (int64_t) 512);
+    if (mem_87371_cached_sizze_89071 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87371, &mem_87371_cached_sizze_89071, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88304_cached_sizze_90006 < (int64_t) 32) {
-        err = lexical_realloc(ctx, &mem_88304, &mem_88304_cached_sizze_90006, (int64_t) 32);
+    if (mem_87376_cached_sizze_89072 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87376, &mem_87376_cached_sizze_89072, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88325_cached_sizze_90007 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88325, &mem_88325_cached_sizze_90007, (int64_t) 128);
+    if (mem_87387_cached_sizze_89073 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87387, &mem_87387_cached_sizze_89073, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88326_cached_sizze_90008 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88326, &mem_88326_cached_sizze_90008, (int64_t) 2048);
+    if (mem_87392_cached_sizze_89074 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87392, &mem_87392_cached_sizze_89074, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88334_cached_sizze_90009 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88334, &mem_88334_cached_sizze_90009, (int64_t) 128);
+    if (mem_87403_cached_sizze_89075 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87403, &mem_87403_cached_sizze_89075, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88348_cached_sizze_90010 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88348, &mem_88348_cached_sizze_90010, (int64_t) 2048);
+    if (mem_87404_cached_sizze_89076 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87404, &mem_87404_cached_sizze_89076, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88353_cached_sizze_90011 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88353, &mem_88353_cached_sizze_90011, (int64_t) 128);
+    if (mem_87413_cached_sizze_89077 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87413, &mem_87413_cached_sizze_89077, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88364_cached_sizze_90012 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88364, &mem_88364_cached_sizze_90012, (int64_t) 2048);
+    if (mem_87414_cached_sizze_89078 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87414, &mem_87414_cached_sizze_89078, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88369_cached_sizze_90013 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88369, &mem_88369_cached_sizze_90013, (int64_t) 128);
+    if (mem_87435_cached_sizze_89079 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87435, &mem_87435_cached_sizze_89079, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88380_cached_sizze_90014 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88380, &mem_88380_cached_sizze_90014, (int64_t) 2048);
+    if (mem_87436_cached_sizze_89080 < (int64_t) 8192) {
+        err = lexical_realloc(ctx, &mem_87436, &mem_87436_cached_sizze_89080, (int64_t) 8192);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88381_cached_sizze_90015 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88381, &mem_88381_cached_sizze_90015, (int64_t) 2048);
+    if (mem_87444_cached_sizze_89081 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_87444, &mem_87444_cached_sizze_89081, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88390_cached_sizze_90016 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88390, &mem_88390_cached_sizze_90016, (int64_t) 128);
+    if (mem_87458_cached_sizze_89082 < (int64_t) 8192) {
+        err = lexical_realloc(ctx, &mem_87458, &mem_87458_cached_sizze_89082, (int64_t) 8192);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88391_cached_sizze_90017 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88391, &mem_88391_cached_sizze_90017, (int64_t) 128);
+    if (mem_87463_cached_sizze_89083 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_87463, &mem_87463_cached_sizze_89083, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88412_cached_sizze_90018 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88412, &mem_88412_cached_sizze_90018, (int64_t) 128);
+    if (mem_87474_cached_sizze_89084 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87474, &mem_87474_cached_sizze_89084, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88413_cached_sizze_90019 < (int64_t) 8192) {
-        err = lexical_realloc(ctx, &mem_88413, &mem_88413_cached_sizze_90019, (int64_t) 8192);
+    if (mem_87479_cached_sizze_89085 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87479, &mem_87479_cached_sizze_89085, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88421_cached_sizze_90020 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88421, &mem_88421_cached_sizze_90020, (int64_t) 512);
+    if (mem_87490_cached_sizze_89086 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87490, &mem_87490_cached_sizze_89086, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88435_cached_sizze_90021 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88435, &mem_88435_cached_sizze_90021, (int64_t) 128);
+    if (mem_87495_cached_sizze_89087 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87495, &mem_87495_cached_sizze_89087, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88436_cached_sizze_90022 < (int64_t) 8192) {
-        err = lexical_realloc(ctx, &mem_88436, &mem_88436_cached_sizze_90022, (int64_t) 8192);
+    if (mem_87506_cached_sizze_89088 < (int64_t) 3456) {
+        err = lexical_realloc(ctx, &mem_87506, &mem_87506_cached_sizze_89088, (int64_t) 3456);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88444_cached_sizze_90023 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88444, &mem_88444_cached_sizze_90023, (int64_t) 512);
+    if (mem_87511_cached_sizze_89089 < (int64_t) 216) {
+        err = lexical_realloc(ctx, &mem_87511, &mem_87511_cached_sizze_89089, (int64_t) 216);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88458_cached_sizze_90024 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88458, &mem_88458_cached_sizze_90024, (int64_t) 2048);
+    if (mem_87522_cached_sizze_89090 < (int64_t) 3456) {
+        err = lexical_realloc(ctx, &mem_87522, &mem_87522_cached_sizze_89090, (int64_t) 3456);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88463_cached_sizze_90025 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88463, &mem_88463_cached_sizze_90025, (int64_t) 128);
+    if (mem_87523_cached_sizze_89091 < (int64_t) 3456) {
+        err = lexical_realloc(ctx, &mem_87523, &mem_87523_cached_sizze_89091, (int64_t) 3456);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88474_cached_sizze_90026 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88474, &mem_88474_cached_sizze_90026, (int64_t) 2048);
+    if (mem_87532_cached_sizze_89092 < (int64_t) 216) {
+        err = lexical_realloc(ctx, &mem_87532, &mem_87532_cached_sizze_89092, (int64_t) 216);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88479_cached_sizze_90027 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88479, &mem_88479_cached_sizze_90027, (int64_t) 128);
+    if (mem_87533_cached_sizze_89093 < (int64_t) 216) {
+        err = lexical_realloc(ctx, &mem_87533, &mem_87533_cached_sizze_89093, (int64_t) 216);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88490_cached_sizze_90028 < (int64_t) 3456) {
-        err = lexical_realloc(ctx, &mem_88490, &mem_88490_cached_sizze_90028, (int64_t) 3456);
+    if (mem_87546_cached_sizze_89094 < (int64_t) 216) {
+        err = lexical_realloc(ctx, &mem_87546, &mem_87546_cached_sizze_89094, (int64_t) 216);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88495_cached_sizze_90029 < (int64_t) 216) {
-        err = lexical_realloc(ctx, &mem_88495, &mem_88495_cached_sizze_90029, (int64_t) 216);
+    if (mem_87547_cached_sizze_89095 < (int64_t) 216) {
+        err = lexical_realloc(ctx, &mem_87547, &mem_87547_cached_sizze_89095, (int64_t) 216);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88506_cached_sizze_90030 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88506, &mem_88506_cached_sizze_90030, (int64_t) 128);
+    if (mem_87568_cached_sizze_89096 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87568, &mem_87568_cached_sizze_89096, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88510_cached_sizze_90031 < (int64_t) 216) {
-        err = lexical_realloc(ctx, &mem_88510, &mem_88510_cached_sizze_90031, (int64_t) 216);
+    if (mem_87575_cached_sizze_89097 < (int64_t) 3456) {
+        err = lexical_realloc(ctx, &mem_87575, &mem_87575_cached_sizze_89097, (int64_t) 3456);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88511_cached_sizze_90032 < (int64_t) 216) {
-        err = lexical_realloc(ctx, &mem_88511, &mem_88511_cached_sizze_90032, (int64_t) 216);
+    if (mem_87580_cached_sizze_89098 < (int64_t) 216) {
+        err = lexical_realloc(ctx, &mem_87580, &mem_87580_cached_sizze_89098, (int64_t) 216);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88527_cached_sizze_90033 < (int64_t) 3456) {
-        err = lexical_realloc(ctx, &mem_88527, &mem_88527_cached_sizze_90033, (int64_t) 3456);
+    if (mem_87591_cached_sizze_89099 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87591, &mem_87591_cached_sizze_89099, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88532_cached_sizze_90034 < (int64_t) 216) {
-        err = lexical_realloc(ctx, &mem_88532, &mem_88532_cached_sizze_90034, (int64_t) 216);
+    if (mem_87596_cached_sizze_89100 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87596, &mem_87596_cached_sizze_89100, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88533_cached_sizze_90035 < (int64_t) 216) {
-        err = lexical_realloc(ctx, &mem_88533, &mem_88533_cached_sizze_90035, (int64_t) 216);
+    if (mem_87607_cached_sizze_89101 < (int64_t) 8192) {
+        err = lexical_realloc(ctx, &mem_87607, &mem_87607_cached_sizze_89101, (int64_t) 8192);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88546_cached_sizze_90036 < (int64_t) 216) {
-        err = lexical_realloc(ctx, &mem_88546, &mem_88546_cached_sizze_90036, (int64_t) 216);
+    if (mem_87608_cached_sizze_89102 < (int64_t) 8192) {
+        err = lexical_realloc(ctx, &mem_87608, &mem_87608_cached_sizze_89102, (int64_t) 8192);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88557_cached_sizze_90037 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88557, &mem_88557_cached_sizze_90037, (int64_t) 2048);
+    if (mem_87617_cached_sizze_89103 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_87617, &mem_87617_cached_sizze_89103, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88562_cached_sizze_90038 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88562, &mem_88562_cached_sizze_90038, (int64_t) 128);
+    if (mem_87618_cached_sizze_89104 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_87618, &mem_87618_cached_sizze_89104, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88573_cached_sizze_90039 < (int64_t) 8192) {
-        err = lexical_realloc(ctx, &mem_88573, &mem_88573_cached_sizze_90039, (int64_t) 8192);
+    if (mem_87639_cached_sizze_89105 < (int64_t) 8192) {
+        err = lexical_realloc(ctx, &mem_87639, &mem_87639_cached_sizze_89105, (int64_t) 8192);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88574_cached_sizze_90040 < (int64_t) 8192) {
-        err = lexical_realloc(ctx, &mem_88574, &mem_88574_cached_sizze_90040, (int64_t) 8192);
+    if (mem_87644_cached_sizze_89106 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_87644, &mem_87644_cached_sizze_89106, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88583_cached_sizze_90041 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88583, &mem_88583_cached_sizze_90041, (int64_t) 512);
+    if (mem_87655_cached_sizze_89107 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87655, &mem_87655_cached_sizze_89107, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88584_cached_sizze_90042 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88584, &mem_88584_cached_sizze_90042, (int64_t) 512);
+    if (mem_87660_cached_sizze_89108 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87660, &mem_87660_cached_sizze_89108, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88605_cached_sizze_90043 < (int64_t) 8192) {
-        err = lexical_realloc(ctx, &mem_88605, &mem_88605_cached_sizze_90043, (int64_t) 8192);
+    if (mem_87671_cached_sizze_89109 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87671, &mem_87671_cached_sizze_89109, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88610_cached_sizze_90044 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88610, &mem_88610_cached_sizze_90044, (int64_t) 512);
+    if (mem_87672_cached_sizze_89110 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87672, &mem_87672_cached_sizze_89110, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88621_cached_sizze_90045 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88621, &mem_88621_cached_sizze_90045, (int64_t) 2048);
+    if (mem_87685_cached_sizze_89111 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87685, &mem_87685_cached_sizze_89111, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88626_cached_sizze_90046 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88626, &mem_88626_cached_sizze_90046, (int64_t) 128);
+    if (mem_87692_cached_sizze_89112 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87692, &mem_87692_cached_sizze_89112, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88637_cached_sizze_90047 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88637, &mem_88637_cached_sizze_90047, (int64_t) 128);
+    if (mem_87702_cached_sizze_89113 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87702, &mem_87702_cached_sizze_89113, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88644_cached_sizze_90048 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88644, &mem_88644_cached_sizze_90048, (int64_t) 128);
+    if (mem_87707_cached_sizze_89114 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87707, &mem_87707_cached_sizze_89114, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88651_cached_sizze_90049 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88651, &mem_88651_cached_sizze_90049, (int64_t) 2048);
+    if (mem_87718_cached_sizze_89115 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87718, &mem_87718_cached_sizze_89115, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88661_cached_sizze_90050 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88661, &mem_88661_cached_sizze_90050, (int64_t) 2048);
+    if (mem_87719_cached_sizze_89116 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87719, &mem_87719_cached_sizze_89116, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88666_cached_sizze_90051 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88666, &mem_88666_cached_sizze_90051, (int64_t) 128);
+    if (mem_87728_cached_sizze_89117 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87728, &mem_87728_cached_sizze_89117, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88677_cached_sizze_90052 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88677, &mem_88677_cached_sizze_90052, (int64_t) 2048);
+    if (mem_87729_cached_sizze_89118 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87729, &mem_87729_cached_sizze_89118, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88678_cached_sizze_90053 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88678, &mem_88678_cached_sizze_90053, (int64_t) 2048);
+    if (mem_87750_cached_sizze_89119 < (int64_t) 8192) {
+        err = lexical_realloc(ctx, &mem_87750, &mem_87750_cached_sizze_89119, (int64_t) 8192);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88687_cached_sizze_90054 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88687, &mem_88687_cached_sizze_90054, (int64_t) 128);
+    if (mem_87751_cached_sizze_89120 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87751, &mem_87751_cached_sizze_89120, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88688_cached_sizze_90055 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88688, &mem_88688_cached_sizze_90055, (int64_t) 128);
+    if (mem_87762_cached_sizze_89121 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87762, &mem_87762_cached_sizze_89121, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88709_cached_sizze_90056 < (int64_t) 8192) {
-        err = lexical_realloc(ctx, &mem_88709, &mem_88709_cached_sizze_90056, (int64_t) 8192);
+    if (mem_87763_cached_sizze_89122 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_87763, &mem_87763_cached_sizze_89122, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88710_cached_sizze_90057 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88710, &mem_88710_cached_sizze_90057, (int64_t) 2048);
+    if (mem_87772_cached_sizze_89123 < (int64_t) 32) {
+        err = lexical_realloc(ctx, &mem_87772, &mem_87772_cached_sizze_89123, (int64_t) 32);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88721_cached_sizze_90058 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88721, &mem_88721_cached_sizze_90058, (int64_t) 2048);
+    if (mem_87779_cached_sizze_89124 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87779, &mem_87779_cached_sizze_89124, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88722_cached_sizze_90059 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88722, &mem_88722_cached_sizze_90059, (int64_t) 512);
+    if (mem_87804_cached_sizze_89125 < (int64_t) 8192) {
+        err = lexical_realloc(ctx, &mem_87804, &mem_87804_cached_sizze_89125, (int64_t) 8192);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88731_cached_sizze_90060 < (int64_t) 32) {
-        err = lexical_realloc(ctx, &mem_88731, &mem_88731_cached_sizze_90060, (int64_t) 32);
+    if (mem_87805_cached_sizze_89126 < (int64_t) 8192) {
+        err = lexical_realloc(ctx, &mem_87805, &mem_87805_cached_sizze_89126, (int64_t) 8192);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88738_cached_sizze_90061 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88738, &mem_88738_cached_sizze_90061, (int64_t) 128);
+    if (mem_87816_cached_sizze_89127 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87816, &mem_87816_cached_sizze_89127, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88763_cached_sizze_90062 < (int64_t) 8192) {
-        err = lexical_realloc(ctx, &mem_88763, &mem_88763_cached_sizze_90062, (int64_t) 8192);
+    if (mem_87817_cached_sizze_89128 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87817, &mem_87817_cached_sizze_89128, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88764_cached_sizze_90063 < (int64_t) 8192) {
-        err = lexical_realloc(ctx, &mem_88764, &mem_88764_cached_sizze_90063, (int64_t) 8192);
+    if (mem_87826_cached_sizze_89129 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87826, &mem_87826_cached_sizze_89129, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88775_cached_sizze_90064 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88775, &mem_88775_cached_sizze_90064, (int64_t) 2048);
+    if (mem_87833_cached_sizze_89130 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87833, &mem_87833_cached_sizze_89130, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88776_cached_sizze_90065 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88776, &mem_88776_cached_sizze_90065, (int64_t) 2048);
+    if (mem_87840_cached_sizze_89131 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87840, &mem_87840_cached_sizze_89131, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88785_cached_sizze_90066 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88785, &mem_88785_cached_sizze_90066, (int64_t) 128);
+    if (mem_87865_cached_sizze_89132 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87865, &mem_87865_cached_sizze_89132, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88792_cached_sizze_90067 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88792, &mem_88792_cached_sizze_90067, (int64_t) 128);
+    if (mem_87866_cached_sizze_89133 < (int64_t) 8192) {
+        err = lexical_realloc(ctx, &mem_87866, &mem_87866_cached_sizze_89133, (int64_t) 8192);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88799_cached_sizze_90068 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88799, &mem_88799_cached_sizze_90068, (int64_t) 128);
+    if (mem_87877_cached_sizze_89134 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_87877, &mem_87877_cached_sizze_89134, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88824_cached_sizze_90069 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88824, &mem_88824_cached_sizze_90069, (int64_t) 2048);
+    if (mem_87878_cached_sizze_89135 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87878, &mem_87878_cached_sizze_89135, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88825_cached_sizze_90070 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88825, &mem_88825_cached_sizze_90070, (int64_t) 512);
+    if (mem_87887_cached_sizze_89136 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87887, &mem_87887_cached_sizze_89136, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88835_cached_sizze_90071 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88835, &mem_88835_cached_sizze_90071, (int64_t) 512);
+    if (mem_87894_cached_sizze_89137 < (int64_t) 32) {
+        err = lexical_realloc(ctx, &mem_87894, &mem_87894_cached_sizze_89137, (int64_t) 32);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88836_cached_sizze_90072 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88836, &mem_88836_cached_sizze_90072, (int64_t) 128);
+    if (mem_87919_cached_sizze_89138 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_87919, &mem_87919_cached_sizze_89138, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88844_cached_sizze_90073 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88844, &mem_88844_cached_sizze_90073, (int64_t) 128);
+    if (mem_87924_cached_sizze_89139 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87924, &mem_87924_cached_sizze_89139, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88851_cached_sizze_90074 < (int64_t) 32) {
-        err = lexical_realloc(ctx, &mem_88851, &mem_88851_cached_sizze_90074, (int64_t) 32);
+    if (mem_87935_cached_sizze_89140 < (int64_t) 8192) {
+        err = lexical_realloc(ctx, &mem_87935, &mem_87935_cached_sizze_89140, (int64_t) 8192);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88874_cached_sizze_90075 < (int64_t) 8192) {
-        err = lexical_realloc(ctx, &mem_88874, &mem_88874_cached_sizze_90075, (int64_t) 8192);
+    if (mem_87941_cached_sizze_89141 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87941, &mem_87941_cached_sizze_89141, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88880_cached_sizze_90076 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88880, &mem_88880_cached_sizze_90076, (int64_t) 2048);
+    if (mem_87946_cached_sizze_89142 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87946, &mem_87946_cached_sizze_89142, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88885_cached_sizze_90077 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88885, &mem_88885_cached_sizze_90077, (int64_t) 128);
+    if (mem_87962_cached_sizze_89143 < (int64_t) 8192) {
+        err = lexical_realloc(ctx, &mem_87962, &mem_87962_cached_sizze_89143, (int64_t) 8192);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88892_cached_sizze_90078 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88892, &mem_88892_cached_sizze_90078, (int64_t) 128);
+    if (mem_87968_cached_sizze_89144 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87968, &mem_87968_cached_sizze_89144, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88908_cached_sizze_90079 < (int64_t) 8192) {
-        err = lexical_realloc(ctx, &mem_88908, &mem_88908_cached_sizze_90079, (int64_t) 8192);
+    if (mem_87973_cached_sizze_89145 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_87973, &mem_87973_cached_sizze_89145, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88914_cached_sizze_90080 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88914, &mem_88914_cached_sizze_90080, (int64_t) 2048);
+    if (mem_87989_cached_sizze_89146 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87989, &mem_87989_cached_sizze_89146, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88919_cached_sizze_90081 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_88919, &mem_88919_cached_sizze_90081, (int64_t) 128);
+    if (mem_87990_cached_sizze_89147 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_87990, &mem_87990_cached_sizze_89147, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88935_cached_sizze_90082 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88935, &mem_88935_cached_sizze_90082, (int64_t) 2048);
+    if (mem_88001_cached_sizze_89148 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_88001, &mem_88001_cached_sizze_89148, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88936_cached_sizze_90083 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88936, &mem_88936_cached_sizze_90083, (int64_t) 2048);
+    if (mem_88002_cached_sizze_89149 < (int64_t) 512) {
+        err = lexical_realloc(ctx, &mem_88002, &mem_88002_cached_sizze_89149, (int64_t) 512);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88947_cached_sizze_90084 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88947, &mem_88947_cached_sizze_90084, (int64_t) 512);
+    if (mem_88011_cached_sizze_89150 < (int64_t) 32) {
+        err = lexical_realloc(ctx, &mem_88011, &mem_88011_cached_sizze_89150, (int64_t) 32);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88948_cached_sizze_90085 < (int64_t) 512) {
-        err = lexical_realloc(ctx, &mem_88948, &mem_88948_cached_sizze_90085, (int64_t) 512);
+    if (mem_88012_cached_sizze_89151 < (int64_t) 32) {
+        err = lexical_realloc(ctx, &mem_88012, &mem_88012_cached_sizze_89151, (int64_t) 32);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88957_cached_sizze_90086 < (int64_t) 32) {
-        err = lexical_realloc(ctx, &mem_88957, &mem_88957_cached_sizze_90086, (int64_t) 32);
+    if (mem_88043_cached_sizze_89152 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_88043, &mem_88043_cached_sizze_89152, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88958_cached_sizze_90087 < (int64_t) 32) {
-        err = lexical_realloc(ctx, &mem_88958, &mem_88958_cached_sizze_90087, (int64_t) 32);
+    if (mem_88044_cached_sizze_89153 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_88044, &mem_88044_cached_sizze_89153, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88989_cached_sizze_90088 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88989, &mem_88989_cached_sizze_90088, (int64_t) 2048);
+    if (mem_88045_cached_sizze_89154 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_88045, &mem_88045_cached_sizze_89154, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88990_cached_sizze_90089 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88990, &mem_88990_cached_sizze_90089, (int64_t) 2048);
+    if (mem_88058_cached_sizze_89155 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88058, &mem_88058_cached_sizze_89155, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_88991_cached_sizze_90090 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_88991, &mem_88991_cached_sizze_90090, (int64_t) 2048);
+    if (mem_88059_cached_sizze_89156 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88059, &mem_88059_cached_sizze_89156, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89004_cached_sizze_90091 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89004, &mem_89004_cached_sizze_90091, (int64_t) 128);
+    if (mem_88060_cached_sizze_89157 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88060, &mem_88060_cached_sizze_89157, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89005_cached_sizze_90092 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89005, &mem_89005_cached_sizze_90092, (int64_t) 128);
+    if (mem_88091_cached_sizze_89158 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_88091, &mem_88091_cached_sizze_89158, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89006_cached_sizze_90093 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89006, &mem_89006_cached_sizze_90093, (int64_t) 128);
+    if (mem_88092_cached_sizze_89159 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_88092, &mem_88092_cached_sizze_89159, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89037_cached_sizze_90094 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_89037, &mem_89037_cached_sizze_90094, (int64_t) 2048);
+    if (mem_88093_cached_sizze_89160 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_88093, &mem_88093_cached_sizze_89160, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89038_cached_sizze_90095 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_89038, &mem_89038_cached_sizze_90095, (int64_t) 2048);
+    if (mem_88094_cached_sizze_89161 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_88094, &mem_88094_cached_sizze_89161, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89039_cached_sizze_90096 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_89039, &mem_89039_cached_sizze_90096, (int64_t) 2048);
+    if (mem_88111_cached_sizze_89162 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88111, &mem_88111_cached_sizze_89162, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89040_cached_sizze_90097 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_89040, &mem_89040_cached_sizze_90097, (int64_t) 2048);
+    if (mem_88112_cached_sizze_89163 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88112, &mem_88112_cached_sizze_89163, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89057_cached_sizze_90098 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89057, &mem_89057_cached_sizze_90098, (int64_t) 128);
+    if (mem_88113_cached_sizze_89164 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88113, &mem_88113_cached_sizze_89164, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89058_cached_sizze_90099 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89058, &mem_89058_cached_sizze_90099, (int64_t) 128);
+    if (mem_88114_cached_sizze_89165 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88114, &mem_88114_cached_sizze_89165, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89059_cached_sizze_90100 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89059, &mem_89059_cached_sizze_90100, (int64_t) 128);
+    if (mem_88155_cached_sizze_89166 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88155, &mem_88155_cached_sizze_89166, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89060_cached_sizze_90101 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89060, &mem_89060_cached_sizze_90101, (int64_t) 128);
+    if (mem_88156_cached_sizze_89167 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88156, &mem_88156_cached_sizze_89167, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89101_cached_sizze_90102 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89101, &mem_89101_cached_sizze_90102, (int64_t) 128);
+    if (mem_88169_cached_sizze_89168 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88169, &mem_88169_cached_sizze_89168, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89108_cached_sizze_90103 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89108, &mem_89108_cached_sizze_90103, (int64_t) 128);
+    if (mem_88176_cached_sizze_89169 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_88176, &mem_88176_cached_sizze_89169, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89115_cached_sizze_90104 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_89115, &mem_89115_cached_sizze_90104, (int64_t) 2048);
+    if (mem_88186_cached_sizze_89170 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_88186, &mem_88186_cached_sizze_89170, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89125_cached_sizze_90105 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_89125, &mem_89125_cached_sizze_90105, (int64_t) 2048);
+    if (mem_88191_cached_sizze_89171 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88191, &mem_88191_cached_sizze_89171, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89130_cached_sizze_90106 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89130, &mem_89130_cached_sizze_90106, (int64_t) 128);
+    if (mem_88202_cached_sizze_89172 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88202, &mem_88202_cached_sizze_89172, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89141_cached_sizze_90107 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89141, &mem_89141_cached_sizze_90107, (int64_t) 128);
+    if (mem_88203_cached_sizze_89173 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88203, &mem_88203_cached_sizze_89173, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89148_cached_sizze_90108 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89148, &mem_89148_cached_sizze_90108, (int64_t) 128);
+    if (mem_88216_cached_sizze_89174 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88216, &mem_88216_cached_sizze_89174, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89155_cached_sizze_90109 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_89155, &mem_89155_cached_sizze_90109, (int64_t) 2048);
+    if (mem_88223_cached_sizze_89175 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_88223, &mem_88223_cached_sizze_89175, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89165_cached_sizze_90110 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_89165, &mem_89165_cached_sizze_90110, (int64_t) 2048);
+    if (mem_88233_cached_sizze_89176 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_88233, &mem_88233_cached_sizze_89176, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89170_cached_sizze_90111 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89170, &mem_89170_cached_sizze_90111, (int64_t) 128);
+    if (mem_88238_cached_sizze_89177 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88238, &mem_88238_cached_sizze_89177, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89181_cached_sizze_90112 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_89181, &mem_89181_cached_sizze_90112, (int64_t) 2048);
+    if (mem_88249_cached_sizze_89178 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_88249, &mem_88249_cached_sizze_89178, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89182_cached_sizze_90113 < (int64_t) 2048) {
-        err = lexical_realloc(ctx, &mem_89182, &mem_89182_cached_sizze_90113, (int64_t) 2048);
+    if (mem_88250_cached_sizze_89179 < (int64_t) 2048) {
+        err = lexical_realloc(ctx, &mem_88250, &mem_88250_cached_sizze_89179, (int64_t) 2048);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89191_cached_sizze_90114 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89191, &mem_89191_cached_sizze_90114, (int64_t) 128);
+    if (mem_88259_cached_sizze_89180 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88259, &mem_88259_cached_sizze_89180, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89192_cached_sizze_90115 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89192, &mem_89192_cached_sizze_90115, (int64_t) 128);
+    if (mem_88260_cached_sizze_89181 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88260, &mem_88260_cached_sizze_89181, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89213_cached_sizze_90116 < (int64_t) 8192) {
-        err = lexical_realloc(ctx, &mem_89213, &mem_89213_cached_sizze_90116, (int64_t) 8192);
+    if (mem_88281_cached_sizze_89182 < (int64_t) 8192) {
+        err = lexical_realloc(ctx, &mem_88281, &mem_88281_cached_sizze_89182, (int64_t) 8192);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89218_cached_sizze_90117 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89218, &mem_89218_cached_sizze_90117, (int64_t) 128);
+    if (mem_88286_cached_sizze_89183 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88286, &mem_88286_cached_sizze_89183, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89229_cached_sizze_90118 < (int64_t) 3456) {
-        err = lexical_realloc(ctx, &mem_89229, &mem_89229_cached_sizze_90118, (int64_t) 3456);
+    if (mem_88297_cached_sizze_89184 < (int64_t) 3456) {
+        err = lexical_realloc(ctx, &mem_88297, &mem_88297_cached_sizze_89184, (int64_t) 3456);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89230_cached_sizze_90119 < (int64_t) 3456) {
-        err = lexical_realloc(ctx, &mem_89230, &mem_89230_cached_sizze_90119, (int64_t) 3456);
+    if (mem_88298_cached_sizze_89185 < (int64_t) 3456) {
+        err = lexical_realloc(ctx, &mem_88298, &mem_88298_cached_sizze_89185, (int64_t) 3456);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89239_cached_sizze_90120 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89239, &mem_89239_cached_sizze_90120, (int64_t) 128);
+    if (mem_88307_cached_sizze_89186 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88307, &mem_88307_cached_sizze_89186, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
     // futhark/microgpt.fut:4:11-25
-    if (mem_89240_cached_sizze_90121 < (int64_t) 128) {
-        err = lexical_realloc(ctx, &mem_89240, &mem_89240_cached_sizze_90121, (int64_t) 128);
+    if (mem_88308_cached_sizze_89187 < (int64_t) 128) {
+        err = lexical_realloc(ctx, &mem_88308, &mem_88308_cached_sizze_89187, (int64_t) 128);
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
-    // futhark/microgpt.fut:474:5-479:51
-    if (memblock_set(ctx, &mem_param_87833, &wdown_mem_87800, "wdown_mem_87800") != 0)
+    // futhark/microgpt.fut:471:5-476:51
+    if (memblock_set(ctx, &mem_param_86870, &wdown_mem_86837, "wdown_mem_86837") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87837, &wkey_mem_87801, "wkey_mem_87801") != 0)
+    if (memblock_set(ctx, &mem_param_86874, &wkey_mem_86838, "wkey_mem_86838") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87841, &wout_mem_87802, "wout_mem_87802") != 0)
+    if (memblock_set(ctx, &mem_param_86878, &wout_mem_86839, "wout_mem_86839") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87845, &wpe_mem_87803, "wpe_mem_87803") != 0)
+    if (memblock_set(ctx, &mem_param_86882, &wpe_mem_86840, "wpe_mem_86840") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87849, &wqry_mem_87804, "wqry_mem_87804") != 0)
+    if (memblock_set(ctx, &mem_param_86886, &wqry_mem_86841, "wqry_mem_86841") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87853, &wte_mem_87805, "wte_mem_87805") != 0)
+    if (memblock_set(ctx, &mem_param_86890, &wte_mem_86842, "wte_mem_86842") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87857, &wup_mem_87806, "wup_mem_87806") != 0)
+    if (memblock_set(ctx, &mem_param_86894, &wup_mem_86843, "wup_mem_86843") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87861, &wval_mem_87807, "wval_mem_87807") != 0)
+    if (memblock_set(ctx, &mem_param_86898, &wval_mem_86844, "wval_mem_86844") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87865, &wvoc_mem_87808, "wvoc_mem_87808") != 0)
+    if (memblock_set(ctx, &mem_param_86902, &wvoc_mem_86845, "wvoc_mem_86845") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87869, &wdown_mem_87809, "wdown_mem_87809") != 0)
+    if (memblock_set(ctx, &mem_param_86906, &wdown_mem_86846, "wdown_mem_86846") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87873, &wkey_mem_87810, "wkey_mem_87810") != 0)
+    if (memblock_set(ctx, &mem_param_86910, &wkey_mem_86847, "wkey_mem_86847") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87877, &wout_mem_87811, "wout_mem_87811") != 0)
+    if (memblock_set(ctx, &mem_param_86914, &wout_mem_86848, "wout_mem_86848") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87881, &wpe_mem_87812, "wpe_mem_87812") != 0)
+    if (memblock_set(ctx, &mem_param_86918, &wpe_mem_86849, "wpe_mem_86849") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87885, &wqry_mem_87813, "wqry_mem_87813") != 0)
+    if (memblock_set(ctx, &mem_param_86922, &wqry_mem_86850, "wqry_mem_86850") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87889, &wte_mem_87814, "wte_mem_87814") != 0)
+    if (memblock_set(ctx, &mem_param_86926, &wte_mem_86851, "wte_mem_86851") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87893, &wup_mem_87815, "wup_mem_87815") != 0)
+    if (memblock_set(ctx, &mem_param_86930, &wup_mem_86852, "wup_mem_86852") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87897, &wval_mem_87816, "wval_mem_87816") != 0)
+    if (memblock_set(ctx, &mem_param_86934, &wval_mem_86853, "wval_mem_86853") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87901, &wvoc_mem_87817, "wvoc_mem_87817") != 0)
+    if (memblock_set(ctx, &mem_param_86938, &wvoc_mem_86854, "wvoc_mem_86854") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87905, &wdown_mem_87818, "wdown_mem_87818") != 0)
+    if (memblock_set(ctx, &mem_param_86942, &wdown_mem_86855, "wdown_mem_86855") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87909, &wkey_mem_87819, "wkey_mem_87819") != 0)
+    if (memblock_set(ctx, &mem_param_86946, &wkey_mem_86856, "wkey_mem_86856") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87913, &wout_mem_87820, "wout_mem_87820") != 0)
+    if (memblock_set(ctx, &mem_param_86950, &wout_mem_86857, "wout_mem_86857") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87917, &wpe_mem_87821, "wpe_mem_87821") != 0)
+    if (memblock_set(ctx, &mem_param_86954, &wpe_mem_86858, "wpe_mem_86858") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87921, &wqry_mem_87822, "wqry_mem_87822") != 0)
+    if (memblock_set(ctx, &mem_param_86958, &wqry_mem_86859, "wqry_mem_86859") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87925, &wte_mem_87823, "wte_mem_87823") != 0)
+    if (memblock_set(ctx, &mem_param_86962, &wte_mem_86860, "wte_mem_86860") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87929, &wup_mem_87824, "wup_mem_87824") != 0)
+    if (memblock_set(ctx, &mem_param_86966, &wup_mem_86861, "wup_mem_86861") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87933, &wval_mem_87825, "wval_mem_87825") != 0)
+    if (memblock_set(ctx, &mem_param_86970, &wval_mem_86862, "wval_mem_86862") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_param_87937, &wvoc_mem_87826, "wvoc_mem_87826") != 0)
+    if (memblock_set(ctx, &mem_param_86974, &wvoc_mem_86863, "wvoc_mem_86863") != 0)
         return 1;
-    for (int64_t step_81116 = 0; step_81116 < (int64_t) 500; step_81116++) {
-        // futhark/microgpt.fut:476:16-25
+    for (int64_t step_80406 = 0; step_80406 < (int64_t) 500; step_80406++) {
+        // futhark/microgpt.fut:473:16-25
         
-        int64_t dl_81144 = ((int64_t *) dls_mem_87828.mem)[step_81116];
+        int64_t dl_80434 = ((int64_t *) dls_mem_86865.mem)[step_80406];
         
-        // futhark/microgpt.fut:389:37-40
+        // futhark/microgpt.fut:386:37-40
         
-        int64_t zl_rhs_81149 = sub64(dl_81144, (int64_t) 1);
+        int64_t zl_rhs_80439 = sub64(dl_80434, (int64_t) 1);
         
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_86976 = 0; i_86976 < (int64_t) 16; i_86976++) {
-            // futhark/microgpt.fut:389:25-81
+        for (int64_t i_86011 = 0; i_86011 < (int64_t) 16; i_86011++) {
+            // futhark/microgpt.fut:386:25-81
             
-            bool cond_82979 = slt64(i_86976, zl_rhs_81149);
+            bool cond_82312 = slt64(i_86011, zl_rhs_80439);
             
-            // futhark/microgpt.fut:389:56-59
+            // futhark/microgpt.fut:386:56-59
             
-            int64_t zeze_lhs_82980 = add64((int64_t) 1, i_86976);
+            int64_t zeze_lhs_82313 = add64((int64_t) 1, i_86011);
             
-            // futhark/microgpt.fut:389:47-60
+            // futhark/microgpt.fut:386:47-60
             
-            bool x_82981 = sle64((int64_t) 0, zeze_lhs_82980);
+            bool x_82314 = sle64((int64_t) 0, zeze_lhs_82313);
             
-            // futhark/microgpt.fut:389:47-60
+            // futhark/microgpt.fut:386:47-60
             
-            bool y_82982 = slt64(zeze_lhs_82980, (int64_t) 16);
+            bool y_82315 = slt64(zeze_lhs_82313, (int64_t) 16);
             
-            // futhark/microgpt.fut:389:47-60
+            // futhark/microgpt.fut:386:47-60
             
-            bool bounds_check_82983 = x_82981 && y_82982;
-            
-            // futhark/microgpt.fut:9:27-39
-            
-            bool loop_not_taken_82984 = !cond_82979;
+            bool bounds_check_82316 = x_82314 && y_82315;
             
             // futhark/microgpt.fut:9:27-39
             
-            bool protect_assert_disj_82985 = bounds_check_82983 || loop_not_taken_82984;
+            bool loop_not_taken_82317 = !cond_82312;
             
-            // futhark/microgpt.fut:389:47-60
+            // futhark/microgpt.fut:9:27-39
             
-            bool index_certs_82986;
+            bool protect_assert_disj_82318 = bounds_check_82316 || loop_not_taken_82317;
             
-            if (!protect_assert_disj_82985) {
-                set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) zeze_lhs_82980, "] out of bounds for array of shape [", (long long) (int64_t) 16, "].", "-> #0  futhark/microgpt.fut:389:47-60\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:389:3-83\n   #6  futhark/microgpt.fut:447:18-38\n   #7  futhark/microgpt.fut:457:26-463:31\n   #8  futhark/microgpt.fut:479:11-50\n"));
+            // futhark/microgpt.fut:386:47-60
+            
+            bool index_certs_82319;
+            
+            if (!protect_assert_disj_82318) {
+                set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) zeze_lhs_82313, "] out of bounds for array of shape [", (long long) (int64_t) 16, "].", "-> #0  futhark/microgpt.fut:386:47-60\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:386:3-83\n   #6  futhark/microgpt.fut:444:18-38\n   #7  futhark/microgpt.fut:454:26-460:31\n   #8  futhark/microgpt.fut:476:11-50\n"));
                 err = FUTHARK_PROGRAM_ERROR;
                 goto cleanup;
             }
             
-            int64_t tmp_83001 = ((int64_t *) seqs_mem_87829.mem)[step_81116 * (int64_t) 16 + i_86976];
+            int64_t tmp_82334 = ((int64_t *) seqs_mem_86866.mem)[step_80406 * (int64_t) 16 + i_86011];
             
-            // futhark/microgpt.fut:449:37-51
+            // futhark/microgpt.fut:446:37-51
             
-            bool x_83002 = sle64((int64_t) 0, tmp_83001);
+            bool x_82335 = sle64((int64_t) 0, tmp_82334);
             
-            // futhark/microgpt.fut:449:37-51
+            // futhark/microgpt.fut:446:37-51
             
-            bool y_83003 = slt64(tmp_83001, (int64_t) 27);
+            bool y_82336 = slt64(tmp_82334, (int64_t) 27);
             
-            // futhark/microgpt.fut:449:37-51
+            // futhark/microgpt.fut:446:37-51
             
-            bool bounds_check_83004 = x_83002 && y_83003;
+            bool bounds_check_82337 = x_82335 && y_82336;
             
-            // futhark/microgpt.fut:449:37-51
+            // futhark/microgpt.fut:446:37-51
             
-            bool index_certs_83005;
+            bool index_certs_82338;
             
-            if (!bounds_check_83004) {
-                set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_83001, "] out of bounds for array of shape [", (long long) (int64_t) 27, "].", "-> #0  futhark/microgpt.fut:449:37-51\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:449:16-55\n   #6  futhark/microgpt.fut:457:26-463:31\n   #7  futhark/microgpt.fut:479:11-50\n"));
+            if (!bounds_check_82337) {
+                set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_82334, "] out of bounds for array of shape [", (long long) (int64_t) 27, "].", "-> #0  futhark/microgpt.fut:446:37-51\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:446:16-55\n   #6  futhark/microgpt.fut:454:26-460:31\n   #7  futhark/microgpt.fut:476:11-50\n"));
                 err = FUTHARK_PROGRAM_ERROR;
                 goto cleanup;
             }
-            // futhark/microgpt.fut:389:47-60
+            // futhark/microgpt.fut:386:47-60
             
-            int64_t zeze_lhs_82987;
+            int64_t zeze_lhs_82320;
             
-            if (cond_82979) {
-                int64_t x_86788 = ((int64_t *) seqs_mem_87829.mem)[step_81116 * (int64_t) 16 + zeze_lhs_82980];
+            if (cond_82312) {
+                int64_t x_85824 = ((int64_t *) seqs_mem_86866.mem)[step_80406 * (int64_t) 16 + zeze_lhs_82313];
                 
-                zeze_lhs_82987 = x_86788;
+                zeze_lhs_82320 = x_85824;
             } else {
-                zeze_lhs_82987 = (int64_t) 0;
+                zeze_lhs_82320 = (int64_t) 0;
             }
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_86966 = 0; i_86966 < (int64_t) 27; i_86966++) {
-                // futhark/microgpt.fut:389:61-65
+            for (int64_t i_86001 = 0; i_86001 < (int64_t) 27; i_86001++) {
+                // futhark/microgpt.fut:386:61-65
                 
-                bool cond_t_res_82991 = zeze_lhs_82987 == i_86966;
+                bool cond_t_res_82324 = zeze_lhs_82320 == i_86001;
                 
                 // futhark/microgpt.fut:9:27-39
                 
-                bool x_82992 = cond_82979 && cond_t_res_82991;
+                bool x_82325 = cond_82312 && cond_t_res_82324;
                 
-                // futhark/microgpt.fut:389:25-81
+                // futhark/microgpt.fut:386:25-81
                 
-                double lifted_lambda_res_82993;
+                double lifted_lambda_res_82326;
                 
-                if (x_82992) {
-                    lifted_lambda_res_82993 = 1.0;
+                if (x_82325) {
+                    lifted_lambda_res_82326 = 1.0;
                 } else {
-                    lifted_lambda_res_82993 = 0.0;
+                    lifted_lambda_res_82326 = 0.0;
                 }
-                ((double *) mem_87948)[i_86966] = lifted_lambda_res_82993;
+                ((double *) mem_86985)[i_86001] = lifted_lambda_res_82326;
             }
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_86970 = 0; i_86970 < (int64_t) 16; i_86970++) {
+            for (int64_t i_86005 = 0; i_86005 < (int64_t) 16; i_86005++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double lifted_lambda_res_83012 = ((double *) mem_param_87853.mem)[tmp_83001 * (int64_t) 16 + i_86970];
+                double lifted_lambda_res_82345 = ((double *) mem_param_86890.mem)[tmp_82334 * (int64_t) 16 + i_86005];
                 
-                ((double *) mem_87955)[i_86970] = lifted_lambda_res_83012;
+                ((double *) mem_86992)[i_86005] = lifted_lambda_res_82345;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87938, i_86976 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87955, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87939, i_86976 * (int64_t) 27, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87948, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 27});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_86975, i_86011 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_86992, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_86976, i_86011 * (int64_t) 27, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_86985, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 27});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_86991 = 0; i_86991 < (int64_t) 16; i_86991++) {
+        for (int64_t i_86026 = 0; i_86026 < (int64_t) 16; i_86026++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_86981 = 0; i_86981 < (int64_t) 16; i_86981++) {
+            for (int64_t i_86016 = 0; i_86016 < (int64_t) 16; i_86016++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double zp_lhs_83037 = ((double *) mem_param_87845.mem)[i_86991 * (int64_t) 16 + i_86981];
+                double zp_lhs_82370 = ((double *) mem_param_86882.mem)[i_86026 * (int64_t) 16 + i_86016];
                 
                 // futhark/microgpt.fut:4:11-25
                 
-                double zp_rhs_83038 = ((double *) mem_87938)[i_86991 * (int64_t) 16 + i_86981];
+                double zp_rhs_82371 = ((double *) mem_86975)[i_86026 * (int64_t) 16 + i_86016];
                 
-                // futhark/microgpt.fut:224:39-75
+                // futhark/microgpt.fut:231:39-75
                 
-                double zp_res_83039 = zp_lhs_83037 + zp_rhs_83038;
+                double zp_res_82372 = zp_lhs_82370 + zp_rhs_82371;
                 
-                ((double *) mem_87980)[i_86981] = zp_res_83039;
+                ((double *) mem_87017)[i_86016] = zp_res_82372;
             }
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_86985 = 0; i_86985 < (int64_t) 27; i_86985++) {
+            for (int64_t i_86020 = 0; i_86020 < (int64_t) 27; i_86020++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double zt_rhs_83053 = ((double *) mem_87939)[i_86991 * (int64_t) 27 + i_86985];
+                double zt_rhs_82386 = ((double *) mem_86976)[i_86026 * (int64_t) 27 + i_86020];
                 
-                // futhark/microgpt.fut:260:43-85
+                // futhark/microgpt.fut:267:43-85
                 
-                double zt_res_83054 = -6.25e-2 * zt_rhs_83053;
+                double zt_res_82387 = -6.25e-2 * zt_rhs_82386;
                 
-                ((double *) mem_87987)[i_86985] = zt_res_83054;
+                ((double *) mem_87024)[i_86020] = zt_res_82387;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87970, i_86991 * (int64_t) 27, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87987, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 27});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87971, i_86991 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87980, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87007, i_86026 * (int64_t) 27, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87024, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 27});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87008, i_86026 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87017, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87005 = 0; i_87005 < (int64_t) 16; i_87005++) {
+        for (int64_t i_86040 = 0; i_86040 < (int64_t) 16; i_86040++) {
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_83073;
-            double r_83075 = 0.0;
+            double defunc_0_lifted_lambda_res_82406;
+            double r_82408 = 0.0;
             
-            for (int64_t i_83074 = 0; i_83074 < (int64_t) 16; i_83074++) {
+            for (int64_t i_82407 = 0; i_82407 < (int64_t) 16; i_82407++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_lhs_83076 = ((double *) mem_87971)[i_87005 * (int64_t) 16 + i_83074];
+                double zt_lhs_82409 = ((double *) mem_87008)[i_86040 * (int64_t) 16 + i_82407];
                 
-                // futhark/microgpt.fut:225:70-103
+                // futhark/microgpt.fut:232:70-103
                 
-                double zt_res_83077 = zt_lhs_83076 * zt_lhs_83076;
+                double zt_res_82410 = zt_lhs_82409 * zt_lhs_82409;
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_83078 = r_83075 + zt_res_83077;
-                double r_tmp_89631 = zp_res_83078;
+                double zp_res_82411 = r_82408 + zt_res_82410;
+                double r_tmp_88699 = zp_res_82411;
                 
-                r_83075 = r_tmp_89631;
+                r_82408 = r_tmp_88699;
             }
-            defunc_0_lifted_lambda_res_83073 = r_83075;
-            // futhark/microgpt.fut:225:50-121
+            defunc_0_lifted_lambda_res_82406 = r_82408;
+            // futhark/microgpt.fut:232:50-121
             
-            double zs_res_83079 = defunc_0_lifted_lambda_res_83073 / 16.0;
+            double zs_res_82412 = defunc_0_lifted_lambda_res_82406 / 16.0;
             
-            // futhark/microgpt.fut:226:23-53
+            // futhark/microgpt.fut:233:23-53
             
-            double zp_res_83080 = 1.0e-5 + zs_res_83079;
+            double zp_res_82413 = 1.0e-5 + zs_res_82412;
             
-            // futhark/microgpt.fut:226:15-53
+            // futhark/microgpt.fut:233:15-53
             
-            double sqrt_res_83081 = futrts_sqrt64(zp_res_83080);
+            double sqrt_res_82414 = futrts_sqrt64(zp_res_82413);
             
-            // futhark/microgpt.fut:227:25-35
+            // futhark/microgpt.fut:234:25-35
             
-            double zs_res_83082 = 1.0 / sqrt_res_83081;
+            double zs_res_82415 = 1.0 / sqrt_res_82414;
             
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_86998 = 0; i_86998 < (int64_t) 16; i_86998++) {
+            for (int64_t i_86033 = 0; i_86033 < (int64_t) 16; i_86033++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double zt_lhs_84973 = ((double *) mem_87971)[i_87005 * (int64_t) 16 + i_86998];
+                double zt_lhs_84176 = ((double *) mem_87008)[i_86040 * (int64_t) 16 + i_86033];
                 
-                // futhark/microgpt.fut:227:5-35
+                // futhark/microgpt.fut:234:5-35
                 
-                double zt_res_84974 = zs_res_83082 * zt_lhs_84973;
+                double zt_res_84177 = zs_res_82415 * zt_lhs_84176;
                 
-                // futhark/microgpt.fut:318:45-86
+                // futhark/microgpt.fut:316:45-86
                 
-                double zt_res_84982 = zt_lhs_84973 * zt_lhs_84973;
+                double zt_res_84185 = zt_lhs_84176 * zt_lhs_84176;
                 
-                ((double *) mem_88012)[i_86998] = zt_res_84982;
-                ((double *) mem_88013)[i_86998] = zt_res_84974;
+                ((double *) mem_87049)[i_86033] = zt_res_84185;
+                ((double *) mem_87050)[i_86033] = zt_res_84177;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88002, i_87005 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88012, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88003, i_87005 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88013, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87039, i_86040 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87049, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87040, i_86040 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87050, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87021 = 0; i_87021 < (int64_t) 16; i_87021++) {
+        for (int64_t i_86056 = 0; i_86056 < (int64_t) 16; i_86056++) {
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_83181;
-            double r_83183 = 0.0;
+            double defunc_0_lifted_lambda_res_82514;
+            double r_82516 = 0.0;
             
-            for (int64_t i_83182 = 0; i_83182 < (int64_t) 16; i_83182++) {
+            for (int64_t i_82515 = 0; i_82515 < (int64_t) 16; i_82515++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_lhs_83184 = ((double *) mem_88003)[i_87021 * (int64_t) 16 + i_83182];
+                double zt_lhs_82517 = ((double *) mem_87040)[i_86056 * (int64_t) 16 + i_82515];
                 
-                // futhark/microgpt.fut:228:71-106
+                // futhark/microgpt.fut:235:71-106
                 
-                double zt_res_83185 = zt_lhs_83184 * zt_lhs_83184;
+                double zt_res_82518 = zt_lhs_82517 * zt_lhs_82517;
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_83186 = r_83183 + zt_res_83185;
-                double r_tmp_89637 = zp_res_83186;
+                double zp_res_82519 = r_82516 + zt_res_82518;
+                double r_tmp_88705 = zp_res_82519;
                 
-                r_83183 = r_tmp_89637;
+                r_82516 = r_tmp_88705;
             }
-            defunc_0_lifted_lambda_res_83181 = r_83183;
-            // futhark/microgpt.fut:228:50-124
+            defunc_0_lifted_lambda_res_82514 = r_82516;
+            // futhark/microgpt.fut:235:50-124
             
-            double zs_res_83187 = defunc_0_lifted_lambda_res_83181 / 16.0;
+            double zs_res_82520 = defunc_0_lifted_lambda_res_82514 / 16.0;
             
-            // futhark/microgpt.fut:229:24-54
+            // futhark/microgpt.fut:236:24-54
             
-            double zp_res_83188 = 1.0e-5 + zs_res_83187;
+            double zp_res_82521 = 1.0e-5 + zs_res_82520;
             
-            // futhark/microgpt.fut:229:16-54
+            // futhark/microgpt.fut:236:16-54
             
-            double sqrt_res_83189 = futrts_sqrt64(zp_res_83188);
+            double sqrt_res_82522 = futrts_sqrt64(zp_res_82521);
             
-            // futhark/microgpt.fut:230:25-36
+            // futhark/microgpt.fut:237:25-36
             
-            double zs_res_83190 = 1.0 / sqrt_res_83189;
+            double zs_res_82523 = 1.0 / sqrt_res_82522;
             
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87012 = 0; i_87012 < (int64_t) 16; i_87012++) {
+            for (int64_t i_86047 = 0; i_86047 < (int64_t) 16; i_86047++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double zt_lhs_85002 = ((double *) mem_88003)[i_87021 * (int64_t) 16 + i_87012];
+                double zt_lhs_84205 = ((double *) mem_87040)[i_86056 * (int64_t) 16 + i_86047];
                 
-                // futhark/microgpt.fut:230:5-36
+                // futhark/microgpt.fut:237:5-36
                 
-                double zt_res_85003 = zs_res_83190 * zt_lhs_85002;
+                double zt_res_84206 = zs_res_82523 * zt_lhs_84205;
                 
-                // futhark/microgpt.fut:311:45-86
+                // futhark/microgpt.fut:309:45-86
                 
-                double zt_res_85011 = zt_lhs_85002 * zt_lhs_85002;
+                double zt_res_84214 = zt_lhs_84205 * zt_lhs_84205;
                 
-                ((double *) mem_88048)[i_87012] = zt_res_85011;
-                ((double *) mem_88049)[i_87012] = zt_res_85003;
+                ((double *) mem_87085)[i_86047] = zt_res_84214;
+                ((double *) mem_87086)[i_86047] = zt_res_84206;
             }
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_83224;
-            double r_83226 = 0.0;
+            double defunc_0_lifted_lambda_res_82557;
+            double r_82559 = 0.0;
             
-            for (int64_t i_83225 = 0; i_83225 < (int64_t) 16; i_83225++) {
+            for (int64_t i_82558 = 0; i_82558 < (int64_t) 16; i_82558++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double lifted_lambda_res_83227 = ((double *) mem_88002)[i_87021 * (int64_t) 16 + i_83225];
+                double lifted_lambda_res_82560 = ((double *) mem_87039)[i_86056 * (int64_t) 16 + i_82558];
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_83228 = r_83226 + lifted_lambda_res_83227;
-                double r_tmp_89640 = zp_res_83228;
+                double zp_res_82561 = r_82559 + lifted_lambda_res_82560;
+                double r_tmp_88708 = zp_res_82561;
                 
-                r_83226 = r_tmp_89640;
+                r_82559 = r_tmp_88708;
             }
-            defunc_0_lifted_lambda_res_83224 = r_83226;
-            // futhark/microgpt.fut:319:36-94
+            defunc_0_lifted_lambda_res_82557 = r_82559;
+            // futhark/microgpt.fut:317:36-94
             
-            double zs_res_83229 = defunc_0_lifted_lambda_res_83224 / 16.0;
+            double zs_res_82562 = defunc_0_lifted_lambda_res_82557 / 16.0;
             
-            ((double *) mem_88034)[i_87021] = zs_res_83229;
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88035, i_87021 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88048, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88036, i_87021 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88049, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            ((double *) mem_87071)[i_86056] = zs_res_82562;
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87072, i_86056 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87085, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87073, i_86056 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87086, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87045 = 0; i_87045 < (int64_t) 16; i_87045++) {
+        for (int64_t i_86078 = 0; i_86078 < (int64_t) 16; i_86078++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87031 = 0; i_87031 < (int64_t) 16; i_87031++) {
+            for (int64_t i_86066 = 0; i_86066 < (int64_t) 16; i_86066++) {
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_85074;
-                double r_85076 = 0.0;
+                double defunc_0_lifted_lambda_res_84277;
+                double r_84279 = 0.0;
                 
-                for (int64_t i_85075 = 0; i_85075 < (int64_t) 16; i_85075++) {
+                for (int64_t i_84278 = 0; i_84278 < (int64_t) 16; i_84278++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_85077 = ((double *) mem_param_87849.mem)[i_87031 * (int64_t) 16 + i_85075];
+                    double zt_lhs_84280 = ((double *) mem_param_86886.mem)[i_86066 * (int64_t) 16 + i_84278];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_85078 = ((double *) mem_88036)[i_87045 * (int64_t) 16 + i_85075];
+                    double zt_rhs_84281 = ((double *) mem_87073)[i_86078 * (int64_t) 16 + i_84278];
                     
-                    // futhark/microgpt.fut:231:63-102
+                    // futhark/microgpt.fut:238:63-102
                     
-                    double zt_res_85079 = zt_lhs_85077 * zt_rhs_85078;
+                    double zt_res_84282 = zt_lhs_84280 * zt_rhs_84281;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_85080 = r_85076 + zt_res_85079;
-                    double r_tmp_89649 = zp_res_85080;
+                    double zp_res_84283 = r_84279 + zt_res_84282;
+                    double r_tmp_88716 = zp_res_84283;
                     
-                    r_85076 = r_tmp_89649;
+                    r_84279 = r_tmp_88716;
                 }
-                defunc_0_lifted_lambda_res_85074 = r_85076;
+                defunc_0_lifted_lambda_res_84277 = r_84279;
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_85087;
-                double r_85089 = 0.0;
+                double defunc_0_lifted_lambda_res_84290;
+                double r_84292 = 0.0;
                 
-                for (int64_t i_85088 = 0; i_85088 < (int64_t) 16; i_85088++) {
+                for (int64_t i_84291 = 0; i_84291 < (int64_t) 16; i_84291++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_85090 = ((double *) mem_param_87837.mem)[i_87031 * (int64_t) 16 + i_85088];
+                    double zt_lhs_84293 = ((double *) mem_param_86874.mem)[i_86066 * (int64_t) 16 + i_84291];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_85091 = ((double *) mem_88036)[i_87045 * (int64_t) 16 + i_85088];
+                    double zt_rhs_84294 = ((double *) mem_87073)[i_86078 * (int64_t) 16 + i_84291];
                     
-                    // futhark/microgpt.fut:232:63-102
+                    // futhark/microgpt.fut:239:63-102
                     
-                    double zt_res_85092 = zt_lhs_85090 * zt_rhs_85091;
+                    double zt_res_84295 = zt_lhs_84293 * zt_rhs_84294;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_85093 = r_85089 + zt_res_85092;
-                    double r_tmp_89650 = zp_res_85093;
+                    double zp_res_84296 = r_84292 + zt_res_84295;
+                    double r_tmp_88717 = zp_res_84296;
                     
-                    r_85089 = r_tmp_89650;
+                    r_84292 = r_tmp_88717;
                 }
-                defunc_0_lifted_lambda_res_85087 = r_85089;
+                defunc_0_lifted_lambda_res_84290 = r_84292;
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_85103;
-                double r_85105 = 0.0;
+                double defunc_0_lifted_lambda_res_84306;
+                double r_84308 = 0.0;
                 
-                for (int64_t i_85104 = 0; i_85104 < (int64_t) 16; i_85104++) {
+                for (int64_t i_84307 = 0; i_84307 < (int64_t) 16; i_84307++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_85106 = ((double *) mem_param_87861.mem)[i_87031 * (int64_t) 16 + i_85104];
+                    double zt_lhs_84309 = ((double *) mem_param_86898.mem)[i_86066 * (int64_t) 16 + i_84307];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_85107 = ((double *) mem_88036)[i_87045 * (int64_t) 16 + i_85104];
+                    double zt_rhs_84310 = ((double *) mem_87073)[i_86078 * (int64_t) 16 + i_84307];
                     
-                    // futhark/microgpt.fut:233:63-102
+                    // futhark/microgpt.fut:240:63-102
                     
-                    double zt_res_85108 = zt_lhs_85106 * zt_rhs_85107;
+                    double zt_res_84311 = zt_lhs_84309 * zt_rhs_84310;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_85109 = r_85105 + zt_res_85108;
-                    double r_tmp_89651 = zp_res_85109;
+                    double zp_res_84312 = r_84308 + zt_res_84311;
+                    double r_tmp_88718 = zp_res_84312;
                     
-                    r_85105 = r_tmp_89651;
+                    r_84308 = r_tmp_88718;
                 }
-                defunc_0_lifted_lambda_res_85103 = r_85105;
-                ((double *) mem_88096)[i_87031] = defunc_0_lifted_lambda_res_85103;
-                ((double *) mem_88097)[i_87031] = defunc_0_lifted_lambda_res_85087;
-                ((double *) mem_88098)[i_87031] = defunc_0_lifted_lambda_res_85074;
+                defunc_0_lifted_lambda_res_84306 = r_84308;
+                ((double *) mem_87129)[i_86066] = defunc_0_lifted_lambda_res_84306;
+                ((double *) mem_87130)[i_86066] = defunc_0_lifted_lambda_res_84290;
+                ((double *) mem_87131)[i_86066] = defunc_0_lifted_lambda_res_84277;
             }
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_83571;
-            double r_83573 = 0.0;
+            double defunc_0_lifted_lambda_res_82793;
+            double r_82795 = 0.0;
             
-            for (int64_t i_83572 = 0; i_83572 < (int64_t) 16; i_83572++) {
+            for (int64_t i_82794 = 0; i_82794 < (int64_t) 16; i_82794++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double lifted_lambda_res_83574 = ((double *) mem_88035)[i_87045 * (int64_t) 16 + i_83572];
+                double lifted_lambda_res_82796 = ((double *) mem_87072)[i_86078 * (int64_t) 16 + i_82794];
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_83575 = r_83573 + lifted_lambda_res_83574;
-                double r_tmp_89652 = zp_res_83575;
+                double zp_res_82797 = r_82795 + lifted_lambda_res_82796;
+                double r_tmp_88719 = zp_res_82797;
                 
-                r_83573 = r_tmp_89652;
+                r_82795 = r_tmp_88719;
             }
-            defunc_0_lifted_lambda_res_83571 = r_83573;
-            // futhark/microgpt.fut:312:36-94
+            defunc_0_lifted_lambda_res_82793 = r_82795;
+            // futhark/microgpt.fut:310:36-94
             
-            double zs_res_83576 = defunc_0_lifted_lambda_res_83571 / 16.0;
+            double zs_res_82798 = defunc_0_lifted_lambda_res_82793 / 16.0;
             
-            // futhark/microgpt.fut:320:43-55
-            
-            double zp_lhs_83590 = ((double *) mem_88034)[i_87045];
-            
-            // futhark/microgpt.fut:320:43-83
-            
-            double zp_res_83591 = 1.0e-5 + zp_lhs_83590;
-            
-            // futhark/microgpt.fut:320:35-83
-            
-            double sqrt_res_83592 = futrts_sqrt64(zp_res_83591);
-            
-            ((double *) mem_88073)[i_87045] = sqrt_res_83592;
-            ((double *) mem_88074)[i_87045] = zs_res_83576;
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88075, i_87045 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88096, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88076, i_87045 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88097, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88077, i_87045 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88098, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            ((double *) mem_87110)[i_86078] = zs_res_82798;
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87111, i_86078 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87129, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87112, i_86078 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87130, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87113, i_86078 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87131, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87077 = 0; i_87077 < (int64_t) 4; i_87077++) {
-            // futhark/microgpt.fut:234:67-70
+        for (int64_t i_86109 = 0; i_86109 < (int64_t) 4; i_86109++) {
+            // futhark/microgpt.fut:241:67-70
             
-            int64_t zp_lhs_83664 = mul64((int64_t) 4, i_87077);
+            int64_t zp_lhs_82869 = mul64((int64_t) 4, i_86109);
             
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87067 = 0; i_87067 < (int64_t) 16; i_87067++) {
+            for (int64_t i_86099 = 0; i_86099 < (int64_t) 16; i_86099++) {
                 // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87057 = 0; i_87057 < (int64_t) 4; i_87057++) {
-                    // futhark/microgpt.fut:234:72-79
+                for (int64_t i_86089 = 0; i_86089 < (int64_t) 4; i_86089++) {
+                    // futhark/microgpt.fut:241:72-79
                     
-                    int64_t tmp_85267 = add64(zp_lhs_83664, i_87057);
+                    int64_t tmp_84470 = add64(zp_lhs_82869, i_86089);
                     
-                    // futhark/microgpt.fut:234:48-81
+                    // futhark/microgpt.fut:241:48-81
                     
-                    bool x_85268 = sle64((int64_t) 0, tmp_85267);
+                    bool x_84471 = sle64((int64_t) 0, tmp_84470);
                     
-                    // futhark/microgpt.fut:234:48-81
+                    // futhark/microgpt.fut:241:48-81
                     
-                    bool y_85269 = slt64(tmp_85267, (int64_t) 16);
+                    bool y_84472 = slt64(tmp_84470, (int64_t) 16);
                     
-                    // futhark/microgpt.fut:234:48-81
+                    // futhark/microgpt.fut:241:48-81
                     
-                    bool bounds_check_85270 = x_85268 && y_85269;
+                    bool bounds_check_84473 = x_84471 && y_84472;
                     
-                    // futhark/microgpt.fut:234:48-81
+                    // futhark/microgpt.fut:241:48-81
                     
-                    bool index_certs_85271;
+                    bool index_certs_84474;
                     
-                    if (!bounds_check_85270) {
-                        set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_85267, "] out of bounds for array of shape [", (long long) (int64_t) 16, "].", "-> #0  futhark/microgpt.fut:234:48-81\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:15:29-44\n   #6  futhark/microgpt.fut:4:11-25\n   #7  futhark/microgpt.fut:15:15-45\n   #8  futhark/microgpt.fut:234:12-82\n   #9  futhark/microgpt.fut:452:5-76\n   #10 futhark/microgpt.fut:457:26-463:31\n   #11 futhark/microgpt.fut:479:11-50\n"));
+                    if (!bounds_check_84473) {
+                        set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_84470, "] out of bounds for array of shape [", (long long) (int64_t) 16, "].", "-> #0  futhark/microgpt.fut:241:48-81\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:15:29-44\n   #6  futhark/microgpt.fut:4:11-25\n   #7  futhark/microgpt.fut:15:15-45\n   #8  futhark/microgpt.fut:241:12-82\n   #9  futhark/microgpt.fut:449:5-76\n   #10 futhark/microgpt.fut:454:26-460:31\n   #11 futhark/microgpt.fut:476:11-50\n"));
                         err = FUTHARK_PROGRAM_ERROR;
                         goto cleanup;
                     }
                     // futhark/microgpt.fut:4:11-25
                     
-                    double lifted_lambda_res_85272 = ((double *) mem_88077)[i_87067 * (int64_t) 16 + tmp_85267];
+                    double lifted_lambda_res_84475 = ((double *) mem_87113)[i_86099 * (int64_t) 16 + tmp_84470];
                     
                     // futhark/microgpt.fut:4:11-25
                     
-                    double lifted_lambda_res_85280 = ((double *) mem_88076)[i_87067 * (int64_t) 16 + tmp_85267];
+                    double lifted_lambda_res_84483 = ((double *) mem_87112)[i_86099 * (int64_t) 16 + tmp_84470];
                     
                     // futhark/microgpt.fut:4:11-25
                     
-                    double lifted_lambda_res_85291 = ((double *) mem_88075)[i_87067 * (int64_t) 16 + tmp_85267];
+                    double lifted_lambda_res_84494 = ((double *) mem_87111)[i_86099 * (int64_t) 16 + tmp_84470];
                     
-                    ((double *) mem_88168)[i_87057] = lifted_lambda_res_85291;
-                    ((double *) mem_88169)[i_87057] = lifted_lambda_res_85280;
-                    ((double *) mem_88170)[i_87057] = lifted_lambda_res_85272;
+                    ((double *) mem_87198)[i_86089] = lifted_lambda_res_84494;
+                    ((double *) mem_87199)[i_86089] = lifted_lambda_res_84483;
+                    ((double *) mem_87200)[i_86089] = lifted_lambda_res_84475;
                 }
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88153, i_87067 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88168, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88154, i_87067 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88169, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88155, i_87067 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88170, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87183, i_86099 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87198, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87184, i_86099 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87199, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87185, i_86099 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87200, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
             }
-            lmad_copy_8b(ctx, 2, (uint64_t *) mem_88135, i_87077 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_88153, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
-            lmad_copy_8b(ctx, 2, (uint64_t *) mem_88136, i_87077 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_88154, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
-            lmad_copy_8b(ctx, 2, (uint64_t *) mem_88137, i_87077 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_88155, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
+            lmad_copy_8b(ctx, 2, (uint64_t *) mem_87165, i_86109 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_87183, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
+            lmad_copy_8b(ctx, 2, (uint64_t *) mem_87166, i_86109 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_87184, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
+            lmad_copy_8b(ctx, 2, (uint64_t *) mem_87167, i_86109 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_87185, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87129 = 0; i_87129 < (int64_t) 4; i_87129++) {
+        for (int64_t i_86161 = 0; i_86161 < (int64_t) 4; i_86161++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87092 = 0; i_87092 < (int64_t) 16; i_87092++) {
+            for (int64_t i_86124 = 0; i_86124 < (int64_t) 16; i_86124++) {
                 // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87085 = 0; i_87085 < (int64_t) 16; i_87085++) {
+                for (int64_t i_86117 = 0; i_86117 < (int64_t) 16; i_86117++) {
                     // futhark/microgpt.fut:71:13-49
                     
-                    double defunc_0_lifted_lambda_res_85370;
-                    double r_85372 = 0.0;
+                    double defunc_0_lifted_lambda_res_84573;
+                    double r_84575 = 0.0;
                     
-                    for (int64_t i_85371 = 0; i_85371 < (int64_t) 4; i_85371++) {
+                    for (int64_t i_84574 = 0; i_84574 < (int64_t) 4; i_84574++) {
                         // futhark/microgpt.fut:71:46-49
                         
-                        double zt_lhs_85373 = ((double *) mem_88137)[i_87129 * (int64_t) 64 + i_87092 * (int64_t) 4 + i_85371];
+                        double zt_lhs_84576 = ((double *) mem_87167)[i_86161 * (int64_t) 64 + i_86124 * (int64_t) 4 + i_84574];
                         
                         // futhark/microgpt.fut:71:46-49
                         
-                        double zt_rhs_85374 = ((double *) mem_88136)[i_87129 * (int64_t) 64 + i_87085 * (int64_t) 4 + i_85371];
+                        double zt_rhs_84577 = ((double *) mem_87166)[i_86161 * (int64_t) 64 + i_86117 * (int64_t) 4 + i_84574];
                         
-                        // futhark/microgpt.fut:237:110-163
+                        // futhark/microgpt.fut:244:110-163
                         
-                        double zt_res_85375 = zt_lhs_85373 * zt_rhs_85374;
+                        double zt_res_84578 = zt_lhs_84576 * zt_rhs_84577;
                         
                         // futhark/microgpt.fut:71:40-49
                         
-                        double zp_res_85376 = r_85372 + zt_res_85375;
-                        double r_tmp_89668 = zp_res_85376;
+                        double zp_res_84579 = r_84575 + zt_res_84578;
+                        double r_tmp_88735 = zp_res_84579;
                         
-                        r_85372 = r_tmp_89668;
+                        r_84575 = r_tmp_88735;
                     }
-                    defunc_0_lifted_lambda_res_85370 = r_85372;
+                    defunc_0_lifted_lambda_res_84573 = r_84575;
                     // futhark/microgpt.fut:71:13-49
                     
-                    double defunc_0_lifted_lambda_res_85383;
-                    double r_85385 = 0.0;
+                    double defunc_0_lifted_lambda_res_84586;
+                    double r_84588 = 0.0;
                     
-                    for (int64_t i_85384 = 0; i_85384 < (int64_t) 4; i_85384++) {
+                    for (int64_t i_84587 = 0; i_84587 < (int64_t) 4; i_84587++) {
                         // futhark/microgpt.fut:71:46-49
                         
-                        double zt_lhs_85386 = ((double *) mem_88137)[i_87129 * (int64_t) 64 + i_87092 * (int64_t) 4 + i_85384];
+                        double zt_lhs_84589 = ((double *) mem_87167)[i_86161 * (int64_t) 64 + i_86124 * (int64_t) 4 + i_84587];
                         
                         // futhark/microgpt.fut:71:46-49
                         
-                        double zt_rhs_85387 = ((double *) mem_88136)[i_87129 * (int64_t) 64 + i_87085 * (int64_t) 4 + i_85384];
+                        double zt_rhs_84590 = ((double *) mem_87166)[i_86161 * (int64_t) 64 + i_86117 * (int64_t) 4 + i_84587];
                         
-                        // futhark/microgpt.fut:288:75-134
+                        // futhark/microgpt.fut:291:75-134
                         
-                        double zt_res_85388 = zt_lhs_85386 * zt_rhs_85387;
+                        double zt_res_84591 = zt_lhs_84589 * zt_rhs_84590;
                         
                         // futhark/microgpt.fut:71:40-49
                         
-                        double zp_res_85389 = r_85385 + zt_res_85388;
-                        double r_tmp_89669 = zp_res_85389;
+                        double zp_res_84592 = r_84588 + zt_res_84591;
+                        double r_tmp_88736 = zp_res_84592;
                         
-                        r_85385 = r_tmp_89669;
+                        r_84588 = r_tmp_88736;
                     }
-                    defunc_0_lifted_lambda_res_85383 = r_85385;
-                    ((double *) mem_88238)[i_87085] = defunc_0_lifted_lambda_res_85383;
-                    ((double *) mem_88239)[i_87085] = defunc_0_lifted_lambda_res_85370;
+                    defunc_0_lifted_lambda_res_84586 = r_84588;
+                    ((double *) mem_87268)[i_86117] = defunc_0_lifted_lambda_res_84586;
+                    ((double *) mem_87269)[i_86117] = defunc_0_lifted_lambda_res_84573;
                 }
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88228, i_87092 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88238, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88229, i_87092 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88239, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87258, i_86124 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87268, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87259, i_86124 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87269, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
             }
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87101 = 0; i_87101 < (int64_t) 16; i_87101++) {
+            for (int64_t i_86133 = 0; i_86133 < (int64_t) 16; i_86133++) {
                 // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87097 = 0; i_87097 < (int64_t) 16; i_87097++) {
+                for (int64_t i_86129 = 0; i_86129 < (int64_t) 16; i_86129++) {
                     // futhark/microgpt.fut:4:11-25
                     
-                    double zs_lhs_83773 = ((double *) mem_88229)[i_87101 * (int64_t) 16 + i_87097];
+                    double zs_lhs_82978 = ((double *) mem_87259)[i_86133 * (int64_t) 16 + i_86129];
                     
-                    // futhark/microgpt.fut:238:47-78
+                    // futhark/microgpt.fut:245:47-78
                     
-                    double zs_res_83774 = zs_lhs_83773 / 2.0;
-                    double zp_rhs_83775 = ((double *) masks_mem_87827.mem)[step_81116 * (int64_t) 256 + i_87101 * (int64_t) 16 + i_87097];
+                    double zs_res_82979 = zs_lhs_82978 / 2.0;
+                    double zp_rhs_82980 = ((double *) masks_mem_86864.mem)[step_80406 * (int64_t) 256 + i_86133 * (int64_t) 16 + i_86129];
                     
-                    // futhark/microgpt.fut:238:65-102
+                    // futhark/microgpt.fut:245:65-102
                     
-                    double zp_res_83776 = zs_res_83774 + zp_rhs_83775;
+                    double zp_res_82981 = zs_res_82979 + zp_rhs_82980;
                     
-                    ((double *) mem_88265)[i_87097] = zp_res_83776;
+                    ((double *) mem_87295)[i_86129] = zp_res_82981;
                 }
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88260, i_87101 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88265, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87290, i_86133 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87295, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
             }
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87115 = 0; i_87115 < (int64_t) 16; i_87115++) {
-                // futhark/microgpt.fut:115:13-33
+            for (int64_t i_86147 = 0; i_86147 < (int64_t) 16; i_86147++) {
+                // futhark/microgpt.fut:103:13-33
                 
-                double defunc_0_reduce_res_86809;
-                double redout_87103 = -INFINITY;
+                double defunc_0_reduce_res_85845;
+                double redout_86135 = -INFINITY;
                 
-                for (int64_t i_87104 = 0; i_87104 < (int64_t) 16; i_87104++) {
+                for (int64_t i_86136 = 0; i_86136 < (int64_t) 16; i_86136++) {
                     // futhark/microgpt.fut:4:11-25
                     
-                    double lifted_lambda_res_85407 = ((double *) mem_88260)[i_87115 * (int64_t) 16 + i_87104];
+                    double lifted_lambda_res_84610 = ((double *) mem_87290)[i_86147 * (int64_t) 16 + i_86136];
                     
-                    // futhark/microgpt.fut:115:13-33
+                    // futhark/microgpt.fut:103:13-33
                     
-                    double max_res_83797 = fmax64(lifted_lambda_res_85407, redout_87103);
-                    double redout_tmp_89673 = max_res_83797;
+                    double max_res_83002 = fmax64(lifted_lambda_res_84610, redout_86135);
+                    double redout_tmp_88740 = max_res_83002;
                     
-                    redout_87103 = redout_tmp_89673;
+                    redout_86135 = redout_tmp_88740;
                 }
-                defunc_0_reduce_res_86809 = redout_87103;
-                // futhark/microgpt.fut:240:65-74
+                defunc_0_reduce_res_85845 = redout_86135;
+                // futhark/microgpt.fut:247:65-74
                 
-                double neg_res_83798 = -defunc_0_reduce_res_86809;
+                double neg_res_83003 = -defunc_0_reduce_res_85845;
                 
                 // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87107 = 0; i_87107 < (int64_t) 16; i_87107++) {
+                for (int64_t i_86139 = 0; i_86139 < (int64_t) 16; i_86139++) {
                     // futhark/microgpt.fut:4:11-25
                     
-                    double zp_lhs_83805 = ((double *) mem_88260)[i_87115 * (int64_t) 16 + i_87107];
+                    double zp_lhs_83010 = ((double *) mem_87290)[i_86147 * (int64_t) 16 + i_86139];
                     
-                    // futhark/microgpt.fut:240:43-74
+                    // futhark/microgpt.fut:247:43-74
                     
-                    double zp_res_83806 = neg_res_83798 + zp_lhs_83805;
+                    double zp_res_83011 = neg_res_83003 + zp_lhs_83010;
                     
-                    // futhark/microgpt.fut:240:36-74
+                    // futhark/microgpt.fut:247:36-74
                     
-                    double exp_res_83807 = futrts_exp64(zp_res_83806);
+                    double exp_res_83012 = futrts_exp64(zp_res_83011);
                     
-                    ((double *) mem_88281)[i_87107] = exp_res_83807;
+                    ((double *) mem_87311)[i_86139] = exp_res_83012;
                 }
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_83809;
-                double r_83811 = 0.0;
+                double defunc_0_lifted_lambda_res_83014;
+                double r_83016 = 0.0;
                 
-                for (int64_t i_83810 = 0; i_83810 < (int64_t) 16; i_83810++) {
-                    // futhark/microgpt.fut:241:36-46
+                for (int64_t i_83015 = 0; i_83015 < (int64_t) 16; i_83015++) {
+                    // futhark/microgpt.fut:248:36-46
                     
-                    double lifted_lambda_res_83812 = ((double *) mem_88281)[i_83810];
+                    double lifted_lambda_res_83017 = ((double *) mem_87311)[i_83015];
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_83813 = r_83811 + lifted_lambda_res_83812;
-                    double r_tmp_89675 = zp_res_83813;
+                    double zp_res_83018 = r_83016 + lifted_lambda_res_83017;
+                    double r_tmp_88742 = zp_res_83018;
                     
-                    r_83811 = r_tmp_89675;
+                    r_83016 = r_tmp_88742;
                 }
-                defunc_0_lifted_lambda_res_83809 = r_83811;
+                defunc_0_lifted_lambda_res_83014 = r_83016;
                 // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87111 = 0; i_87111 < (int64_t) 16; i_87111++) {
-                    // futhark/microgpt.fut:242:5-15
+                for (int64_t i_86143 = 0; i_86143 < (int64_t) 16; i_86143++) {
+                    // futhark/microgpt.fut:249:5-15
                     
-                    double zs_lhs_83820 = ((double *) mem_88281)[i_87111];
+                    double zs_lhs_83025 = ((double *) mem_87311)[i_86143];
                     
-                    // futhark/microgpt.fut:242:5-23
+                    // futhark/microgpt.fut:249:5-23
                     
-                    double zs_res_83821 = zs_lhs_83820 / defunc_0_lifted_lambda_res_83809;
+                    double zs_res_83026 = zs_lhs_83025 / defunc_0_lifted_lambda_res_83014;
                     
-                    ((double *) mem_88288)[i_87111] = zs_res_83821;
+                    ((double *) mem_87318)[i_86143] = zs_res_83026;
                 }
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88276, i_87115 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88288, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87306, i_86147 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87318, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
             }
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87123 = 0; i_87123 < (int64_t) 16; i_87123++) {
+            for (int64_t i_86155 = 0; i_86155 < (int64_t) 16; i_86155++) {
                 // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87119 = 0; i_87119 < (int64_t) 4; i_87119++) {
+                for (int64_t i_86151 = 0; i_86151 < (int64_t) 4; i_86151++) {
                     // futhark/microgpt.fut:71:13-49
                     
-                    double defunc_0_lifted_lambda_res_83836;
-                    double r_83838 = 0.0;
+                    double defunc_0_lifted_lambda_res_83041;
+                    double r_83043 = 0.0;
                     
-                    for (int64_t i_83837 = 0; i_83837 < (int64_t) 16; i_83837++) {
+                    for (int64_t i_83042 = 0; i_83042 < (int64_t) 16; i_83042++) {
                         // futhark/microgpt.fut:71:46-49
                         
-                        double zt_lhs_83839 = ((double *) mem_88276)[i_87123 * (int64_t) 16 + i_83837];
+                        double zt_lhs_83044 = ((double *) mem_87306)[i_86155 * (int64_t) 16 + i_83042];
                         
                         // futhark/microgpt.fut:71:46-49
                         
-                        double zt_rhs_83840 = ((double *) mem_88135)[i_87129 * (int64_t) 64 + i_83837 * (int64_t) 4 + i_87119];
+                        double zt_rhs_83045 = ((double *) mem_87165)[i_86161 * (int64_t) 64 + i_83042 * (int64_t) 4 + i_86151];
                         
-                        // futhark/microgpt.fut:243:26-72
+                        // futhark/microgpt.fut:250:26-72
                         
-                        double zt_res_83841 = zt_lhs_83839 * zt_rhs_83840;
+                        double zt_res_83046 = zt_lhs_83044 * zt_rhs_83045;
                         
                         // futhark/microgpt.fut:71:40-49
                         
-                        double zp_res_83842 = r_83838 + zt_res_83841;
-                        double r_tmp_89679 = zp_res_83842;
+                        double zp_res_83047 = r_83043 + zt_res_83046;
+                        double r_tmp_88746 = zp_res_83047;
                         
-                        r_83838 = r_tmp_89679;
+                        r_83043 = r_tmp_88746;
                     }
-                    defunc_0_lifted_lambda_res_83836 = r_83838;
-                    ((double *) mem_88304)[i_87119] = defunc_0_lifted_lambda_res_83836;
+                    defunc_0_lifted_lambda_res_83041 = r_83043;
+                    ((double *) mem_87334)[i_86151] = defunc_0_lifted_lambda_res_83041;
                 }
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88299, i_87123 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88304, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87329, i_86155 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87334, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
             }
-            lmad_copy_8b(ctx, 2, (uint64_t *) mem_88216, i_87129 * (int64_t) 256, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_88228, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-            lmad_copy_8b(ctx, 2, (uint64_t *) mem_88217, i_87129 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_88299, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
+            lmad_copy_8b(ctx, 2, (uint64_t *) mem_87246, i_86161 * (int64_t) 256, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_87258, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+            lmad_copy_8b(ctx, 2, (uint64_t *) mem_87247, i_86161 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_87329, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87140 = 0; i_87140 < (int64_t) 16; i_87140++) {
+        for (int64_t i_86170 = 0; i_86170 < (int64_t) 16; i_86170++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87134 = 0; i_87134 < (int64_t) 16; i_87134++) {
-                // futhark/microgpt.fut:244:52-55
+            for (int64_t i_86166 = 0; i_86166 < (int64_t) 16; i_86166++) {
+                // futhark/microgpt.fut:251:52-55
                 
-                int64_t tmp_83891 = sdiv64(i_87134, (int64_t) 4);
+                int64_t tmp_80792 = sdiv64(i_86166, (int64_t) 4);
                 
-                // futhark/microgpt.fut:244:41-57
+                // futhark/microgpt.fut:251:41-57
                 
-                bool x_83892 = sle64((int64_t) 0, tmp_83891);
+                bool x_80793 = sle64((int64_t) 0, tmp_80792);
                 
-                // futhark/microgpt.fut:244:41-57
+                // futhark/microgpt.fut:251:41-57
                 
-                bool y_83893 = slt64(tmp_83891, (int64_t) 4);
+                bool y_80794 = slt64(tmp_80792, (int64_t) 4);
                 
-                // futhark/microgpt.fut:244:41-57
+                // futhark/microgpt.fut:251:41-57
                 
-                bool bounds_check_83894 = x_83892 && y_83893;
+                bool bounds_check_80795 = x_80793 && y_80794;
                 
-                // futhark/microgpt.fut:244:41-57
+                // futhark/microgpt.fut:251:41-57
                 
-                bool index_certs_83895;
+                bool index_certs_80796;
                 
-                if (!bounds_check_83894) {
-                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_83891, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:244:41-57\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:244:12-78\n   #6  futhark/microgpt.fut:452:5-76\n   #7  futhark/microgpt.fut:457:26-463:31\n   #8  futhark/microgpt.fut:479:11-50\n"));
+                if (!bounds_check_80795) {
+                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_80792, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:251:41-57\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:251:12-78\n   #6  futhark/microgpt.fut:449:5-76\n   #7  futhark/microgpt.fut:454:26-460:31\n   #8  futhark/microgpt.fut:476:11-50\n"));
                     err = FUTHARK_PROGRAM_ERROR;
                     goto cleanup;
                 }
-                // futhark/microgpt.fut:244:72-75
+                // futhark/microgpt.fut:251:72-75
                 
-                int64_t tmp_83896 = smod64(i_87134, (int64_t) 4);
+                int64_t tmp_80797 = smod64(i_86166, (int64_t) 4);
                 
-                // futhark/microgpt.fut:244:41-77
+                // futhark/microgpt.fut:251:41-77
                 
-                bool x_83897 = sle64((int64_t) 0, tmp_83896);
+                bool x_80798 = sle64((int64_t) 0, tmp_80797);
                 
-                // futhark/microgpt.fut:244:41-77
+                // futhark/microgpt.fut:251:41-77
                 
-                bool y_83898 = slt64(tmp_83896, (int64_t) 4);
+                bool y_80799 = slt64(tmp_80797, (int64_t) 4);
                 
-                // futhark/microgpt.fut:244:41-77
+                // futhark/microgpt.fut:251:41-77
                 
-                bool bounds_check_83899 = x_83897 && y_83898;
+                bool bounds_check_80800 = x_80798 && y_80799;
                 
-                // futhark/microgpt.fut:244:41-77
+                // futhark/microgpt.fut:251:41-77
                 
-                bool index_certs_83900;
+                bool index_certs_80801;
                 
-                if (!bounds_check_83899) {
-                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_83896, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:244:41-77\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:244:12-78\n   #6  futhark/microgpt.fut:452:5-76\n   #7  futhark/microgpt.fut:457:26-463:31\n   #8  futhark/microgpt.fut:479:11-50\n"));
+                if (!bounds_check_80800) {
+                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_80797, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:251:41-77\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:251:12-78\n   #6  futhark/microgpt.fut:449:5-76\n   #7  futhark/microgpt.fut:454:26-460:31\n   #8  futhark/microgpt.fut:476:11-50\n"));
                     err = FUTHARK_PROGRAM_ERROR;
                     goto cleanup;
                 }
                 // futhark/microgpt.fut:4:11-25
                 
-                double lifted_lambda_res_83901 = ((double *) mem_88217)[tmp_83891 * (int64_t) 64 + i_87140 * (int64_t) 4 + tmp_83896];
+                double lifted_lambda_res_80802 = ((double *) mem_87247)[tmp_80792 * (int64_t) 64 + i_86170 * (int64_t) 4 + tmp_80797];
                 
-                ((double *) mem_88334)[i_87134] = lifted_lambda_res_83901;
+                ((double *) mem_87360)[i_86166] = lifted_lambda_res_80802;
             }
-            // futhark/microgpt.fut:313:43-55
-            
-            double zp_lhs_83909 = ((double *) mem_88074)[i_87140];
-            
-            // futhark/microgpt.fut:313:43-83
-            
-            double zp_res_83910 = 1.0e-5 + zp_lhs_83909;
-            
-            // futhark/microgpt.fut:313:35-83
-            
-            double sqrt_res_83911 = futrts_sqrt64(zp_res_83910);
-            
-            ((double *) mem_88325)[i_87140] = sqrt_res_83911;
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88326, i_87140 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88334, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87355, i_86170 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87360, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87149 = 0; i_87149 < (int64_t) 16; i_87149++) {
+        for (int64_t i_86178 = 0; i_86178 < (int64_t) 16; i_86178++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87145 = 0; i_87145 < (int64_t) 16; i_87145++) {
+            for (int64_t i_86174 = 0; i_86174 < (int64_t) 16; i_86174++) {
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_81527;
-                double r_81529 = 0.0;
+                double defunc_0_lifted_lambda_res_80817;
+                double r_80819 = 0.0;
                 
-                for (int64_t i_81528 = 0; i_81528 < (int64_t) 16; i_81528++) {
+                for (int64_t i_80818 = 0; i_80818 < (int64_t) 16; i_80818++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_81530 = ((double *) mem_param_87841.mem)[i_87145 * (int64_t) 16 + i_81528];
+                    double zt_lhs_80820 = ((double *) mem_param_86878.mem)[i_86174 * (int64_t) 16 + i_80818];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_81531 = ((double *) mem_88326)[i_87149 * (int64_t) 16 + i_81528];
+                    double zt_rhs_80821 = ((double *) mem_87355)[i_86178 * (int64_t) 16 + i_80818];
                     
-                    // futhark/microgpt.fut:245:63-103
+                    // futhark/microgpt.fut:252:63-103
                     
-                    double zt_res_81532 = zt_lhs_81530 * zt_rhs_81531;
+                    double zt_res_80822 = zt_lhs_80820 * zt_rhs_80821;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_81533 = r_81529 + zt_res_81532;
-                    double r_tmp_89685 = zp_res_81533;
+                    double zp_res_80823 = r_80819 + zt_res_80822;
+                    double r_tmp_88751 = zp_res_80823;
                     
-                    r_81529 = r_tmp_89685;
+                    r_80819 = r_tmp_88751;
                 }
-                defunc_0_lifted_lambda_res_81527 = r_81529;
-                ((double *) mem_88353)[i_87145] = defunc_0_lifted_lambda_res_81527;
+                defunc_0_lifted_lambda_res_80817 = r_80819;
+                ((double *) mem_87376)[i_86174] = defunc_0_lifted_lambda_res_80817;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88348, i_87149 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88353, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87371, i_86178 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87376, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87157 = 0; i_87157 < (int64_t) 16; i_87157++) {
+        for (int64_t i_86186 = 0; i_86186 < (int64_t) 16; i_86186++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87153 = 0; i_87153 < (int64_t) 16; i_87153++) {
+            for (int64_t i_86182 = 0; i_86182 < (int64_t) 16; i_86182++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double zp_lhs_81548 = ((double *) mem_88348)[i_87157 * (int64_t) 16 + i_87153];
+                double zp_lhs_80838 = ((double *) mem_87371)[i_86186 * (int64_t) 16 + i_86182];
                 
                 // futhark/microgpt.fut:4:11-25
                 
-                double zp_rhs_81549 = ((double *) mem_88003)[i_87157 * (int64_t) 16 + i_87153];
+                double zp_rhs_80839 = ((double *) mem_87040)[i_86186 * (int64_t) 16 + i_86182];
                 
-                // futhark/microgpt.fut:246:42-80
+                // futhark/microgpt.fut:253:42-80
                 
-                double zp_res_81550 = zp_lhs_81548 + zp_rhs_81549;
+                double zp_res_80840 = zp_lhs_80838 + zp_rhs_80839;
                 
-                ((double *) mem_88369)[i_87153] = zp_res_81550;
+                ((double *) mem_87392)[i_86182] = zp_res_80840;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88364, i_87157 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88369, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87387, i_86186 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87392, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87170 = 0; i_87170 < (int64_t) 16; i_87170++) {
+        for (int64_t i_86199 = 0; i_86199 < (int64_t) 16; i_86199++) {
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_83929;
-            double r_83931 = 0.0;
+            double defunc_0_lifted_lambda_res_83094;
+            double r_83096 = 0.0;
             
-            for (int64_t i_83930 = 0; i_83930 < (int64_t) 16; i_83930++) {
+            for (int64_t i_83095 = 0; i_83095 < (int64_t) 16; i_83095++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_lhs_83932 = ((double *) mem_88364)[i_87170 * (int64_t) 16 + i_83930];
+                double zt_lhs_83097 = ((double *) mem_87387)[i_86199 * (int64_t) 16 + i_83095];
                 
-                // futhark/microgpt.fut:247:75-114
+                // futhark/microgpt.fut:254:75-114
                 
-                double zt_res_83933 = zt_lhs_83932 * zt_lhs_83932;
+                double zt_res_83098 = zt_lhs_83097 * zt_lhs_83097;
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_83934 = r_83931 + zt_res_83933;
-                double r_tmp_89690 = zp_res_83934;
+                double zp_res_83099 = r_83096 + zt_res_83098;
+                double r_tmp_88756 = zp_res_83099;
                 
-                r_83931 = r_tmp_89690;
+                r_83096 = r_tmp_88756;
             }
-            defunc_0_lifted_lambda_res_83929 = r_83931;
-            // futhark/microgpt.fut:247:54-132
+            defunc_0_lifted_lambda_res_83094 = r_83096;
+            // futhark/microgpt.fut:254:54-132
             
-            double zs_res_83935 = defunc_0_lifted_lambda_res_83929 / 16.0;
+            double zs_res_83100 = defunc_0_lifted_lambda_res_83094 / 16.0;
             
-            // futhark/microgpt.fut:248:24-55
+            // futhark/microgpt.fut:255:24-55
             
-            double zp_res_83936 = 1.0e-5 + zs_res_83935;
+            double zp_res_83101 = 1.0e-5 + zs_res_83100;
             
-            // futhark/microgpt.fut:248:16-55
+            // futhark/microgpt.fut:255:16-55
             
-            double sqrt_res_83937 = futrts_sqrt64(zp_res_83936);
+            double sqrt_res_83102 = futrts_sqrt64(zp_res_83101);
             
-            // futhark/microgpt.fut:249:28-39
+            // futhark/microgpt.fut:256:28-39
             
-            double zs_res_83938 = 1.0 / sqrt_res_83937;
+            double zs_res_83103 = 1.0 / sqrt_res_83102;
             
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87163 = 0; i_87163 < (int64_t) 16; i_87163++) {
+            for (int64_t i_86192 = 0; i_86192 < (int64_t) 16; i_86192++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double zt_lhs_85446 = ((double *) mem_88364)[i_87170 * (int64_t) 16 + i_87163];
+                double zt_lhs_84649 = ((double *) mem_87387)[i_86199 * (int64_t) 16 + i_86192];
                 
-                // futhark/microgpt.fut:249:5-39
+                // futhark/microgpt.fut:256:5-39
                 
-                double zt_res_85447 = zs_res_83938 * zt_lhs_85446;
+                double zt_res_84650 = zs_res_83103 * zt_lhs_84649;
                 
-                // futhark/microgpt.fut:279:45-88
+                // futhark/microgpt.fut:282:45-88
                 
-                double zt_res_85455 = zt_lhs_85446 * zt_lhs_85446;
+                double zt_res_84658 = zt_lhs_84649 * zt_lhs_84649;
                 
-                ((double *) mem_88390)[i_87163] = zt_res_85455;
-                ((double *) mem_88391)[i_87163] = zt_res_85447;
+                ((double *) mem_87413)[i_86192] = zt_res_84658;
+                ((double *) mem_87414)[i_86192] = zt_res_84650;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88380, i_87170 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88390, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88381, i_87170 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88391, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87403, i_86199 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87413, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87404, i_86199 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87414, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87181 = 0; i_87181 < (int64_t) 16; i_87181++) {
+        for (int64_t i_86210 = 0; i_86210 < (int64_t) 16; i_86210++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87175 = 0; i_87175 < (int64_t) 64; i_87175++) {
+            for (int64_t i_86204 = 0; i_86204 < (int64_t) 64; i_86204++) {
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_83986;
-                double r_83988 = 0.0;
+                double defunc_0_lifted_lambda_res_83151;
+                double r_83153 = 0.0;
                 
-                for (int64_t i_83987 = 0; i_83987 < (int64_t) 16; i_83987++) {
+                for (int64_t i_83152 = 0; i_83152 < (int64_t) 16; i_83152++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_83989 = ((double *) mem_param_87857.mem)[i_87175 * (int64_t) 16 + i_83987];
+                    double zt_lhs_83154 = ((double *) mem_param_86894.mem)[i_86204 * (int64_t) 16 + i_83152];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_83990 = ((double *) mem_88381)[i_87181 * (int64_t) 16 + i_83987];
+                    double zt_rhs_83155 = ((double *) mem_87404)[i_86210 * (int64_t) 16 + i_83152];
                     
-                    // futhark/microgpt.fut:250:63-102
+                    // futhark/microgpt.fut:257:63-102
                     
-                    double zt_res_83991 = zt_lhs_83989 * zt_rhs_83990;
+                    double zt_res_83156 = zt_lhs_83154 * zt_rhs_83155;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_83992 = r_83988 + zt_res_83991;
-                    double r_tmp_89696 = zp_res_83992;
+                    double zp_res_83157 = r_83153 + zt_res_83156;
+                    double r_tmp_88762 = zp_res_83157;
                     
-                    r_83988 = r_tmp_89696;
+                    r_83153 = r_tmp_88762;
                 }
-                defunc_0_lifted_lambda_res_83986 = r_83988;
-                ((double *) mem_88421)[i_87175] = defunc_0_lifted_lambda_res_83986;
+                defunc_0_lifted_lambda_res_83151 = r_83153;
+                ((double *) mem_87444)[i_86204] = defunc_0_lifted_lambda_res_83151;
             }
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_84000;
-            double r_84002 = 0.0;
+            double defunc_0_lifted_lambda_res_83165;
+            double r_83167 = 0.0;
             
-            for (int64_t i_84001 = 0; i_84001 < (int64_t) 16; i_84001++) {
+            for (int64_t i_83166 = 0; i_83166 < (int64_t) 16; i_83166++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double lifted_lambda_res_84003 = ((double *) mem_88380)[i_87181 * (int64_t) 16 + i_84001];
+                double lifted_lambda_res_83168 = ((double *) mem_87403)[i_86210 * (int64_t) 16 + i_83166];
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_84004 = r_84002 + lifted_lambda_res_84003;
-                double r_tmp_89697 = zp_res_84004;
+                double zp_res_83169 = r_83167 + lifted_lambda_res_83168;
+                double r_tmp_88763 = zp_res_83169;
                 
-                r_84002 = r_tmp_89697;
+                r_83167 = r_tmp_88763;
             }
-            defunc_0_lifted_lambda_res_84000 = r_84002;
-            // futhark/microgpt.fut:280:36-94
+            defunc_0_lifted_lambda_res_83165 = r_83167;
+            // futhark/microgpt.fut:283:36-94
             
-            double zs_res_84005 = defunc_0_lifted_lambda_res_84000 / 16.0;
+            double zs_res_83170 = defunc_0_lifted_lambda_res_83165 / 16.0;
             
-            ((double *) mem_88412)[i_87181] = zs_res_84005;
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88413, i_87181 * (int64_t) 64, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88421, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 64});
+            ((double *) mem_87435)[i_86210] = zs_res_83170;
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87436, i_86210 * (int64_t) 64, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87444, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 64});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87192 = 0; i_87192 < (int64_t) 16; i_87192++) {
+        for (int64_t i_86219 = 0; i_86219 < (int64_t) 16; i_86219++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87186 = 0; i_87186 < (int64_t) 64; i_87186++) {
+            for (int64_t i_86215 = 0; i_86215 < (int64_t) 64; i_86215++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double max_arg0_84029 = ((double *) mem_88413)[i_87192 * (int64_t) 64 + i_87186];
+                double max_arg0_80903 = ((double *) mem_87436)[i_86219 * (int64_t) 64 + i_86215];
                 
-                // futhark/microgpt.fut:251:41-69
+                // futhark/microgpt.fut:258:41-69
                 
-                double max_res_84030 = fmax64(0.0, max_arg0_84029);
+                double max_res_80904 = fmax64(0.0, max_arg0_80903);
                 
-                ((double *) mem_88444)[i_87186] = max_res_84030;
+                ((double *) mem_87463)[i_86215] = max_res_80904;
             }
-            // futhark/microgpt.fut:281:43-55
-            
-            double zp_lhs_84038 = ((double *) mem_88412)[i_87192];
-            
-            // futhark/microgpt.fut:281:43-83
-            
-            double zp_res_84039 = 1.0e-5 + zp_lhs_84038;
-            
-            // futhark/microgpt.fut:281:35-83
-            
-            double sqrt_res_84040 = futrts_sqrt64(zp_res_84039);
-            
-            ((double *) mem_88435)[i_87192] = sqrt_res_84040;
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88436, i_87192 * (int64_t) 64, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88444, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 64});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87458, i_86219 * (int64_t) 64, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87463, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 64});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87201 = 0; i_87201 < (int64_t) 16; i_87201++) {
+        for (int64_t i_86227 = 0; i_86227 < (int64_t) 16; i_86227++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87197 = 0; i_87197 < (int64_t) 16; i_87197++) {
+            for (int64_t i_86223 = 0; i_86223 < (int64_t) 16; i_86223++) {
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_81629;
-                double r_81631 = 0.0;
+                double defunc_0_lifted_lambda_res_80919;
+                double r_80921 = 0.0;
                 
-                for (int64_t i_81630 = 0; i_81630 < (int64_t) 64; i_81630++) {
+                for (int64_t i_80920 = 0; i_80920 < (int64_t) 64; i_80920++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_81632 = ((double *) mem_param_87833.mem)[i_87197 * (int64_t) 64 + i_81630];
+                    double zt_lhs_80922 = ((double *) mem_param_86870.mem)[i_86223 * (int64_t) 64 + i_80920];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_81633 = ((double *) mem_88436)[i_87201 * (int64_t) 64 + i_81630];
+                    double zt_rhs_80923 = ((double *) mem_87458)[i_86227 * (int64_t) 64 + i_80920];
                     
-                    // futhark/microgpt.fut:252:63-104
+                    // futhark/microgpt.fut:259:63-104
                     
-                    double zt_res_81634 = zt_lhs_81632 * zt_rhs_81633;
+                    double zt_res_80924 = zt_lhs_80922 * zt_rhs_80923;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_81635 = r_81631 + zt_res_81634;
-                    double r_tmp_89703 = zp_res_81635;
+                    double zp_res_80925 = r_80921 + zt_res_80924;
+                    double r_tmp_88768 = zp_res_80925;
                     
-                    r_81631 = r_tmp_89703;
+                    r_80921 = r_tmp_88768;
                 }
-                defunc_0_lifted_lambda_res_81629 = r_81631;
-                ((double *) mem_88463)[i_87197] = defunc_0_lifted_lambda_res_81629;
+                defunc_0_lifted_lambda_res_80919 = r_80921;
+                ((double *) mem_87479)[i_86223] = defunc_0_lifted_lambda_res_80919;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88458, i_87201 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88463, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87474, i_86227 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87479, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87209 = 0; i_87209 < (int64_t) 16; i_87209++) {
+        for (int64_t i_86235 = 0; i_86235 < (int64_t) 16; i_86235++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87205 = 0; i_87205 < (int64_t) 16; i_87205++) {
+            for (int64_t i_86231 = 0; i_86231 < (int64_t) 16; i_86231++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double zp_lhs_81650 = ((double *) mem_88458)[i_87209 * (int64_t) 16 + i_87205];
+                double zp_lhs_80940 = ((double *) mem_87474)[i_86235 * (int64_t) 16 + i_86231];
                 
                 // futhark/microgpt.fut:4:11-25
                 
-                double zp_rhs_81651 = ((double *) mem_88364)[i_87209 * (int64_t) 16 + i_87205];
+                double zp_rhs_80941 = ((double *) mem_87387)[i_86235 * (int64_t) 16 + i_86231];
                 
-                // futhark/microgpt.fut:253:42-81
+                // futhark/microgpt.fut:260:42-81
                 
-                double zp_res_81652 = zp_lhs_81650 + zp_rhs_81651;
+                double zp_res_80942 = zp_lhs_80940 + zp_rhs_80941;
                 
-                ((double *) mem_88479)[i_87205] = zp_res_81652;
+                ((double *) mem_87495)[i_86231] = zp_res_80942;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88474, i_87209 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88479, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87490, i_86235 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87495, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87217 = 0; i_87217 < (int64_t) 16; i_87217++) {
+        for (int64_t i_86243 = 0; i_86243 < (int64_t) 16; i_86243++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87213 = 0; i_87213 < (int64_t) 27; i_87213++) {
+            for (int64_t i_86239 = 0; i_86239 < (int64_t) 27; i_86239++) {
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_81667;
-                double r_81669 = 0.0;
+                double defunc_0_lifted_lambda_res_80957;
+                double r_80959 = 0.0;
                 
-                for (int64_t i_81668 = 0; i_81668 < (int64_t) 16; i_81668++) {
+                for (int64_t i_80958 = 0; i_80958 < (int64_t) 16; i_80958++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_81670 = ((double *) mem_param_87865.mem)[i_87213 * (int64_t) 16 + i_81668];
+                    double zt_lhs_80960 = ((double *) mem_param_86902.mem)[i_86239 * (int64_t) 16 + i_80958];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_81671 = ((double *) mem_88474)[i_87217 * (int64_t) 16 + i_81668];
+                    double zt_rhs_80961 = ((double *) mem_87490)[i_86243 * (int64_t) 16 + i_80958];
                     
-                    // futhark/microgpt.fut:254:63-103
+                    // futhark/microgpt.fut:261:63-103
                     
-                    double zt_res_81672 = zt_lhs_81670 * zt_rhs_81671;
+                    double zt_res_80962 = zt_lhs_80960 * zt_rhs_80961;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_81673 = r_81669 + zt_res_81672;
-                    double r_tmp_89708 = zp_res_81673;
+                    double zp_res_80963 = r_80959 + zt_res_80962;
+                    double r_tmp_88773 = zp_res_80963;
                     
-                    r_81669 = r_tmp_89708;
+                    r_80959 = r_tmp_88773;
                 }
-                defunc_0_lifted_lambda_res_81667 = r_81669;
-                ((double *) mem_88495)[i_87213] = defunc_0_lifted_lambda_res_81667;
+                defunc_0_lifted_lambda_res_80957 = r_80959;
+                ((double *) mem_87511)[i_86239] = defunc_0_lifted_lambda_res_80957;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88490, i_87217 * (int64_t) 27, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88495, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 27});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87506, i_86243 * (int64_t) 27, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87511, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 27});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87231 = 0; i_87231 < (int64_t) 16; i_87231++) {
-            double x_86830;
-            double x_86831;
-            double redout_87219;
-            double redout_87220;
+        for (int64_t i_86266 = 0; i_86266 < (int64_t) 16; i_86266++) {
+            // futhark/microgpt.fut:103:13-33
             
-            redout_87219 = -INFINITY;
-            redout_87220 = -INFINITY;
-            for (int64_t i_87221 = 0; i_87221 < (int64_t) 27; i_87221++) {
+            double defunc_0_reduce_res_85864;
+            double defunc_0_reduce_res_85865;
+            double redout_86245;
+            double redout_86246;
+            
+            redout_86245 = -INFINITY;
+            redout_86246 = -INFINITY;
+            for (int64_t i_86247 = 0; i_86247 < (int64_t) 27; i_86247++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double lifted_lambda_res_85523 = ((double *) mem_88490)[i_87231 * (int64_t) 27 + i_87221];
+                double lifted_lambda_res_84726 = ((double *) mem_87506)[i_86266 * (int64_t) 27 + i_86247];
                 
-                // futhark/microgpt.fut:115:13-33
+                // futhark/microgpt.fut:103:13-33
                 
-                double max_res_81713 = fmax64(lifted_lambda_res_85523, redout_87219);
+                double max_res_83200 = fmax64(lifted_lambda_res_84726, redout_86245);
                 
-                // futhark/microgpt.fut:115:13-33
+                // futhark/microgpt.fut:103:13-33
                 
-                double max_res_81742 = fmax64(lifted_lambda_res_85523, redout_87220);
-                double redout_tmp_89710 = max_res_81713;
-                double redout_tmp_89711 = max_res_81742;
+                double max_res_83244 = fmax64(lifted_lambda_res_84726, redout_86246);
+                double redout_tmp_88776 = max_res_83200;
+                double redout_tmp_88777 = max_res_83244;
                 
-                redout_87219 = redout_tmp_89710;
-                redout_87220 = redout_tmp_89711;
+                redout_86245 = redout_tmp_88776;
+                redout_86246 = redout_tmp_88777;
             }
-            x_86830 = redout_87219;
-            x_86831 = redout_87220;
-            // futhark/microgpt.fut:262:65-74
-            
-            double neg_res_81714 = -x_86830;
-            
-            // futhark/microgpt.fut:265:65-74
-            
-            double neg_res_81743 = -x_86831;
-            
-            // futhark/microgpt.fut:71:13-49
-            
-            double defunc_0_lifted_lambda_res_81698;
-            double r_81700 = 0.0;
-            
-            for (int64_t i_81699 = 0; i_81699 < (int64_t) 27; i_81699++) {
-                // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87226 = 0; i_87226 < (int64_t) 27; i_87226++) {
-                    // futhark/microgpt.fut:4:11-25
-                    
-                    double zp_lhs_85562 = ((double *) mem_88490)[i_87231 * (int64_t) 27 + i_87226];
-                    
-                    // futhark/microgpt.fut:262:43-74
-                    
-                    double zp_res_85563 = neg_res_81714 + zp_lhs_85562;
-                    
-                    // futhark/microgpt.fut:262:36-74
-                    
-                    double exp_res_85564 = futrts_exp64(zp_res_85563);
-                    
-                    // futhark/microgpt.fut:265:43-74
-                    
-                    double zp_res_85572 = neg_res_81743 + zp_lhs_85562;
-                    
-                    // futhark/microgpt.fut:265:36-74
-                    
-                    double exp_res_85573 = futrts_exp64(zp_res_85572);
-                    
-                    ((double *) mem_88510)[i_87226] = exp_res_85573;
-                    ((double *) mem_88511)[i_87226] = exp_res_85564;
-                }
-                // futhark/microgpt.fut:71:13-49
-                
-                double defunc_0_lifted_lambda_res_81725;
-                double r_81727 = 0.0;
-                
-                for (int64_t i_81726 = 0; i_81726 < (int64_t) 27; i_81726++) {
-                    // futhark/microgpt.fut:263:36-46
-                    
-                    double lifted_lambda_res_81728 = ((double *) mem_88511)[i_81726];
-                    
-                    // futhark/microgpt.fut:71:40-49
-                    
-                    double zp_res_81729 = r_81727 + lifted_lambda_res_81728;
-                    double r_tmp_89715 = zp_res_81729;
-                    
-                    r_81727 = r_tmp_89715;
-                }
-                defunc_0_lifted_lambda_res_81725 = r_81727;
-                // futhark/microgpt.fut:71:13-49
-                
-                double defunc_0_lifted_lambda_res_81754;
-                double r_81756 = 0.0;
-                
-                for (int64_t i_81755 = 0; i_81755 < (int64_t) 27; i_81755++) {
-                    // futhark/microgpt.fut:266:36-46
-                    
-                    double lifted_lambda_res_81757 = ((double *) mem_88510)[i_81755];
-                    
-                    // futhark/microgpt.fut:71:40-49
-                    
-                    double zp_res_81758 = r_81756 + lifted_lambda_res_81757;
-                    double r_tmp_89716 = zp_res_81758;
-                    
-                    r_81756 = r_tmp_89716;
-                }
-                defunc_0_lifted_lambda_res_81754 = r_81756;
-                // futhark/microgpt.fut:71:46-49
-                
-                double zt_lhs_81759 = ((double *) mem_87970)[i_87231 * (int64_t) 27 + i_81699];
-                
-                // futhark/microgpt.fut:267:38-48
-                
-                double zs_lhs_81760 = ((double *) mem_88511)[i_81699];
-                
-                // futhark/microgpt.fut:267:38-56
-                
-                double zs_res_81761 = zs_lhs_81760 / defunc_0_lifted_lambda_res_81725;
-                
-                // futhark/microgpt.fut:267:29-56
-                
-                double zs_res_81762 = 1.0 / zs_res_81761;
-                
-                // futhark/microgpt.fut:267:6-56
-                
-                double zt_res_81763 = zt_lhs_81759 * zs_res_81762;
-                
-                // futhark/microgpt.fut:267:65-75
-                
-                double zs_lhs_81764 = ((double *) mem_88510)[i_81699];
-                
-                // futhark/microgpt.fut:267:65-83
-                
-                double zs_res_81765 = zs_lhs_81764 / defunc_0_lifted_lambda_res_81754;
-                
-                // futhark/microgpt.fut:267:24-83
-                
-                double zt_res_81766 = zt_res_81763 * zs_res_81765;
-                
-                // futhark/microgpt.fut:71:40-49
-                
-                double zp_res_81767 = r_81700 + zt_res_81766;
-                double r_tmp_89712 = zp_res_81767;
-                
-                r_81700 = r_tmp_89712;
-            }
-            defunc_0_lifted_lambda_res_81698 = r_81700;
-            ((double *) mem_88506)[i_87231] = defunc_0_lifted_lambda_res_81698;
-        }
-        // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87249 = 0; i_87249 < (int64_t) 16; i_87249++) {
-            // futhark/microgpt.fut:115:13-33
-            
-            double defunc_0_reduce_res_86832;
-            double defunc_0_reduce_res_86833;
-            double redout_87233;
-            double redout_87234;
-            
-            redout_87233 = -INFINITY;
-            redout_87234 = -INFINITY;
-            for (int64_t i_87235 = 0; i_87235 < (int64_t) 27; i_87235++) {
-                // futhark/microgpt.fut:4:11-25
-                
-                double lifted_lambda_res_85647 = ((double *) mem_88490)[i_87249 * (int64_t) 27 + i_87235];
-                
-                // futhark/microgpt.fut:115:13-33
-                
-                double max_res_81787 = fmax64(lifted_lambda_res_85647, redout_87233);
-                
-                // futhark/microgpt.fut:115:13-33
-                
-                double max_res_81816 = fmax64(lifted_lambda_res_85647, redout_87234);
-                double redout_tmp_89718 = max_res_81787;
-                double redout_tmp_89719 = max_res_81816;
-                
-                redout_87233 = redout_tmp_89718;
-                redout_87234 = redout_tmp_89719;
-            }
-            defunc_0_reduce_res_86832 = redout_87233;
-            defunc_0_reduce_res_86833 = redout_87234;
+            defunc_0_reduce_res_85864 = redout_86245;
+            defunc_0_reduce_res_85865 = redout_86246;
             // futhark/microgpt.fut:269:65-74
             
-            double neg_res_81788 = -defunc_0_reduce_res_86832;
+            double neg_res_83201 = -defunc_0_reduce_res_85864;
             
-            // futhark/microgpt.fut:272:65-74
+            // futhark/microgpt.fut:273:65-74
             
-            double neg_res_81817 = -defunc_0_reduce_res_86833;
+            double neg_res_83245 = -defunc_0_reduce_res_85865;
             
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87240 = 0; i_87240 < (int64_t) 27; i_87240++) {
+            for (int64_t i_86252 = 0; i_86252 < (int64_t) 27; i_86252++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double zp_lhs_85686 = ((double *) mem_88490)[i_87249 * (int64_t) 27 + i_87240];
+                double zp_lhs_84765 = ((double *) mem_87506)[i_86266 * (int64_t) 27 + i_86252];
                 
                 // futhark/microgpt.fut:269:43-74
                 
-                double zp_res_85687 = neg_res_81788 + zp_lhs_85686;
+                double zp_res_84766 = neg_res_83201 + zp_lhs_84765;
                 
                 // futhark/microgpt.fut:269:36-74
                 
-                double exp_res_85688 = futrts_exp64(zp_res_85687);
+                double exp_res_84767 = futrts_exp64(zp_res_84766);
                 
-                // futhark/microgpt.fut:272:43-74
+                // futhark/microgpt.fut:273:43-74
                 
-                double zp_res_85696 = neg_res_81817 + zp_lhs_85686;
+                double zp_res_84775 = neg_res_83245 + zp_lhs_84765;
                 
-                // futhark/microgpt.fut:272:36-74
+                // futhark/microgpt.fut:273:36-74
                 
-                double exp_res_85697 = futrts_exp64(zp_res_85696);
+                double exp_res_84776 = futrts_exp64(zp_res_84775);
                 
-                ((double *) mem_88532)[i_87240] = exp_res_85697;
-                ((double *) mem_88533)[i_87240] = exp_res_85688;
+                ((double *) mem_87532)[i_86252] = exp_res_84776;
+                ((double *) mem_87533)[i_86252] = exp_res_84767;
             }
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_81799;
-            double r_81801 = 0.0;
+            double defunc_0_lifted_lambda_res_83212;
+            double r_83214 = 0.0;
             
-            for (int64_t i_81800 = 0; i_81800 < (int64_t) 27; i_81800++) {
+            for (int64_t i_83213 = 0; i_83213 < (int64_t) 27; i_83213++) {
                 // futhark/microgpt.fut:270:36-46
                 
-                double lifted_lambda_res_81802 = ((double *) mem_88533)[i_81800];
+                double lifted_lambda_res_83215 = ((double *) mem_87533)[i_83213];
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_81803 = r_81801 + lifted_lambda_res_81802;
-                double r_tmp_89722 = zp_res_81803;
+                double zp_res_83216 = r_83214 + lifted_lambda_res_83215;
+                double r_tmp_88780 = zp_res_83216;
                 
-                r_81801 = r_tmp_89722;
+                r_83214 = r_tmp_88780;
             }
-            defunc_0_lifted_lambda_res_81799 = r_81801;
+            defunc_0_lifted_lambda_res_83212 = r_83214;
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_81828;
-            double r_81830 = 0.0;
+            double defunc_0_lifted_lambda_res_83256;
+            double r_83258 = 0.0;
             
-            for (int64_t i_81829 = 0; i_81829 < (int64_t) 27; i_81829++) {
-                // futhark/microgpt.fut:273:36-46
+            for (int64_t i_83257 = 0; i_83257 < (int64_t) 27; i_83257++) {
+                // futhark/microgpt.fut:274:36-46
                 
-                double lifted_lambda_res_81831 = ((double *) mem_88532)[i_81829];
+                double lifted_lambda_res_83259 = ((double *) mem_87532)[i_83257];
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_81832 = r_81830 + lifted_lambda_res_81831;
-                double r_tmp_89723 = zp_res_81832;
+                double zp_res_83260 = r_83258 + lifted_lambda_res_83259;
+                double r_tmp_88781 = zp_res_83260;
                 
-                r_81830 = r_tmp_89723;
+                r_83258 = r_tmp_88781;
             }
-            defunc_0_lifted_lambda_res_81828 = r_81830;
-            // futhark/microgpt.fut:274:97-107
-            
-            double neg_arg0_81833 = ((double *) mem_88506)[i_87249];
-            
-            // futhark/microgpt.fut:274:91-107
-            
-            double neg_res_81834 = -neg_arg0_81833;
-            
+            defunc_0_lifted_lambda_res_83256 = r_83258;
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87245 = 0; i_87245 < (int64_t) 27; i_87245++) {
-                // futhark/microgpt.fut:274:6-16
+            for (int64_t i_86259 = 0; i_86259 < (int64_t) 27; i_86259++) {
+                // futhark/microgpt.fut:271:5-15
                 
-                double zs_lhs_81841 = ((double *) mem_88533)[i_87245];
+                double zs_lhs_84794 = ((double *) mem_87533)[i_86259];
                 
-                // futhark/microgpt.fut:274:6-24
+                // futhark/microgpt.fut:271:5-23
                 
-                double zs_res_81842 = zs_lhs_81841 / defunc_0_lifted_lambda_res_81799;
+                double zs_res_84795 = zs_lhs_84794 / defunc_0_lifted_lambda_res_83212;
                 
                 // futhark/microgpt.fut:4:11-25
                 
-                double zt_lhs_81843 = ((double *) mem_87970)[i_87249 * (int64_t) 27 + i_87245];
+                double zt_lhs_84802 = ((double *) mem_87007)[i_86266 * (int64_t) 27 + i_86259];
                 
-                // futhark/microgpt.fut:274:64-74
+                // futhark/microgpt.fut:275:37-47
                 
-                double zs_lhs_81844 = ((double *) mem_88532)[i_87245];
+                double zs_lhs_84803 = ((double *) mem_87532)[i_86259];
                 
-                // futhark/microgpt.fut:274:64-82
+                // futhark/microgpt.fut:275:37-55
                 
-                double zs_res_81845 = zs_lhs_81844 / defunc_0_lifted_lambda_res_81828;
+                double zs_res_84804 = zs_lhs_84803 / defunc_0_lifted_lambda_res_83256;
                 
-                // futhark/microgpt.fut:274:55-82
+                // futhark/microgpt.fut:275:28-55
                 
-                double zs_res_81846 = 1.0 / zs_res_81845;
+                double zs_res_84805 = 1.0 / zs_res_84804;
                 
-                // futhark/microgpt.fut:274:32-82
+                // futhark/microgpt.fut:275:5-55
                 
-                double zt_res_81847 = zt_lhs_81843 * zs_res_81846;
+                double zt_res_84806 = zt_lhs_84802 * zs_res_84805;
                 
-                // futhark/microgpt.fut:274:50-107
-                
-                double zp_res_81848 = neg_res_81834 + zt_res_81847;
-                
-                // futhark/microgpt.fut:274:17-107
-                
-                double zt_res_81849 = zs_res_81842 * zp_res_81848;
-                
-                ((double *) mem_88546)[i_87245] = zt_res_81849;
+                ((double *) mem_87546)[i_86259] = zt_res_84806;
+                ((double *) mem_87547)[i_86259] = zs_res_84795;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88527, i_87249 * (int64_t) 27, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88546, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 27});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87522, i_86266 * (int64_t) 27, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87546, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 27});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87523, i_86266 * (int64_t) 27, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87547, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 27});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87257 = 0; i_87257 < (int64_t) 16; i_87257++) {
-            // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87253 = 0; i_87253 < (int64_t) 16; i_87253++) {
-                // futhark/microgpt.fut:71:13-49
-                
-                double defunc_0_lifted_lambda_res_81864;
-                double r_81866 = 0.0;
-                
-                for (int64_t i_81865 = 0; i_81865 < (int64_t) 27; i_81865++) {
-                    // futhark/microgpt.fut:71:46-49
-                    
-                    double zt_lhs_81867 = ((double *) mem_param_87865.mem)[i_81865 * (int64_t) 16 + i_87253];
-                    
-                    // futhark/microgpt.fut:71:46-49
-                    
-                    double zt_rhs_81868 = ((double *) mem_88527)[i_87257 * (int64_t) 27 + i_81865];
-                    
-                    // futhark/microgpt.fut:275:63-103
-                    
-                    double zt_res_81869 = zt_lhs_81867 * zt_rhs_81868;
-                    
-                    // futhark/microgpt.fut:71:40-49
-                    
-                    double zp_res_81870 = r_81866 + zt_res_81869;
-                    double r_tmp_89727 = zp_res_81870;
-                    
-                    r_81866 = r_tmp_89727;
-                }
-                defunc_0_lifted_lambda_res_81864 = r_81866;
-                ((double *) mem_88562)[i_87253] = defunc_0_lifted_lambda_res_81864;
-            }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88557, i_87257 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88562, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-        }
-        // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87270 = 0; i_87270 < (int64_t) 16; i_87270++) {
-            // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87263 = 0; i_87263 < (int64_t) 64; i_87263++) {
-                // futhark/microgpt.fut:71:13-49
-                
-                double defunc_0_lifted_lambda_res_85721;
-                double r_85723 = 0.0;
-                
-                for (int64_t i_85722 = 0; i_85722 < (int64_t) 16; i_85722++) {
-                    // futhark/microgpt.fut:71:46-49
-                    
-                    double zt_lhs_85724 = ((double *) mem_param_87833.mem)[i_85722 * (int64_t) 64 + i_87263];
-                    
-                    // futhark/microgpt.fut:71:46-49
-                    
-                    double zt_rhs_85725 = ((double *) mem_88557)[i_87270 * (int64_t) 16 + i_85722];
-                    
-                    // futhark/microgpt.fut:276:63-104
-                    
-                    double zt_res_85726 = zt_lhs_85724 * zt_rhs_85725;
-                    
-                    // futhark/microgpt.fut:71:40-49
-                    
-                    double zp_res_85727 = r_85723 + zt_res_85726;
-                    double r_tmp_89732 = zp_res_85727;
-                    
-                    r_85723 = r_tmp_89732;
-                }
-                defunc_0_lifted_lambda_res_85721 = r_85723;
-                // futhark/microgpt.fut:71:13-49
-                
-                double defunc_0_lifted_lambda_res_85734;
-                double r_85736 = 0.0;
-                
-                for (int64_t i_85735 = 0; i_85735 < (int64_t) 16; i_85735++) {
-                    // futhark/microgpt.fut:71:46-49
-                    
-                    double zt_lhs_85737 = ((double *) mem_88557)[i_85735 * (int64_t) 16 + i_87270];
-                    
-                    // futhark/microgpt.fut:71:46-49
-                    
-                    double zt_rhs_85738 = ((double *) mem_88436)[i_85735 * (int64_t) 64 + i_87263];
-                    
-                    // futhark/microgpt.fut:333:69-112
-                    
-                    double zt_res_85739 = zt_lhs_85737 * zt_rhs_85738;
-                    
-                    // futhark/microgpt.fut:71:40-49
-                    
-                    double zp_res_85740 = r_85736 + zt_res_85739;
-                    double r_tmp_89733 = zp_res_85740;
-                    
-                    r_85736 = r_tmp_89733;
-                }
-                defunc_0_lifted_lambda_res_85734 = r_85736;
-                ((double *) mem_88583)[i_87263] = defunc_0_lifted_lambda_res_85734;
-                ((double *) mem_88584)[i_87263] = defunc_0_lifted_lambda_res_85721;
-            }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88573, i_87270 * (int64_t) 64, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88583, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 64});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88574, i_87270 * (int64_t) 64, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88584, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 64});
-        }
-        // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87279 = 0; i_87279 < (int64_t) 16; i_87279++) {
-            // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87275 = 0; i_87275 < (int64_t) 64; i_87275++) {
-                // futhark/microgpt.fut:4:11-25
-                
-                double indicatorp_arg0_81906 = ((double *) mem_88413)[i_87279 * (int64_t) 64 + i_87275];
-                
-                // futhark/microgpt.fut:110:42-54
-                
-                double max_res_81907 = fmax64(0.0, indicatorp_arg0_81906);
-                
-                // futhark/microgpt.fut:110:35-54
-                
-                double sgn_res_81908 = fsignum64(max_res_81907);
-                
-                // futhark/microgpt.fut:4:11-25
-                
-                double zt_rhs_81909 = ((double *) mem_88574)[i_87279 * (int64_t) 64 + i_87275];
-                
-                // futhark/microgpt.fut:277:43-94
-                
-                double zt_res_81910 = sgn_res_81908 * zt_rhs_81909;
-                
-                ((double *) mem_88610)[i_87275] = zt_res_81910;
-            }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88605, i_87279 * (int64_t) 64, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88610, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 64});
-        }
-        // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87287 = 0; i_87287 < (int64_t) 16; i_87287++) {
-            // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87283 = 0; i_87283 < (int64_t) 16; i_87283++) {
-                // futhark/microgpt.fut:71:13-49
-                
-                double defunc_0_lifted_lambda_res_81925;
-                double r_81927 = 0.0;
-                
-                for (int64_t i_81926 = 0; i_81926 < (int64_t) 64; i_81926++) {
-                    // futhark/microgpt.fut:71:46-49
-                    
-                    double zt_lhs_81928 = ((double *) mem_param_87857.mem)[i_81926 * (int64_t) 16 + i_87283];
-                    
-                    // futhark/microgpt.fut:71:46-49
-                    
-                    double zt_rhs_81929 = ((double *) mem_88605)[i_87287 * (int64_t) 64 + i_81926];
-                    
-                    // futhark/microgpt.fut:278:66-109
-                    
-                    double zt_res_81930 = zt_lhs_81928 * zt_rhs_81929;
-                    
-                    // futhark/microgpt.fut:71:40-49
-                    
-                    double zp_res_81931 = r_81927 + zt_res_81930;
-                    double r_tmp_89738 = zp_res_81931;
-                    
-                    r_81927 = r_tmp_89738;
-                }
-                defunc_0_lifted_lambda_res_81925 = r_81927;
-                ((double *) mem_88626)[i_87283] = defunc_0_lifted_lambda_res_81925;
-            }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88621, i_87287 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88626, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-        }
-        // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87291 = 0; i_87291 < (int64_t) 16; i_87291++) {
-            // futhark/microgpt.fut:282:51-63
-            
-            double zs_rhs_81979 = ((double *) mem_88435)[i_87291];
-            
-            // futhark/microgpt.fut:282:43-63
-            
-            double zs_res_81980 = 1.0 / zs_rhs_81979;
-            
+        for (int64_t i_86271 = 0; i_86271 < (int64_t) 16; i_86271++) {
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_81981;
-            double r_81983 = 0.0;
+            double defunc_0_lifted_lambda_res_81081;
+            double r_81083 = 0.0;
             
-            for (int64_t i_81982 = 0; i_81982 < (int64_t) 16; i_81982++) {
+            for (int64_t i_81082 = 0; i_81082 < (int64_t) 27; i_81082++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_lhs_81984 = ((double *) mem_88364)[i_87291 * (int64_t) 16 + i_81982];
+                double zt_lhs_81084 = ((double *) mem_87522)[i_86271 * (int64_t) 27 + i_81082];
                 
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_rhs_81985 = ((double *) mem_88621)[i_87291 * (int64_t) 16 + i_81982];
+                double zt_rhs_81085 = ((double *) mem_87523)[i_86271 * (int64_t) 27 + i_81082];
                 
-                // futhark/microgpt.fut:282:93-136
+                // futhark/microgpt.fut:276:54-93
                 
-                double zt_res_81986 = zt_lhs_81984 * zt_rhs_81985;
+                double zt_res_81086 = zt_lhs_81084 * zt_rhs_81085;
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_81987 = r_81983 + zt_res_81986;
-                double r_tmp_89740 = zp_res_81987;
+                double zp_res_81087 = r_81083 + zt_res_81086;
+                double r_tmp_88785 = zp_res_81087;
                 
-                r_81983 = r_tmp_89740;
+                r_81083 = r_tmp_88785;
             }
-            defunc_0_lifted_lambda_res_81981 = r_81983;
-            // futhark/microgpt.fut:282:71-165
-            
-            double zt_res_81988 = zs_res_81980 * defunc_0_lifted_lambda_res_81981;
-            
-            // futhark/microgpt.fut:282:47-165
-            
-            double zt_res_81989 = zs_res_81980 * zt_res_81988;
-            
-            // futhark/microgpt.fut:282:35-165
-            
-            double neg_res_81990 = -zt_res_81989;
-            
-            ((double *) mem_88637)[i_87291] = neg_res_81990;
+            defunc_0_lifted_lambda_res_81081 = r_81083;
+            ((double *) mem_87568)[i_86271] = defunc_0_lifted_lambda_res_81081;
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87295 = 0; i_87295 < (int64_t) 16; i_87295++) {
-            // futhark/microgpt.fut:283:35-47
+        for (int64_t i_86279 = 0; i_86279 < (int64_t) 16; i_86279++) {
+            // futhark/microgpt.fut:277:94-104
             
-            double zt_lhs_81998 = ((double *) mem_88637)[i_87295];
+            double neg_arg0_81095 = ((double *) mem_87568)[i_86279];
             
-            // futhark/microgpt.fut:283:89-101
+            // futhark/microgpt.fut:277:88-104
             
-            double zp_lhs_81999 = ((double *) mem_88412)[i_87295];
-            
-            // futhark/microgpt.fut:283:89-129
-            
-            double zp_res_82000 = 1.0e-5 + zp_lhs_81999;
-            
-            // futhark/microgpt.fut:283:81-129
-            
-            double sqrt_res_82001 = futrts_sqrt64(zp_res_82000);
-            
-            // futhark/microgpt.fut:283:67-131
-            
-            double zt_res_82002 = 2.0 * sqrt_res_82001;
-            
-            // futhark/microgpt.fut:283:53-131
-            
-            double zs_res_82003 = 1.0 / zt_res_82002;
-            
-            // futhark/microgpt.fut:283:35-131
-            
-            double zt_res_82004 = zt_lhs_81998 * zs_res_82003;
-            
-            ((double *) mem_88644)[i_87295] = zt_res_82004;
-        }
-        // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87299 = 0; i_87299 < (int64_t) 16; i_87299++) {
-            // futhark/microgpt.fut:284:45-57
-            
-            double zs_lhs_82012 = ((double *) mem_88644)[i_87299];
-            
-            // futhark/microgpt.fut:284:45-72
-            
-            double zs_res_82013 = zs_lhs_82012 / 16.0;
+            double neg_res_81096 = -neg_arg0_81095;
             
             // futhark/microgpt.fut:4:11-25
-            for (int64_t nest_i_89743 = 0; nest_i_89743 < (int64_t) 16; nest_i_89743++) {
-                ((double *) mem_88651)[i_87299 * (int64_t) 16 + nest_i_89743] = zs_res_82013;
+            for (int64_t i_86275 = 0; i_86275 < (int64_t) 27; i_86275++) {
+                // futhark/microgpt.fut:4:11-25
+                
+                double zt_lhs_81103 = ((double *) mem_87523)[i_86279 * (int64_t) 27 + i_86275];
+                
+                // futhark/microgpt.fut:4:11-25
+                
+                double zp_lhs_81104 = ((double *) mem_87522)[i_86279 * (int64_t) 27 + i_86275];
+                
+                // futhark/microgpt.fut:277:65-104
+                
+                double zp_res_81105 = neg_res_81096 + zp_lhs_81104;
+                
+                // futhark/microgpt.fut:277:42-104
+                
+                double zt_res_81106 = zt_lhs_81103 * zp_res_81105;
+                
+                ((double *) mem_87580)[i_86275] = zt_res_81106;
             }
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87575, i_86279 * (int64_t) 27, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87580, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 27});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87307 = 0; i_87307 < (int64_t) 16; i_87307++) {
-            // futhark/microgpt.fut:285:105-117
-            
-            double zs_rhs_82022 = ((double *) mem_88435)[i_87307];
-            
-            // futhark/microgpt.fut:285:97-117
-            
-            double zs_res_82023 = 1.0 / zs_rhs_82022;
-            
+        for (int64_t i_86287 = 0; i_86287 < (int64_t) 16; i_86287++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87303 = 0; i_87303 < (int64_t) 16; i_87303++) {
-                // futhark/microgpt.fut:4:11-25
-                
-                double zp_lhs_82030 = ((double *) mem_88557)[i_87307 * (int64_t) 16 + i_87303];
-                
-                // futhark/microgpt.fut:4:11-25
-                
-                double zt_lhs_82031 = ((double *) mem_88621)[i_87307 * (int64_t) 16 + i_87303];
-                
-                // futhark/microgpt.fut:285:72-117
-                
-                double zt_res_82032 = zs_res_82023 * zt_lhs_82031;
-                
-                // futhark/microgpt.fut:4:11-25
-                
-                double zt_lhs_82033 = ((double *) mem_88364)[i_87307 * (int64_t) 16 + i_87303];
-                
-                // futhark/microgpt.fut:4:11-25
-                
-                double zt_rhs_82034 = ((double *) mem_88651)[i_87307 * (int64_t) 16 + i_87303];
-                
-                // futhark/microgpt.fut:285:125-169
-                
-                double zt_res_82035 = zt_lhs_82033 * zt_rhs_82034;
-                
-                // futhark/microgpt.fut:285:92-169
-                
-                double zp_res_82036 = zt_res_82032 + zt_res_82035;
-                
-                // futhark/microgpt.fut:285:120-221
-                
-                double zp_res_82037 = zt_res_82035 + zp_res_82036;
-                
-                // futhark/microgpt.fut:285:45-221
-                
-                double zp_res_82038 = zp_lhs_82030 + zp_res_82037;
-                
-                ((double *) mem_88666)[i_87303] = zp_res_82038;
-            }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88661, i_87307 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88666, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-        }
-        // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87320 = 0; i_87320 < (int64_t) 16; i_87320++) {
-            // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87313 = 0; i_87313 < (int64_t) 16; i_87313++) {
+            for (int64_t i_86283 = 0; i_86283 < (int64_t) 16; i_86283++) {
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_85763;
-                double r_85765 = 0.0;
+                double defunc_0_lifted_lambda_res_81121;
+                double r_81123 = 0.0;
                 
-                for (int64_t i_85764 = 0; i_85764 < (int64_t) 16; i_85764++) {
+                for (int64_t i_81122 = 0; i_81122 < (int64_t) 27; i_81122++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_85766 = ((double *) mem_param_87841.mem)[i_85764 * (int64_t) 16 + i_87313];
+                    double zt_lhs_81124 = ((double *) mem_param_86902.mem)[i_81122 * (int64_t) 16 + i_86283];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_85767 = ((double *) mem_88661)[i_87320 * (int64_t) 16 + i_85764];
+                    double zt_rhs_81125 = ((double *) mem_87575)[i_86287 * (int64_t) 27 + i_81122];
                     
-                    // futhark/microgpt.fut:286:67-112
+                    // futhark/microgpt.fut:278:63-103
                     
-                    double zt_res_85768 = zt_lhs_85766 * zt_rhs_85767;
+                    double zt_res_81126 = zt_lhs_81124 * zt_rhs_81125;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_85769 = r_85765 + zt_res_85768;
-                    double r_tmp_89750 = zp_res_85769;
+                    double zp_res_81127 = r_81123 + zt_res_81126;
+                    double r_tmp_88790 = zp_res_81127;
                     
-                    r_85765 = r_tmp_89750;
+                    r_81123 = r_tmp_88790;
                 }
-                defunc_0_lifted_lambda_res_85763 = r_85765;
+                defunc_0_lifted_lambda_res_81121 = r_81123;
+                ((double *) mem_87596)[i_86283] = defunc_0_lifted_lambda_res_81121;
+            }
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87591, i_86287 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87596, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        }
+        // futhark/microgpt.fut:4:11-25
+        for (int64_t i_86300 = 0; i_86300 < (int64_t) 16; i_86300++) {
+            // futhark/microgpt.fut:4:11-25
+            for (int64_t i_86293 = 0; i_86293 < (int64_t) 64; i_86293++) {
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_85776;
-                double r_85778 = 0.0;
+                double defunc_0_lifted_lambda_res_84832;
+                double r_84834 = 0.0;
                 
-                for (int64_t i_85777 = 0; i_85777 < (int64_t) 16; i_85777++) {
+                for (int64_t i_84833 = 0; i_84833 < (int64_t) 16; i_84833++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_85779 = ((double *) mem_88661)[i_85777 * (int64_t) 16 + i_87320];
+                    double zt_lhs_84835 = ((double *) mem_param_86870.mem)[i_84833 * (int64_t) 64 + i_86293];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_85780 = ((double *) mem_88326)[i_85777 * (int64_t) 16 + i_87313];
+                    double zt_rhs_84836 = ((double *) mem_87591)[i_86300 * (int64_t) 16 + i_84833];
                     
-                    // futhark/microgpt.fut:331:68-112
+                    // futhark/microgpt.fut:279:63-104
                     
-                    double zt_res_85781 = zt_lhs_85779 * zt_rhs_85780;
+                    double zt_res_84837 = zt_lhs_84835 * zt_rhs_84836;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_85782 = r_85778 + zt_res_85781;
-                    double r_tmp_89751 = zp_res_85782;
+                    double zp_res_84838 = r_84834 + zt_res_84837;
+                    double r_tmp_88795 = zp_res_84838;
                     
-                    r_85778 = r_tmp_89751;
+                    r_84834 = r_tmp_88795;
                 }
-                defunc_0_lifted_lambda_res_85776 = r_85778;
-                ((double *) mem_88687)[i_87313] = defunc_0_lifted_lambda_res_85776;
-                ((double *) mem_88688)[i_87313] = defunc_0_lifted_lambda_res_85763;
+                defunc_0_lifted_lambda_res_84832 = r_84834;
+                // futhark/microgpt.fut:71:13-49
+                
+                double defunc_0_lifted_lambda_res_84845;
+                double r_84847 = 0.0;
+                
+                for (int64_t i_84846 = 0; i_84846 < (int64_t) 16; i_84846++) {
+                    // futhark/microgpt.fut:71:46-49
+                    
+                    double zt_lhs_84848 = ((double *) mem_87591)[i_84846 * (int64_t) 16 + i_86300];
+                    
+                    // futhark/microgpt.fut:71:46-49
+                    
+                    double zt_rhs_84849 = ((double *) mem_87458)[i_84846 * (int64_t) 64 + i_86293];
+                    
+                    // futhark/microgpt.fut:331:69-112
+                    
+                    double zt_res_84850 = zt_lhs_84848 * zt_rhs_84849;
+                    
+                    // futhark/microgpt.fut:71:40-49
+                    
+                    double zp_res_84851 = r_84847 + zt_res_84850;
+                    double r_tmp_88796 = zp_res_84851;
+                    
+                    r_84847 = r_tmp_88796;
+                }
+                defunc_0_lifted_lambda_res_84845 = r_84847;
+                ((double *) mem_87617)[i_86293] = defunc_0_lifted_lambda_res_84845;
+                ((double *) mem_87618)[i_86293] = defunc_0_lifted_lambda_res_84832;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88677, i_87320 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88687, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88678, i_87320 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88688, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87607, i_86300 * (int64_t) 64, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87617, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 64});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87608, i_86300 * (int64_t) 64, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87618, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 64});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87342 = 0; i_87342 < (int64_t) 4; i_87342++) {
-            // futhark/microgpt.fut:287:74-77
+        for (int64_t i_86309 = 0; i_86309 < (int64_t) 16; i_86309++) {
+            // futhark/microgpt.fut:4:11-25
+            for (int64_t i_86305 = 0; i_86305 < (int64_t) 64; i_86305++) {
+                // futhark/microgpt.fut:4:11-25
+                
+                double indicatorp_arg0_81163 = ((double *) mem_87436)[i_86309 * (int64_t) 64 + i_86305];
+                
+                // futhark/microgpt.fut:124:42-54
+                
+                double max_res_81164 = fmax64(0.0, indicatorp_arg0_81163);
+                
+                // futhark/microgpt.fut:124:35-54
+                
+                double sgn_res_81165 = fsignum64(max_res_81164);
+                
+                // futhark/microgpt.fut:4:11-25
+                
+                double zt_rhs_81166 = ((double *) mem_87608)[i_86309 * (int64_t) 64 + i_86305];
+                
+                // futhark/microgpt.fut:280:43-94
+                
+                double zt_res_81167 = sgn_res_81165 * zt_rhs_81166;
+                
+                ((double *) mem_87644)[i_86305] = zt_res_81167;
+            }
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87639, i_86309 * (int64_t) 64, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87644, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 64});
+        }
+        // futhark/microgpt.fut:4:11-25
+        for (int64_t i_86317 = 0; i_86317 < (int64_t) 16; i_86317++) {
+            // futhark/microgpt.fut:4:11-25
+            for (int64_t i_86313 = 0; i_86313 < (int64_t) 16; i_86313++) {
+                // futhark/microgpt.fut:71:13-49
+                
+                double defunc_0_lifted_lambda_res_81182;
+                double r_81184 = 0.0;
+                
+                for (int64_t i_81183 = 0; i_81183 < (int64_t) 64; i_81183++) {
+                    // futhark/microgpt.fut:71:46-49
+                    
+                    double zt_lhs_81185 = ((double *) mem_param_86894.mem)[i_81183 * (int64_t) 16 + i_86313];
+                    
+                    // futhark/microgpt.fut:71:46-49
+                    
+                    double zt_rhs_81186 = ((double *) mem_87639)[i_86317 * (int64_t) 64 + i_81183];
+                    
+                    // futhark/microgpt.fut:281:63-102
+                    
+                    double zt_res_81187 = zt_lhs_81185 * zt_rhs_81186;
+                    
+                    // futhark/microgpt.fut:71:40-49
+                    
+                    double zp_res_81188 = r_81184 + zt_res_81187;
+                    double r_tmp_88801 = zp_res_81188;
+                    
+                    r_81184 = r_tmp_88801;
+                }
+                defunc_0_lifted_lambda_res_81182 = r_81184;
+                ((double *) mem_87660)[i_86313] = defunc_0_lifted_lambda_res_81182;
+            }
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87655, i_86317 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87660, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        }
+        // futhark/microgpt.fut:4:11-25
+        for (int64_t i_86323 = 0; i_86323 < (int64_t) 16; i_86323++) {
+            // futhark/microgpt.fut:284:43-55
             
-            int64_t zp_lhs_84156 = mul64((int64_t) 4, i_87342);
+            double zp_lhs_82278 = ((double *) mem_87435)[i_86323];
+            
+            // futhark/microgpt.fut:284:43-83
+            
+            double zp_res_82279 = 1.0e-5 + zp_lhs_82278;
+            
+            // futhark/microgpt.fut:284:35-83
+            
+            double sqrt_res_82280 = futrts_sqrt64(zp_res_82279);
+            
+            // futhark/microgpt.fut:285:65-85
+            
+            double zs_res_82288 = 1.0 / sqrt_res_82280;
+            
+            // futhark/microgpt.fut:71:13-49
+            
+            double defunc_0_lifted_lambda_res_82289;
+            double r_82291 = 0.0;
+            
+            for (int64_t i_82290 = 0; i_82290 < (int64_t) 16; i_82290++) {
+                // futhark/microgpt.fut:71:46-49
+                
+                double zt_lhs_82292 = ((double *) mem_87387)[i_86323 * (int64_t) 16 + i_82290];
+                
+                // futhark/microgpt.fut:71:46-49
+                
+                double zt_rhs_82293 = ((double *) mem_87655)[i_86323 * (int64_t) 16 + i_82290];
+                
+                // futhark/microgpt.fut:285:93-136
+                
+                double zt_res_82294 = zt_lhs_82292 * zt_rhs_82293;
+                
+                // futhark/microgpt.fut:285:113-163
+                
+                double zt_res_82295 = zs_res_82288 * zt_res_82294;
+                
+                // futhark/microgpt.fut:285:69-163
+                
+                double zt_res_82296 = zs_res_82288 * zt_res_82295;
+                
+                // futhark/microgpt.fut:285:57-163
+                
+                double neg_res_82297 = -zt_res_82296;
+                
+                // futhark/microgpt.fut:71:40-49
+                
+                double zp_res_82298 = r_82291 + neg_res_82297;
+                double r_tmp_88804 = zp_res_82298;
+                
+                r_82291 = r_tmp_88804;
+            }
+            defunc_0_lifted_lambda_res_82289 = r_82291;
+            ((double *) mem_87671)[i_86323] = defunc_0_lifted_lambda_res_82289;
+            ((double *) mem_87672)[i_86323] = sqrt_res_82280;
+        }
+        // futhark/microgpt.fut:4:11-25
+        for (int64_t i_86328 = 0; i_86328 < (int64_t) 16; i_86328++) {
+            // futhark/microgpt.fut:286:35-47
+            
+            double zt_lhs_81255 = ((double *) mem_87671)[i_86328];
+            
+            // futhark/microgpt.fut:286:89-101
+            
+            double zp_lhs_81256 = ((double *) mem_87435)[i_86328];
+            
+            // futhark/microgpt.fut:286:89-129
+            
+            double zp_res_81257 = 1.0e-5 + zp_lhs_81256;
+            
+            // futhark/microgpt.fut:286:81-129
+            
+            double sqrt_res_81258 = futrts_sqrt64(zp_res_81257);
+            
+            // futhark/microgpt.fut:286:67-131
+            
+            double zt_res_81259 = 2.0 * sqrt_res_81258;
+            
+            // futhark/microgpt.fut:286:53-131
+            
+            double zs_res_81260 = 1.0 / zt_res_81259;
+            
+            // futhark/microgpt.fut:286:35-131
+            
+            double zt_res_81261 = zt_lhs_81255 * zs_res_81260;
+            
+            ((double *) mem_87685)[i_86328] = zt_res_81261;
+        }
+        // futhark/microgpt.fut:4:11-25
+        for (int64_t i_86332 = 0; i_86332 < (int64_t) 16; i_86332++) {
+            // futhark/microgpt.fut:287:45-57
+            
+            double zs_lhs_81269 = ((double *) mem_87685)[i_86332];
+            
+            // futhark/microgpt.fut:287:45-72
+            
+            double zs_res_81270 = zs_lhs_81269 / 16.0;
             
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87335 = 0; i_87335 < (int64_t) 16; i_87335++) {
+            for (int64_t nest_i_88807 = 0; nest_i_88807 < (int64_t) 16; nest_i_88807++) {
+                ((double *) mem_87692)[i_86332 * (int64_t) 16 + nest_i_88807] = zs_res_81270;
+            }
+        }
+        // futhark/microgpt.fut:4:11-25
+        for (int64_t i_86340 = 0; i_86340 < (int64_t) 16; i_86340++) {
+            // futhark/microgpt.fut:288:105-117
+            
+            double zs_rhs_81279 = ((double *) mem_87672)[i_86340];
+            
+            // futhark/microgpt.fut:288:97-117
+            
+            double zs_res_81280 = 1.0 / zs_rhs_81279;
+            
+            // futhark/microgpt.fut:4:11-25
+            for (int64_t i_86336 = 0; i_86336 < (int64_t) 16; i_86336++) {
                 // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87325 = 0; i_87325 < (int64_t) 4; i_87325++) {
-                    // futhark/microgpt.fut:287:79-87
+                
+                double zp_lhs_81287 = ((double *) mem_87591)[i_86340 * (int64_t) 16 + i_86336];
+                
+                // futhark/microgpt.fut:4:11-25
+                
+                double zt_lhs_81288 = ((double *) mem_87655)[i_86340 * (int64_t) 16 + i_86336];
+                
+                // futhark/microgpt.fut:288:72-117
+                
+                double zt_res_81289 = zs_res_81280 * zt_lhs_81288;
+                
+                // futhark/microgpt.fut:4:11-25
+                
+                double zt_lhs_81290 = ((double *) mem_87387)[i_86340 * (int64_t) 16 + i_86336];
+                
+                // futhark/microgpt.fut:4:11-25
+                
+                double zt_rhs_81291 = ((double *) mem_87692)[i_86340 * (int64_t) 16 + i_86336];
+                
+                // futhark/microgpt.fut:288:125-169
+                
+                double zt_res_81292 = zt_lhs_81290 * zt_rhs_81291;
+                
+                // futhark/microgpt.fut:288:92-169
+                
+                double zp_res_81293 = zt_res_81289 + zt_res_81292;
+                
+                // futhark/microgpt.fut:288:120-221
+                
+                double zp_res_81294 = zt_res_81292 + zp_res_81293;
+                
+                // futhark/microgpt.fut:288:45-221
+                
+                double zp_res_81295 = zp_lhs_81287 + zp_res_81294;
+                
+                ((double *) mem_87707)[i_86336] = zp_res_81295;
+            }
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87702, i_86340 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87707, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        }
+        // futhark/microgpt.fut:4:11-25
+        for (int64_t i_86353 = 0; i_86353 < (int64_t) 16; i_86353++) {
+            // futhark/microgpt.fut:4:11-25
+            for (int64_t i_86346 = 0; i_86346 < (int64_t) 16; i_86346++) {
+                // futhark/microgpt.fut:71:13-49
+                
+                double defunc_0_lifted_lambda_res_84874;
+                double r_84876 = 0.0;
+                
+                for (int64_t i_84875 = 0; i_84875 < (int64_t) 16; i_84875++) {
+                    // futhark/microgpt.fut:71:46-49
                     
-                    int64_t tmp_85804 = add64(zp_lhs_84156, i_87325);
+                    double zt_lhs_84877 = ((double *) mem_param_86878.mem)[i_84875 * (int64_t) 16 + i_86346];
                     
-                    // futhark/microgpt.fut:287:52-89
+                    // futhark/microgpt.fut:71:46-49
                     
-                    bool x_85805 = sle64((int64_t) 0, tmp_85804);
+                    double zt_rhs_84878 = ((double *) mem_87702)[i_86353 * (int64_t) 16 + i_84875];
                     
-                    // futhark/microgpt.fut:287:52-89
+                    // futhark/microgpt.fut:289:67-112
                     
-                    bool y_85806 = slt64(tmp_85804, (int64_t) 16);
+                    double zt_res_84879 = zt_lhs_84877 * zt_rhs_84878;
                     
-                    // futhark/microgpt.fut:287:52-89
+                    // futhark/microgpt.fut:71:40-49
                     
-                    bool bounds_check_85807 = x_85805 && y_85806;
+                    double zp_res_84880 = r_84876 + zt_res_84879;
+                    double r_tmp_88814 = zp_res_84880;
                     
-                    // futhark/microgpt.fut:287:52-89
+                    r_84876 = r_tmp_88814;
+                }
+                defunc_0_lifted_lambda_res_84874 = r_84876;
+                // futhark/microgpt.fut:71:13-49
+                
+                double defunc_0_lifted_lambda_res_84887;
+                double r_84889 = 0.0;
+                
+                for (int64_t i_84888 = 0; i_84888 < (int64_t) 16; i_84888++) {
+                    // futhark/microgpt.fut:71:46-49
                     
-                    bool index_certs_85808;
+                    double zt_lhs_84890 = ((double *) mem_87702)[i_84888 * (int64_t) 16 + i_86353];
                     
-                    if (!bounds_check_85807) {
-                        set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_85804, "] out of bounds for array of shape [", (long long) (int64_t) 16, "].", "-> #0  futhark/microgpt.fut:287:52-89\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:15:29-44\n   #6  futhark/microgpt.fut:4:11-25\n   #7  futhark/microgpt.fut:15:15-45\n   #8  futhark/microgpt.fut:287:13-90\n   #9  futhark/microgpt.fut:452:5-76\n   #10 futhark/microgpt.fut:457:26-463:31\n   #11 futhark/microgpt.fut:479:11-50\n"));
+                    // futhark/microgpt.fut:71:46-49
+                    
+                    double zt_rhs_84891 = ((double *) mem_87355)[i_84888 * (int64_t) 16 + i_86346];
+                    
+                    // futhark/microgpt.fut:329:68-112
+                    
+                    double zt_res_84892 = zt_lhs_84890 * zt_rhs_84891;
+                    
+                    // futhark/microgpt.fut:71:40-49
+                    
+                    double zp_res_84893 = r_84889 + zt_res_84892;
+                    double r_tmp_88815 = zp_res_84893;
+                    
+                    r_84889 = r_tmp_88815;
+                }
+                defunc_0_lifted_lambda_res_84887 = r_84889;
+                ((double *) mem_87728)[i_86346] = defunc_0_lifted_lambda_res_84887;
+                ((double *) mem_87729)[i_86346] = defunc_0_lifted_lambda_res_84874;
+            }
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87718, i_86353 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87728, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87719, i_86353 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87729, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        }
+        // futhark/microgpt.fut:4:11-25
+        for (int64_t i_86375 = 0; i_86375 < (int64_t) 4; i_86375++) {
+            // futhark/microgpt.fut:290:74-77
+            
+            int64_t zp_lhs_83388 = mul64((int64_t) 4, i_86375);
+            
+            // futhark/microgpt.fut:4:11-25
+            for (int64_t i_86368 = 0; i_86368 < (int64_t) 16; i_86368++) {
+                // futhark/microgpt.fut:4:11-25
+                for (int64_t i_86358 = 0; i_86358 < (int64_t) 4; i_86358++) {
+                    // futhark/microgpt.fut:290:79-87
+                    
+                    int64_t tmp_84915 = add64(zp_lhs_83388, i_86358);
+                    
+                    // futhark/microgpt.fut:290:52-89
+                    
+                    bool x_84916 = sle64((int64_t) 0, tmp_84915);
+                    
+                    // futhark/microgpt.fut:290:52-89
+                    
+                    bool y_84917 = slt64(tmp_84915, (int64_t) 16);
+                    
+                    // futhark/microgpt.fut:290:52-89
+                    
+                    bool bounds_check_84918 = x_84916 && y_84917;
+                    
+                    // futhark/microgpt.fut:290:52-89
+                    
+                    bool index_certs_84919;
+                    
+                    if (!bounds_check_84918) {
+                        set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_84915, "] out of bounds for array of shape [", (long long) (int64_t) 16, "].", "-> #0  futhark/microgpt.fut:290:52-89\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:15:29-44\n   #6  futhark/microgpt.fut:4:11-25\n   #7  futhark/microgpt.fut:15:15-45\n   #8  futhark/microgpt.fut:290:13-90\n   #9  futhark/microgpt.fut:449:5-76\n   #10 futhark/microgpt.fut:454:26-460:31\n   #11 futhark/microgpt.fut:476:11-50\n"));
                         err = FUTHARK_PROGRAM_ERROR;
                         goto cleanup;
                     }
                     // futhark/microgpt.fut:4:11-25
                     
-                    double lifted_lambda_res_85809 = ((double *) mem_88678)[i_87335 * (int64_t) 16 + tmp_85804];
+                    double lifted_lambda_res_84920 = ((double *) mem_87719)[i_86368 * (int64_t) 16 + tmp_84915];
                     
-                    ((double *) mem_88731)[i_87325] = lifted_lambda_res_85809;
+                    ((double *) mem_87772)[i_86358] = lifted_lambda_res_84920;
                 }
                 // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87329 = 0; i_87329 < (int64_t) 16; i_87329++) {
+                for (int64_t i_86362 = 0; i_86362 < (int64_t) 16; i_86362++) {
                     // futhark/microgpt.fut:4:11-25
                     
-                    double zs_lhs_85823 = ((double *) mem_88216)[i_87342 * (int64_t) 256 + i_87335 * (int64_t) 16 + i_87329];
+                    double zs_lhs_84934 = ((double *) mem_87246)[i_86375 * (int64_t) 256 + i_86368 * (int64_t) 16 + i_86362];
                     
-                    // futhark/microgpt.fut:289:55-97
+                    // futhark/microgpt.fut:292:55-97
                     
-                    double zs_res_85824 = zs_lhs_85823 / 2.0;
-                    double zp_rhs_85825 = ((double *) masks_mem_87827.mem)[step_81116 * (int64_t) 256 + i_87335 * (int64_t) 16 + i_87329];
+                    double zs_res_84935 = zs_lhs_84934 / 2.0;
+                    double zp_rhs_84936 = ((double *) masks_mem_86864.mem)[step_80406 * (int64_t) 256 + i_86368 * (int64_t) 16 + i_86362];
                     
-                    // futhark/microgpt.fut:289:84-123
+                    // futhark/microgpt.fut:292:84-123
                     
-                    double zp_res_85826 = zs_res_85824 + zp_rhs_85825;
+                    double zp_res_84937 = zs_res_84935 + zp_rhs_84936;
                     
-                    ((double *) mem_88738)[i_87329] = zp_res_85826;
+                    ((double *) mem_87779)[i_86362] = zp_res_84937;
                 }
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88721, i_87335 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88738, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88722, i_87335 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88731, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87762, i_86368 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87779, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87763, i_86368 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87772, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
             }
-            lmad_copy_8b(ctx, 2, (uint64_t *) mem_88709, i_87342 * (int64_t) 256, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_88721, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-            lmad_copy_8b(ctx, 2, (uint64_t *) mem_88710, i_87342 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_88722, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
+            lmad_copy_8b(ctx, 2, (uint64_t *) mem_87750, i_86375 * (int64_t) 256, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_87762, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+            lmad_copy_8b(ctx, 2, (uint64_t *) mem_87751, i_86375 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_87763, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87369 = 0; i_87369 < (int64_t) 4; i_87369++) {
+        for (int64_t i_86402 = 0; i_86402 < (int64_t) 4; i_86402++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87362 = 0; i_87362 < (int64_t) 16; i_87362++) {
+            for (int64_t i_86395 = 0; i_86395 < (int64_t) 16; i_86395++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double defunc_0_reduce_res_86849;
-                double redout_87346 = -INFINITY;
+                double defunc_0_reduce_res_85883;
+                double redout_86379 = -INFINITY;
                 
-                for (int64_t i_87348 = 0; i_87348 < (int64_t) 16; i_87348++) {
+                for (int64_t i_86381 = 0; i_86381 < (int64_t) 16; i_86381++) {
                     // futhark/microgpt.fut:4:11-25
                     
-                    double lifted_lambda_res_85944 = ((double *) mem_88709)[i_87369 * (int64_t) 256 + i_87362 * (int64_t) 16 + i_87348];
+                    double lifted_lambda_res_85055 = ((double *) mem_87750)[i_86402 * (int64_t) 256 + i_86395 * (int64_t) 16 + i_86381];
                     
                     // futhark/microgpt.fut:71:13-49
                     
-                    double defunc_0_lifted_lambda_res_85955;
-                    double r_85957 = 0.0;
+                    double defunc_0_lifted_lambda_res_85066;
+                    double r_85068 = 0.0;
                     
-                    for (int64_t i_85956 = 0; i_85956 < (int64_t) 4; i_85956++) {
+                    for (int64_t i_85067 = 0; i_85067 < (int64_t) 4; i_85067++) {
                         // futhark/microgpt.fut:71:46-49
                         
-                        double zt_lhs_85958 = ((double *) mem_88710)[i_87369 * (int64_t) 64 + i_87362 * (int64_t) 4 + i_85956];
+                        double zt_lhs_85069 = ((double *) mem_87751)[i_86402 * (int64_t) 64 + i_86395 * (int64_t) 4 + i_85067];
                         
                         // futhark/microgpt.fut:71:46-49
                         
-                        double zt_rhs_85959 = ((double *) mem_88135)[i_87369 * (int64_t) 64 + i_87348 * (int64_t) 4 + i_85956];
+                        double zt_rhs_85070 = ((double *) mem_87165)[i_86402 * (int64_t) 64 + i_86381 * (int64_t) 4 + i_85067];
                         
-                        // futhark/microgpt.fut:294:75-135
+                        // futhark/microgpt.fut:297:75-135
                         
-                        double zt_res_85960 = zt_lhs_85958 * zt_rhs_85959;
+                        double zt_res_85071 = zt_lhs_85069 * zt_rhs_85070;
                         
                         // futhark/microgpt.fut:71:40-49
                         
-                        double zp_res_85961 = r_85957 + zt_res_85960;
-                        double r_tmp_89764 = zp_res_85961;
+                        double zp_res_85072 = r_85068 + zt_res_85071;
+                        double r_tmp_88828 = zp_res_85072;
                         
-                        r_85957 = r_tmp_89764;
+                        r_85068 = r_tmp_88828;
                     }
-                    defunc_0_lifted_lambda_res_85955 = r_85957;
-                    // futhark/microgpt.fut:115:13-33
+                    defunc_0_lifted_lambda_res_85066 = r_85068;
+                    // futhark/microgpt.fut:103:13-33
                     
-                    double max_res_85863 = fmax64(lifted_lambda_res_85944, redout_87346);
+                    double max_res_84974 = fmax64(lifted_lambda_res_85055, redout_86379);
                     
-                    ((double *) mem_88785)[i_87348] = defunc_0_lifted_lambda_res_85955;
+                    ((double *) mem_87826)[i_86381] = defunc_0_lifted_lambda_res_85066;
                     
-                    double redout_tmp_89762 = max_res_85863;
+                    double redout_tmp_88826 = max_res_84974;
                     
-                    redout_87346 = redout_tmp_89762;
+                    redout_86379 = redout_tmp_88826;
                 }
-                defunc_0_reduce_res_86849 = redout_87346;
-                // futhark/microgpt.fut:291:78-88
+                defunc_0_reduce_res_85883 = redout_86379;
+                // futhark/microgpt.fut:294:78-88
                 
-                double neg_res_85864 = -defunc_0_reduce_res_86849;
+                double neg_res_84975 = -defunc_0_reduce_res_85883;
                 
                 // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87352 = 0; i_87352 < (int64_t) 16; i_87352++) {
+                for (int64_t i_86385 = 0; i_86385 < (int64_t) 16; i_86385++) {
                     // futhark/microgpt.fut:4:11-25
                     
-                    double zp_lhs_85871 = ((double *) mem_88709)[i_87369 * (int64_t) 256 + i_87362 * (int64_t) 16 + i_87352];
+                    double zp_lhs_84982 = ((double *) mem_87750)[i_86402 * (int64_t) 256 + i_86395 * (int64_t) 16 + i_86385];
                     
-                    // futhark/microgpt.fut:291:45-88
+                    // futhark/microgpt.fut:294:45-88
                     
-                    double zp_res_85872 = neg_res_85864 + zp_lhs_85871;
+                    double zp_res_84983 = neg_res_84975 + zp_lhs_84982;
                     
-                    // futhark/microgpt.fut:291:38-88
+                    // futhark/microgpt.fut:294:38-88
                     
-                    double exp_res_85873 = futrts_exp64(zp_res_85872);
+                    double exp_res_84984 = futrts_exp64(zp_res_84983);
                     
-                    ((double *) mem_88792)[i_87352] = exp_res_85873;
+                    ((double *) mem_87833)[i_86385] = exp_res_84984;
                 }
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_85875;
-                double r_85877 = 0.0;
+                double defunc_0_lifted_lambda_res_84986;
+                double r_84988 = 0.0;
                 
-                for (int64_t i_85876 = 0; i_85876 < (int64_t) 16; i_85876++) {
-                    // futhark/microgpt.fut:292:38-50
+                for (int64_t i_84987 = 0; i_84987 < (int64_t) 16; i_84987++) {
+                    // futhark/microgpt.fut:295:38-50
                     
-                    double lifted_lambda_res_85878 = ((double *) mem_88792)[i_85876];
+                    double lifted_lambda_res_84989 = ((double *) mem_87833)[i_84987];
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_85879 = r_85877 + lifted_lambda_res_85878;
-                    double r_tmp_89766 = zp_res_85879;
+                    double zp_res_84990 = r_84988 + lifted_lambda_res_84989;
+                    double r_tmp_88830 = zp_res_84990;
                     
-                    r_85877 = r_tmp_89766;
+                    r_84988 = r_tmp_88830;
                 }
-                defunc_0_lifted_lambda_res_85875 = r_85877;
+                defunc_0_lifted_lambda_res_84986 = r_84988;
                 // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87356 = 0; i_87356 < (int64_t) 16; i_87356++) {
-                    // futhark/microgpt.fut:293:5-17
+                for (int64_t i_86389 = 0; i_86389 < (int64_t) 16; i_86389++) {
+                    // futhark/microgpt.fut:296:5-17
                     
-                    double zs_lhs_85886 = ((double *) mem_88792)[i_87356];
+                    double zs_lhs_84997 = ((double *) mem_87833)[i_86389];
                     
-                    // futhark/microgpt.fut:293:5-26
+                    // futhark/microgpt.fut:296:5-26
                     
-                    double zs_res_85887 = zs_lhs_85886 / defunc_0_lifted_lambda_res_85875;
+                    double zs_res_84998 = zs_lhs_84997 / defunc_0_lifted_lambda_res_84986;
                     
-                    ((double *) mem_88799)[i_87356] = zs_res_85887;
+                    ((double *) mem_87840)[i_86389] = zs_res_84998;
                 }
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88775, i_87362 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88785, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88776, i_87362 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88799, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87816, i_86395 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87826, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87817, i_86395 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87840, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
             }
-            lmad_copy_8b(ctx, 2, (uint64_t *) mem_88763, i_87369 * (int64_t) 256, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_88775, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-            lmad_copy_8b(ctx, 2, (uint64_t *) mem_88764, i_87369 * (int64_t) 256, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_88776, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+            lmad_copy_8b(ctx, 2, (uint64_t *) mem_87804, i_86402 * (int64_t) 256, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_87816, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+            lmad_copy_8b(ctx, 2, (uint64_t *) mem_87805, i_86402 * (int64_t) 256, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_87817, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87393 = 0; i_87393 < (int64_t) 4; i_87393++) {
+        for (int64_t i_86424 = 0; i_86424 < (int64_t) 4; i_86424++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87386 = 0; i_87386 < (int64_t) 16; i_87386++) {
-                double x_86856;
-                double redout_87372 = -INFINITY;
-                
-                for (int64_t i_87373 = 0; i_87373 < (int64_t) 16; i_87373++) {
+            for (int64_t i_86417 = 0; i_86417 < (int64_t) 16; i_86417++) {
+                // futhark/microgpt.fut:4:11-25
+                for (int64_t i_86407 = 0; i_86407 < (int64_t) 16; i_86407++) {
                     // futhark/microgpt.fut:4:11-25
                     
-                    double lifted_lambda_res_86060 = ((double *) mem_88709)[i_87393 * (int64_t) 256 + i_87386 * (int64_t) 16 + i_87373];
+                    double lifted_lambda_res_85106 = ((double *) mem_87804)[i_86424 * (int64_t) 256 + i_86417 * (int64_t) 16 + i_86407];
                     
-                    // futhark/microgpt.fut:115:13-33
-                    
-                    double max_res_86004 = fmax64(lifted_lambda_res_86060, redout_87372);
-                    double redout_tmp_89772 = max_res_86004;
-                    
-                    redout_87372 = redout_tmp_89772;
+                    ((double *) mem_87887)[i_86407] = lifted_lambda_res_85106;
                 }
-                x_86856 = redout_87372;
-                // futhark/microgpt.fut:296:78-88
-                
-                double neg_res_86005 = -x_86856;
-                
-                // futhark/microgpt.fut:71:13-49
-                
-                double defunc_0_lifted_lambda_res_85989;
-                double r_85991 = 0.0;
-                
-                for (int64_t i_85990 = 0; i_85990 < (int64_t) 16; i_85990++) {
-                    // futhark/microgpt.fut:4:11-25
-                    for (int64_t i_87376 = 0; i_87376 < (int64_t) 16; i_87376++) {
-                        // futhark/microgpt.fut:4:11-25
-                        
-                        double zp_lhs_86012 = ((double *) mem_88709)[i_87393 * (int64_t) 256 + i_87386 * (int64_t) 16 + i_87376];
-                        
-                        // futhark/microgpt.fut:296:45-88
-                        
-                        double zp_res_86013 = neg_res_86005 + zp_lhs_86012;
-                        
-                        // futhark/microgpt.fut:296:38-88
-                        
-                        double exp_res_86014 = futrts_exp64(zp_res_86013);
-                        
-                        ((double *) mem_88844)[i_87376] = exp_res_86014;
-                    }
+                // futhark/microgpt.fut:4:11-25
+                for (int64_t i_86411 = 0; i_86411 < (int64_t) 4; i_86411++) {
                     // futhark/microgpt.fut:71:13-49
                     
-                    double defunc_0_lifted_lambda_res_86016;
-                    double r_86018 = 0.0;
+                    double defunc_0_lifted_lambda_res_85120;
+                    double r_85122 = 0.0;
                     
-                    for (int64_t i_86017 = 0; i_86017 < (int64_t) 16; i_86017++) {
-                        // futhark/microgpt.fut:297:38-50
+                    for (int64_t i_85121 = 0; i_85121 < (int64_t) 16; i_85121++) {
+                        // futhark/microgpt.fut:71:46-49
                         
-                        double lifted_lambda_res_86019 = ((double *) mem_88844)[i_86017];
+                        double zt_lhs_85123 = ((double *) mem_87805)[i_86424 * (int64_t) 256 + i_85121 * (int64_t) 16 + i_86417];
+                        
+                        // futhark/microgpt.fut:71:46-49
+                        
+                        double zt_rhs_85124 = ((double *) mem_87751)[i_86424 * (int64_t) 64 + i_85121 * (int64_t) 4 + i_86411];
+                        
+                        // futhark/microgpt.fut:302:75-136
+                        
+                        double zt_res_85125 = zt_lhs_85123 * zt_rhs_85124;
                         
                         // futhark/microgpt.fut:71:40-49
                         
-                        double zp_res_86020 = r_86018 + lifted_lambda_res_86019;
-                        double r_tmp_89775 = zp_res_86020;
+                        double zp_res_85126 = r_85122 + zt_res_85125;
+                        double r_tmp_88838 = zp_res_85126;
                         
-                        r_86018 = r_tmp_89775;
+                        r_85122 = r_tmp_88838;
                     }
-                    defunc_0_lifted_lambda_res_86016 = r_86018;
+                    defunc_0_lifted_lambda_res_85120 = r_85122;
+                    ((double *) mem_87894)[i_86411] = defunc_0_lifted_lambda_res_85120;
+                }
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87877, i_86417 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87894, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87878, i_86417 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87887, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            }
+            lmad_copy_8b(ctx, 2, (uint64_t *) mem_87865, i_86424 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_87877, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
+            lmad_copy_8b(ctx, 2, (uint64_t *) mem_87866, i_86424 * (int64_t) 256, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_87878, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        }
+        // futhark/microgpt.fut:4:11-25
+        for (int64_t i_86433 = 0; i_86433 < (int64_t) 4; i_86433++) {
+            // futhark/microgpt.fut:4:11-25
+            for (int64_t i_86429 = 0; i_86429 < (int64_t) 16; i_86429++) {
+                // futhark/microgpt.fut:71:13-49
+                
+                double defunc_0_lifted_lambda_res_81506;
+                double r_81508 = 0.0;
+                
+                for (int64_t i_81507 = 0; i_81507 < (int64_t) 16; i_81507++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_86021 = ((double *) mem_88763)[i_87393 * (int64_t) 256 + i_87386 * (int64_t) 16 + i_85990];
+                    double zt_lhs_81509 = ((double *) mem_87866)[i_86433 * (int64_t) 256 + i_86429 * (int64_t) 16 + i_81507];
                     
-                    // futhark/microgpt.fut:298:39-51
+                    // futhark/microgpt.fut:71:46-49
                     
-                    double zs_lhs_86022 = ((double *) mem_88844)[i_85990];
+                    double zt_rhs_81510 = ((double *) mem_87805)[i_86433 * (int64_t) 256 + i_86429 * (int64_t) 16 + i_81507];
                     
-                    // futhark/microgpt.fut:298:39-60
+                    // futhark/microgpt.fut:299:66-127
                     
-                    double zs_res_86023 = zs_lhs_86022 / defunc_0_lifted_lambda_res_86016;
-                    
-                    // futhark/microgpt.fut:298:5-60
-                    
-                    double zt_res_86024 = zt_lhs_86021 * zs_res_86023;
+                    double zt_res_81511 = zt_lhs_81509 * zt_rhs_81510;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_86025 = r_85991 + zt_res_86024;
-                    double r_tmp_89773 = zp_res_86025;
+                    double zp_res_81512 = r_81508 + zt_res_81511;
+                    double r_tmp_88841 = zp_res_81512;
                     
-                    r_85991 = r_tmp_89773;
+                    r_81508 = r_tmp_88841;
                 }
-                defunc_0_lifted_lambda_res_85989 = r_85991;
+                defunc_0_lifted_lambda_res_81506 = r_81508;
+                ((double *) mem_87924)[i_86429] = defunc_0_lifted_lambda_res_81506;
+            }
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_87919, i_86433 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87924, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+        }
+        // futhark/microgpt.fut:4:11-25
+        for (int64_t i_86445 = 0; i_86445 < (int64_t) 4; i_86445++) {
+            // futhark/microgpt.fut:4:11-25
+            for (int64_t i_86441 = 0; i_86441 < (int64_t) 16; i_86441++) {
                 // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87380 = 0; i_87380 < (int64_t) 4; i_87380++) {
+                
+                double neg_arg0_81527 = ((double *) mem_87919)[i_86445 * (int64_t) 16 + i_86441];
+                
+                // futhark/microgpt.fut:300:122-148
+                
+                double neg_res_81528 = -neg_arg0_81527;
+                
+                // futhark/microgpt.fut:4:11-25
+                for (int64_t i_86437 = 0; i_86437 < (int64_t) 16; i_86437++) {
+                    // futhark/microgpt.fut:4:11-25
+                    
+                    double zt_lhs_81535 = ((double *) mem_87805)[i_86445 * (int64_t) 256 + i_86441 * (int64_t) 16 + i_86437];
+                    
+                    // futhark/microgpt.fut:4:11-25
+                    
+                    double zp_lhs_81536 = ((double *) mem_87866)[i_86445 * (int64_t) 256 + i_86441 * (int64_t) 16 + i_86437];
+                    
+                    // futhark/microgpt.fut:300:88-148
+                    
+                    double zp_res_81537 = neg_res_81528 + zp_lhs_81536;
+                    
+                    // futhark/microgpt.fut:300:54-148
+                    
+                    double zt_res_81538 = zt_lhs_81535 * zp_res_81537;
+                    
+                    ((double *) mem_87946)[i_86437] = zt_res_81538;
+                }
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87941, i_86441 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87946, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            }
+            lmad_copy_8b(ctx, 2, (uint64_t *) mem_87935, i_86445 * (int64_t) 256, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_87941, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        }
+        // futhark/microgpt.fut:4:11-25
+        for (int64_t i_86457 = 0; i_86457 < (int64_t) 4; i_86457++) {
+            // futhark/microgpt.fut:4:11-25
+            for (int64_t i_86453 = 0; i_86453 < (int64_t) 16; i_86453++) {
+                // futhark/microgpt.fut:4:11-25
+                for (int64_t i_86449 = 0; i_86449 < (int64_t) 16; i_86449++) {
+                    // futhark/microgpt.fut:4:11-25
+                    
+                    double zs_lhs_81560 = ((double *) mem_87935)[i_86457 * (int64_t) 256 + i_86453 * (int64_t) 16 + i_86449];
+                    
+                    // futhark/microgpt.fut:301:54-96
+                    
+                    double zs_res_81561 = zs_lhs_81560 / 2.0;
+                    
+                    ((double *) mem_87973)[i_86449] = zs_res_81561;
+                }
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_87968, i_86453 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_87973, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            }
+            lmad_copy_8b(ctx, 2, (uint64_t *) mem_87962, i_86457 * (int64_t) 256, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_87968, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        }
+        // futhark/microgpt.fut:4:11-25
+        for (int64_t i_86477 = 0; i_86477 < (int64_t) 4; i_86477++) {
+            // futhark/microgpt.fut:4:11-25
+            for (int64_t i_86470 = 0; i_86470 < (int64_t) 16; i_86470++) {
+                // futhark/microgpt.fut:4:11-25
+                for (int64_t i_86463 = 0; i_86463 < (int64_t) 4; i_86463++) {
                     // futhark/microgpt.fut:71:13-49
                     
-                    double defunc_0_lifted_lambda_res_86038;
-                    double r_86040 = 0.0;
+                    double defunc_0_lifted_lambda_res_85207;
+                    double r_85209 = 0.0;
                     
-                    for (int64_t i_86039 = 0; i_86039 < (int64_t) 16; i_86039++) {
+                    for (int64_t i_85208 = 0; i_85208 < (int64_t) 16; i_85208++) {
                         // futhark/microgpt.fut:71:46-49
                         
-                        double zt_lhs_86041 = ((double *) mem_88764)[i_87393 * (int64_t) 256 + i_86039 * (int64_t) 16 + i_87386];
+                        double zt_lhs_85210 = ((double *) mem_87167)[i_86477 * (int64_t) 64 + i_85208 * (int64_t) 4 + i_86463];
                         
                         // futhark/microgpt.fut:71:46-49
                         
-                        double zt_rhs_86042 = ((double *) mem_88710)[i_87393 * (int64_t) 64 + i_86039 * (int64_t) 4 + i_87380];
+                        double zt_rhs_85211 = ((double *) mem_87962)[i_86477 * (int64_t) 256 + i_85208 * (int64_t) 16 + i_86470];
                         
-                        // futhark/microgpt.fut:304:75-136
+                        // futhark/microgpt.fut:303:75-135
                         
-                        double zt_res_86043 = zt_lhs_86041 * zt_rhs_86042;
+                        double zt_res_85212 = zt_lhs_85210 * zt_rhs_85211;
                         
                         // futhark/microgpt.fut:71:40-49
                         
-                        double zp_res_86044 = r_86040 + zt_res_86043;
-                        double r_tmp_89777 = zp_res_86044;
+                        double zp_res_85213 = r_85209 + zt_res_85212;
+                        double r_tmp_88854 = zp_res_85213;
                         
-                        r_86040 = r_tmp_89777;
+                        r_85209 = r_tmp_88854;
                     }
-                    defunc_0_lifted_lambda_res_86038 = r_86040;
-                    ((double *) mem_88851)[i_87380] = defunc_0_lifted_lambda_res_86038;
-                }
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88835, i_87386 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88851, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
-                ((double *) mem_88836)[i_87386] = defunc_0_lifted_lambda_res_85989;
-            }
-            lmad_copy_8b(ctx, 2, (uint64_t *) mem_88824, i_87393 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_88835, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88825, i_87393 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88836, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-        }
-        // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87412 = 0; i_87412 < (int64_t) 4; i_87412++) {
-            // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87408 = 0; i_87408 < (int64_t) 16; i_87408++) {
-                // futhark/microgpt.fut:115:13-33
-                
-                double defunc_0_reduce_res_86860;
-                double redout_87396 = -INFINITY;
-                
-                for (int64_t i_87397 = 0; i_87397 < (int64_t) 16; i_87397++) {
-                    // futhark/microgpt.fut:4:11-25
-                    
-                    double lifted_lambda_res_86090 = ((double *) mem_88709)[i_87412 * (int64_t) 256 + i_87408 * (int64_t) 16 + i_87397];
-                    
-                    // futhark/microgpt.fut:115:13-33
-                    
-                    double max_res_82290 = fmax64(lifted_lambda_res_86090, redout_87396);
-                    double redout_tmp_89780 = max_res_82290;
-                    
-                    redout_87396 = redout_tmp_89780;
-                }
-                defunc_0_reduce_res_86860 = redout_87396;
-                // futhark/microgpt.fut:300:78-88
-                
-                double neg_res_82291 = -defunc_0_reduce_res_86860;
-                
-                // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87400 = 0; i_87400 < (int64_t) 16; i_87400++) {
-                    // futhark/microgpt.fut:4:11-25
-                    
-                    double zp_lhs_82298 = ((double *) mem_88709)[i_87412 * (int64_t) 256 + i_87408 * (int64_t) 16 + i_87400];
-                    
-                    // futhark/microgpt.fut:300:45-88
-                    
-                    double zp_res_82299 = neg_res_82291 + zp_lhs_82298;
-                    
-                    // futhark/microgpt.fut:300:38-88
-                    
-                    double exp_res_82300 = futrts_exp64(zp_res_82299);
-                    
-                    ((double *) mem_88885)[i_87400] = exp_res_82300;
-                }
-                // futhark/microgpt.fut:71:13-49
-                
-                double defunc_0_lifted_lambda_res_82302;
-                double r_82304 = 0.0;
-                
-                for (int64_t i_82303 = 0; i_82303 < (int64_t) 16; i_82303++) {
-                    // futhark/microgpt.fut:301:38-50
-                    
-                    double lifted_lambda_res_82305 = ((double *) mem_88885)[i_82303];
-                    
-                    // futhark/microgpt.fut:71:40-49
-                    
-                    double zp_res_82306 = r_82304 + lifted_lambda_res_82305;
-                    double r_tmp_89782 = zp_res_82306;
-                    
-                    r_82304 = r_tmp_89782;
-                }
-                defunc_0_lifted_lambda_res_82302 = r_82304;
-                // futhark/microgpt.fut:4:11-25
-                
-                double neg_arg0_82307 = ((double *) mem_88825)[i_87412 * (int64_t) 16 + i_87408];
-                
-                // futhark/microgpt.fut:302:68-94
-                
-                double neg_res_82308 = -neg_arg0_82307;
-                
-                // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87404 = 0; i_87404 < (int64_t) 16; i_87404++) {
-                    // futhark/microgpt.fut:302:6-18
-                    
-                    double zs_lhs_82315 = ((double *) mem_88885)[i_87404];
-                    
-                    // futhark/microgpt.fut:302:6-27
-                    
-                    double zs_res_82316 = zs_lhs_82315 / defunc_0_lifted_lambda_res_82302;
-                    
-                    // futhark/microgpt.fut:4:11-25
-                    
-                    double zp_lhs_82317 = ((double *) mem_88763)[i_87412 * (int64_t) 256 + i_87408 * (int64_t) 16 + i_87404];
-                    
-                    // futhark/microgpt.fut:302:34-94
-                    
-                    double zp_res_82318 = neg_res_82308 + zp_lhs_82317;
-                    
-                    // futhark/microgpt.fut:302:19-94
-                    
-                    double zt_res_82319 = zs_res_82316 * zp_res_82318;
-                    
-                    ((double *) mem_88892)[i_87404] = zt_res_82319;
-                }
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88880, i_87408 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88892, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            }
-            lmad_copy_8b(ctx, 2, (uint64_t *) mem_88874, i_87412 * (int64_t) 256, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_88880, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        }
-        // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87424 = 0; i_87424 < (int64_t) 4; i_87424++) {
-            // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87420 = 0; i_87420 < (int64_t) 16; i_87420++) {
-                // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87416 = 0; i_87416 < (int64_t) 16; i_87416++) {
-                    // futhark/microgpt.fut:4:11-25
-                    
-                    double zs_lhs_82341 = ((double *) mem_88874)[i_87424 * (int64_t) 256 + i_87420 * (int64_t) 16 + i_87416];
-                    
-                    // futhark/microgpt.fut:303:54-96
-                    
-                    double zs_res_82342 = zs_lhs_82341 / 2.0;
-                    
-                    ((double *) mem_88919)[i_87416] = zs_res_82342;
-                }
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88914, i_87420 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88919, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            }
-            lmad_copy_8b(ctx, 2, (uint64_t *) mem_88908, i_87424 * (int64_t) 256, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_88914, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        }
-        // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87444 = 0; i_87444 < (int64_t) 4; i_87444++) {
-            // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87437 = 0; i_87437 < (int64_t) 16; i_87437++) {
-                // futhark/microgpt.fut:4:11-25
-                for (int64_t i_87430 = 0; i_87430 < (int64_t) 4; i_87430++) {
+                    defunc_0_lifted_lambda_res_85207 = r_85209;
                     // futhark/microgpt.fut:71:13-49
                     
-                    double defunc_0_lifted_lambda_res_86170;
-                    double r_86172 = 0.0;
+                    double defunc_0_lifted_lambda_res_85220;
+                    double r_85222 = 0.0;
                     
-                    for (int64_t i_86171 = 0; i_86171 < (int64_t) 16; i_86171++) {
+                    for (int64_t i_85221 = 0; i_85221 < (int64_t) 16; i_85221++) {
                         // futhark/microgpt.fut:71:46-49
                         
-                        double zt_lhs_86173 = ((double *) mem_88137)[i_87444 * (int64_t) 64 + i_86171 * (int64_t) 4 + i_87430];
+                        double zt_lhs_85223 = ((double *) mem_87962)[i_86477 * (int64_t) 256 + i_86470 * (int64_t) 16 + i_85221];
                         
                         // futhark/microgpt.fut:71:46-49
                         
-                        double zt_rhs_86174 = ((double *) mem_88908)[i_87444 * (int64_t) 256 + i_86171 * (int64_t) 16 + i_87437];
+                        double zt_rhs_85224 = ((double *) mem_87166)[i_86477 * (int64_t) 64 + i_85221 * (int64_t) 4 + i_86463];
                         
-                        // futhark/microgpt.fut:305:75-135
+                        // futhark/microgpt.fut:304:75-135
                         
-                        double zt_res_86175 = zt_lhs_86173 * zt_rhs_86174;
+                        double zt_res_85225 = zt_lhs_85223 * zt_rhs_85224;
                         
                         // futhark/microgpt.fut:71:40-49
                         
-                        double zp_res_86176 = r_86172 + zt_res_86175;
-                        double r_tmp_89793 = zp_res_86176;
+                        double zp_res_85226 = r_85222 + zt_res_85225;
+                        double r_tmp_88855 = zp_res_85226;
                         
-                        r_86172 = r_tmp_89793;
+                        r_85222 = r_tmp_88855;
                     }
-                    defunc_0_lifted_lambda_res_86170 = r_86172;
-                    // futhark/microgpt.fut:71:13-49
-                    
-                    double defunc_0_lifted_lambda_res_86183;
-                    double r_86185 = 0.0;
-                    
-                    for (int64_t i_86184 = 0; i_86184 < (int64_t) 16; i_86184++) {
-                        // futhark/microgpt.fut:71:46-49
-                        
-                        double zt_lhs_86186 = ((double *) mem_88908)[i_87444 * (int64_t) 256 + i_87437 * (int64_t) 16 + i_86184];
-                        
-                        // futhark/microgpt.fut:71:46-49
-                        
-                        double zt_rhs_86187 = ((double *) mem_88136)[i_87444 * (int64_t) 64 + i_86184 * (int64_t) 4 + i_87430];
-                        
-                        // futhark/microgpt.fut:306:75-135
-                        
-                        double zt_res_86188 = zt_lhs_86186 * zt_rhs_86187;
-                        
-                        // futhark/microgpt.fut:71:40-49
-                        
-                        double zp_res_86189 = r_86185 + zt_res_86188;
-                        double r_tmp_89794 = zp_res_86189;
-                        
-                        r_86185 = r_tmp_89794;
-                    }
-                    defunc_0_lifted_lambda_res_86183 = r_86185;
-                    ((double *) mem_88957)[i_87430] = defunc_0_lifted_lambda_res_86183;
-                    ((double *) mem_88958)[i_87430] = defunc_0_lifted_lambda_res_86170;
+                    defunc_0_lifted_lambda_res_85220 = r_85222;
+                    ((double *) mem_88011)[i_86463] = defunc_0_lifted_lambda_res_85220;
+                    ((double *) mem_88012)[i_86463] = defunc_0_lifted_lambda_res_85207;
                 }
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88947, i_87437 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88957, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
-                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88948, i_87437 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88958, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88001, i_86470 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88011, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
+                lmad_copy_8b(ctx, 1, (uint64_t *) mem_88002, i_86470 * (int64_t) 4, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88012, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 4});
             }
-            lmad_copy_8b(ctx, 2, (uint64_t *) mem_88935, i_87444 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_88947, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
-            lmad_copy_8b(ctx, 2, (uint64_t *) mem_88936, i_87444 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_88948, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
+            lmad_copy_8b(ctx, 2, (uint64_t *) mem_87989, i_86477 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_88001, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
+            lmad_copy_8b(ctx, 2, (uint64_t *) mem_87990, i_86477 * (int64_t) 64, (int64_t []) {(int64_t) 4, (int64_t) 1}, (uint64_t *) mem_88002, (int64_t) 0, (int64_t []) {(int64_t) 4, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 4});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87463 = 0; i_87463 < (int64_t) 16; i_87463++) {
+        for (int64_t i_86496 = 0; i_86496 < (int64_t) 16; i_86496++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87453 = 0; i_87453 < (int64_t) 16; i_87453++) {
-                // futhark/microgpt.fut:307:57-60
+            for (int64_t i_86486 = 0; i_86486 < (int64_t) 16; i_86486++) {
+                // futhark/microgpt.fut:305:57-60
                 
-                int64_t tmp_86252 = sdiv64(i_87453, (int64_t) 4);
+                int64_t tmp_85289 = sdiv64(i_86486, (int64_t) 4);
                 
-                // futhark/microgpt.fut:307:44-62
+                // futhark/microgpt.fut:305:44-62
                 
-                bool x_86253 = sle64((int64_t) 0, tmp_86252);
+                bool x_85290 = sle64((int64_t) 0, tmp_85289);
                 
-                // futhark/microgpt.fut:307:44-62
+                // futhark/microgpt.fut:305:44-62
                 
-                bool y_86254 = slt64(tmp_86252, (int64_t) 4);
+                bool y_85291 = slt64(tmp_85289, (int64_t) 4);
                 
-                // futhark/microgpt.fut:307:44-62
+                // futhark/microgpt.fut:305:44-62
                 
-                bool bounds_check_86255 = x_86253 && y_86254;
+                bool bounds_check_85292 = x_85290 && y_85291;
                 
-                // futhark/microgpt.fut:307:44-62
+                // futhark/microgpt.fut:305:44-62
                 
-                bool index_certs_86256;
+                bool index_certs_85293;
                 
-                if (!bounds_check_86255) {
-                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_86252, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:307:44-62\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:307:13-85\n   #6  futhark/microgpt.fut:452:5-76\n   #7  futhark/microgpt.fut:457:26-463:31\n   #8  futhark/microgpt.fut:479:11-50\n"));
+                if (!bounds_check_85292) {
+                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_85289, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:305:44-62\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:305:13-85\n   #6  futhark/microgpt.fut:449:5-76\n   #7  futhark/microgpt.fut:454:26-460:31\n   #8  futhark/microgpt.fut:476:11-50\n"));
                     err = FUTHARK_PROGRAM_ERROR;
                     goto cleanup;
                 }
-                // futhark/microgpt.fut:307:79-82
+                // futhark/microgpt.fut:305:79-82
                 
-                int64_t tmp_86257 = smod64(i_87453, (int64_t) 4);
+                int64_t tmp_85294 = smod64(i_86486, (int64_t) 4);
                 
-                // futhark/microgpt.fut:307:44-84
+                // futhark/microgpt.fut:305:44-84
                 
-                bool x_86258 = sle64((int64_t) 0, tmp_86257);
+                bool x_85295 = sle64((int64_t) 0, tmp_85294);
                 
-                // futhark/microgpt.fut:307:44-84
+                // futhark/microgpt.fut:305:44-84
                 
-                bool y_86259 = slt64(tmp_86257, (int64_t) 4);
+                bool y_85296 = slt64(tmp_85294, (int64_t) 4);
                 
-                // futhark/microgpt.fut:307:44-84
+                // futhark/microgpt.fut:305:44-84
                 
-                bool bounds_check_86260 = x_86258 && y_86259;
+                bool bounds_check_85297 = x_85295 && y_85296;
                 
-                // futhark/microgpt.fut:307:44-84
+                // futhark/microgpt.fut:305:44-84
                 
-                bool index_certs_86261;
+                bool index_certs_85298;
                 
-                if (!bounds_check_86260) {
-                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_86257, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:307:44-84\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:307:13-85\n   #6  futhark/microgpt.fut:452:5-76\n   #7  futhark/microgpt.fut:457:26-463:31\n   #8  futhark/microgpt.fut:479:11-50\n"));
+                if (!bounds_check_85297) {
+                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_85294, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:305:44-84\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:305:13-85\n   #6  futhark/microgpt.fut:449:5-76\n   #7  futhark/microgpt.fut:454:26-460:31\n   #8  futhark/microgpt.fut:476:11-50\n"));
                     err = FUTHARK_PROGRAM_ERROR;
                     goto cleanup;
                 }
                 // futhark/microgpt.fut:4:11-25
                 
-                double lifted_lambda_res_86262 = ((double *) mem_88824)[tmp_86252 * (int64_t) 64 + i_87463 * (int64_t) 4 + tmp_86257];
+                double lifted_lambda_res_85299 = ((double *) mem_87865)[tmp_85289 * (int64_t) 64 + i_86496 * (int64_t) 4 + tmp_85294];
                 
                 // futhark/microgpt.fut:4:11-25
                 
-                double lifted_lambda_res_86275 = ((double *) mem_88936)[tmp_86252 * (int64_t) 64 + i_87463 * (int64_t) 4 + tmp_86257];
+                double lifted_lambda_res_85312 = ((double *) mem_87990)[tmp_85289 * (int64_t) 64 + i_86496 * (int64_t) 4 + tmp_85294];
                 
                 // futhark/microgpt.fut:4:11-25
                 
-                double lifted_lambda_res_86291 = ((double *) mem_88935)[tmp_86252 * (int64_t) 64 + i_87463 * (int64_t) 4 + tmp_86257];
+                double lifted_lambda_res_85328 = ((double *) mem_87989)[tmp_85289 * (int64_t) 64 + i_86496 * (int64_t) 4 + tmp_85294];
                 
-                ((double *) mem_89004)[i_87453] = lifted_lambda_res_86291;
-                ((double *) mem_89005)[i_87453] = lifted_lambda_res_86275;
-                ((double *) mem_89006)[i_87453] = lifted_lambda_res_86262;
+                ((double *) mem_88058)[i_86486] = lifted_lambda_res_85328;
+                ((double *) mem_88059)[i_86486] = lifted_lambda_res_85312;
+                ((double *) mem_88060)[i_86486] = lifted_lambda_res_85299;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88989, i_87463 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_89004, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88990, i_87463 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_89005, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88991, i_87463 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_89006, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88043, i_86496 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88058, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88044, i_86496 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88059, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88045, i_86496 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88060, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87488 = 0; i_87488 < (int64_t) 16; i_87488++) {
+        for (int64_t i_86521 = 0; i_86521 < (int64_t) 16; i_86521++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87475 = 0; i_87475 < (int64_t) 16; i_87475++) {
+            for (int64_t i_86508 = 0; i_86508 < (int64_t) 16; i_86508++) {
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_86454;
-                double r_86456 = 0.0;
+                double defunc_0_lifted_lambda_res_85491;
+                double r_85493 = 0.0;
                 
-                for (int64_t i_86455 = 0; i_86455 < (int64_t) 16; i_86455++) {
+                for (int64_t i_85492 = 0; i_85492 < (int64_t) 16; i_85492++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_86457 = ((double *) mem_param_87861.mem)[i_86455 * (int64_t) 16 + i_87475];
+                    double zt_lhs_85494 = ((double *) mem_param_86898.mem)[i_85492 * (int64_t) 16 + i_86508];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_86458 = ((double *) mem_88991)[i_87488 * (int64_t) 16 + i_86455];
+                    double zt_rhs_85495 = ((double *) mem_88045)[i_86521 * (int64_t) 16 + i_85492];
                     
-                    // futhark/microgpt.fut:310:69-114
+                    // futhark/microgpt.fut:308:69-114
                     
-                    double zt_res_86459 = zt_lhs_86457 * zt_rhs_86458;
+                    double zt_res_85496 = zt_lhs_85494 * zt_rhs_85495;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_86460 = r_86456 + zt_res_86459;
-                    double r_tmp_89809 = zp_res_86460;
+                    double zp_res_85497 = r_85493 + zt_res_85496;
+                    double r_tmp_88870 = zp_res_85497;
                     
-                    r_86456 = r_tmp_89809;
+                    r_85493 = r_tmp_88870;
                 }
-                defunc_0_lifted_lambda_res_86454 = r_86456;
+                defunc_0_lifted_lambda_res_85491 = r_85493;
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_86461;
-                double r_86463 = 0.0;
+                double defunc_0_lifted_lambda_res_85498;
+                double r_85500 = 0.0;
                 
-                for (int64_t i_86462 = 0; i_86462 < (int64_t) 16; i_86462++) {
+                for (int64_t i_85499 = 0; i_85499 < (int64_t) 16; i_85499++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_86464 = ((double *) mem_param_87837.mem)[i_86462 * (int64_t) 16 + i_87475];
+                    double zt_lhs_85501 = ((double *) mem_param_86874.mem)[i_85499 * (int64_t) 16 + i_86508];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_86465 = ((double *) mem_88990)[i_87488 * (int64_t) 16 + i_86462];
+                    double zt_rhs_85502 = ((double *) mem_88044)[i_86521 * (int64_t) 16 + i_85499];
                     
-                    // futhark/microgpt.fut:310:145-190
+                    // futhark/microgpt.fut:308:145-190
                     
-                    double zt_res_86466 = zt_lhs_86464 * zt_rhs_86465;
+                    double zt_res_85503 = zt_lhs_85501 * zt_rhs_85502;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_86467 = r_86463 + zt_res_86466;
-                    double r_tmp_89810 = zp_res_86467;
+                    double zp_res_85504 = r_85500 + zt_res_85503;
+                    double r_tmp_88871 = zp_res_85504;
                     
-                    r_86463 = r_tmp_89810;
+                    r_85500 = r_tmp_88871;
                 }
-                defunc_0_lifted_lambda_res_86461 = r_86463;
-                // futhark/microgpt.fut:310:47-192
+                defunc_0_lifted_lambda_res_85498 = r_85500;
+                // futhark/microgpt.fut:308:47-192
                 
-                double zp_res_86468 = defunc_0_lifted_lambda_res_86454 + defunc_0_lifted_lambda_res_86461;
+                double zp_res_85505 = defunc_0_lifted_lambda_res_85491 + defunc_0_lifted_lambda_res_85498;
                 
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_86469;
-                double r_86471 = 0.0;
+                double defunc_0_lifted_lambda_res_85506;
+                double r_85508 = 0.0;
                 
-                for (int64_t i_86470 = 0; i_86470 < (int64_t) 16; i_86470++) {
+                for (int64_t i_85507 = 0; i_85507 < (int64_t) 16; i_85507++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_86472 = ((double *) mem_param_87849.mem)[i_86470 * (int64_t) 16 + i_87475];
+                    double zt_lhs_85509 = ((double *) mem_param_86886.mem)[i_85507 * (int64_t) 16 + i_86508];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_86473 = ((double *) mem_88989)[i_87488 * (int64_t) 16 + i_86470];
+                    double zt_rhs_85510 = ((double *) mem_88043)[i_86521 * (int64_t) 16 + i_85507];
                     
-                    // futhark/microgpt.fut:310:222-267
+                    // futhark/microgpt.fut:308:222-267
                     
-                    double zt_res_86474 = zt_lhs_86472 * zt_rhs_86473;
+                    double zt_res_85511 = zt_lhs_85509 * zt_rhs_85510;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_86475 = r_86471 + zt_res_86474;
-                    double r_tmp_89811 = zp_res_86475;
+                    double zp_res_85512 = r_85508 + zt_res_85511;
+                    double r_tmp_88872 = zp_res_85512;
                     
-                    r_86471 = r_tmp_89811;
+                    r_85508 = r_tmp_88872;
                 }
-                defunc_0_lifted_lambda_res_86469 = r_86471;
-                // futhark/microgpt.fut:310:118-269
+                defunc_0_lifted_lambda_res_85506 = r_85508;
+                // futhark/microgpt.fut:308:118-269
                 
-                double zp_res_86476 = zp_res_86468 + defunc_0_lifted_lambda_res_86469;
+                double zp_res_85513 = zp_res_85505 + defunc_0_lifted_lambda_res_85506;
                 
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_86483;
-                double r_86485 = 0.0;
+                double defunc_0_lifted_lambda_res_85520;
+                double r_85522 = 0.0;
                 
-                for (int64_t i_86484 = 0; i_86484 < (int64_t) 16; i_86484++) {
+                for (int64_t i_85521 = 0; i_85521 < (int64_t) 16; i_85521++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_86486 = ((double *) mem_88989)[i_86484 * (int64_t) 16 + i_87488];
+                    double zt_lhs_85523 = ((double *) mem_88043)[i_85521 * (int64_t) 16 + i_86521];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_86487 = ((double *) mem_88036)[i_86484 * (int64_t) 16 + i_87475];
+                    double zt_rhs_85524 = ((double *) mem_87073)[i_85521 * (int64_t) 16 + i_86508];
+                    
+                    // futhark/microgpt.fut:326:68-111
+                    
+                    double zt_res_85525 = zt_lhs_85523 * zt_rhs_85524;
+                    
+                    // futhark/microgpt.fut:71:40-49
+                    
+                    double zp_res_85526 = r_85522 + zt_res_85525;
+                    double r_tmp_88873 = zp_res_85526;
+                    
+                    r_85522 = r_tmp_88873;
+                }
+                defunc_0_lifted_lambda_res_85520 = r_85522;
+                // futhark/microgpt.fut:71:13-49
+                
+                double defunc_0_lifted_lambda_res_85536;
+                double r_85538 = 0.0;
+                
+                for (int64_t i_85537 = 0; i_85537 < (int64_t) 16; i_85537++) {
+                    // futhark/microgpt.fut:71:46-49
+                    
+                    double zt_lhs_85539 = ((double *) mem_88044)[i_85537 * (int64_t) 16 + i_86521];
+                    
+                    // futhark/microgpt.fut:71:46-49
+                    
+                    double zt_rhs_85540 = ((double *) mem_87073)[i_85537 * (int64_t) 16 + i_86508];
+                    
+                    // futhark/microgpt.fut:327:68-111
+                    
+                    double zt_res_85541 = zt_lhs_85539 * zt_rhs_85540;
+                    
+                    // futhark/microgpt.fut:71:40-49
+                    
+                    double zp_res_85542 = r_85538 + zt_res_85541;
+                    double r_tmp_88874 = zp_res_85542;
+                    
+                    r_85538 = r_tmp_88874;
+                }
+                defunc_0_lifted_lambda_res_85536 = r_85538;
+                // futhark/microgpt.fut:71:13-49
+                
+                double defunc_0_lifted_lambda_res_85554;
+                double r_85556 = 0.0;
+                
+                for (int64_t i_85555 = 0; i_85555 < (int64_t) 16; i_85555++) {
+                    // futhark/microgpt.fut:71:46-49
+                    
+                    double zt_lhs_85557 = ((double *) mem_88045)[i_85555 * (int64_t) 16 + i_86521];
+                    
+                    // futhark/microgpt.fut:71:46-49
+                    
+                    double zt_rhs_85558 = ((double *) mem_87073)[i_85555 * (int64_t) 16 + i_86508];
                     
                     // futhark/microgpt.fut:328:68-111
                     
-                    double zt_res_86488 = zt_lhs_86486 * zt_rhs_86487;
+                    double zt_res_85559 = zt_lhs_85557 * zt_rhs_85558;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_86489 = r_86485 + zt_res_86488;
-                    double r_tmp_89812 = zp_res_86489;
+                    double zp_res_85560 = r_85556 + zt_res_85559;
+                    double r_tmp_88875 = zp_res_85560;
                     
-                    r_86485 = r_tmp_89812;
+                    r_85556 = r_tmp_88875;
                 }
-                defunc_0_lifted_lambda_res_86483 = r_86485;
-                // futhark/microgpt.fut:71:13-49
-                
-                double defunc_0_lifted_lambda_res_86499;
-                double r_86501 = 0.0;
-                
-                for (int64_t i_86500 = 0; i_86500 < (int64_t) 16; i_86500++) {
-                    // futhark/microgpt.fut:71:46-49
-                    
-                    double zt_lhs_86502 = ((double *) mem_88990)[i_86500 * (int64_t) 16 + i_87488];
-                    
-                    // futhark/microgpt.fut:71:46-49
-                    
-                    double zt_rhs_86503 = ((double *) mem_88036)[i_86500 * (int64_t) 16 + i_87475];
-                    
-                    // futhark/microgpt.fut:329:68-111
-                    
-                    double zt_res_86504 = zt_lhs_86502 * zt_rhs_86503;
-                    
-                    // futhark/microgpt.fut:71:40-49
-                    
-                    double zp_res_86505 = r_86501 + zt_res_86504;
-                    double r_tmp_89813 = zp_res_86505;
-                    
-                    r_86501 = r_tmp_89813;
-                }
-                defunc_0_lifted_lambda_res_86499 = r_86501;
-                // futhark/microgpt.fut:71:13-49
-                
-                double defunc_0_lifted_lambda_res_86517;
-                double r_86519 = 0.0;
-                
-                for (int64_t i_86518 = 0; i_86518 < (int64_t) 16; i_86518++) {
-                    // futhark/microgpt.fut:71:46-49
-                    
-                    double zt_lhs_86520 = ((double *) mem_88991)[i_86518 * (int64_t) 16 + i_87488];
-                    
-                    // futhark/microgpt.fut:71:46-49
-                    
-                    double zt_rhs_86521 = ((double *) mem_88036)[i_86518 * (int64_t) 16 + i_87475];
-                    
-                    // futhark/microgpt.fut:330:68-111
-                    
-                    double zt_res_86522 = zt_lhs_86520 * zt_rhs_86521;
-                    
-                    // futhark/microgpt.fut:71:40-49
-                    
-                    double zp_res_86523 = r_86519 + zt_res_86522;
-                    double r_tmp_89814 = zp_res_86523;
-                    
-                    r_86519 = r_tmp_89814;
-                }
-                defunc_0_lifted_lambda_res_86517 = r_86519;
-                ((double *) mem_89057)[i_87475] = defunc_0_lifted_lambda_res_86517;
-                ((double *) mem_89058)[i_87475] = defunc_0_lifted_lambda_res_86499;
-                ((double *) mem_89059)[i_87475] = defunc_0_lifted_lambda_res_86483;
-                ((double *) mem_89060)[i_87475] = zp_res_86476;
+                defunc_0_lifted_lambda_res_85554 = r_85556;
+                ((double *) mem_88111)[i_86508] = defunc_0_lifted_lambda_res_85554;
+                ((double *) mem_88112)[i_86508] = defunc_0_lifted_lambda_res_85536;
+                ((double *) mem_88113)[i_86508] = defunc_0_lifted_lambda_res_85520;
+                ((double *) mem_88114)[i_86508] = zp_res_85513;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_89037, i_87488 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_89057, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_89038, i_87488 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_89058, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_89039, i_87488 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_89059, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_89040, i_87488 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_89060, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88091, i_86521 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88111, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88092, i_86521 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88112, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88093, i_86521 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88113, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88094, i_86521 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88114, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87495 = 0; i_87495 < (int64_t) 16; i_87495++) {
-            // futhark/microgpt.fut:314:51-63
+        for (int64_t i_86530 = 0; i_86530 < (int64_t) 16; i_86530++) {
+            // futhark/microgpt.fut:311:43-55
             
-            double zs_rhs_82575 = ((double *) mem_88325)[i_87495];
+            double zp_lhs_82240 = ((double *) mem_87110)[i_86530];
             
-            // futhark/microgpt.fut:314:43-63
+            // futhark/microgpt.fut:311:43-83
             
-            double zs_res_82576 = 1.0 / zs_rhs_82575;
+            double zp_res_82241 = 1.0e-5 + zp_lhs_82240;
+            
+            // futhark/microgpt.fut:311:35-83
+            
+            double sqrt_res_82242 = futrts_sqrt64(zp_res_82241);
+            
+            // futhark/microgpt.fut:312:65-85
+            
+            double zs_res_82250 = 1.0 / sqrt_res_82242;
             
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_82577;
-            double r_82579 = 0.0;
+            double defunc_0_lifted_lambda_res_82251;
+            double r_82253 = 0.0;
             
-            for (int64_t i_82578 = 0; i_82578 < (int64_t) 16; i_82578++) {
+            for (int64_t i_82252 = 0; i_82252 < (int64_t) 16; i_82252++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_lhs_82580 = ((double *) mem_88003)[i_87495 * (int64_t) 16 + i_82578];
+                double zt_lhs_82254 = ((double *) mem_87040)[i_86530 * (int64_t) 16 + i_82252];
                 
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_rhs_82581 = ((double *) mem_89040)[i_87495 * (int64_t) 16 + i_82578];
+                double zt_rhs_82255 = ((double *) mem_88094)[i_86530 * (int64_t) 16 + i_82252];
                 
-                // futhark/microgpt.fut:314:93-136
+                // futhark/microgpt.fut:312:93-136
                 
-                double zt_res_82582 = zt_lhs_82580 * zt_rhs_82581;
+                double zt_res_82256 = zt_lhs_82254 * zt_rhs_82255;
+                
+                // futhark/microgpt.fut:312:112-163
+                
+                double zt_res_82257 = zs_res_82250 * zt_res_82256;
+                
+                // futhark/microgpt.fut:312:69-163
+                
+                double zt_res_82258 = zs_res_82250 * zt_res_82257;
+                
+                // futhark/microgpt.fut:312:57-163
+                
+                double neg_res_82259 = -zt_res_82258;
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_82583 = r_82579 + zt_res_82582;
-                double r_tmp_89816 = zp_res_82583;
+                double zp_res_82260 = r_82253 + neg_res_82259;
+                double r_tmp_88878 = zp_res_82260;
                 
-                r_82579 = r_tmp_89816;
+                r_82253 = r_tmp_88878;
             }
-            defunc_0_lifted_lambda_res_82577 = r_82579;
-            // futhark/microgpt.fut:314:71-165
-            
-            double zt_res_82584 = zs_res_82576 * defunc_0_lifted_lambda_res_82577;
-            
-            // futhark/microgpt.fut:314:47-165
-            
-            double zt_res_82585 = zs_res_82576 * zt_res_82584;
-            
-            // futhark/microgpt.fut:314:35-165
-            
-            double neg_res_82586 = -zt_res_82585;
-            
-            ((double *) mem_89101)[i_87495] = neg_res_82586;
+            defunc_0_lifted_lambda_res_82251 = r_82253;
+            ((double *) mem_88155)[i_86530] = defunc_0_lifted_lambda_res_82251;
+            ((double *) mem_88156)[i_86530] = sqrt_res_82242;
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87499 = 0; i_87499 < (int64_t) 16; i_87499++) {
-            // futhark/microgpt.fut:315:35-47
+        for (int64_t i_86535 = 0; i_86535 < (int64_t) 16; i_86535++) {
+            // futhark/microgpt.fut:313:35-47
             
-            double zt_lhs_82594 = ((double *) mem_89101)[i_87499];
+            double zt_lhs_81813 = ((double *) mem_88155)[i_86535];
             
-            // futhark/microgpt.fut:315:89-101
+            // futhark/microgpt.fut:313:89-101
             
-            double zp_lhs_82595 = ((double *) mem_88074)[i_87499];
+            double zp_lhs_81814 = ((double *) mem_87110)[i_86535];
             
-            // futhark/microgpt.fut:315:89-129
+            // futhark/microgpt.fut:313:89-129
             
-            double zp_res_82596 = 1.0e-5 + zp_lhs_82595;
+            double zp_res_81815 = 1.0e-5 + zp_lhs_81814;
             
-            // futhark/microgpt.fut:315:81-129
+            // futhark/microgpt.fut:313:81-129
             
-            double sqrt_res_82597 = futrts_sqrt64(zp_res_82596);
+            double sqrt_res_81816 = futrts_sqrt64(zp_res_81815);
             
-            // futhark/microgpt.fut:315:67-131
+            // futhark/microgpt.fut:313:67-131
             
-            double zt_res_82598 = 2.0 * sqrt_res_82597;
+            double zt_res_81817 = 2.0 * sqrt_res_81816;
             
-            // futhark/microgpt.fut:315:53-131
+            // futhark/microgpt.fut:313:53-131
             
-            double zs_res_82599 = 1.0 / zt_res_82598;
+            double zs_res_81818 = 1.0 / zt_res_81817;
             
-            // futhark/microgpt.fut:315:35-131
+            // futhark/microgpt.fut:313:35-131
             
-            double zt_res_82600 = zt_lhs_82594 * zs_res_82599;
+            double zt_res_81819 = zt_lhs_81813 * zs_res_81818;
             
-            ((double *) mem_89108)[i_87499] = zt_res_82600;
+            ((double *) mem_88169)[i_86535] = zt_res_81819;
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87503 = 0; i_87503 < (int64_t) 16; i_87503++) {
-            // futhark/microgpt.fut:316:45-57
+        for (int64_t i_86539 = 0; i_86539 < (int64_t) 16; i_86539++) {
+            // futhark/microgpt.fut:314:45-57
             
-            double zs_lhs_82608 = ((double *) mem_89108)[i_87503];
+            double zs_lhs_81827 = ((double *) mem_88169)[i_86539];
             
-            // futhark/microgpt.fut:316:45-72
+            // futhark/microgpt.fut:314:45-72
             
-            double zs_res_82609 = zs_lhs_82608 / 16.0;
+            double zs_res_81828 = zs_lhs_81827 / 16.0;
             
             // futhark/microgpt.fut:4:11-25
-            for (int64_t nest_i_89819 = 0; nest_i_89819 < (int64_t) 16; nest_i_89819++) {
-                ((double *) mem_89115)[i_87503 * (int64_t) 16 + nest_i_89819] = zs_res_82609;
+            for (int64_t nest_i_88881 = 0; nest_i_88881 < (int64_t) 16; nest_i_88881++) {
+                ((double *) mem_88176)[i_86539 * (int64_t) 16 + nest_i_88881] = zs_res_81828;
             }
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87511 = 0; i_87511 < (int64_t) 16; i_87511++) {
-            // futhark/microgpt.fut:317:107-119
+        for (int64_t i_86547 = 0; i_86547 < (int64_t) 16; i_86547++) {
+            // futhark/microgpt.fut:315:107-119
             
-            double zs_rhs_82618 = ((double *) mem_88325)[i_87511];
+            double zs_rhs_81837 = ((double *) mem_88156)[i_86547];
             
-            // futhark/microgpt.fut:317:99-119
+            // futhark/microgpt.fut:315:99-119
             
-            double zs_res_82619 = 1.0 / zs_rhs_82618;
+            double zs_res_81838 = 1.0 / zs_rhs_81837;
             
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87507 = 0; i_87507 < (int64_t) 16; i_87507++) {
+            for (int64_t i_86543 = 0; i_86543 < (int64_t) 16; i_86543++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double zp_lhs_82626 = ((double *) mem_88661)[i_87511 * (int64_t) 16 + i_87507];
-                
-                // futhark/microgpt.fut:4:11-25
-                
-                double zt_lhs_82627 = ((double *) mem_89040)[i_87511 * (int64_t) 16 + i_87507];
-                
-                // futhark/microgpt.fut:317:73-119
-                
-                double zt_res_82628 = zs_res_82619 * zt_lhs_82627;
+                double zp_lhs_81845 = ((double *) mem_87702)[i_86547 * (int64_t) 16 + i_86543];
                 
                 // futhark/microgpt.fut:4:11-25
                 
-                double zt_lhs_82629 = ((double *) mem_88003)[i_87511 * (int64_t) 16 + i_87507];
+                double zt_lhs_81846 = ((double *) mem_88094)[i_86547 * (int64_t) 16 + i_86543];
+                
+                // futhark/microgpt.fut:315:73-119
+                
+                double zt_res_81847 = zs_res_81838 * zt_lhs_81846;
                 
                 // futhark/microgpt.fut:4:11-25
                 
-                double zt_rhs_82630 = ((double *) mem_89115)[i_87511 * (int64_t) 16 + i_87507];
+                double zt_lhs_81848 = ((double *) mem_87040)[i_86547 * (int64_t) 16 + i_86543];
                 
-                // futhark/microgpt.fut:317:127-170
+                // futhark/microgpt.fut:4:11-25
                 
-                double zt_res_82631 = zt_lhs_82629 * zt_rhs_82630;
+                double zt_rhs_81849 = ((double *) mem_88176)[i_86547 * (int64_t) 16 + i_86543];
                 
-                // futhark/microgpt.fut:317:94-170
+                // futhark/microgpt.fut:315:127-170
                 
-                double zp_res_82632 = zt_res_82628 + zt_res_82631;
+                double zt_res_81850 = zt_lhs_81848 * zt_rhs_81849;
                 
-                // futhark/microgpt.fut:317:122-221
+                // futhark/microgpt.fut:315:94-170
                 
-                double zp_res_82633 = zt_res_82631 + zp_res_82632;
+                double zp_res_81851 = zt_res_81847 + zt_res_81850;
                 
-                // futhark/microgpt.fut:317:45-221
+                // futhark/microgpt.fut:315:122-221
                 
-                double zp_res_82634 = zp_lhs_82626 + zp_res_82633;
+                double zp_res_81852 = zt_res_81850 + zp_res_81851;
                 
-                ((double *) mem_89130)[i_87507] = zp_res_82634;
+                // futhark/microgpt.fut:315:45-221
+                
+                double zp_res_81853 = zp_lhs_81845 + zp_res_81852;
+                
+                ((double *) mem_88191)[i_86543] = zp_res_81853;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_89125, i_87511 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_89130, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88186, i_86547 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88191, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87515 = 0; i_87515 < (int64_t) 16; i_87515++) {
-            // futhark/microgpt.fut:321:51-63
+        for (int64_t i_86553 = 0; i_86553 < (int64_t) 16; i_86553++) {
+            // futhark/microgpt.fut:318:43-55
             
-            double zs_rhs_82682 = ((double *) mem_88073)[i_87515];
+            double zp_lhs_82202 = ((double *) mem_87071)[i_86553];
             
-            // futhark/microgpt.fut:321:43-63
+            // futhark/microgpt.fut:318:43-83
             
-            double zs_res_82683 = 1.0 / zs_rhs_82682;
+            double zp_res_82203 = 1.0e-5 + zp_lhs_82202;
+            
+            // futhark/microgpt.fut:318:35-83
+            
+            double sqrt_res_82204 = futrts_sqrt64(zp_res_82203);
+            
+            // futhark/microgpt.fut:319:65-85
+            
+            double zs_res_82212 = 1.0 / sqrt_res_82204;
             
             // futhark/microgpt.fut:71:13-49
             
-            double defunc_0_lifted_lambda_res_82684;
-            double r_82686 = 0.0;
+            double defunc_0_lifted_lambda_res_82213;
+            double r_82215 = 0.0;
             
-            for (int64_t i_82685 = 0; i_82685 < (int64_t) 16; i_82685++) {
+            for (int64_t i_82214 = 0; i_82214 < (int64_t) 16; i_82214++) {
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_lhs_82687 = ((double *) mem_87971)[i_87515 * (int64_t) 16 + i_82685];
+                double zt_lhs_82216 = ((double *) mem_87008)[i_86553 * (int64_t) 16 + i_82214];
                 
                 // futhark/microgpt.fut:71:46-49
                 
-                double zt_rhs_82688 = ((double *) mem_89125)[i_87515 * (int64_t) 16 + i_82685];
+                double zt_rhs_82217 = ((double *) mem_88186)[i_86553 * (int64_t) 16 + i_82214];
                 
-                // futhark/microgpt.fut:321:93-136
+                // futhark/microgpt.fut:319:93-136
                 
-                double zt_res_82689 = zt_lhs_82687 * zt_rhs_82688;
+                double zt_res_82218 = zt_lhs_82216 * zt_rhs_82217;
+                
+                // futhark/microgpt.fut:319:112-163
+                
+                double zt_res_82219 = zs_res_82212 * zt_res_82218;
+                
+                // futhark/microgpt.fut:319:69-163
+                
+                double zt_res_82220 = zs_res_82212 * zt_res_82219;
+                
+                // futhark/microgpt.fut:319:57-163
+                
+                double neg_res_82221 = -zt_res_82220;
                 
                 // futhark/microgpt.fut:71:40-49
                 
-                double zp_res_82690 = r_82686 + zt_res_82689;
-                double r_tmp_89823 = zp_res_82690;
+                double zp_res_82222 = r_82215 + neg_res_82221;
+                double r_tmp_88886 = zp_res_82222;
                 
-                r_82686 = r_tmp_89823;
+                r_82215 = r_tmp_88886;
             }
-            defunc_0_lifted_lambda_res_82684 = r_82686;
-            // futhark/microgpt.fut:321:71-165
-            
-            double zt_res_82691 = zs_res_82683 * defunc_0_lifted_lambda_res_82684;
-            
-            // futhark/microgpt.fut:321:47-165
-            
-            double zt_res_82692 = zs_res_82683 * zt_res_82691;
-            
-            // futhark/microgpt.fut:321:35-165
-            
-            double neg_res_82693 = -zt_res_82692;
-            
-            ((double *) mem_89141)[i_87515] = neg_res_82693;
+            defunc_0_lifted_lambda_res_82213 = r_82215;
+            ((double *) mem_88202)[i_86553] = defunc_0_lifted_lambda_res_82213;
+            ((double *) mem_88203)[i_86553] = sqrt_res_82204;
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87519 = 0; i_87519 < (int64_t) 16; i_87519++) {
-            // futhark/microgpt.fut:322:35-47
+        for (int64_t i_86558 = 0; i_86558 < (int64_t) 16; i_86558++) {
+            // futhark/microgpt.fut:320:35-47
             
-            double zt_lhs_82701 = ((double *) mem_89141)[i_87519];
+            double zt_lhs_81920 = ((double *) mem_88202)[i_86558];
             
-            // futhark/microgpt.fut:322:89-101
+            // futhark/microgpt.fut:320:89-101
             
-            double zp_lhs_82702 = ((double *) mem_88034)[i_87519];
+            double zp_lhs_81921 = ((double *) mem_87071)[i_86558];
             
-            // futhark/microgpt.fut:322:89-129
+            // futhark/microgpt.fut:320:89-129
             
-            double zp_res_82703 = 1.0e-5 + zp_lhs_82702;
+            double zp_res_81922 = 1.0e-5 + zp_lhs_81921;
             
-            // futhark/microgpt.fut:322:81-129
+            // futhark/microgpt.fut:320:81-129
             
-            double sqrt_res_82704 = futrts_sqrt64(zp_res_82703);
+            double sqrt_res_81923 = futrts_sqrt64(zp_res_81922);
             
-            // futhark/microgpt.fut:322:67-131
+            // futhark/microgpt.fut:320:67-131
             
-            double zt_res_82705 = 2.0 * sqrt_res_82704;
+            double zt_res_81924 = 2.0 * sqrt_res_81923;
             
-            // futhark/microgpt.fut:322:53-131
+            // futhark/microgpt.fut:320:53-131
             
-            double zs_res_82706 = 1.0 / zt_res_82705;
+            double zs_res_81925 = 1.0 / zt_res_81924;
             
-            // futhark/microgpt.fut:322:35-131
+            // futhark/microgpt.fut:320:35-131
             
-            double zt_res_82707 = zt_lhs_82701 * zs_res_82706;
+            double zt_res_81926 = zt_lhs_81920 * zs_res_81925;
             
-            ((double *) mem_89148)[i_87519] = zt_res_82707;
+            ((double *) mem_88216)[i_86558] = zt_res_81926;
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87523 = 0; i_87523 < (int64_t) 16; i_87523++) {
-            // futhark/microgpt.fut:323:45-57
+        for (int64_t i_86562 = 0; i_86562 < (int64_t) 16; i_86562++) {
+            // futhark/microgpt.fut:321:45-57
             
-            double zs_lhs_82715 = ((double *) mem_89148)[i_87523];
+            double zs_lhs_81934 = ((double *) mem_88216)[i_86562];
             
-            // futhark/microgpt.fut:323:45-72
+            // futhark/microgpt.fut:321:45-72
             
-            double zs_res_82716 = zs_lhs_82715 / 16.0;
+            double zs_res_81935 = zs_lhs_81934 / 16.0;
             
             // futhark/microgpt.fut:4:11-25
-            for (int64_t nest_i_89826 = 0; nest_i_89826 < (int64_t) 16; nest_i_89826++) {
-                ((double *) mem_89155)[i_87523 * (int64_t) 16 + nest_i_89826] = zs_res_82716;
+            for (int64_t nest_i_88889 = 0; nest_i_88889 < (int64_t) 16; nest_i_88889++) {
+                ((double *) mem_88223)[i_86562 * (int64_t) 16 + nest_i_88889] = zs_res_81935;
             }
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87531 = 0; i_87531 < (int64_t) 16; i_87531++) {
-            // futhark/microgpt.fut:324:81-93
+        for (int64_t i_86570 = 0; i_86570 < (int64_t) 16; i_86570++) {
+            // futhark/microgpt.fut:322:81-93
             
-            double zs_rhs_82725 = ((double *) mem_88073)[i_87531];
+            double zs_rhs_81944 = ((double *) mem_88203)[i_86570];
             
-            // futhark/microgpt.fut:324:73-93
+            // futhark/microgpt.fut:322:73-93
             
-            double zs_res_82726 = 1.0 / zs_rhs_82725;
+            double zs_res_81945 = 1.0 / zs_rhs_81944;
             
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87527 = 0; i_87527 < (int64_t) 16; i_87527++) {
+            for (int64_t i_86566 = 0; i_86566 < (int64_t) 16; i_86566++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double zt_lhs_82733 = ((double *) mem_89125)[i_87531 * (int64_t) 16 + i_87527];
+                double zt_lhs_81952 = ((double *) mem_88186)[i_86570 * (int64_t) 16 + i_86566];
                 
-                // futhark/microgpt.fut:324:47-93
+                // futhark/microgpt.fut:322:47-93
                 
-                double zt_res_82734 = zs_res_82726 * zt_lhs_82733;
-                
-                // futhark/microgpt.fut:4:11-25
-                
-                double zt_lhs_82735 = ((double *) mem_87971)[i_87531 * (int64_t) 16 + i_87527];
+                double zt_res_81953 = zs_res_81945 * zt_lhs_81952;
                 
                 // futhark/microgpt.fut:4:11-25
                 
-                double zt_rhs_82736 = ((double *) mem_89155)[i_87531 * (int64_t) 16 + i_87527];
+                double zt_lhs_81954 = ((double *) mem_87008)[i_86570 * (int64_t) 16 + i_86566];
                 
-                // futhark/microgpt.fut:324:101-144
+                // futhark/microgpt.fut:4:11-25
                 
-                double zt_res_82737 = zt_lhs_82735 * zt_rhs_82736;
+                double zt_rhs_81955 = ((double *) mem_88223)[i_86570 * (int64_t) 16 + i_86566];
                 
-                // futhark/microgpt.fut:324:68-144
+                // futhark/microgpt.fut:322:101-144
                 
-                double zp_res_82738 = zt_res_82734 + zt_res_82737;
+                double zt_res_81956 = zt_lhs_81954 * zt_rhs_81955;
                 
-                // futhark/microgpt.fut:324:96-195
+                // futhark/microgpt.fut:322:68-144
                 
-                double zp_res_82739 = zt_res_82737 + zp_res_82738;
+                double zp_res_81957 = zt_res_81953 + zt_res_81956;
                 
-                ((double *) mem_89170)[i_87527] = zp_res_82739;
+                // futhark/microgpt.fut:322:96-195
+                
+                double zp_res_81958 = zt_res_81956 + zp_res_81957;
+                
+                ((double *) mem_88238)[i_86566] = zp_res_81958;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_89165, i_87531 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_89170, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88233, i_86570 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88238, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87544 = 0; i_87544 < (int64_t) 16; i_87544++) {
+        for (int64_t i_86583 = 0; i_86583 < (int64_t) 16; i_86583++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87537 = 0; i_87537 < (int64_t) 16; i_87537++) {
+            for (int64_t i_86576 = 0; i_86576 < (int64_t) 16; i_86576++) {
                 // futhark/microgpt.fut:4:11-25
                 
-                double lifted_lambda_res_86549 = ((double *) mem_89165)[i_87544 * (int64_t) 16 + i_87537];
+                double lifted_lambda_res_85586 = ((double *) mem_88233)[i_86583 * (int64_t) 16 + i_86576];
                 
-                ((double *) mem_89191)[i_87537] = lifted_lambda_res_86549;
-                ((double *) mem_89192)[i_87537] = lifted_lambda_res_86549;
+                ((double *) mem_88259)[i_86576] = lifted_lambda_res_85586;
+                ((double *) mem_88260)[i_86576] = lifted_lambda_res_85586;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_89181, i_87544 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_89191, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_89182, i_87544 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_89192, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88249, i_86583 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88259, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88250, i_86583 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88260, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87553 = 0; i_87553 < (int64_t) 64; i_87553++) {
+        for (int64_t i_86592 = 0; i_86592 < (int64_t) 64; i_86592++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87549 = 0; i_87549 < (int64_t) 16; i_87549++) {
+            for (int64_t i_86588 = 0; i_86588 < (int64_t) 16; i_86588++) {
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_82853;
-                double r_82855 = 0.0;
+                double defunc_0_lifted_lambda_res_82072;
+                double r_82074 = 0.0;
                 
-                for (int64_t i_82854 = 0; i_82854 < (int64_t) 16; i_82854++) {
+                for (int64_t i_82073 = 0; i_82073 < (int64_t) 16; i_82073++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_82856 = ((double *) mem_88605)[i_82854 * (int64_t) 64 + i_87553];
+                    double zt_lhs_82075 = ((double *) mem_87639)[i_82073 * (int64_t) 64 + i_86592];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_82857 = ((double *) mem_88381)[i_82854 * (int64_t) 16 + i_87549];
+                    double zt_rhs_82076 = ((double *) mem_87404)[i_82073 * (int64_t) 16 + i_86588];
                     
-                    // futhark/microgpt.fut:332:67-110
+                    // futhark/microgpt.fut:330:67-110
                     
-                    double zt_res_82858 = zt_lhs_82856 * zt_rhs_82857;
+                    double zt_res_82077 = zt_lhs_82075 * zt_rhs_82076;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_82859 = r_82855 + zt_res_82858;
-                    double r_tmp_89835 = zp_res_82859;
+                    double zp_res_82078 = r_82074 + zt_res_82077;
+                    double r_tmp_88898 = zp_res_82078;
                     
-                    r_82855 = r_tmp_89835;
+                    r_82074 = r_tmp_88898;
                 }
-                defunc_0_lifted_lambda_res_82853 = r_82855;
-                ((double *) mem_89218)[i_87549] = defunc_0_lifted_lambda_res_82853;
+                defunc_0_lifted_lambda_res_82072 = r_82074;
+                ((double *) mem_88286)[i_86588] = defunc_0_lifted_lambda_res_82072;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_89213, i_87553 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_89218, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88281, i_86592 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88286, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:4:11-25
-        for (int64_t i_87566 = 0; i_87566 < (int64_t) 27; i_87566++) {
+        for (int64_t i_86605 = 0; i_86605 < (int64_t) 27; i_86605++) {
             // futhark/microgpt.fut:4:11-25
-            for (int64_t i_87559 = 0; i_87559 < (int64_t) 16; i_87559++) {
+            for (int64_t i_86598 = 0; i_86598 < (int64_t) 16; i_86598++) {
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_86577;
-                double r_86579 = 0.0;
+                double defunc_0_lifted_lambda_res_85614;
+                double r_85616 = 0.0;
                 
-                for (int64_t i_86578 = 0; i_86578 < (int64_t) 16; i_86578++) {
+                for (int64_t i_85615 = 0; i_85615 < (int64_t) 16; i_85615++) {
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_lhs_86580 = ((double *) mem_88527)[i_86578 * (int64_t) 27 + i_87566];
+                    double zt_lhs_85617 = ((double *) mem_87575)[i_85615 * (int64_t) 27 + i_86605];
                     
                     // futhark/microgpt.fut:71:46-49
                     
-                    double zt_rhs_86581 = ((double *) mem_88474)[i_86578 * (int64_t) 16 + i_87559];
+                    double zt_rhs_85618 = ((double *) mem_87490)[i_85615 * (int64_t) 16 + i_86598];
                     
-                    // futhark/microgpt.fut:334:68-111
+                    // futhark/microgpt.fut:332:68-111
                     
-                    double zt_res_86582 = zt_lhs_86580 * zt_rhs_86581;
+                    double zt_res_85619 = zt_lhs_85617 * zt_rhs_85618;
                     
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_86583 = r_86579 + zt_res_86582;
-                    double r_tmp_89840 = zp_res_86583;
+                    double zp_res_85620 = r_85616 + zt_res_85619;
+                    double r_tmp_88903 = zp_res_85620;
                     
-                    r_86579 = r_tmp_89840;
+                    r_85616 = r_tmp_88903;
                 }
-                defunc_0_lifted_lambda_res_86577 = r_86579;
+                defunc_0_lifted_lambda_res_85614 = r_85616;
                 // futhark/microgpt.fut:71:13-49
                 
-                double defunc_0_lifted_lambda_res_86586;
-                double r_86588 = 0.0;
+                double defunc_0_lifted_lambda_res_85623;
+                double r_85625 = 0.0;
                 
-                for (int64_t i_86587 = 0; i_86587 < (int64_t) 16; i_86587++) {
-                    int64_t zeze_lhs_86589 = ((int64_t *) seqs_mem_87829.mem)[step_81116 * (int64_t) 16 + i_86587];
+                for (int64_t i_85624 = 0; i_85624 < (int64_t) 16; i_85624++) {
+                    int64_t zeze_lhs_85626 = ((int64_t *) seqs_mem_86866.mem)[step_80406 * (int64_t) 16 + i_85624];
                     
-                    // futhark/microgpt.fut:453:58-109
+                    // futhark/microgpt.fut:450:58-109
                     
-                    bool cond_86590 = zeze_lhs_86589 == i_87566;
+                    bool cond_85627 = zeze_lhs_85626 == i_86605;
                     
-                    // futhark/microgpt.fut:453:58-109
+                    // futhark/microgpt.fut:450:58-109
                     
-                    double lifted_lambda_res_86591;
+                    double lifted_lambda_res_85628;
                     
-                    if (cond_86590) {
+                    if (cond_85627) {
                         // futhark/microgpt.fut:71:46-49
                         
-                        double lifted_lambda_res_t_res_86886 = ((double *) mem_89181)[i_86587 * (int64_t) 16 + i_87559];
+                        double lifted_lambda_res_t_res_85918 = ((double *) mem_88249)[i_85624 * (int64_t) 16 + i_86598];
                         
-                        lifted_lambda_res_86591 = lifted_lambda_res_t_res_86886;
+                        lifted_lambda_res_85628 = lifted_lambda_res_t_res_85918;
                     } else {
-                        lifted_lambda_res_86591 = 0.0;
+                        lifted_lambda_res_85628 = 0.0;
                     }
                     // futhark/microgpt.fut:71:40-49
                     
-                    double zp_res_86597 = r_86588 + lifted_lambda_res_86591;
-                    double r_tmp_89841 = zp_res_86597;
+                    double zp_res_85634 = r_85625 + lifted_lambda_res_85628;
+                    double r_tmp_88904 = zp_res_85634;
                     
-                    r_86588 = r_tmp_89841;
+                    r_85625 = r_tmp_88904;
                 }
-                defunc_0_lifted_lambda_res_86586 = r_86588;
-                ((double *) mem_89239)[i_87559] = defunc_0_lifted_lambda_res_86586;
-                ((double *) mem_89240)[i_87559] = defunc_0_lifted_lambda_res_86577;
+                defunc_0_lifted_lambda_res_85623 = r_85625;
+                ((double *) mem_88307)[i_86598] = defunc_0_lifted_lambda_res_85623;
+                ((double *) mem_88308)[i_86598] = defunc_0_lifted_lambda_res_85614;
             }
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_89229, i_87566 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_89239, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
-            lmad_copy_8b(ctx, 1, (uint64_t *) mem_89230, i_87566 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_89240, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88297, i_86605 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88307, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
+            lmad_copy_8b(ctx, 1, (uint64_t *) mem_88298, i_86605 * (int64_t) 16, (int64_t []) {(int64_t) 1}, (uint64_t *) mem_88308, (int64_t) 0, (int64_t []) {(int64_t) 1}, (int64_t []) {(int64_t) 16});
         }
         // futhark/microgpt.fut:66:26-45
         
-        double i64_res_82937 = sitofp_i64_f64(step_81116);
+        double i64_res_82156 = sitofp_i64_f64(step_80406);
         
-        // futhark/microgpt.fut:409:46-65
+        // futhark/microgpt.fut:406:46-65
         
-        double zm_rhs_82938 = i64_res_82937 / 500.0;
+        double zm_rhs_82157 = i64_res_82156 / 500.0;
         
-        // futhark/microgpt.fut:409:24-65
+        // futhark/microgpt.fut:406:24-65
         
-        double zt_rhs_82939 = 1.0 - zm_rhs_82938;
+        double zt_rhs_82158 = 1.0 - zm_rhs_82157;
         
-        // futhark/microgpt.fut:409:19-65
+        // futhark/microgpt.fut:406:19-65
         
-        double lt_r_82940 = 1.0e-2 * zt_rhs_82939;
+        double lt_r_82159 = 1.0e-2 * zt_rhs_82158;
         
-        // futhark/microgpt.fut:411:5-52
-        if (memblock_alloc(ctx, &mem_89261, (int64_t) 3456, "mem_89261")) {
+        // futhark/microgpt.fut:408:5-52
+        if (memblock_alloc(ctx, &mem_88329, (int64_t) 3456, "mem_88329")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:411:5-52
-        // futhark/microgpt.fut:411:5-52
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89261.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87853.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
-        // futhark/microgpt.fut:411:5-52
-        if (memblock_alloc(ctx, &mem_89263, (int64_t) 3456, "mem_89263")) {
+        // futhark/microgpt.fut:408:5-52
+        // futhark/microgpt.fut:408:5-52
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88329.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86890.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
+        // futhark/microgpt.fut:408:5-52
+        if (memblock_alloc(ctx, &mem_88331, (int64_t) 3456, "mem_88331")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:411:5-52
-        // futhark/microgpt.fut:411:5-52
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89263.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87889.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
-        // futhark/microgpt.fut:411:5-52
-        if (memblock_alloc(ctx, &mem_89265, (int64_t) 3456, "mem_89265")) {
+        // futhark/microgpt.fut:408:5-52
+        // futhark/microgpt.fut:408:5-52
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88331.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86926.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
+        // futhark/microgpt.fut:408:5-52
+        if (memblock_alloc(ctx, &mem_88333, (int64_t) 3456, "mem_88333")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:411:5-52
-        // futhark/microgpt.fut:411:5-52
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89265.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87925.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
-        // futhark/microgpt.fut:411:5-52
-        if (memblock_alloc(ctx, &mem_89267, (int64_t) 3456, "mem_89267")) {
+        // futhark/microgpt.fut:408:5-52
+        // futhark/microgpt.fut:408:5-52
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88333.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86962.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
+        // futhark/microgpt.fut:408:5-52
+        if (memblock_alloc(ctx, &mem_88335, (int64_t) 3456, "mem_88335")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:411:5-52
-        // futhark/microgpt.fut:411:5-52
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89267.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_89229, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
-        // futhark/microgpt.fut:411:5-52
-        if (futrts_adam_opt_w_10264(ctx, &ext_mem_89271, &ext_mem_89270, &ext_mem_89269, mem_89261, mem_89263, mem_89265, mem_89267, (int64_t) 27, (int64_t) 16, step_81116, lt_r_82940) != 0) {
+        // futhark/microgpt.fut:408:5-52
+        // futhark/microgpt.fut:408:5-52
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88335.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_88297, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
+        // futhark/microgpt.fut:408:5-52
+        if (futrts_adam_opt_w_10203(ctx, &ext_mem_88339, &ext_mem_88338, &ext_mem_88337, mem_88329, mem_88331, mem_88333, mem_88335, (int64_t) 27, (int64_t) 16, step_80406, lt_r_82159) != 0) {
             err = 1;
             goto cleanup;
         }
-        if (memblock_unref(ctx, &mem_89261, "mem_89261") != 0)
+        if (memblock_unref(ctx, &mem_88329, "mem_88329") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89263, "mem_89263") != 0)
+        if (memblock_unref(ctx, &mem_88331, "mem_88331") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89265, "mem_89265") != 0)
+        if (memblock_unref(ctx, &mem_88333, "mem_88333") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89267, "mem_89267") != 0)
+        if (memblock_unref(ctx, &mem_88335, "mem_88335") != 0)
             return 1;
-        // futhark/microgpt.fut:413:5-52
-        if (memblock_alloc(ctx, &mem_89272, (int64_t) 2048, "mem_89272")) {
+        // futhark/microgpt.fut:410:5-52
+        if (memblock_alloc(ctx, &mem_88340, (int64_t) 2048, "mem_88340")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:413:5-52
-        // futhark/microgpt.fut:413:5-52
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89272.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87845.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:413:5-52
-        if (memblock_alloc(ctx, &mem_89274, (int64_t) 2048, "mem_89274")) {
+        // futhark/microgpt.fut:410:5-52
+        // futhark/microgpt.fut:410:5-52
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88340.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86882.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:410:5-52
+        if (memblock_alloc(ctx, &mem_88342, (int64_t) 2048, "mem_88342")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:413:5-52
-        // futhark/microgpt.fut:413:5-52
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89274.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87881.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:413:5-52
-        if (memblock_alloc(ctx, &mem_89276, (int64_t) 2048, "mem_89276")) {
+        // futhark/microgpt.fut:410:5-52
+        // futhark/microgpt.fut:410:5-52
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88342.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86918.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:410:5-52
+        if (memblock_alloc(ctx, &mem_88344, (int64_t) 2048, "mem_88344")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:413:5-52
-        // futhark/microgpt.fut:413:5-52
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89276.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87917.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:413:5-52
-        if (memblock_alloc(ctx, &mem_89278, (int64_t) 2048, "mem_89278")) {
+        // futhark/microgpt.fut:410:5-52
+        // futhark/microgpt.fut:410:5-52
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88344.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86954.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:410:5-52
+        if (memblock_alloc(ctx, &mem_88346, (int64_t) 2048, "mem_88346")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:413:5-52
-        // futhark/microgpt.fut:413:5-52
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89278.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_89182, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:413:5-52
-        if (futrts_adam_opt_w_10265(ctx, &ext_mem_89282, &ext_mem_89281, &ext_mem_89280, mem_89272, mem_89274, mem_89276, mem_89278, (int64_t) 16, (int64_t) 16, step_81116, lt_r_82940) != 0) {
+        // futhark/microgpt.fut:410:5-52
+        // futhark/microgpt.fut:410:5-52
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88346.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_88250, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:410:5-52
+        if (futrts_adam_opt_w_10204(ctx, &ext_mem_88350, &ext_mem_88349, &ext_mem_88348, mem_88340, mem_88342, mem_88344, mem_88346, (int64_t) 16, (int64_t) 16, step_80406, lt_r_82159) != 0) {
             err = 1;
             goto cleanup;
         }
-        if (memblock_unref(ctx, &mem_89272, "mem_89272") != 0)
+        if (memblock_unref(ctx, &mem_88340, "mem_88340") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89274, "mem_89274") != 0)
+        if (memblock_unref(ctx, &mem_88342, "mem_88342") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89276, "mem_89276") != 0)
+        if (memblock_unref(ctx, &mem_88344, "mem_88344") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89278, "mem_89278") != 0)
+        if (memblock_unref(ctx, &mem_88346, "mem_88346") != 0)
             return 1;
-        // futhark/microgpt.fut:415:5-56
-        if (memblock_alloc(ctx, &mem_89283, (int64_t) 2048, "mem_89283")) {
+        // futhark/microgpt.fut:412:5-56
+        if (memblock_alloc(ctx, &mem_88351, (int64_t) 2048, "mem_88351")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:415:5-56
-        // futhark/microgpt.fut:415:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89283.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87849.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:415:5-56
-        if (memblock_alloc(ctx, &mem_89285, (int64_t) 2048, "mem_89285")) {
+        // futhark/microgpt.fut:412:5-56
+        // futhark/microgpt.fut:412:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88351.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86886.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:412:5-56
+        if (memblock_alloc(ctx, &mem_88353, (int64_t) 2048, "mem_88353")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:415:5-56
-        // futhark/microgpt.fut:415:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89285.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87885.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:415:5-56
-        if (memblock_alloc(ctx, &mem_89287, (int64_t) 2048, "mem_89287")) {
+        // futhark/microgpt.fut:412:5-56
+        // futhark/microgpt.fut:412:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88353.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86922.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:412:5-56
+        if (memblock_alloc(ctx, &mem_88355, (int64_t) 2048, "mem_88355")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:415:5-56
-        // futhark/microgpt.fut:415:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89287.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87921.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:415:5-56
-        if (memblock_alloc(ctx, &mem_89289, (int64_t) 2048, "mem_89289")) {
+        // futhark/microgpt.fut:412:5-56
+        // futhark/microgpt.fut:412:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88355.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86958.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:412:5-56
+        if (memblock_alloc(ctx, &mem_88357, (int64_t) 2048, "mem_88357")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:415:5-56
-        // futhark/microgpt.fut:415:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89289.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_89039, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:415:5-56
-        if (futrts_adam_opt_w_10265(ctx, &ext_mem_89293, &ext_mem_89292, &ext_mem_89291, mem_89283, mem_89285, mem_89287, mem_89289, (int64_t) 16, (int64_t) 16, step_81116, lt_r_82940) != 0) {
+        // futhark/microgpt.fut:412:5-56
+        // futhark/microgpt.fut:412:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88357.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_88093, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:412:5-56
+        if (futrts_adam_opt_w_10204(ctx, &ext_mem_88361, &ext_mem_88360, &ext_mem_88359, mem_88351, mem_88353, mem_88355, mem_88357, (int64_t) 16, (int64_t) 16, step_80406, lt_r_82159) != 0) {
             err = 1;
             goto cleanup;
         }
-        if (memblock_unref(ctx, &mem_89283, "mem_89283") != 0)
+        if (memblock_unref(ctx, &mem_88351, "mem_88351") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89285, "mem_89285") != 0)
+        if (memblock_unref(ctx, &mem_88353, "mem_88353") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89287, "mem_89287") != 0)
+        if (memblock_unref(ctx, &mem_88355, "mem_88355") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89289, "mem_89289") != 0)
+        if (memblock_unref(ctx, &mem_88357, "mem_88357") != 0)
             return 1;
-        // futhark/microgpt.fut:417:5-56
-        if (memblock_alloc(ctx, &mem_89294, (int64_t) 2048, "mem_89294")) {
+        // futhark/microgpt.fut:414:5-56
+        if (memblock_alloc(ctx, &mem_88362, (int64_t) 2048, "mem_88362")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:417:5-56
-        // futhark/microgpt.fut:417:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89294.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87837.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:417:5-56
-        if (memblock_alloc(ctx, &mem_89296, (int64_t) 2048, "mem_89296")) {
+        // futhark/microgpt.fut:414:5-56
+        // futhark/microgpt.fut:414:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88362.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86874.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:414:5-56
+        if (memblock_alloc(ctx, &mem_88364, (int64_t) 2048, "mem_88364")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:417:5-56
-        // futhark/microgpt.fut:417:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89296.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87873.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:417:5-56
-        if (memblock_alloc(ctx, &mem_89298, (int64_t) 2048, "mem_89298")) {
+        // futhark/microgpt.fut:414:5-56
+        // futhark/microgpt.fut:414:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88364.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86910.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:414:5-56
+        if (memblock_alloc(ctx, &mem_88366, (int64_t) 2048, "mem_88366")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:417:5-56
-        // futhark/microgpt.fut:417:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89298.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87909.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:417:5-56
-        if (memblock_alloc(ctx, &mem_89300, (int64_t) 2048, "mem_89300")) {
+        // futhark/microgpt.fut:414:5-56
+        // futhark/microgpt.fut:414:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88366.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86946.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:414:5-56
+        if (memblock_alloc(ctx, &mem_88368, (int64_t) 2048, "mem_88368")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:417:5-56
-        // futhark/microgpt.fut:417:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89300.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_89038, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:417:5-56
-        if (futrts_adam_opt_w_10265(ctx, &ext_mem_89304, &ext_mem_89303, &ext_mem_89302, mem_89294, mem_89296, mem_89298, mem_89300, (int64_t) 16, (int64_t) 16, step_81116, lt_r_82940) != 0) {
+        // futhark/microgpt.fut:414:5-56
+        // futhark/microgpt.fut:414:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88368.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_88092, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:414:5-56
+        if (futrts_adam_opt_w_10204(ctx, &ext_mem_88372, &ext_mem_88371, &ext_mem_88370, mem_88362, mem_88364, mem_88366, mem_88368, (int64_t) 16, (int64_t) 16, step_80406, lt_r_82159) != 0) {
             err = 1;
             goto cleanup;
         }
-        if (memblock_unref(ctx, &mem_89294, "mem_89294") != 0)
+        if (memblock_unref(ctx, &mem_88362, "mem_88362") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89296, "mem_89296") != 0)
+        if (memblock_unref(ctx, &mem_88364, "mem_88364") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89298, "mem_89298") != 0)
+        if (memblock_unref(ctx, &mem_88366, "mem_88366") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89300, "mem_89300") != 0)
+        if (memblock_unref(ctx, &mem_88368, "mem_88368") != 0)
             return 1;
-        // futhark/microgpt.fut:419:5-56
-        if (memblock_alloc(ctx, &mem_89305, (int64_t) 2048, "mem_89305")) {
+        // futhark/microgpt.fut:416:5-56
+        if (memblock_alloc(ctx, &mem_88373, (int64_t) 2048, "mem_88373")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:419:5-56
-        // futhark/microgpt.fut:419:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89305.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87861.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:419:5-56
-        if (memblock_alloc(ctx, &mem_89307, (int64_t) 2048, "mem_89307")) {
+        // futhark/microgpt.fut:416:5-56
+        // futhark/microgpt.fut:416:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88373.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86898.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:416:5-56
+        if (memblock_alloc(ctx, &mem_88375, (int64_t) 2048, "mem_88375")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:419:5-56
-        // futhark/microgpt.fut:419:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89307.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87897.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:419:5-56
-        if (memblock_alloc(ctx, &mem_89309, (int64_t) 2048, "mem_89309")) {
+        // futhark/microgpt.fut:416:5-56
+        // futhark/microgpt.fut:416:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88375.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86934.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:416:5-56
+        if (memblock_alloc(ctx, &mem_88377, (int64_t) 2048, "mem_88377")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:419:5-56
-        // futhark/microgpt.fut:419:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89309.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87933.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:419:5-56
-        if (memblock_alloc(ctx, &mem_89311, (int64_t) 2048, "mem_89311")) {
+        // futhark/microgpt.fut:416:5-56
+        // futhark/microgpt.fut:416:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88377.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86970.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:416:5-56
+        if (memblock_alloc(ctx, &mem_88379, (int64_t) 2048, "mem_88379")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:419:5-56
-        // futhark/microgpt.fut:419:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89311.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_89037, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:419:5-56
-        if (futrts_adam_opt_w_10265(ctx, &ext_mem_89315, &ext_mem_89314, &ext_mem_89313, mem_89305, mem_89307, mem_89309, mem_89311, (int64_t) 16, (int64_t) 16, step_81116, lt_r_82940) != 0) {
+        // futhark/microgpt.fut:416:5-56
+        // futhark/microgpt.fut:416:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88379.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_88091, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:416:5-56
+        if (futrts_adam_opt_w_10204(ctx, &ext_mem_88383, &ext_mem_88382, &ext_mem_88381, mem_88373, mem_88375, mem_88377, mem_88379, (int64_t) 16, (int64_t) 16, step_80406, lt_r_82159) != 0) {
             err = 1;
             goto cleanup;
         }
-        if (memblock_unref(ctx, &mem_89305, "mem_89305") != 0)
+        if (memblock_unref(ctx, &mem_88373, "mem_88373") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89307, "mem_89307") != 0)
+        if (memblock_unref(ctx, &mem_88375, "mem_88375") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89309, "mem_89309") != 0)
+        if (memblock_unref(ctx, &mem_88377, "mem_88377") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89311, "mem_89311") != 0)
+        if (memblock_unref(ctx, &mem_88379, "mem_88379") != 0)
             return 1;
-        // futhark/microgpt.fut:421:5-56
-        if (memblock_alloc(ctx, &mem_89316, (int64_t) 2048, "mem_89316")) {
+        // futhark/microgpt.fut:418:5-56
+        if (memblock_alloc(ctx, &mem_88384, (int64_t) 2048, "mem_88384")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:421:5-56
-        // futhark/microgpt.fut:421:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89316.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87841.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:421:5-56
-        if (memblock_alloc(ctx, &mem_89318, (int64_t) 2048, "mem_89318")) {
+        // futhark/microgpt.fut:418:5-56
+        // futhark/microgpt.fut:418:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88384.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86878.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:418:5-56
+        if (memblock_alloc(ctx, &mem_88386, (int64_t) 2048, "mem_88386")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:421:5-56
-        // futhark/microgpt.fut:421:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89318.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87877.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:421:5-56
-        if (memblock_alloc(ctx, &mem_89320, (int64_t) 2048, "mem_89320")) {
+        // futhark/microgpt.fut:418:5-56
+        // futhark/microgpt.fut:418:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88386.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86914.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:418:5-56
+        if (memblock_alloc(ctx, &mem_88388, (int64_t) 2048, "mem_88388")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:421:5-56
-        // futhark/microgpt.fut:421:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89320.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87913.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:421:5-56
-        if (memblock_alloc(ctx, &mem_89322, (int64_t) 2048, "mem_89322")) {
+        // futhark/microgpt.fut:418:5-56
+        // futhark/microgpt.fut:418:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88388.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86950.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:418:5-56
+        if (memblock_alloc(ctx, &mem_88390, (int64_t) 2048, "mem_88390")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:421:5-56
-        // futhark/microgpt.fut:421:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89322.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_88677, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
-        // futhark/microgpt.fut:421:5-56
-        if (futrts_adam_opt_w_10265(ctx, &ext_mem_89326, &ext_mem_89325, &ext_mem_89324, mem_89316, mem_89318, mem_89320, mem_89322, (int64_t) 16, (int64_t) 16, step_81116, lt_r_82940) != 0) {
+        // futhark/microgpt.fut:418:5-56
+        // futhark/microgpt.fut:418:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88390.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_87718, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 16});
+        // futhark/microgpt.fut:418:5-56
+        if (futrts_adam_opt_w_10204(ctx, &ext_mem_88394, &ext_mem_88393, &ext_mem_88392, mem_88384, mem_88386, mem_88388, mem_88390, (int64_t) 16, (int64_t) 16, step_80406, lt_r_82159) != 0) {
             err = 1;
             goto cleanup;
         }
-        if (memblock_unref(ctx, &mem_89316, "mem_89316") != 0)
+        if (memblock_unref(ctx, &mem_88384, "mem_88384") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89318, "mem_89318") != 0)
+        if (memblock_unref(ctx, &mem_88386, "mem_88386") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89320, "mem_89320") != 0)
+        if (memblock_unref(ctx, &mem_88388, "mem_88388") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89322, "mem_89322") != 0)
+        if (memblock_unref(ctx, &mem_88390, "mem_88390") != 0)
             return 1;
-        // futhark/microgpt.fut:423:5-52
-        if (memblock_alloc(ctx, &mem_89327, (int64_t) 8192, "mem_89327")) {
+        // futhark/microgpt.fut:420:5-52
+        if (memblock_alloc(ctx, &mem_88395, (int64_t) 8192, "mem_88395")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:423:5-52
-        // futhark/microgpt.fut:423:5-52
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89327.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87857.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 64, (int64_t) 16});
-        // futhark/microgpt.fut:423:5-52
-        if (memblock_alloc(ctx, &mem_89329, (int64_t) 8192, "mem_89329")) {
+        // futhark/microgpt.fut:420:5-52
+        // futhark/microgpt.fut:420:5-52
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88395.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86894.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 64, (int64_t) 16});
+        // futhark/microgpt.fut:420:5-52
+        if (memblock_alloc(ctx, &mem_88397, (int64_t) 8192, "mem_88397")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:423:5-52
-        // futhark/microgpt.fut:423:5-52
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89329.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87893.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 64, (int64_t) 16});
-        // futhark/microgpt.fut:423:5-52
-        if (memblock_alloc(ctx, &mem_89331, (int64_t) 8192, "mem_89331")) {
+        // futhark/microgpt.fut:420:5-52
+        // futhark/microgpt.fut:420:5-52
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88397.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86930.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 64, (int64_t) 16});
+        // futhark/microgpt.fut:420:5-52
+        if (memblock_alloc(ctx, &mem_88399, (int64_t) 8192, "mem_88399")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:423:5-52
-        // futhark/microgpt.fut:423:5-52
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89331.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87929.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 64, (int64_t) 16});
-        // futhark/microgpt.fut:423:5-52
-        if (memblock_alloc(ctx, &mem_89333, (int64_t) 8192, "mem_89333")) {
+        // futhark/microgpt.fut:420:5-52
+        // futhark/microgpt.fut:420:5-52
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88399.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86966.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 64, (int64_t) 16});
+        // futhark/microgpt.fut:420:5-52
+        if (memblock_alloc(ctx, &mem_88401, (int64_t) 8192, "mem_88401")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:423:5-52
-        // futhark/microgpt.fut:423:5-52
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89333.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_89213, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 64, (int64_t) 16});
-        // futhark/microgpt.fut:423:5-52
-        if (futrts_adam_opt_w_10264(ctx, &ext_mem_89337, &ext_mem_89336, &ext_mem_89335, mem_89327, mem_89329, mem_89331, mem_89333, (int64_t) 64, (int64_t) 16, step_81116, lt_r_82940) != 0) {
+        // futhark/microgpt.fut:420:5-52
+        // futhark/microgpt.fut:420:5-52
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88401.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_88281, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 64, (int64_t) 16});
+        // futhark/microgpt.fut:420:5-52
+        if (futrts_adam_opt_w_10203(ctx, &ext_mem_88405, &ext_mem_88404, &ext_mem_88403, mem_88395, mem_88397, mem_88399, mem_88401, (int64_t) 64, (int64_t) 16, step_80406, lt_r_82159) != 0) {
             err = 1;
             goto cleanup;
         }
-        if (memblock_unref(ctx, &mem_89327, "mem_89327") != 0)
+        if (memblock_unref(ctx, &mem_88395, "mem_88395") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89329, "mem_89329") != 0)
+        if (memblock_unref(ctx, &mem_88397, "mem_88397") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89331, "mem_89331") != 0)
+        if (memblock_unref(ctx, &mem_88399, "mem_88399") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89333, "mem_89333") != 0)
+        if (memblock_unref(ctx, &mem_88401, "mem_88401") != 0)
             return 1;
-        // futhark/microgpt.fut:425:5-60
-        if (memblock_alloc(ctx, &mem_89338, (int64_t) 8192, "mem_89338")) {
+        // futhark/microgpt.fut:422:5-60
+        if (memblock_alloc(ctx, &mem_88406, (int64_t) 8192, "mem_88406")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:425:5-60
-        // futhark/microgpt.fut:425:5-60
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89338.mem, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (uint64_t *) mem_param_87833.mem, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 64});
-        // futhark/microgpt.fut:425:5-60
-        if (memblock_alloc(ctx, &mem_89340, (int64_t) 8192, "mem_89340")) {
+        // futhark/microgpt.fut:422:5-60
+        // futhark/microgpt.fut:422:5-60
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88406.mem, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (uint64_t *) mem_param_86870.mem, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 64});
+        // futhark/microgpt.fut:422:5-60
+        if (memblock_alloc(ctx, &mem_88408, (int64_t) 8192, "mem_88408")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:425:5-60
-        // futhark/microgpt.fut:425:5-60
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89340.mem, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (uint64_t *) mem_param_87869.mem, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 64});
-        // futhark/microgpt.fut:425:5-60
-        if (memblock_alloc(ctx, &mem_89342, (int64_t) 8192, "mem_89342")) {
+        // futhark/microgpt.fut:422:5-60
+        // futhark/microgpt.fut:422:5-60
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88408.mem, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (uint64_t *) mem_param_86906.mem, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 64});
+        // futhark/microgpt.fut:422:5-60
+        if (memblock_alloc(ctx, &mem_88410, (int64_t) 8192, "mem_88410")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:425:5-60
-        // futhark/microgpt.fut:425:5-60
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89342.mem, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (uint64_t *) mem_param_87905.mem, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 64});
-        // futhark/microgpt.fut:425:5-60
-        if (memblock_alloc(ctx, &mem_89344, (int64_t) 8192, "mem_89344")) {
+        // futhark/microgpt.fut:422:5-60
+        // futhark/microgpt.fut:422:5-60
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88410.mem, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (uint64_t *) mem_param_86942.mem, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 64});
+        // futhark/microgpt.fut:422:5-60
+        if (memblock_alloc(ctx, &mem_88412, (int64_t) 8192, "mem_88412")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:425:5-60
-        // futhark/microgpt.fut:425:5-60
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89344.mem, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (uint64_t *) mem_88573, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 64});
-        // futhark/microgpt.fut:425:5-60
-        if (futrts_adam_opt_w_10264(ctx, &ext_mem_89348, &ext_mem_89347, &ext_mem_89346, mem_89338, mem_89340, mem_89342, mem_89344, (int64_t) 16, (int64_t) 64, step_81116, lt_r_82940) != 0) {
+        // futhark/microgpt.fut:422:5-60
+        // futhark/microgpt.fut:422:5-60
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88412.mem, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (uint64_t *) mem_87607, (int64_t) 0, (int64_t []) {(int64_t) 64, (int64_t) 1}, (int64_t []) {(int64_t) 16, (int64_t) 64});
+        // futhark/microgpt.fut:422:5-60
+        if (futrts_adam_opt_w_10203(ctx, &ext_mem_88416, &ext_mem_88415, &ext_mem_88414, mem_88406, mem_88408, mem_88410, mem_88412, (int64_t) 16, (int64_t) 64, step_80406, lt_r_82159) != 0) {
             err = 1;
             goto cleanup;
         }
-        if (memblock_unref(ctx, &mem_89338, "mem_89338") != 0)
+        if (memblock_unref(ctx, &mem_88406, "mem_88406") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89340, "mem_89340") != 0)
+        if (memblock_unref(ctx, &mem_88408, "mem_88408") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89342, "mem_89342") != 0)
+        if (memblock_unref(ctx, &mem_88410, "mem_88410") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89344, "mem_89344") != 0)
+        if (memblock_unref(ctx, &mem_88412, "mem_88412") != 0)
             return 1;
-        // futhark/microgpt.fut:427:5-56
-        if (memblock_alloc(ctx, &mem_89349, (int64_t) 3456, "mem_89349")) {
+        // futhark/microgpt.fut:424:5-56
+        if (memblock_alloc(ctx, &mem_88417, (int64_t) 3456, "mem_88417")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:427:5-56
-        // futhark/microgpt.fut:427:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89349.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87865.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
-        // futhark/microgpt.fut:427:5-56
-        if (memblock_alloc(ctx, &mem_89351, (int64_t) 3456, "mem_89351")) {
+        // futhark/microgpt.fut:424:5-56
+        // futhark/microgpt.fut:424:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88417.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86902.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
+        // futhark/microgpt.fut:424:5-56
+        if (memblock_alloc(ctx, &mem_88419, (int64_t) 3456, "mem_88419")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:427:5-56
-        // futhark/microgpt.fut:427:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89351.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87901.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
-        // futhark/microgpt.fut:427:5-56
-        if (memblock_alloc(ctx, &mem_89353, (int64_t) 3456, "mem_89353")) {
+        // futhark/microgpt.fut:424:5-56
+        // futhark/microgpt.fut:424:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88419.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86938.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
+        // futhark/microgpt.fut:424:5-56
+        if (memblock_alloc(ctx, &mem_88421, (int64_t) 3456, "mem_88421")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:427:5-56
-        // futhark/microgpt.fut:427:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89353.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_87937.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
-        // futhark/microgpt.fut:427:5-56
-        if (memblock_alloc(ctx, &mem_89355, (int64_t) 3456, "mem_89355")) {
+        // futhark/microgpt.fut:424:5-56
+        // futhark/microgpt.fut:424:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88421.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_param_86974.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
+        // futhark/microgpt.fut:424:5-56
+        if (memblock_alloc(ctx, &mem_88423, (int64_t) 3456, "mem_88423")) {
             err = 1;
             goto cleanup;
         }
-        // futhark/microgpt.fut:427:5-56
-        // futhark/microgpt.fut:427:5-56
-        lmad_copy_8b(ctx, 2, (uint64_t *) mem_89355.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_89230, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
-        // futhark/microgpt.fut:427:5-56
-        if (futrts_adam_opt_w_10264(ctx, &ext_mem_89359, &ext_mem_89358, &ext_mem_89357, mem_89349, mem_89351, mem_89353, mem_89355, (int64_t) 27, (int64_t) 16, step_81116, lt_r_82940) != 0) {
+        // futhark/microgpt.fut:424:5-56
+        // futhark/microgpt.fut:424:5-56
+        lmad_copy_8b(ctx, 2, (uint64_t *) mem_88423.mem, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (uint64_t *) mem_88298, (int64_t) 0, (int64_t []) {(int64_t) 16, (int64_t) 1}, (int64_t []) {(int64_t) 27, (int64_t) 16});
+        // futhark/microgpt.fut:424:5-56
+        if (futrts_adam_opt_w_10203(ctx, &ext_mem_88427, &ext_mem_88426, &ext_mem_88425, mem_88417, mem_88419, mem_88421, mem_88423, (int64_t) 27, (int64_t) 16, step_80406, lt_r_82159) != 0) {
             err = 1;
             goto cleanup;
         }
-        if (memblock_unref(ctx, &mem_89349, "mem_89349") != 0)
+        if (memblock_unref(ctx, &mem_88417, "mem_88417") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89351, "mem_89351") != 0)
+        if (memblock_unref(ctx, &mem_88419, "mem_88419") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89353, "mem_89353") != 0)
+        if (memblock_unref(ctx, &mem_88421, "mem_88421") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89355, "mem_89355") != 0)
+        if (memblock_unref(ctx, &mem_88423, "mem_88423") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89567, &ext_mem_89348, "ext_mem_89348") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88635, &ext_mem_88416, "ext_mem_88416") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89568, &ext_mem_89304, "ext_mem_89304") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88636, &ext_mem_88372, "ext_mem_88372") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89569, &ext_mem_89326, "ext_mem_89326") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88637, &ext_mem_88394, "ext_mem_88394") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89570, &ext_mem_89282, "ext_mem_89282") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88638, &ext_mem_88350, "ext_mem_88350") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89571, &ext_mem_89293, "ext_mem_89293") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88639, &ext_mem_88361, "ext_mem_88361") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89572, &ext_mem_89271, "ext_mem_89271") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88640, &ext_mem_88339, "ext_mem_88339") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89573, &ext_mem_89337, "ext_mem_89337") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88641, &ext_mem_88405, "ext_mem_88405") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89574, &ext_mem_89315, "ext_mem_89315") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88642, &ext_mem_88383, "ext_mem_88383") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89575, &ext_mem_89359, "ext_mem_89359") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88643, &ext_mem_88427, "ext_mem_88427") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89576, &ext_mem_89347, "ext_mem_89347") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88644, &ext_mem_88415, "ext_mem_88415") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89577, &ext_mem_89303, "ext_mem_89303") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88645, &ext_mem_88371, "ext_mem_88371") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89578, &ext_mem_89325, "ext_mem_89325") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88646, &ext_mem_88393, "ext_mem_88393") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89579, &ext_mem_89281, "ext_mem_89281") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88647, &ext_mem_88349, "ext_mem_88349") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89580, &ext_mem_89292, "ext_mem_89292") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88648, &ext_mem_88360, "ext_mem_88360") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89581, &ext_mem_89270, "ext_mem_89270") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88649, &ext_mem_88338, "ext_mem_88338") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89582, &ext_mem_89336, "ext_mem_89336") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88650, &ext_mem_88404, "ext_mem_88404") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89583, &ext_mem_89314, "ext_mem_89314") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88651, &ext_mem_88382, "ext_mem_88382") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89584, &ext_mem_89358, "ext_mem_89358") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88652, &ext_mem_88426, "ext_mem_88426") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89585, &ext_mem_89346, "ext_mem_89346") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88653, &ext_mem_88414, "ext_mem_88414") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89586, &ext_mem_89302, "ext_mem_89302") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88654, &ext_mem_88370, "ext_mem_88370") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89587, &ext_mem_89324, "ext_mem_89324") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88655, &ext_mem_88392, "ext_mem_88392") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89588, &ext_mem_89280, "ext_mem_89280") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88656, &ext_mem_88348, "ext_mem_88348") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89589, &ext_mem_89291, "ext_mem_89291") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88657, &ext_mem_88359, "ext_mem_88359") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89590, &ext_mem_89269, "ext_mem_89269") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88658, &ext_mem_88337, "ext_mem_88337") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89591, &ext_mem_89335, "ext_mem_89335") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88659, &ext_mem_88403, "ext_mem_88403") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89592, &ext_mem_89313, "ext_mem_89313") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88660, &ext_mem_88381, "ext_mem_88381") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_tmp_89593, &ext_mem_89357, "ext_mem_89357") != 0)
+        if (memblock_set(ctx, &mem_param_tmp_88661, &ext_mem_88425, "ext_mem_88425") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87833, &mem_param_tmp_89567, "mem_param_tmp_89567") != 0)
+        if (memblock_set(ctx, &mem_param_86870, &mem_param_tmp_88635, "mem_param_tmp_88635") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87837, &mem_param_tmp_89568, "mem_param_tmp_89568") != 0)
+        if (memblock_set(ctx, &mem_param_86874, &mem_param_tmp_88636, "mem_param_tmp_88636") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87841, &mem_param_tmp_89569, "mem_param_tmp_89569") != 0)
+        if (memblock_set(ctx, &mem_param_86878, &mem_param_tmp_88637, "mem_param_tmp_88637") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87845, &mem_param_tmp_89570, "mem_param_tmp_89570") != 0)
+        if (memblock_set(ctx, &mem_param_86882, &mem_param_tmp_88638, "mem_param_tmp_88638") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87849, &mem_param_tmp_89571, "mem_param_tmp_89571") != 0)
+        if (memblock_set(ctx, &mem_param_86886, &mem_param_tmp_88639, "mem_param_tmp_88639") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87853, &mem_param_tmp_89572, "mem_param_tmp_89572") != 0)
+        if (memblock_set(ctx, &mem_param_86890, &mem_param_tmp_88640, "mem_param_tmp_88640") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87857, &mem_param_tmp_89573, "mem_param_tmp_89573") != 0)
+        if (memblock_set(ctx, &mem_param_86894, &mem_param_tmp_88641, "mem_param_tmp_88641") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87861, &mem_param_tmp_89574, "mem_param_tmp_89574") != 0)
+        if (memblock_set(ctx, &mem_param_86898, &mem_param_tmp_88642, "mem_param_tmp_88642") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87865, &mem_param_tmp_89575, "mem_param_tmp_89575") != 0)
+        if (memblock_set(ctx, &mem_param_86902, &mem_param_tmp_88643, "mem_param_tmp_88643") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87869, &mem_param_tmp_89576, "mem_param_tmp_89576") != 0)
+        if (memblock_set(ctx, &mem_param_86906, &mem_param_tmp_88644, "mem_param_tmp_88644") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87873, &mem_param_tmp_89577, "mem_param_tmp_89577") != 0)
+        if (memblock_set(ctx, &mem_param_86910, &mem_param_tmp_88645, "mem_param_tmp_88645") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87877, &mem_param_tmp_89578, "mem_param_tmp_89578") != 0)
+        if (memblock_set(ctx, &mem_param_86914, &mem_param_tmp_88646, "mem_param_tmp_88646") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87881, &mem_param_tmp_89579, "mem_param_tmp_89579") != 0)
+        if (memblock_set(ctx, &mem_param_86918, &mem_param_tmp_88647, "mem_param_tmp_88647") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87885, &mem_param_tmp_89580, "mem_param_tmp_89580") != 0)
+        if (memblock_set(ctx, &mem_param_86922, &mem_param_tmp_88648, "mem_param_tmp_88648") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87889, &mem_param_tmp_89581, "mem_param_tmp_89581") != 0)
+        if (memblock_set(ctx, &mem_param_86926, &mem_param_tmp_88649, "mem_param_tmp_88649") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87893, &mem_param_tmp_89582, "mem_param_tmp_89582") != 0)
+        if (memblock_set(ctx, &mem_param_86930, &mem_param_tmp_88650, "mem_param_tmp_88650") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87897, &mem_param_tmp_89583, "mem_param_tmp_89583") != 0)
+        if (memblock_set(ctx, &mem_param_86934, &mem_param_tmp_88651, "mem_param_tmp_88651") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87901, &mem_param_tmp_89584, "mem_param_tmp_89584") != 0)
+        if (memblock_set(ctx, &mem_param_86938, &mem_param_tmp_88652, "mem_param_tmp_88652") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87905, &mem_param_tmp_89585, "mem_param_tmp_89585") != 0)
+        if (memblock_set(ctx, &mem_param_86942, &mem_param_tmp_88653, "mem_param_tmp_88653") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87909, &mem_param_tmp_89586, "mem_param_tmp_89586") != 0)
+        if (memblock_set(ctx, &mem_param_86946, &mem_param_tmp_88654, "mem_param_tmp_88654") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87913, &mem_param_tmp_89587, "mem_param_tmp_89587") != 0)
+        if (memblock_set(ctx, &mem_param_86950, &mem_param_tmp_88655, "mem_param_tmp_88655") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87917, &mem_param_tmp_89588, "mem_param_tmp_89588") != 0)
+        if (memblock_set(ctx, &mem_param_86954, &mem_param_tmp_88656, "mem_param_tmp_88656") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87921, &mem_param_tmp_89589, "mem_param_tmp_89589") != 0)
+        if (memblock_set(ctx, &mem_param_86958, &mem_param_tmp_88657, "mem_param_tmp_88657") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87925, &mem_param_tmp_89590, "mem_param_tmp_89590") != 0)
+        if (memblock_set(ctx, &mem_param_86962, &mem_param_tmp_88658, "mem_param_tmp_88658") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87929, &mem_param_tmp_89591, "mem_param_tmp_89591") != 0)
+        if (memblock_set(ctx, &mem_param_86966, &mem_param_tmp_88659, "mem_param_tmp_88659") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87933, &mem_param_tmp_89592, "mem_param_tmp_89592") != 0)
+        if (memblock_set(ctx, &mem_param_86970, &mem_param_tmp_88660, "mem_param_tmp_88660") != 0)
             return 1;
-        if (memblock_set(ctx, &mem_param_87937, &mem_param_tmp_89593, "mem_param_tmp_89593") != 0)
+        if (memblock_set(ctx, &mem_param_86974, &mem_param_tmp_88661, "mem_param_tmp_88661") != 0)
             return 1;
     }
-    if (memblock_set(ctx, &ext_mem_89467, &mem_param_87833, "mem_param_87833") != 0)
+    if (memblock_set(ctx, &ext_mem_88535, &mem_param_86870, "mem_param_86870") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89466, &mem_param_87837, "mem_param_87837") != 0)
+    if (memblock_set(ctx, &ext_mem_88534, &mem_param_86874, "mem_param_86874") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89465, &mem_param_87841, "mem_param_87841") != 0)
+    if (memblock_set(ctx, &ext_mem_88533, &mem_param_86878, "mem_param_86878") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89464, &mem_param_87845, "mem_param_87845") != 0)
+    if (memblock_set(ctx, &ext_mem_88532, &mem_param_86882, "mem_param_86882") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89463, &mem_param_87849, "mem_param_87849") != 0)
+    if (memblock_set(ctx, &ext_mem_88531, &mem_param_86886, "mem_param_86886") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89462, &mem_param_87853, "mem_param_87853") != 0)
+    if (memblock_set(ctx, &ext_mem_88530, &mem_param_86890, "mem_param_86890") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89461, &mem_param_87857, "mem_param_87857") != 0)
+    if (memblock_set(ctx, &ext_mem_88529, &mem_param_86894, "mem_param_86894") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89460, &mem_param_87861, "mem_param_87861") != 0)
+    if (memblock_set(ctx, &ext_mem_88528, &mem_param_86898, "mem_param_86898") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89459, &mem_param_87865, "mem_param_87865") != 0)
+    if (memblock_set(ctx, &ext_mem_88527, &mem_param_86902, "mem_param_86902") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89458, &mem_param_87869, "mem_param_87869") != 0)
+    if (memblock_set(ctx, &ext_mem_88526, &mem_param_86906, "mem_param_86906") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89457, &mem_param_87873, "mem_param_87873") != 0)
+    if (memblock_set(ctx, &ext_mem_88525, &mem_param_86910, "mem_param_86910") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89456, &mem_param_87877, "mem_param_87877") != 0)
+    if (memblock_set(ctx, &ext_mem_88524, &mem_param_86914, "mem_param_86914") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89455, &mem_param_87881, "mem_param_87881") != 0)
+    if (memblock_set(ctx, &ext_mem_88523, &mem_param_86918, "mem_param_86918") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89454, &mem_param_87885, "mem_param_87885") != 0)
+    if (memblock_set(ctx, &ext_mem_88522, &mem_param_86922, "mem_param_86922") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89453, &mem_param_87889, "mem_param_87889") != 0)
+    if (memblock_set(ctx, &ext_mem_88521, &mem_param_86926, "mem_param_86926") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89452, &mem_param_87893, "mem_param_87893") != 0)
+    if (memblock_set(ctx, &ext_mem_88520, &mem_param_86930, "mem_param_86930") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89451, &mem_param_87897, "mem_param_87897") != 0)
+    if (memblock_set(ctx, &ext_mem_88519, &mem_param_86934, "mem_param_86934") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89450, &mem_param_87901, "mem_param_87901") != 0)
+    if (memblock_set(ctx, &ext_mem_88518, &mem_param_86938, "mem_param_86938") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89449, &mem_param_87905, "mem_param_87905") != 0)
+    if (memblock_set(ctx, &ext_mem_88517, &mem_param_86942, "mem_param_86942") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89448, &mem_param_87909, "mem_param_87909") != 0)
+    if (memblock_set(ctx, &ext_mem_88516, &mem_param_86946, "mem_param_86946") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89447, &mem_param_87913, "mem_param_87913") != 0)
+    if (memblock_set(ctx, &ext_mem_88515, &mem_param_86950, "mem_param_86950") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89446, &mem_param_87917, "mem_param_87917") != 0)
+    if (memblock_set(ctx, &ext_mem_88514, &mem_param_86954, "mem_param_86954") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89445, &mem_param_87921, "mem_param_87921") != 0)
+    if (memblock_set(ctx, &ext_mem_88513, &mem_param_86958, "mem_param_86958") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89444, &mem_param_87925, "mem_param_87925") != 0)
+    if (memblock_set(ctx, &ext_mem_88512, &mem_param_86962, "mem_param_86962") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89443, &mem_param_87929, "mem_param_87929") != 0)
+    if (memblock_set(ctx, &ext_mem_88511, &mem_param_86966, "mem_param_86966") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89442, &mem_param_87933, "mem_param_87933") != 0)
+    if (memblock_set(ctx, &ext_mem_88510, &mem_param_86970, "mem_param_86970") != 0)
         return 1;
-    if (memblock_set(ctx, &ext_mem_89441, &mem_param_87937, "mem_param_87937") != 0)
+    if (memblock_set(ctx, &ext_mem_88509, &mem_param_86974, "mem_param_86974") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89540, &ext_mem_89462, "ext_mem_89462") != 0)
+    if (memblock_set(ctx, &mem_out_88608, &ext_mem_88530, "ext_mem_88530") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89541, &ext_mem_89464, "ext_mem_89464") != 0)
+    if (memblock_set(ctx, &mem_out_88609, &ext_mem_88532, "ext_mem_88532") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89542, &ext_mem_89463, "ext_mem_89463") != 0)
+    if (memblock_set(ctx, &mem_out_88610, &ext_mem_88531, "ext_mem_88531") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89543, &ext_mem_89466, "ext_mem_89466") != 0)
+    if (memblock_set(ctx, &mem_out_88611, &ext_mem_88534, "ext_mem_88534") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89544, &ext_mem_89460, "ext_mem_89460") != 0)
+    if (memblock_set(ctx, &mem_out_88612, &ext_mem_88528, "ext_mem_88528") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89545, &ext_mem_89465, "ext_mem_89465") != 0)
+    if (memblock_set(ctx, &mem_out_88613, &ext_mem_88533, "ext_mem_88533") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89546, &ext_mem_89461, "ext_mem_89461") != 0)
+    if (memblock_set(ctx, &mem_out_88614, &ext_mem_88529, "ext_mem_88529") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89547, &ext_mem_89467, "ext_mem_89467") != 0)
+    if (memblock_set(ctx, &mem_out_88615, &ext_mem_88535, "ext_mem_88535") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89548, &ext_mem_89459, "ext_mem_89459") != 0)
+    if (memblock_set(ctx, &mem_out_88616, &ext_mem_88527, "ext_mem_88527") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89549, &ext_mem_89453, "ext_mem_89453") != 0)
+    if (memblock_set(ctx, &mem_out_88617, &ext_mem_88521, "ext_mem_88521") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89550, &ext_mem_89455, "ext_mem_89455") != 0)
+    if (memblock_set(ctx, &mem_out_88618, &ext_mem_88523, "ext_mem_88523") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89551, &ext_mem_89454, "ext_mem_89454") != 0)
+    if (memblock_set(ctx, &mem_out_88619, &ext_mem_88522, "ext_mem_88522") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89552, &ext_mem_89457, "ext_mem_89457") != 0)
+    if (memblock_set(ctx, &mem_out_88620, &ext_mem_88525, "ext_mem_88525") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89553, &ext_mem_89451, "ext_mem_89451") != 0)
+    if (memblock_set(ctx, &mem_out_88621, &ext_mem_88519, "ext_mem_88519") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89554, &ext_mem_89456, "ext_mem_89456") != 0)
+    if (memblock_set(ctx, &mem_out_88622, &ext_mem_88524, "ext_mem_88524") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89555, &ext_mem_89452, "ext_mem_89452") != 0)
+    if (memblock_set(ctx, &mem_out_88623, &ext_mem_88520, "ext_mem_88520") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89556, &ext_mem_89458, "ext_mem_89458") != 0)
+    if (memblock_set(ctx, &mem_out_88624, &ext_mem_88526, "ext_mem_88526") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89557, &ext_mem_89450, "ext_mem_89450") != 0)
+    if (memblock_set(ctx, &mem_out_88625, &ext_mem_88518, "ext_mem_88518") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89558, &ext_mem_89444, "ext_mem_89444") != 0)
+    if (memblock_set(ctx, &mem_out_88626, &ext_mem_88512, "ext_mem_88512") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89559, &ext_mem_89446, "ext_mem_89446") != 0)
+    if (memblock_set(ctx, &mem_out_88627, &ext_mem_88514, "ext_mem_88514") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89560, &ext_mem_89445, "ext_mem_89445") != 0)
+    if (memblock_set(ctx, &mem_out_88628, &ext_mem_88513, "ext_mem_88513") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89561, &ext_mem_89448, "ext_mem_89448") != 0)
+    if (memblock_set(ctx, &mem_out_88629, &ext_mem_88516, "ext_mem_88516") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89562, &ext_mem_89442, "ext_mem_89442") != 0)
+    if (memblock_set(ctx, &mem_out_88630, &ext_mem_88510, "ext_mem_88510") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89563, &ext_mem_89447, "ext_mem_89447") != 0)
+    if (memblock_set(ctx, &mem_out_88631, &ext_mem_88515, "ext_mem_88515") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89564, &ext_mem_89443, "ext_mem_89443") != 0)
+    if (memblock_set(ctx, &mem_out_88632, &ext_mem_88511, "ext_mem_88511") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89565, &ext_mem_89449, "ext_mem_89449") != 0)
+    if (memblock_set(ctx, &mem_out_88633, &ext_mem_88517, "ext_mem_88517") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89566, &ext_mem_89441, "ext_mem_89441") != 0)
+    if (memblock_set(ctx, &mem_out_88634, &ext_mem_88509, "ext_mem_88509") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89933, &mem_out_89540, "mem_out_89540") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88996, &mem_out_88608, "mem_out_88608") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89934, &mem_out_89541, "mem_out_89541") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88997, &mem_out_88609, "mem_out_88609") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89935, &mem_out_89542, "mem_out_89542") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88998, &mem_out_88610, "mem_out_88610") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89936, &mem_out_89543, "mem_out_89543") != 0)
+    if (memblock_set(ctx, &*mem_out_p_88999, &mem_out_88611, "mem_out_88611") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89937, &mem_out_89544, "mem_out_89544") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89000, &mem_out_88612, "mem_out_88612") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89938, &mem_out_89545, "mem_out_89545") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89001, &mem_out_88613, "mem_out_88613") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89939, &mem_out_89546, "mem_out_89546") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89002, &mem_out_88614, "mem_out_88614") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89940, &mem_out_89547, "mem_out_89547") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89003, &mem_out_88615, "mem_out_88615") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89941, &mem_out_89548, "mem_out_89548") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89004, &mem_out_88616, "mem_out_88616") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89942, &mem_out_89549, "mem_out_89549") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89005, &mem_out_88617, "mem_out_88617") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89943, &mem_out_89550, "mem_out_89550") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89006, &mem_out_88618, "mem_out_88618") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89944, &mem_out_89551, "mem_out_89551") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89007, &mem_out_88619, "mem_out_88619") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89945, &mem_out_89552, "mem_out_89552") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89008, &mem_out_88620, "mem_out_88620") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89946, &mem_out_89553, "mem_out_89553") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89009, &mem_out_88621, "mem_out_88621") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89947, &mem_out_89554, "mem_out_89554") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89010, &mem_out_88622, "mem_out_88622") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89948, &mem_out_89555, "mem_out_89555") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89011, &mem_out_88623, "mem_out_88623") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89949, &mem_out_89556, "mem_out_89556") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89012, &mem_out_88624, "mem_out_88624") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89950, &mem_out_89557, "mem_out_89557") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89013, &mem_out_88625, "mem_out_88625") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89951, &mem_out_89558, "mem_out_89558") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89014, &mem_out_88626, "mem_out_88626") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89952, &mem_out_89559, "mem_out_89559") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89015, &mem_out_88627, "mem_out_88627") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89953, &mem_out_89560, "mem_out_89560") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89016, &mem_out_88628, "mem_out_88628") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89954, &mem_out_89561, "mem_out_89561") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89017, &mem_out_88629, "mem_out_88629") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89955, &mem_out_89562, "mem_out_89562") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89018, &mem_out_88630, "mem_out_88630") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89956, &mem_out_89563, "mem_out_89563") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89019, &mem_out_88631, "mem_out_88631") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89957, &mem_out_89564, "mem_out_89564") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89020, &mem_out_88632, "mem_out_88632") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89958, &mem_out_89565, "mem_out_89565") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89021, &mem_out_88633, "mem_out_88633") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_89959, &mem_out_89566, "mem_out_89566") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89022, &mem_out_88634, "mem_out_88634") != 0)
         return 1;
     
   cleanup:
     {
-        free(mem_87938);
-        free(mem_87939);
-        free(mem_87948);
-        free(mem_87955);
-        free(mem_87970);
-        free(mem_87971);
-        free(mem_87980);
-        free(mem_87987);
+        free(mem_86975);
+        free(mem_86976);
+        free(mem_86985);
+        free(mem_86992);
+        free(mem_87007);
+        free(mem_87008);
+        free(mem_87017);
+        free(mem_87024);
+        free(mem_87039);
+        free(mem_87040);
+        free(mem_87049);
+        free(mem_87050);
+        free(mem_87071);
+        free(mem_87072);
+        free(mem_87073);
+        free(mem_87085);
+        free(mem_87086);
+        free(mem_87110);
+        free(mem_87111);
+        free(mem_87112);
+        free(mem_87113);
+        free(mem_87129);
+        free(mem_87130);
+        free(mem_87131);
+        free(mem_87165);
+        free(mem_87166);
+        free(mem_87167);
+        free(mem_87183);
+        free(mem_87184);
+        free(mem_87185);
+        free(mem_87198);
+        free(mem_87199);
+        free(mem_87200);
+        free(mem_87246);
+        free(mem_87247);
+        free(mem_87258);
+        free(mem_87259);
+        free(mem_87268);
+        free(mem_87269);
+        free(mem_87290);
+        free(mem_87295);
+        free(mem_87306);
+        free(mem_87311);
+        free(mem_87318);
+        free(mem_87329);
+        free(mem_87334);
+        free(mem_87355);
+        free(mem_87360);
+        free(mem_87371);
+        free(mem_87376);
+        free(mem_87387);
+        free(mem_87392);
+        free(mem_87403);
+        free(mem_87404);
+        free(mem_87413);
+        free(mem_87414);
+        free(mem_87435);
+        free(mem_87436);
+        free(mem_87444);
+        free(mem_87458);
+        free(mem_87463);
+        free(mem_87474);
+        free(mem_87479);
+        free(mem_87490);
+        free(mem_87495);
+        free(mem_87506);
+        free(mem_87511);
+        free(mem_87522);
+        free(mem_87523);
+        free(mem_87532);
+        free(mem_87533);
+        free(mem_87546);
+        free(mem_87547);
+        free(mem_87568);
+        free(mem_87575);
+        free(mem_87580);
+        free(mem_87591);
+        free(mem_87596);
+        free(mem_87607);
+        free(mem_87608);
+        free(mem_87617);
+        free(mem_87618);
+        free(mem_87639);
+        free(mem_87644);
+        free(mem_87655);
+        free(mem_87660);
+        free(mem_87671);
+        free(mem_87672);
+        free(mem_87685);
+        free(mem_87692);
+        free(mem_87702);
+        free(mem_87707);
+        free(mem_87718);
+        free(mem_87719);
+        free(mem_87728);
+        free(mem_87729);
+        free(mem_87750);
+        free(mem_87751);
+        free(mem_87762);
+        free(mem_87763);
+        free(mem_87772);
+        free(mem_87779);
+        free(mem_87804);
+        free(mem_87805);
+        free(mem_87816);
+        free(mem_87817);
+        free(mem_87826);
+        free(mem_87833);
+        free(mem_87840);
+        free(mem_87865);
+        free(mem_87866);
+        free(mem_87877);
+        free(mem_87878);
+        free(mem_87887);
+        free(mem_87894);
+        free(mem_87919);
+        free(mem_87924);
+        free(mem_87935);
+        free(mem_87941);
+        free(mem_87946);
+        free(mem_87962);
+        free(mem_87968);
+        free(mem_87973);
+        free(mem_87989);
+        free(mem_87990);
+        free(mem_88001);
         free(mem_88002);
-        free(mem_88003);
+        free(mem_88011);
         free(mem_88012);
-        free(mem_88013);
-        free(mem_88034);
-        free(mem_88035);
-        free(mem_88036);
-        free(mem_88048);
-        free(mem_88049);
-        free(mem_88073);
-        free(mem_88074);
-        free(mem_88075);
-        free(mem_88076);
-        free(mem_88077);
-        free(mem_88096);
-        free(mem_88097);
-        free(mem_88098);
-        free(mem_88135);
-        free(mem_88136);
-        free(mem_88137);
-        free(mem_88153);
-        free(mem_88154);
+        free(mem_88043);
+        free(mem_88044);
+        free(mem_88045);
+        free(mem_88058);
+        free(mem_88059);
+        free(mem_88060);
+        free(mem_88091);
+        free(mem_88092);
+        free(mem_88093);
+        free(mem_88094);
+        free(mem_88111);
+        free(mem_88112);
+        free(mem_88113);
+        free(mem_88114);
         free(mem_88155);
-        free(mem_88168);
+        free(mem_88156);
         free(mem_88169);
-        free(mem_88170);
+        free(mem_88176);
+        free(mem_88186);
+        free(mem_88191);
+        free(mem_88202);
+        free(mem_88203);
         free(mem_88216);
-        free(mem_88217);
-        free(mem_88228);
-        free(mem_88229);
+        free(mem_88223);
+        free(mem_88233);
         free(mem_88238);
-        free(mem_88239);
+        free(mem_88249);
+        free(mem_88250);
+        free(mem_88259);
         free(mem_88260);
-        free(mem_88265);
-        free(mem_88276);
         free(mem_88281);
-        free(mem_88288);
-        free(mem_88299);
-        free(mem_88304);
-        free(mem_88325);
-        free(mem_88326);
-        free(mem_88334);
-        free(mem_88348);
-        free(mem_88353);
-        free(mem_88364);
-        free(mem_88369);
-        free(mem_88380);
-        free(mem_88381);
-        free(mem_88390);
-        free(mem_88391);
-        free(mem_88412);
-        free(mem_88413);
-        free(mem_88421);
-        free(mem_88435);
-        free(mem_88436);
-        free(mem_88444);
-        free(mem_88458);
-        free(mem_88463);
-        free(mem_88474);
-        free(mem_88479);
-        free(mem_88490);
-        free(mem_88495);
-        free(mem_88506);
-        free(mem_88510);
-        free(mem_88511);
-        free(mem_88527);
-        free(mem_88532);
-        free(mem_88533);
-        free(mem_88546);
-        free(mem_88557);
-        free(mem_88562);
-        free(mem_88573);
-        free(mem_88574);
-        free(mem_88583);
-        free(mem_88584);
-        free(mem_88605);
-        free(mem_88610);
-        free(mem_88621);
-        free(mem_88626);
-        free(mem_88637);
-        free(mem_88644);
-        free(mem_88651);
-        free(mem_88661);
-        free(mem_88666);
-        free(mem_88677);
-        free(mem_88678);
-        free(mem_88687);
-        free(mem_88688);
-        free(mem_88709);
-        free(mem_88710);
-        free(mem_88721);
-        free(mem_88722);
-        free(mem_88731);
-        free(mem_88738);
-        free(mem_88763);
-        free(mem_88764);
-        free(mem_88775);
-        free(mem_88776);
-        free(mem_88785);
-        free(mem_88792);
-        free(mem_88799);
-        free(mem_88824);
-        free(mem_88825);
-        free(mem_88835);
-        free(mem_88836);
-        free(mem_88844);
-        free(mem_88851);
-        free(mem_88874);
-        free(mem_88880);
-        free(mem_88885);
-        free(mem_88892);
-        free(mem_88908);
-        free(mem_88914);
-        free(mem_88919);
-        free(mem_88935);
-        free(mem_88936);
-        free(mem_88947);
-        free(mem_88948);
-        free(mem_88957);
-        free(mem_88958);
-        free(mem_88989);
-        free(mem_88990);
-        free(mem_88991);
-        free(mem_89004);
-        free(mem_89005);
-        free(mem_89006);
-        free(mem_89037);
-        free(mem_89038);
-        free(mem_89039);
-        free(mem_89040);
-        free(mem_89057);
-        free(mem_89058);
-        free(mem_89059);
-        free(mem_89060);
-        free(mem_89101);
-        free(mem_89108);
-        free(mem_89115);
-        free(mem_89125);
-        free(mem_89130);
-        free(mem_89141);
-        free(mem_89148);
-        free(mem_89155);
-        free(mem_89165);
-        free(mem_89170);
-        free(mem_89181);
-        free(mem_89182);
-        free(mem_89191);
-        free(mem_89192);
-        free(mem_89213);
-        free(mem_89218);
-        free(mem_89229);
-        free(mem_89230);
-        free(mem_89239);
-        free(mem_89240);
-        if (memblock_unref(ctx, &mem_param_tmp_89593, "mem_param_tmp_89593") != 0)
+        free(mem_88286);
+        free(mem_88297);
+        free(mem_88298);
+        free(mem_88307);
+        free(mem_88308);
+        if (memblock_unref(ctx, &mem_param_tmp_88661, "mem_param_tmp_88661") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89592, "mem_param_tmp_89592") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88660, "mem_param_tmp_88660") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89591, "mem_param_tmp_89591") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88659, "mem_param_tmp_88659") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89590, "mem_param_tmp_89590") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88658, "mem_param_tmp_88658") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89589, "mem_param_tmp_89589") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88657, "mem_param_tmp_88657") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89588, "mem_param_tmp_89588") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88656, "mem_param_tmp_88656") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89587, "mem_param_tmp_89587") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88655, "mem_param_tmp_88655") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89586, "mem_param_tmp_89586") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88654, "mem_param_tmp_88654") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89585, "mem_param_tmp_89585") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88653, "mem_param_tmp_88653") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89584, "mem_param_tmp_89584") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88652, "mem_param_tmp_88652") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89583, "mem_param_tmp_89583") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88651, "mem_param_tmp_88651") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89582, "mem_param_tmp_89582") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88650, "mem_param_tmp_88650") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89581, "mem_param_tmp_89581") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88649, "mem_param_tmp_88649") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89580, "mem_param_tmp_89580") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88648, "mem_param_tmp_88648") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89579, "mem_param_tmp_89579") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88647, "mem_param_tmp_88647") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89578, "mem_param_tmp_89578") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88646, "mem_param_tmp_88646") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89577, "mem_param_tmp_89577") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88645, "mem_param_tmp_88645") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89576, "mem_param_tmp_89576") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88644, "mem_param_tmp_88644") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89575, "mem_param_tmp_89575") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88643, "mem_param_tmp_88643") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89574, "mem_param_tmp_89574") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88642, "mem_param_tmp_88642") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89573, "mem_param_tmp_89573") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88641, "mem_param_tmp_88641") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89572, "mem_param_tmp_89572") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88640, "mem_param_tmp_88640") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89571, "mem_param_tmp_89571") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88639, "mem_param_tmp_88639") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89570, "mem_param_tmp_89570") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88638, "mem_param_tmp_88638") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89569, "mem_param_tmp_89569") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88637, "mem_param_tmp_88637") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89568, "mem_param_tmp_89568") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88636, "mem_param_tmp_88636") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_tmp_89567, "mem_param_tmp_89567") != 0)
+        if (memblock_unref(ctx, &mem_param_tmp_88635, "mem_param_tmp_88635") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89357, "ext_mem_89357") != 0)
+        if (memblock_unref(ctx, &ext_mem_88425, "ext_mem_88425") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89358, "ext_mem_89358") != 0)
+        if (memblock_unref(ctx, &ext_mem_88426, "ext_mem_88426") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89359, "ext_mem_89359") != 0)
+        if (memblock_unref(ctx, &ext_mem_88427, "ext_mem_88427") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89355, "mem_89355") != 0)
+        if (memblock_unref(ctx, &mem_88423, "mem_88423") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89353, "mem_89353") != 0)
+        if (memblock_unref(ctx, &mem_88421, "mem_88421") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89351, "mem_89351") != 0)
+        if (memblock_unref(ctx, &mem_88419, "mem_88419") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89349, "mem_89349") != 0)
+        if (memblock_unref(ctx, &mem_88417, "mem_88417") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89346, "ext_mem_89346") != 0)
+        if (memblock_unref(ctx, &ext_mem_88414, "ext_mem_88414") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89347, "ext_mem_89347") != 0)
+        if (memblock_unref(ctx, &ext_mem_88415, "ext_mem_88415") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89348, "ext_mem_89348") != 0)
+        if (memblock_unref(ctx, &ext_mem_88416, "ext_mem_88416") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89344, "mem_89344") != 0)
+        if (memblock_unref(ctx, &mem_88412, "mem_88412") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89342, "mem_89342") != 0)
+        if (memblock_unref(ctx, &mem_88410, "mem_88410") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89340, "mem_89340") != 0)
+        if (memblock_unref(ctx, &mem_88408, "mem_88408") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89338, "mem_89338") != 0)
+        if (memblock_unref(ctx, &mem_88406, "mem_88406") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89335, "ext_mem_89335") != 0)
+        if (memblock_unref(ctx, &ext_mem_88403, "ext_mem_88403") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89336, "ext_mem_89336") != 0)
+        if (memblock_unref(ctx, &ext_mem_88404, "ext_mem_88404") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89337, "ext_mem_89337") != 0)
+        if (memblock_unref(ctx, &ext_mem_88405, "ext_mem_88405") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89333, "mem_89333") != 0)
+        if (memblock_unref(ctx, &mem_88401, "mem_88401") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89331, "mem_89331") != 0)
+        if (memblock_unref(ctx, &mem_88399, "mem_88399") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89329, "mem_89329") != 0)
+        if (memblock_unref(ctx, &mem_88397, "mem_88397") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89327, "mem_89327") != 0)
+        if (memblock_unref(ctx, &mem_88395, "mem_88395") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89324, "ext_mem_89324") != 0)
+        if (memblock_unref(ctx, &ext_mem_88392, "ext_mem_88392") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89325, "ext_mem_89325") != 0)
+        if (memblock_unref(ctx, &ext_mem_88393, "ext_mem_88393") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89326, "ext_mem_89326") != 0)
+        if (memblock_unref(ctx, &ext_mem_88394, "ext_mem_88394") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89322, "mem_89322") != 0)
+        if (memblock_unref(ctx, &mem_88390, "mem_88390") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89320, "mem_89320") != 0)
+        if (memblock_unref(ctx, &mem_88388, "mem_88388") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89318, "mem_89318") != 0)
+        if (memblock_unref(ctx, &mem_88386, "mem_88386") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89316, "mem_89316") != 0)
+        if (memblock_unref(ctx, &mem_88384, "mem_88384") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89313, "ext_mem_89313") != 0)
+        if (memblock_unref(ctx, &ext_mem_88381, "ext_mem_88381") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89314, "ext_mem_89314") != 0)
+        if (memblock_unref(ctx, &ext_mem_88382, "ext_mem_88382") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89315, "ext_mem_89315") != 0)
+        if (memblock_unref(ctx, &ext_mem_88383, "ext_mem_88383") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89311, "mem_89311") != 0)
+        if (memblock_unref(ctx, &mem_88379, "mem_88379") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89309, "mem_89309") != 0)
+        if (memblock_unref(ctx, &mem_88377, "mem_88377") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89307, "mem_89307") != 0)
+        if (memblock_unref(ctx, &mem_88375, "mem_88375") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89305, "mem_89305") != 0)
+        if (memblock_unref(ctx, &mem_88373, "mem_88373") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89302, "ext_mem_89302") != 0)
+        if (memblock_unref(ctx, &ext_mem_88370, "ext_mem_88370") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89303, "ext_mem_89303") != 0)
+        if (memblock_unref(ctx, &ext_mem_88371, "ext_mem_88371") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89304, "ext_mem_89304") != 0)
+        if (memblock_unref(ctx, &ext_mem_88372, "ext_mem_88372") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89300, "mem_89300") != 0)
+        if (memblock_unref(ctx, &mem_88368, "mem_88368") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89298, "mem_89298") != 0)
+        if (memblock_unref(ctx, &mem_88366, "mem_88366") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89296, "mem_89296") != 0)
+        if (memblock_unref(ctx, &mem_88364, "mem_88364") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89294, "mem_89294") != 0)
+        if (memblock_unref(ctx, &mem_88362, "mem_88362") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89291, "ext_mem_89291") != 0)
+        if (memblock_unref(ctx, &ext_mem_88359, "ext_mem_88359") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89292, "ext_mem_89292") != 0)
+        if (memblock_unref(ctx, &ext_mem_88360, "ext_mem_88360") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89293, "ext_mem_89293") != 0)
+        if (memblock_unref(ctx, &ext_mem_88361, "ext_mem_88361") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89289, "mem_89289") != 0)
+        if (memblock_unref(ctx, &mem_88357, "mem_88357") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89287, "mem_89287") != 0)
+        if (memblock_unref(ctx, &mem_88355, "mem_88355") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89285, "mem_89285") != 0)
+        if (memblock_unref(ctx, &mem_88353, "mem_88353") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89283, "mem_89283") != 0)
+        if (memblock_unref(ctx, &mem_88351, "mem_88351") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89280, "ext_mem_89280") != 0)
+        if (memblock_unref(ctx, &ext_mem_88348, "ext_mem_88348") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89281, "ext_mem_89281") != 0)
+        if (memblock_unref(ctx, &ext_mem_88349, "ext_mem_88349") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89282, "ext_mem_89282") != 0)
+        if (memblock_unref(ctx, &ext_mem_88350, "ext_mem_88350") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89278, "mem_89278") != 0)
+        if (memblock_unref(ctx, &mem_88346, "mem_88346") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89276, "mem_89276") != 0)
+        if (memblock_unref(ctx, &mem_88344, "mem_88344") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89274, "mem_89274") != 0)
+        if (memblock_unref(ctx, &mem_88342, "mem_88342") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89272, "mem_89272") != 0)
+        if (memblock_unref(ctx, &mem_88340, "mem_88340") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89269, "ext_mem_89269") != 0)
+        if (memblock_unref(ctx, &ext_mem_88337, "ext_mem_88337") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89270, "ext_mem_89270") != 0)
+        if (memblock_unref(ctx, &ext_mem_88338, "ext_mem_88338") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89271, "ext_mem_89271") != 0)
+        if (memblock_unref(ctx, &ext_mem_88339, "ext_mem_88339") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89267, "mem_89267") != 0)
+        if (memblock_unref(ctx, &mem_88335, "mem_88335") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89265, "mem_89265") != 0)
+        if (memblock_unref(ctx, &mem_88333, "mem_88333") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89263, "mem_89263") != 0)
+        if (memblock_unref(ctx, &mem_88331, "mem_88331") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_89261, "mem_89261") != 0)
+        if (memblock_unref(ctx, &mem_88329, "mem_88329") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87937, "mem_param_87937") != 0)
+        if (memblock_unref(ctx, &mem_param_86974, "mem_param_86974") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87933, "mem_param_87933") != 0)
+        if (memblock_unref(ctx, &mem_param_86970, "mem_param_86970") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87929, "mem_param_87929") != 0)
+        if (memblock_unref(ctx, &mem_param_86966, "mem_param_86966") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87925, "mem_param_87925") != 0)
+        if (memblock_unref(ctx, &mem_param_86962, "mem_param_86962") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87921, "mem_param_87921") != 0)
+        if (memblock_unref(ctx, &mem_param_86958, "mem_param_86958") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87917, "mem_param_87917") != 0)
+        if (memblock_unref(ctx, &mem_param_86954, "mem_param_86954") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87913, "mem_param_87913") != 0)
+        if (memblock_unref(ctx, &mem_param_86950, "mem_param_86950") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87909, "mem_param_87909") != 0)
+        if (memblock_unref(ctx, &mem_param_86946, "mem_param_86946") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87905, "mem_param_87905") != 0)
+        if (memblock_unref(ctx, &mem_param_86942, "mem_param_86942") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87901, "mem_param_87901") != 0)
+        if (memblock_unref(ctx, &mem_param_86938, "mem_param_86938") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87897, "mem_param_87897") != 0)
+        if (memblock_unref(ctx, &mem_param_86934, "mem_param_86934") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87893, "mem_param_87893") != 0)
+        if (memblock_unref(ctx, &mem_param_86930, "mem_param_86930") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87889, "mem_param_87889") != 0)
+        if (memblock_unref(ctx, &mem_param_86926, "mem_param_86926") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87885, "mem_param_87885") != 0)
+        if (memblock_unref(ctx, &mem_param_86922, "mem_param_86922") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87881, "mem_param_87881") != 0)
+        if (memblock_unref(ctx, &mem_param_86918, "mem_param_86918") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87877, "mem_param_87877") != 0)
+        if (memblock_unref(ctx, &mem_param_86914, "mem_param_86914") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87873, "mem_param_87873") != 0)
+        if (memblock_unref(ctx, &mem_param_86910, "mem_param_86910") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87869, "mem_param_87869") != 0)
+        if (memblock_unref(ctx, &mem_param_86906, "mem_param_86906") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87865, "mem_param_87865") != 0)
+        if (memblock_unref(ctx, &mem_param_86902, "mem_param_86902") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87861, "mem_param_87861") != 0)
+        if (memblock_unref(ctx, &mem_param_86898, "mem_param_86898") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87857, "mem_param_87857") != 0)
+        if (memblock_unref(ctx, &mem_param_86894, "mem_param_86894") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87853, "mem_param_87853") != 0)
+        if (memblock_unref(ctx, &mem_param_86890, "mem_param_86890") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87849, "mem_param_87849") != 0)
+        if (memblock_unref(ctx, &mem_param_86886, "mem_param_86886") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87845, "mem_param_87845") != 0)
+        if (memblock_unref(ctx, &mem_param_86882, "mem_param_86882") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87841, "mem_param_87841") != 0)
+        if (memblock_unref(ctx, &mem_param_86878, "mem_param_86878") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87837, "mem_param_87837") != 0)
+        if (memblock_unref(ctx, &mem_param_86874, "mem_param_86874") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_param_87833, "mem_param_87833") != 0)
+        if (memblock_unref(ctx, &mem_param_86870, "mem_param_86870") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89441, "ext_mem_89441") != 0)
+        if (memblock_unref(ctx, &ext_mem_88509, "ext_mem_88509") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89442, "ext_mem_89442") != 0)
+        if (memblock_unref(ctx, &ext_mem_88510, "ext_mem_88510") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89443, "ext_mem_89443") != 0)
+        if (memblock_unref(ctx, &ext_mem_88511, "ext_mem_88511") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89444, "ext_mem_89444") != 0)
+        if (memblock_unref(ctx, &ext_mem_88512, "ext_mem_88512") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89445, "ext_mem_89445") != 0)
+        if (memblock_unref(ctx, &ext_mem_88513, "ext_mem_88513") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89446, "ext_mem_89446") != 0)
+        if (memblock_unref(ctx, &ext_mem_88514, "ext_mem_88514") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89447, "ext_mem_89447") != 0)
+        if (memblock_unref(ctx, &ext_mem_88515, "ext_mem_88515") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89448, "ext_mem_89448") != 0)
+        if (memblock_unref(ctx, &ext_mem_88516, "ext_mem_88516") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89449, "ext_mem_89449") != 0)
+        if (memblock_unref(ctx, &ext_mem_88517, "ext_mem_88517") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89450, "ext_mem_89450") != 0)
+        if (memblock_unref(ctx, &ext_mem_88518, "ext_mem_88518") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89451, "ext_mem_89451") != 0)
+        if (memblock_unref(ctx, &ext_mem_88519, "ext_mem_88519") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89452, "ext_mem_89452") != 0)
+        if (memblock_unref(ctx, &ext_mem_88520, "ext_mem_88520") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89453, "ext_mem_89453") != 0)
+        if (memblock_unref(ctx, &ext_mem_88521, "ext_mem_88521") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89454, "ext_mem_89454") != 0)
+        if (memblock_unref(ctx, &ext_mem_88522, "ext_mem_88522") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89455, "ext_mem_89455") != 0)
+        if (memblock_unref(ctx, &ext_mem_88523, "ext_mem_88523") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89456, "ext_mem_89456") != 0)
+        if (memblock_unref(ctx, &ext_mem_88524, "ext_mem_88524") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89457, "ext_mem_89457") != 0)
+        if (memblock_unref(ctx, &ext_mem_88525, "ext_mem_88525") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89458, "ext_mem_89458") != 0)
+        if (memblock_unref(ctx, &ext_mem_88526, "ext_mem_88526") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89459, "ext_mem_89459") != 0)
+        if (memblock_unref(ctx, &ext_mem_88527, "ext_mem_88527") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89460, "ext_mem_89460") != 0)
+        if (memblock_unref(ctx, &ext_mem_88528, "ext_mem_88528") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89461, "ext_mem_89461") != 0)
+        if (memblock_unref(ctx, &ext_mem_88529, "ext_mem_88529") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89462, "ext_mem_89462") != 0)
+        if (memblock_unref(ctx, &ext_mem_88530, "ext_mem_88530") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89463, "ext_mem_89463") != 0)
+        if (memblock_unref(ctx, &ext_mem_88531, "ext_mem_88531") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89464, "ext_mem_89464") != 0)
+        if (memblock_unref(ctx, &ext_mem_88532, "ext_mem_88532") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89465, "ext_mem_89465") != 0)
+        if (memblock_unref(ctx, &ext_mem_88533, "ext_mem_88533") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89466, "ext_mem_89466") != 0)
+        if (memblock_unref(ctx, &ext_mem_88534, "ext_mem_88534") != 0)
             return 1;
-        if (memblock_unref(ctx, &ext_mem_89467, "ext_mem_89467") != 0)
+        if (memblock_unref(ctx, &ext_mem_88535, "ext_mem_88535") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89566, "mem_out_89566") != 0)
+        if (memblock_unref(ctx, &mem_out_88634, "mem_out_88634") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89565, "mem_out_89565") != 0)
+        if (memblock_unref(ctx, &mem_out_88633, "mem_out_88633") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89564, "mem_out_89564") != 0)
+        if (memblock_unref(ctx, &mem_out_88632, "mem_out_88632") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89563, "mem_out_89563") != 0)
+        if (memblock_unref(ctx, &mem_out_88631, "mem_out_88631") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89562, "mem_out_89562") != 0)
+        if (memblock_unref(ctx, &mem_out_88630, "mem_out_88630") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89561, "mem_out_89561") != 0)
+        if (memblock_unref(ctx, &mem_out_88629, "mem_out_88629") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89560, "mem_out_89560") != 0)
+        if (memblock_unref(ctx, &mem_out_88628, "mem_out_88628") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89559, "mem_out_89559") != 0)
+        if (memblock_unref(ctx, &mem_out_88627, "mem_out_88627") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89558, "mem_out_89558") != 0)
+        if (memblock_unref(ctx, &mem_out_88626, "mem_out_88626") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89557, "mem_out_89557") != 0)
+        if (memblock_unref(ctx, &mem_out_88625, "mem_out_88625") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89556, "mem_out_89556") != 0)
+        if (memblock_unref(ctx, &mem_out_88624, "mem_out_88624") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89555, "mem_out_89555") != 0)
+        if (memblock_unref(ctx, &mem_out_88623, "mem_out_88623") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89554, "mem_out_89554") != 0)
+        if (memblock_unref(ctx, &mem_out_88622, "mem_out_88622") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89553, "mem_out_89553") != 0)
+        if (memblock_unref(ctx, &mem_out_88621, "mem_out_88621") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89552, "mem_out_89552") != 0)
+        if (memblock_unref(ctx, &mem_out_88620, "mem_out_88620") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89551, "mem_out_89551") != 0)
+        if (memblock_unref(ctx, &mem_out_88619, "mem_out_88619") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89550, "mem_out_89550") != 0)
+        if (memblock_unref(ctx, &mem_out_88618, "mem_out_88618") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89549, "mem_out_89549") != 0)
+        if (memblock_unref(ctx, &mem_out_88617, "mem_out_88617") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89548, "mem_out_89548") != 0)
+        if (memblock_unref(ctx, &mem_out_88616, "mem_out_88616") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89547, "mem_out_89547") != 0)
+        if (memblock_unref(ctx, &mem_out_88615, "mem_out_88615") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89546, "mem_out_89546") != 0)
+        if (memblock_unref(ctx, &mem_out_88614, "mem_out_88614") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89545, "mem_out_89545") != 0)
+        if (memblock_unref(ctx, &mem_out_88613, "mem_out_88613") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89544, "mem_out_89544") != 0)
+        if (memblock_unref(ctx, &mem_out_88612, "mem_out_88612") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89543, "mem_out_89543") != 0)
+        if (memblock_unref(ctx, &mem_out_88611, "mem_out_88611") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89542, "mem_out_89542") != 0)
+        if (memblock_unref(ctx, &mem_out_88610, "mem_out_88610") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89541, "mem_out_89541") != 0)
+        if (memblock_unref(ctx, &mem_out_88609, "mem_out_88609") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89540, "mem_out_89540") != 0)
+        if (memblock_unref(ctx, &mem_out_88608, "mem_out_88608") != 0)
             return 1;
     }
     return err;
 }
-FUTHARK_FUN_ATTR int futrts_entry_zzero_params(struct futhark_context *ctx, struct memblock *mem_out_p_90122, struct memblock *mem_out_p_90123, struct memblock *mem_out_p_90124, struct memblock *mem_out_p_90125, struct memblock *mem_out_p_90126, struct memblock *mem_out_p_90127, struct memblock *mem_out_p_90128, struct memblock *mem_out_p_90129, struct memblock *mem_out_p_90130)
+FUTHARK_FUN_ATTR int futrts_entry_zzero_params(struct futhark_context *ctx, struct memblock *mem_out_p_89188, struct memblock *mem_out_p_89189, struct memblock *mem_out_p_89190, struct memblock *mem_out_p_89191, struct memblock *mem_out_p_89192, struct memblock *mem_out_p_89193, struct memblock *mem_out_p_89194, struct memblock *mem_out_p_89195, struct memblock *mem_out_p_89196)
 {
     (void) ctx;
     
     int err = 0;
-    struct memblock mem_out_89548;
+    struct memblock mem_out_88616;
     
-    mem_out_89548.references = NULL;
+    mem_out_88616.references = NULL;
     
-    struct memblock mem_out_89547;
+    struct memblock mem_out_88615;
     
-    mem_out_89547.references = NULL;
+    mem_out_88615.references = NULL;
     
-    struct memblock mem_out_89546;
+    struct memblock mem_out_88614;
     
-    mem_out_89546.references = NULL;
+    mem_out_88614.references = NULL;
     
-    struct memblock mem_out_89545;
+    struct memblock mem_out_88613;
     
-    mem_out_89545.references = NULL;
+    mem_out_88613.references = NULL;
     
-    struct memblock mem_out_89544;
+    struct memblock mem_out_88612;
     
-    mem_out_89544.references = NULL;
+    mem_out_88612.references = NULL;
     
-    struct memblock mem_out_89543;
+    struct memblock mem_out_88611;
     
-    mem_out_89543.references = NULL;
+    mem_out_88611.references = NULL;
     
-    struct memblock mem_out_89542;
+    struct memblock mem_out_88610;
     
-    mem_out_89542.references = NULL;
+    mem_out_88610.references = NULL;
     
-    struct memblock mem_out_89541;
+    struct memblock mem_out_88609;
     
-    mem_out_89541.references = NULL;
+    mem_out_88609.references = NULL;
     
-    struct memblock mem_out_89540;
+    struct memblock mem_out_88608;
     
-    mem_out_89540.references = NULL;
+    mem_out_88608.references = NULL;
     
-    struct memblock mem_87791 = ctx->constants->mem_87791;
-    struct memblock mem_87792 = ctx->constants->mem_87792;
-    struct memblock mem_87793 = ctx->constants->mem_87793;
-    struct memblock mem_87794 = ctx->constants->mem_87794;
-    struct memblock mem_87795 = ctx->constants->mem_87795;
-    struct memblock mem_87796 = ctx->constants->mem_87796;
-    struct memblock mem_87797 = ctx->constants->mem_87797;
-    struct memblock mem_87798 = ctx->constants->mem_87798;
-    struct memblock mem_87799 = ctx->constants->mem_87799;
+    struct memblock mem_86828 = ctx->constants->mem_86828;
+    struct memblock mem_86829 = ctx->constants->mem_86829;
+    struct memblock mem_86830 = ctx->constants->mem_86830;
+    struct memblock mem_86831 = ctx->constants->mem_86831;
+    struct memblock mem_86832 = ctx->constants->mem_86832;
+    struct memblock mem_86833 = ctx->constants->mem_86833;
+    struct memblock mem_86834 = ctx->constants->mem_86834;
+    struct memblock mem_86835 = ctx->constants->mem_86835;
+    struct memblock mem_86836 = ctx->constants->mem_86836;
     
-    if (memblock_set(ctx, &mem_out_89540, &mem_87798, "mem_87798") != 0)
+    if (memblock_set(ctx, &mem_out_88608, &mem_86835, "mem_86835") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89541, &mem_87794, "mem_87794") != 0)
+    if (memblock_set(ctx, &mem_out_88609, &mem_86831, "mem_86831") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89542, &mem_87796, "mem_87796") != 0)
+    if (memblock_set(ctx, &mem_out_88610, &mem_86833, "mem_86833") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89543, &mem_87792, "mem_87792") != 0)
+    if (memblock_set(ctx, &mem_out_88611, &mem_86829, "mem_86829") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89544, &mem_87793, "mem_87793") != 0)
+    if (memblock_set(ctx, &mem_out_88612, &mem_86830, "mem_86830") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89545, &mem_87791, "mem_87791") != 0)
+    if (memblock_set(ctx, &mem_out_88613, &mem_86828, "mem_86828") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89546, &mem_87797, "mem_87797") != 0)
+    if (memblock_set(ctx, &mem_out_88614, &mem_86834, "mem_86834") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89547, &mem_87795, "mem_87795") != 0)
+    if (memblock_set(ctx, &mem_out_88615, &mem_86832, "mem_86832") != 0)
         return 1;
-    if (memblock_set(ctx, &mem_out_89548, &mem_87799, "mem_87799") != 0)
+    if (memblock_set(ctx, &mem_out_88616, &mem_86836, "mem_86836") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_90122, &mem_out_89540, "mem_out_89540") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89188, &mem_out_88608, "mem_out_88608") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_90123, &mem_out_89541, "mem_out_89541") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89189, &mem_out_88609, "mem_out_88609") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_90124, &mem_out_89542, "mem_out_89542") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89190, &mem_out_88610, "mem_out_88610") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_90125, &mem_out_89543, "mem_out_89543") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89191, &mem_out_88611, "mem_out_88611") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_90126, &mem_out_89544, "mem_out_89544") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89192, &mem_out_88612, "mem_out_88612") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_90127, &mem_out_89545, "mem_out_89545") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89193, &mem_out_88613, "mem_out_88613") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_90128, &mem_out_89546, "mem_out_89546") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89194, &mem_out_88614, "mem_out_88614") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_90129, &mem_out_89547, "mem_out_89547") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89195, &mem_out_88615, "mem_out_88615") != 0)
         return 1;
-    if (memblock_set(ctx, &*mem_out_p_90130, &mem_out_89548, "mem_out_89548") != 0)
+    if (memblock_set(ctx, &*mem_out_p_89196, &mem_out_88616, "mem_out_88616") != 0)
         return 1;
     
   cleanup:
     {
-        if (memblock_unref(ctx, &mem_out_89548, "mem_out_89548") != 0)
+        if (memblock_unref(ctx, &mem_out_88616, "mem_out_88616") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89547, "mem_out_89547") != 0)
+        if (memblock_unref(ctx, &mem_out_88615, "mem_out_88615") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89546, "mem_out_89546") != 0)
+        if (memblock_unref(ctx, &mem_out_88614, "mem_out_88614") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89545, "mem_out_89545") != 0)
+        if (memblock_unref(ctx, &mem_out_88613, "mem_out_88613") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89544, "mem_out_89544") != 0)
+        if (memblock_unref(ctx, &mem_out_88612, "mem_out_88612") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89543, "mem_out_89543") != 0)
+        if (memblock_unref(ctx, &mem_out_88611, "mem_out_88611") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89542, "mem_out_89542") != 0)
+        if (memblock_unref(ctx, &mem_out_88610, "mem_out_88610") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89541, "mem_out_89541") != 0)
+        if (memblock_unref(ctx, &mem_out_88609, "mem_out_88609") != 0)
             return 1;
-        if (memblock_unref(ctx, &mem_out_89540, "mem_out_89540") != 0)
+        if (memblock_unref(ctx, &mem_out_88608, "mem_out_88608") != 0)
             return 1;
     }
     return err;
@@ -18039,83 +17854,83 @@ int futhark_entry_forward_seq(struct futhark_context *ctx, struct futhark_f64_2d
     
     lock_lock(&ctx->lock);
     
-    struct memblock mem_out_89540;
+    struct memblock mem_out_88608;
     
-    mem_out_89540.references = NULL;
+    mem_out_88608.references = NULL;
     
-    struct memblock mask_mem_87810;
+    struct memblock mask_mem_86847;
     
-    mask_mem_87810.references = NULL;
+    mask_mem_86847.references = NULL;
     
-    struct memblock tokens_mem_87809;
+    struct memblock tokens_mem_86846;
     
-    tokens_mem_87809.references = NULL;
+    tokens_mem_86846.references = NULL;
     
-    struct memblock wvoc_mem_87808;
+    struct memblock wvoc_mem_86845;
     
-    wvoc_mem_87808.references = NULL;
+    wvoc_mem_86845.references = NULL;
     
-    struct memblock wval_mem_87807;
+    struct memblock wval_mem_86844;
     
-    wval_mem_87807.references = NULL;
+    wval_mem_86844.references = NULL;
     
-    struct memblock wup_mem_87806;
+    struct memblock wup_mem_86843;
     
-    wup_mem_87806.references = NULL;
+    wup_mem_86843.references = NULL;
     
-    struct memblock wte_mem_87805;
+    struct memblock wte_mem_86842;
     
-    wte_mem_87805.references = NULL;
+    wte_mem_86842.references = NULL;
     
-    struct memblock wqry_mem_87804;
+    struct memblock wqry_mem_86841;
     
-    wqry_mem_87804.references = NULL;
+    wqry_mem_86841.references = NULL;
     
-    struct memblock wpe_mem_87803;
+    struct memblock wpe_mem_86840;
     
-    wpe_mem_87803.references = NULL;
+    wpe_mem_86840.references = NULL;
     
-    struct memblock wout_mem_87802;
+    struct memblock wout_mem_86839;
     
-    wout_mem_87802.references = NULL;
+    wout_mem_86839.references = NULL;
     
-    struct memblock wkey_mem_87801;
+    struct memblock wkey_mem_86838;
     
-    wkey_mem_87801.references = NULL;
+    wkey_mem_86838.references = NULL;
     
-    struct memblock wdown_mem_87800;
+    struct memblock wdown_mem_86837;
     
-    wdown_mem_87800.references = NULL;
-    wdown_mem_87800 = in0->v0->mem;
-    wkey_mem_87801 = in0->v1->mem;
-    wout_mem_87802 = in0->v2->mem;
-    wpe_mem_87803 = in0->v3->mem;
-    wqry_mem_87804 = in0->v4->mem;
-    wte_mem_87805 = in0->v5->mem;
-    wup_mem_87806 = in0->v6->mem;
-    wval_mem_87807 = in0->v7->mem;
-    wvoc_mem_87808 = in0->v8->mem;
-    tokens_mem_87809 = in1->mem;
-    mask_mem_87810 = in2->mem;
+    wdown_mem_86837.references = NULL;
+    wdown_mem_86837 = in0->v0->mem;
+    wkey_mem_86838 = in0->v1->mem;
+    wout_mem_86839 = in0->v2->mem;
+    wpe_mem_86840 = in0->v3->mem;
+    wqry_mem_86841 = in0->v4->mem;
+    wte_mem_86842 = in0->v5->mem;
+    wup_mem_86843 = in0->v6->mem;
+    wval_mem_86844 = in0->v7->mem;
+    wvoc_mem_86845 = in0->v8->mem;
+    tokens_mem_86846 = in1->mem;
+    mask_mem_86847 = in2->mem;
     if (!(((int64_t) 16 == in0->v0->shape[0] && ((int64_t) 64 == in0->v0->shape[1] && ((int64_t) 16 == in0->v1->shape[0] && ((int64_t) 16 == in0->v1->shape[1] && ((int64_t) 16 == in0->v2->shape[0] && ((int64_t) 16 == in0->v2->shape[1] && ((int64_t) 16 == in0->v3->shape[0] && ((int64_t) 16 == in0->v3->shape[1] && ((int64_t) 16 == in0->v4->shape[0] && ((int64_t) 16 == in0->v4->shape[1] && ((int64_t) 27 == in0->v5->shape[0] && ((int64_t) 16 == in0->v5->shape[1] && ((int64_t) 64 == in0->v6->shape[0] && ((int64_t) 16 == in0->v6->shape[1] && ((int64_t) 16 == in0->v7->shape[0] && ((int64_t) 16 == in0->v7->shape[1] && ((int64_t) 27 == in0->v8->shape[0] && (int64_t) 16 == in0->v8->shape[1]))))))))))))))))) && ((int64_t) 16 == in1->shape[0] && ((int64_t) 16 == in2->shape[0] && (int64_t) 16 == in2->shape[1])))) {
         ret = 1;
         set_error(ctx, msgprintf("Error: entry point arguments have invalid sizes.\n"));
     }
     if (ret == 0) {
-        ret = futrts_entry_forward_seq(ctx, &mem_out_89540, wdown_mem_87800, wkey_mem_87801, wout_mem_87802, wpe_mem_87803, wqry_mem_87804, wte_mem_87805, wup_mem_87806, wval_mem_87807, wvoc_mem_87808, tokens_mem_87809, mask_mem_87810);
+        ret = futrts_entry_forward_seq(ctx, &mem_out_88608, wdown_mem_86837, wkey_mem_86838, wout_mem_86839, wpe_mem_86840, wqry_mem_86841, wte_mem_86842, wup_mem_86843, wval_mem_86844, wvoc_mem_86845, tokens_mem_86846, mask_mem_86847);
         if (ret == 0) {
-            struct memblock mem_87791 = ctx->constants->mem_87791;
-            struct memblock mem_87792 = ctx->constants->mem_87792;
-            struct memblock mem_87793 = ctx->constants->mem_87793;
-            struct memblock mem_87794 = ctx->constants->mem_87794;
-            struct memblock mem_87795 = ctx->constants->mem_87795;
-            struct memblock mem_87796 = ctx->constants->mem_87796;
-            struct memblock mem_87797 = ctx->constants->mem_87797;
-            struct memblock mem_87798 = ctx->constants->mem_87798;
-            struct memblock mem_87799 = ctx->constants->mem_87799;
+            struct memblock mem_86828 = ctx->constants->mem_86828;
+            struct memblock mem_86829 = ctx->constants->mem_86829;
+            struct memblock mem_86830 = ctx->constants->mem_86830;
+            struct memblock mem_86831 = ctx->constants->mem_86831;
+            struct memblock mem_86832 = ctx->constants->mem_86832;
+            struct memblock mem_86833 = ctx->constants->mem_86833;
+            struct memblock mem_86834 = ctx->constants->mem_86834;
+            struct memblock mem_86835 = ctx->constants->mem_86835;
+            struct memblock mem_86836 = ctx->constants->mem_86836;
             
             assert((*out = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->mem = mem_out_89540;
+            (*out)->mem = mem_out_88608;
             (*out)->shape[0] = (int64_t) 16;
             (*out)->shape[1] = (int64_t) 27;
         }
@@ -18129,138 +17944,138 @@ int futhark_entry_to_params(struct futhark_context *ctx, struct futhark_opaque_p
     
     lock_lock(&ctx->lock);
     
-    struct memblock mem_out_89548;
+    struct memblock mem_out_88616;
     
-    mem_out_89548.references = NULL;
+    mem_out_88616.references = NULL;
     
-    struct memblock mem_out_89547;
+    struct memblock mem_out_88615;
     
-    mem_out_89547.references = NULL;
+    mem_out_88615.references = NULL;
     
-    struct memblock mem_out_89546;
+    struct memblock mem_out_88614;
     
-    mem_out_89546.references = NULL;
+    mem_out_88614.references = NULL;
     
-    struct memblock mem_out_89545;
+    struct memblock mem_out_88613;
     
-    mem_out_89545.references = NULL;
+    mem_out_88613.references = NULL;
     
-    struct memblock mem_out_89544;
+    struct memblock mem_out_88612;
     
-    mem_out_89544.references = NULL;
+    mem_out_88612.references = NULL;
     
-    struct memblock mem_out_89543;
+    struct memblock mem_out_88611;
     
-    mem_out_89543.references = NULL;
+    mem_out_88611.references = NULL;
     
-    struct memblock mem_out_89542;
+    struct memblock mem_out_88610;
     
-    mem_out_89542.references = NULL;
+    mem_out_88610.references = NULL;
     
-    struct memblock mem_out_89541;
+    struct memblock mem_out_88609;
     
-    mem_out_89541.references = NULL;
+    mem_out_88609.references = NULL;
     
-    struct memblock mem_out_89540;
+    struct memblock mem_out_88608;
     
-    mem_out_89540.references = NULL;
+    mem_out_88608.references = NULL;
     
-    struct memblock wvoc_mem_87808;
+    struct memblock wvoc_mem_86845;
     
-    wvoc_mem_87808.references = NULL;
+    wvoc_mem_86845.references = NULL;
     
-    struct memblock wdown_mem_87807;
+    struct memblock wdown_mem_86844;
     
-    wdown_mem_87807.references = NULL;
+    wdown_mem_86844.references = NULL;
     
-    struct memblock wup_mem_87806;
+    struct memblock wup_mem_86843;
     
-    wup_mem_87806.references = NULL;
+    wup_mem_86843.references = NULL;
     
-    struct memblock wout_mem_87805;
+    struct memblock wout_mem_86842;
     
-    wout_mem_87805.references = NULL;
+    wout_mem_86842.references = NULL;
     
-    struct memblock wval_mem_87804;
+    struct memblock wval_mem_86841;
     
-    wval_mem_87804.references = NULL;
+    wval_mem_86841.references = NULL;
     
-    struct memblock wkey_mem_87803;
+    struct memblock wkey_mem_86840;
     
-    wkey_mem_87803.references = NULL;
+    wkey_mem_86840.references = NULL;
     
-    struct memblock wqry_mem_87802;
+    struct memblock wqry_mem_86839;
     
-    wqry_mem_87802.references = NULL;
+    wqry_mem_86839.references = NULL;
     
-    struct memblock wpe_mem_87801;
+    struct memblock wpe_mem_86838;
     
-    wpe_mem_87801.references = NULL;
+    wpe_mem_86838.references = NULL;
     
-    struct memblock wte_mem_87800;
+    struct memblock wte_mem_86837;
     
-    wte_mem_87800.references = NULL;
-    wte_mem_87800 = in0->mem;
-    wpe_mem_87801 = in1->mem;
-    wqry_mem_87802 = in2->mem;
-    wkey_mem_87803 = in3->mem;
-    wval_mem_87804 = in4->mem;
-    wout_mem_87805 = in5->mem;
-    wup_mem_87806 = in6->mem;
-    wdown_mem_87807 = in7->mem;
-    wvoc_mem_87808 = in8->mem;
+    wte_mem_86837.references = NULL;
+    wte_mem_86837 = in0->mem;
+    wpe_mem_86838 = in1->mem;
+    wqry_mem_86839 = in2->mem;
+    wkey_mem_86840 = in3->mem;
+    wval_mem_86841 = in4->mem;
+    wout_mem_86842 = in5->mem;
+    wup_mem_86843 = in6->mem;
+    wdown_mem_86844 = in7->mem;
+    wvoc_mem_86845 = in8->mem;
     if (!(((int64_t) 27 == in0->shape[0] && (int64_t) 16 == in0->shape[1]) && (((int64_t) 16 == in1->shape[0] && (int64_t) 16 == in1->shape[1]) && (((int64_t) 16 == in2->shape[0] && (int64_t) 16 == in2->shape[1]) && (((int64_t) 16 == in3->shape[0] && (int64_t) 16 == in3->shape[1]) && (((int64_t) 16 == in4->shape[0] && (int64_t) 16 == in4->shape[1]) && (((int64_t) 16 == in5->shape[0] && (int64_t) 16 == in5->shape[1]) && (((int64_t) 64 == in6->shape[0] && (int64_t) 16 == in6->shape[1]) && (((int64_t) 16 == in7->shape[0] && (int64_t) 64 == in7->shape[1]) && ((int64_t) 27 == in8->shape[0] && (int64_t) 16 == in8->shape[1])))))))))) {
         ret = 1;
         set_error(ctx, msgprintf("Error: entry point arguments have invalid sizes.\n"));
     }
     if (ret == 0) {
-        ret = futrts_entry_to_params(ctx, &mem_out_89540, &mem_out_89541, &mem_out_89542, &mem_out_89543, &mem_out_89544, &mem_out_89545, &mem_out_89546, &mem_out_89547, &mem_out_89548, wte_mem_87800, wpe_mem_87801, wqry_mem_87802, wkey_mem_87803, wval_mem_87804, wout_mem_87805, wup_mem_87806, wdown_mem_87807, wvoc_mem_87808);
+        ret = futrts_entry_to_params(ctx, &mem_out_88608, &mem_out_88609, &mem_out_88610, &mem_out_88611, &mem_out_88612, &mem_out_88613, &mem_out_88614, &mem_out_88615, &mem_out_88616, wte_mem_86837, wpe_mem_86838, wqry_mem_86839, wkey_mem_86840, wval_mem_86841, wout_mem_86842, wup_mem_86843, wdown_mem_86844, wvoc_mem_86845);
         if (ret == 0) {
-            struct memblock mem_87791 = ctx->constants->mem_87791;
-            struct memblock mem_87792 = ctx->constants->mem_87792;
-            struct memblock mem_87793 = ctx->constants->mem_87793;
-            struct memblock mem_87794 = ctx->constants->mem_87794;
-            struct memblock mem_87795 = ctx->constants->mem_87795;
-            struct memblock mem_87796 = ctx->constants->mem_87796;
-            struct memblock mem_87797 = ctx->constants->mem_87797;
-            struct memblock mem_87798 = ctx->constants->mem_87798;
-            struct memblock mem_87799 = ctx->constants->mem_87799;
+            struct memblock mem_86828 = ctx->constants->mem_86828;
+            struct memblock mem_86829 = ctx->constants->mem_86829;
+            struct memblock mem_86830 = ctx->constants->mem_86830;
+            struct memblock mem_86831 = ctx->constants->mem_86831;
+            struct memblock mem_86832 = ctx->constants->mem_86832;
+            struct memblock mem_86833 = ctx->constants->mem_86833;
+            struct memblock mem_86834 = ctx->constants->mem_86834;
+            struct memblock mem_86835 = ctx->constants->mem_86835;
+            struct memblock mem_86836 = ctx->constants->mem_86836;
             
             assert((*out = (struct futhark_opaque_params *) malloc(sizeof(struct futhark_opaque_params))) != NULL);
             assert(((*out)->v0 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v0->mem = mem_out_89540;
+            (*out)->v0->mem = mem_out_88608;
             (*out)->v0->shape[0] = (int64_t) 16;
             (*out)->v0->shape[1] = (int64_t) 64;
             assert(((*out)->v1 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v1->mem = mem_out_89541;
+            (*out)->v1->mem = mem_out_88609;
             (*out)->v1->shape[0] = (int64_t) 16;
             (*out)->v1->shape[1] = (int64_t) 16;
             assert(((*out)->v2 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v2->mem = mem_out_89542;
+            (*out)->v2->mem = mem_out_88610;
             (*out)->v2->shape[0] = (int64_t) 16;
             (*out)->v2->shape[1] = (int64_t) 16;
             assert(((*out)->v3 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v3->mem = mem_out_89543;
+            (*out)->v3->mem = mem_out_88611;
             (*out)->v3->shape[0] = (int64_t) 16;
             (*out)->v3->shape[1] = (int64_t) 16;
             assert(((*out)->v4 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v4->mem = mem_out_89544;
+            (*out)->v4->mem = mem_out_88612;
             (*out)->v4->shape[0] = (int64_t) 16;
             (*out)->v4->shape[1] = (int64_t) 16;
             assert(((*out)->v5 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v5->mem = mem_out_89545;
+            (*out)->v5->mem = mem_out_88613;
             (*out)->v5->shape[0] = (int64_t) 27;
             (*out)->v5->shape[1] = (int64_t) 16;
             assert(((*out)->v6 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v6->mem = mem_out_89546;
+            (*out)->v6->mem = mem_out_88614;
             (*out)->v6->shape[0] = (int64_t) 64;
             (*out)->v6->shape[1] = (int64_t) 16;
             assert(((*out)->v7 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v7->mem = mem_out_89547;
+            (*out)->v7->mem = mem_out_88615;
             (*out)->v7->shape[0] = (int64_t) 16;
             (*out)->v7->shape[1] = (int64_t) 16;
             assert(((*out)->v8 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v8->mem = mem_out_89548;
+            (*out)->v8->mem = mem_out_88616;
             (*out)->v8->shape[0] = (int64_t) 27;
             (*out)->v8->shape[1] = (int64_t) 16;
         }
@@ -18274,387 +18089,387 @@ int futhark_entry_train(struct futhark_context *ctx, struct futhark_opaque_tup3_
     
     lock_lock(&ctx->lock);
     
-    struct memblock mem_out_89566;
+    struct memblock mem_out_88634;
     
-    mem_out_89566.references = NULL;
+    mem_out_88634.references = NULL;
     
-    struct memblock mem_out_89565;
+    struct memblock mem_out_88633;
     
-    mem_out_89565.references = NULL;
+    mem_out_88633.references = NULL;
     
-    struct memblock mem_out_89564;
+    struct memblock mem_out_88632;
     
-    mem_out_89564.references = NULL;
+    mem_out_88632.references = NULL;
     
-    struct memblock mem_out_89563;
+    struct memblock mem_out_88631;
     
-    mem_out_89563.references = NULL;
+    mem_out_88631.references = NULL;
     
-    struct memblock mem_out_89562;
+    struct memblock mem_out_88630;
     
-    mem_out_89562.references = NULL;
+    mem_out_88630.references = NULL;
     
-    struct memblock mem_out_89561;
+    struct memblock mem_out_88629;
     
-    mem_out_89561.references = NULL;
+    mem_out_88629.references = NULL;
     
-    struct memblock mem_out_89560;
+    struct memblock mem_out_88628;
     
-    mem_out_89560.references = NULL;
+    mem_out_88628.references = NULL;
     
-    struct memblock mem_out_89559;
+    struct memblock mem_out_88627;
     
-    mem_out_89559.references = NULL;
+    mem_out_88627.references = NULL;
     
-    struct memblock mem_out_89558;
+    struct memblock mem_out_88626;
     
-    mem_out_89558.references = NULL;
+    mem_out_88626.references = NULL;
     
-    struct memblock mem_out_89557;
+    struct memblock mem_out_88625;
     
-    mem_out_89557.references = NULL;
+    mem_out_88625.references = NULL;
     
-    struct memblock mem_out_89556;
+    struct memblock mem_out_88624;
     
-    mem_out_89556.references = NULL;
+    mem_out_88624.references = NULL;
     
-    struct memblock mem_out_89555;
+    struct memblock mem_out_88623;
     
-    mem_out_89555.references = NULL;
+    mem_out_88623.references = NULL;
     
-    struct memblock mem_out_89554;
+    struct memblock mem_out_88622;
     
-    mem_out_89554.references = NULL;
+    mem_out_88622.references = NULL;
     
-    struct memblock mem_out_89553;
+    struct memblock mem_out_88621;
     
-    mem_out_89553.references = NULL;
+    mem_out_88621.references = NULL;
     
-    struct memblock mem_out_89552;
+    struct memblock mem_out_88620;
     
-    mem_out_89552.references = NULL;
+    mem_out_88620.references = NULL;
     
-    struct memblock mem_out_89551;
+    struct memblock mem_out_88619;
     
-    mem_out_89551.references = NULL;
+    mem_out_88619.references = NULL;
     
-    struct memblock mem_out_89550;
+    struct memblock mem_out_88618;
     
-    mem_out_89550.references = NULL;
+    mem_out_88618.references = NULL;
     
-    struct memblock mem_out_89549;
+    struct memblock mem_out_88617;
     
-    mem_out_89549.references = NULL;
+    mem_out_88617.references = NULL;
     
-    struct memblock mem_out_89548;
+    struct memblock mem_out_88616;
     
-    mem_out_89548.references = NULL;
+    mem_out_88616.references = NULL;
     
-    struct memblock mem_out_89547;
+    struct memblock mem_out_88615;
     
-    mem_out_89547.references = NULL;
+    mem_out_88615.references = NULL;
     
-    struct memblock mem_out_89546;
+    struct memblock mem_out_88614;
     
-    mem_out_89546.references = NULL;
+    mem_out_88614.references = NULL;
     
-    struct memblock mem_out_89545;
+    struct memblock mem_out_88613;
     
-    mem_out_89545.references = NULL;
+    mem_out_88613.references = NULL;
     
-    struct memblock mem_out_89544;
+    struct memblock mem_out_88612;
     
-    mem_out_89544.references = NULL;
+    mem_out_88612.references = NULL;
     
-    struct memblock mem_out_89543;
+    struct memblock mem_out_88611;
     
-    mem_out_89543.references = NULL;
+    mem_out_88611.references = NULL;
     
-    struct memblock mem_out_89542;
+    struct memblock mem_out_88610;
     
-    mem_out_89542.references = NULL;
+    mem_out_88610.references = NULL;
     
-    struct memblock mem_out_89541;
+    struct memblock mem_out_88609;
     
-    mem_out_89541.references = NULL;
+    mem_out_88609.references = NULL;
     
-    struct memblock mem_out_89540;
+    struct memblock mem_out_88608;
     
-    mem_out_89540.references = NULL;
+    mem_out_88608.references = NULL;
     
-    struct memblock seqs_mem_87829;
+    struct memblock seqs_mem_86866;
     
-    seqs_mem_87829.references = NULL;
+    seqs_mem_86866.references = NULL;
     
-    struct memblock dls_mem_87828;
+    struct memblock dls_mem_86865;
     
-    dls_mem_87828.references = NULL;
+    dls_mem_86865.references = NULL;
     
-    struct memblock masks_mem_87827;
+    struct memblock masks_mem_86864;
     
-    masks_mem_87827.references = NULL;
+    masks_mem_86864.references = NULL;
     
-    struct memblock wvoc_mem_87826;
+    struct memblock wvoc_mem_86863;
     
-    wvoc_mem_87826.references = NULL;
+    wvoc_mem_86863.references = NULL;
     
-    struct memblock wval_mem_87825;
+    struct memblock wval_mem_86862;
     
-    wval_mem_87825.references = NULL;
+    wval_mem_86862.references = NULL;
     
-    struct memblock wup_mem_87824;
+    struct memblock wup_mem_86861;
     
-    wup_mem_87824.references = NULL;
+    wup_mem_86861.references = NULL;
     
-    struct memblock wte_mem_87823;
+    struct memblock wte_mem_86860;
     
-    wte_mem_87823.references = NULL;
+    wte_mem_86860.references = NULL;
     
-    struct memblock wqry_mem_87822;
+    struct memblock wqry_mem_86859;
     
-    wqry_mem_87822.references = NULL;
+    wqry_mem_86859.references = NULL;
     
-    struct memblock wpe_mem_87821;
+    struct memblock wpe_mem_86858;
     
-    wpe_mem_87821.references = NULL;
+    wpe_mem_86858.references = NULL;
     
-    struct memblock wout_mem_87820;
+    struct memblock wout_mem_86857;
     
-    wout_mem_87820.references = NULL;
+    wout_mem_86857.references = NULL;
     
-    struct memblock wkey_mem_87819;
+    struct memblock wkey_mem_86856;
     
-    wkey_mem_87819.references = NULL;
+    wkey_mem_86856.references = NULL;
     
-    struct memblock wdown_mem_87818;
+    struct memblock wdown_mem_86855;
     
-    wdown_mem_87818.references = NULL;
+    wdown_mem_86855.references = NULL;
     
-    struct memblock wvoc_mem_87817;
+    struct memblock wvoc_mem_86854;
     
-    wvoc_mem_87817.references = NULL;
+    wvoc_mem_86854.references = NULL;
     
-    struct memblock wval_mem_87816;
+    struct memblock wval_mem_86853;
     
-    wval_mem_87816.references = NULL;
+    wval_mem_86853.references = NULL;
     
-    struct memblock wup_mem_87815;
+    struct memblock wup_mem_86852;
     
-    wup_mem_87815.references = NULL;
+    wup_mem_86852.references = NULL;
     
-    struct memblock wte_mem_87814;
+    struct memblock wte_mem_86851;
     
-    wte_mem_87814.references = NULL;
+    wte_mem_86851.references = NULL;
     
-    struct memblock wqry_mem_87813;
+    struct memblock wqry_mem_86850;
     
-    wqry_mem_87813.references = NULL;
+    wqry_mem_86850.references = NULL;
     
-    struct memblock wpe_mem_87812;
+    struct memblock wpe_mem_86849;
     
-    wpe_mem_87812.references = NULL;
+    wpe_mem_86849.references = NULL;
     
-    struct memblock wout_mem_87811;
+    struct memblock wout_mem_86848;
     
-    wout_mem_87811.references = NULL;
+    wout_mem_86848.references = NULL;
     
-    struct memblock wkey_mem_87810;
+    struct memblock wkey_mem_86847;
     
-    wkey_mem_87810.references = NULL;
+    wkey_mem_86847.references = NULL;
     
-    struct memblock wdown_mem_87809;
+    struct memblock wdown_mem_86846;
     
-    wdown_mem_87809.references = NULL;
+    wdown_mem_86846.references = NULL;
     
-    struct memblock wvoc_mem_87808;
+    struct memblock wvoc_mem_86845;
     
-    wvoc_mem_87808.references = NULL;
+    wvoc_mem_86845.references = NULL;
     
-    struct memblock wval_mem_87807;
+    struct memblock wval_mem_86844;
     
-    wval_mem_87807.references = NULL;
+    wval_mem_86844.references = NULL;
     
-    struct memblock wup_mem_87806;
+    struct memblock wup_mem_86843;
     
-    wup_mem_87806.references = NULL;
+    wup_mem_86843.references = NULL;
     
-    struct memblock wte_mem_87805;
+    struct memblock wte_mem_86842;
     
-    wte_mem_87805.references = NULL;
+    wte_mem_86842.references = NULL;
     
-    struct memblock wqry_mem_87804;
+    struct memblock wqry_mem_86841;
     
-    wqry_mem_87804.references = NULL;
+    wqry_mem_86841.references = NULL;
     
-    struct memblock wpe_mem_87803;
+    struct memblock wpe_mem_86840;
     
-    wpe_mem_87803.references = NULL;
+    wpe_mem_86840.references = NULL;
     
-    struct memblock wout_mem_87802;
+    struct memblock wout_mem_86839;
     
-    wout_mem_87802.references = NULL;
+    wout_mem_86839.references = NULL;
     
-    struct memblock wkey_mem_87801;
+    struct memblock wkey_mem_86838;
     
-    wkey_mem_87801.references = NULL;
+    wkey_mem_86838.references = NULL;
     
-    struct memblock wdown_mem_87800;
+    struct memblock wdown_mem_86837;
     
-    wdown_mem_87800.references = NULL;
-    wdown_mem_87800 = in0->v0->mem;
-    wkey_mem_87801 = in0->v1->mem;
-    wout_mem_87802 = in0->v2->mem;
-    wpe_mem_87803 = in0->v3->mem;
-    wqry_mem_87804 = in0->v4->mem;
-    wte_mem_87805 = in0->v5->mem;
-    wup_mem_87806 = in0->v6->mem;
-    wval_mem_87807 = in0->v7->mem;
-    wvoc_mem_87808 = in0->v8->mem;
-    wdown_mem_87809 = in1->v0->mem;
-    wkey_mem_87810 = in1->v1->mem;
-    wout_mem_87811 = in1->v2->mem;
-    wpe_mem_87812 = in1->v3->mem;
-    wqry_mem_87813 = in1->v4->mem;
-    wte_mem_87814 = in1->v5->mem;
-    wup_mem_87815 = in1->v6->mem;
-    wval_mem_87816 = in1->v7->mem;
-    wvoc_mem_87817 = in1->v8->mem;
-    wdown_mem_87818 = in2->v0->mem;
-    wkey_mem_87819 = in2->v1->mem;
-    wout_mem_87820 = in2->v2->mem;
-    wpe_mem_87821 = in2->v3->mem;
-    wqry_mem_87822 = in2->v4->mem;
-    wte_mem_87823 = in2->v5->mem;
-    wup_mem_87824 = in2->v6->mem;
-    wval_mem_87825 = in2->v7->mem;
-    wvoc_mem_87826 = in2->v8->mem;
-    masks_mem_87827 = in3->mem;
-    dls_mem_87828 = in4->mem;
-    seqs_mem_87829 = in5->mem;
+    wdown_mem_86837.references = NULL;
+    wdown_mem_86837 = in0->v0->mem;
+    wkey_mem_86838 = in0->v1->mem;
+    wout_mem_86839 = in0->v2->mem;
+    wpe_mem_86840 = in0->v3->mem;
+    wqry_mem_86841 = in0->v4->mem;
+    wte_mem_86842 = in0->v5->mem;
+    wup_mem_86843 = in0->v6->mem;
+    wval_mem_86844 = in0->v7->mem;
+    wvoc_mem_86845 = in0->v8->mem;
+    wdown_mem_86846 = in1->v0->mem;
+    wkey_mem_86847 = in1->v1->mem;
+    wout_mem_86848 = in1->v2->mem;
+    wpe_mem_86849 = in1->v3->mem;
+    wqry_mem_86850 = in1->v4->mem;
+    wte_mem_86851 = in1->v5->mem;
+    wup_mem_86852 = in1->v6->mem;
+    wval_mem_86853 = in1->v7->mem;
+    wvoc_mem_86854 = in1->v8->mem;
+    wdown_mem_86855 = in2->v0->mem;
+    wkey_mem_86856 = in2->v1->mem;
+    wout_mem_86857 = in2->v2->mem;
+    wpe_mem_86858 = in2->v3->mem;
+    wqry_mem_86859 = in2->v4->mem;
+    wte_mem_86860 = in2->v5->mem;
+    wup_mem_86861 = in2->v6->mem;
+    wval_mem_86862 = in2->v7->mem;
+    wvoc_mem_86863 = in2->v8->mem;
+    masks_mem_86864 = in3->mem;
+    dls_mem_86865 = in4->mem;
+    seqs_mem_86866 = in5->mem;
     if (!(((int64_t) 16 == in0->v0->shape[0] && ((int64_t) 64 == in0->v0->shape[1] && ((int64_t) 16 == in0->v1->shape[0] && ((int64_t) 16 == in0->v1->shape[1] && ((int64_t) 16 == in0->v2->shape[0] && ((int64_t) 16 == in0->v2->shape[1] && ((int64_t) 16 == in0->v3->shape[0] && ((int64_t) 16 == in0->v3->shape[1] && ((int64_t) 16 == in0->v4->shape[0] && ((int64_t) 16 == in0->v4->shape[1] && ((int64_t) 27 == in0->v5->shape[0] && ((int64_t) 16 == in0->v5->shape[1] && ((int64_t) 64 == in0->v6->shape[0] && ((int64_t) 16 == in0->v6->shape[1] && ((int64_t) 16 == in0->v7->shape[0] && ((int64_t) 16 == in0->v7->shape[1] && ((int64_t) 27 == in0->v8->shape[0] && (int64_t) 16 == in0->v8->shape[1]))))))))))))))))) && (((int64_t) 16 == in1->v0->shape[0] && ((int64_t) 64 == in1->v0->shape[1] && ((int64_t) 16 == in1->v1->shape[0] && ((int64_t) 16 == in1->v1->shape[1] && ((int64_t) 16 == in1->v2->shape[0] && ((int64_t) 16 == in1->v2->shape[1] && ((int64_t) 16 == in1->v3->shape[0] && ((int64_t) 16 == in1->v3->shape[1] && ((int64_t) 16 == in1->v4->shape[0] && ((int64_t) 16 == in1->v4->shape[1] && ((int64_t) 27 == in1->v5->shape[0] && ((int64_t) 16 == in1->v5->shape[1] && ((int64_t) 64 == in1->v6->shape[0] && ((int64_t) 16 == in1->v6->shape[1] && ((int64_t) 16 == in1->v7->shape[0] && ((int64_t) 16 == in1->v7->shape[1] && ((int64_t) 27 == in1->v8->shape[0] && (int64_t) 16 == in1->v8->shape[1]))))))))))))))))) && (((int64_t) 16 == in2->v0->shape[0] && ((int64_t) 64 == in2->v0->shape[1] && ((int64_t) 16 == in2->v1->shape[0] && ((int64_t) 16 == in2->v1->shape[1] && ((int64_t) 16 == in2->v2->shape[0] && ((int64_t) 16 == in2->v2->shape[1] && ((int64_t) 16 == in2->v3->shape[0] && ((int64_t) 16 == in2->v3->shape[1] && ((int64_t) 16 == in2->v4->shape[0] && ((int64_t) 16 == in2->v4->shape[1] && ((int64_t) 27 == in2->v5->shape[0] && ((int64_t) 16 == in2->v5->shape[1] && ((int64_t) 64 == in2->v6->shape[0] && ((int64_t) 16 == in2->v6->shape[1] && ((int64_t) 16 == in2->v7->shape[0] && ((int64_t) 16 == in2->v7->shape[1] && ((int64_t) 27 == in2->v8->shape[0] && (int64_t) 16 == in2->v8->shape[1]))))))))))))))))) && (((int64_t) 500 == in3->shape[0] && ((int64_t) 16 == in3->shape[1] && (int64_t) 16 == in3->shape[2])) && ((int64_t) 500 == in4->shape[0] && ((int64_t) 500 == in5->shape[0] && (int64_t) 16 == in5->shape[1]))))))) {
         ret = 1;
         set_error(ctx, msgprintf("Error: entry point arguments have invalid sizes.\n"));
     }
     if (ret == 0) {
-        ret = futrts_entry_train(ctx, &mem_out_89540, &mem_out_89541, &mem_out_89542, &mem_out_89543, &mem_out_89544, &mem_out_89545, &mem_out_89546, &mem_out_89547, &mem_out_89548, &mem_out_89549, &mem_out_89550, &mem_out_89551, &mem_out_89552, &mem_out_89553, &mem_out_89554, &mem_out_89555, &mem_out_89556, &mem_out_89557, &mem_out_89558, &mem_out_89559, &mem_out_89560, &mem_out_89561, &mem_out_89562, &mem_out_89563, &mem_out_89564, &mem_out_89565, &mem_out_89566, wdown_mem_87800, wkey_mem_87801, wout_mem_87802, wpe_mem_87803, wqry_mem_87804, wte_mem_87805, wup_mem_87806, wval_mem_87807, wvoc_mem_87808, wdown_mem_87809, wkey_mem_87810, wout_mem_87811, wpe_mem_87812, wqry_mem_87813, wte_mem_87814, wup_mem_87815, wval_mem_87816, wvoc_mem_87817, wdown_mem_87818, wkey_mem_87819, wout_mem_87820, wpe_mem_87821, wqry_mem_87822, wte_mem_87823, wup_mem_87824, wval_mem_87825, wvoc_mem_87826, masks_mem_87827, dls_mem_87828, seqs_mem_87829);
+        ret = futrts_entry_train(ctx, &mem_out_88608, &mem_out_88609, &mem_out_88610, &mem_out_88611, &mem_out_88612, &mem_out_88613, &mem_out_88614, &mem_out_88615, &mem_out_88616, &mem_out_88617, &mem_out_88618, &mem_out_88619, &mem_out_88620, &mem_out_88621, &mem_out_88622, &mem_out_88623, &mem_out_88624, &mem_out_88625, &mem_out_88626, &mem_out_88627, &mem_out_88628, &mem_out_88629, &mem_out_88630, &mem_out_88631, &mem_out_88632, &mem_out_88633, &mem_out_88634, wdown_mem_86837, wkey_mem_86838, wout_mem_86839, wpe_mem_86840, wqry_mem_86841, wte_mem_86842, wup_mem_86843, wval_mem_86844, wvoc_mem_86845, wdown_mem_86846, wkey_mem_86847, wout_mem_86848, wpe_mem_86849, wqry_mem_86850, wte_mem_86851, wup_mem_86852, wval_mem_86853, wvoc_mem_86854, wdown_mem_86855, wkey_mem_86856, wout_mem_86857, wpe_mem_86858, wqry_mem_86859, wte_mem_86860, wup_mem_86861, wval_mem_86862, wvoc_mem_86863, masks_mem_86864, dls_mem_86865, seqs_mem_86866);
         if (ret == 0) {
-            struct memblock mem_87791 = ctx->constants->mem_87791;
-            struct memblock mem_87792 = ctx->constants->mem_87792;
-            struct memblock mem_87793 = ctx->constants->mem_87793;
-            struct memblock mem_87794 = ctx->constants->mem_87794;
-            struct memblock mem_87795 = ctx->constants->mem_87795;
-            struct memblock mem_87796 = ctx->constants->mem_87796;
-            struct memblock mem_87797 = ctx->constants->mem_87797;
-            struct memblock mem_87798 = ctx->constants->mem_87798;
-            struct memblock mem_87799 = ctx->constants->mem_87799;
+            struct memblock mem_86828 = ctx->constants->mem_86828;
+            struct memblock mem_86829 = ctx->constants->mem_86829;
+            struct memblock mem_86830 = ctx->constants->mem_86830;
+            struct memblock mem_86831 = ctx->constants->mem_86831;
+            struct memblock mem_86832 = ctx->constants->mem_86832;
+            struct memblock mem_86833 = ctx->constants->mem_86833;
+            struct memblock mem_86834 = ctx->constants->mem_86834;
+            struct memblock mem_86835 = ctx->constants->mem_86835;
+            struct memblock mem_86836 = ctx->constants->mem_86836;
             
             assert((*out = (struct futhark_opaque_tup3_tup9_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_tup9_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_tup9_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64 *) malloc(sizeof(struct futhark_opaque_tup3_tup9_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_tup9_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_tup9_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64_arr2d_f64))) != NULL);
             assert(((*out)->v0 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v0->mem = mem_out_89540;
+            (*out)->v0->mem = mem_out_88608;
             (*out)->v0->shape[0] = (int64_t) 27;
             (*out)->v0->shape[1] = (int64_t) 16;
             assert(((*out)->v1 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v1->mem = mem_out_89541;
+            (*out)->v1->mem = mem_out_88609;
             (*out)->v1->shape[0] = (int64_t) 16;
             (*out)->v1->shape[1] = (int64_t) 16;
             assert(((*out)->v2 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v2->mem = mem_out_89542;
+            (*out)->v2->mem = mem_out_88610;
             (*out)->v2->shape[0] = (int64_t) 16;
             (*out)->v2->shape[1] = (int64_t) 16;
             assert(((*out)->v3 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v3->mem = mem_out_89543;
+            (*out)->v3->mem = mem_out_88611;
             (*out)->v3->shape[0] = (int64_t) 16;
             (*out)->v3->shape[1] = (int64_t) 16;
             assert(((*out)->v4 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v4->mem = mem_out_89544;
+            (*out)->v4->mem = mem_out_88612;
             (*out)->v4->shape[0] = (int64_t) 16;
             (*out)->v4->shape[1] = (int64_t) 16;
             assert(((*out)->v5 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v5->mem = mem_out_89545;
+            (*out)->v5->mem = mem_out_88613;
             (*out)->v5->shape[0] = (int64_t) 16;
             (*out)->v5->shape[1] = (int64_t) 16;
             assert(((*out)->v6 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v6->mem = mem_out_89546;
+            (*out)->v6->mem = mem_out_88614;
             (*out)->v6->shape[0] = (int64_t) 64;
             (*out)->v6->shape[1] = (int64_t) 16;
             assert(((*out)->v7 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v7->mem = mem_out_89547;
+            (*out)->v7->mem = mem_out_88615;
             (*out)->v7->shape[0] = (int64_t) 16;
             (*out)->v7->shape[1] = (int64_t) 64;
             assert(((*out)->v8 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v8->mem = mem_out_89548;
+            (*out)->v8->mem = mem_out_88616;
             (*out)->v8->shape[0] = (int64_t) 27;
             (*out)->v8->shape[1] = (int64_t) 16;
             assert(((*out)->v9 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v9->mem = mem_out_89549;
+            (*out)->v9->mem = mem_out_88617;
             (*out)->v9->shape[0] = (int64_t) 27;
             (*out)->v9->shape[1] = (int64_t) 16;
             assert(((*out)->v10 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v10->mem = mem_out_89550;
+            (*out)->v10->mem = mem_out_88618;
             (*out)->v10->shape[0] = (int64_t) 16;
             (*out)->v10->shape[1] = (int64_t) 16;
             assert(((*out)->v11 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v11->mem = mem_out_89551;
+            (*out)->v11->mem = mem_out_88619;
             (*out)->v11->shape[0] = (int64_t) 16;
             (*out)->v11->shape[1] = (int64_t) 16;
             assert(((*out)->v12 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v12->mem = mem_out_89552;
+            (*out)->v12->mem = mem_out_88620;
             (*out)->v12->shape[0] = (int64_t) 16;
             (*out)->v12->shape[1] = (int64_t) 16;
             assert(((*out)->v13 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v13->mem = mem_out_89553;
+            (*out)->v13->mem = mem_out_88621;
             (*out)->v13->shape[0] = (int64_t) 16;
             (*out)->v13->shape[1] = (int64_t) 16;
             assert(((*out)->v14 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v14->mem = mem_out_89554;
+            (*out)->v14->mem = mem_out_88622;
             (*out)->v14->shape[0] = (int64_t) 16;
             (*out)->v14->shape[1] = (int64_t) 16;
             assert(((*out)->v15 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v15->mem = mem_out_89555;
+            (*out)->v15->mem = mem_out_88623;
             (*out)->v15->shape[0] = (int64_t) 64;
             (*out)->v15->shape[1] = (int64_t) 16;
             assert(((*out)->v16 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v16->mem = mem_out_89556;
+            (*out)->v16->mem = mem_out_88624;
             (*out)->v16->shape[0] = (int64_t) 16;
             (*out)->v16->shape[1] = (int64_t) 64;
             assert(((*out)->v17 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v17->mem = mem_out_89557;
+            (*out)->v17->mem = mem_out_88625;
             (*out)->v17->shape[0] = (int64_t) 27;
             (*out)->v17->shape[1] = (int64_t) 16;
             assert(((*out)->v18 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v18->mem = mem_out_89558;
+            (*out)->v18->mem = mem_out_88626;
             (*out)->v18->shape[0] = (int64_t) 27;
             (*out)->v18->shape[1] = (int64_t) 16;
             assert(((*out)->v19 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v19->mem = mem_out_89559;
+            (*out)->v19->mem = mem_out_88627;
             (*out)->v19->shape[0] = (int64_t) 16;
             (*out)->v19->shape[1] = (int64_t) 16;
             assert(((*out)->v20 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v20->mem = mem_out_89560;
+            (*out)->v20->mem = mem_out_88628;
             (*out)->v20->shape[0] = (int64_t) 16;
             (*out)->v20->shape[1] = (int64_t) 16;
             assert(((*out)->v21 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v21->mem = mem_out_89561;
+            (*out)->v21->mem = mem_out_88629;
             (*out)->v21->shape[0] = (int64_t) 16;
             (*out)->v21->shape[1] = (int64_t) 16;
             assert(((*out)->v22 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v22->mem = mem_out_89562;
+            (*out)->v22->mem = mem_out_88630;
             (*out)->v22->shape[0] = (int64_t) 16;
             (*out)->v22->shape[1] = (int64_t) 16;
             assert(((*out)->v23 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v23->mem = mem_out_89563;
+            (*out)->v23->mem = mem_out_88631;
             (*out)->v23->shape[0] = (int64_t) 16;
             (*out)->v23->shape[1] = (int64_t) 16;
             assert(((*out)->v24 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v24->mem = mem_out_89564;
+            (*out)->v24->mem = mem_out_88632;
             (*out)->v24->shape[0] = (int64_t) 64;
             (*out)->v24->shape[1] = (int64_t) 16;
             assert(((*out)->v25 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v25->mem = mem_out_89565;
+            (*out)->v25->mem = mem_out_88633;
             (*out)->v25->shape[0] = (int64_t) 16;
             (*out)->v25->shape[1] = (int64_t) 64;
             assert(((*out)->v26 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v26->mem = mem_out_89566;
+            (*out)->v26->mem = mem_out_88634;
             (*out)->v26->shape[0] = (int64_t) 27;
             (*out)->v26->shape[1] = (int64_t) 16;
         }
@@ -18668,89 +18483,89 @@ int futhark_entry_zero_params(struct futhark_context *ctx, struct futhark_opaque
     
     lock_lock(&ctx->lock);
     
-    struct memblock mem_out_89548;
+    struct memblock mem_out_88616;
     
-    mem_out_89548.references = NULL;
+    mem_out_88616.references = NULL;
     
-    struct memblock mem_out_89547;
+    struct memblock mem_out_88615;
     
-    mem_out_89547.references = NULL;
+    mem_out_88615.references = NULL;
     
-    struct memblock mem_out_89546;
+    struct memblock mem_out_88614;
     
-    mem_out_89546.references = NULL;
+    mem_out_88614.references = NULL;
     
-    struct memblock mem_out_89545;
+    struct memblock mem_out_88613;
     
-    mem_out_89545.references = NULL;
+    mem_out_88613.references = NULL;
     
-    struct memblock mem_out_89544;
+    struct memblock mem_out_88612;
     
-    mem_out_89544.references = NULL;
+    mem_out_88612.references = NULL;
     
-    struct memblock mem_out_89543;
+    struct memblock mem_out_88611;
     
-    mem_out_89543.references = NULL;
+    mem_out_88611.references = NULL;
     
-    struct memblock mem_out_89542;
+    struct memblock mem_out_88610;
     
-    mem_out_89542.references = NULL;
+    mem_out_88610.references = NULL;
     
-    struct memblock mem_out_89541;
+    struct memblock mem_out_88609;
     
-    mem_out_89541.references = NULL;
+    mem_out_88609.references = NULL;
     
-    struct memblock mem_out_89540;
+    struct memblock mem_out_88608;
     
-    mem_out_89540.references = NULL;
+    mem_out_88608.references = NULL;
     if (ret == 0) {
-        ret = futrts_entry_zzero_params(ctx, &mem_out_89540, &mem_out_89541, &mem_out_89542, &mem_out_89543, &mem_out_89544, &mem_out_89545, &mem_out_89546, &mem_out_89547, &mem_out_89548);
+        ret = futrts_entry_zzero_params(ctx, &mem_out_88608, &mem_out_88609, &mem_out_88610, &mem_out_88611, &mem_out_88612, &mem_out_88613, &mem_out_88614, &mem_out_88615, &mem_out_88616);
         if (ret == 0) {
-            struct memblock mem_87791 = ctx->constants->mem_87791;
-            struct memblock mem_87792 = ctx->constants->mem_87792;
-            struct memblock mem_87793 = ctx->constants->mem_87793;
-            struct memblock mem_87794 = ctx->constants->mem_87794;
-            struct memblock mem_87795 = ctx->constants->mem_87795;
-            struct memblock mem_87796 = ctx->constants->mem_87796;
-            struct memblock mem_87797 = ctx->constants->mem_87797;
-            struct memblock mem_87798 = ctx->constants->mem_87798;
-            struct memblock mem_87799 = ctx->constants->mem_87799;
+            struct memblock mem_86828 = ctx->constants->mem_86828;
+            struct memblock mem_86829 = ctx->constants->mem_86829;
+            struct memblock mem_86830 = ctx->constants->mem_86830;
+            struct memblock mem_86831 = ctx->constants->mem_86831;
+            struct memblock mem_86832 = ctx->constants->mem_86832;
+            struct memblock mem_86833 = ctx->constants->mem_86833;
+            struct memblock mem_86834 = ctx->constants->mem_86834;
+            struct memblock mem_86835 = ctx->constants->mem_86835;
+            struct memblock mem_86836 = ctx->constants->mem_86836;
             
             assert((*out = (struct futhark_opaque_params *) malloc(sizeof(struct futhark_opaque_params))) != NULL);
             assert(((*out)->v0 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v0->mem = mem_out_89540;
+            (*out)->v0->mem = mem_out_88608;
             (*out)->v0->shape[0] = (int64_t) 16;
             (*out)->v0->shape[1] = (int64_t) 64;
             assert(((*out)->v1 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v1->mem = mem_out_89541;
+            (*out)->v1->mem = mem_out_88609;
             (*out)->v1->shape[0] = (int64_t) 16;
             (*out)->v1->shape[1] = (int64_t) 16;
             assert(((*out)->v2 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v2->mem = mem_out_89542;
+            (*out)->v2->mem = mem_out_88610;
             (*out)->v2->shape[0] = (int64_t) 16;
             (*out)->v2->shape[1] = (int64_t) 16;
             assert(((*out)->v3 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v3->mem = mem_out_89543;
+            (*out)->v3->mem = mem_out_88611;
             (*out)->v3->shape[0] = (int64_t) 16;
             (*out)->v3->shape[1] = (int64_t) 16;
             assert(((*out)->v4 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v4->mem = mem_out_89544;
+            (*out)->v4->mem = mem_out_88612;
             (*out)->v4->shape[0] = (int64_t) 16;
             (*out)->v4->shape[1] = (int64_t) 16;
             assert(((*out)->v5 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v5->mem = mem_out_89545;
+            (*out)->v5->mem = mem_out_88613;
             (*out)->v5->shape[0] = (int64_t) 27;
             (*out)->v5->shape[1] = (int64_t) 16;
             assert(((*out)->v6 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v6->mem = mem_out_89546;
+            (*out)->v6->mem = mem_out_88614;
             (*out)->v6->shape[0] = (int64_t) 64;
             (*out)->v6->shape[1] = (int64_t) 16;
             assert(((*out)->v7 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v7->mem = mem_out_89547;
+            (*out)->v7->mem = mem_out_88615;
             (*out)->v7->shape[0] = (int64_t) 16;
             (*out)->v7->shape[1] = (int64_t) 16;
             assert(((*out)->v8 = (struct futhark_f64_2d *) malloc(sizeof(struct futhark_f64_2d))) != NULL);
-            (*out)->v8->mem = mem_out_89548;
+            (*out)->v8->mem = mem_out_88616;
             (*out)->v8->shape[0] = (int64_t) 27;
             (*out)->v8->shape[1] = (int64_t) 16;
         }

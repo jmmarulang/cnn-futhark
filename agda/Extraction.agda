@@ -245,25 +245,7 @@ module Extract where
 
   grad-conv-e = pp conv-e (ε ▹ "img" ▹ "k1")
 
-  {-
-  "let x0 = (imap2 4 4 (\\ x2_0 x2_1 -> (isum2 2 2 (\\ x1_0 x1_1 -> (img[(x1_0 + x2_0)][(x1_1 + x2_1)] F.* k1[x1_0][x1_1])))))
-  let x3 = (let x4 = (imap2 4 4 (\\ x6_0 x6_1 -> (logistics x0[x6_0][x6_1])))
-  in (imap2 4 4 (\\ x5_0 x5_1 -> (x4[x5_0][x5_1] F.* (one F.+ (F.neg x4[x5_0][x5_1]))))))
-
-  let dimg = (imap2 5 5 (\\ x8_0 x8_1 -> (isum2 2 2 (\\ x7_0 x7_1 -> if (x8_0 >= x7_0 && x8_1 >= x7_1 && (x8_0 - x7_0) < 4 && (x8_1 - x7_1) < 4) then (x3[(x8_0 - x7_0)][(x8_1 - x7_1)] F.* k1[x7_0][x7_1]) else zero))))
-  let dk1 = (imap2 2 2 (\\ x9_0 x9_1 -> (isum2 4 4 (\\ x10_0 x10_1 -> (x3[x10_0][x10_1] F.* img[(x9_0 + x10_0)][(x9_1 + x10_1)])))))"
-  -}
-
   grad-conv-s = pp conv-e (ε ▹ "inp" ▹ "k1") -- whats the difference?
-
-  {-
-  "let x0 = (imap2 4 4 (\\ x2_0 x2_1 -> (isum2 2 2 (\\ x1_0 x1_1 -> (inp[(x1_0 + x2_0)][(x1_1 + x2_1)] F.* k1[x1_0][x1_1])))))
-  let x3 = (let x4 = (imap2 4 4 (\\ x6_0 x6_1 -> (logistics x0[x6_0][x6_1])))
-  in (imap2 4 4 (\\ x5_0 x5_1 -> (x4[x5_0][x5_1] F.* (one F.+ (F.neg x4[x5_0][x5_1]))))))
-
-  let dinp = (imap2 5 5 (\\ x8_0 x8_1 -> (isum2 2 2 (\\ x7_0 x7_1 -> if (x8_0 >= x7_0 && x8_1 >= x7_1 && (x8_0 - x7_0) < 4 && (x8_1 - x7_1) < 4) then (x3[(x8_0 - x7_0)][(x8_1 - x7_1)] F.* k1[x7_0][x7_1]) else zero))))
-  let dk1 = (imap2 2 2 (\\ x9_0 x9_1 -> (isum2 4 4 (\\ x10_0 x10_1 -> (x3[x10_0][x10_1] F.* inp[(x9_0 + x10_0)][(x9_1 + x10_1)])))))"
-  -}
 
   compc1 : E _ _
   compc1 =  Lcon (  ar (28 ∷ 28 ∷ []) ∷ ar (6 ∷ 5 ∷ 5 ∷ [])
@@ -281,13 +263,6 @@ module Extract where
 
   grad-compc1-e = ee-opt (grad compc1 one zero-ee)
   grad-compc1-s = pp compc1 (ε ▹ "inp" ▹ "k1" ▹ "b1" ▹ "k2" ▹ "b2")
-
-  -- test-e : E _ _
-  -- test-e = Lcon (ar ([]) ∷  ar [] ∷ []) (ar ([])) ε
-  --          λ a x  → (a ⊞ a) ⊠ x
-  -- test-s = pp test-e (ε ▹ "a" ▹ "x")
-
-  -- test-n = WkSub.norm-lets test-e
 
   sum-let : E _ _
   sum-let = Lcon (ar (5 ∷ []) ∷ ar (5 ∷ []) ∷ []) (ar []) ε

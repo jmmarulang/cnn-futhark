@@ -1,3 +1,2 @@
-(let x0 = (imaximum2 5 5 (\x2_0 x2_1 -> f[x2_0][x2_1]))
-in (let x1 = (isum2 5 5 (\x2_0 x2_1 -> f[x2_0][x2_1]))
-in (imap2 5 5 (\x2_0 x2_1 -> ((F.exp (f[x2_0][x2_1] F.neg x0)) F./ x1)))))
+elet x0 = sum λ x1 → (sels f' x1 * sels ((softmax f)) x1)
+let df = ((softmax f) * (f' + (- (imaps λ x2 → x0))))

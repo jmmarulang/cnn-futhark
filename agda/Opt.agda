@@ -662,9 +662,11 @@ module Opt (r : Real) (rp : RealProp r) where
   opt (ln e) with opt e
   ... | a , p = ln a , (λ ρ i → cong log (p ρ i))
   opt (ℙ e) with opt e
-  ... | a , p = ℙ a , (λ ρ i → cong {!   !} (p ρ i))
+  ... | a , p = ℙ a , λ ρ i → cong₂ _÷_ (cong e^_ (p _ _))
+    (sum-cong _+_ _ {e^_ ∘ (eval e ρ)} λ j → cong e^_ (p _ _))
 
   danger-opt : E Γ is → E Γ is
   danger-opt e =
     -- (opt e .proj₁)
-    danger-opt' $ sels-in $ let-out $ sum-in $ (opt e .proj₁)
+    -- danger-opt' $
+    sels-in $ let-out $ sum-in $ (opt e .proj₁)

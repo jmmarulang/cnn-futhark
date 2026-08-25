@@ -247,12 +247,15 @@ module _ where
   grad (sqrt e)               s δ = grad e (s // (𝟚 ⊠ sqrt e)) δ
   grad (𝟙/ e)                 s δ = grad e (⊟ (( 𝟙/ e) ⊠ (s // e))) δ
   grad (ln e)                 s δ = grad e (s // e) δ
-
   grad (ℙ e)                  s δ =
     let
-      δ' = ee-push-zero (ee-wk (skip ⊆-eq) δ)
-      f = ee-tail ∘ EE.let′ (E.sum $ (sels ((s ⊠ (ℙ e)) ↑) (var v₀)))
-    in f $ grad (e ↑) ((ℙ (e ↑)) ⊠ ((s ↑) ⊟ imaps (var v₁))) δ'
+      w = (skip (skip (skip ⊆-eq)))
+      δ' = ee-wk-zero (ee-wk w δ) w
+      tails = ee-tail ∘ ee-tail ∘ ee-tail
+      lets = λ x → let′ (ℙ e) ( --v2
+                let′ (s ↑) ( --v1
+                let′ (E.sum $ sels (var v₁ ⊠ var v₂) (var v₀)) x)) --v0
+    in (tails ∘ lets) $ grad (wk w e) (var v₂ ⊠ (var v₁ ⊟ (imaps $ var v₁))) δ'
 
   grad-last′ v e (env ρ) = let
     w = env-lookup ρ v
