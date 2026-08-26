@@ -441,8 +441,9 @@ module Test where
   open import Data.String
   open import Function
   open import Lang
-  open import Ar
+  open import Ar hiding (_++_; Ix)
   open Syntax
+  open import Text.Printf
 
   open import Effect.Monad.State
   instance
@@ -454,11 +455,30 @@ module Test where
   _,,_ = _,′_
 
   test-e : E _ _
-  test-e = Lcon (ar (5 ∷ []) ∷ []) (ar (5 ∷ [])) ε
-           λ e → (ℙ (e ⊠ e)) ⊞ e
+  test-e = Lcon (ar (5 ∷ []) ∷ ar (5 ∷ []) ∷ []) (ar (5 ∷ 5 ∷ [])) ε
+           λ x y → imap {s = (5 ∷ [])} (let′ (sqrt x) (imaps (sels y (var v₀))))
 
   test-s : String
-  test-s = proj₂ (runState (to-str test-e (_ , mkar "f")) 0)
+  test-s = proj₂ (runState (to-str test-e ((_ , mkar "x") , mkar "y")) 0)
+
+  test-f : String
+  test-f = e where
+    a : State ℕ (Sem (ar (5 ∷ 5 ∷ [])))
+    a = to-fut test-e ((_ , mkar "x") , mkar "y")
+
+    b : Ix (5 ∷ 5 ∷ []) → State ℕ ((String → String) × String)
+    b = proj₂ $ runState a 0
+
+    c : State ℕ ((String → String) × String)
+    c = b ("samurai" ∷ ("aku" ∷ []))
+
+    d : (String → String) × String
+    d = proj₂ (runState c 1)
+
+    f = proj₁ d
+    e = proj₂ d
+
+  test-sf = printf "%s \n \n %s" test-f test-s
 
   loss-e : E _ _
   loss-e = Lcon (ar (5 ∷ []) ∷ ar (5 ∷ []) ∷ []) (ar (5 ∷ [])) ε

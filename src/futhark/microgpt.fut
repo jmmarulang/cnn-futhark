@@ -108,7 +108,7 @@ module nn (F: real) = {
     \m n f -> F.maximum (imap1 m (\i -> imaximum1 n (f i)))
 
   def isoftmax1 (m: i64) (f : i64 -> real) : [m]real =
-    -- #[noinline]
+    #[inline]
     let max = imaximum1 m f
     let exps = imap1 m (\x -> F.exp((f x) F.+ F.neg max))
     let scale = isum1 m (\x -> exps[x])
