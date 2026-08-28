@@ -4,10 +4,6 @@
 `agda` --- Agda implementaiton of our framework, DSL, AD, optimisations, extraction to Futhark and the
 CNN itself.
 
-
-`paper` --- sources of the paper written in literate Agda.
-
-
 `src` --- the code we that we used while running our experiments.
 
 
