@@ -161,3 +161,9 @@ module _ where
 
   pp : E Γ is → FEnv Γ → State ℕ (Sem is)
   pp = ppx 0
+
+  -- test : Sem (ar s) → State ℕ String
+  -- test a = {! a  !}
+
+  -- to-str-pp : E Γ (ar s) → FEnv Γ → State ℕ String
+  -- to-str-pp e ρ = pp e ρ >>= return

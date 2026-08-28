@@ -67,7 +67,7 @@ cau_mask = (ones - np.tril(ones))
 
 num_steps = 500
 
-#-------------------------------------
+# -------------------------------------
 # TRAINING FUT
 
 print("Hold on to your morses")
@@ -131,7 +131,7 @@ try:
 except :
     print("It refused")
 
-# #-------------------------------------
+# # -------------------------------------
 # # TRAINING PY
 
 # start = time.time()

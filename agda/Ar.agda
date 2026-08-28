@@ -53,9 +53,6 @@ module _ where
   ++-neutʳ {[]} = refl
   ++-neutʳ {x ∷ s} = cong (x ∷_) ++-neutʳ
 
-  -- p-++-neutʳ : ∀ {px : P s} → px ++ [] ≡ {!   !}
-  -- p-++-neutʳ = {!   !}
-
   Ar : S → Set → Set
   Ar s X = P s → X
 
@@ -202,10 +199,6 @@ module _ where
   ... | yes refl with is ≟ₚ js
   ... | no ¬q = no λ { refl → ¬q refl }
   ... | yes refl = yes refl
-
-  -- ≟ₚ-sym : (i : P s) → ∃ λ eq → i ≟ₚ i ≡ yes eq
-  -- ≟ₚ-sym [] = refl , refl
-  -- ≟ₚ-sym (i ∷ is) = refl , {!   !}
 
   inject-left : Fin (suc m) → Fin (suc (n + m))
   inject-left {m} {n} i rewrite +-comm n m  = inject+ _ i
@@ -403,6 +396,9 @@ module _ where
   lastIx : suc p ≈ s → P s
   lastIx {p} {[]} pr = []
   lastIx {p ∷ ps} {x ∷ s} (cons {p = _} ⦃ refl ⦄ ⦃ b ⦄) = F.fromℕ p ∷ (lastIx b)
+
+  -- *-split : ∀ {s p q₁ q₂} → s * p ≈ (q₁ ⊗ q₂) → ? × ?
+  -- *-split = ?
 
 module ArTests where
   imap : (s : S) → (P s → X) → Ar s X

@@ -225,14 +225,6 @@ module _ where
     printf "((%s * %s) + %s)" i (show-nat n) j
     ∷ from-div-mod eq is js
 
-  -- to-argmax : (s : S) → Ix s → (e : String) → Ix s
-  -- to-argmax s i = to-argmax' 0 s where
-  --   to-argmax' : ℕ → (p : S) → (e : String) → Ix p
-  --   to-argmax' pi [] e = []
-  --   to-argmax' pi (p ∷ ps) e =
-  --     printf "(argmax%u_%u %s (\\%s -> %s))"
-  --       (dim s) pi (shape-args s) (ix-join i " ") e
-  --     ∷ (to-argmax' (suc pi) ps e)
 
   -- Generate a new name for an external array
   mkar : String → Ix s → State ℕ ((String → String) × String)
