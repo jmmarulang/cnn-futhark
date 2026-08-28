@@ -1,5 +1,7 @@
 {-# OPTIONS  --backtracking-instance-search #-} -- only needed for tests
 --{-# OPTIONS --warn=noUserWarning #-}
+
+{-# OPTIONS --no-positivity-check #-}
 module _ where
 
 module _ where
@@ -15,6 +17,9 @@ module _ where
   open import Ar hiding (_++_; Ix)
   open import Lang
   open import Function
+  -- open import LangEq
+  open import Relation.Nullary
+  open import Data.List.Properties
 
   open import Effect.Monad.State
   open import Effect.Monad using (RawMonad)
@@ -26,13 +31,37 @@ module _ where
     _ = applicative
     _ = monadState
 
+  data SFin : ℕ → Set where
+    val : String → SFin n
+
   data Ix : S → Set where
     []  : Ix []
-    _∷_ : String → Ix s → Ix (n ∷ s)
+    _∷_ : SFin n → Ix s → Ix (n ∷ s)
 
-  Sem : IS → Set
-  Sem (ar s) = (Ix s → State ℕ ((String → String) × String))
-  Sem (ix s) = Ix s
+  getVal : SFin n → String
+  getVal (val x) = x
+
+  F : S → Set → Set
+  F s X = Ix s → State ℕ ((String → String) × X)
+
+  data Sem : IS → Set where
+    plain : F s String → Sem (ar s)
+    combined : F s (Sem (ar p)) →  Sem (ar (s Ar.⊗ p))
+    index : Ix s → Sem (ix s)
+
+  subst-plain : ∀ {x} → {d : s L.++ p ≡ q}
+    → subst (Sem ∘ ar) (sym d) (plain x) ≡
+      plain (subst (λ y → F y _) (sym d) x)
+  subst-plain {d = refl} = refl
+
+  isCombined : (a : Sem (ar q))
+    → Dec (∃₂ λ s p → Σ (s L.++ p ≡ q) λ eq
+      → ∃ (λ t → subst (Sem ∘ ar) (sym eq) a ≡ combined {s}{p} t))
+  isCombined (plain _) = no foo where
+    foo : _
+    foo (s , _ , _ , _ , eq) with (sym (subst-plain {s = s}) ∙ eq)
+    ... | ()
+  isCombined (combined {s}{p} a) = yes (s , p , refl , a , refl)
 
   -- Here is a detailed explanation why the type for semantic
   -- arrays look so complicated.
@@ -96,32 +125,43 @@ module _ where
   --show-shape : S → String
   --show-shape s = printf "[%s]" $ intersperse ", " $ L.map show-nat s
 
+  fresh-i : ∀ n → State ℕ (SFin n)
+  fresh-i n = do
+    c ← get
+    modify suc
+    let i = printf "i%u" c
+    return (val i)
+
+  fresh-var : State ℕ String
+  fresh-var = do
+    c ← get
+    modify suc
+    let x = printf "x%u" c
+    return x
+
+  fresh-ix : ∀ s → State ℕ (Ix s)
+  fresh-ix [] = pure []
+  fresh-ix (x ∷ s) = _∷_ <$> fresh-i x <*> fresh-ix s
+
+  fresh-i-named : ∀ n → String → State ℕ (SFin n)
+  fresh-i-named n st = do
+    c ← get
+    modify suc
+    let i = printf "%s%u" st c
+    return (val i)
+
+  fresh-ix-named' : ∀ s → String → State ℕ (Ix s)
+  fresh-ix-named' [] st = pure []
+  fresh-ix-named' (x ∷ s) st = _∷_ <$> fresh-i-named x st <*> fresh-ix-named' s st
+
+  fresh-ix-named : ∀ s → String → Ix s
+  fresh-ix-named s st = proj₂ (runState (fresh-ix-named' s st) 0)
+
   shape-args : S → String
   shape-args s = intersperse " " $ L.map show-nat s
 
   dim : S → ℕ
   dim s = L.length s
-
-  fresh-var : ℕ → String
-  fresh-var n = "x" ++ show-nat n
-
-  fresh-ix : String → Ix s
-  fresh-ix n = proj₂ (runState (go n) 0)
-    where
-      go : String → State ℕ (Ix s)
-      go {[]} n = return []
-      go {x ∷ s} n = do -- why is x being igonred?
-        c ← get
-        modify suc
-        is ← go {s} n
-        return ((printf "%s_%u" n c) ∷ is)
-
-  -- Indexes of a variable?
-  iv : (s : S) → State ℕ (Ix s)
-  iv s = do
-    c ← get
-    modify suc
-    return (fresh-ix (fresh-var c))
 
   bop : Bop -> String
   bop plus = "F.+"
@@ -149,20 +189,20 @@ module _ where
 
   ix-map : (String → String) → Ix s → Ix s
   ix-map f [] = []
-  ix-map f (x ∷ i) = f x ∷ ix-map f i
+  ix-map f (x ∷ i) = val (f (getVal x)) ∷ ix-map f i
 
   ix-zipwith : ((a b : String) → String) → Ix s → Ix s → Ix s
   ix-zipwith f [] [] = []
-  ix-zipwith f (x ∷ i) (y ∷ j) = f x y ∷ ix-zipwith f i j
+  ix-zipwith f (x ∷ i) (y ∷ j) = val (f (getVal x) (getVal y)) ∷ ix-zipwith f i j
 
   ix-join : Ix s → String → String
   ix-join [] d = ""
-  ix-join (x ∷ []) d = x
-  ix-join {s = _ ∷ s} (x ∷ y ∷ xs) d = x ++ d ++ ix-join {s} (y ∷ xs) d
+  ix-join (x ∷ []) d = getVal x
+  ix-join {s = _ ∷ s} (x ∷ y ∷ xs) d = getVal x ++ d ++ ix-join {s} (y ∷ xs) d
 
   ix-to-list : Ix s → List String
   ix-to-list [] = []
-  ix-to-list (x ∷ xs) = x ∷ ix-to-list xs
+  ix-to-list (x ∷ xs) = getVal x ∷ ix-to-list xs
 
   -- first argument is an index i, second is a variable x. Gives you x[i]
   to-sel : Ix s → String → String
@@ -172,326 +212,351 @@ module _ where
   to-imap s i e = printf "(imap%u %s (\\%s -> %s))"
                    (dim s) (shape-args s) (ix-join i " ")
                    e
-
   to-sum : (s : S) → (i : Ix s) → (e : String) → String
   to-sum [] i e = e
   to-sum s  i e = printf "(isum%u %s (\\%s -> %s))" (dim s) (shape-args s)
                          (ix-join i " ") e
 
-  to-max : (s : S) → (i : Ix s) → (e : String) → String
-  to-max [] i e = e
-  to-max s  i e = printf "(imaximum%u %s (\\%s -> %s))" (dim s) (shape-args s)
-                         (ix-join i " ") e
-
-  to-softmax : (s : S) → (i : Ix s) → (e : String) → String
-  to-softmax [] i e = e
-  to-softmax s  i e = printf "(isoftmax%u %s (\\%s -> %s))" (dim s) (shape-args s)
-                         (ix-join i " ") e
-
-  ix-plus : s + p ≈ r → (suc_≈_ p u)
-          → (i : Ix s)
-          → (j : Ix u)
-          → Ix r
-  ix-plus []  [] [] [] = []
-  ix-plus (cons ⦃ _ ⦄ ⦃ s+p ⦄) (cons ⦃ _ ⦄ ⦃ sp ⦄) (i ∷ is) (j ∷ js) =
-    printf "(%s + %s)" i j ∷ ix-plus s+p sp is js
-
-  ix-eq : (i j : Ix s) → String
-  ix-eq i j = ix-join (ix-zipwith (printf "(%s == %s)") i j) " && "
-
-  ix-minus : s + p ≈ r → (suc_≈_ p u)
-           → (i : Ix r)
-           → (j : Ix s)
-           → Ix u
-  ix-minus []  [] [] [] = []
-  ix-minus (cons ⦃ _ ⦄ ⦃ s+p ⦄) (cons ⦃ _ ⦄ ⦃ sp ⦄) (i ∷ is) (j ∷ js) =
-    printf "(%s - %s)" i j ∷ ix-minus s+p sp is js
+  mkar : String → Ix s → State ℕ ((String → String) × String)
+  mkar a i = return (id , to-sel i a)
 
   to-div-mod : s * p ≈ q → Ix q
              → Ix s × Ix p
-  to-div-mod []   [] = [] , []
-  to-div-mod (cons {n = n} ⦃ _ ⦄ ⦃ eq ⦄) (x ∷ i) =
-    -- (i: Fin (m*n)) → [p,q] : Fin [m,n] => p=i/n q=i%n
-    Prod.map (printf "(%s / %s)" x (show-nat n) ∷_)
-             (printf "(%s %% %s)" x (show-nat n) ∷_)
+  to-div-mod [] [] = [] , []
+  to-div-mod (cons {m = m} {n = n} ⦃ _ ⦄ ⦃ eq ⦄) ((val x) ∷ i) =
+    Prod.map (val (printf "(%s / %s)" x (show-nat n)) ∷_)
+             (val (printf "(%s %% %s)" x (show-nat n)) ∷_)
              (to-div-mod eq i)
 
   from-div-mod : s * p ≈ q
                → Ix s → Ix p
                → Ix q
   from-div-mod [] [] [] = []
-  from-div-mod (cons {n = n} ⦃ _ ⦄ ⦃ eq ⦄) (i ∷ is) (j ∷ js) =
-    -- (i : Fin m) (j : Fin n)  (k : Fin (m * n))  k = i * n + j
-    printf "((%s * %s) + %s)" i (show-nat n) j
-    ∷ from-div-mod eq is js
+  from-div-mod (cons {n = n} ⦃ _ ⦄ ⦃ eq ⦄) (val i ∷ is) (val j ∷ js) =
+    val (printf "((%s * %s) + %s)" i (show-nat n) j)
+    ∷ (from-div-mod eq is js)
 
+  ix-eq : (i j : Ix s) → String
+  ix-eq i j = ix-join (ix-zipwith (printf "(%s == %s)") i j) " && "
 
-  -- Generate a new name for an external array
-  mkar : String → Ix s → State ℕ ((String → String) × String)
-  mkar a i = return (id , to-sel i a)
+  ix-plus : s + p ≈ r → (suc_≈_ p u)
+          → (i : Ix s)
+          → (j : Ix u)
+          → Ix r
+  ix-plus []  [] [] [] = []
+  ix-plus (cons ⦃ _ ⦄ ⦃ s+p ⦄) (cons ⦃ _ ⦄ ⦃ sp ⦄) (val i ∷ is) (val j ∷ js) =
+    val (printf "(%s + %s)" i j) ∷ (ix-plus s+p sp is js)
+
+  ix-minus : s + p ≈ r → (suc_≈_ p u)
+           → (i : Ix r)
+           → (j : Ix s)
+           → Ix u
+  ix-minus []  [] [] [] = []
+  ix-minus (cons ⦃ _ ⦄ ⦃ s+p ⦄) (cons ⦃ _ ⦄ ⦃ sp ⦄) (val i ∷ is) (val j ∷ js) =
+    val (printf "(%s - %s)" i j) ∷ ix-minus s+p sp is js
+
+  to-softmax : (s : S) → (i : Ix s) → (e : String) → String
+  to-softmax [] i e = e
+  to-softmax s  i e = printf "(isoftmax%u %s (\\%s -> %s))" (dim s) (shape-args s)
+                         (ix-join i " ") e
+
+  {-# TERMINATING #-}
+  sem-sel-fut : Sem (ar s) → Ix s → State ℕ (String)
+  sem-sel-fut (plain x) i = do
+    f , b ← x i
+    return (f b)
+  sem-sel-fut (combined {r} x) ij = do
+    let i , j , pr = splitⁱ {r} ij
+    f , r ← x i
+    b ← sem-sel-fut r j
+    return (f b)
+
+  {-# TERMINATING #-}
+  sem-sel-fut' : Sem (ar s) → Ix s → State ℕ ((String → String) × String)
+  sem-sel-fut' (plain x) i = do
+    f , b ← x i
+    return (f , b)
+  sem-sel-fut' (combined {r} x) ij = do
+    let i , j , pr = splitⁱ {r} ij
+    f , r ← x i
+    h , b ← sem-sel-fut' r j
+    return (h ∘ f , b)
+
+  -- {-# TERMINATING #-}
+  -- sem-sel : Sem (ar (s Ar.⊗ p)) → Ix s → State ℕ (Sem (ar p))
+  -- sem-sel {s} {p} a i with isCombined a
+  -- ... | no _ = return $ plain λ j → do -- 1
+  --   b ← ix-curry (sem-sel-fut a) i j
+  --   return (id , b)
+  -- ... | yes (q , r , qr-eq , t , _) with (q ≟ˢ s) -- 1
+  -- ... | yes refl = foo where -- 2
+  --   foo : _
+  --   foo with (sym $ ++-cancelˡ s _ _ qr-eq)
+  --   ... | refl = t i >>= λ where
+  --       (f , plain b) → return $ plain λ k → do
+  --         h , b′ ← b k
+  --         return (f ∘ h , b′)
+  --       (f , combined {s₁}{p₁} b) → return $ combined {s₁}{p₁} λ k → do
+  --         h , b′ ← b k
+  --         return (f ∘ h , b′)
+  -- ... | no b = {!   !} -- 2
+
+  {-# TERMINATING #-}
+  sem-sum : Sem (ar p) → Ix s → Ix p → State ℕ String
+  sem-sum {p}{s} (plain a) i j = do
+    f , a′ ← a j
+    return (f $ to-sum s i a′)
+
+  sem-sum {_}{s} (combined {q}{r} a) i kw = do
+    let k , w , pr = splitⁱ {q} kw
+    f , a′ ← a k
+    b ← sem-sum a′ i w
+    return (f $ to-sum s i b)
+
+  {-# TERMINATING #-} -- What is wrong with you, Agda?
+  sem-imap : Sem (ar s) → State ℕ String
+  sem-imap {s} (plain f) with s
+  ... | [] = do
+    f , a ← f []
+    return (f a)
+  ... | s′ = do
+    iv ← fresh-ix s′
+    f , a ← f iv
+    return (f $ to-imap s′ iv a)
+
+  sem-imap {s} (combined {p}{r} f) = do
+    iv ← fresh-ix p
+    h , a ← f iv
+    b ← sem-imap a
+    return (h $ to-imap p iv b)
 
   to-fut : E Γ is → FEnv Γ → State ℕ (Sem is)
 
   to-str : E Γ (ar s) → FEnv Γ → State ℕ String
-  to-str {s = []} e ρ = do
-    p ← to-fut e ρ
-    f , b ← p []
-    return (f b)
-  to-str {s = s} e ρ = do
-    p ← to-fut e ρ
-    i ← iv s
-    f , b ← p i
-    return (f (to-imap s i b))
+  to-str e ρ = to-fut e ρ >>= sem-imap
 
   to-fut (var x) ρ = return $ lookup x ρ
-  to-fut zero ρ = return (λ _ → return (id , "zero"))
-  to-fut one ρ = return (λ _ → return (id , "one"))
-  to-fut (imaps e) ρ = return λ i → do
-     b ← to-fut e (ρ , i)
-     f , b′ ← b []
-     return (id , f b′)
+  to-fut zero ρ = pure $ plain $ λ i → pure (id , "zero")
+  to-fut one ρ = pure $ plain $ (λ _ → pure (id , "one"))
+
+  to-fut {Γ} (imaps {s = s} e) ρ = do
+    return $ plain λ i → do
+      b ← to-fut e (ρ , index i)
+      r ← sem-imap b
+      return (id , r)
 
   to-fut (sels e e₁) ρ = do
-     a ← to-fut e ρ
-     x ← to-fut e₁ ρ
-     return λ i → do
-       f , a′ ← a x
-       return (f , a′)
-     --return λ _ → f x
-  to-fut (imap {s = s} e) ρ =
-    return $ ix-uncurry {s} λ i j → do
-      b ← to-fut e (ρ , i)
-      f , b′ ← b j
-      return (id , f b′)
-
-  to-fut (sel e e₁) ρ = do
-     a ← to-fut e ρ
-     i ← to-fut e₁ ρ
-     return λ j → do
-       f , a′ ← ix-curry a i j -- a′ is normalized a?
-       return (f , a′)
-  to-fut (E.imapb x e) ρ = return λ i → do
-    let j , k = to-div-mod x i
-    b ← to-fut e (ρ , j)
-    f , b′ ← b k
-    return (id , f b′)
-  to-fut (E.selb x e e₁) ρ = do
     a ← to-fut e ρ
-    i ← to-fut e₁ ρ
-    return λ j → do
-      let k = from-div-mod x i j
-      f , a′ ← a k
-      return (f , a′)
+    index x ← to-fut e₁ ρ
+    b ← sem-sel-fut a x
+    return $ plain λ _ → return (id , b)
+
+  to-fut (imap {s = s}{p} e) ρ =
+    return $ combined {s}{p} λ i → do
+      b ← to-fut e (ρ , index i)
+      return (id , b)
+
+  to-fut (sel {s = s}{p = p} e e₁) ρ =
+    -- do
+    -- index i ← to-fut e₁ ρ
+    -- a ← to-fut e ρ
+    -- b ← sem-sel a i
+    -- return b
+    do
+    a ← to-fut e ρ
+    index i ← to-fut e₁ ρ
+    return $ plain λ j → do
+      b ← sem-sel-fut a (ix-curry id i j)
+      return (id , b)
+
+  -- TODO : Make it preserve combined
+  -- Not used in mgpt
+  to-fut (E.imapb {s = s}{p = p}{q = q} pf e) ρ =
+    do
+    return $ plain λ i → do -- is plain correct?
+      let (j , k) = to-div-mod pf i
+      b ← to-fut e (ρ , index j)
+      r ← sem-sel-fut b k
+      return (id , r)
+
+  to-fut (E.selb {s}{p}{q} pf e e₁) ρ =
+    do
+    a ← to-fut e ρ
+    index i ← to-fut e₁ ρ
+    return $ plain λ j → do -- is plain correct?
+      let k = from-div-mod pf i j
+      b ← sem-sel-fut a k
+      return (id , b)
+
   to-fut (E.sum {s = s} e) ρ = do
-    i ← iv s
-    b ← to-fut e (ρ , i)
-    return λ j → do
-      f , b′ ← b j
-      return (id , to-sum s i (f b′))
+    i ← fresh-ix s
+    b ← to-fut e (ρ , index i)
+    return $ plain λ j → do
+      c ← sem-sum b i j
+      return (id , c)
+
   to-fut (zero-but e e₁ e₂) ρ = do
-    i ← to-fut e ρ
-    j ← to-fut e₁ ρ
+    index i ← to-fut e ρ
+    index j ← to-fut e₁ ρ
     a ← to-fut e₂ ρ
-    return λ k → do
-      f , a′ ← a k
-      -- move context under if, so that we do not evaluate stuff that we do not need.
-      return (id , printf "(if (%s) then %s else zero)" (ix-eq i j) (f a′))
+    return $ plain λ k → do
+      b ← sem-sel-fut a k
+      return (id , printf "(if (%s) then %s else zero)" (ix-eq i j) b)
+
   to-fut (E.slide e x e₁ x₁) ρ = do
-    i ← to-fut e ρ
+    index i ← to-fut e ρ
     a ← to-fut e₁ ρ
-    return λ j → do
-      f , a′ ← a (ix-plus x x₁ i j)
-      return (f , a′)
+    return $ plain λ j → do
+      b ← sem-sel-fut a (ix-plus x x₁ i j)
+      return (id , b)
+
   to-fut (E.backslide {u = u} e e₁ x x₁) ρ = do
-    i ← to-fut e ρ
+    index i ← to-fut e ρ
     a ← to-fut e₁ ρ
-    return λ j → do
+    return $ plain λ j → do
       let j-i = ix-minus x₁ x j i
       let j≥i = intersperse " && " (L.zipWith (printf "%s >= %s") (ix-to-list j) (ix-to-list i))
       let j-i<u = intersperse " && " (L.zipWith (printf "%s < %u") (ix-to-list j-i) u)
+      b ← sem-sel-fut a j-i
+      let c = printf "if (%s && %s) then %s else zero"
+                     j≥i j-i<u b
+      return (id , c)
 
-      f , a′ ← a j-i
-      -- Again, move the context under if.
-      let b = printf "if (%s && %s) then %s else zero"
-                     j≥i j-i<u (f a′)
-
-      return (id , b)
-  to-fut (logi e) ρ = do
+  to-fut (scaledown x e) ρ = do
     a ← to-fut e ρ
-    return λ i → do
-      f , a′ ← a i
-      return (f ,  printf "(logistics %s)" a′)
+    return $ plain λ i → do
+      b ← sem-sel-fut a i
+      return (id ,  printf "(%s F./ fromi64 %s)" b (show-nat x))
+
   to-fut (e ⊞ e₁) ρ = do
     l ← to-fut e ρ
     r ← to-fut e₁ ρ
-    return λ i → do
-      f , l′ ← l i
-      g , r′ ← r i
-      return (f ∘ g , printf "(%s F.+ %s)" l′ r′)
+    return $ plain λ i → do
+      b ← sem-sel-fut l i
+      c ← sem-sel-fut r i
+      return (id , printf "(%s F.+ %s)" b c)
 
   to-fut (e ⊠ e₁) ρ = do
     l ← to-fut e ρ
     r ← to-fut e₁ ρ
-    return λ i → do
-      f , l′ ← l i
-      g , r′ ← r i
-      return (f ∘ g , printf "(%s F.* %s)" l′ r′)
-
-  to-fut (let′ e e₁) ρ = do
-    c ← get
-    modify suc
-    let n = fresh-var c
-    b ← to-fut e₁ (ρ , (mkar n))
-    return λ i → do
-      x ← to-str e ρ
-      f , b′ ← b i
-      return (printf "(let %s = %s\nin %s)" n x ∘ f ,  b′)
-
-  to-fut (scaledown x e) ρ = do
-    a ← to-fut e ρ
-    return λ i → do
-      f , a′ ← a i
-      return (f ,  printf "(%s F./ fromi64 %s)" a′ (show-nat x))
+    return $ plain λ i → do
+      b ← sem-sel-fut l i
+      c ← sem-sel-fut r i
+      return (id , printf "(%s F.* %s)" b c)
 
   to-fut (⊟ e) ρ = do
     a ← to-fut e ρ
-    return λ i → do
-      f , a′ ← a i
-      return (f ,  printf "(F.neg %s)" a′)
-  -- jairo made
+    return $ plain λ i → do
+      b ← sem-sel-fut a i
+      return (id , printf "(F.neg %s)" b)
 
   to-fut (𝟙/ e) ρ = do
     a ← to-fut e ρ
-    return λ i → do
-      f , a′ ← a i
-      return (f , printf "(one F./ %s)" a′)
+    return $ plain λ i → do
+      b ← sem-sel-fut a i
+      return (id , printf "(one F./ %s)" b)
 
   to-fut (relu e) ρ = do
     a ← to-fut e ρ
-    return λ i → do
-      f , a′ ← a i
-      return (f , printf "F.max %s zero" a′)
+    return $ plain λ i → do
+      b ← sem-sel-fut a i
+      return (id , printf "(F.max %s zero)" b)
 
   to-fut (sqrt e) ρ = do
     a ← to-fut e ρ
-    return λ i → do
-      f , a′ ← a i
-      return (f , printf "(F.sqrt %s)" a′)
+    return $ plain λ i → do
+      b ← sem-sel-fut a i
+      return (id , printf "(F.sqrt %s)" b)
 
   to-fut (𝕀+ e) ρ = do
     a ← to-fut e ρ
-    return λ i → do
-      f , a′ ← a i
-      -- return (f , printf "(if (zero F.< %s) then one else zero)" a′)
-      return (f , printf "(indicatorp %s)" a′)
+    return $ plain λ i → do
+      b ← sem-sel-fut a i
+      return (id , printf "(indicatorp %s)" b)
 
   to-fut (ln e) ρ = do
     a ← to-fut e ρ
-    return λ i → do
-      f , a′ ← a i
-      return (f , printf "(F.log %s)" a′)
+    return $ plain λ i → do
+      b ← sem-sel-fut a i
+      return (id , printf "(F.log %s)" b)
 
   to-fut (un {s = s} softmax e) ρ = do
     c ← get
-    i ← iv s
-    let sf = fresh-var c
+    i ← fresh-ix s
+    sf ← fresh-var
     a ← to-fut e ρ
-    return λ j → do
-      _ , a′ ← a i
-      f , _ ← a j
-      return (printf "(let %s = %s\nin %s)" sf (to-softmax s i a′) ∘ f , to-sel j sf)
-      -- return (id , to-softmax a′)
+    return $ plain λ j → do
+      _ , b ← sem-sel-fut' a i
+      f , _ ← sem-sel-fut' a i
+      return (printf "(let %s = %s\nin %s)" sf (to-softmax s i b) ∘ f , to-sel j sf)
 
-  -- to-fut (un {s = s} softmax e) ρ = do
-  --   c₁ ← get
-  --   i₁ ← iv s
-  --   c₂ ← get
-  --   i₂ ← iv s
-  --   c₃ ← get
-  --   i₃ ← iv s
-  --   let max = fresh-var c₁
-  --   let exps = fresh-var c₂
-  --   let total = fresh-var c₃
-  --   a ← to-fut e ρ
-  --   return λ i₄ → do
-  --     _ , a′₁ ← a i₁
-  --     _ , a′₂ ← a i₂
-  --     f , _ ← a i₄
-  --     return (
-  --       printf "(let %s = %s\nin %s)" max (to-max s i₁ a′₁) ∘
-  --       printf "(let %s = %s \nin %s)" exps
-  --         (to-imap s i₂ (printf "F.exp (%s F.+ F.neg %s)" a′₂ max)) ∘
-  --       printf "(let %s = %s\nin %s)" total (to-sum s i₃ (to-sel i₃ exps)) ∘
-  --       f
-  --       , printf "(%s F./ %s)" (to-sel i₄ exps) total)
+  to-fut (logi e) ρ = do
+    a ← to-fut e ρ
+    return $ plain λ i → do
+      b ← sem-sel-fut a i
+      return (id , printf "(logistics %s)" b)
 
-module Test where
-  open import Relation.Binary.PropositionalEquality
-  open import Data.List
-  open import Data.Product
-  open import Data.Nat
-  open import Data.String
-  open import Function
-  open import Lang
-  open import Ar hiding (_++_; Ix)
-  open Syntax
-  open import Text.Printf
+  to-fut (let′ {s = s}{p} e e₁) ρ = do
+    n ← fresh-var
+    to-fut e₁ (ρ , plain (mkar n)) >>= λ where
+      (plain a) → return (plain λ i → do
+         x ← to-str e ρ
+         f , v ← a i
+         return (printf "(let %s = %s\nin %s)" n x ∘ f , v))
+      (combined {r}{q} a) → return (combined {r}{q} λ i → do
+         x ← to-str e ρ
+         f , v ← a i
+         return (printf "(let %s = %s\nin %s)" n x ∘ f , v))
 
-  open import Effect.Monad.State
-  instance
-    _ = monad
-    _ = applicative
-    _ = monadState
 
-  infixl 5 _,,_
-  _,,_ = _,′_
+module _ where
+open import Relation.Binary.PropositionalEquality
+open import Data.List
+open import Data.Product
+open import Data.Nat
+open import Data.String
+open import Function
+open import Lang
+open import Ar
+open Syntax
 
-  test-e : E _ _
-  test-e = Lcon (ar (5 ∷ []) ∷ ar (5 ∷ []) ∷ []) (ar (5 ∷ 5 ∷ [])) ε
-           λ x y → imap {s = (5 ∷ [])} (let′ (sqrt x) (imaps (sels y (var v₀))))
+open import Effect.Monad.State
+instance
+  _ = monad
+  _ = applicative
+  _ = monadState
 
-  test-s : String
-  test-s = proj₂ (runState (to-str test-e ((_ , mkar "x") , mkar "y")) 0)
+infixl 5 _,,_
+_,,_ = _,′_
 
-  test-f : String
-  test-f = e where
-    a : State ℕ (Sem (ar (5 ∷ 5 ∷ [])))
-    a = to-fut test-e ((_ , mkar "x") , mkar "y")
+test-e : E _ _
+test-e = Lcon (ar (5 ∷ []) ∷ []) (ar (5 ∷ 5 ∷ [])) ε
+         λ e → Imap {5 ∷ []}{5 ∷ []} λ i → Let x := zero {s = unit} In Imaps λ j → x
 
-    b : Ix (5 ∷ 5 ∷ []) → State ℕ ((String → String) × String)
-    b = proj₂ $ runState a 0
+test-s : String
+test-s = proj₂ (runState (to-str test-e (_ , plain (mkar "f"))) 0)
+-- "(imap1 5 (\\i0 -> (let x1 = zero
+-- in (imap1 5 (\\i2 -> x1)))))"
 
-    c : State ℕ ((String → String) × String)
-    c = b ("samurai" ∷ ("aku" ∷ []))
+test₂-e : E _ _
+test₂-e = Lcon (ar (5 ∷ []) ∷ ix (5 ∷ []) ∷ []) (ar (5 ∷ [])) ε
+         λ e i → sel (Let y := zero {s = unit} In Imap {5 ∷ []}{5 ∷ []} λ i → Let x := zero {s = unit} In Imaps λ j → x) i
+        --  λ e i → sel (Imap {5 ∷ []}{5 ∷ []} λ i → Let x := zero {s = unit} In Imaps λ j → x) i
+        --  λ e j → Imaps {5 ∷ 5 ∷ []} λ i → (sel (Let x := sels one i In sel e i) j)
 
-    d : (String → String) × String
-    d = proj₂ (runState c 1)
+test₂-s : String
+test₂-s = proj₂ (runState (to-str test₂-e ((_ , (plain (mkar "f"))) , index (val "j1" ∷ []))) 0)
+-- "(imap1 5 (\\i1 -> (let x0 = zero
+-- in (let x2 = zero
+-- in x2))))"
 
-    f = proj₁ d
-    e = proj₂ d
+test₃-e : E _ _ -- Is this what we want?
+test₃-e = Lcon (ar (5 ∷ []) ∷ []) (ar (_)) ε
+         λ e → Imap {5 ∷ []} (λ i →
+          zero-but i i (
+            Imap {5 ∷ []}{5 ∷ []} λ j → Let x := zero {s = unit} In Imaps λ k → x))
 
-  test-sf = printf "%s \n \n %s" test-f test-s
-
-  loss-e : E _ _
-  loss-e = Lcon (ar (5 ∷ []) ∷ ar (5 ∷ []) ∷ []) (ar (5 ∷ [])) ε
-           λ inp out → Let r := inp ⊠ inp In
-                       {- err -} scaledown 2 ((r ⊞ (⊟ out)) ⊠ (r ⊞ (⊟ out)))
-
-  loss-s : String
-  loss-s = proj₂ (runState (to-str loss-e ((_ , mkar "inp") , mkar "out" )) 0)
-
-  conv-e : E _ _
-  conv-e = Lcon (ar (5 ∷ 5 ∷ []) ∷ ar (2 ∷ 2 ∷ []) ∷ []) (ar (4 ∷ 4 ∷ [])) ε
-           λ img k1 → Primitives.Cnn.conv img k1
-
-  conv-s : String
-  conv-s = proj₂ (runState (to-str conv-e (_ ,, mkar "img" ,, mkar "k1")) 0)
-
-  --λ inp k₁ b₁ k₂ b₂ fc b →
-  cnn-s : String
-  cnn-s = proj₂
-        $ runState (to-str (Primitives.Cnn.cnn)
-                           (_ ,, mkar "inp" ,, mkar "k1" ,, mkar "b1"
-                              ,, mkar "k2"  ,, mkar "b2" ,, mkar "fc"
-                              ,, mkar "b" ,, mkar "target"  )) 0
-
+test₃-s : String
+test₃-s = proj₂ (runState (to-str test₃-e (_ , plain (mkar "f"))) 0)
+-- "(imap1 5 (\\i0 -> (imap2 5 5 (\\i1 i2 -> (if ((i0 == i0)) then (let x3 = zero
+-- in x3) else zero)))))"

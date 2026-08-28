@@ -47,7 +47,12 @@ elet x70 = imap λ x71 → imaps λ x72 → sum λ x73 → (sels (sel wvoc x72) 
 
 elet x74 = imaps λ x75 → scaledown 16 1
 
+-- Imap -> let x = f in G
+-- let x = Imap -> f in Imap -> G[sub]
+
 elet x76 = imap λ x77 → (ln ((softmax (sel x70 x77))))
+
+-- elet x76 = ln (imap λ x77 → ((softmax (sel x70 x77))))
 
 elet x78 = imap λ x79 → imaps λ x80 → ((- (sels x74 x79)) * sels (sel target x79) x80)
 

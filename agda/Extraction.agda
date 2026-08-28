@@ -37,9 +37,9 @@ module Extract where
   open import Relation.Binary.PropositionalEquality
 
   open import Lang
-  open import Ar hiding (r)
+  open import Ar hiding (r ; Ix)
   open import Function
-  open import Futhark
+  open import XFuthark
   open import Replace
 
   open import Effect.Monad.State
@@ -50,6 +50,8 @@ module Extract where
   open import Data.Maybe hiding (_>>=_)
 
   open import LangEq
+
+  import PP
 
   instance
     _ = monad
@@ -154,8 +156,8 @@ module Extract where
 
   from-named : NamedEnv Γ → FEnv Γ
   from-named ε = _
-  from-named (_▹_ {is = ix s} ρ x) = from-named ρ , fresh-ix x
-  from-named (_▹_ {is = ar s} ρ x) = from-named ρ , mkar x
+  from-named (_▹_ {is = ix s} ρ x) = from-named ρ , index (fresh-ix-named s x) --fresh-ix x
+  from-named (_▹_ {is = ar s} ρ x) = from-named ρ , plain (mkar x) --mkar x
 
   -- Show chain using SemFuthark
   env-fut′ : Env Γ Δ → NamedEnv Γ → NamedEnv Δ → State ℕ String
@@ -172,7 +174,7 @@ module Extract where
     c ← get
     modify suc
     v ← to-str x (from-named ν)
-    let n = fresh-var c
+    let n = proj₂ (runState fresh-var c) --fresh-var c
     r ← ee-fut′ e ρ (ν ▹ n)
     return $ printf "let %s = %s\n%s" n v r
 
@@ -216,7 +218,7 @@ module Extract where
       c ← get
       modify suc
       v ← PP.pp x (named-ppenv ν)
-      let n = fresh-var c
+      let n = proj₂ (runState fresh-var c) --fresh-var c
       r ← pretty-ee′ e ρ (ν ▹ n)
       return $ printf "elet %s = %s\n\n%s" n v r
 
@@ -285,8 +287,8 @@ module Extract where
   grad-rmsnorm-pp : String
   grad-rmsnorm-pp = Pretty.pretty Primitives.Microgpt.rmsnorm-e (ε ▹ "inp")
 
-  test-s : String
-  test-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.test-e OPT) (from-named (ε ▹ "f"))) 0)
+  -- test-s : String
+  -- test-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.test-e OPT) (from-named (ε ▹ "f"))) 0)
 
   grad-id-pp : String
   grad-id-pp = Pretty.pretty Primitives.Microgpt.id-e (ε ▹ "inp")
@@ -307,6 +309,9 @@ module Extract where
 
   mgpt-forward-s : String
   mgpt-forward-s = proj₂ (runState (to-str ( multiopt Primitives.Microgpt.mgpt-forward-e OPT) (from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq"))) 0)
+
+  mgpt-forward-pp : String
+  mgpt-forward-pp = proj₂ (runState (PP.pp (multiopt Primitives.Microgpt.mgpt-forward-e OPT) ((((((((((_ , "mask") , "wpe") , "wqry") , "wkey") , "wval") , "wout") , "wup") , "wdown") , "wvoc") , "wseq")) 0)
 
 
   grad-mgpt-loss-s : String
