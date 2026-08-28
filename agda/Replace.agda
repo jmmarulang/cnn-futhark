@@ -1,4 +1,5 @@
 {-# OPTIONS  --backtracking-instance-search #-}
+-- {-# OPTIONS --warn=noUserWarning #-}
 
 module _ where
 module _ where
@@ -34,23 +35,49 @@ module _ where
   replace (zero-but e e₁ e₂) x y | nothing = zero-but (replace e x y) (replace e₁ x y) (replace e₂ x y)
   replace (E.slide e x₁ e₁ x₂) x y | nothing = E.slide (replace e x y) x₁ (replace e₁ x y) x₂
   replace (E.backslide e e₁ x₁ x₂) x y | nothing = E.backslide (replace e x y) (replace e₁ x y) x₁ x₂
-  replace (logistic e) x y | nothing = logistic (replace e x y)
+  -- replace (logistic e) x y | nothing = logistic (replace e x y)
   replace (bin x₁ e e₁) x y | nothing = bin x₁ (replace e x y) (replace e₁ x y)
   replace (scaledown x₁ e) x y | nothing = scaledown x₁ (replace e x y)
-  replace (minus e) x y | nothing = minus (replace e x y)
+  -- replace (minus e) x y | nothing = minus (replace e x y)
   replace (let′ e e₁) x y | nothing = let′ (replace e x y) (replace e₁ (x ↑) (y ↑))
+  -- Jairo made
+  replace (un x₁ e) x y | nothing = un x₁ (replace e x y)
+  -- replace (argmax sn e) x y | nothing = argmax sn (replace e x y)
 
+  replace-let : (e : E Γ is) → E Γ is
+  replace-let (let′ e e₁) = let e' = (replace-let e) in
+    let′ e' (replace (replace-let e₁) (e' ↑) (var v₀)) -- is this correct?
+  replace-let (var x) = var x
+  replace-let 𝟘 = 𝟘
+  replace-let 𝟙 = 𝟙
+  replace-let (imaps e) = imaps (replace-let e)
+  replace-let (sels e e₁) = sels (replace-let e) (replace-let e₁)
+  replace-let (imap e) = imap (replace-let e)
+  replace-let (sel e e₁) = sel (replace-let e) (replace-let e₁)
+  replace-let (E.imapb x e) = E.imapb x (replace-let e)
+  replace-let (E.selb x e e₁) = E.selb x (replace-let e) (replace-let e₁)
+  replace-let (E.sum e) = E.sum (replace-let e)
+  replace-let (zero-but e e₁ e₂) =
+    zero-but (replace-let e) (replace-let e₁) (replace-let e₂)
+  replace-let (E.slide e x e₁ x₁) =
+    E.slide (replace-let e) x (replace-let e₁) x₁
+  replace-let (E.backslide e e₁ x x₁) =
+    E.backslide (replace-let e) (replace-let e₁) x x₁
+  replace-let (bin x e e₁) = bin x (replace-let e) (replace-let e₁)
+  replace-let (scaledown x e) = scaledown x (replace-let e)
+  replace-let (un x e) = un x (replace-let e)
+  -- replace-let (argmax sn e) = argmax sn (replace-let e)
 
 module Test where
   open import Data.List
 
   open import Lang
   open Syntax
-  
+
   ex₁ : E _ _
   ex₁ = Lcon (ar [] ∷ []) (ar []) ε
         λ a → Let x := (Let y := a ⊞ a In (y) ⊞ (y)) In x
+  -- let′ (let′ (var v₀ ⊞ var v₀) (var v₀ ⊞ var v₀)) (var v₀)
 
   ex-repl = replace ex₁ (var v₀ ⊞ var v₀) one
-
-open import Lang
+  -- let′ (let′ 𝟙 (var v₀ ⊞ var v₀)) (var v₀)

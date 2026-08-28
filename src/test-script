@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# Run the various experiments.
+#
+# Currently has some stuff specific to the cluster the script was written for.
+
+echo "BLAH" >> /tmp/x.log
+
+gcc $1

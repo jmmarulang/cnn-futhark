@@ -1,4 +1,5 @@
---{-# OPTIONS --overlapping-instances #-}
+-- {-# OPTIONS --overlapping-instances #-}
+-- {-# OPTIONS --warn=noUserWarning #-}
 open import Data.Nat using (zero; suc; ℕ; _+_; _*_; _≤_; s≤s; z≤n; _<_)
 open import Data.Nat.Properties using (+-mono-≤; ≤-step; ≤-pred; _≟_; +-comm; +-suc)
 open import Data.Fin as F using (zero; suc; Fin; combine; remQuot; fromℕ<; inject+; splitAt)
@@ -22,6 +23,9 @@ module _ where
 module _ where
   S = List ℕ
   P = All Fin
+
+  ι : ℕ → S
+  ι n = n ∷ []
 
   variable
     m n k : ℕ
@@ -116,7 +120,6 @@ module _ where
   --ysum-inv : (f : X → X → X) (e : X) → {a : Ar s (Ar p X)}
   --        → (∀ k → ysum (zipWith f) (K e) a k ≡ map (ysum f e) (λ i j → a j i) k)
 
-
   sum₁ : (X → X → X) → X → Ar (n ∷ []) X → X
   sum₁ {n = zero}   f ε a = ε
   sum₁ {n = suc n}  f ε a = f (a (zero ∷ [])) (sum₁ f ε (a ∘ ιsuc))
@@ -142,8 +145,6 @@ module _ where
   sum-sum₁-agree {n = zero} = refl
   sum-sum₁-agree {n = suc n} {f = f} = cong₂ f refl (sum₁-cong {n = n} _ _ λ { (i ∷ []) → refl })
 
-
-
   xsum-cong : {f : X → X → X} {e : X} {a b : Ar s X} → (∀ i → a i ≡ b i)
             → xsum f e a ≡ xsum f e b
   xsum-cong {s = []} p = p []
@@ -154,7 +155,6 @@ module _ where
   sum₁-xsum : {f : X → X → X} {e : X} {a : Ar (n ∷ []) X} → sum₁ f e a ≡ xsum f e a
   sum₁-xsum {n = zero} = refl
   sum₁-xsum {n = suc n} {f = f}{e}{a} = cong₂ f refl (sym $ trans (sym $ sum₁-xsum {a = unnest (nest a ∘ ιsuc)}) (sum₁-cong {n = n} _ _ λ { (i ∷ []) → refl }))
-
 
   sum-xsum-step : {f : X → X → X} {e : X} {a : Ar (n ∷ s) X}
                 → sum₁ f e (map (xsum f e) (nest a)) ≡ xsum f e a
@@ -176,7 +176,6 @@ module _ where
   sum₁-inv {n = zero} f e {a} _ = refl
   sum₁-inv {n = suc n} f e {a} k = cong (f (a (zero ∷ []) k)) (sum₁-inv f e {a ∘ ιsuc} k)
 
-
   sum-inv : (f : X → X → X) (e : X) → {a : Ar s (Ar p X)}
           → (∀ k → sum (zipWith f) (K e) a k ≡ map (sum f e) (λ i j → a j i) k)
   sum-inv {s = []} f e {a} _ = refl
@@ -184,7 +183,6 @@ module _ where
     sum₁-inv f e {λ i → sum (zipWith f) (K e) (λ j → a (i ++ j))} k
     ∙ sum₁-cong f e {(λ j → sum (zipWith f) (K e) (λ i → a (j ++ i)) k)}
               (λ i → sum-inv f e {λ j → a (i ++ j)} k)
-
 
   sum-map : (f : X → X → X) (e : X) → {a : Ar s (Ar p X)}
           → let
@@ -372,6 +370,35 @@ module _ where
   -- Transposes an array
   transpose : Ar s X → Ar (reverse s) X
   transpose x i = x (unreverseP i)
+
+  sum₁-dist : (_⊙_ : X → X → X) (e : X) → ∀ {a b : Ar (n ∷ []) X} →
+    (∀ {x} → e ⊙ x ≡ x)
+    → (∀ {x y z w} → ((x ⊙ y) ⊙ (z ⊙ w)) ≡ ((x ⊙ z) ⊙ (y ⊙ w)))
+    → sum₁ (_⊙_) e (λ i → (a i) ⊙ (b i)) ≡
+      (sum₁ (_⊙_) e λ i → a i) ⊙ (sum₁ (_⊙_) e λ i → b i)
+  sum₁-dist {n = zero} _⊙_ e neul prop = sym neul
+  sum₁-dist {n = suc n} _⊙_ e {a} {b} neul prop =
+    let sum₁-dist' = λ i j → sum₁-dist _⊙_ e {i} {j} neul prop in
+    cong (λ x → _ ⊙ x) (sum₁-dist' (λ x → a (ιsuc x)) _) ∙ prop
+
+  sum-dist : (_⊙_ : X → X → X) (e : X) → ∀ {a b : Ar s X} →
+    (∀ {x} → e ⊙ x ≡ x)
+    → (∀ {x y z w} → ((x ⊙ y) ⊙ (z ⊙ w)) ≡ ((x ⊙ z) ⊙ (y ⊙ w)))
+    → sum (_⊙_) e (λ i → (a i) ⊙ (b i)) ≡
+      (sum (_⊙_) e λ i → a i) ⊙ (sum (_⊙_) e λ i → b i)
+  sum-dist {s = []} _⊙_ e neul prop = refl
+  sum-dist {s = s ∷ ss} _⊙_ e {a} {b} neul prop =
+    let a' = λ i → sum _⊙_ e λ j → a (i ++ j) in
+    sym (sym (sum₁-dist _⊙_ e {a'} neul prop)
+    ∙ sum₁-cong {n = s} _⊙_ e λ i →
+      sym (sum-dist _⊙_ e {λ j → a (i ++ j)} neul prop))
+
+  lastIx : suc p ≈ s → P s
+  lastIx {p} {[]} pr = []
+  lastIx {p ∷ ps} {x ∷ s} (cons {p = _} ⦃ refl ⦄ ⦃ b ⦄) = F.fromℕ p ∷ (lastIx b)
+
+  -- *-split : ∀ {s p q₁ q₂} → s * p ≈ (q₁ ⊗ q₂) → ? × ?
+  -- *-split = ?
 
 module ArTests where
   imap : (s : S) → (P s → X) → Ar s X

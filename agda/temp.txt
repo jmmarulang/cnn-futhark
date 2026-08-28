@@ -1,0 +1,31 @@
+let x0 = wpe + wseq in
+let x1 = (imap λ x2 → let x3 = (sel x0 x2 * sel x0 x2) in
+let x4 = scaledown 16 (sum λ x5 → sels x3 x5) in
+let x6 = (sqrt (x4 + scaledown 100000 1)) in
+(imaps λ x7 → (sels (sel x0 x2) x7 * (inv x6)))) in
+let x8 = (imap λ x9 → let x10 = (sel x1 x9 * sel x1 x9) in
+let x11 = scaledown 16 (sum λ x12 → sels x10 x12) in
+let x13 = (sqrt (x11 + scaledown 100000 1)) in
+(imaps λ x14 → (sels (sel x1 x9) x14 * (inv x13)))) in
+let x15 = (imap λ x16 → imaps λ x17 → sum λ x18 → (sels (sel wqry x17) x18 * sels (sel x8 x16) x18)) in
+let x19 = (imap λ x20 → imaps λ x21 → sum λ x22 → (sels (sel wkey x21) x22 * sels (sel x8 x20) x22)) in
+let x23 = (imap λ x24 → imaps λ x25 → sum λ x26 → (sels (sel wval x25) x26 * sels (sel x8 x24) x26)) in
+let x27 = (imap λ x28 → imap λ x29 → selb (sel x15 x29) x28) in
+let x30 = (imap λ x31 → imap λ x32 → selb (sel x19 x32) x31) in
+let x33 = (imap λ x34 → imap λ x35 → selb (sel x23 x35) x34) in
+let x36 = (imap λ x37 → let x38 = (imap λ x39 → imaps λ x40 → sum λ x41 → (sels (sel (sel x27 x37) x39) x41 * sels (sel (sel x30 x37) x40) x41)) in
+let x42 = scaledown 2 x38 + mask in
+let x43 = (imap λ x44 → (softmax (sel x42 x44))) in
+(imap λ x45 → imaps λ x46 → sum λ x47 → (sels (sel x43 x45) x47 * sels (sel (sel x33 x37) x47) x46))) in
+let x48 = (imap λ x49 → imapb λ x50 → sel (sel x36 x50) x49) in
+let x51 = (imap λ x52 → imaps λ x53 → sum λ x54 → (sels (sel wout x53) x54 * sels (sel x48 x52) x54)) in
+let x55 = x51 + x1 in
+let x56 = (imap λ x57 → let x58 = (sel x55 x57 * sel x55 x57) in
+let x59 = scaledown 16 (sum λ x60 → sels x58 x60) in
+let x61 = (sqrt (x59 + scaledown 100000 1)) in
+(imaps λ x62 → (sels (sel x55 x57) x62 * (inv x61)))) in
+let x63 = (imap λ x64 → imaps λ x65 → sum λ x66 → (sels (sel wup x65) x66 * sels (sel x56 x64) x66)) in
+let x67 = (relu x63) in
+let x68 = (imap λ x69 → imaps λ x70 → sum λ x71 → (sels (sel wdown x70) x71 * sels (sel x67 x69) x71)) in
+let x72 = x68 + x55 in
+(imap λ x73 → imaps λ x74 → sum λ x75 → (sels (sel wvoc x74) x75 * sels (sel x72 x73) x75))
