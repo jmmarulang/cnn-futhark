@@ -7,4 +7,6 @@ agda/*.agdai
 src/futhark/__pycache__
 src/fwdic.txt
 src/fwdic.npy
+src/string
+src/sys
 
