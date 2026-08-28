@@ -149,8 +149,6 @@ module Opt (r : Real) (rp : RealProp r) where
   ... | _ | _ | _ = imaps e'
   danger-opt' (imap zero) = zero
   danger-opt' (imap {s = s} {p = p} e) = imap (danger-opt' e)
-    -- imap {s = s} (sel (imap (e ↑)) (var v₀))
-    --imap (danger-opt' e)
   danger-opt' (E.imapb x e) = E.imapb x (danger-opt' e)
   danger-opt' (E.sum (a ⊠ (b ⊠ (c ⊠ d)))) with
     a' ← (danger-opt' a) | b' ← (danger-opt' b) | c' ← (danger-opt' c)
@@ -215,7 +213,6 @@ module Opt (r : Real) (rp : RealProp r) where
   ... | (a ⊠ b , p) | (i , q) = (sels a i) ⊠ (sels b i)
                               , λ ρ j → p ρ (eval e₁ ρ)
                                         ∙ cong₂ _*_ (cong (eval a ρ) (q ρ)) (cong (eval b ρ) (q ρ))
-  -- ... | sum e | i = sum (selₛ e (wk here i))
   ... | (sum e , p) | (i , q) = E.sum (sels e (i ↑))
                               , λ {ρ [] → p ρ (eval e₁ ρ)
                                           ∙ sum-inv _+_ (fromℕ 0) {eval e ∘ (ρ ,_)} (eval e₁ ρ)
@@ -229,7 +226,6 @@ module Opt (r : Real) (rp : RealProp r) where
                                                          (eval-wk (skip ⊆-eq) i (ρ , j)
                                                           ∙ eval-cong i wk-env-id
                                                           ∙ sym (q ρ) ))  }
-  -- ... | zero-but i j a | k = zero-but i j (selₛ a k)
   ... | zero-but {Γ = Γ} i j a , p | (k , q) = zero-but i j (sels a k)
                                      , go
           where

@@ -178,15 +178,14 @@ module _ where
   e-depth-wk (zero-but e e₁ e₂) w = e-depth-wk e₂ w
   e-depth-wk (E.slide e x e₁ x₁) w = e-depth-wk e₁ w
   e-depth-wk (E.backslide e e₁ x x₁) w = e-depth-wk e₁ w
-  -- e-depth-wk (logi e) w = e-depth-wk e w
   e-depth-wk (bin x e e₁) w = cong₂ _⊔_ (e-depth-wk e w) (e-depth-wk e₁ w)
   e-depth-wk (scaledown x e) w = e-depth-wk e w
-  -- e-depth-wk (⊟ e) w = e-depth-wk e w
   e-depth-wk (let′ e e₁) w = cong suc (cong₂ _⊔_ (e-depth-wk e w) (e-depth-wk e₁ (keep w)))
   -- Jairo made
   e-depth-wk (logi e) w = e-depth-wk e w
-  e-depth-wk (𝕖^ e) w = e-depth-wk e w
   e-depth-wk (⊟ e) w = e-depth-wk e w
+  e-depth-wk (ln e) w = e-depth-wk e w
+  e-depth-wk (ℙ e) w = e-depth-wk e w
   e-depth-wk (sqrt e) w = e-depth-wk e w
   e-depth-wk (𝟙/ e) w = e-depth-wk e w
   e-depth-wk (relu e) w = e-depth-wk e w
@@ -261,9 +260,10 @@ module _ where
   -- Jairo made
   grad′ (relu e) s = grad′ e ((𝕀+ e) ⊠ s)
   grad′ (𝕀+ e) s = grad′ e 𝟘
-  grad′ (𝕖^ e) s = grad′ e (𝕖^ s)
   grad′ (sqrt e) s = grad′ e (𝟙/ (𝟚 ⊠ sqrt s))
-  grad′ (𝟙/ e) s = grad′ e (s ⊠ s)
+  grad′ (𝟙/ e) s = grad′ e (⊟ (( 𝟙/ e) ⊠ (s // e)))
+  grad′ (ln e) s = grad′ e (s // e)
+  grad′ (ℙ e) s = grad′ e (ℙ e ⊠ (s ⊟ (imaps $ E.sum $ sels ((ℙ $ e ↑ ↑) ⊠ (s ↑ ↑)) (var v₀))))
 
   grad-last e (env (ρ ▹ x)) l e<l _ _ = ee-tail $′ let′ x $′ grad′ (e ↑) (var v₀) (ee-push-zero $′ ee-wk (skip ⊆-eq) (env ρ)) l (e-depth-↑ e e<l)
   grad-last e (let′ x ρ) l e<l (suc ld) (s≤s ρ<ld) = let

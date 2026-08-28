@@ -2,7 +2,7 @@
 --{-# OPTIONS --warn=noUserWarning #-}
 module ToFile where
 
-open import XExtraction
+open import Extraction
 open Extract
 open import Data.String
 open import Lang

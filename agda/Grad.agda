@@ -84,14 +84,6 @@ module _ where
   env-map-sum (skip ρ) = skip (env-map-sum ρ)
   env-map-sum (ρ ▹ x) = env-map-sum ρ ▹ E.sum x
 
-  -- ee-fold : EE Γ Δ → Env Γ Δ
-  -- ee-fold (env x) = x
-  -- ee-fold {Δ = Δ} (let′ {s = s} x ρ) = map-let (ee-fold ρ)
-  --   where map-let : ∀ {Γ} → Env Γ (Δ ▹ ar s) → Env Γ Δ
-  --         map-let ε = ε
-  --         map-let (skip ν) = skip (map-let ν)
-  --         map-let (ν ▹ e) =  map-let ν ▹ let′ x e
-
   ee-fold : EE Γ Δ → Env Γ Δ
   ee-fold (env x) = x
   ee-fold {Δ = Δ} (let′ {s = s} x ρ) = map-let (ee-fold ρ)
@@ -113,11 +105,6 @@ module _ where
   ee-plus (env ρ) (env ν) = env (env-plus ρ ν)
   ee-plus (env ρ) (let′ x ν) = let′ x (ee-plus (ee-wk (skip ⊆-eq) (env ρ)) ν) -- TODO : substituve replicated let bindings
   ee-plus (let′ x ρ) ν = let′ x (ee-plus ρ (ee-wk (skip ⊆-eq) ν))
-
-  -- ee-plus : (ρ ν : EE Γ Δ) → EE Γ Δ
-  -- ee-plus (env ρ) (env ν) = env (env-plus ρ ν)
-  -- ee-plus (env ρ) (let′ x ν) = let′ x (ee-plus (ee-wk (skip ⊆-eq) (env ρ)) ν) -- TODO : substituve replicated let bindings
-  -- ee-plus (let′ x ρ) ν = let′ x (ee-plus ρ (ee-wk (skip ⊆-eq) ν))
 
   -- This is a section that implements a terminating version
   -- of the ee-plus.
@@ -161,9 +148,6 @@ module _ where
   glet : (v : ar s ∈ Δ) → (x : E (Δ / v) (ar s)) → E Δ (ar p) → E (Δ / v) (ar p)
   glet v x e = let′ x $′ sub e (glet-sub v)
 
-  -- glet′ : (x : E Δ (ar s)) → E Δ (ar p) → E Δ (ar p)
-  -- glet′ x e = let′ x (wk (skip ⊆-eq) e)
-
   env-sub : Env Γ Δ → Sub Ψ Δ → Env Γ Ψ
   env-sub ε s = ε
   env-sub (skip ρ) s = skip (env-sub ρ s)
@@ -179,14 +163,9 @@ module _ where
   ee-let : (v : ar s ∈ Δ) (x : E (Δ / v) (ar s)) → EE Γ Δ → EE Γ (Δ / v)
   ee-let v x ρ = let′ x $ ee-sub ρ (glet-sub v)
 
-  -- ee-map-sum : EE Γ (Δ ▹ ix s) → EE Γ Δ
-  -- ee-map-sum ρ = env (env-map-sum (ee-fold ρ))
-
   {-# TERMINATING #-}
   ee-map-sum : EE Γ (Δ ▹ ix s) → EE Γ Δ
   ee-map-sum (env x) = env (env-map-sum x)
-  -- ee-map-sum {s = s} (let′ {s = p} x ρ) =
-  --   env (env-map-sum (ee-fold (let′ {s = p} x ρ)))
   ee-map-sum {s = s} (let′ {s = p} x ρ) with (stren-∃ x v₀)
   ... | just (x' , eq) = let′ x' (ee-map-sum (ee-sub ρ sub-swap))
   -- ... | nothing = env (env-map-sum (ee-fold (let′ {s = p} x ρ)))
@@ -202,9 +181,6 @@ module _ where
   grad-last′ : (v : ar s ∈ Γ) → E (Γ / v) (ar s) → EE (Γ) (Γ / v) → EE (Γ / v) (Γ / v)
 
   grad : (e s : E Γ is) → EE Γ Γ → EE Γ Γ
-
-  -- grad-sum : (e s : E (Γ ▹ ix s) (ar p)) → EE Γ Γ → EE Γ Γ
-  -- grad-sum e s δ = ee-plus δ $ ee-tail $ ee-map-sum (grad e s zero-ee)
 
   grad-sum : (e seed : E (Γ ▹ ix s) (ar p)) → EE Γ Γ → EE Γ Γ
   grad-sum e s δ = ee-plus δ $ ee-tail $ ee-map-sum (grad e s zero-ee)

@@ -155,7 +155,6 @@ module _ where
   isOne (let′ e e₁) = no λ ()
   -- Jairo made
   isOne (un x e) = no λ ()
-  -- isOne (argmax pf e) = no λ ()
 
   isImap : (e : E Γ (ar q))
          → Dec (∃₂ λ s p
@@ -177,8 +176,6 @@ module _ where
   isImap (scaledown x e) = no λ { (_ , _ , refl , _ , ()) }
   isImap (let′ e e₁) = no λ { (_ , _ , refl , _ , ()) }
   isImap (un x e) = no λ { (_ , _ , refl , _ , ()) }
-  -- isImap (argmax pf e) = no λ { (_ , _ , refl , _ , ()) }
-
 
   isImaps : (e : E Γ (ar s)) → Dec (∃ λ u → e ≡ imaps u)
   isImaps (var x) = no λ ()
@@ -198,7 +195,6 @@ module _ where
   isImaps (scaledown x e) = no λ ()
   isImaps (let′ e e₁) = no λ ()
   isImaps (un x e) = no λ ()
-  -- isImaps (argmax pf e) = no λ ()
 
   isZeroBut : (e : E Γ (ar p)) → Dec (∃₂ λ s i → ∃₂ λ j u → e ≡ zero-but {s = s} i j u)
   isZeroBut (var x) = no λ ()
@@ -218,7 +214,6 @@ module _ where
   isZeroBut (scaledown x e) = no λ ()
   isZeroBut (let′ e e₁) = no λ ()
   isZeroBut (un x e) = no λ ()
-  -- isZeroBut (argmax pf e) = no λ ()
 
   isSels : (e : E Γ (ar p)) (s : S) → Dec (Σ (p ≡ []) λ eq → ∃₂ λ t u → subst (E Γ ∘ ar) eq e ≡ sels {s = s} t u)
   isSels (var x) s = no λ { (refl , _ , _ , ()) }
@@ -244,7 +239,6 @@ module _ where
   isSels (scaledown x e) s = no λ { (refl , _ , _ , ()) }
   isSels (let′ e e₁) s = no λ { (refl , _ , _ , ()) }
   isSels (un x e) s = no λ { (refl , _ , _ , ()) }
-  -- isSels (argmax pf e) s = no λ { (refl , _ , _ , ()) }
 
   isSel :  (e : E Γ (ar p)) → Dec (∃ λ s → ∃₂ λ t u → e ≡ sel {s = s}{p} t u)
   isSel (var x) = no λ { (_ , _ , _ , ()) }
@@ -264,7 +258,6 @@ module _ where
   isSel (scaledown x e) = no λ { (_ , _ , _ , ()) }
   isSel (let′ e e₁) = no λ { (_ , _ , _ , ()) }
   isSel (un x e) = no λ { (_ , _ , _ , ()) }
-  -- isSel (argmax pf e) = no λ { (_ , _ , _ , ()) }
 
   isImapb : (e : E Γ (ar q)) → Dec (∃₂ λ s p → Σ (s * p ≈ q) λ pf → ∃ λ t → e ≡ E.imapb pf t)
   isImapb (var x) = no λ { (_ , _ , _ , _ , ()) }
@@ -284,7 +277,6 @@ module _ where
   isImapb (scaledown x e) = no λ { (_ , _ , _ , _ , ()) }
   isImapb (let′ e e₁) = no λ { (_ , _ , _ , _ , ()) }
   isImapb (un x e) = no λ { (_ , _ , _ , _ , ()) }
-  -- isImapb (argmax pf e) = no λ { (_ , _ , _ , _ , ()) }
 
   isSelb : (e : E Γ (ar p)) → Dec (∃₂ λ s q → Σ (s * p ≈ q) λ pf → ∃₂ λ t u → e ≡ E.selb pf t u)
   isSelb (var x) = no λ { (_ , _ , _ , _ , _ , ()) }
@@ -304,7 +296,6 @@ module _ where
   isSelb (scaledown x e) = no λ { (_ , _ , _ , _ , _ , ()) }
   isSelb (let′ e e₁) = no λ { (_ , _ , _ , _ , _ , ()) }
   isSelb (un x e) = no λ { (_ , _ , _ , _ , _ , ()) }
-  -- isSelb (argmax pf e) = no λ { (_ , _ , _ , _ , _ , ()) }
 
   isSum : (e : E Γ (ar p)) → Dec (∃₂ λ s t → e ≡ E.sum {s = s} t)
   isSum (var x) = no λ ()
@@ -324,7 +315,6 @@ module _ where
   isSum (scaledown x e) = no λ ()
   isSum (let′ e e₁) = no λ ()
   isSum (un x e) = no λ ()
-  -- isSum (argmax pf e) = no λ ()
 
   isSlide : (e : E Γ (ar u)) → Dec (∃₂ λ s′ p′ → ∃₂ λ r′ t → ∃₂ λ x′ t₁ → ∃ λ x₁ → e ≡ E.slide {s = s′}{p′}{r′} t x′ t₁ x₁)
   isSlide (var x) = no λ ()
@@ -346,7 +336,6 @@ module _ where
   isSlide (⊟ e) = no λ ()
   isSlide (let′ e e₁) = no λ ()
   isSlide (un x e) = no λ ()
-  -- isSlide (argmax pf e) = no λ ()
 
   isBackslide : (e : E Γ (ar r))
               → Dec (∃₂ λ s′ u′ → ∃₂ λ p′ t → ∃₂ λ t₁ x → ∃ λ x₁
@@ -370,7 +359,6 @@ module _ where
   isBackslide (⊟ e) = no λ ()
   isBackslide (let′ e e₁) = no λ ()
   isBackslide (un x e) = no λ ()
-  -- isBackslide (argmax pf e) = no λ ()
 
   isUn : (e : E Γ (ar s)) → Dec (∃ λ t → ∃ λ t₁ → e ≡ un t t₁)
   isUn (var x) = no λ ()
@@ -390,7 +378,6 @@ module _ where
   isUn (scaledown x e) = no λ ()
   isUn (let′ e e₁) = no λ ()
   isUn (un x e) = yes (x , e , refl)
-  -- isUn (argmax pf e) = no λ ()
 
   un-inj : {a b : E Γ (ar s)} → {x y : Uop} → (un x a ≡ un y b) → (x ≡ y)
   un-inj {a = a} {b = b} {x = x} {y = y} refl = refl
@@ -422,7 +409,6 @@ module _ where
   isBin (⊟ e) = no λ ()
   isBin (let′ e e₁) = no λ ()
   isBin (un x e) = no λ ()
-  -- isBin (argmax pf e) = no λ ()
 
   isScaledown : (e : E Γ (ar s)) → Dec (∃₂ λ x t  → e ≡ scaledown x t)
   isScaledown (var x) = no λ ()
@@ -444,7 +430,6 @@ module _ where
   isScaledown (⊟ e) = no λ ()
   isScaledown (let′ e e₁) = no λ ()
   isScaledown (un x e) = no λ ()
-  -- isScaledown (argmax pf e) = no λ ()
 
   isLet : (e : E Γ (ar p)) → Dec (∃₂ λ s′ t → ∃ λ t₁ → e ≡ let′ {s = s′} t t₁)
   isLet (var x) = no λ ()
@@ -466,7 +451,6 @@ module _ where
   isLet (⊟ e) = no λ ()
   isLet (let′ e e₁) = yes (_ , e , e₁ , refl)
   isLet (un x e) = no λ ()
-  -- isLet (argmax pf e) = no λ ()
 
   unvar : {x y : is ∈ Γ} → var x ≡ var y → x ≡ y
   unvar refl = refl
@@ -570,9 +554,6 @@ module _ where
     e₁t₁ ← e₁ ≟ᵉ t₁
     just (cong₂ (λ a b → E.backslide a b _ _ ) et e₁t₁)
   ... | _ | _ | _ = nothing
-  -- logi e ≟ᵉ u with isLogistic u
-  -- ... | no ¬p = nothing
-  -- ... | yes (t , refl) = e ≟ᵉ t >>= just ∘ (cong logi)
   bin x e e₁ ≟ᵉ u with isBin u
   ... | no ¬p = nothing
   ... | yes (o , t , t₁ , refl) with x ≟ᵒ o
@@ -586,9 +567,6 @@ module _ where
   ... | yes (x′ , t , refl) with x ≟ x′
   ... | no ¬p = nothing
   ... | yes refl = e ≟ᵉ t >>= just ∘ (cong (scaledown _))
-  -- (⊟ e) ≟ᵉ u with isMinus u
-  -- ... | no ¬p = nothing
-  -- ... | yes (t , refl) = e ≟ᵉ t >>= just ∘ (cong (⊟_))
   let′ {s = s} e e₁ ≟ᵉ u with isLet u
   ... | no ¬p = nothing
   ... | yes (s′ , t , t₁ , refl) with s ≟ˢ s′
@@ -605,11 +583,6 @@ module _ where
   ... | yes refl with e ≟ᵉ t
   ... | just refl = just (cong (un _) refl)
   ... | nothing = nothing
-    -- do
-    -- et ← e ≟ᵉ t -- ???
-    -- just (cong (un o) et)
-
-  -- test : (e : E (Γ ▹ ix s)) → inv (sum e)
 
   e-eq? : (a : E Γ is) (b : E Γ ip) → Maybe (Σ (is ≡ ip) λ pp → subst (E Γ) pp a ≡ b)
   e-eq? {is = is}{ip} a b with is ≟ⁱ ip
@@ -622,8 +595,6 @@ module _ where
   open import Data.Maybe.Properties
   open import Data.Nat using (ℕ; zero; suc; _+_)
   open WkSub hiding (_∙ˢ_)
-
-  -- chain-selx? : E Γ is → ip ∈ Γ → ℕ
 
   count-sels : E Γ is → ip ∈ Γ → ℕ
   count-sels (sels e e₁) v with isVar e
@@ -645,39 +616,6 @@ module _ where
   count-sels (let′ e e₁) v = count-sels e v + count-sels e₁ (there v)
   count-sels (un x e) v = count-sels e v
   count-sels e v = 0
-
-  -- count-selv : E Γ is → ip ∈ Γ → ℕ
-  -- count-selv (sels e e₁) v with isVar e
-  -- ... | no a = count-selv e v
-  -- ... | yes (w , refl) with eq? w v
-  -- ... | veq = 1
-  -- ... | _ = 0
-  -- count-selv (sel e e₁) v with isVar e
-  -- ... | no a = count-selv e v
-  -- ... | yes (w , refl) with eq? w v
-  -- ... | veq = 1
-  -- ... | _ = 0
-  -- count-selv (selb x e e₁) v with isVar e
-  -- ... | no a = count-selv e v
-  -- ... | yes (w , refl) with eq? w v
-  -- ... | veq = 1
-  -- ... | _ = 0
-  -- count-selv (imaps e) v = count-selv e (there v)
-  -- count-selv (imap e) v = count-selv e (there v)
-  -- count-selv (imapb x e) v = count-selv e (there v)
-  -- count-selv (sum e) v = count-selv e (there v)
-  -- count-selv (argmax pf e) v = count-selv e (there v)
-  -- count-selv (zero-but i j e) v = count-selv e v
-  -- count-selv (slide i x e x₁) v = count-selv e v
-  -- count-selv (backslide i e x x₁) v = count-selv e v
-  -- count-selv (bin x e e₁) v = (count-selv e v) + (count-selv e₁ v)
-  -- count-selv (scaledown x e) v = count-selv e v
-  -- count-selv (let′ e e₁) v = count-selv e v + count-selv e₁ (there v)
-  -- count-selv (un x e) v = count-selv e v
-  -- count-selv e v = 0
-
-  -- test-count : ℕ
-  -- test-count = count-selv {Γ = ε ▹ ar unit ▹ ix unit} {is = ar unit} (sels (var v₁) (var v₀) ⊞ sels (var v₁) (var v₀)) v₁
 
   inline : E Γ is → E Γ is
   inline e = norm-lets (inline' e) where
@@ -706,55 +644,3 @@ module _ where
     -- ... | 1 | 0 | _ = sub a (sub-id ▹ inline' e)
     ... | 1 | 1 | _ = sub a (sub-id ▹ inline' e)
     ... | _ | _ | _ = let′ (inline' e) a
-
-  -- _⊆?_ : (Γ Δ : Ctx) → Dec (Γ ⊆ Δ)
-  -- ε ⊆? Δ = yes ⊆-ε
-  -- (Γ ▹ x) ⊆? ε = no λ ()
-  -- (Γ ▹ x) ⊆? (Δ ▹ y) with (x ≟ⁱ y)
-  -- ... | yes refl = map′ (λ s → keep s) ⊆-inj (Γ ⊆? Δ)
-  -- ... | no f = no (λ s → {!   !})
-
-
-  -- IsE₂ : ∀ {Γ' Γ is ip} (x : E Γ' is) (e : E Γ ip) → Set
-  -- IsE₂ {_} {Γ} {_} {_} (var x) e = (∃ λ v → e ≡ var v)
-  -- IsE₂ {_} {Γ} {ar s} {ix q} x e = ⊥
-  -- IsE₂ {_} {Γ} {ar s} {ar q} 𝟘 e = (e ≡ zero)
-  -- IsE₂ {_} {Γ} {ar s} {ar q} 𝟙 e = (e ≡ one)
-  -- IsE₂ {_} {Γ} {ar s} {ar q} (imaps x) e = (∃ λ u → e ≡ imaps u)
-  -- IsE₂ {_} {Γ} {ar s} {ar p} (sels x x₁) e = (Σ (p ≡ []) λ eq → ∃₂ λ t u → subst (E Γ ∘ ar) eq e ≡ sels {s = s} t u)
-  -- IsE₂ {_} {Γ} {ar s} {ar q} (imap x) e = (∃₂ λ s p → Σ (s L.++ p ≡ q) λ eq → ∃ λ u → subst (E Γ ∘ ar) (sym eq) e ≡ imap {s = s} u)
-  -- IsE₂ {_} {Γ} {ar s} {ar p} (sel x x₁) e =  (∃ λ s → ∃₂ λ t u → e ≡ sel {s = s}{p} t u)
-  -- IsE₂ {_} {Γ} {ar s} {ar q} (E.imapb x x₁) e = (∃₂ λ s p → Σ (s * p ≈ q) λ pf → ∃ λ t → e ≡ E.imapb pf t)
-  -- IsE₂ {_} {Γ} {ar s} {ar p} (E.selb x x₁ x₂) e = (∃₂ λ s q → Σ (s * p ≈ q) λ pf → ∃₂ λ t u → e ≡ E.selb pf t u)
-  -- IsE₂ {_} {Γ} {ar s} {ar q} (E.sum x) e = (∃₂ λ s t → e ≡ E.sum {s = s} t)
-  -- IsE₂ {_} {Γ} {ar s} {ar q} (zero-but x x₁ x₂) e = (∃₂ λ s i → ∃₂ λ j u → e ≡ zero-but {s = s} i j u)
-  -- IsE₂ {_} {Γ} {ar s} {ar q} (E.slide x x₁ x₂ x₃) e = (∃₂ λ s′ p′ → ∃₂ λ r′ t → ∃₂ λ x′ t₁ → ∃ λ x₁ → e ≡ E.slide {s = s′}{p′}{r′} t x′ t₁ x₁)
-  -- IsE₂ {_} {Γ} {ar s} {ar q} (E.backslide x x₁ x₂ x₃) e = (∃₂ λ s′ u′ → ∃₂ λ p′ t → ∃₂ λ t₁ x → ∃ λ x₁ → e ≡ E.backslide {s = s′}{u = u′}{p = p′} t t₁ x x₁)
-  -- IsE₂ {_} {Γ} {ar s} {ar q} (bin x x₁ x₂) e = (∃₂ λ o t → ∃ λ t₁ → e ≡ bin o t t₁)
-  -- IsE₂ {_} {Γ} {ar s} {ar q} (scaledown x x₁) e = (∃₂ λ x t  → e ≡ scaledown x t)
-  -- IsE₂ {_} {Γ} {ar s} {ar q} (let′ x x₁) e = (∃₂ λ s′ t → ∃ λ t₁ → e ≡ let′ {s = s′} t t₁)
-  -- IsE₂ {_} {Γ} {ar s} {ar q} (un x x₁) e = (∃ λ t → ∃ λ t₁ → e ≡ un t t₁)
-  -- IsE₂ {_} {Γ} {ar s} {ar q} (maximum x) e = (∃₂ λ s t → e ≡ maximum {s = s} t)
-  -- -- IsE₂ {_} {Γ} {ar s} {ar q} (var x) e = (∃ λ v → e ≡ var v)
-
-  -- isE₂ : ∀ {Γ' Γ is} (x : E Γ' is) (e : E Γ is) → Dec (IsE₂ x e)
-  -- isE₂ {_} {_} {ar s} 𝟘 e = isZero e
-  -- isE₂ {_} {_} {ar s} 𝟙 e = isOne e
-  -- isE₂ {_} {_} {ar s} (imaps x) e = isImaps e
-  -- isE₂ {_} {_} {ar s} (sels x x₁) e = isSels e s
-  -- isE₂ {_} {_} {ar s} (imap x) e = isImap e
-  -- isE₂ {_} {_} {ar s} (sel x x₁) e = isSel e
-  -- isE₂ {_} {_} {ar s} (E.imapb x x₁) e = isImapb e
-  -- isE₂ {_} {_} {ar s} (E.selb x x₁ x₂) e = isSelb e
-  -- isE₂ {_} {_} {ar s} (E.sum x) e = isSum e
-  -- isE₂ {_} {_} {ar s} (zero-but x x₁ x₂) e = isZeroBut e
-  -- isE₂ {_} {_} {ar s} (E.slide x x₁ x₂ x₃) e = isSlide e
-  -- isE₂ {_} {_} {ar s} (E.backslide x x₁ x₂ x₃) e = isBackslide e
-  -- isE₂ {_} {_} {ar s} (bin x x₁ x₂) e = isBin e
-  -- isE₂ {_} {_} {ar s} (scaledown x x₁) e = isScaledown e
-  -- isE₂ {_} {_} {ar s} (let′ x x₁) e = isLet e
-  -- isE₂ {_} {_} {ar s} (un x x₁) e = isUn e
-  -- isE₂ {_} {_} {ar s} (maximum x) e = isMaximum e
-  -- isE₂ {_} {_} {ix s} (var x) e = isVar e
-  -- isE₂ {_} {_} {ar s} (var x) e = isVar e
-

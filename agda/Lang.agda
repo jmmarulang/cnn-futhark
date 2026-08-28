@@ -95,11 +95,10 @@ module _ where
     logistic
       neg
     -- Jairo made
-      -- exp
-      rectifier 
-      squared 
-      inverse 
-      ind-positive 
+      rectifier
+      squared
+      inverse
+      ind-positive
       logarithm
       softmax
       : Uop
@@ -132,13 +131,11 @@ module _ where
     let′       : E Γ (ar s) → E (Γ ▹ ar s) (ar p) → E Γ (ar p)
     -- Jairo made
     un         : Uop → E Γ (ar s) → E Γ (ar s)
-    -- argmax    : suc p ≈ s → E Γ (ar s) → E Γ (ix s)
 
   pattern 𝟙 = one
   pattern 𝟘 = zero
 
   pattern ⊟_ a = un neg a
-  -- pattern 𝕖^_ a = un exp a
   pattern logi a = un logistic a
   pattern sqrt a = un squared a
   pattern 𝟙/ a = un inverse a
@@ -149,9 +146,6 @@ module _ where
 
   pattern _⊞_ a b = bin plus a b
   pattern _⊠_ a b = bin mul a b
-
-  -- infixl 5 𝕀+
-  -- syntax 𝕀+ a b = 𝕀[ a < b ]
 
   _⊟_ : ( a b : E Γ (ar s)) → E Γ (ar s)
   _⊟_ a b = a ⊞ ⊟ b
@@ -213,7 +207,6 @@ module WkSub where
   wk s (let′ e e₁) = let′ (wk s e) (wk (keep s) e₁)
   -- Jairo made
   wk s (un x e) = un x (wk s e)
-  -- wk s (argmax pf e) = argmax pf (wk s e)
 
   _∙ʷ_ : Δ ⊆ Ψ → Γ ⊆ Δ → Γ ⊆ Ψ
   s ∙ʷ ε = s
@@ -285,7 +278,6 @@ module WkSub where
   sub (let′ e e₁) s = let′ (sub e s) (sub e₁ (skeep s))
   -- Jairo made
   sub (un x e) s = un x (sub e s)
-  -- sub (argmax pf e) s = argmax pf (sub e s)
 
   _∙ˢ_ : Sub Δ Ψ → Sub Γ Δ → Sub Γ Ψ
   ε ∙ˢ t = ε
@@ -328,7 +320,6 @@ module WkSub where
   sub-at-id (let′ e e₁) = cong₂ let′ (sub-at-id e) (sub-at-id e₁)
   -- Jairo made
   sub-at-id (un x e) = cong (un x) (sub-at-id e)
-  -- sub-at-id (argmax pf e) = cong (argmax pf) (sub-at-id e)
 
   sub-ε : (e : E ε is) → sub e ε ≡ e
   sub-ε e = sub-at-id e
@@ -395,8 +386,6 @@ module WkSub where
     map (λ (a , b) → _ , (cong (scaledown x) b)) (stren-∃ e v)
   stren-∃ (un x e) v =
     map (λ (a , b) → _ , (cong (un x) b)) (stren-∃ e v)
-  -- stren-∃ (argmax pf e) v =
-  --   map (λ (a , b) → _ , (cong (argmax pf) b)) (stren-∃ e v)
   stren-∃ (let′ e e₁) v = do
     (a , b) ← stren-∃ e v
     (c , d) ← stren-∃ e₁ (there v)
@@ -428,7 +417,6 @@ module WkSub where
   norm-lets (let′ e e₁) = maybe id (let′ (norm-lets e) (norm-lets e₁)) (stren (norm-lets e₁) v₀)
   -- Jairo made
   norm-lets (un x e) = un x (norm-lets e)
-  -- norm-lets (argmax pf e) = argmax pf (norm-lets e)
 
   count-uses : E Γ is → ip ∈ Γ → ℕ
   count-uses (var x) v with eq? x v
@@ -451,7 +439,6 @@ module WkSub where
   count-uses (let′ e e₁) v = count-uses e v + count-uses e₁ (there v)
   -- Jairo made
   count-uses (un x e) v = count-uses e v
-  -- count-uses (argmax pf e) v = count-uses e v -- Is this correct?
 
 
 module Syntax where
@@ -489,11 +476,6 @@ module Syntax where
        → (GE (Γ ▹ ix s) (ix s) → E (Γ ▹ ix s) (ar p))
        → E Γ (ar p)
   Sum f = sum (f λ {Δ} ⦃ p ⦄ → var (V v₀))
-
-  -- Max : ∀ {Γ}
-  --      → (GE (Γ ▹ ix s) (ix s) → E (Γ ▹ ix s) (ar p))
-  --      → E Γ (ar p)
-  -- Max f = maximum (f λ {Δ} ⦃ p ⦄ → var (V v₀))
 
   Imaps : ∀ {Γ}
         → (GE (Γ ▹ ix s) (ix s) → E (Γ ▹ ix s) (ar unit))
@@ -598,9 +580,7 @@ module Primitives where
                 ∷ ar (6 ∷ [])       ∷ ar (12 ∷ 6 ∷ 5 ∷ 5 ∷ [])
                 ∷ ar (12 ∷ [])      ∷ ar (10 ∷ 12 ∷ 1 ∷ 4 ∷ 4 ∷ [])
                 ∷ ar (10 ∷ [])      ∷ ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])
-                -- ∷ ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])
                 ∷ [])
-              -- (ar (10 ∷ 1 ∷ 1 ∷ 1 ∷ 1 ∷ [])) ε
               (ar ([])) ε
           λ inp k₁ b₁ k₂ b₂ fc b target →
           Let c₁₁ := mconv inp k₁ b₁  In
@@ -638,7 +618,6 @@ module Primitives where
     linear : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar s) → E Γ (ar u)
     linear {u} {s} w x =
       Imaps {u} λ i → Sum {s} λ j → sels (sel ⟨ w ⟩ i ⊠ ⟨ x ⟩) j
-      -- Imaps {u} λ i → Sum {s} λ j → sels (sel ⟨ w ⟩ i) j ⊠ sels ⟨ x ⟩ j
 
     m-linear : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (p ⊗ s)) → E Γ (ar (p ⊗ u))
     m-linear {u} {s} {p} w xs = Imap {p} λ i → linear ⟨ w ⟩ (sel ⟨ xs ⟩ i)

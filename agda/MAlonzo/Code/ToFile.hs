@@ -18,10 +18,10 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
 import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.IO
+import qualified MAlonzo.Code.Extraction
 import qualified MAlonzo.Code.IO.Base
 import qualified MAlonzo.Code.IO.Finite
 import qualified MAlonzo.Code.Level
-import qualified MAlonzo.Code.XExtraction
 
 main = coe d_main_2
 -- ToFile.main
@@ -34,4 +34,4 @@ d_main_2
       (coe
          MAlonzo.Code.IO.Finite.d_putStrLn_28
          (coe MAlonzo.Code.Level.d_0ℓ_22)
-         (coe MAlonzo.Code.XExtraction.d_grad'45'mgpt'45'loss'45's_538))
+         (coe MAlonzo.Code.Extraction.d_grad'45'mgpt'45'loss'45's_538))

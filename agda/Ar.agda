@@ -117,9 +117,6 @@ module _ where
         foldr' zero e a = e
         foldr' (suc n) e a = go s (foldr' n e (unnest (nest a ∘ ιsuc))) (a (zero ∷ []))
 
-  --ysum-inv : (f : X → X → X) (e : X) → {a : Ar s (Ar p X)}
-  --        → (∀ k → ysum (zipWith f) (K e) a k ≡ map (ysum f e) (λ i j → a j i) k)
-
   sum₁ : (X → X → X) → X → Ar (n ∷ []) X → X
   sum₁ {n = zero}   f ε a = ε
   sum₁ {n = suc n}  f ε a = f (a (zero ∷ [])) (sum₁ f ε (a ∘ ιsuc))
@@ -396,9 +393,6 @@ module _ where
   lastIx : suc p ≈ s → P s
   lastIx {p} {[]} pr = []
   lastIx {p ∷ ps} {x ∷ s} (cons {p = _} ⦃ refl ⦄ ⦃ b ⦄) = F.fromℕ p ∷ (lastIx b)
-
-  -- *-split : ∀ {s p q₁ q₂} → s * p ≈ (q₁ ⊗ q₂) → ? × ?
-  -- *-split = ?
 
 module ArTests where
   imap : (s : S) → (P s → X) → Ar s X

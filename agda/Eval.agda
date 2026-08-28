@@ -324,7 +324,6 @@ module Eval (r : Real) (rp : RealProp r) where
     open import Data.Maybe.Properties
 
   module ZeroBut where
-    -- open RealProp rp
 
     zbs-suc-r : (i : P (n ∷ [])) (j : P (n ∷ [])) (is js : P s) (t : P (n ∷ s) → R)
               → zbs (j ++ js) (i ++ is) (t) ≡ zbs js is (λ ks → zbs (j) (i) (λ k → t (k ++ ks)))

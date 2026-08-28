@@ -28,8 +28,6 @@ record Real : Set₁ where
   1/_ : R → R
   1/_ = fromℕ 1 ÷_
 
-  -- syntax I-< a b = I[ a < b ]
-
 record RealProp (r : Real) : Set where
   open Real r
   field

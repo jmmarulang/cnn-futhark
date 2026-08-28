@@ -282,25 +282,6 @@ module _ where
     h , b ← sem-sel-fut' r j
     return (h ∘ f , b)
 
-  -- {-# TERMINATING #-}
-  -- sem-sel : Sem (ar (s Ar.⊗ p)) → Ix s → State ℕ (Sem (ar p))
-  -- sem-sel {s} {p} a i with isCombined a
-  -- ... | no _ = return $ plain λ j → do -- 1
-  --   b ← ix-curry (sem-sel-fut a) i j
-  --   return (id , b)
-  -- ... | yes (q , r , qr-eq , t , _) with (q ≟ˢ s) -- 1
-  -- ... | yes refl = foo where -- 2
-  --   foo : _
-  --   foo with (sym $ ++-cancelˡ s _ _ qr-eq)
-  --   ... | refl = t i >>= λ where
-  --       (f , plain b) → return $ plain λ k → do
-  --         h , b′ ← b k
-  --         return (f ∘ h , b′)
-  --       (f , combined {s₁}{p₁} b) → return $ combined {s₁}{p₁} λ k → do
-  --         h , b′ ← b k
-  --         return (f ∘ h , b′)
-  -- ... | no b = {!   !} -- 2
-
   {-# TERMINATING #-}
   sem-sum : Sem (ar p) → Ix s → Ix p → State ℕ String
   sem-sum {p}{s} (plain a) i j = do
@@ -535,20 +516,13 @@ test-e = Lcon (ar (5 ∷ []) ∷ []) (ar (5 ∷ 5 ∷ [])) ε
 
 test-s : String
 test-s = proj₂ (runState (to-str test-e (_ , plain (mkar "f"))) 0)
--- "(imap1 5 (\\i0 -> (let x1 = zero
--- in (imap1 5 (\\i2 -> x1)))))"
 
 test₂-e : E _ _
 test₂-e = Lcon (ar (5 ∷ []) ∷ ix (5 ∷ []) ∷ []) (ar (5 ∷ [])) ε
          λ e i → sel (Let y := zero {s = unit} In Imap {5 ∷ []}{5 ∷ []} λ i → Let x := zero {s = unit} In Imaps λ j → x) i
-        --  λ e i → sel (Imap {5 ∷ []}{5 ∷ []} λ i → Let x := zero {s = unit} In Imaps λ j → x) i
-        --  λ e j → Imaps {5 ∷ 5 ∷ []} λ i → (sel (Let x := sels one i In sel e i) j)
 
 test₂-s : String
 test₂-s = proj₂ (runState (to-str test₂-e ((_ , (plain (mkar "f"))) , index (val "j1" ∷ []))) 0)
--- "(imap1 5 (\\i1 -> (let x0 = zero
--- in (let x2 = zero
--- in x2))))"
 
 test₃-e : E _ _ -- Is this what we want?
 test₃-e = Lcon (ar (5 ∷ []) ∷ []) (ar (_)) ε
@@ -558,5 +532,3 @@ test₃-e = Lcon (ar (5 ∷ []) ∷ []) (ar (_)) ε
 
 test₃-s : String
 test₃-s = proj₂ (runState (to-str test₃-e (_ , plain (mkar "f"))) 0)
--- "(imap1 5 (\\i0 -> (imap2 5 5 (\\i1 i2 -> (if ((i0 == i0)) then (let x3 = zero
--- in x3) else zero)))))"

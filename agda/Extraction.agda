@@ -39,7 +39,7 @@ module Extract where
   open import Lang
   open import Ar hiding (r ; Ix)
   open import Function
-  open import XFuthark
+  open import Futhark
   open import Replace
 
   open import Effect.Monad.State
@@ -129,24 +129,6 @@ module Extract where
   ee-dedup (let′ x ρ) = let x' = (replace-let x) in
     let′ x' (ee-replace (ee-dedup ρ) (x' ↑) (var v₀))
 
-  -- env-let-out : Env Γ Δ → Env Γ Δ
-  -- env-let-out ε = ε
-  -- env-let-out (skip ρ) = skip (env-let-out ρ)
-  -- env-let-out (ρ ▹ x) = (env-let-out ρ) ▹ (let-out x)
-
-  -- {-# TERMINATING #-}
-  -- ee-let-out : EE Γ Δ → EE Γ Δ
-  -- ee-let-out (env ρ) = env ρ
-  -- ee-let-out (let′ x (env ρ)) = let′ x (env ρ)
-  -- ee-let-out (let′ x (let′ y ρ)) with (stren y v₀)
-  -- -- ... | just (y' , _) = let′ y' (let′ (x ↑) (ee-sub (ee-let-out ρ) sub-swap))
-  -- ... | just y' = let′ y' (ee-let-out (let′ (x ↑) (ee-sub ρ sub-swap)))
-  -- ... | nothing = (let′ x (ee-let-out (let′ y  ρ)))
-
-  -- ee-dedup : EE Γ Δ → EE Γ Δ
-  -- ee-dedup (env x) = env x
-  -- ee-dedup (let′ x e) = let′ x (ee-replace (ee-dedup e) (x ↑) (var v₀))
-
   ee-OPT : EE Γ Δ → EE Γ Δ
   ee-OPT ρ = ee-inline $ ee-opt (ee-inline (ee-opt $ ee-inline ρ)) --??
 
@@ -185,17 +167,11 @@ module Extract where
   ee-fut : EE Γ Γ → NamedEnv Γ → String
   ee-fut e ρ = proj₂ $ runState (ee-fut′ (ee-clean e) ρ ρ) 0
 
-  -- nodedup-ee-fut : EE Γ Γ → NamedEnv Γ → String
-  -- nodedup-ee-fut e ρ = proj₂ $ runState (ee-fut′ (ee-opt $ ee-opt e) ρ ρ) 0
-
   -- This is the "entry point" that computes derivatives
   -- and generates the Futhark code for the variable names
   -- passed through NamedEnv
   pp : E Γ (ar s) → NamedEnv Γ → String
   pp e ρ = ee-fut ({- env-norm-lets $ -} grad e one zero-ee) ρ
-
-  -- nodedup-pp : E Γ (ar s) → NamedEnv Γ → String
-  -- nodedup-pp e ρ = nodedup-ee-fut ({- env-norm-lets $ -} grad e one zero-ee) ρ
 
   module Pretty where
     import PP
@@ -247,7 +223,7 @@ module Extract where
 
   grad-conv-e = pp conv-e (ε ▹ "img" ▹ "k1")
 
-  grad-conv-s = pp conv-e (ε ▹ "inp" ▹ "k1") -- whats the difference?
+  grad-conv-s = pp conv-e (ε ▹ "inp" ▹ "k1")
 
   compc1 : E _ _
   compc1 =  Lcon (  ar (28 ∷ 28 ∷ []) ∷ ar (6 ∷ 5 ∷ 5 ∷ [])
@@ -271,9 +247,6 @@ module Extract where
             λ a b → Sum λ i → (Let x := sels a i ⊞ sels b i In x ⊠ x)
   sum-let-s = pp sum-let (ε ▹ "a" ▹ "b")
 
-  -- grad-test-e = ee-opt (grad test-e (var v₀) zero-ee)
-  -- grad-test-s = ee-fut (grad test-e (var v₀) zero-ee) (ε ▹ "x" ▹ "s" )
-
   grad-cnn-e = ee-OPT (grad Primitives.Cnn.cnn one zero-ee)
 
   -- This is our CNN example from the paper.
@@ -287,17 +260,11 @@ module Extract where
   grad-rmsnorm-pp : String
   grad-rmsnorm-pp = Pretty.pretty Primitives.Microgpt.rmsnorm-e (ε ▹ "inp")
 
-  -- test-s : String
-  -- test-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.test-e OPT) (from-named (ε ▹ "f"))) 0)
-
   grad-id-pp : String
   grad-id-pp = Pretty.pretty Primitives.Microgpt.id-e (ε ▹ "inp")
 
   grad-softmax-pp : String
   grad-softmax-pp = Pretty.seed-pretty Primitives.Microgpt.softmax-e (var v₁) (ε ▹ "f'" ▹ "f")
-
-  -- grad-maximum-pp : String
-  -- grad-maximum-pp = Pretty.seed-pretty Primitives.Microgpt.maximum-e (var v₁) (ε ▹ "j" ▹ "inp")
 
   grad-div-pp : String
   grad-div-pp = Pretty.pretty Primitives.Microgpt.div-e (ε ▹ "x" ▹ "y")
@@ -313,7 +280,6 @@ module Extract where
   mgpt-forward-pp : String
   mgpt-forward-pp = proj₂ (runState (PP.pp (multiopt Primitives.Microgpt.mgpt-forward-e OPT) ((((((((((_ , "mask") , "wpe") , "wqry") , "wkey") , "wval") , "wout") , "wup") , "wdown") , "wvoc") , "wseq")) 0)
 
-
   grad-mgpt-loss-s : String
   grad-mgpt-loss-s = pp Primitives.Microgpt.mgpt-loss-e
     (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup"
@@ -322,6 +288,3 @@ module Extract where
   grad-mgpt-loss-pp = Pretty.pretty Primitives.Microgpt.mgpt-loss-e
     (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup"
        ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target")
-
-  -- grad-inv : String
-  -- grad-inv = Pretty.pretty (Lcon {!   !} {!   !} {!   !} {!   !}) {!   !}

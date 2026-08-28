@@ -179,24 +179,6 @@ in (let x16 = (imap1 16 (\i88 -> (imap1 16 (\i89 -> (isum1 64 (\i90 -> (wdown[i8
 in (let x17 = (imap2 16 16 (\i91 i92 -> (x16[i91][i92] F.+ x12[i91][i92])))
 in (imap1 16 (\i18 -> (imap1 27 (\i93 -> (isum1 16 (\i94 -> (wvoc[i93][i94] F.* x17[i18][i94])))))))))))))))))))))))))
 
---   def cal_loss : (mask: [16][16]real)
---     -> (wpe: [16][16]real)
---     -> (wqry: [16][16]real)
---     -> (wkey: [16][16]real)
---     -> (wval: [16][16]real)
---     -> (wout: [16][16]real)
---     -> (wup: [64][16]real)
---     -> (wdown: [16][64]real)
---     -> (wvoc: [27][16]real)
---     -> (wseq: [16][16]real)
---     -> (target: [16][27]real)
---     -> (real, [16]real) =
---     #[unsafe]
---     \(mask: [16][16]real) (wpe: [16][16]real)
---     (wqry: [16][16]real) (wkey: [16][16]real) (wval: [16][16]real)
---     (wout: [16][16]real) (wup: [64][16]real) (wdown: [16][64]real)
---     (wvoc: [27][16]real) (wseq: [16][16]real) (target: [16][27]real) ->
-
   def grad_loss : (mask: [16][16]real)
     -> (wpe: [16][16]real)
     -> (wqry: [16][16]real)
@@ -363,11 +345,6 @@ entry forward_seq (p : params) (tokens : [16]i64) (mask : [16][16]f64) : [16][27
    let {wte, wpe, wqry, wkey, wval, wout, wup, wdown, wvoc} = p
    let wseq = (imap2 16 16 (\m n -> wte[tokens[m]][n]))
    in nn64.forward_seq mask wpe wqry wkey wval wout wup wdown wvoc wseq
-
--- entry cal_loss (p : params) (tokens : [16]i64) (target : [16][27]f64) (mask : [16][16]f64) : (f64 , [16]f64) =
---    let {wte, wpe, wqry, wkey, wval, wout, wup, wdown, wvoc} = p
---    let wseq = (imap2 16 16 (\m n -> wte[tokens[m]][n]))
---    in nn64.cal_loss mask wpe wqry wkey wval wout wup wdown wvoc wseq target
 
 def cal_target (n : i64) (tokens : [16]i64) : [16][27]f64 =
   imap2 16 27 (\i j -> (if ((i < (n - 1)) && (tokens[i + 1] == j)) then 1 else 0))
