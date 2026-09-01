@@ -65,7 +65,7 @@ pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
 ones = np.ones((sl,sl))
 cau_mask = (ones - np.tril(ones))
 
-num_steps = 500
+num_steps = 30000
 
 # -------------------------------------
 # TRAINING FUT
@@ -84,6 +84,7 @@ for step in range(num_steps):
     dls[step] = dl
     # Masking
     pad_mask = np.ones((sl,sl))
+    print(dl)
     for i in range(dl):
         pad_mask[i][ 0 : dl] = 0
     mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)

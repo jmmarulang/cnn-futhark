@@ -197,10 +197,13 @@ module _ where
   ... | no ¬q = no λ { refl → ¬q refl }
   ... | yes refl = yes refl
 
-  inject-left : Fin (suc m) → Fin (suc (n + m))
-  inject-left {m} {n} i rewrite +-comm n m  = inject+ _ i
+  inject+′ : ∀ {m} n → Fin m → Fin (m + n)
+  inject+′ n i = F._↑ˡ_ i n
 
-  split-inj₁ : (i : Fin (m + n)) (k : Fin m) → splitAt m i ≡ inj₁ k → inject+ _ k ≡ i
+  inject-left : Fin (suc m) → Fin (suc (n + m))
+  inject-left {m} {n} i rewrite +-comm n m  = inject+′ _ i
+
+  split-inj₁ : (i : Fin (m + n)) (k : Fin m) → splitAt m i ≡ inj₁ k → inject+′ _ k ≡ i
   split-inj₁ {suc m} zero .zero refl = refl
   split-inj₁ {suc m} (suc i) zero p with splitAt m i | inspect (splitAt m) i
   split-inj₁ {suc m} (suc i) zero () | inj₁ x | [ r ]
@@ -215,6 +218,9 @@ module _ where
   zero   ⊕ j = inject-left j
   suc i  ⊕ j = suc (i ⊕ j)
 
+  splitAt-inject+′ : ∀ m n i → splitAt m (F._↑ˡ_ i n) ≡ inj₁ i
+  splitAt-inject+′ m n i = Data.Fin.Properties.splitAt-↑ˡ m i n
+
   _⊝_ : (i : Fin (m + n)) (j : Fin m)
       → Dec (∃ λ k → j ⊕ k ≡ i)
   _⊝_ {suc m} {n} i zero rewrite +-comm m n with splitAt (suc n) i | inspect (splitAt (suc n)) i
@@ -222,7 +228,7 @@ module _ where
   ... | inj₂ k | [ r ] = no reason
     where
       reason : _
-      reason (k , refl) rewrite splitAt-inject+ (suc n) m k = inj₁₂ r
+      reason (k , refl) rewrite splitAt-inject+′ (suc n) m k = inj₁₂ r
   zero ⊝ suc j = no λ { (k , ()) }
   suc i ⊝ suc j with i ⊝ j
   ... | yes (k , p) = yes (k , cong suc p)
