@@ -208,24 +208,6 @@ module _ where
   isMop (zero-but e e₁ e₂) = no λ ()
   isMop (let′ e e₁) = no λ ()
 
-  isImap : (e : E Γ (ar q))
-         → Dec (∃₂ λ s p
-                → Σ (s L.++ p ≡ q) λ eq → ∃ λ u → subst (E Γ ∘ ar) (sym eq) e ≡ imap {s = s} u)
-  isImap e with isMop e
-  ...| no a = no foo where
-    foo : _
-    foo (s , p , refl , f , refl) = a (s , p , imap-op refl , f , refl)
-  ... | yes (s , .unit , imaps-op , a , refl) = no foo where
-    foo : _
-    foo (s , p , refl , b , ())
-  ... | yes (s , p , imap-op refl , a , refl) = yes (s , p , refl , a , refl)
-  ... | yes (s , p , imapb-op x , a , refl) = no foo where
-    foo : _
-    foo (s , p , refl , b , ())
-  ... | yes (s , p , sum-op , a , refl) = no foo where
-    foo : _
-    foo (s , p , refl , b , ())
-
   isSop : (e : E Γ (ar s))
     → Dec (∃₂ (λ p q → ∃ (λ x → ∃₂ (λ a b → e ≡ sop {p} {q} x a b))))
   isSop (var x) = no λ ()
@@ -320,47 +302,3 @@ module _ where
     et ← e ≟ᵉ t
     e₁t₁ ← e₁ ≟ᵉ t₁
     just (cong₂ let′ et e₁t₁)
-
-  e-eq? : (a : E Γ is) (b : E Γ ip) → Maybe (Σ (is ≡ ip) λ pp → subst (E Γ) pp a ≡ b)
-  e-eq? {is = is}{ip} a b with is ≟ⁱ ip
-  ... | no ¬p = nothing
-  ... | yes refl = a ≟ᵉ b >>= just ∘ (refl ,_)
-
-  open import Data.Unit
-  open import Data.Empty
-  open import Data.Maybe renaming (map to mmap)
-  open import Data.Maybe.Properties
-  open import Data.Nat using (ℕ; zero; suc; _+_)
-  open WkSub hiding (_∙ˢ_)
-
-  count-sels : E Γ is → ip ∈ Γ → ℕ
-  count-sels (sels (var w) e₁) v with eq? w v
-  ... | veq = 1
-  ... | neq .w y = 0
-  count-sels (sop x e e₁) v = count-sels e v + count-sels e₁ v
-  count-sels (var x) v = 0
-  count-sels (kop x) v = 0
-  count-sels (uop x e) v = count-sels e v
-  count-sels (bop x e e₁) v = count-sels e v + count-sels e₁ v
-  count-sels (mop x e) v = count-sels e (there v)
-  count-sels (zero-but e e₁ e₂) v = count-sels e₂ v
-  count-sels (let′ e e₁) v = count-sels e v + count-sels e₁ (there v)
-
-  inline : E Γ is → E Γ is
-  inline e = norm-lets (inline' e) where
-    inline' : E Γ is → E Γ is
-    inline' (var x) = var x
-    inline' (kop x) = kop x
-    inline' (uop x e) = uop x (inline' e)
-    inline' (bop x e e₁) = bop x (inline' e) (inline' e₁)
-    inline' (mop x e) = mop x (inline' e)
-    inline' (sop x e e₁) = sop x (inline' e) (inline' e₁)
-    inline' (zero-but e e₁ e₂) = zero-but (inline' e) (inline' e₁) (inline' e₂)
-    inline' (let′ e e₁) with a ← (inline' e₁) | count-uses a v₀ | count-sels a v₀ | e
-    ... | 0 | _ | _ = sub a (sub-id ▹ (inline' e))
-    ... | _ | _ | var v = sub a (sub-id ▹ (var v))
-    ... | _ | _ | 𝟘 = sub a (sub-id ▹ 𝟘)
-    ... | _ | _ | 𝟙 = sub a (sub-id ▹ 𝟙)
-    -- ... | 1 | 0 | _ = sub a (sub-id ▹ inline' e)
-    ... | 1 | 1 | _ = sub a (sub-id ▹ inline' e)
-    ... | _ | _ | _ = let′ (inline' e) a

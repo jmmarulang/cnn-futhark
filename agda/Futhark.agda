@@ -163,9 +163,9 @@ module _ where
   dim : S → ℕ
   dim s = L.length s
 
-  bop : Bop -> String
-  bop plus = "F.+"
-  bop mul = "F.*"
+  bop-fut : Bop -> String
+  bop-fut plus-op = "F.+"
+  bop-fut mul-op = "F.*"
 
   show-array-type : S → String
   show-array-type [] = "f32"
@@ -317,8 +317,8 @@ module _ where
   to-str e ρ = to-fut e ρ >>= sem-imap
 
   to-fut (var x) ρ = return $ lookup x ρ
-  to-fut zero ρ = pure $ plain $ λ i → pure (id , "zero")
-  to-fut one ρ = pure $ plain $ (λ _ → pure (id , "one"))
+  to-fut 𝟘 ρ = pure $ plain $ λ i → pure (id , "zero")
+  to-fut 𝟙 ρ = pure $ plain $ (λ _ → pure (id , "one"))
 
   to-fut {Γ} (imaps {s = s} e) ρ = do
     return $ plain λ i → do
@@ -332,12 +332,12 @@ module _ where
     b ← sem-sel-fut a x
     return $ plain λ _ → return (id , b)
 
-  to-fut (imap {s = s}{p} e) ρ =
+  to-fut (imap′ {s = s}{p} refl e) ρ =
     return $ combined {s}{p} λ i → do
       b ← to-fut e (ρ , index i)
       return (id , b)
 
-  to-fut (sel {s = s}{p = p} e e₁) ρ =
+  to-fut (sel′ {s = s}{p = p} refl e e₁) ρ =
     -- do
     -- index i ← to-fut e₁ ρ
     -- a ← to-fut e ρ
@@ -352,7 +352,7 @@ module _ where
 
   -- TODO : Make it preserve combined
   -- Not used in mgpt
-  to-fut (E.imapb {s = s}{p = p}{q = q} pf e) ρ =
+  to-fut (imapb {s = s}{p = p}{q = q} pf e) ρ =
     do
     return $ plain λ i → do -- is plain correct?
       let (j , k) = to-div-mod pf i
@@ -360,7 +360,7 @@ module _ where
       r ← sem-sel-fut b k
       return (id , r)
 
-  to-fut (E.selb {s}{p}{q} pf e e₁) ρ =
+  to-fut (selb {s}{p}{q} pf e e₁) ρ =
     do
     a ← to-fut e ρ
     index i ← to-fut e₁ ρ
@@ -369,7 +369,7 @@ module _ where
       b ← sem-sel-fut a k
       return (id , b)
 
-  to-fut (E.sum {s = s} e) ρ = do
+  to-fut (sum {s = s} e) ρ = do
     i ← fresh-ix s
     b ← to-fut e (ρ , index i)
     return $ plain λ j → do
@@ -384,24 +384,24 @@ module _ where
       b ← sem-sel-fut a k
       return (id , printf "(if (%s) then %s else zero)" (ix-eq i j) b)
 
-  to-fut (E.slide e x e₁ x₁) ρ = do
-    index i ← to-fut e ρ
-    a ← to-fut e₁ ρ
-    return $ plain λ j → do
-      b ← sem-sel-fut a (ix-plus x x₁ i j)
-      return (id , b)
+  -- to-fut (E.slide e x e₁ x₁) ρ = do
+  --   index i ← to-fut e ρ
+  --   a ← to-fut e₁ ρ
+  --   return $ plain λ j → do
+  --     b ← sem-sel-fut a (ix-plus x x₁ i j)
+  --     return (id , b)
 
-  to-fut (E.backslide {u = u} e e₁ x x₁) ρ = do
-    index i ← to-fut e ρ
-    a ← to-fut e₁ ρ
-    return $ plain λ j → do
-      let j-i = ix-minus x₁ x j i
-      let j≥i = intersperse " && " (L.zipWith (printf "%s >= %s") (ix-to-list j) (ix-to-list i))
-      let j-i<u = intersperse " && " (L.zipWith (printf "%s < %u") (ix-to-list j-i) u)
-      b ← sem-sel-fut a j-i
-      let c = printf "if (%s && %s) then %s else zero"
-                     j≥i j-i<u b
-      return (id , c)
+  -- to-fut (E.backslide {u = u} e e₁ x x₁) ρ = do
+  --   index i ← to-fut e ρ
+  --   a ← to-fut e₁ ρ
+  --   return $ plain λ j → do
+  --     let j-i = ix-minus x₁ x j i
+  --     let j≥i = intersperse " && " (L.zipWith (printf "%s >= %s") (ix-to-list j) (ix-to-list i))
+  --     let j-i<u = intersperse " && " (L.zipWith (printf "%s < %u") (ix-to-list j-i) u)
+  --     b ← sem-sel-fut a j-i
+  --     let c = printf "if (%s && %s) then %s else zero"
+  --                    j≥i j-i<u b
+  --     return (id , c)
 
   to-fut (scaledown x e) ρ = do
     a ← to-fut e ρ
@@ -443,13 +443,13 @@ module _ where
       b ← sem-sel-fut a i
       return (id , printf "(F.max %s zero)" b)
 
-  to-fut (sqrt e) ρ = do
+  to-fut (√ e) ρ = do
     a ← to-fut e ρ
     return $ plain λ i → do
       b ← sem-sel-fut a i
       return (id , printf "(F.sqrt %s)" b)
 
-  to-fut (𝕀+ e) ρ = do
+  to-fut (𝕚+ e) ρ = do
     a ← to-fut e ρ
     return $ plain λ i → do
       b ← sem-sel-fut a i
@@ -461,7 +461,7 @@ module _ where
       b ← sem-sel-fut a i
       return (id , printf "(F.log %s)" b)
 
-  to-fut (un {s = s} softmax e) ρ = do
+  to-fut (uop {s = s} softmax-op e) ρ = do
     c ← get
     i ← fresh-ix s
     sf ← fresh-var
@@ -471,11 +471,11 @@ module _ where
       f , _ ← sem-sel-fut' a i
       return (printf "(let %s = %s\nin %s)" sf (to-softmax s i b) ∘ f , to-sel j sf)
 
-  to-fut (logi e) ρ = do
-    a ← to-fut e ρ
-    return $ plain λ i → do
-      b ← sem-sel-fut a i
-      return (id , printf "(logistics %s)" b)
+  -- to-fut (logi e) ρ = do
+  --   a ← to-fut e ρ
+  --   return $ plain λ i → do
+  --     b ← sem-sel-fut a i
+  --     return (id , printf "(logistics %s)" b)
 
   to-fut (let′ {s = s}{p} e e₁) ρ = do
     n ← fresh-var
@@ -512,14 +512,14 @@ _,,_ = _,′_
 
 test-e : E _ _
 test-e = Lcon (ar (5 ∷ []) ∷ []) (ar (5 ∷ 5 ∷ [])) ε
-         λ e → Imap {5 ∷ []}{5 ∷ []} λ i → Let x := zero {s = unit} In Imaps λ j → x
+         λ e → Imap {5 ∷ []}{5 ∷ []} λ i → Let x := 𝟘 {s = unit} In Imaps λ j → x
 
 test-s : String
 test-s = proj₂ (runState (to-str test-e (_ , plain (mkar "f"))) 0)
 
 test₂-e : E _ _
 test₂-e = Lcon (ar (5 ∷ []) ∷ ix (5 ∷ []) ∷ []) (ar (5 ∷ [])) ε
-         λ e i → sel (Let y := zero {s = unit} In Imap {5 ∷ []}{5 ∷ []} λ i → Let x := zero {s = unit} In Imaps λ j → x) i
+         λ e i → sel (Let y := 𝟘 {s = unit} In Imap {5 ∷ []}{5 ∷ []} λ i → Let x := 𝟘 {s = unit} In Imaps λ j → x) i
 
 test₂-s : String
 test₂-s = proj₂ (runState (to-str test₂-e ((_ , (plain (mkar "f"))) , index (val "j1" ∷ []))) 0)
@@ -528,7 +528,7 @@ test₃-e : E _ _ -- Is this what we want?
 test₃-e = Lcon (ar (5 ∷ []) ∷ []) (ar (_)) ε
          λ e → Imap {5 ∷ []} (λ i →
           zero-but i i (
-            Imap {5 ∷ []}{5 ∷ []} λ j → Let x := zero {s = unit} In Imaps λ k → x))
+            Imap {5 ∷ []}{5 ∷ []} λ j → Let x := 𝟘 {s = unit} In Imaps λ k → x))
 
 test₃-s : String
 test₃-s = proj₂ (runState (to-str test₃-e (_ , plain (mkar "f"))) 0)

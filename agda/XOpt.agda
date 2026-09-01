@@ -21,7 +21,7 @@ open import Real
 open import Data.Product as Prod hiding (_<*>_)
 open import Data.List.Properties
 
-module Opt (r : Real) (rp : RealProp r) where
+module XOpt (r : Real) (rp : RealProp r) where
 
   open Real.Real r
   open RealProp rp
@@ -70,29 +70,6 @@ module Opt (r : Real) (rp : RealProp r) where
   sels-in (zero-but e e₁ e₂) = zero-but (sels-in e) (sels-in e₁) (sels-in e₂)
   sels-in (let′ e e₁) = let′ (sels-in e) (sels-in e₁)
   sels-in e = e
-
-  -- TODO : Incomplete
-  sum-in : E Γ is → E Γ is
-  sum-in (sum (a ⊠ b)) with
-    a' ← (sum-in a) | b' ← (sum-in b) | (stren a' v₀) | (stren (sum-in b) v₀)
-  ... | just c | _ = c ⊠ Lang.sum b'
-  ... | _ | just d = (Lang.sum a') ⊠ d
-  ... | _ | _ = Lang.sum (a' ⊠ b')
-  sum-in (Lang.sum (⊟ e)) = ⊟ Lang.sum (sum-in e)
-
-  sum-in (Lang.sum e) = Lang.sum (sum-in e)
-  sum-in (imaps e) = imaps (sum-in e)
-  sum-in (imap′ refl e) = imap (sum-in e)
-  sum-in (imapb x e) = Lang.imapb x (sum-in e)
-  sum-in (sels e e₁) = sels (sum-in e) (sum-in e₁)
-  sum-in (sel′ refl e e₁) = sel (sum-in e) (sum-in e₁)
-  sum-in (Lang.selb x e e₁) = Lang.selb x (sum-in e) (sum-in e₁)
-  sum-in (zero-but e e₁ e₂) = zero-but e e₁ (sum-in e₂)
-  sum-in (bop x e e₁) = bop x (sum-in e) (sum-in e₁)
-  sum-in (scaledown x e) = scaledown x (sum-in e)
-  sum-in (let′ e e₁) = let′ (sum-in e) (sum-in e₁)
-  sum-in (uop x e) = uop x (sum-in e)
-  sum-in e = e
 
   opt : (e : E Γ is) → ∃ λ e′ → (e ≈ᵉ e′)
   opt (var v) = var v , reflᵉ (var v)
@@ -252,20 +229,6 @@ module Opt (r : Real) (rp : RealProp r) where
                                                                         ∙ᶜ sub-env-id ∙ᶜ wk-env-id ∙ᶜ wk-env-id) ▹ refl ▹ refl) [] )
                                      ∙ sum-cong _+_ (fromℕ 0) {λ z → eval a′ ((ρ , z) , j) []} (λ i → sym (pf (ρ , i) j))
                                      ∙ sym (sum-inv _+_ (fromℕ 0) {λ z → eval e (ρ , z)} j))
-  ... | (imap′ refl a′) , pf = imap (Lang.sum (sub a′ sub-swap))
-                     , λ ρ j → let ss = ((wks (wks sub-id (skip ⊆-eq))
-                                              (skip (keep ⊆-eq)) ▹ var v₀)
-                                         ▹ var v₁)
-                               in sym (sum-inv _+_ (fromℕ 0) {λ i → eval (sub a′ ss) ((ρ , splitP j .proj₁) , i)} (splitP j .proj₂)
-                                       ∙ sum-cong _+_ (fromℕ 0)
-                                                  {λ j₁ → eval (sub a′ ss) ((ρ , splitP j .proj₁) , j₁) (splitP j .proj₂)}
-                                                  (λ k → eval-sub a′ ((ρ , splitP j .proj₁) , k) ss (splitP j .proj₂)
-                                                         ∙ eval-cong a′ ((sub-env-wks _ _ ((ρ , splitP j .proj₁) , k)
-                                                                          ∙ᶜ sub-env-wks _ _ (wk-env ⊆-eq ρ , splitP j .proj₁)
-                                                                          ∙ᶜ sub-env-id ∙ᶜ wk-env-id ∙ᶜ wk-env-id) ▹ refl ▹ refl)
-                                                                        (splitP j .proj₂))
-                                       ∙ sum-cong _+_ (fromℕ 0)  (λ i → sym (pf (ρ , i) j))
-                                       ∙ sym (sum-inv _+_ (fromℕ 0) {λ z → eval e (ρ , z)} j))
   ... | imapb m a′ , pf = Lang.imapb m (Lang.sum (sub a′ sub-swap))
                         , λ ρ j → let ss = ((wks (wks sub-id (skip ⊆-eq)) (skip (keep ⊆-eq)) ▹ var v₀) ▹ var v₁)
                                   in sym (sum-inv _+_ (fromℕ 0) {λ i → eval (sub a′ ss) ((ρ , ix-div j m) , i)} (ix-mod j m)
@@ -410,4 +373,4 @@ module Opt (r : Real) (rp : RealProp r) where
   danger-opt : E Γ is → E Γ is
   danger-opt e =
     -- (opt e .proj₁)
-    sels-in $ let-out $ sum-in $ (opt e .proj₁)
+    sels-in $ let-out $ (opt e .proj₁)
