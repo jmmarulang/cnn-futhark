@@ -871,7 +871,7 @@ int main(int argc, char **argv) {
     rng_seed(42);
 
     // Load dataset
-    load_dataset("input.txt");
+    load_dataset("input-mgpt/input.txt");
 
     // Initialize model
     init_param_offsets();
