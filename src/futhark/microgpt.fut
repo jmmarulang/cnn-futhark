@@ -179,6 +179,7 @@ in (let x16 = (imap1 16 (\i88 -> (imap1 16 (\i89 -> (isum1 64 (\i90 -> (wdown[i8
 in (let x17 = (imap2 16 16 (\i91 i92 -> (x16[i91][i92] F.+ x12[i91][i92])))
 in (imap1 16 (\i18 -> (imap1 27 (\i93 -> (isum1 16 (\i94 -> (wvoc[i93][i94] F.* x17[i18][i94])))))))))))))))))))))))))
 
+
   def grad_loss : (mask: [16][16]real)
     -> (wpe: [16][16]real)
     -> (wqry: [16][16]real)
@@ -302,6 +303,7 @@ let dwvoc = (imap1 27 (\i285 -> (imap1 16 (\i286 -> (isum1 16 (\i287 -> (x113[i2
 let dwseq = (imap2 16 16 (\i288 i289 -> x259[i288][i289]))
 let dtarget = (imap1 16 (\i290 -> (imap1 27 (\i291 -> (F.neg (x92[i290][i291] F.* x90[i290]))))))
 
+
 in (dwpe, dwqry, dwkey, dwval, dwout, dwup, dwdown, dwvoc, dwseq)
 }
 
@@ -367,7 +369,7 @@ def adam_opt_w [n] [m] (w : [n][m]f64) (mw : [n][m]f64) (vw : [n][m]f64)
 def adam_opt (p : params) (mp : params) (vp : params)
   (dp : params) (step : i64):
   (params,  params,  params) =
-  let lt_r = 0.01 * (1 - (nn64.fromi64 step) / (nn64.fromi64 30000))
+  let lt_r = 0.01 * (1 - (nn64.fromi64 step) / (nn64.fromi64 005))
   let (wte, mwte, vwte) =
     adam_opt_w p.wte mp.wte vp.wte dp.wte step lt_r
   let (wpe, mwpe, vwpe) =
@@ -429,11 +431,11 @@ def cal_step (dl : i64) (p : params) (mp : params) (vp : params)
   in (p', mp', vp')
 
 entry train (p : params) (mp : params) (vp : params)
-  (masks : [30000][16][16]f64) (dls : [30000]i64)
-  (seqs : [30000][16]i64) =
+  (masks : [005][16][16]f64) (dls : [005]i64)
+  (seqs : [005][16]i64) =
   let (new_p, new_mp, new_vp) =
     loop (p', mp', vp') = (p, mp, vp)
-    for step < 30000 do
+    for step < 005 do
       let dl = dls[step]
       let tokens = seqs[step]
       let mask = masks[step]

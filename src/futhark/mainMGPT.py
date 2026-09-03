@@ -65,7 +65,7 @@ pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
 ones = np.ones((sl,sl))
 cau_mask = (ones - np.tril(ones))
 
-num_steps = 30000
+num_steps = 5
 
 # -------------------------------------
 # TRAINING FUT
@@ -84,7 +84,6 @@ for step in range(num_steps):
     dls[step] = dl
     # Masking
     pad_mask = np.ones((sl,sl))
-    print(dl)
     for i in range(dl):
         pad_mask[i][ 0 : dl] = 0
     mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
@@ -132,97 +131,97 @@ try:
 except :
     print("It refused")
 
-# # -------------------------------------
-# # TRAINING PY
+# -------------------------------------
+# TRAINING PY
 
-# start = time.time()
+start = time.time()
 
-# pdwdic = {}
-# for step in range(num_steps):
-#     doc = list(docs[step % len(docs)])
-#     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+pdwdic = {}
+for step in range(num_steps):
+    doc = list(docs[step % len(docs)])
+    tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
 
-#     plossV, plossesV = mp.cal_loss(pwdic, tokens)
-#     plossV.backward()
+    plossV, plossesV = mp.cal_loss(pwdic, tokens)
+    plossV.backward()
 
-#     pdwdic = \
-#         { k :
-#             np.array(
-#             [[v[j][i].grad for i in range(len(v[0]))] for j in range(len(v))])
-#         for k, v in pwdic.items()}
+    pdwdic = \
+        { k :
+            np.array(
+            [[v[j][i].grad for i in range(len(v[0]))] for j in range(len(v))])
+        for k, v in pwdic.items()}
 
-#     mp.update(pwdic, pdwdic, pmdic, pvdic, step, num_steps)
+    mp.update(pwdic, pdwdic, pmdic, pvdic, step, num_steps)
 
-#     for k , data in pdwdic.items():
-#         for j in range(len(data)):
-#             for i in range(len(data[0])):
-#                 pwdic[k][j][i].grad = 0
+    for k , data in pdwdic.items():
+        for j in range(len(data)):
+            for i in range(len(data[0])):
+                pwdic[k][j][i].grad = 0
 
-# end = time.time()
-# print("pgrad time", end - start)
+end = time.time()
+print("pgrad time", end - start)
 
-# pwdic_data = {k : np.vectorize(mp.to_data)(p) for k , p in pwdic.items()}
+pwdic_data = {k : np.vectorize(mp.to_data)(p) for k , p in pwdic.items()}
 
-# try:
-#     np.save("pwdic.npy", pwdic_data, allow_pickle=True)
-#     file = open('pdwdic.txt', 'wt')
-#     file.write(str(pwdic_data))
-#     file.close()
-# except :
-#     print("It refused")
+try:
+    np.save("pwdic.npy", pwdic_data, allow_pickle=True)
+    file = open('pdwdic.txt', 'wt')
+    file.write(str(pwdic_data))
+    file.close()
+except :
+    print("It refused")
 
-# #-------------------------------------
-# # PROBS
+#-------------------------------------
+# PROBS
 
-# input
-# # doc = list("wakuntchapinka")
-# doc = list("jairo")
-# dl = len(doc) + 2
+input
+# doc = list("wakuntchapinka")
+doc = list("jairo")
+dl = len(doc) + 2
 
-# # sequence ids
-# ptokens = [BOS] + [vocab.index(ch) for ch in doc] + [BOS]
-# # add padding
-# ftokens = ptokens + ([BOS] * (sl - dl))
-# # to numpy
-# ftokens = np.array(ftokens)
-# print("".join(doc))
+# sequence ids
+ptokens = [BOS] + [vocab.index(ch) for ch in doc] + [BOS]
+# add padding
+ftokens = ptokens + ([BOS] * (sl - dl))
+# to numpy
+ftokens = np.array(ftokens)
+print("".join(doc))
 
-# pad_mask = np.ones((sl,sl))
-# for i in range(dl):
-#     pad_mask[i][ 0 : dl] = 0
+pad_mask = np.ones((sl,sl))
+for i in range(dl):
+    pad_mask[i][ 0 : dl] = 0
 
-# # print(pad_mask)
-# mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
+# print(pad_mask)
+mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
 
-# mask = -1*mask*big_num
+mask = -1*mask*big_num
 
-# with futhark_server.Server(futhark) as server:
-#     server.put_value('tokens', ftokens)
-#     server.put_value('mask', mask)
-#     for k , data in fwdic.items():
-#         server.put_value(k, data)
-#     server.cmd_call('to_params', 'fparams', *fwdic.keys())
-#     server.cmd_call('forward_seq', 'fmlogits', 'fparams', 'tokens', 'mask')
-#     fmlogits = server.get_value('fmlogits')
-# mfprobs = np.array([softmax(logits) for logits in fmlogits])
-# mfprobs = mfprobs[: dl]
+with futhark_server.Server(futhark) as server:
+    server.put_value('tokens', ftokens)
+    server.put_value('mask', mask)
+    for k , data in fwdic.items():
+        server.put_value(k, data)
+    server.cmd_call('to_params', 'fparams', *fwdic.keys())
+    server.cmd_call('forward_seq', 'fmlogits', 'fparams', 'tokens', 'mask')
+    fmlogits = server.get_value('fmlogits')
+mfprobs = np.array([softmax(logits) for logits in fmlogits])
+mfprobs = mfprobs[: dl]
 
-# mplogits = mp.forward_seq(pwdic, ptokens)
-# mplogits = np.array([[val.data for val in logits] for logits in mplogits])
-# mpprobs = np.array([softmax(logits) for logits in mplogits])
+mplogits = mp.forward_seq(pwdic, ptokens)
+mplogits = np.array([[val.data for val in logits] for logits in mplogits])
+mpprobs = np.array([softmax(logits) for logits in mplogits])
 
-# # # #---------
+# # #---------
 
-# barWidth = 0.25
-# lfprobs = mfprobs[0]
-# lpprobs = mpprobs[0]
+barWidth = 0.25
+lfprobs = mfprobs[0]
+lpprobs = mpprobs[0]
 
-# br1 = np.arange(len(lfprobs))
-# br2 = [x + barWidth for x in br1]
-# plt.bar(br1, lfprobs, width=barWidth, label="futhark")
-# plt.bar(br2, lpprobs, width=barWidth, label="python")
-# plt.xticks([r + barWidth for r in range(len(lfprobs))], vocab)
-# plt.xlabel('next token probability', fontsize = 12)
-# plt.legend()
-# # plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
-# plt.show()
+br1 = np.arange(len(lfprobs))
+br2 = [x + barWidth for x in br1]
+plt.bar(br1, lfprobs, width=barWidth, label="futhark")
+plt.bar(br2, lpprobs, width=barWidth, label="python")
+plt.xticks([r + barWidth for r in range(len(lfprobs))], vocab)
+plt.xlabel('next token probability', fontsize = 12)
+plt.legend()
+# plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+plt.show()
