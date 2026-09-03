@@ -390,7 +390,7 @@ def adam_opt_w [n] [m] (w : [n][m]f64) (mw : [n][m]f64) (vw : [n][m]f64)
 def adam_opt (p : params) (mp : params) (vp : params)
   (dp : params) (step : i64):
   (params,  params,  params) =
-  let lt_r = 0.01 * (1 - (nn64.fromi64 step) / (nn64.fromi64 500))
+  let lt_r = 0.01 * (1 - (nn64.fromi64 step) / (nn64.fromi64 005))
   let (wte, mwte, vwte) =
     adam_opt_w p.wte mp.wte vp.wte dp.wte step lt_r
   let (wpe, mwpe, vwpe) =
@@ -452,11 +452,11 @@ def cal_step (dl : i64) (p : params) (mp : params) (vp : params)
   in (p', mp', vp')
 
 entry train (p : params) (mp : params) (vp : params)
-  (masks : [500][16][16]f64) (dls : [500]i64)
-  (seqs : [500][16]i64) =
+  (masks : [005][16][16]f64) (dls : [005]i64)
+  (seqs : [005][16]i64) =
   let (new_p, new_mp, new_vp) =
     loop (p', mp', vp') = (p, mp, vp)
-    for step < 500 do
+    for step < 005 do
       let dl = dls[step]
       let tokens = seqs[step]
       let mask = masks[step]
