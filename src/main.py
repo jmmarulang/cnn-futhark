@@ -2,9 +2,6 @@
 import numpy as np
 # import string
 import matplotlib.pyplot as plt
-# import sys
-# sys.path.insert(0,"/home/jmmg1c24/Documents/Github Repos/cnn-futhark/src/purePython")
-import microgptlib as mp
 import time
 import random
 # import argparse
@@ -20,7 +17,6 @@ def softmax(logits):
     return [e / total for e in exps]
 
 futhark = "futhark/microgpt"
-# print(futhark)
 
 # Data
 file = open('input-mgpt/input.txt')
@@ -48,6 +44,9 @@ dimdic = {'wte' : (vocab_size, ed), 'wpe' : (sl, ed),
 ran_matrix = lambda nout, nin, std=0.08: \
     np.array([[random.gauss(0, std) for _ in range(nin)] for _ in range(nout)])
 
+const_matrix = lambda num, nout, nin, std=0.08: \
+    np.array([[num for _ in range(nin)] for _ in range(nout)])
+
 fwdic = {}
 fmdic = {}
 fvdic = {}
@@ -55,17 +54,37 @@ pmdic = {}
 pvdic = {}
 
 for k , dim in dimdic.items():
-    fwdic[k] = ran_matrix(*dim)
+    # fwdic[k] = ran_matrix(*dim)
+    fwdic[k] = const_matrix(0.5, *dim)
     fmdic[k] = np.zeros(dim)
     fvdic[k] = np.zeros(dim)
     pmdic[k] = np.zeros(dim)
     pvdic[k] = np.zeros(dim)
-pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
 
 ones = np.ones((sl,sl))
 cau_mask = (ones - np.tril(ones))
 
 num_steps = 5
+
+# -------------------------------------
+# DEF TORCH
+
+import os
+import torch
+import torch.nn as nn
+from torch.nn import functional as F
+import pytorch.microgpt_torch_lib as mt
+
+torch.manual_seed(seed)
+device = torch.device("cpu")
+
+model = mt.GPT()
+model.to(device)
+model.vocan_size = vocab_size
+learning_rate = 0.01
+
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, betas=(0.85, 0.99), eps=1e-8)
+scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0, total_iters=1000)
 
 # -------------------------------------
 # TRAINING FUT
@@ -115,7 +134,7 @@ with futhark_server.Server(futhark) as server:
     server.cmd_call('train', 'p_mp_vp', 'p', 'mp', 'vp', 'masks',
                     'dls', 'seqs')
     end = time.time()
-    print("fgrad time", end - start)
+    print("futhark grad time", end - start)
     p_mp_vp = server.get_value('p_mp_vp')
 
 for i , k in enumerate(dimdic.keys()):
@@ -131,44 +150,28 @@ try:
 except :
     print("It refused")
 
-# -------------------------------------
-# TRAINING PY
+# # -------------------------------------
+# # TRAINING TORCH
 
+model.train()
+# start timer
 start = time.time()
-
-pdwdic = {}
 for step in range(num_steps):
-    doc = list(docs[step % len(docs)])
+    doc = docs[step % len(docs)]
     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+    n = min(sl, len(tokens) - 1)
 
-    plossV, plossesV = mp.cal_loss(pwdic, tokens)
-    plossV.backward()
+    x = torch.tensor([tokens[:n]], dtype=torch.long, device= device) # change input devices
+    y = torch.tensor([tokens[1:n+1]], dtype=torch.long, device= device)
 
-    pdwdic = \
-        { k :
-            np.array(
-            [[v[j][i].grad for i in range(len(v[0]))] for j in range(len(v))])
-        for k, v in pwdic.items()}
+    logits, loss = model(x, y)
 
-    mp.update(pwdic, pdwdic, pmdic, pvdic, step, num_steps)
-
-    for k , data in pdwdic.items():
-        for j in range(len(data)):
-            for i in range(len(data[0])):
-                pwdic[k][j][i].grad = 0
-
+    optimizer.zero_grad(set_to_none=True)
+    loss.backward()
+    optimizer.step()
+    scheduler.step()
 end = time.time()
-print("pgrad time", end - start)
-
-pwdic_data = {k : np.vectorize(mp.to_data)(p) for k , p in pwdic.items()}
-
-try:
-    np.save("pwdic.npy", pwdic_data, allow_pickle=True)
-    file = open('pdwdic.txt', 'wt')
-    file.write(str(pwdic_data))
-    file.close()
-except :
-    print("It refused")
+print("torch grad time", end - start)
 
 #-------------------------------------
 # PROBS
@@ -206,15 +209,20 @@ with futhark_server.Server(futhark) as server:
 mfprobs = np.array([softmax(logits) for logits in fmlogits])
 mfprobs = mfprobs[: dl]
 
-mplogits = mp.forward_seq(pwdic, ptokens)
-mplogits = np.array([[val.data for val in logits] for logits in mplogits])
-mpprobs = np.array([softmax(logits) for logits in mplogits])
+with torch.no_grad():
+    idx = torch.tensor([ftokens.tolist()], dtype=torch.long) #source of error?
+    mplogits, _ = model(idx)
 
-# # #---------
+mplogits = mplogits.numpy()[0]
+
+mpprobs = np.array([softmax(logits) for logits in mplogits])
+mpprobs = mfprobs[: dl]
+
+# #---------
 
 barWidth = 0.25
-lfprobs = mfprobs[0]
-lpprobs = mpprobs[0]
+lfprobs = mfprobs[-1]
+lpprobs = mpprobs[-1]
 
 br1 = np.arange(len(lfprobs))
 br2 = [x + barWidth for x in br1]
