@@ -9,6 +9,6 @@ src/fwdic.txt
 src/fwdic.npy
 src/string
 src/sys
-src/pwdict.txt
+src/pdwdict.txt
 src/pwdict.npy
 src/pytorch/__pycache__
