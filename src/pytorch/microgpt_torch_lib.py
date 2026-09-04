@@ -1,0 +1,112 @@
+"""
+A PyTorch equivalent of microgpt.py: train and run inference for a character-level GPT.
+"""
+
+import os
+import torch
+import torch.nn as nn
+from torch.nn import functional as F
+import random
+
+# Hyperparameters
+n_layer = 1
+n_embd = 16
+block_size = 16
+n_head = 4
+head_dim = n_embd // n_head
+learning_rate = 0.01
+
+class Head(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.key = nn.Linear(n_embd, head_dim, bias=False)
+        self.query = nn.Linear(n_embd, head_dim, bias=False)
+        self.value = nn.Linear(n_embd, head_dim, bias=False)
+        self.register_buffer('tril', torch.tril(torch.ones(block_size, block_size)))
+
+    def forward(self, x):
+        B, T, C = x.shape
+        k = self.key(x)   # (B, T, head_dim)
+        q = self.query(x) # (B, T, head_dim)
+        # compute attention scores ("affinities")
+        wei = q @ k.transpose(-2, -1) * k.shape[-1]**-0.5 # (B, T, T)
+        wei = wei.masked_fill(self.tril[:T, :T] == 0, float('-inf'))
+        wei = F.softmax(wei, dim=-1)
+        # perform the weighted aggregation of the values
+        v = self.value(x) # (B, T, head_dim)
+        out = wei @ v # (B, T, T) @ (B, T, head_dim) -> (B, T, head_dim)
+        return out
+
+class MultiHeadAttention(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.heads = nn.ModuleList([Head() for _ in range(n_head)])
+        self.proj = nn.Linear(head_dim * n_head, n_embd, bias=False)
+
+    def forward(self, x):
+        out = torch.cat([h(x) for h in self.heads], dim=-1)
+        out = self.proj(out)
+        return out
+
+class FeedForward(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(n_embd, 4 * n_embd, bias=False),
+            nn.ReLU(),
+            nn.Linear(4 * n_embd, n_embd, bias=False),
+        )
+
+    def forward(self, x):
+        return self.net(x)
+
+class Block(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.sa_heads = MultiHeadAttention()
+        self.ffwd = FeedForward()
+
+    def forward(self, x):
+        x = x + self.sa_heads(F.rms_norm(x, (n_embd,)))
+        x = x + self.ffwd(F.rms_norm(x, (n_embd,)))
+        return x
+
+class GPT(nn.Module):
+    def __init__(self):
+        super().__init__()
+        vocab_size = 27
+        self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
+        self.position_embedding_table = nn.Embedding(block_size, n_embd)
+        self.blocks = nn.Sequential(*[Block() for _ in range(n_layer)])
+        self.lm_head = nn.Linear(n_embd, vocab_size, bias=False)
+
+        # Better init
+        self.apply(self._init_weights)
+
+    def _init_weights(self, module):
+        if isinstance(module, nn.Linear):
+            # torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
+            torch.nn.init.constant_(module.weight, 0.5)
+        elif isinstance(module, nn.Embedding):
+            # torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
+            torch.nn.init.constant_(module.weight, 0.5) # device?
+
+    def forward(self, idx, targets=None):
+        B, T = idx.shape
+        tok_emb = self.token_embedding_table(idx) # (B, T, n_embd)
+        pos_emb = self.position_embedding_table(torch.arange(T, device=idx.device)) # (T, n_embd)
+        x = tok_emb + pos_emb # (B, T, n_embd)
+        x = F.rms_norm(x, (n_embd,))
+        x = self.blocks(x) # (B, T, n_embd)
+        logits = self.lm_head(x) # (B, T, vocab_size)
+
+        if targets is None:
+            loss = None
+        else:
+            B, T, C = logits.shape
+            logits = logits.view(B*T, C)
+            targets = targets.view(B*T)
+            loss = F.cross_entropy(logits, targets)
+
+        return logits, loss
+

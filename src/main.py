@@ -2,9 +2,6 @@
 import numpy as np
 # import string
 import matplotlib.pyplot as plt
-# import sys
-# sys.path.insert(0,"/home/jmmg1c24/Documents/Github Repos/cnn-futhark/src/purePython")
-import microgptlib as mp
 import time
 import random
 # import argparse
@@ -64,7 +61,6 @@ for k , dim in dimdic.items():
     fvdic[k] = np.zeros(dim)
     pmdic[k] = np.zeros(dim)
     pvdic[k] = np.zeros(dim)
-pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
 
 ones = np.ones((sl,sl))
 cau_mask = (ones - np.tril(ones))
@@ -136,43 +132,44 @@ except :
     print("It refused")
 
 # -------------------------------------
-# TRAINING PY
+# DEF TORCH
 
-start = time.time()
+import os
+import torch
+import torch.nn as nn
+from torch.nn import functional as F
+import pytorch.microgpt_torch_lib as mt
 
-pdwdic = {}
+torch.manual_seed(seed)
+device = torch.device("cpu")
+
+model = mt.GPT()
+model.to(device)
+model.vocan_size = vocab_size
+learning_rate = 0.01
+
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, betas=(0.85, 0.99), eps=1e-8)
+scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0, total_iters=1000)
+
+# # -------------------------------------
+# # TRAINING TORCH
+
+model.train()
+
 for step in range(num_steps):
-    doc = list(docs[step % len(docs)])
+    doc = docs[step % len(docs)]
     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+    n = min(sl, len(tokens) - 1)
 
-    plossV, plossesV = mp.cal_loss(pwdic, tokens)
-    plossV.backward()
+    x = torch.tensor([tokens[:n]], dtype=torch.long, device= device) # change input devices
+    y = torch.tensor([tokens[1:n+1]], dtype=torch.long, device= device)
 
-    pdwdic = \
-        { k :
-            np.array(
-            [[v[j][i].grad for i in range(len(v[0]))] for j in range(len(v))])
-        for k, v in pwdic.items()}
+    logits, loss = model(x, y)
 
-    mp.update(pwdic, pdwdic, pmdic, pvdic, step, num_steps)
-
-    for k , data in pdwdic.items():
-        for j in range(len(data)):
-            for i in range(len(data[0])):
-                pwdic[k][j][i].grad = 0
-
-end = time.time()
-print("pgrad time", end - start)
-
-pwdic_data = {k : np.vectorize(mp.to_data)(p) for k , p in pwdic.items()}
-
-try:
-    np.save("pwdic.npy", pwdic_data, allow_pickle=True)
-    file = open('pdwdic.txt', 'wt')
-    file.write(str(pwdic_data))
-    file.close()
-except :
-    print("It refused")
+    optimizer.zero_grad(set_to_none=True)
+    loss.backward()
+    optimizer.step()
+    scheduler.step()
 
 #-------------------------------------
 # PROBS
@@ -210,9 +207,11 @@ with futhark_server.Server(futhark) as server:
 mfprobs = np.array([softmax(logits) for logits in fmlogits])
 mfprobs = mfprobs[: dl]
 
-mplogits = mp.forward_seq(pwdic, ptokens)
-mplogits = np.array([[val.data for val in logits] for logits in mplogits])
-mpprobs = np.array([softmax(logits) for logits in mplogits])
+with torch.no_grad():
+    idx = torch.tensor([ftokens], dtype=torch.long) #source of error?
+    mplogits, _ = model(idx)
+    mplogits = mplogits[:, -1, :]
+    mpprobs = F.softmax(mplogits, dim=-1)
 
 # # #---------
 
