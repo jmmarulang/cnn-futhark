@@ -9,7 +9,6 @@ import torch.nn as nn
 from torch.nn import functional as F
 import pytorch.microgpt_torch_lib as mt
 
-
 seed = 40
 random.seed(seed)
 
