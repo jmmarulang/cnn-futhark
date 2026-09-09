@@ -500,12 +500,16 @@ module Primitives where
     open import Data.List.Properties
 
     variable
-      ah hd ed sl vo pr fd : S
+      bs ah hd ed sl vo pr fd : S
+
+    e-map : ∀ {Γ} (f : E (Γ ▹ ix p) (ar s) → E (Γ ▹ ix p) (ar q)) →
+            E Γ (ar $ p ⊗ s) → E Γ (ar $ p ⊗ q)
+    e-map {p = p} {s = s} f e = Imap {p} λ i → f (sel ⟨ e ⟩ i)
 
     tiles : ∀ {Γ} → E Γ (ar []) → E Γ (ar s)
     tiles x = Imaps (λ _ → ⟨ x ⟩)
 
-    tile : ∀ {Γ} → E Γ (ar s) → E Γ (ar (p ⊗ s))
+    tile : ∀ {p s} {Γ} → E Γ (ar s) → E Γ (ar (p ⊗ s))
     tile x = Imap (λ _ → ⟨ x ⟩)
 
     iswap : ∀ {Γ} → E Γ (ar (s ⊗ u)) → E Γ (ar (u ⊗ s))
@@ -514,26 +518,49 @@ module Primitives where
     iswap3 : ∀ {Γ} → E Γ (ar (p ⊗ (s ⊗ u))) → E Γ (ar (s ⊗ (p ⊗ u)))
     iswap3 {p} {s} {u} x = Imap {s} λ i → Imap {p} λ j → sel (sel ⟨ x ⟩ j) i
 
+    icomᵣ : ∀ {s p q} {Γ} → E Γ (ar (s ⊗ (p ⊗ q))) → E Γ (ar ((s ⊗ p) ⊗ q))
+    icomᵣ {s} {p} {q} e = Imap λ i → Imaps {q} λ j →
+      sels (Imap {s} λ k → Imaps λ w → sels (sel (sel ⟨ e ⟩ k) w) j) i
+
+    icomₗ : ∀ {s p q} {Γ} → E Γ (ar ((s ⊗ p) ⊗ q)) → E Γ (ar (s ⊗ (p ⊗ q)))
+    icomₗ {s} {p} {q} e = Imap {s} λ i → Imap {p} λ j → Imaps λ k →
+      sels (sel (Imaps λ w → sels (sel ⟨ e ⟩ w) k) i) j
+
+    imedial : ∀ {Γ} → E Γ (ar $ (s ⊗ p) ⊗ (q ⊗ r))
+              → E Γ (ar $ (s ⊗ q) ⊗ (p ⊗ r))
+    imedial {s} {p} {q} {r} e =
+      Imap λ sqi → Imaps λ pri →
+        sels (Imap {s} λ si → Imaps {q} λ qi →
+          sels (Imap {p} λ pi → Imaps {r} λ ri →
+            sels (sel (Imaps λ spi →
+              sels (sel (sel ⟨ e ⟩ spi) qi) ri) si) pi) pri) sqi
+
+    -- TODO : add biases
     linear : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar s) → E Γ (ar u)
     linear {u} {s} w x =
       Imaps {u} λ i → Sum {s} λ j → sels (sel ⟨ w ⟩ i ⊠ ⟨ x ⟩) j
 
-    m-linear : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (p ⊗ s)) → E Γ (ar (p ⊗ u))
-    m-linear {u} {s} {p} w xs = Imap {p} λ i → linear ⟨ w ⟩ (sel ⟨ xs ⟩ i)
-
-    matmult : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (r ⊗ s)) → E Γ (ar (u ⊗ r))
-    matmult {u} {s} {r} w1 w2 =
-      Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
-      sels ((sel ⟨ w1 ⟩ i) ⊠ (sel ⟨ w2 ⟩ j)) k
+    m-linear : ∀ {Γ} → E Γ (ar $ u ⊗ s) →
+                 E Γ (ar $ p ⊗ s) → E Γ (ar $ p ⊗ u)
+    m-linear {u} {s} {p} w e = e-map {p} (linear (w ↑)) e
 
     matmul : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (s ⊗ r)) → E Γ (ar (u ⊗ r))
     matmul {u} {s} {r} w1 w2 =
       Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
       sels (sel ⟨ w1 ⟩ i) k ⊠ sels (sel ⟨ w2 ⟩ k) j
 
-    m-softmax : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
-    m-softmax {s = s} {p = p} x =
-      Imap {s = s} λ i → ℙ (sel ⟨ x ⟩ i)
+    m-matmul : ∀ {Γ} → E Γ (ar $ p ⊗ (u ⊗ s)) → E Γ (ar $ p ⊗ (s ⊗ r))
+               → E Γ (ar $ p ⊗ (u ⊗ r))
+    m-matmul {p} {u} a b = e-map {p} (matmul {u} $ sel ⟨ a ⟩ (var v₀)) b
+
+    matmult : ∀ {Γ} → E Γ (ar (u ⊗ s)) → E Γ (ar (r ⊗ s)) → E Γ (ar (u ⊗ r))
+    matmult {u} {s} {r} w1 w2 =
+      Imap {u} λ i → Imaps {r} λ j → Sum {s} λ k →
+      sels ((sel ⟨ w1 ⟩ i) ⊠ (sel ⟨ w2 ⟩ j)) k
+
+    m-matmult : ∀ {Γ} → E Γ (ar $ p ⊗ (u ⊗ s)) → E Γ (ar $ p ⊗ (r ⊗ s))
+               → E Γ (ar $ p ⊗ (u ⊗ r))
+    m-matmult {p} {u} a b = e-map {p} (matmult {u} $ sel ⟨ a ⟩ (var v₀)) b
 
     rmsnorm : ∀ {Γ} → E Γ (ar s) → E Γ (ar s)
     rmsnorm {s = s} x =
@@ -543,10 +570,7 @@ module Primitives where
       Imaps λ i → (sels ⟨ x ⟩ i) // scale
 
     m-rmsnorm : ∀ {Γ} → E Γ (ar (s ⊗ p)) → E Γ (ar (s ⊗ p))
-    m-rmsnorm {s} {p} {Γ} x = Imap {s} λ i → rmsnorm (sel ⟨ x ⟩ i)
-
-    avg : ∀ {Γ} → E Γ (ar s) → E Γ (ar [])
-    avg {s} x = scaledown (len s) (Sum λ i → sels ⟨ x ⟩ i)
+    m-rmsnorm {s} {p} {Γ} e = e-map {s} rmsnorm e
 
     record GPT-Params (Γ : Ctx) (vo ed sl fd : S) : Set₁ where
       field
@@ -583,68 +607,108 @@ module Primitives where
       ; wvoc = wvoc
       }
 
-    attention : ∀ {Γ} → (sc : ℕ) →
-                   (mask : E Γ (ar (sl ⊗ sl)))
-                   (qs ks vs : E Γ (ar (sl ⊗ hd)))
-                  → E Γ (ar (sl ⊗ hd))
-    attention {sl} {hd} {Γ} sc mask hqs hks hvs =
-      Let hqks := matmult {sl} hqs hks In
-      Let masked := (scaledown sc hqks) ⊞ ⟨ mask ⟩ In
-      Let sf := m-softmax {s = sl} (masked) In
-      matmul {sl} sf ⟨ hvs ⟩
+    wk-gptp : Prefix Γ Δ → GPT-Params Γ vo ed sl fd → GPT-Params Δ vo ed sl fd
+    wk-gptp pr p = record
+      { wpe = wk (fromPrefix pr) (p .wpe)
+      ; wqry = wk (fromPrefix pr) (p .wqry)
+      ; wkey = wk (fromPrefix pr) (p .wkey)
+      ; wval = wk (fromPrefix pr) (p .wval)
+      ; wout = wk (fromPrefix pr) (p .wout)
+      ; wup = wk (fromPrefix pr) (p .wup)
+      ; wdown = wk (fromPrefix pr) (p .wdown)
+      ; wvoc = wk (fromPrefix pr) (p .wvoc)
+      }
 
-    mh-attention : ∀ {Γ} → (sc : ℕ)
-                   (mask : E Γ (ar (sl ⊗ sl)))
-                   (qs ks vs : E Γ (ar (ah ⊗ (sl ⊗ hd))))
-                   → E Γ (ar (ah ⊗ (sl ⊗ hd)))
-    mh-attention {sl} {ah} {hd} {Γ} sc mask bqs bks bvs =
-      Imap {ah} λ i →
-      attention {sl = sl} sc ⟨ mask ⟩ (sel ⟨ bqs ⟩ i) (sel ⟨ bks ⟩ i) (sel ⟨ bvs ⟩ i)
+    G-GPT-Params : Ctx → S → S → S → S → Set₁
+    G-GPT-Params Γ vo ed sl fd =
+      ∀ {Δ} → ⦃ Prefix Γ Δ ⦄ → GPT-Params Δ vo ed sl fd
 
-    block-tok : ∀ {Γ} → E Γ (ar ed) → ah * hd ≈ ed → E Γ (ar (ah ⊗ hd))
-    block-tok {ed} {ah} {hd} {Γ} x pr = Imap {ah} λ i → selb pr ⟨ x ⟩ i
+    ⟨_⟩ₚ : GPT-Params Γ vo ed sl fd → G-GPT-Params Γ vo ed sl fd
+    ⟨_⟩ₚ p {Δ} ⦃ pf ⦄  = wk-gptp pf p
 
-    unblock-tok : ∀ {Γ} → E Γ (ar (ah ⊗ hd)) → ah * hd ≈ ed → E Γ (ar ed)
-    unblock-tok {ah} {hd} {ed} {Γ} x pr = Imapb pr λ i → sel ⟨ x ⟩ i
+    -- DANGER: imedial may be inefficient.
+    split-heads : ∀ {bs ah hd sl ed Γ} → ah * hd ≈ ed
+      → E Γ (ar $ (bs ⊗ sl) ⊗ ed) → E Γ (ar $ (bs ⊗ ah) ⊗ (sl ⊗ hd))
+    split-heads {bs = bs} {ah = ah} {sl = sl} pf e =
+      imedial {bs} $ e-map (λ x → Imap λ i → selb pf (x ↑) i) e
 
-    block-vec : ∀ {Γ} → E Γ (ar (sl ⊗ ed)) → ah * hd ≈ ed
-                → E Γ (ar (ah ⊗ (sl ⊗ hd)))
-    block-vec {sl} {ed} {ah} x pr =
-      iswap3 {sl} {ah} (Imap {sl} λ i → block-tok (sel ⟨ x ⟩ i) pr)
+    -- DANGER: imedial may be inefficient.
+    merge-heads : ∀ {bs ah hd sl ed Γ} → ah * hd ≈ ed
+      → E Γ (ar $ (bs ⊗ ah) ⊗ (sl ⊗ hd)) → E Γ (ar $ (bs ⊗ sl) ⊗ ed)
+    merge-heads {bs = bs} {ah = ah} {sl = sl} pf e =
+      e-map {bs ⊗ sl} (λ x → Imapb pf λ i → sel ⟨ x ⟩ i) $ imedial {bs} e
 
-    unblock-vec : ∀ {Γ} → E Γ (ar (ah ⊗ (sl ⊗ hd))) → ah * hd ≈ ed
-      → E Γ (ar (sl ⊗ ed))
-    unblock-vec {ah} {sl} {hd} {ed} {Γ} x pr = Imap {sl} λ i →
-      unblock-tok (sel (iswap3 {ah} {sl} ⟨ x ⟩) i) pr
+    mask-attn-weights : ∀ {Γ} → E Γ (ar $ bs ⊗ (sl ⊗ sl))
+                        → E Γ (ar $ (bs ⊗ ah) ⊗ (sl ⊗ sl))
+                        → E Γ (ar $ (bs ⊗ ah) ⊗ (sl ⊗ sl))
+    mask-attn-weights {bs} {ah = ah} mask w =
+      -- DANGER: icomᵣ is inneficient. Opt should be able to take care of it
+      w ⊞ icomᵣ {bs} (Imap {bs} λ i → tile {ah} (sel ⟨ mask ⟩ i))
 
-    mgpt-forward : ∀ {ah hd : S} {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
-                   (p : GPT-Params Γ vo ed sl fd) (wseq : E Γ (ar (sl ⊗ ed)))
-                   → ah * hd ≈ ed → E Γ (ar (sl ⊗ vo))
-    mgpt-forward {sl} {vo} {ed} {fd} {ah} {hd} {Γ} sc mask p wseq pr =
-      Let wpe-wseq := (p .wpe) ⊞ wseq In
-      Let seq := m-rmsnorm {sl} wpe-wseq In
-      -- layer pass
-      Let nseq := m-rmsnorm {sl} seq In
-        -- attention block
-      Let qs := m-linear {u = ed} ⟨ p .wqry ⟩ nseq In
-      Let ks := m-linear {u = ed} ⟨ p .wkey ⟩ nseq In
-      Let vs := m-linear {u = ed} ⟨ p .wval ⟩ nseq In
-      Let bqs := block-vec qs pr In
-      Let bks := block-vec ks pr In
-      Let bvs := block-vec vs pr In
-      Let battn := mh-attention {sl} {ah} sc ⟨ mask ⟩ bqs bks bvs In
-      Let attn := unblock-vec battn pr In
-      Let oseq := m-linear {u = ed} {p = sl} ⟨ p .wout ⟩ attn In
-      Let cseq := oseq ⊞ seq In
-        -- mlp block
-      Let nseq2 := m-rmsnorm {sl} cseq In
-      Let useq := m-linear {p = sl} ⟨ p .wup ⟩ nseq2 In
-      Let aseq := relu useq In
-      Let dseq := m-linear {u = ed} {p = sl} ⟨ p .wdown ⟩ aseq In
-      Let lseq := dseq ⊞ cseq In
-      -- build logits
-      --Let logits := m-linear {u = vo} {p = sl} ⟨ p .wvoc ⟩ lseq In logits
-      m-linear {u = vo} {p = sl} ⟨ p .wvoc ⟩ lseq
+    -- DANGER: Is this correct?
+    gpt-softmax : ∀ {Γ} → E Γ (ar $ (bs ⊗ ah) ⊗ (sl ⊗ sl))
+                  → E Γ (ar $ (bs ⊗ ah) ⊗ (sl ⊗ sl))
+    gpt-softmax {bs} {ah} {sl} e =
+      e-map {bs ⊗ ah} (λ x → e-map {sl} ℙ x) e
+
+    multihead-attn : ∀ {Γ} (sc : ℕ) (mask : E Γ (ar $ bs ⊗ (sl ⊗ sl)))
+                     (q k v : E Γ (ar $ (bs ⊗ ah) ⊗ (sl ⊗ hd)))
+                     → E Γ (ar $ (bs ⊗ ah) ⊗ (sl ⊗ hd))
+    multihead-attn {bs} {sl} {ah} sc mask q k v =
+      Let w := m-matmult {bs ⊗ ah} {sl} q k In
+      Let masked := mask-attn-weights {bs} {sl} ⟨ mask ⟩ (scaledown sc w) In
+      Let sf := gpt-softmax {bs} {ah} {sl} masked
+      In m-matmul {bs ⊗ ah} {sl} sf ⟨ v ⟩
+
+    attn : ∀ {Γ}
+           (pf : ah * hd ≈ ed) (sc : ℕ)
+           (p : GPT-Params Γ vo ed sl fd)
+           (mask : E Γ (ar $ bs ⊗ (sl ⊗ sl)))
+           (h : E Γ (ar $ (bs ⊗ sl) ⊗ ed))
+           → E Γ (ar $ (bs ⊗ sl) ⊗ ed)
+    attn {ah} {hd} {ed} {vo} {sl} {fd} {bs} pf sc p mask h =
+      Let q := (split-heads {bs} pf $ m-linear {ed} ⟨ p .wqry ⟩   h  ) In
+      Let k := (split-heads {bs} pf $ m-linear {ed} ⟨ p .wkey ⟩ ⟨ h ⟩) In
+      Let v := (split-heads {bs} pf $ m-linear {ed} ⟨ p .wval ⟩ ⟨ h ⟩) In
+      Let a := multihead-attn {bs} {sl} sc ⟨ mask ⟩ q k v In
+      Let a₁ := merge-heads {bs} pf a
+      In m-linear {ed} ⟨ p .wout ⟩ a₁
+
+    mlp : ∀ {Γ}
+           (p : GPT-Params Γ vo ed sl fd)
+           (x : E Γ (ar $ (bs ⊗ sl) ⊗ ed))
+           → E Γ (ar $ (bs ⊗ sl) ⊗ ed)
+    mlp {ed = ed} {sl = sl} {fd = fd} {bs = bs} p x =
+      m-linear {ed} ⟨ p .wdown ⟩ $
+        relu $ m-linear {fd} ⟨ p .wup ⟩ ⟨ x ⟩
+
+    block : ∀ {Γ}
+            (pf : ah * hd ≈ ed) (sc : ℕ)
+            (p : GPT-Params Γ vo ed sl fd)
+            (mask : E Γ (ar $ bs ⊗ (sl ⊗ sl)))
+            (h : E Γ (ar $ (bs ⊗ sl) ⊗ ed))
+            → E Γ (ar $ (bs ⊗ sl) ⊗ ed)
+    block {ah} {hd} {ed} {vo} {sl} {fd} {bs} pf sc p mask x =
+      Let a := attn pf sc p mask (m-rmsnorm {bs ⊗ sl} x) In
+      Let x+a := ⟨ x ⟩ ⊞ a In
+      Let m := mlp ⟨ p ⟩ₚ (m-rmsnorm {bs ⊗ sl} x+a)
+      In x+a ⊞ m
+
+    model : ∀ {Γ}
+            (pf : ah * hd ≈ ed) (sc : ℕ)
+            (p : GPT-Params Γ vo ed sl fd)
+            (mask : E Γ (ar $ bs ⊗ (sl ⊗ sl)))
+            (te : E Γ (ar $ (bs ⊗ sl) ⊗ ed))
+            → E Γ (ar $ (bs ⊗ sl) ⊗ vo)
+    model {vo = vo} {sl = sl} {bs = bs} pf sc p mask te =
+      -- DANGER : Not sure if tile is what we need
+      -- DANGER : icomᵣ is inneficient. Opt should be able to take care of it
+      -- NOTE : microgpt applies normalization twice for some reason
+      Let h := (m-rmsnorm {bs ⊗ sl} $ te ⊞ icomᵣ {bs} (tile {bs} (p .wpe))) In
+      -- TODO : Generalize to multiple layers
+      -- DANGER : microgpt does NOT normalize after block but gpt2 does?
+      Let h₁ := block pf sc ⟨ p ⟩ₚ ⟨ mask ⟩ h In
+        m-linear {vo} ⟨ p .wvoc ⟩ h₁
 
     cross-entropy : ∀ {Γ} (logits target : E Γ (ar s)) → (E Γ (ar []))
     cross-entropy {s} logits target =
@@ -655,80 +719,190 @@ module Primitives where
     m-cross-entropy {s} {p} logits target =
       Imaps λ i → cross-entropy {p} (sel ⟨ logits ⟩ i) (sel ⟨ target ⟩ i)
 
-    mgpt-loss : ∀ {ah hd : S} {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
-                   (p : GPT-Params Γ vo ed sl fd) (wseq : E Γ (ar (sl ⊗ ed)))
-                   (target : E Γ (ar (sl ⊗ vo))) → ah * hd ≈ ed → E Γ (ar [])
-    mgpt-loss {sl = sl} {vo = vo} {ed = ed} {ah = ah} sc mask p wseq target eq1 =
+    avg : ∀ {Γ} → E Γ (ar s) → E Γ (ar [])
+    avg {s} x = scaledown (len s) (Sum λ i → sels ⟨ x ⟩ i)
 
-      Let wpe-wseq := (p .wpe) ⊞ wseq In
-      Let seq := m-rmsnorm {sl} wpe-wseq In
-      -- layer pass
-      Let nseq := m-rmsnorm {sl} seq In
-        -- attention block
-      Let qs := m-linear {u = ed} ⟨ p .wqry ⟩ nseq In
-      Let ks := m-linear {u = ed} ⟨ p .wkey ⟩ nseq In
-      Let vs := m-linear {u = ed} ⟨ p .wval ⟩ nseq In
-      Let bqs := block-vec qs eq1 In
-      Let bks := block-vec ks eq1 In
-      Let bvs := block-vec vs eq1 In
-      Let battn := mh-attention {sl} {ah} sc ⟨ mask ⟩ bqs bks bvs In
-      Let attn := unblock-vec battn eq1 In
-      Let oseq := m-linear {u = ed} {p = sl} ⟨ p .wout ⟩ attn In
-      Let cseq := oseq ⊞ seq In
-        -- mlp block
-      Let nseq2 := m-rmsnorm {sl} cseq In
-      Let useq := m-linear {p = sl} ⟨ p .wup ⟩ nseq2 In
-      Let aseq := relu useq In
-      Let dseq := m-linear {u = ed} {p = sl} ⟨ p .wdown ⟩ aseq In
-      Let lseq := dseq ⊞ cseq In
-      -- build logits
-      Let logits := m-linear {u = vo} {p = sl} ⟨ p .wvoc ⟩ lseq In
-      -- calculate losses
-      Let losses := m-cross-entropy {sl} logits ⟨ target ⟩ In
-      -- average loss
-      --Let loss := avg losses In loss
-      avg losses
+    gpt-loss : ∀ {Γ}
+            (pf : ah * hd ≈ ed) (sc : ℕ)
+            (p : GPT-Params Γ vo ed sl fd)
+            (mask : E Γ (ar $ bs ⊗ (sl ⊗ sl)))
+            (te : E Γ (ar $ (bs ⊗ sl) ⊗ ed))
+            (target : E Γ (ar $ (bs ⊗ sl) ⊗ vo))
+            → E Γ (ar [])
+    gpt-loss {vo = vo} {sl = sl} {bs = bs} pf sc p mask te target =
+      Let logits := model pf sc p mask te In
+      Let losses := m-cross-entropy {bs ⊗ sl} logits ⟨ target ⟩ In
+      -- DANGER: Not sure if this is the right reduction
+      -- DANGER: Not sure how to deal with batchsize
+      -- Let loss := avg losses In loss
+      (Sum λ i → sels losses i)
 
-    ED = ι 16 ; AH = ι 4 ; HD = ι 4 ; SL = ι 16 ; FD = ι 64 ; SC = 2 ; VO = ι 27
 
-    PR : AH * HD ≈ ED
-    PR = cons
+    BS = ι 1 ; SL = ι 16
+    ED = ι 16 ; AH = ι 4 ; HD = ι 4
+    FD = ι 64 ; SC = 2 ; VO = ι 27
 
-    PF : suc (ι 15) ≈ SL
+    PF : AH * HD ≈ ED
     PF = cons
 
-    rmsnorm-e : E _ _
-    rmsnorm-e = Lcon (ar (ι 5 ⊗ ι 6) ∷ []) (ar (ι 5 ⊗ ι 6)) ε (λ x → rmsnorm {s = ι 5 ⊗ ι 6} x)
+    model-e : E _ _
+    model-e = Lcon (_ ∷ _ ∷ _ ∷ _ ∷ _ ∷ _ ∷ _ ∷ _ ∷ _ ∷ _ ∷ _) _ ε
+      λ wpe wqry wkey wval wout wup wdown wvoc mask te →
+        model {vo = VO} {sl = SL} {fd = FD} {bs = BS} PF SC
+        (to-gptp wpe wqry wkey wval wout wup wdown wvoc) mask te
 
-    div-e : E _ _
-    div-e = Lcon (ar (ι 6) ∷ ar (ι 6) ∷ []) (ar (ι 6)) ε (λ x y → (x ⊞ y) // (x ⊞ y))
+    gpt-loss-e : E _ _
+    gpt-loss-e = Lcon (_ ∷ _ ∷ _ ∷ _ ∷ _ ∷ _ ∷ _ ∷ _ ∷ _ ∷ _ ∷ _ ∷ _) _ ε
+      λ wpe wqry wkey wval wout wup wdown wvoc mask te target →
+        gpt-loss {vo = VO} {sl = SL} {fd = FD} {bs = BS} PF SC
+        (to-gptp wpe wqry wkey wval wout wup wdown wvoc) mask te target
 
-    softmax-e : E _ _
-    softmax-e = Lcon (ar (ι 2) ∷ ar (ι 2) ∷ []) (ar (ι 2)) ε (λ i x → ℙ x)
+    -- attention : ∀ {Γ} → (sc : ℕ) →
+    --                (mask : E Γ (ar (sl ⊗ sl)))
+    --                (qs ks vs : E Γ (ar (sl ⊗ hd)))
+    --               → E Γ (ar (sl ⊗ hd))
+    -- attention {sl} {hd} {Γ} sc mask hqs hks hvs =
+    --   Let hqks := matmult {sl} hqs hks In
+    --   Let masked := (scaledown sc hqks) ⊞ ⟨ mask ⟩ In
+    --   Let sf := m-softmax {s = sl} (masked) In
+    --   matmul {sl} sf ⟨ hvs ⟩
 
-    test : ∀ {Γ} → E Γ (ar $ ι 5 ⊗ ι 3) → E Γ (ar $ ι 5 ⊗ ι 3)
-    test x = ℙ x
+    -- mh-attention : ∀ {Γ} → (sc : ℕ)
+    --                (mask : E Γ (ar (sl ⊗ sl)))
+    --                (qs ks vs : E Γ (ar (ah ⊗ (sl ⊗ hd))))
+    --                → E Γ (ar (ah ⊗ (sl ⊗ hd)))
+    -- mh-attention {sl} {ah} {hd} {Γ} sc mask bqs bks bvs =
+    --   Imap {ah} λ i →
+    --   attention {sl = sl} sc ⟨ mask ⟩ (sel ⟨ bqs ⟩ i) (sel ⟨ bks ⟩ i) (sel ⟨ bvs ⟩ i)
 
-    test-e : E _ _
-    test-e = Lcon (ar (ι 5 ⊗ ι 3) ∷ []) (ar (ι 5 ⊗ ι 3)) ε (λ x → test x)
+    -- block-tok : ∀ {Γ} → E Γ (ar ed) → ah * hd ≈ ed → E Γ (ar (ah ⊗ hd))
+    -- block-tok {ed} {ah} {hd} {Γ} x pr = Imap {ah} λ i → selb pr ⟨ x ⟩ i
 
-    id-e : E _ _
-    id-e = Lcon (ar (ι 5 ⊗ ι 6) ∷ []) (ar (ι 5 ⊗ ι 6)) ε (λ x → x)
+    -- unblock-tok : ∀ {Γ} → E Γ (ar (ah ⊗ hd)) → ah * hd ≈ ed → E Γ (ar ed)
+    -- unblock-tok {ah} {hd} {ed} {Γ} x pr = Imapb pr λ i → sel ⟨ x ⟩ i
 
-    mgpt-forward-e : E _ _
-    mgpt-forward-e = Lcon (ar (SL ⊗ SL) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
-                  ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
-                  ar (FD ⊗ ED) ∷ ar (ED ⊗ FD) ∷ ar (VO ⊗ ED) ∷
-                  ar (SL ⊗ ED) ∷ []) (ar (SL ⊗ VO)) ε
-      λ mask wpe wqry wkey wval wout wup wdown wvoc wseq  →
-        mgpt-forward {sl = SL} SC mask
-          (to-gptp wpe wqry wkey wval wout wup wdown wvoc) wseq PR
+    -- block-vec : ∀ {Γ} → E Γ (ar (sl ⊗ ed)) → ah * hd ≈ ed
+    --             → E Γ (ar (ah ⊗ (sl ⊗ hd)))
+    -- block-vec {sl} {ed} {ah} x pr =
+    --   iswap3 {sl} {ah} (Imap {sl} λ i → block-tok (sel ⟨ x ⟩ i) pr)
 
-    mgpt-loss-e : E _ _
-    mgpt-loss-e = Lcon (ar (SL ⊗ SL) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
-                  ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
-                  ar (FD ⊗ ED) ∷ ar (ED ⊗ FD) ∷ ar (VO ⊗ ED) ∷
-                  ar (SL ⊗ ED) ∷ ar (SL ⊗ VO) ∷ []) (ar []) ε
-      λ mask wpe wqry wkey wval wout wup wdown wvoc wseq target →
-        mgpt-loss {sl = SL} SC mask
-          (to-gptp wpe wqry wkey wval wout wup wdown wvoc) wseq target PR
+    -- unblock-vec : ∀ {Γ} → E Γ (ar (ah ⊗ (sl ⊗ hd))) → ah * hd ≈ ed
+    --   → E Γ (ar (sl ⊗ ed))
+    -- unblock-vec {ah} {sl} {hd} {ed} {Γ} x pr = Imap {sl} λ i →
+    --   unblock-tok (sel (iswap3 {ah} {sl} ⟨ x ⟩) i) pr
+
+    -- mgpt-forward : ∀ {ah hd : S} {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
+    --                (p : GPT-Params Γ vo ed sl fd) (wseq : E Γ (ar (sl ⊗ ed)))
+    --                → ah * hd ≈ ed → E Γ (ar (sl ⊗ vo))
+    -- mgpt-forward {sl} {vo} {ed} {fd} {ah} {hd} {Γ} sc mask p wseq pr =
+    --   Let wpe-wseq := (p .wpe) ⊞ wseq In
+    --   Let seq := m-rmsnorm {sl} wpe-wseq In
+    --   -- layer pass
+    --   Let nseq := m-rmsnorm {sl} seq In
+    --     -- attention block
+    --   Let qs := m-linear {u = ed} ⟨ p .wqry ⟩ nseq In
+    --   Let ks := m-linear {u = ed} ⟨ p .wkey ⟩ nseq In
+    --   Let vs := m-linear {u = ed} ⟨ p .wval ⟩ nseq In
+    --   Let bqs := block-vec qs pr In
+    --   Let bks := block-vec ks pr In
+    --   Let bvs := block-vec vs pr In
+    --   Let battn := mh-attention {sl} {ah} sc ⟨ mask ⟩ bqs bks bvs In
+    --   Let attn := unblock-vec battn pr In
+    --   Let oseq := m-linear {u = ed} {p = sl} ⟨ p .wout ⟩ attn In
+    --   Let cseq := oseq ⊞ seq In
+    --     -- mlp block
+    --   Let nseq2 := m-rmsnorm {sl} cseq In
+    --   Let useq := m-linear {p = sl} ⟨ p .wup ⟩ nseq2 In
+    --   Let aseq := relu useq In
+    --   Let dseq := m-linear {u = ed} {p = sl} ⟨ p .wdown ⟩ aseq In
+    --   Let lseq := dseq ⊞ cseq In
+    --   -- build logits
+    --   --Let logits := m-linear {u = vo} {p = sl} ⟨ p .wvoc ⟩ lseq In logits
+    --   m-linear {u = vo} {p = sl} ⟨ p .wvoc ⟩ lseq
+
+    -- cross-entropy : ∀ {Γ} (logits target : E Γ (ar s)) → (E Γ (ar []))
+    -- cross-entropy {s} logits target =
+    --   Let lnsf := ln (ℙ logits) In
+    --   (⊟ (Sum λ i → sels lnsf i ⊠ sels ⟨ target ⟩ i))
+
+    -- m-cross-entropy : ∀ {Γ} (logits target : E Γ (ar (s ⊗ p))) → (E Γ (ar s))
+    -- m-cross-entropy {s} {p} logits target =
+    --   Imaps λ i → cross-entropy {p} (sel ⟨ logits ⟩ i) (sel ⟨ target ⟩ i)
+
+    -- mgpt-loss : ∀ {ah hd : S} {Γ} (sc : ℕ) (mask : E Γ (ar (sl ⊗ sl)))
+    --                (p : GPT-Params Γ vo ed sl fd) (wseq : E Γ (ar (sl ⊗ ed)))
+    --                (target : E Γ (ar (sl ⊗ vo))) → ah * hd ≈ ed → E Γ (ar [])
+    -- mgpt-loss {sl = sl} {vo = vo} {ed = ed} {ah = ah} sc mask p wseq target eq1 =
+
+    --   Let wpe-wseq := (p .wpe) ⊞ wseq In
+    --   Let seq := m-rmsnorm {sl} wpe-wseq In
+    --   -- layer pass
+    --   Let nseq := m-rmsnorm {sl} seq In
+    --     -- attention block
+    --   Let qs := m-linear {u = ed} ⟨ p .wqry ⟩ nseq In
+    --   Let ks := m-linear {u = ed} ⟨ p .wkey ⟩ nseq In
+    --   Let vs := m-linear {u = ed} ⟨ p .wval ⟩ nseq In
+    --   Let bqs := block-vec qs eq1 In
+    --   Let bks := block-vec ks eq1 In
+    --   Let bvs := block-vec vs eq1 In
+    --   Let battn := mh-attention {sl} {ah} sc ⟨ mask ⟩ bqs bks bvs In
+    --   Let attn := unblock-vec battn eq1 In
+    --   Let oseq := m-linear {u = ed} {p = sl} ⟨ p .wout ⟩ attn In
+    --   Let cseq := oseq ⊞ seq In
+    --     -- mlp block
+    --   Let nseq2 := m-rmsnorm {sl} cseq In
+    --   Let useq := m-linear {p = sl} ⟨ p .wup ⟩ nseq2 In
+    --   Let aseq := relu useq In
+    --   Let dseq := m-linear {u = ed} {p = sl} ⟨ p .wdown ⟩ aseq In
+    --   Let lseq := dseq ⊞ cseq In
+    --   -- build logits
+    --   Let logits := m-linear {u = vo} {p = sl} ⟨ p .wvoc ⟩ lseq In
+    --   -- calculate losses
+    --   Let losses := m-cross-entropy {sl} logits ⟨ target ⟩ In
+    --   -- average loss
+    --   --Let loss := avg losses In loss
+    --   avg losses
+
+    -- ED = ι 16 ; AH = ι 4 ; HD = ι 4 ; SL = ι 16 ; FD = ι 64 ; SC = 2 ; VO = ι 27
+
+    -- PR : AH * HD ≈ ED
+    -- PR = cons
+
+    -- PF : suc (ι 15) ≈ SL
+    -- PF = cons
+
+    -- rmsnorm-e : E _ _
+    -- rmsnorm-e = Lcon (ar (ι 5 ⊗ ι 6) ∷ []) (ar (ι 5 ⊗ ι 6)) ε (λ x → rmsnorm {s = ι 5 ⊗ ι 6} x)
+
+    -- div-e : E _ _
+    -- div-e = Lcon (ar (ι 6) ∷ ar (ι 6) ∷ []) (ar (ι 6)) ε (λ x y → (x ⊞ y) // (x ⊞ y))
+
+    -- softmax-e : E _ _
+    -- softmax-e = Lcon (ar (ι 2) ∷ ar (ι 2) ∷ []) (ar (ι 2)) ε (λ i x → ℙ x)
+
+    -- test : ∀ {Γ} → E Γ (ar $ ι 5 ⊗ ι 3) → E Γ (ar $ ι 5 ⊗ ι 3)
+    -- test x = ℙ x
+
+    -- test-e : E _ _
+    -- test-e = Lcon (ar (ι 5 ⊗ ι 3) ∷ []) (ar (ι 5 ⊗ ι 3)) ε (λ x → test x)
+
+    -- id-e : E _ _
+    -- id-e = Lcon (ar (ι 5 ⊗ ι 6) ∷ []) (ar (ι 5 ⊗ ι 6)) ε (λ x → x)
+
+    -- mgpt-forward-e : E _ _
+    -- mgpt-forward-e = Lcon (ar (SL ⊗ SL) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+    --               ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+    --               ar (FD ⊗ ED) ∷ ar (ED ⊗ FD) ∷ ar (VO ⊗ ED) ∷
+    --               ar (SL ⊗ ED) ∷ []) (ar (SL ⊗ VO)) ε
+    --   λ mask wpe wqry wkey wval wout wup wdown wvoc wseq  →
+    --     mgpt-forward {sl = SL} SC mask
+    --       (to-gptp wpe wqry wkey wval wout wup wdown wvoc) wseq PR
+
+    -- mgpt-loss-e : E _ _
+    -- mgpt-loss-e = Lcon (ar (SL ⊗ SL) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+    --               ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷ ar (ED ⊗ ED) ∷
+    --               ar (FD ⊗ ED) ∷ ar (ED ⊗ FD) ∷ ar (VO ⊗ ED) ∷
+    --               ar (SL ⊗ ED) ∷ ar (SL ⊗ VO) ∷ []) (ar []) ε
+    --   λ mask wpe wqry wkey wval wout wup wdown wvoc wseq target →
+    --     mgpt-loss {sl = SL} SC mask
+    --       (to-gptp wpe wqry wkey wval wout wup wdown wvoc) wseq target PR

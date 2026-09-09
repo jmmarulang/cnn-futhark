@@ -33,8 +33,9 @@ vocab_size = len(uchars) + 1
 vocab = uchars + ["end"]
 
 # Initialize the parameters, to store the knowledge of the model
-ed = 16     # width of the network (embedding dimension)
+bs = 1
 sl = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
+ed = 16     # width of the network (embedding dimension)
 ah = 4      # number of attention heads
 hd = ed // ah # derived dimension of each head
 big_num = 1000000000000000
@@ -77,7 +78,8 @@ num_steps = 30_000
 # DEF TORCH
 
 torch.manual_seed(seed)
-device = torch.device("cpu")
+device_type = "cpu"
+device = torch.device(device_type)
 
 model = mt.GPT()
 model.to(device)
@@ -88,162 +90,196 @@ optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, betas=(0.85, 
 # scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0, total_iters=1000)
 
 # -------------------------------------
-# TRAINING FUT
+# # TRAINING FUT
 
-print("Hold on to your morses")
+# print("Hold on to your morses")
 
-# Preprocessing
-masks = np.zeros((num_steps, sl, sl)).astype(np.float64)
-dls = np.zeros((num_steps)).astype(np.int64)
-seqs = np.zeros((num_steps, sl)).astype(np.int64, copy=False)
+# # Preprocessing
+# masks = np.zeros((num_steps, sl, sl)).astype(np.float64)
+# dls = np.zeros((num_steps)).astype(np.int64)
+# seqs = np.zeros((num_steps, sl)).astype(np.int64, copy=False)
 
-for step in range(num_steps):
-    # doc lengths
-    doc = docs[step % len(docs)]
-    dl = min(len(doc), sl - 2)
-    dls[step] = dl
-    # Masking
+# for step in range(num_steps):
+#     # doc lengths
+#     doc = docs[step % len(docs)]
+#     dl = min(len(doc), sl - 2)
+#     dls[step] = dl
+#     # Masking
+#     pad_mask = np.ones((sl,sl))
+#     for i in range(dl):
+#         pad_mask[i][ 0 : dl] = 0
+#     mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
+#     mask = -1*mask*big_num
+#     masks[step] = mask
+
+# with futhark_server.Server(futhark) as server:
+#     server.put_value('num_steps',
+#                      np.array(num_steps).astype(np.int64, copy=False))
+#     for k , data in fwdic.items():
+#         server.put_value(k, data)
+#     server.cmd_call('to_params', 'p', *fwdic.keys())
+#     server.cmd_call('zero_params', 'mp')
+#     server.cmd_call('zero_params', 'vp')
+#     server.put_value('masks', masks)
+#     server.put_value('dls', dls)
+
+#     # train
+#     # start timer
+#     start = time.perf_counter ()
+#     # Tokenization
+#     for step in range(num_steps):
+#         doc = docs[step % len(docs)]
+#         dl = min(len(doc), sl - 2)
+#         tokens = [BOS] + [uchars.index(ch) for ch in doc[:dl]] + [BOS]
+#         # Padding
+#         ftokens = tokens + ([BOS] * (sl - dl - 2))
+#         try:
+#             seqs[step] = ftokens
+#         except ValueError as e:
+#             print("dl", dl)
+#             print("tokens", tokens)
+#             print("ftokens", ftokens)
+#             print("len tokens", len(tokens))
+#             print("len ftokens", len(ftokens))
+#             raise e
+#     server.put_value('seqs', seqs)
+#     server.cmd_call('train', 'p_mp_vp', 'p', 'mp', 'vp', 'masks',
+#                     'dls', 'seqs')
+#     end = time.perf_counter ()
+#     print("futhark grad time", end - start)
+#     p_mp_vp = server.get_value('p_mp_vp')
+
+# # save weights
+# for i , k in enumerate(dimdic.keys()):
+#     fwdic[k] = p_mp_vp[i]
+#     fmdic[k] = p_mp_vp[i + 9]
+#     fmdic[k] = p_mp_vp[i + 18]
+
+# try:
+#     np.save("fwdic.npy", fwdic, allow_pickle=True)
+#     file = open('fwdic.txt', 'wt')
+#     file.write(str(fwdic))
+#     file.close()
+# except :
+#     print("It refused")
+
+# # # -------------------------------------
+# # # TRAINING TORCH
+
+# model.train()
+# # start timer
+# start = time.perf_counter ()
+# for step in range(num_steps):
+#     doc = docs[step % len(docs)]
+#     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+#     n = min(sl, len(tokens) - 1)
+
+#     x = torch.tensor([tokens[:n]], dtype=torch.long, device= device)
+#     y = torch.tensor([tokens[1:n+1]], dtype=torch.long, device= device)
+
+#     with torch.autocast(device_type= device_type, dtype=torch.bfloat16):
+#         logits, loss = model(x, y)
+
+#     optimizer.zero_grad(set_to_none=True)
+#     loss.backward()
+#     optimizer.step()
+#     # scheduler.step()
+
+#     print(f"step {step+1:4d} / {num_steps:4d} | loss {loss.item():.4f}", end='\r')
+
+# end = time.perf_counter ()
+# print("torch grad time", end - start)
+
+#-------------------------------------
+# PROBS
+
+# input
+# input_docs = []
+dls = []
+input_seqs = []
+seqs = []
+masks = []
+for i in range(bs):
+    doc = input(str(i) + " doc >> ")
+    # input_docs.append(doc)
+    dl = len(doc) + 2
+    dls.append(dl)
+
+    seq = [BOS] + [vocab.index(ch) for ch in doc] + [BOS]
+    seq = seq + ([BOS] * (sl - dl))
+    assert (len(seq) == sl)
+    seqs.append(seq)
+
     pad_mask = np.ones((sl,sl))
     for i in range(dl):
         pad_mask[i][ 0 : dl] = 0
     mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
     mask = -1*mask*big_num
-    masks[step] = mask
+    masks.append(mask)
+
+seqs = np.array(seqs)
+masks = np.array(masks)
+dls = np.array(dls)
 
 with futhark_server.Server(futhark) as server:
-    server.put_value('num_steps',
-                     np.array(num_steps).astype(np.int64, copy=False))
-    for k , data in fwdic.items():
-        server.put_value(k, data)
-    server.cmd_call('to_params', 'p', *fwdic.keys())
-    server.cmd_call('zero_params', 'mp')
-    server.cmd_call('zero_params', 'vp')
-    server.put_value('masks', masks)
-    server.put_value('dls', dls)
-
-    # train
-    # start timer
-    start = time.perf_counter ()
-    # Tokenization
-    for step in range(num_steps):
-        doc = docs[step % len(docs)]
-        dl = min(len(doc), sl - 2)
-        tokens = [BOS] + [uchars.index(ch) for ch in doc[:dl]] + [BOS]
-        # Padding
-        ftokens = tokens + ([BOS] * (sl - dl - 2))
-        try:
-            seqs[step] = ftokens
-        except ValueError as e:
-            print("dl", dl)
-            print("tokens", tokens)
-            print("ftokens", ftokens)
-            print("len tokens", len(tokens))
-            print("len ftokens", len(ftokens))
-            raise e
     server.put_value('seqs', seqs)
-    server.cmd_call('train', 'p_mp_vp', 'p', 'mp', 'vp', 'masks',
-                    'dls', 'seqs')
-    end = time.perf_counter ()
-    print("futhark grad time", end - start)
-    p_mp_vp = server.get_value('p_mp_vp')
-
-# save weights
-for i , k in enumerate(dimdic.keys()):
-    fwdic[k] = p_mp_vp[i]
-    fmdic[k] = p_mp_vp[i + 9]
-    fmdic[k] = p_mp_vp[i + 18]
-
-try:
-    np.save("fwdic.npy", fwdic, allow_pickle=True)
-    file = open('fwdic.txt', 'wt')
-    file.write(str(fwdic))
-    file.close()
-except :
-    print("It refused")
-
-# # -------------------------------------
-# # TRAINING TORCH
-
-model.train()
-# start timer
-start = time.perf_counter ()
-for step in range(num_steps):
-    doc = docs[step % len(docs)]
-    tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
-    n = min(sl, len(tokens) - 1)
-
-    x = torch.tensor([tokens[:n]], dtype=torch.long, device= device)
-    y = torch.tensor([tokens[1:n+1]], dtype=torch.long, device= device)
-
-    logits, loss = model(x, y)
-
-    optimizer.zero_grad(set_to_none=True)
-    loss.backward()
-    optimizer.step()
-    # scheduler.step()
-
-    print(f"step {step+1:4d} / {num_steps:4d} | loss {loss.item():.4f}", end='\r')
-
-end = time.perf_counter ()
-print("torch grad time", end - start)
-
-#-------------------------------------
-# PROBS
-
-input
-# doc = list("wakuntchapinka")
-doc = list("jairo")
-dl = len(doc) + 2
-
-# sequence ids
-ptokens = [BOS] + [vocab.index(ch) for ch in doc] + [BOS]
-# add padding
-ftokens = ptokens + ([BOS] * (sl - dl))
-# to numpy
-ftokens = np.array(ftokens)
-print("".join(doc))
-
-pad_mask = np.ones((sl,sl))
-for i in range(dl):
-    pad_mask[i][ 0 : dl] = 0
-
-# print(pad_mask)
-mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
-
-mask = -1*mask*big_num
-
-with futhark_server.Server(futhark) as server:
-    server.put_value('tokens', ftokens)
-    server.put_value('mask', mask)
+    server.put_value('masks', masks)
     for k , data in fwdic.items():
         server.put_value(k, data)
-    server.cmd_call('to_params', 'fparams', *fwdic.keys())
-    server.cmd_call('forward_seq', 'fmlogits', 'fparams', 'tokens', 'mask')
-    fmlogits = server.get_value('fmlogits')
-mfprobs = np.array([softmax(logits) for logits in fmlogits])
-mfprobs = mfprobs[: dl]
+    server.cmd_call('to_params', 'params', *fwdic.keys())
+    server.cmd_call('forward', 'logits', 'params', 'seqs', 'masks')
+    f_batch_seq_logits = server.get_value('logits')
+    server.put_value('dls', dls)
+    server.cmd_call('loss', 'floss', 'dls', 'params', 'seqs', 'masks')
+    floss = server.get_value('floss')
 
+# TODO : Add batchsize to pytorch
+t_batch_seq_logits = []
+t_batch_loss = []
 with torch.no_grad():
-    idx = torch.tensor([ftokens.tolist()], dtype=torch.long, device=device) #source of error?
-    mplogits, _ = model(idx)
+    for i in range(bs):
+        tokens = seqs[i]
+        # tokens.tolist()
+        n = min(sl, len(tokens) - 1)
+        x = torch.tensor([tokens[:n].tolist()], dtype=torch.long, device= device)
+        y = torch.tensor([tokens[1:n+1].tolist()], dtype=torch.long, device= device)
+        # idx = torch.tensor([tokens.tolist()], dtype=torch.long, device=device) #source of error?
+        seq_logits, seq_loss = model(x , y)
+        seq_logits = seq_logits.numpy()[0]
+        t_batch_seq_logits.append(seq_logits)
+        t_batch_loss.append(seq_loss.numpy())
 
-mplogits = mplogits.numpy()[0]
+# t_batch_seq_logits = np.array(t_batch_seq_logits)
 
-mpprobs = np.array([softmax(logits) for logits in mplogits])
-mpprobs = mfprobs[: dl]
+fprobs = [[softmax(logits) for logits in seq_logits[: dl]]
+                   for seq_logits , dl in zip(f_batch_seq_logits, dls)]
+
+# tprobs = [[softmax(logits) for logits in seq_logits[: dl]]
+#                    for seq_logits , dl in zip(t_batch_seq_logits, dls)]
+
+
+print(floss)
+print(t_batch_loss)
+# print(len(fprobs[0]))
+# print(len(tprobs[0]))
+# print(np.asarray(fprobs).shape)
+# print(np.asarray(tprobs).shape)
+# print(t_batch_seq_logits[0].shape)
+# print(floss)
+# print(np.sum(t_batch_loss))
 
 # #---------
 
-barWidth = 0.25
-lfprobs = mfprobs[-1]
-lpprobs = mpprobs[-1]
+# barWidth = 0.25
+# lfprobs = fprobs[0][-1]
+# lpprobs = tprobs[0][-1]
 
-br1 = np.arange(len(lfprobs))
-br2 = [x + barWidth for x in br1]
-plt.bar(br1, lfprobs, width=barWidth, label="futhark")
-plt.bar(br2, lpprobs, width=barWidth, label="python")
-plt.xticks([r + barWidth for r in range(len(lfprobs))], vocab)
-plt.xlabel('next token probability', fontsize = 12)
-plt.legend()
-# plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
-plt.show()
+# br1 = np.arange(len(lfprobs))
+# br2 = [x + barWidth for x in br1]
+# plt.bar(br1, lfprobs, width=barWidth, label="futhark")
+# plt.bar(br2, lpprobs, width=barWidth, label="pytorch")
+# plt.xticks([r + barWidth for r in range(len(lfprobs))], vocab)
+# plt.xlabel('next token probability', fontsize = 12)
+# plt.legend()
+# # plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
+# plt.show()
