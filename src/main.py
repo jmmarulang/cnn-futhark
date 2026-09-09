@@ -86,105 +86,105 @@ learning_rate = 0.01
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, betas=(0.85, 0.99), eps=1e-8)
 # scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0, total_iters=1000)
 
-# -------------------------------------
-# TRAINING FUT
-
-print("Hold on to your morses")
-
-# Preprocessing
-masks = np.zeros((num_steps, sl, sl)).astype(np.float64)
-dls = np.zeros((num_steps)).astype(np.int64)
-seqs = np.zeros((num_steps, sl)).astype(np.int64, copy=False)
-
-for step in range(num_steps):
-    # doc lengths
-    doc = docs[step % len(docs)]
-    dl = min(len(doc), sl - 2)
-    dls[step] = dl
-    # Masking
-    pad_mask = np.ones((sl,sl))
-    for i in range(dl):
-        pad_mask[i][ 0 : dl] = 0
-    mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
-    mask = -1*mask*big_num
-    masks[step] = mask
-
-with futhark_server.Server(futhark) as server:
-    server.put_value('num_steps',
-                     np.array(num_steps).astype(np.int64, copy=False))
-    for k , data in fwdic.items():
-        server.put_value(k, data)
-    server.cmd_call('to_params', 'p', *fwdic.keys())
-    server.cmd_call('zero_params', 'mp')
-    server.cmd_call('zero_params', 'vp')
-    server.put_value('masks', masks)
-    server.put_value('dls', dls)
-
-    # train
-    # start timer
-    start = time.perf_counter ()
-    # Tokenization
-    for step in range(num_steps):
-        doc = docs[step % len(docs)]
-        dl = min(len(doc), sl - 2)
-        tokens = [BOS] + [uchars.index(ch) for ch in doc[:dl]] + [BOS]
-        # Padding
-        ftokens = tokens + ([BOS] * (sl - dl - 2))
-        try:
-            seqs[step] = ftokens
-        except ValueError as e:
-            print("dl", dl)
-            print("tokens", tokens)
-            print("ftokens", ftokens)
-            print("len tokens", len(tokens))
-            print("len ftokens", len(ftokens))
-            raise e
-    server.put_value('seqs', seqs)
-    server.cmd_call('train', 'p_mp_vp', 'p', 'mp', 'vp', 'masks',
-                    'dls', 'seqs')
-    end = time.perf_counter ()
-    print("futhark grad time", end - start)
-    p_mp_vp = server.get_value('p_mp_vp')
-
-# save weights
-for i , k in enumerate(dimdic.keys()):
-    fwdic[k] = p_mp_vp[i]
-    fmdic[k] = p_mp_vp[i + 9]
-    fmdic[k] = p_mp_vp[i + 18]
-
-try:
-    np.save("fwdic.npy", fwdic, allow_pickle=True)
-    file = open('fwdic.txt', 'wt')
-    file.write(str(fwdic))
-    file.close()
-except :
-    print("It refused")
-
 # # -------------------------------------
-# # TRAINING TORCH
+# # TRAINING FUT
 
-model.train()
-# start timer
-start = time.perf_counter ()
-for step in range(num_steps):
-    doc = docs[step % len(docs)]
-    tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
-    n = min(sl, len(tokens) - 1)
+# print("Hold on to your morses")
 
-    x = torch.tensor([tokens[:n]], dtype=torch.long, device= device)
-    y = torch.tensor([tokens[1:n+1]], dtype=torch.long, device= device)
+# # Preprocessing
+# masks = np.zeros((num_steps, sl, sl)).astype(np.float64)
+# dls = np.zeros((num_steps)).astype(np.int64)
+# seqs = np.zeros((num_steps, sl)).astype(np.int64, copy=False)
 
-    logits, loss = model(x, y)
+# for step in range(num_steps):
+#     # doc lengths
+#     doc = docs[step % len(docs)]
+#     dl = min(len(doc), sl - 2)
+#     dls[step] = dl
+#     # Masking
+#     pad_mask = np.ones((sl,sl))
+#     for i in range(dl):
+#         pad_mask[i][ 0 : dl] = 0
+#     mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
+#     mask = -1*mask*big_num
+#     masks[step] = mask
 
-    optimizer.zero_grad(set_to_none=True)
-    loss.backward()
-    optimizer.step()
-    # scheduler.step()
+# with futhark_server.Server(futhark) as server:
+#     server.put_value('num_steps',
+#                      np.array(num_steps).astype(np.int64, copy=False))
+#     for k , data in fwdic.items():
+#         server.put_value(k, data)
+#     server.cmd_call('to_params', 'p', *fwdic.keys())
+#     server.cmd_call('zero_params', 'mp')
+#     server.cmd_call('zero_params', 'vp')
+#     server.put_value('masks', masks)
+#     server.put_value('dls', dls)
 
-    print(f"step {step+1:4d} / {num_steps:4d} | loss {loss.item():.4f}", end='\r')
+#     # train
+#     # start timer
+#     start = time.perf_counter ()
+#     # Tokenization
+#     for step in range(num_steps):
+#         doc = docs[step % len(docs)]
+#         dl = min(len(doc), sl - 2)
+#         tokens = [BOS] + [uchars.index(ch) for ch in doc[:dl]] + [BOS]
+#         # Padding
+#         ftokens = tokens + ([BOS] * (sl - dl - 2))
+#         try:
+#             seqs[step] = ftokens
+#         except ValueError as e:
+#             print("dl", dl)
+#             print("tokens", tokens)
+#             print("ftokens", ftokens)
+#             print("len tokens", len(tokens))
+#             print("len ftokens", len(ftokens))
+#             raise e
+#     server.put_value('seqs', seqs)
+#     server.cmd_call('train', 'p_mp_vp', 'p', 'mp', 'vp', 'masks',
+#                     'dls', 'seqs')
+#     end = time.perf_counter ()
+#     print("futhark grad time", end - start)
+#     p_mp_vp = server.get_value('p_mp_vp')
 
-end = time.perf_counter ()
-print("torch grad time", end - start)
+# # save weights
+# for i , k in enumerate(dimdic.keys()):
+#     fwdic[k] = p_mp_vp[i]
+#     fmdic[k] = p_mp_vp[i + 9]
+#     fmdic[k] = p_mp_vp[i + 18]
+
+# try:
+#     np.save("fwdic.npy", fwdic, allow_pickle=True)
+#     file = open('fwdic.txt', 'wt')
+#     file.write(str(fwdic))
+#     file.close()
+# except :
+#     print("It refused")
+
+# # # -------------------------------------
+# # # TRAINING TORCH
+
+# model.train()
+# # start timer
+# start = time.perf_counter ()
+# for step in range(num_steps):
+#     doc = docs[step % len(docs)]
+#     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+#     n = min(sl, len(tokens) - 1)
+
+#     x = torch.tensor([tokens[:n]], dtype=torch.long, device= device)
+#     y = torch.tensor([tokens[1:n+1]], dtype=torch.long, device= device)
+
+#     logits, loss = model(x, y)
+
+#     optimizer.zero_grad(set_to_none=True)
+#     loss.backward()
+#     optimizer.step()
+#     # scheduler.step()
+
+#     print(f"step {step+1:4d} / {num_steps:4d} | loss {loss.item():.4f}", end='\r')
+
+# end = time.perf_counter ()
+# print("torch grad time", end - start)
 
 #-------------------------------------
 # PROBS
@@ -219,23 +219,25 @@ with futhark_server.Server(futhark) as server:
     server.cmd_call('to_params', 'fparams', *fwdic.keys())
     server.cmd_call('forward_seq', 'fmlogits', 'fparams', 'tokens', 'mask')
     fmlogits = server.get_value('fmlogits')
+fmlogits = fmlogits[: dl]
 mfprobs = np.array([softmax(logits) for logits in fmlogits])
-mfprobs = mfprobs[: dl]
+# mfprobs = mfprobs[: dl]
 
 with torch.no_grad():
     idx = torch.tensor([ftokens.tolist()], dtype=torch.long, device=device) #source of error?
     mplogits, _ = model(idx)
 
 mplogits = mplogits.numpy()[0]
+mplogits = mplogits[: dl]
 
 mpprobs = np.array([softmax(logits) for logits in mplogits])
-mpprobs = mfprobs[: dl]
+
 
 # #---------
 
 barWidth = 0.25
-lfprobs = mfprobs[-1]
-lpprobs = mpprobs[-1]
+lfprobs = fmlogits[-1]
+lpprobs = mplogits[-1]
 
 br1 = np.arange(len(lfprobs))
 br2 = [x + barWidth for x in br1]
