@@ -30,6 +30,7 @@ vocab_size = len(uchars) + 1
 vocab = uchars + ["end"]
 
 # Initialize the parameters, to store the knowledge of the model
+num_steps = 1000
 ed = 16     # width of the network (embedding dimension)
 sl = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
 ah = 4      # number of attention heads
@@ -64,8 +65,6 @@ for k , dim in dimdic.items():
 ones = np.ones((sl,sl))
 cau_mask = (ones - np.tril(ones))
 
-num_steps = 1000
-
 # -------------------------------------
 # DEF TORCH
 
@@ -87,27 +86,28 @@ optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, betas=(0.85, 
 scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0, total_iters=1000)
 
 # -------------------------------------
+# TRAINING DATA PREPROCESSING
+
+masks = np.zeros((num_steps, sl, sl)).astype(np.float64)
+seqs = np.zeros((num_steps, sl)).astype(np.int64, copy=False)
+
+dls = np.ones((num_steps)).astype(np.int64)*sl
+
+for step in range(num_steps):
+    doc = docs[step % len(docs)]
+    tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+    tokens = tokens + ([BOS] * (sl - len(tokens)))
+    assert len(tokens) == sl
+    seqs[step] = tokens
+    # Masking
+    mask = np.where(cau_mask >= 1, 1, 0).astype(np.float64)
+    mask = -1*mask*big_num
+    masks[step] = mask
+
+# -------------------------------------
 # TRAINING FUT
 
 print("Hold on to your morses")
-
-# Preprocessing
-masks = np.zeros((num_steps, sl, sl)).astype(np.float64)
-dls = np.zeros((num_steps)).astype(np.int64)
-seqs = np.zeros((num_steps, sl)).astype(np.int64, copy=False)
-
-for step in range(num_steps):
-    # doc lengths
-    doc = docs[step % len(docs)]
-    dl = len(doc) + 2
-    dls[step] = dl
-    # Masking
-    pad_mask = np.ones((sl,sl))
-    for i in range(dl):
-        pad_mask[i][ 0 : dl] = 0
-    mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
-    mask = -1*mask*big_num
-    masks[step] = mask
 
 with futhark_server.Server(futhark) as server:
     server.put_value('num_steps',
@@ -119,19 +119,11 @@ with futhark_server.Server(futhark) as server:
     server.cmd_call('zero_params', 'vp')
     server.put_value('masks', masks)
     server.put_value('dls', dls)
+    server.put_value('seqs', seqs)
 
     # start timer
     start = time.time()
-    # Tokenization
-    for step in range(num_steps):
-        doc = docs[step % len(docs)]
-        dl = len(doc) + 2
-        tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
-        # Padding
-        ftokens = tokens + ([BOS] * (sl - dl))
-        seqs[step] = ftokens
-    server.put_value('seqs', seqs)
-    server.cmd_call('train', 'p_mp_vp', 'p', 'mp', 'vp', 'masks',
+    server.cmd_call('train', 'p_mp_vp', 'num_steps', 'p', 'mp', 'vp', 'masks',
                     'dls', 'seqs')
     end = time.time()
     print("futhark grad time", end - start)
@@ -157,12 +149,12 @@ model.train()
 # start timer
 start = time.time()
 for step in range(num_steps):
-    doc = docs[step % len(docs)]
-    tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
-    n = min(sl, len(tokens) - 1)
+    n = sl - 1
+    x = seqs[step, :n]
+    y = seqs[step, 1:n+1]
 
-    x = torch.tensor([tokens[:n]], dtype=torch.long, device= device) # change input devices
-    y = torch.tensor([tokens[1:n+1]], dtype=torch.long, device= device)
+    x = torch.tensor([x], dtype=torch.long, device= device) # change input devices
+    y = torch.tensor([y], dtype=torch.long, device= device)
 
     logits, loss = model(x, y)
 
