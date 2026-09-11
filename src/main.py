@@ -64,7 +64,7 @@ for k , dim in dimdic.items():
 ones = np.ones((sl,sl))
 cau_mask = (ones - np.tril(ones))
 
-num_steps = 5
+num_steps = 1000
 
 # -------------------------------------
 # DEF TORCH
@@ -176,7 +176,7 @@ print("torch grad time", end - start)
 #-------------------------------------
 # PROBS
 
-input
+# input
 # doc = list("wakuntchapinka")
 doc = list("jairo")
 dl = len(doc) + 2
