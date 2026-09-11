@@ -31,6 +31,8 @@ vocab = uchars + ["end"]
 
 # Initialize the parameters, to store the knowledge of the model
 num_steps = 1000
+bs = 5
+num_batches = 200
 ed = 16     # width of the network (embedding dimension)
 sl = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
 ah = 4      # number of attention heads
@@ -148,14 +150,12 @@ except :
 model.train()
 # start timer
 start = time.time()
-for step in range(num_steps):
+for step in range(num_batches):
     n = sl - 1
-    x = seqs[step, :n]
-    y = seqs[step, 1:n+1]
-
-    x = torch.tensor([x], dtype=torch.long, device= device) # change input devices
-    y = torch.tensor([y], dtype=torch.long, device= device)
-
+    x = seqs[step*bs : step + bs, :n]
+    y = seqs[step*bs : step + bs, 1:n+1]
+    x = torch.tensor(x, dtype=torch.long, device= device)
+    y = torch.tensor(y, dtype=torch.long, device= device)
     logits, loss = model(x, y)
 
     optimizer.zero_grad(set_to_none=True)
