@@ -400,6 +400,10 @@ module _ where
   lastIx {p} {[]} pr = []
   lastIx {p ∷ ps} {x ∷ s} (cons {p = _} ⦃ refl ⦄ ⦃ b ⦄) = F.fromℕ p ∷ (lastIx b)
 
+  ⊗-ass : (s ⊗ p) ⊗ q ≡ s ⊗ (p ⊗ q)
+  ⊗-ass {[]} {p} {q} = refl
+  ⊗-ass {s ∷ ss} {p} {q} = cong (s ∷_) (⊗-ass {ss})
+
 module ArTests where
   imap : (s : S) → (P s → X) → Ar s X
   imap s f = f

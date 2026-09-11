@@ -38,38 +38,38 @@ module Opt (r : Real) (rp : RealProp r) where
   ++-inj₂ {[]} eq = eq
   ++-inj₂ {x ∷ s} eq = ++-inj₂ (∷-inj₂ eq)
 
-  let-out-stren : ∀ {p r q is}
-    → ((E (Γ ▹ ar q ▹ is) (ar p)) → (E (Γ ▹ ar q) (ar r)))
-    → ((E (Γ ▹ is) (ar p)) → (E Γ (ar r)))
-    → (E (Γ ▹ is) (ar q)) → (E (Γ ▹ is ▹ ar q) (ar p)) → (E Γ (ar r))
-  let-out-stren f g a b with (stren-∃ a v₀)
-  ... | just (a' , _) = let′ a' (f (sub b sub-swap))
-  ... | nothing = g (let′ a b)
+  -- let-out-stren : ∀ {p r q is}
+  --   → ((E (Γ ▹ ar q ▹ is) (ar p)) → (E (Γ ▹ ar q) (ar r)))
+  --   → ((E (Γ ▹ is) (ar p)) → (E Γ (ar r)))
+  --   → (E (Γ ▹ is) (ar q)) → (E (Γ ▹ is ▹ ar q) (ar p)) → (E Γ (ar r))
+  -- let-out-stren f g a b with (stren-∃ a v₀)
+  -- ... | just (a' , _) = let′ a' (f (sub b sub-swap))
+  -- ... | nothing = g (let′ a b)
 
-  let-out-step : ∀ {is p r} → (∀ {Δ} → (E (Δ ▹ is) (ar p)) → (E Δ (ar r)))
-    → (E (Γ ▹ is) (ar p)) → (E Γ (ar r))
-  let-out-step f (let′ a b) = let-out-stren f f a b
-  let-out-step f e = f e
+  -- let-out-step : ∀ {is p r} → (∀ {Δ} → (E (Δ ▹ is) (ar p)) → (E Δ (ar r)))
+  --   → (E (Γ ▹ is) (ar p)) → (E Γ (ar r))
+  -- let-out-step f (let′ a b) = let-out-stren f f a b
+  -- let-out-step f e = f e
 
-  let-out : E Γ is → E Γ is
-  let-out (uop x e) = uop x (let-out e)
-  let-out (bop x e e₁) = bop x (let-out e) (let-out e₁)
-  let-out (mop x e) = let-out-step (mop x) (let-out e)
-  let-out (sop x e e₁) = sop x (let-out e) (let-out e₁)
-  let-out (zero-but e e₁ e₂) = zero-but (let-out e) (let-out e₁) (let-out e₂)
-  let-out (let′ e e₁) = let′ (let-out e) (let-out e₁)
-  let-out e = e
+  -- let-out : E Γ is → E Γ is
+  -- let-out (uop x e) = uop x (let-out e)
+  -- let-out (bop x e e₁) = bop x (let-out e) (let-out e₁)
+  -- let-out (mop x e) = let-out-step (mop x) (let-out e)
+  -- let-out (sop x e e₁) = sop x (let-out e) (let-out e₁)
+  -- let-out (zero-but e e₁ e₂) = zero-but (let-out e) (let-out e₁) (let-out e₂)
+  -- let-out (let′ e e₁) = let′ (let-out e) (let-out e₁)
+  -- let-out e = e
 
-  sels-in : E Γ is → E Γ is
-  sels-in (sels (⊟ e) e₁) = ⊟ (sels (sels-in e) (sels-in e₁))
-  sels-in (sels (bop x a b) e₁) = bop x (sels (sels-in a) (sels-in e₁)) (sels (sels-in b) (sels-in e₁))
-  sels-in (uop x e) = uop x (sels-in e)
-  sels-in (bop x e e₁) = bop x (sels-in e) (sels-in e₁)
-  sels-in (mop x e) = mop x (sels-in e)
-  sels-in (sop x e e₁) = sop x (sels-in e) (sels-in e₁)
-  sels-in (zero-but e e₁ e₂) = zero-but (sels-in e) (sels-in e₁) (sels-in e₂)
-  sels-in (let′ e e₁) = let′ (sels-in e) (sels-in e₁)
-  sels-in e = e
+  -- sels-in : E Γ is → E Γ is
+  -- sels-in (sels (⊟ e) e₁) = ⊟ (sels (sels-in e) (sels-in e₁))
+  -- sels-in (sels (bop x a b) e₁) = bop x (sels (sels-in a) (sels-in e₁)) (sels (sels-in b) (sels-in e₁))
+  -- sels-in (uop x e) = uop x (sels-in e)
+  -- sels-in (bop x e e₁) = bop x (sels-in e) (sels-in e₁)
+  -- sels-in (mop x e) = mop x (sels-in e)
+  -- sels-in (sop x e e₁) = sop x (sels-in e) (sels-in e₁)
+  -- sels-in (zero-but e e₁ e₂) = zero-but (sels-in e) (sels-in e₁) (sels-in e₂)
+  -- sels-in (let′ e e₁) = let′ (sels-in e) (sels-in e₁)
+  -- sels-in e = e
 
   -- TODO : Incomplete
   sum-in : E Γ is → E Γ is
@@ -409,5 +409,5 @@ module Opt (r : Real) (rp : RealProp r) where
 
   danger-opt : E Γ is → E Γ is
   danger-opt e =
-    -- (opt e .proj₁)
-    sels-in $ let-out $ sum-in $ (opt e .proj₁)
+    (opt e .proj₁)
+    -- sels-in $ let-out $ sum-in $ (opt e .proj₁)
