@@ -179,6 +179,23 @@ in (let x16 = (imap1 16 (\i88 -> (imap1 16 (\i89 -> (isum1 64 (\i90 -> (wdown[i8
 in (let x17 = (imap2 16 16 (\i91 i92 -> (x16[i91][i92] F.+ x12[i91][i92])))
 in (imap1 16 (\i18 -> (imap1 27 (\i93 -> (isum1 16 (\i94 -> (wvoc[i93][i94] F.* x17[i18][i94])))))))))))))))))))))))))
 
+--   def cal_loss : (mask: [16][16]real)
+--     -> (wpe: [16][16]real)
+--     -> (wqry: [16][16]real)
+--     -> (wkey: [16][16]real)
+--     -> (wval: [16][16]real)
+--     -> (wout: [16][16]real)
+--     -> (wup: [64][16]real)
+--     -> (wdown: [16][64]real)
+--     -> (wvoc: [27][16]real)
+--     -> (wseq: [16][16]real)
+--     -> (target: [16][27]real)
+--     -> (real, [16]real) =
+--     #[unsafe]
+--     \(mask: [16][16]real) (wpe: [16][16]real)
+--     (wqry: [16][16]real) (wkey: [16][16]real) (wval: [16][16]real)
+--     (wout: [16][16]real) (wup: [64][16]real) (wdown: [16][64]real)
+--     (wvoc: [27][16]real) (wseq: [16][16]real) (target: [16][27]real) ->
 
   def grad_loss : (mask: [16][16]real)
     -> (wpe: [16][16]real)
@@ -303,7 +320,6 @@ let dwvoc = (imap1 27 (\i285 -> (imap1 16 (\i286 -> (isum1 16 (\i287 -> (x113[i2
 let dwseq = (imap2 16 16 (\i288 i289 -> x259[i288][i289]))
 let dtarget = (imap1 16 (\i290 -> (imap1 27 (\i291 -> (F.neg (x92[i290][i291] F.* x90[i290]))))))
 
-
 in (dwpe, dwqry, dwkey, dwval, dwout, dwup, dwdown, dwvoc, dwseq)
 }
 
@@ -348,6 +364,11 @@ entry forward_seq (p : params) (tokens : [16]i64) (mask : [16][16]f64) : [16][27
    let wseq = (imap2 16 16 (\m n -> wte[tokens[m]][n]))
    in nn64.forward_seq mask wpe wqry wkey wval wout wup wdown wvoc wseq
 
+-- entry cal_loss (p : params) (tokens : [16]i64) (target : [16][27]f64) (mask : [16][16]f64) : (f64 , [16]f64) =
+--    let {wte, wpe, wqry, wkey, wval, wout, wup, wdown, wvoc} = p
+--    let wseq = (imap2 16 16 (\m n -> wte[tokens[m]][n]))
+--    in nn64.cal_loss mask wpe wqry wkey wval wout wup wdown wvoc wseq target
+
 def cal_target (n : i64) (tokens : [16]i64) : [16][27]f64 =
   imap2 16 27 (\i j -> (if ((i < (n - 1)) && (tokens[i + 1] == j)) then 1 else 0))
 
@@ -369,7 +390,7 @@ def adam_opt_w [n] [m] (w : [n][m]f64) (mw : [n][m]f64) (vw : [n][m]f64)
 def adam_opt (p : params) (mp : params) (vp : params)
   (dp : params) (step : i64):
   (params,  params,  params) =
-  let lt_r = 0.01 * (1 - (nn64.fromi64 step) / (nn64.fromi64 1000))
+  let lt_r = 0.01 * (1 - (nn64.fromi64 step) / (nn64.fromi64 005))
   let (wte, mwte, vwte) =
     adam_opt_w p.wte mp.wte vp.wte dp.wte step lt_r
   let (wpe, mwpe, vwpe) =
@@ -431,11 +452,11 @@ def cal_step (dl : i64) (p : params) (mp : params) (vp : params)
   in (p', mp', vp')
 
 entry train (p : params) (mp : params) (vp : params)
-  (masks : [1000][16][16]f64) (dls : [1000]i64)
-  (seqs : [1000][16]i64) =
+  (masks : [005][16][16]f64) (dls : [005]i64)
+  (seqs : [005][16]i64) =
   let (new_p, new_mp, new_vp) =
     loop (p', mp', vp') = (p, mp, vp)
-    for step < 1000 do
+    for step < 005 do
       let dl = dls[step]
       let tokens = seqs[step]
       let mask = masks[step]

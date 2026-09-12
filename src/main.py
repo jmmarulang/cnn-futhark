@@ -17,6 +17,7 @@ def softmax(logits):
     return [e / total for e in exps]
 
 futhark = "futhark/microgpt"
+# print(futhark)
 
 # Data
 file = open('input-mgpt/input.txt')
@@ -64,27 +65,7 @@ for k , dim in dimdic.items():
 ones = np.ones((sl,sl))
 cau_mask = (ones - np.tril(ones))
 
-num_steps = 1000
-
-# -------------------------------------
-# DEF TORCH
-
-import os
-import torch
-import torch.nn as nn
-from torch.nn import functional as F
-import pytorch.microgpt_torch_lib as mt
-
-torch.manual_seed(seed)
-device = torch.device("cpu")
-
-model = mt.GPT()
-model.to(device)
-model.vocan_size = vocab_size
-learning_rate = 0.01
-
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, betas=(0.85, 0.99), eps=1e-8)
-scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0, total_iters=1000)
+num_steps = 5
 
 # -------------------------------------
 # TRAINING FUT
@@ -134,7 +115,7 @@ with futhark_server.Server(futhark) as server:
     server.cmd_call('train', 'p_mp_vp', 'p', 'mp', 'vp', 'masks',
                     'dls', 'seqs')
     end = time.time()
-    print("futhark grad time", end - start)
+    print("fgrad time", end - start)
     p_mp_vp = server.get_value('p_mp_vp')
 
 for i , k in enumerate(dimdic.keys()):
@@ -150,12 +131,31 @@ try:
 except :
     print("It refused")
 
+# -------------------------------------
+# DEF TORCH
+
+import os
+import torch
+import torch.nn as nn
+from torch.nn import functional as F
+import pytorch.microgpt_torch_lib as mt
+
+torch.manual_seed(seed)
+device = torch.device("cpu")
+
+model = mt.GPT()
+model.to(device)
+model.vocan_size = vocab_size
+learning_rate = 0.01
+
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, betas=(0.85, 0.99), eps=1e-8)
+scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0, total_iters=1000)
+
 # # -------------------------------------
 # # TRAINING TORCH
 
 model.train()
-# start timer
-start = time.time()
+
 for step in range(num_steps):
     doc = docs[step % len(docs)]
     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
@@ -170,13 +170,11 @@ for step in range(num_steps):
     loss.backward()
     optimizer.step()
     scheduler.step()
-end = time.time()
-print("torch grad time", end - start)
 
 #-------------------------------------
 # PROBS
 
-# input
+input
 # doc = list("wakuntchapinka")
 doc = list("jairo")
 dl = len(doc) + 2
@@ -205,24 +203,21 @@ with futhark_server.Server(futhark) as server:
         server.put_value(k, data)
     server.cmd_call('to_params', 'fparams', *fwdic.keys())
     server.cmd_call('forward_seq', 'fmlogits', 'fparams', 'tokens', 'mask')
-    fmlogits = server.get_value('fmlogits')
-mfprobs = np.array([softmax(logits) for logits in fmlogits])
-mfprobs = mfprobs[: dl]
+    futhark_logits = server.get_value('fmlogits')
+futhark_probs = np.array([softmax(logits) for logits in futhark_logits])
+futhark_probs = futhark_probs[: dl]
 
 with torch.no_grad():
-    idx = torch.tensor([ftokens.tolist()], dtype=torch.long) #source of error?
-    mplogits, _ = model(idx)
+    idx = torch.tensor([ftokens], dtype=torch.long) #source of error?
+    torch_logits, _ = model(idx)
+    torch_logits = torch_logits[:, -1, :]
+    torch_probs = F.softmax(torch_logits, dim=-1)
 
-mplogits = mplogits.numpy()[0]
-
-mpprobs = np.array([softmax(logits) for logits in mplogits])
-mpprobs = mfprobs[: dl]
-
-# #---------
+# # #---------
 
 barWidth = 0.25
-lfprobs = mfprobs[-1]
-lpprobs = mpprobs[-1]
+lfprobs = futhark_probs[0]
+lpprobs = torch_probs[0]
 
 br1 = np.arange(len(lfprobs))
 br2 = [x + barWidth for x in br1]
@@ -231,5 +226,4 @@ plt.bar(br2, lpprobs, width=barWidth, label="python")
 plt.xticks([r + barWidth for r in range(len(lfprobs))], vocab)
 plt.xlabel('next token probability', fontsize = 12)
 plt.legend()
-# plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
 plt.show()
