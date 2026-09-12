@@ -203,21 +203,21 @@ with futhark_server.Server(futhark) as server:
         server.put_value(k, data)
     server.cmd_call('to_params', 'fparams', *fwdic.keys())
     server.cmd_call('forward_seq', 'fmlogits', 'fparams', 'tokens', 'mask')
-    fmlogits = server.get_value('fmlogits')
-mfprobs = np.array([softmax(logits) for logits in fmlogits])
-mfprobs = mfprobs[: dl]
+    futhark_logits = server.get_value('fmlogits')
+futhark_probs = np.array([softmax(logits) for logits in futhark_logits])
+futhark_probs = futhark_probs[: dl]
 
 with torch.no_grad():
     idx = torch.tensor([ftokens], dtype=torch.long) #source of error?
-    mplogits, _ = model(idx)
-    mplogits = mplogits[:, -1, :]
-    mpprobs = F.softmax(mplogits, dim=-1)
+    torch_logits, _ = model(idx)
+    torch_logits = torch_logits[:, -1, :]
+    torch_probs = F.softmax(torch_logits, dim=-1)
 
 # # #---------
 
 barWidth = 0.25
-lfprobs = mfprobs[0]
-lpprobs = mpprobs[0]
+lfprobs = futhark_probs[0]
+lpprobs = torch_probs[0]
 
 br1 = np.arange(len(lfprobs))
 br2 = [x + barWidth for x in br1]
@@ -226,5 +226,4 @@ plt.bar(br2, lpprobs, width=barWidth, label="python")
 plt.xticks([r + barWidth for r in range(len(lfprobs))], vocab)
 plt.xlabel('next token probability', fontsize = 12)
 plt.legend()
-# plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
 plt.show()
