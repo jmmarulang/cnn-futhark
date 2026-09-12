@@ -1,12 +1,15 @@
-# import microgpt
+import python.mgptlib as mp
 import numpy as np
-# import string
 import matplotlib.pyplot as plt
 import time
 import random
-# import argparse
 import futhark_server
-# import logging
+import os
+import torch
+import torch.nn as nn
+from torch.nn import functional as F
+import pytorch.microgpt_torch_lib as mt
+
 seed = 40
 random.seed(seed)
 
@@ -32,7 +35,7 @@ vocab = uchars + ["end"]
 
 # Initialize the parameters, to store the knowledge of the model
 
-num_steps = 2
+num_steps = 100
 ed = 16     # width of the network (embedding dimension)
 sl = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
 ah = 4      # number of attention heads
@@ -63,9 +66,26 @@ for k , dim in dimdic.items():
     fvdic[k] = np.zeros(dim)
     pmdic[k] = np.zeros(dim)
     pvdic[k] = np.zeros(dim)
+pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
+
 
 ones = np.ones((sl,sl))
 cau_mask = (ones - np.tril(ones))
+
+# -------------------------------------
+# DEF TORCH
+
+torch.manual_seed(seed)
+device = torch.device("cpu")
+
+model = mt.GPT()
+model = model.double()
+model.to(device)
+model.vocan_size = vocab_size
+learning_rate = 0.01
+
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, betas=(0.85, 0.99), eps=1e-8)
+scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0, total_iters=num_steps)
 
 # -------------------------------------
 # TRAINING FUT
@@ -80,6 +100,9 @@ seqs = np.zeros((num_steps, sl)).astype(np.int64, copy=False)
 for step in range(num_steps):
     # doc lengths
     doc = docs[step % len(docs)]
+    # if step > 310:
+    #         print(doc, len(doc), "\n")
+    doc = doc[:sl-2]
     dl = len(doc) + 2
     dls[step] = dl
     # Masking
@@ -106,6 +129,7 @@ with futhark_server.Server(futhark) as server:
     # Tokenization
     for step in range(num_steps):
         doc = docs[step % len(docs)]
+        doc = doc[:sl-2]
         dl = len(doc) + 2
         tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
         # Padding
@@ -131,45 +155,77 @@ try:
 except :
     print("It refused")
 
-# -------------------------------------
-# DEF TORCH
+# # -------------------------------------
+# # TRAINING PY
 
-import os
-import torch
-import torch.nn as nn
-from torch.nn import functional as F
-import pytorch.microgpt_torch_lib as mt
+start = time.time()
 
-torch.manual_seed(seed)
-device = torch.device("cpu")
+pdwdic = {}
+python_lossV = 0
+for step in range(num_steps):
+    doc = list(docs[step % len(docs)])
+    tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
 
-model = mt.GPT()
-model.to(device)
-model.vocan_size = vocab_size
-learning_rate = 0.01
+    python_lossV, plossesV = mp.cal_loss(pwdic, tokens)
+    python_lossV.backward()
 
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, betas=(0.85, 0.99), eps=1e-8)
-scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0, total_iters=1000)
+    # print("python loss", np.vectorize(mp.to_data)(python_lossV))
+
+    pdwdic = \
+        { k :
+            np.array(
+            [[v[j][i].grad for i in range(len(v[0]))] for j in range(len(v))])
+        for k, v in pwdic.items()}
+
+    mp.update(pwdic, pdwdic, pmdic, pvdic, step, num_steps)
+
+    for k , data in pdwdic.items():
+        for j in range(len(data)):
+            for i in range(len(data[0])):
+                pwdic[k][j][i].grad = 0
+
+    print(f"step {step+1:4d} / {num_steps:4d} | loss {python_lossV.data:.4f}", end='\r')
+
+end = time.time()
+print("python time", end - start)
+
+pwdic_data = {k : np.vectorize(mp.to_data)(p) for k , p in pwdic.items()}
+
+try:
+    np.save("pwdic.npy", pwdic_data, allow_pickle=True)
+    file = open('pdwdic.txt', 'wt')
+    file.write(str(pwdic_data))
+    file.close()
+except :
+    print("It refused")
+
 
 # # -------------------------------------
-# # TRAINING TORCH
+# # # TRAINING TORCH
 
-model.train()
+# model.train()
 
-for step in range(num_steps):
-    doc = docs[step % len(docs)]
-    tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
-    n = min(sl, len(tokens) - 1)
+# for step in range(num_steps):
+#     doc = docs[step % len(docs)]
+#     # if len(doc) > 6:
+#     #     print(doc, len(doc), "\n")
+#     doc = doc[:sl-2]
+#     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+#     n = min(sl, len(tokens) - 1)
 
-    x = torch.tensor([tokens[:n]], dtype=torch.long, device= device) # change input devices
-    y = torch.tensor([tokens[1:n+1]], dtype=torch.long, device= device)
+#     x = torch.tensor([tokens[:n]], dtype=torch.long, device= device) # change input devices
+#     y = torch.tensor([tokens[1:n+1]], dtype=torch.long, device= device)
 
-    logits, loss = model(x, y)
+#     _, torch_loss = model(x, y)
+#     # print("torch loss", torch_lossV.detach().numpy())
 
-    optimizer.zero_grad(set_to_none=True)
-    loss.backward()
-    optimizer.step()
-    scheduler.step()
+#     optimizer.zero_grad(set_to_none=True)
+#     torch_loss.backward()
+#     optimizer.step()
+#     scheduler.step()
+
+#     # print(f"step {step+1:4d} / {num_steps:4d} | loss {torch_loss.item():.4f}", end='\r')
+#     # print(f"step {step+1:4d} / {num_steps:4d} | loss {torch_loss.item():.4f}")
 
 #-------------------------------------
 # PROBS
@@ -185,7 +241,7 @@ ptokens = [BOS] + [vocab.index(ch) for ch in doc] + [BOS]
 ftokens = ptokens + ([BOS] * (sl - dl))
 # to numpy
 ftokens = np.array(ftokens)
-print("".join(doc))
+# print("".join(doc))
 
 pad_mask = np.ones((sl,sl))
 for i in range(dl):
@@ -196,6 +252,7 @@ mask = np.where(cau_mask + pad_mask >= 1, 1, 0).astype(np.float64)
 
 mask = -1*mask*big_num
 
+# Futhark
 with futhark_server.Server(futhark) as server:
     server.put_value('tokens', ftokens)
     server.put_value('mask', mask)
@@ -207,23 +264,41 @@ with futhark_server.Server(futhark) as server:
 futhark_probs = np.array([softmax(logits) for logits in futhark_logits])
 futhark_probs = futhark_probs[: dl]
 
+# Python
+python_logits = mp.forward_seq(pwdic, ptokens)
+# python_lossV, python_losses = mp.cal_loss(pwdic, ptokens)
+python_logits = np.array([[val.data for val in logits] for logits in python_logits])
+python_probs = np.array([softmax(logits) for logits in python_logits])
+
+# Torch
 with torch.no_grad():
-    idx = torch.tensor([ftokens], dtype=torch.long) #source of error?
-    torch_logits, _ = model(idx)
+    idx = torch.tensor([ptokens], dtype=torch.long) #source of error?
+    torch_logits, torch_losses = model(idx)
     torch_logits = torch_logits[:, -1, :]
     torch_probs = F.softmax(torch_logits, dim=-1)
 
-# # #---------
 
+# print(np.vectorize(mp.to_data)(python_losses))
+# print(torch_losses.detach().to_numpy())
+
+# #---------
+
+index = 0
 barWidth = 0.25
-lfprobs = -np.log(futhark_probs[-1] + 0.0000001)
-lpprobs = -np.log(torch_probs[-1] + 0.0000001)
+# futhark_data = -np.log(futhark_probs[index] + 0.0000001)
+# # python_data = -np.log(python_probs[index] + 0.0000001)
+# torch_data = -np.log(torch_probs[index] + 0.0000001)
+futhark_data = futhark_probs[index]
+python_data = python_probs[index]
+torch_data = torch_probs[index]
 
-br1 = np.arange(len(lfprobs))
+br1 = np.arange(len(futhark_data))
 br2 = [x + barWidth for x in br1]
-plt.bar(br1, lfprobs, width=barWidth, label="futhark")
-plt.bar(br2, lpprobs, width=barWidth, label="python")
-plt.xticks([r + barWidth for r in range(len(lfprobs))], vocab)
-plt.xlabel('next token probability', fontsize = 12)
+br3 = [x + barWidth for x in br2]
+plt.bar(br1, futhark_data, width=barWidth, label="futhark")
+# plt.bar(br2, torch_data, width=barWidth, label="torch")
+plt.bar(br2, python_data, width=barWidth, label="python")
+plt.xticks([r + barWidth for r in range(len(futhark_data))], vocab)
+plt.xlabel('data', fontsize = 12)
 plt.legend()
 plt.show()
