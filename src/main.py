@@ -31,6 +31,8 @@ vocab_size = len(uchars) + 1
 vocab = uchars + ["end"]
 
 # Initialize the parameters, to store the knowledge of the model
+
+num_steps = 2
 ed = 16     # width of the network (embedding dimension)
 sl = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
 ah = 4      # number of attention heads
@@ -64,8 +66,6 @@ for k , dim in dimdic.items():
 
 ones = np.ones((sl,sl))
 cau_mask = (ones - np.tril(ones))
-
-num_steps = 5
 
 # -------------------------------------
 # TRAINING FUT
@@ -216,8 +216,8 @@ with torch.no_grad():
 # # #---------
 
 barWidth = 0.25
-lfprobs = futhark_probs[0]
-lpprobs = torch_probs[0]
+lfprobs = -np.log(futhark_probs[-1] + 0.0000001)
+lpprobs = -np.log(torch_probs[-1] + 0.0000001)
 
 br1 = np.arange(len(lfprobs))
 br2 = [x + barWidth for x in br1]
