@@ -7,6 +7,13 @@ import random
 # import argparse
 import futhark_server
 # import logging
+
+import os
+import torch
+import torch.nn as nn
+from torch.nn import functional as F
+import pytorch.microgpt_torch_lib as mt
+
 seed = 40
 random.seed(seed)
 
@@ -30,7 +37,7 @@ vocab_size = len(uchars) + 1
 vocab = uchars + ["end"]
 
 # Initialize the parameters, to store the knowledge of the model
-num_steps = 1000
+num_steps = 30000
 bs = 5
 num_batches = 200
 ed = 16     # width of the network (embedding dimension)
@@ -70,12 +77,6 @@ cau_mask = (ones - np.tril(ones))
 # -------------------------------------
 # DEF TORCH
 
-import os
-import torch
-import torch.nn as nn
-from torch.nn import functional as F
-import pytorch.microgpt_torch_lib as mt
-
 torch.manual_seed(seed)
 device = torch.device("cpu")
 
@@ -90,21 +91,39 @@ scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_f
 # -------------------------------------
 # TRAINING DATA PREPROCESSING
 
-masks = np.zeros((num_steps, sl, sl)).astype(np.float64)
-seqs = np.zeros((num_steps, sl)).astype(np.int64, copy=False)
+masks = np.zeros((num_batches, bs , sl, sl)).astype(np.float64)
+seqs = np.zeros((num_batches, bs, sl)).astype(np.int64, copy=False)
 
-dls = np.ones((num_steps)).astype(np.int64)*sl
+# dls = np.ones((num_steps)).astype(np.int64)*sl
 
 for step in range(num_steps):
     doc = docs[step % len(docs)]
+    doc = doc[:sl-2]
     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
     tokens = tokens + ([BOS] * (sl - len(tokens)))
     assert len(tokens) == sl
-    seqs[step] = tokens
+    seqs[step*bs : step + bs, :] = tokens
     # Masking
     mask = np.where(cau_mask >= 1, 1, 0).astype(np.float64)
     mask = -1*mask*big_num
-    masks[step] = mask
+    masks[step*bs : step + bs, :] = mask
+
+# masks = np.zeros((num_steps, sl, sl)).astype(np.float64)
+# seqs = np.zeros((num_steps, sl)).astype(np.int64, copy=False)
+
+# # dls = np.ones((num_steps)).astype(np.int64)*sl
+
+# for step in range(num_steps):
+#     doc = docs[step % len(docs)]
+#     doc = doc[:sl-2]
+#     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+#     tokens = tokens + ([BOS] * (sl - len(tokens)))
+#     assert len(tokens) == sl
+#     seqs[step] = tokens
+#     # Masking
+#     mask = np.where(cau_mask >= 1, 1, 0).astype(np.float64)
+#     mask = -1*mask*big_num
+#     masks[step] = mask
 
 # -------------------------------------
 # TRAINING FUT
@@ -120,13 +139,12 @@ with futhark_server.Server(futhark) as server:
     server.cmd_call('zero_params', 'mp')
     server.cmd_call('zero_params', 'vp')
     server.put_value('masks', masks)
-    server.put_value('dls', dls)
     server.put_value('seqs', seqs)
 
     # start timer
     start = time.time()
-    server.cmd_call('train', 'p_mp_vp', 'num_steps', 'p', 'mp', 'vp', 'masks',
-                    'dls', 'seqs')
+    server.cmd_call('train', 'p_mp_vp', 'p', 'mp', 'vp', 'masks',
+                    'seqs')
     end = time.time()
     print("futhark grad time", end - start)
     p_mp_vp = server.get_value('p_mp_vp')
@@ -134,7 +152,7 @@ with futhark_server.Server(futhark) as server:
 for i , k in enumerate(dimdic.keys()):
     fwdic[k] = p_mp_vp[i]
     fmdic[k] = p_mp_vp[i + 9]
-    fmdic[k] = p_mp_vp[i + 18]
+    fvdic[k] = p_mp_vp[i + 18]
 
 try:
     np.save("fwdic.npy", fwdic, allow_pickle=True)
@@ -149,11 +167,11 @@ except :
 
 model.train()
 # start timer
+n = sl - 1
 start = time.time()
-for step in range(num_batches):
-    n = sl - 1
-    x = seqs[step*bs : step + bs, :n]
-    y = seqs[step*bs : step + bs, 1:n+1]
+for i in range(num_batches):
+    x = seqs[i, :, :n]
+    y = seqs[i, :, 1:n+1]
     x = torch.tensor(x, dtype=torch.long, device= device)
     y = torch.tensor(y, dtype=torch.long, device= device)
     logits, loss = model(x, y)
@@ -213,8 +231,8 @@ mpprobs = mfprobs[: dl]
 # #---------
 
 barWidth = 0.25
-lfprobs = mfprobs[-1]
-lpprobs = mpprobs[-1]
+lfprobs = -np.log(mfprobs[0])
+lpprobs = -np.log(mpprobs[0])
 
 br1 = np.arange(len(lfprobs))
 br2 = [x + barWidth for x in br1]
