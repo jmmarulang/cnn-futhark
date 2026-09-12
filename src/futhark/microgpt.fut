@@ -430,18 +430,6 @@ def cal_step (num_steps : i64) (p : params) (mp : params) (vp : params)
     adam_opt (nn64.fromi64 num_steps) p mp vp dp step
   in (p', mp', vp')
 
--- entry train (num_steps : i64) (p : params) (mp : params) (vp : params)
---   (masks : [num_steps][16][16]f64)
---   (seqs : [num_steps][16]i64) =
---   let (new_p, new_mp, new_vp) =
---     loop (p', mp', vp') = (p, mp, vp)
---     for step < num_steps do
---       -- let dl = dls[step]
---       let tokens = seqs[step]
---       let mask = masks[step]
---       in (cal_step num_steps p' mp' vp' tokens mask step)
---   in ((from_params new_p), (from_params new_mp), (from_params new_vp))
-
 entry train [num_batches] [batchsize] (p : params) (mp : params)
   (vp : params) (masks : [num_batches][batchsize][16][16]f64)
   (seqs : [num_batches][batchsize][16]i64) =

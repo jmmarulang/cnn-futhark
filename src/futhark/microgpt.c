@@ -12891,27 +12891,27 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
     struct memblock mem_83342 = ctx->constants->mem_83342;
     struct memblock mem_83343 = ctx->constants->mem_83343;
     
-    // futhark/microgpt.fut:448:31-42
+    // futhark/microgpt.fut:436:31-42
     
     int64_t num_steps_76651 = mul64(num_batches_62011, batchsizze_62012);
     bool loop_nonempty_76652 = slt64((int64_t) 0, num_steps_76651);
     
-    // futhark/microgpt.fut:452:27-38
+    // futhark/microgpt.fut:440:27-38
     
     bool zzero_76653 = batchsizze_62012 == (int64_t) 0;
     
-    // futhark/microgpt.fut:452:27-38
+    // futhark/microgpt.fut:440:27-38
     
     bool nonzzero_76654 = !zzero_76653;
     bool loop_not_taken_76655 = !loop_nonempty_76652;
     bool protect_assert_disj_76656 = nonzzero_76654 || loop_not_taken_76655;
     
-    // futhark/microgpt.fut:452:27-38
+    // futhark/microgpt.fut:440:27-38
     
     bool nonzzero_cert_76657;
     
     if (!protect_assert_disj_76656) {
-        set_error(ctx, msgprintf("Error: %s\n\nBacktrace:\n%s", "division by zero", "-> #0  futhark/microgpt.fut:452:27-38\n"));
+        set_error(ctx, msgprintf("Error: %s\n\nBacktrace:\n%s", "division by zero", "-> #0  futhark/microgpt.fut:440:27-38\n"));
         err = FUTHARK_PROGRAM_ERROR;
         goto cleanup;
     }
@@ -13933,7 +13933,7 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
         if (err != FUTHARK_SUCCESS)
             goto cleanup;
     }
-    // futhark/microgpt.fut:450:5-454:55
+    // futhark/microgpt.fut:438:5-442:55
     if (memblock_set(ctx, &mem_param_83376, &wdown_mem_83344, "wdown_mem_83344") != 0)
         return 1;
     if (memblock_set(ctx, &mem_param_83380, &wkey_mem_83345, "wkey_mem_83345") != 0)
@@ -13989,53 +13989,53 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
     if (memblock_set(ctx, &mem_param_83480, &wvoc_mem_83370, "wvoc_mem_83370") != 0)
         return 1;
     for (int64_t step_76690 = 0; step_76690 < num_steps_76651; step_76690++) {
-        // futhark/microgpt.fut:452:27-38
+        // futhark/microgpt.fut:440:27-38
         
         int64_t seq_76718 = sdiv64(step_76690, batchsizze_62012);
         
-        // futhark/microgpt.fut:452:17-39
+        // futhark/microgpt.fut:440:17-39
         
         bool x_76719 = sle64((int64_t) 0, seq_76718);
         
-        // futhark/microgpt.fut:452:17-39
+        // futhark/microgpt.fut:440:17-39
         
         bool y_76720 = slt64(seq_76718, num_batches_62011);
         
-        // futhark/microgpt.fut:452:17-39
+        // futhark/microgpt.fut:440:17-39
         
         bool bounds_check_76721 = x_76719 && y_76720;
         
-        // futhark/microgpt.fut:452:17-39
+        // futhark/microgpt.fut:440:17-39
         
         bool index_certs_76722;
         
         if (!bounds_check_76721) {
-            set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) seq_76718, "] out of bounds for array of shape [", (long long) num_batches_62011, "].", "-> #0  futhark/microgpt.fut:452:17-39\n"));
+            set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) seq_76718, "] out of bounds for array of shape [", (long long) num_batches_62011, "].", "-> #0  futhark/microgpt.fut:440:17-39\n"));
             err = FUTHARK_PROGRAM_ERROR;
             goto cleanup;
         }
-        // futhark/microgpt.fut:452:45-56
+        // futhark/microgpt.fut:440:45-56
         
         int64_t seq_76723 = smod64(step_76690, batchsizze_62012);
         
-        // futhark/microgpt.fut:452:17-57
+        // futhark/microgpt.fut:440:17-57
         
         bool x_76724 = sle64((int64_t) 0, seq_76723);
         
-        // futhark/microgpt.fut:452:17-57
+        // futhark/microgpt.fut:440:17-57
         
         bool y_76725 = slt64(seq_76723, batchsizze_62012);
         
-        // futhark/microgpt.fut:452:17-57
+        // futhark/microgpt.fut:440:17-57
         
         bool bounds_check_76726 = x_76724 && y_76725;
         
-        // futhark/microgpt.fut:452:17-57
+        // futhark/microgpt.fut:440:17-57
         
         bool index_certs_76727;
         
         if (!bounds_check_76726) {
-            set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) seq_76723, "] out of bounds for array of shape [", (long long) batchsizze_62012, "].", "-> #0  futhark/microgpt.fut:452:17-57\n"));
+            set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) seq_76723, "] out of bounds for array of shape [", (long long) batchsizze_62012, "].", "-> #0  futhark/microgpt.fut:440:17-57\n"));
             err = FUTHARK_PROGRAM_ERROR;
             goto cleanup;
         }
@@ -14074,7 +14074,7 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
             bool index_certs_78523;
             
             if (!protect_assert_disj_78522) {
-                set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) zeze_lhs_78517, "] out of bounds for array of shape [", (long long) (int64_t) 16, "].", "-> #0  futhark/microgpt.fut:352:42-55\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:352:3-78\n   #6  futhark/microgpt.fut:368:18-35\n   #7  futhark/microgpt.fut:420:33-426:28\n   #8  futhark/microgpt.fut:454:11-54\n"));
+                set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) zeze_lhs_78517, "] out of bounds for array of shape [", (long long) (int64_t) 16, "].", "-> #0  futhark/microgpt.fut:352:42-55\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:352:3-78\n   #6  futhark/microgpt.fut:368:18-35\n   #7  futhark/microgpt.fut:420:33-426:28\n   #8  futhark/microgpt.fut:442:11-54\n"));
                 err = FUTHARK_PROGRAM_ERROR;
                 goto cleanup;
             }
@@ -14098,7 +14098,7 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
             bool index_certs_78542;
             
             if (!bounds_check_78541) {
-                set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_78538, "] out of bounds for array of shape [", (long long) (int64_t) 27, "].", "-> #0  futhark/microgpt.fut:370:37-51\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:370:16-55\n   #6  futhark/microgpt.fut:420:33-426:28\n   #7  futhark/microgpt.fut:454:11-54\n"));
+                set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_78538, "] out of bounds for array of shape [", (long long) (int64_t) 27, "].", "-> #0  futhark/microgpt.fut:370:37-51\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:9:27-39\n   #3  futhark/microgpt.fut:4:11-25\n   #4  futhark/microgpt.fut:9:13-40\n   #5  futhark/microgpt.fut:370:16-55\n   #6  futhark/microgpt.fut:420:33-426:28\n   #7  futhark/microgpt.fut:442:11-54\n"));
                 err = FUTHARK_PROGRAM_ERROR;
                 goto cleanup;
             }
@@ -14478,7 +14478,7 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
                     bool index_certs_80913;
                     
                     if (!bounds_check_80912) {
-                        set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_80909, "] out of bounds for array of shape [", (long long) (int64_t) 16, "].", "-> #0  futhark/microgpt.fut:221:66-93\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:6:13-17\n   #3  futhark/microgpt.fut:221:49-94\n   #4  futhark/microgpt.fut:4:11-25\n   #5  futhark/microgpt.fut:6:13-17\n   #6  futhark/microgpt.fut:221:30-96\n   #7  futhark/microgpt.fut:4:11-25\n   #8  futhark/microgpt.fut:6:13-17\n   #9  futhark/microgpt.fut:221:12-98\n   #10 futhark/microgpt.fut:373:5-76\n   #11 futhark/microgpt.fut:420:33-426:28\n   #12 futhark/microgpt.fut:454:11-54\n"));
+                        set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_80909, "] out of bounds for array of shape [", (long long) (int64_t) 16, "].", "-> #0  futhark/microgpt.fut:221:66-93\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:6:13-17\n   #3  futhark/microgpt.fut:221:49-94\n   #4  futhark/microgpt.fut:4:11-25\n   #5  futhark/microgpt.fut:6:13-17\n   #6  futhark/microgpt.fut:221:30-96\n   #7  futhark/microgpt.fut:4:11-25\n   #8  futhark/microgpt.fut:6:13-17\n   #9  futhark/microgpt.fut:221:12-98\n   #10 futhark/microgpt.fut:373:5-76\n   #11 futhark/microgpt.fut:420:33-426:28\n   #12 futhark/microgpt.fut:442:11-54\n"));
                         err = FUTHARK_PROGRAM_ERROR;
                         goto cleanup;
                     }
@@ -14733,7 +14733,7 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
                 bool index_certs_79440;
                 
                 if (!bounds_check_79439) {
-                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_79436, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:229:49-63\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:6:13-17\n   #3  futhark/microgpt.fut:229:31-80\n   #4  futhark/microgpt.fut:4:11-25\n   #5  futhark/microgpt.fut:6:13-17\n   #6  futhark/microgpt.fut:229:12-82\n   #7  futhark/microgpt.fut:373:5-76\n   #8  futhark/microgpt.fut:420:33-426:28\n   #9  futhark/microgpt.fut:454:11-54\n"));
+                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_79436, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:229:49-63\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:6:13-17\n   #3  futhark/microgpt.fut:229:31-80\n   #4  futhark/microgpt.fut:4:11-25\n   #5  futhark/microgpt.fut:6:13-17\n   #6  futhark/microgpt.fut:229:12-82\n   #7  futhark/microgpt.fut:373:5-76\n   #8  futhark/microgpt.fut:420:33-426:28\n   #9  futhark/microgpt.fut:442:11-54\n"));
                     err = FUTHARK_PROGRAM_ERROR;
                     goto cleanup;
                 }
@@ -14758,7 +14758,7 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
                 bool index_certs_79445;
                 
                 if (!bounds_check_79444) {
-                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_79441, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:229:49-79\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:6:13-17\n   #3  futhark/microgpt.fut:229:31-80\n   #4  futhark/microgpt.fut:4:11-25\n   #5  futhark/microgpt.fut:6:13-17\n   #6  futhark/microgpt.fut:229:12-82\n   #7  futhark/microgpt.fut:373:5-76\n   #8  futhark/microgpt.fut:420:33-426:28\n   #9  futhark/microgpt.fut:454:11-54\n"));
+                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_79441, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:229:49-79\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:6:13-17\n   #3  futhark/microgpt.fut:229:31-80\n   #4  futhark/microgpt.fut:4:11-25\n   #5  futhark/microgpt.fut:6:13-17\n   #6  futhark/microgpt.fut:229:12-82\n   #7  futhark/microgpt.fut:373:5-76\n   #8  futhark/microgpt.fut:420:33-426:28\n   #9  futhark/microgpt.fut:442:11-54\n"));
                     err = FUTHARK_PROGRAM_ERROR;
                     goto cleanup;
                 }
@@ -15682,7 +15682,7 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
                     bool index_certs_81387;
                     
                     if (!bounds_check_81386) {
-                        set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_81383, "] out of bounds for array of shape [", (long long) (int64_t) 16, "].", "-> #0  futhark/microgpt.fut:262:70-101\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:6:13-17\n   #3  futhark/microgpt.fut:262:52-102\n   #4  futhark/microgpt.fut:4:11-25\n   #5  futhark/microgpt.fut:6:13-17\n   #6  futhark/microgpt.fut:262:32-104\n   #7  futhark/microgpt.fut:4:11-25\n   #8  futhark/microgpt.fut:6:13-17\n   #9  futhark/microgpt.fut:262:13-106\n   #10 futhark/microgpt.fut:373:5-76\n   #11 futhark/microgpt.fut:420:33-426:28\n   #12 futhark/microgpt.fut:454:11-54\n"));
+                        set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_81383, "] out of bounds for array of shape [", (long long) (int64_t) 16, "].", "-> #0  futhark/microgpt.fut:262:70-101\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:6:13-17\n   #3  futhark/microgpt.fut:262:52-102\n   #4  futhark/microgpt.fut:4:11-25\n   #5  futhark/microgpt.fut:6:13-17\n   #6  futhark/microgpt.fut:262:32-104\n   #7  futhark/microgpt.fut:4:11-25\n   #8  futhark/microgpt.fut:6:13-17\n   #9  futhark/microgpt.fut:262:13-106\n   #10 futhark/microgpt.fut:373:5-76\n   #11 futhark/microgpt.fut:420:33-426:28\n   #12 futhark/microgpt.fut:442:11-54\n"));
                         err = FUTHARK_PROGRAM_ERROR;
                         goto cleanup;
                     }
@@ -16060,7 +16060,7 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
                 bool index_certs_81771;
                 
                 if (!bounds_check_81770) {
-                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_81767, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:275:52-68\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:6:13-17\n   #3  futhark/microgpt.fut:275:33-87\n   #4  futhark/microgpt.fut:4:11-25\n   #5  futhark/microgpt.fut:6:13-17\n   #6  futhark/microgpt.fut:275:13-89\n   #7  futhark/microgpt.fut:373:5-76\n   #8  futhark/microgpt.fut:420:33-426:28\n   #9  futhark/microgpt.fut:454:11-54\n"));
+                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_81767, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:275:52-68\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:6:13-17\n   #3  futhark/microgpt.fut:275:33-87\n   #4  futhark/microgpt.fut:4:11-25\n   #5  futhark/microgpt.fut:6:13-17\n   #6  futhark/microgpt.fut:275:13-89\n   #7  futhark/microgpt.fut:373:5-76\n   #8  futhark/microgpt.fut:420:33-426:28\n   #9  futhark/microgpt.fut:442:11-54\n"));
                     err = FUTHARK_PROGRAM_ERROR;
                     goto cleanup;
                 }
@@ -16085,7 +16085,7 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
                 bool index_certs_81776;
                 
                 if (!bounds_check_81775) {
-                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_81772, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:275:52-86\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:6:13-17\n   #3  futhark/microgpt.fut:275:33-87\n   #4  futhark/microgpt.fut:4:11-25\n   #5  futhark/microgpt.fut:6:13-17\n   #6  futhark/microgpt.fut:275:13-89\n   #7  futhark/microgpt.fut:373:5-76\n   #8  futhark/microgpt.fut:420:33-426:28\n   #9  futhark/microgpt.fut:454:11-54\n"));
+                    set_error(ctx, msgprintf("Error: %s%lld%s%lld%s\n\nBacktrace:\n%s", "Index [", (long long) tmp_81772, "] out of bounds for array of shape [", (long long) (int64_t) 4, "].", "-> #0  futhark/microgpt.fut:275:52-86\n   #1  futhark/microgpt.fut:4:11-25\n   #2  futhark/microgpt.fut:6:13-17\n   #3  futhark/microgpt.fut:275:33-87\n   #4  futhark/microgpt.fut:4:11-25\n   #5  futhark/microgpt.fut:6:13-17\n   #6  futhark/microgpt.fut:275:13-89\n   #7  futhark/microgpt.fut:373:5-76\n   #8  futhark/microgpt.fut:420:33-426:28\n   #9  futhark/microgpt.fut:442:11-54\n"));
                     err = FUTHARK_PROGRAM_ERROR;
                     goto cleanup;
                 }
