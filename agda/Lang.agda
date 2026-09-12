@@ -96,10 +96,10 @@ module _ where
       neg
     -- Jairo made
       -- exp
-      rectifier 
-      squared 
-      inverse 
-      ind-positive 
+      rectifier
+      squared
+      inverse
+      ind-positive
       logarithm
       softmax
       : Uop
