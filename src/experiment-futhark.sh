@@ -10,4 +10,4 @@ export CFLAGS="-O3 -std=c99 -ffast-math -march=native -mtune=native"
 
 futhark c -v --server futhark/microgpt.fut
 
-python futhark/mainMGPT.py
+python main.py
