@@ -388,9 +388,9 @@ def adam_opt_w [n] [m] (w : [n][m]f64) (mw : [n][m]f64) (vw : [n][m]f64)
   in (new_w, new_mw, new_vw)
 
 def adam_opt (p : params) (mp : params) (vp : params)
-  (dp : params) (step : i64):
+  (dp : params) (step : i64) n :
   (params,  params,  params) =
-  let lt_r = 0.01 * (1 - (nn64.fromi64 step) / (nn64.fromi64 005))
+  let lt_r = 0.01 * (1 - (nn64.fromi64 step) / (nn64.fromi64 n))
   let (wte, mwte, vwte) =
     adam_opt_w p.wte mp.wte vp.wte dp.wte step lt_r
   let (wpe, mwpe, vwpe) =
@@ -440,7 +440,7 @@ def grad_loss (dl : i64) (p : params) (tokens : [16]i64) (mask : [16][16]f64) :
 
 def cal_step (dl : i64) (p : params) (mp : params) (vp : params)
   (tokens : [16]i64) (mask : [16][16]f64)
-  (step : i64) :
+  (step : i64) n :
   (params,  params,  params) =
   -- cal gradient
   let (dwte, dwpe, dwqry, dwkey, dwval, dwout, dwup, dwdown, dwvoc) =
@@ -448,19 +448,19 @@ def cal_step (dl : i64) (p : params) (mp : params) (vp : params)
   let dp = to_params dwte dwpe dwqry dwkey dwval dwout dwup dwdown dwvoc
   -- cal new model weights
   let (p', mp', vp') =
-    adam_opt p mp vp dp step
+    adam_opt p mp vp dp step n
   in (p', mp', vp')
 
-entry train (p : params) (mp : params) (vp : params)
-  (masks : [005][16][16]f64) (dls : [005]i64)
-  (seqs : [005][16]i64) =
+entry train [n] (p : params) (mp : params) (vp : params)
+  (masks : [n][16][16]f64) (dls : [n]i64)
+  (seqs : [n][16]i64) =
   let (new_p, new_mp, new_vp) =
     loop (p', mp', vp') = (p, mp, vp)
-    for step < 005 do
+    for step < n do
       let dl = dls[step]
       let tokens = seqs[step]
       let mask = masks[step]
-      in (cal_step dl p' mp' vp' tokens mask step)
+      in (cal_step dl p' mp' vp' tokens mask step n)
   in ((from_params new_p), (from_params new_mp), (from_params new_vp))
 
 entry zero_params : params =

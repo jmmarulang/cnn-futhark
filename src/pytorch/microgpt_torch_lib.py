@@ -14,7 +14,8 @@ n_embd = 16
 block_size = 16
 n_head = 4
 head_dim = n_embd // n_head
-learning_rate = 0.01
+vocab_size = 27
+# learning_rate = 0.01
 
 class Head(nn.Module):
     def __init__(self):
@@ -74,7 +75,6 @@ class Block(nn.Module):
 class GPT(nn.Module):
     def __init__(self):
         super().__init__()
-        vocab_size = 27
         self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
         self.position_embedding_table = nn.Embedding(block_size, n_embd)
         self.blocks = nn.Sequential(*[Block() for _ in range(n_layer)])
@@ -89,7 +89,7 @@ class GPT(nn.Module):
             torch.nn.init.constant_(module.weight, 0.5)
         elif isinstance(module, nn.Embedding):
             # torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
-            torch.nn.init.constant_(module.weight, 0.5) # device?
+            torch.nn.init.constant_(module.weight, 0.5)
 
     def forward(self, idx, targets=None):
         B, T = idx.shape
@@ -106,7 +106,6 @@ class GPT(nn.Module):
             B, T, C = logits.shape
             logits = logits.view(B*T, C)
             targets = targets.view(B*T)
-            loss = F.cross_entropy(logits, targets)
+            loss = F.cross_entropy(logits, targets, reduction= 'sum')
 
         return logits, loss
-
