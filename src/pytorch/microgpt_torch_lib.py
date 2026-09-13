@@ -85,9 +85,11 @@ class GPT(nn.Module):
 
     def _init_weights(self, module):
         if isinstance(module, nn.Linear):
-            torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
+            # torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
+            torch.nn.init.constant_(module.weight, 0.5)
         elif isinstance(module, nn.Embedding):
-            torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
+            # torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
+            torch.nn.init.constant_(module.weight, 0.5)
 
     def forward(self, idx, targets=None):
         B, T = idx.shape
@@ -104,6 +106,6 @@ class GPT(nn.Module):
             B, T, C = logits.shape
             logits = logits.view(B*T, C)
             targets = targets.view(B*T)
-            loss = F.cross_entropy(logits, targets)
+            loss = F.cross_entropy(logits, targets, reduction= 'sum')
 
         return logits, loss

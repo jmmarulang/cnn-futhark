@@ -101,11 +101,9 @@ class GPT(nn.Module):
 
     def _init_weights(self, module):
         if isinstance(module, nn.Linear):
-            # torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
-            torch.nn.init.constant_(module.weight, 0.5)
+            torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
         elif isinstance(module, nn.Embedding):
-            # torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
-            torch.nn.init.constant_(module.weight, 0.5)
+            torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
 
     def forward(self, idx, targets=None):
         B, T = idx.shape

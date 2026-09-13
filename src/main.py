@@ -9,8 +9,9 @@ import torch.nn as nn
 from torch.nn import functional as F
 import pytorch.microgpt_torch_lib as mt
 
-seed = 40
+seed = 1
 random.seed(seed)
+torch.manual_seed(seed)
 
 def softmax(logits):
     max_val = max(val for val in logits)
@@ -33,7 +34,7 @@ vocab_size = len(uchars) + 1
 vocab = uchars + ["end"]
 
 # Initialize the parameters, to store the knowledge of the model
-num_steps = 20
+num_steps = 100
 ed = 16     # width of the network (embedding dimension)
 sl = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
 ah = 4      # number of attention heads
@@ -48,7 +49,7 @@ dimdic = {'wte' : (vocab_size, ed), 'wpe' : (sl, ed),
 # ran_matrix = lambda nout, nin, std=0.08: \
 #     np.array([[random.gauss(0, std) for _ in range(nin)] for _ in range(nout)])
 
-const_matrix = lambda num, nout, nin, std=0.08: \
+const_matrix = lambda num, nout, nin: \
     np.array([[num for _ in range(nin)] for _ in range(nout)])
 
 fwdic = {}
@@ -245,20 +246,29 @@ python_logits = mp.forward_seq(pwdic, python_tokens)
 python_logits = np.array([[val.data for val in logits] for logits in python_logits])
 python_probs = np.array([softmax(logits) for logits in python_logits])
 
-# Torch
 
+# Torch
+torch_tokens = torch.tensor([python_tokens], dtype=torch.long)
+model.eval()
+with torch.no_grad():
+    torch_logits, _ = model(torch_tokens)
+torch_logits = torch_logits.numpy()[0]
+torch_probs = np.array([softmax(logits) for logits in torch_logits])
 
 # # #---------
 
 barWidth = 0.25
-lfprobs = futhark_probs[0]
-lpprobs = python_probs[0]
+futhark_data = futhark_probs[0]
+python_data = python_probs[-1]
+torch_data = torch_probs[0]
 
-br1 = np.arange(len(lfprobs))
+br1 = np.arange(len(futhark_data))
 br2 = [x + barWidth for x in br1]
-plt.bar(br1, lfprobs, width=barWidth, label="futhark")
-plt.bar(br2, lpprobs, width=barWidth, label="python")
-plt.xticks([r + barWidth for r in range(len(lfprobs))], vocab)
+br3 = [x + barWidth for x in br2]
+plt.bar(br1, futhark_data, width=barWidth, label="futhark")
+plt.bar(br2, python_data, width=barWidth, label="python")
+plt.bar(br3, torch_data, width=barWidth, label="torch")
+plt.xticks([r + barWidth for r in range(len(futhark_data))], vocab)
 plt.xlabel('next token probability', fontsize = 12)
 plt.legend()
 # plt.savefig('lprobs_' + "".join(doc) + "_seed" + str(seed) +  '_.png')
