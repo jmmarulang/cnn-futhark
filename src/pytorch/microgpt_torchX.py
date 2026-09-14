@@ -126,6 +126,94 @@ class GPT(nn.Module):
             B, T, C = logits.shape
             logits = logits.view(B*T, C)
             targets = targets.view(B*T)
-            loss = F.cross_entropy(logits, targets, reduction='none')
+            loss = F.cross_entropy(logits, targets)
 
         return logits, loss
+
+model = GPT()
+print(f"num params: {sum(p.numel() for p in model.parameters())}")
+
+num_steps = 10_000
+
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, betas=(0.85, 0.99), eps=1e-8)
+scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0, total_iters=num_steps)
+
+model.train()
+for step in range(num_steps):
+    doc = docs[step % len(docs)]
+    tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+    n = min(block_size, len(tokens) - 1)
+
+    x = torch.tensor([tokens[:n]], dtype=torch.long)
+    y = torch.tensor([tokens[1:n+1]], dtype=torch.long)
+
+    logits, loss = model(x, y)
+
+    optimizer.zero_grad(set_to_none=True)
+    loss.backward()
+    optimizer.step()
+    scheduler.step()
+
+    print(f"step {step+1:4d} / {num_steps:4d} | loss {loss.item():.4f}", end='\r')
+
+
+doc = list("marulanda")
+dl = len(doc) + 2
+
+# sequence ids
+python_tokens = [BOS] + [vocab.index(ch) for ch in doc] + [BOS]
+
+
+# def softmax(logits):
+#     max_val = max(val for val in logits)
+#     exps = [np.exp(val - max_val) for val in logits]
+#     total = np.sum(exps)
+#     return [e / total for e in exps]
+
+# Torch
+torch_tokens = torch.tensor([python_tokens], dtype=torch.long)
+model.eval()
+with torch.no_grad():
+    torch_logits, _ = model(torch_tokens)
+torch_logits = torch_logits.numpy()[0]
+# torch_probs = np.array([softmax(logits) for logits in torch_logits])
+
+
+# Probs
+while True:
+    torch_index = int(input("torch index <- "))
+    if (torch_index == -1):
+            break
+    barWidth = 0.25
+    torch_data = torch_logits[torch_index]
+
+    br1 = np.arange(len(torch_data))
+    br2 = [x + barWidth for x in br1]
+    br3 = [x + barWidth for x in br2]
+    plt.bar(br1, torch_data, width=barWidth, label="torch")
+    plt.xticks([r + barWidth for r in range(len(torch_data))], vocab)
+    plt.xlabel('next token', fontsize = 12)
+    plt.legend()
+    plt.savefig('torch_' + "".join(doc) + "_seed_" + str(seed) + "_index_" + str(torch_index) + "_iter_" + str(num_steps) + '_.png')
+    plt.show()
+
+
+# torch_probs = np.array([softmax(logits) for logits in torch_logits])
+
+# print("\n--- inference (new, hallucinated names) ---")
+# model.eval()
+# temperature = 0.5
+# with torch.no_grad():
+#     for sample_idx in range(20):
+#         idx = torch.tensor([[BOS]], dtype=torch.long)
+#         sample = []
+#         for _ in range(block_size):
+#             logits, _ = model(idx)
+#             logits = logits[:, -1, :] / temperature
+#             probs = F.softmax(logits, dim=-1)
+#             idx_next = torch.multinomial(probs, num_samples=1)
+#             if idx_next.item() == BOS:
+#                 break
+#             idx = torch.cat((idx, idx_next), dim=1)
+#             sample.append(uchars[idx_next.item()])
+#         print(f"sample {sample_idx+1:2d}: {''.join(sample)}")

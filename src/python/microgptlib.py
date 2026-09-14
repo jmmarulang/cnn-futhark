@@ -134,6 +134,7 @@ def cal_loss(state_dict, tokens, block_size = 16, n_head = 4, head_dim = 4, n_la
         loss_t = -probs[target_id].log()
         losses.append(loss_t)
     loss = (1 / block_size) * sum(losses)
+    # loss = sum(losses)
 
     return loss, losses
 
@@ -145,3 +146,4 @@ def update(wdic, dwdic, mdic, vdic, step, num_steps, learning_rate = 0.01, beta1
         m_hat = mdic[k] / (1 - beta1 ** (step + 1))
         v_hat = vdic[k] / (1 - beta2 ** (step + 1))
         wdic[k] -= lr_t * m_hat / (v_hat ** 0.5 + eps_adam)
+    return lr_t
