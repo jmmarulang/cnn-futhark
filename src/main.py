@@ -9,7 +9,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 import pytorch.microgpt_torch_lib as mt
 
-seed = 1
+seed = 5
 random.seed(seed)
 torch.manual_seed(seed)
 
@@ -25,7 +25,7 @@ futhark = "futhark/microgpt"
 # Data
 file = open('input-mgpt/input.txt')
 docs = [line.strip() for line in file if line.strip()]
-# random.shuffle(docs)
+random.shuffle(docs)
 
 # Tokenizer
 uchars = sorted(set(''.join(docs)))
@@ -35,24 +35,36 @@ vocab = uchars + ["end"]
 
 # Initialize the parameters, to store the knowledge of the model
 # num_steps = 3351
-num_steps = 10
+num_steps = 10_000
+matrix_type = 'rand'
 ed = 16     # width of the network (embedding dimension)
 sl = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
 ah = 4      # number of attention heads
 hd = ed // ah # derived dimension of each head
 big_num = 1000000000000000000000000000000000000000
 
+
+# -------------------------------------
+# DEFINE TORCH MODEL
+torch_model = mt.GPT().double()
+learning_rate = 0.01
+
+optimizer = torch.optim.Adam(torch_model.parameters(), lr=learning_rate, betas=(0.85, 0.99), eps=1e-8)
+scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0, total_iters=num_steps)
+
+
+# -------------------------------------
+# EXTRACT WEIGHTS
+
+t_dict = torch_model.state_dict().copy()
+for k , t in t_dict.items():
+    t_dict[k] = t.numpy().astype(np.float64)
+    # print(k, w.shape)
+
 dimdic = {'wte' : (vocab_size, ed), 'wpe' : (sl, ed),
           'wqry' : (ed, ed), 'wkey' : (ed, ed), 'wval' : (ed, ed),
           'wout' : (ed, ed), 'wup' : (4 * ed, ed), 'wdown' :(ed, 4 * ed),
           'wvoc': (vocab_size, ed)}
-
-# ran_matrix = lambda nout, nin, std=0.08: \
-#     np.array([[random.gauss(0, std) for _ in range(nin)] for _ in range(nout)])
-
-const_matrix = lambda num, nout, nin: \
-    np.array([[num for _ in range(nin)] for _ in range(nout)])
-
 fwdic = {}
 fmdic = {}
 fvdic = {}
@@ -60,28 +72,45 @@ pmdic = {}
 pvdic = {}
 
 for k , dim in dimdic.items():
-    fwdic[k] = const_matrix(0.5,*dim)
+    fwdic[k] = np.zeros(dim)
     fmdic[k] = np.zeros(dim)
     fvdic[k] = np.zeros(dim)
     pmdic[k] = np.zeros(dim)
     pvdic[k] = np.zeros(dim)
+
+fwdic['wte'] = t_dict['token_embedding_table.weight']
+fwdic['wpe'] = t_dict['position_embedding_table.weight']
+fwdic['wout'] = t_dict['blocks.0.sa_heads.proj.weight']
+fwdic['wup'] = t_dict['blocks.0.ffwd.net.0.weight']
+fwdic['wdown'] = t_dict['blocks.0.ffwd.net.2.weight']
+fwdic['wvoc'] = t_dict['lm_head.weight']
+
+for step in range(ah):
+    fwdic['wqry'][step*hd : hd*(step + 1)] = \
+        t_dict[f"blocks.0.sa_heads.heads.{step}.query.weight"]
+    fwdic['wkey'][step*hd : hd*(step + 1)] = \
+        t_dict[f"blocks.0.sa_heads.heads.{step}.key.weight"]
+    fwdic['wval'][step*hd : hd*(step + 1)] = \
+            t_dict[f"blocks.0.sa_heads.heads.{step}.value.weight"]
+
 pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
+
 
 ones = np.ones((sl,sl))
 cau_mask = (ones - np.tril(ones))
 
-# -------------------------------------
-# DEFINE PYTHON MODEL
-python_model = mp.GPT(docs, pwdic)
 
-# -------------------------------------
-# DEFINE TORCH MODEL
-torch_model = mt.GPT().double()
-print(f"num params: {sum(p.numel() for p in torch_model.parameters())}")
-learning_rate = 0.01
+# # # # -------------------------------------
+# # TRAINING PY
 
-optimizer = torch.optim.Adam(torch_model.parameters(), lr=learning_rate, betas=(0.85, 0.99), eps=1e-8)
-scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0, total_iters=num_steps)
+# print("Training Python")
+
+# start = time.time()
+# python_losses = mp.train(docs, uchars, BOS, num_steps, pwdic)
+# end = time.time()
+
+# print("python training time", end - start)
+# print("python final loss", python_losses[-1])
 
 # -------------------------------------
 # TRAINING FUT
@@ -155,95 +184,37 @@ try:
 except :
     print("It refused")
 
-
-# # # # -------------------------------------
-# # TRAINING PY
-
-print("Training Python")
-
-start = time.time()
-python_losses = python_model.train(num_steps)
-end = time.time()
-
-python_losses = np.vectorize(mp.to_data)(python_losses)
-
-print("pgrad time", end - start)
-print("python final loss", python_losses[-1])
-
-# pdwdic = {}
-# python_lr_ts = np.zeros((num_steps)).astype(np.float64)
-# for step in range(num_steps):
-#     doc = list(docs[step % len(docs)])
-#     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
-
-#     plossV, plossesV = mp.cal_loss(pwdic, tokens)
-#     plossV.backward()
-
-#     python_losses[step] = plossV.data
-
-#     pdwdic = \
-#         { k :
-#             np.array(
-#             [[v[j][i].grad for i in range(len(v[0]))] for j in range(len(v))])
-#         for k, v in pwdic.items()}
-
-#     python_lr_t = mp.update(pwdic, pdwdic, pmdic, pvdic, step, num_steps)
-#     python_lr_ts[step] = python_lr_t
-
-#     for k , data in pdwdic.items():
-#         for j in range(len(data)):
-#             for i in range(len(data[0])):
-#                 pwdic[k][j][i].grad = 0
-
-#     print(f"step {step+1:4d} / {num_steps:4d} | loss {plossV.data:.4f}", end='\r')
-
-# end = time.time()
-# print("pgrad time", end - start)
-# print("python final loss", futhark_losses[-1])
-
-# pwdic_data = {k : np.vectorize(mp.to_data)(p) for k , p in pwdic.items()}
-
-# try:
-#     np.save("pwdic.npy", pwdic_data, allow_pickle=True)
-#     file = open('pdwdic.txt', 'wt')
-#     file.write(str(pwdic_data))
-#     file.close()
-# except :
-#     print("It refused")
-
 # -------------------------------------
-# # # TRAINING TORCH
+# TRAINING TORCH
 
-# print("Training Torch")
+print("Training Torch")
 
-# torch_losses = np.zeros((num_steps)).astype(np.float64)
+torch_losses = np.zeros((num_steps)).astype(np.float64)
 
-# torch_model.train()
-# for step in range(num_steps):
-#     doc = docs[step % len(docs)]
-#     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
-#     n = min(sl, len(tokens) - 1)
+torch_model.train()
+for step in range(num_steps):
+    doc = docs[step % len(docs)]
+    tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+    n = min(sl, len(tokens) - 1)
 
-#     x = torch.tensor([tokens[:n]], dtype=torch.long)
-#     y = torch.tensor([tokens[1:n+1]], dtype=torch.long)
+    x = torch.tensor([tokens[:n]], dtype=torch.long)
+    y = torch.tensor([tokens[1:n+1]], dtype=torch.long)
 
-#     logits, losses = model(x, y)
-#     loss = torch.sum(losses)/sl
+    logits, loss = torch_model(x, y)
 
-#     optimizer.zero_grad(set_to_none=True)
-#     loss.backward()
-#     # nloss.backward()
-#     optimizer.step()
-#     scheduler.step()
+    optimizer.zero_grad(set_to_none=True)
+    loss.backward()
+    optimizer.step()
+    scheduler.step()
 
-#     # Danger: Not used during computation
-#     torch_losses[step] = loss.detach().numpy()
+    # Danger: Not used during computation
+    torch_losses[step] = loss.detach().numpy()
 
-#     print(f"step {step+1:4d} / {num_steps:4d} | loss {loss.item():.4f}", end='\r')
+    print(f"step {step+1:4d} / {num_steps:4d} | loss {loss.item():.4f}", end='\r')
 
-# end = time.time()
-# print("torch training time", end - start)
-# print("torch final loss", torch_losses[-1])
+end = time.time()
+print("torch training time", end - start)
+print("torch final loss", torch_losses[-1])
 
 #-------------------------------------
 # PROBS
@@ -281,12 +252,12 @@ with futhark_server.Server(futhark) as server:
 futhark_probs = np.array([softmax(logits) for logits in futhark_logits])
 futhark_probs = futhark_probs[: dl]
 
-# Python
-python_logits = python_model.forward_seq(python_tokens)
+# # Python
+python_logits = mp.forward_seq(python_tokens, pwdic)
 python_logits = np.array([[val.data for val in logits] for logits in python_logits])
 python_probs = np.array([softmax(logits) for logits in python_logits])
 
-# Torch
+#### Torch
 torch_tokens = torch.tensor([python_tokens], dtype=torch.long)
 torch_model.eval()
 with torch.no_grad():
@@ -297,29 +268,23 @@ torch_probs = np.array([softmax(logits) for logits in torch_logits])
 #-------------------------------------
 # TESTS
 
-# for step in range(num_steps):
-#     doc = docs[step % len(docs)]
-#     doc = doc[:sl - 2]
-#     # if (np.abs(futhark_losses[step] -  python_losses[step]) > 0.1):
-#     #     print("futhark different from python", step, doc, futhark_losses[step], python_losses[step])
-#     if (np.abs(futhark_losses[step] -  torch_losses[step]) > 0.1):
-#         print("futhark different from torch", step, doc, futhark_losses[step], torch_losses[step])
 
 #-------------------------------------
 # PLOTS
 
-# # Losses
-# futhark_data = np.log(futhark_losses)
-# # python_data = np.log(python_losses)
-# torch_data = np.log(torch_losses)
-# # futhark_data = futhark_losses
-# # torch_data = torch_losses
-# plt.plot(futhark_data, label="futhark")
-# # plt.plot(python_data, label="python")
-# plt.plot(torch_data, '--', label="torch")
-# plt.xlabel('log losses', fontsize = 12)
-# plt.legend()
-# plt.show()
+# Losses
+last = 100
+n = min(last, num_steps)
+futhark_data = np.log(futhark_losses[-n:])
+# python_data = np.log(python_losses[-n:])
+torch_data = np.log(torch_losses[-last:])
+plt.plot(futhark_data, label="futhark")
+# plt.plot(python_data, '-.', label="python")
+plt.plot(torch_data, '--', label="torch")
+plt.xlabel('log losses', fontsize = 12)
+plt.legend()
+plt.savefig('figures/main_' + "".join(doc) + "_losses_" + "_seed_" + str(seed) + "_iter_" + str(num_steps) + "_matrix_" + str(matrix_type) +  '_.png')
+plt.show()
 
 # # # loss errors
 # data = (np.abs(futhark_losses - torch_losses))
@@ -348,18 +313,18 @@ while True:
     if index == -1: break
 
     barWidth = 0.25
-    futhark_data = futhark_logits[index]
-    python_data = python_logits[index]
-    torch_data = torch_logits[index]
+    futhark_data = futhark_probs[index]
+    # python_data = python_probs[index]
+    torch_data = torch_probs[index]
 
     br1 = np.arange(len(futhark_data))
     br2 = [x + barWidth for x in br1]
     br3 = [x + barWidth for x in br2]
     plt.bar(br1, futhark_data, width=barWidth, label="futhark")
-    plt.bar(br2, python_data, width=barWidth, label="python")
-    # plt.bar(br2, torch_data, width=barWidth, label="torch")
+    # plt.bar(br2, python_data, width=barWidth, label="python")
+    plt.bar(br3, torch_data, width=barWidth, label="torch")
     plt.xticks([r + barWidth for r in range(len(futhark_data))], vocab)
     plt.xlabel('next token probability', fontsize = 12)
     plt.legend()
-    plt.savefig('main_' + "".join(doc) + "_seed_" + str(seed) + "_index_" + str(index) + "_iter_" + str(num_steps) + '_.png')
+    plt.savefig('figures/main_' + "".join(doc) + "_index_" + str(index) + "_seed_" + str(seed) + "_iter_" + str(num_steps) + "_matrix_" + str(matrix_type) +  '_.png')
     plt.show()

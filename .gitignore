@@ -5,3 +5,4 @@ src/input/MNIST
 agda/MAlonzo
 agda/*.agdai
 src/futhark/__pycache__
+src/figures/*

@@ -74,7 +74,7 @@ class Value:
                 child.grad += local_grad * v.grad
 
 # Initialize the parameters, to store the knowledge of the model
-num_steps = 10_000 # number of training steps
+num_steps = 1250 # number of training steps
 n_layer = 1     # depth of the transformer neural network (number of layers)
 n_embd = 16     # width of the network (embedding dimension)
 block_size = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
