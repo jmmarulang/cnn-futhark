@@ -9,7 +9,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 import pytorch.microgpt_torch_lib as mt
 
-seed = 5
+seed = 1
 random.seed(seed)
 torch.manual_seed(seed)
 
@@ -34,7 +34,6 @@ vocab_size = len(uchars) + 1
 vocab = uchars + ["end"]
 
 # Initialize the parameters, to store the knowledge of the model
-# num_steps = 3351
 num_steps = 30_000
 matrix_type = 'rand'
 ed = 16     # width of the network (embedding dimension)
@@ -94,22 +93,20 @@ for step in range(ah):
 
 pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
 
-
 ones = np.ones((sl,sl))
 cau_mask = (ones - np.tril(ones))
-
 
 # # # # -------------------------------------
 # # TRAINING PY
 
-print("Training Python")
+# print("Training Python")
 
-start = time.time()
-python_losses = mp.train(docs, uchars, BOS, num_steps, pwdic)
-end = time.time()
+# start = time.time()
+# python_losses = mp.train(docs, uchars, BOS, num_steps, pwdic)
+# end = time.time()
 
-print("python training time", end - start)
-print("python final loss", python_losses[-1])
+# print("python training time", end - start)
+# print("python final loss", python_losses[-1])
 
 # -------------------------------------
 # TRAINING FUT
@@ -160,7 +157,6 @@ with futhark_server.Server(futhark) as server:
         futhark_tokens = tokens + ([BOS] * (sl - dl))
         seqs[step] = futhark_tokens
     server.put_value('seqs', seqs)
-    # server.cmd_call('cal_loss', 'loss', 'fparams', 'tokens', 'mask')
     server.cmd_call('train', 'p_mp_vp_loss', 'p', 'mp', 'vp', 'masks',
                     'dls', 'seqs')
     end = time.time()
@@ -252,9 +248,9 @@ futhark_probs = np.array([softmax(logits) for logits in futhark_logits])
 futhark_probs = futhark_probs[: dl]
 
 # # Python
-python_logits = mp.forward_seq(python_tokens, pwdic)
-python_logits = np.array([[val.data for val in logits] for logits in python_logits])
-python_probs = np.array([softmax(logits) for logits in python_logits])
+# python_logits = mp.forward_seq(python_tokens, pwdic)
+# python_logits = np.array([[val.data for val in logits] for logits in python_logits])
+# python_probs = np.array([softmax(logits) for logits in python_logits])
 
 #### Torch
 torch_tokens = torch.tensor([python_tokens], dtype=torch.long)
@@ -265,39 +261,39 @@ torch_logits = torch_logits.numpy()[0]
 torch_probs = np.array([softmax(logits) for logits in torch_logits])
 
 #-------------------------------------
-# TESTS
-
-
-#-------------------------------------
 # PLOTS
 
 # Losses
 last = 100
 n = min(last, num_steps)
 futhark_data = np.log(futhark_losses[-n:])
-python_data = np.log(python_losses[-n:])
-torch_data = np.log(torch_losses[-last:])
+# python_data = np.log(python_losses[-n:])
+torch_data = np.log(torch_losses[-n:])
 plt.plot(futhark_data, label="futhark")
-plt.plot(python_data, '-.', label="python")
+# plt.plot(python_data, '-.', label="python")
 plt.plot(torch_data, '--', label="torch")
 plt.xlabel('log losses', fontsize = 12)
 plt.legend()
-plt.savefig('figures/main_' + "".join(doc) + "_losses_" + "_seed_" + str(seed) + "_iter_" + str(num_steps) + "_matrix_" + str(matrix_type) +  '_.png')
+# plt.savefig('figures/main_' + "".join(doc) + "_losses_" + "_seed_" + str(seed) + "_iter_" + str(num_steps) + "_matrix_" + str(matrix_type) +  '_.png')
 plt.show()
 
-# # # loss errors
-# data = (np.abs(futhark_losses - torch_losses))
-# plt.plot(data)
-# plt.xlabel('absolute error of losses', fontsize = 12)
-# plt.locator_params(axis='x', nbins=40)
-# plt.show()
+# # loss errors
+last = 100
+n = min(last, num_steps)
+futhark_data = np.log(futhark_losses[-n:])
+torch_data = np.log(torch_losses[-n:])
+data = (np.abs(futhark_data - torch_data))
+plt.plot(data)
+plt.xlabel('absolute error of losses', fontsize = 12)
+plt.locator_params(axis='x', nbins=40)
+plt.show()
 
-# # # loss errors boxplot
-# data = (np.abs(futhark_losses - torch_losses))
-# plt.boxplot(data, showfliers=False, orientation= 'horizontal')
-# plt.xlabel('absolute error of losses', fontsize = 12)
-# plt.locator_params(axis='x', nbins=40)
-# plt.show()
+# # loss errors boxplot
+data = (np.abs(futhark_losses - torch_losses))
+plt.boxplot(data, showfliers=False, orientation= 'horizontal')
+plt.xlabel('absolute error of losses', fontsize = 12)
+plt.locator_params(axis='x', nbins=40)
+plt.show()
 
 # # # loss ratios
 # data = np.minimum(np.abs(futhark_losses), np.abs(torch_losses))/np.maximum(np.abs(futhark_losses), np.abs(torch_losses))
@@ -313,17 +309,17 @@ while True:
 
     barWidth = 0.25
     futhark_data = futhark_probs[index]
-    python_data = python_probs[index]
+    # python_data = python_probs[index]
     torch_data = torch_probs[index]
 
     br1 = np.arange(len(futhark_data))
     br2 = [x + barWidth for x in br1]
     br3 = [x + barWidth for x in br2]
     plt.bar(br1, futhark_data, width=barWidth, label="futhark")
-    plt.bar(br2, python_data, width=barWidth, label="python")
-    plt.bar(br3, torch_data, width=barWidth, label="torch")
+    # plt.bar(br2, python_data, width=barWidth, label="python")
+    plt.bar(br2, torch_data, width=barWidth, label="torch")
     plt.xticks([r + barWidth for r in range(len(futhark_data))], vocab)
     plt.xlabel('next token probability', fontsize = 12)
     plt.legend()
-    plt.savefig('figures/main_' + "".join(doc) + "_index_" + str(index) + "_seed_" + str(seed) + "_iter_" + str(num_steps) + "_matrix_" + str(matrix_type) +  '_.png')
+    # plt.savefig('figures/main_' + "".join(doc) + "_index_" + str(index) + "_seed_" + str(seed) + "_iter_" + str(num_steps) + "_matrix_" + str(matrix_type) +  '_.png')
     plt.show()
