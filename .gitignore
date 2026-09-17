@@ -6,3 +6,5 @@ agda/MAlonzo
 agda/*.agdai
 src/futhark/__pycache__
 src/figures/*
+src/*.npy
+src/input.txt
