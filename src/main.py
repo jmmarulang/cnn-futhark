@@ -35,7 +35,7 @@ vocab = uchars + ["end"]
 
 # Initialize the parameters, to store the knowledge of the model
 # num_steps = 3351
-num_steps = 10_000
+num_steps = 30_000
 matrix_type = 'rand'
 ed = 16     # width of the network (embedding dimension)
 sl = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
@@ -56,10 +56,9 @@ scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_f
 # -------------------------------------
 # EXTRACT WEIGHTS
 
-t_dict = torch_model.state_dict().copy()
-for k , t in t_dict.items():
-    t_dict[k] = t.numpy().astype(np.float64)
-    # print(k, w.shape)
+twdict = torch_model.state_dict().copy()
+for k , t in twdict.items():
+    twdict[k] = t.numpy().astype(np.float64)
 
 dimdic = {'wte' : (vocab_size, ed), 'wpe' : (sl, ed),
           'wqry' : (ed, ed), 'wkey' : (ed, ed), 'wval' : (ed, ed),
@@ -78,20 +77,20 @@ for k , dim in dimdic.items():
     pmdic[k] = np.zeros(dim)
     pvdic[k] = np.zeros(dim)
 
-fwdic['wte'] = t_dict['token_embedding_table.weight']
-fwdic['wpe'] = t_dict['position_embedding_table.weight']
-fwdic['wout'] = t_dict['blocks.0.sa_heads.proj.weight']
-fwdic['wup'] = t_dict['blocks.0.ffwd.net.0.weight']
-fwdic['wdown'] = t_dict['blocks.0.ffwd.net.2.weight']
-fwdic['wvoc'] = t_dict['lm_head.weight']
+fwdic['wte'] = twdict['token_embedding_table.weight']
+fwdic['wpe'] = twdict['position_embedding_table.weight']
+fwdic['wout'] = twdict['blocks.0.sa_heads.proj.weight']
+fwdic['wup'] = twdict['blocks.0.ffwd.net.0.weight']
+fwdic['wdown'] = twdict['blocks.0.ffwd.net.2.weight']
+fwdic['wvoc'] = twdict['lm_head.weight']
 
 for step in range(ah):
     fwdic['wqry'][step*hd : hd*(step + 1)] = \
-        t_dict[f"blocks.0.sa_heads.heads.{step}.query.weight"]
+        twdict[f"blocks.0.sa_heads.heads.{step}.query.weight"]
     fwdic['wkey'][step*hd : hd*(step + 1)] = \
-        t_dict[f"blocks.0.sa_heads.heads.{step}.key.weight"]
+        twdict[f"blocks.0.sa_heads.heads.{step}.key.weight"]
     fwdic['wval'][step*hd : hd*(step + 1)] = \
-            t_dict[f"blocks.0.sa_heads.heads.{step}.value.weight"]
+            twdict[f"blocks.0.sa_heads.heads.{step}.value.weight"]
 
 pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
 
@@ -103,14 +102,14 @@ cau_mask = (ones - np.tril(ones))
 # # # # -------------------------------------
 # # TRAINING PY
 
-# print("Training Python")
+print("Training Python")
 
-# start = time.time()
-# python_losses = mp.train(docs, uchars, BOS, num_steps, pwdic)
-# end = time.time()
+start = time.time()
+python_losses = mp.train(docs, uchars, BOS, num_steps, pwdic)
+end = time.time()
 
-# print("python training time", end - start)
-# print("python final loss", python_losses[-1])
+print("python training time", end - start)
+print("python final loss", python_losses[-1])
 
 # -------------------------------------
 # TRAINING FUT
@@ -276,10 +275,10 @@ torch_probs = np.array([softmax(logits) for logits in torch_logits])
 last = 100
 n = min(last, num_steps)
 futhark_data = np.log(futhark_losses[-n:])
-# python_data = np.log(python_losses[-n:])
+python_data = np.log(python_losses[-n:])
 torch_data = np.log(torch_losses[-last:])
 plt.plot(futhark_data, label="futhark")
-# plt.plot(python_data, '-.', label="python")
+plt.plot(python_data, '-.', label="python")
 plt.plot(torch_data, '--', label="torch")
 plt.xlabel('log losses', fontsize = 12)
 plt.legend()
@@ -314,14 +313,14 @@ while True:
 
     barWidth = 0.25
     futhark_data = futhark_probs[index]
-    # python_data = python_probs[index]
+    python_data = python_probs[index]
     torch_data = torch_probs[index]
 
     br1 = np.arange(len(futhark_data))
     br2 = [x + barWidth for x in br1]
     br3 = [x + barWidth for x in br2]
     plt.bar(br1, futhark_data, width=barWidth, label="futhark")
-    # plt.bar(br2, python_data, width=barWidth, label="python")
+    plt.bar(br2, python_data, width=barWidth, label="python")
     plt.bar(br3, torch_data, width=barWidth, label="torch")
     plt.xticks([r + barWidth for r in range(len(futhark_data))], vocab)
     plt.xlabel('next token probability', fontsize = 12)
