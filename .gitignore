@@ -8,5 +8,5 @@ src/futhark/__pycache__
 src/figures/*
 src/*.npy
 src/input.txt
-src/pdwfic.txt
+src/pdwdic.txt
 src/fwdic.txt
