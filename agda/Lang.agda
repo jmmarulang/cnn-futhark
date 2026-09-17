@@ -682,8 +682,6 @@ module Primitives where
         wdown : E Γ (ar (ed ⊗ fd))
         -- output projection into vocabulary size
         wvoc : E Γ (ar (vo ⊗ ed))
-        -- token embedding
-        -- wte : E Γ (ar (vs ⊗ ed))
 
     open GPT-Params
 

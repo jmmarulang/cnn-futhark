@@ -7,23 +7,26 @@ import torch
 import torch.nn as nn
 from torch.nn import functional as F
 import random
+import numpy as np
+import matplotlib.pyplot as plt
 
-torch.manual_seed(1)
-random.seed(1)
+seed = 1
+torch.manual_seed(seed)
+random.seed(seed)
 
 # Dataset
-if not os.path.exists('input.txt'):
-    import urllib.request
-    names_url = 'https://raw.githubusercontent.com/karpathy/makemore/988aa59/names.txt'
-    urllib.request.urlretrieve(names_url, 'input.txt')
-docs = [line.strip() for line in open('input.txt') if line.strip()]
-# random.shuffle(docs)
-print(f"num docs: {len(docs)}")
+futhark = "futhark/microgpt"
+# print(futhark)
 
+# Data
+file = open('input-mgpt/input.txt')
+docs = [line.strip() for line in file if line.strip()]
+# random.shuffle(docs)
+
+# Tokenizer
 uchars = sorted(set(''.join(docs)))
 BOS = len(uchars)
-vocab_size = len(uchars) + 1
-print(f"vocab size: {vocab_size}")
+vocab = uchars + ["end"]
 
 # Hyperparameters
 n_layer = 1
@@ -32,6 +35,7 @@ block_size = 16
 n_head = 4
 head_dim = n_embd // n_head
 learning_rate = 0.01
+vocab_size = 27
 
 class Head(nn.Module):
     def __init__(self):
@@ -84,8 +88,8 @@ class Block(nn.Module):
         self.ffwd = FeedForward()
 
     def forward(self, x):
-        x = x + self.sa_heads(F.rms_norm(x, (n_embd,)))
-        x = x + self.ffwd(F.rms_norm(x, (n_embd,)))
+        x = x + self.sa_heads(F.rms_norm(x, (n_embd,), eps=1e-5))
+        x = x + self.ffwd(F.rms_norm(x, (n_embd,), eps=1e-5))
         return x
 
 class GPT(nn.Module):
@@ -101,16 +105,18 @@ class GPT(nn.Module):
 
     def _init_weights(self, module):
         if isinstance(module, nn.Linear):
-            torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
+            # torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
+            torch.nn.init.constant_(module.weight, 0.5)
         elif isinstance(module, nn.Embedding):
-            torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
+            # torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
+            torch.nn.init.constant_(module.weight, 0.5)
 
     def forward(self, idx, targets=None):
         B, T = idx.shape
         tok_emb = self.token_embedding_table(idx) # (B, T, n_embd)
         pos_emb = self.position_embedding_table(torch.arange(T, device=idx.device)) # (T, n_embd)
         x = tok_emb + pos_emb # (B, T, n_embd)
-        x = F.rms_norm(x, (n_embd,))
+        x = F.rms_norm(x, (n_embd,), eps=1e-5)
         x = self.blocks(x) # (B, T, n_embd)
         logits = self.lm_head(x) # (B, T, vocab_size)
 
@@ -120,17 +126,19 @@ class GPT(nn.Module):
             B, T, C = logits.shape
             logits = logits.view(B*T, C)
             targets = targets.view(B*T)
-            loss = F.cross_entropy(logits, targets)
+            losses = F.cross_entropy(logits, targets, reduction='none')
+            loss = loss = torch.sum(losses)/block_size
 
         return logits, loss
 
-model = GPT()
+model = GPT().double()
 print(f"num params: {sum(p.numel() for p in model.parameters())}")
 
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, betas=(0.85, 0.99), eps=1e-8)
-scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0, total_iters=1000)
+num_steps = 1050
 
-num_steps = 1000
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, betas=(0.85, 0.99), eps=1e-8)
+scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, start_factor=1.0, end_factor=0.0, total_iters=num_steps)
+
 model.train()
 for step in range(num_steps):
     doc = docs[step % len(docs)]
@@ -150,20 +158,39 @@ for step in range(num_steps):
     print(f"step {step+1:4d} / {num_steps:4d} | loss {loss.item():.4f}", end='\r')
 
 
-print("\n--- inference (new, hallucinated names) ---")
+doc = list("marulanda")
+dl = len(doc) + 2
+
+# sequence ids
+python_tokens = [BOS] + [vocab.index(ch) for ch in doc] + [BOS]
+
+
+# Torch
+torch_tokens = torch.tensor([python_tokens], dtype=torch.long)
 model.eval()
-temperature = 0.5
 with torch.no_grad():
-    for sample_idx in range(20):
-        idx = torch.tensor([[BOS]], dtype=torch.long)
-        sample = []
-        for _ in range(block_size):
-            logits, _ = model(idx)
-            logits = logits[:, -1, :] / temperature
-            probs = F.softmax(logits, dim=-1)
-            idx_next = torch.multinomial(probs, num_samples=1)
-            if idx_next.item() == BOS:
-                break
-            idx = torch.cat((idx, idx_next), dim=1)
-            sample.append(uchars[idx_next.item()])
-        print(f"sample {sample_idx+1:2d}: {''.join(sample)}")
+    torch_logits, _ = model(torch_tokens)
+torch_logits = torch_logits.numpy()[0]
+# torch_probs = np.array([softmax(logits) for logits in torch_logits])
+
+
+# Probs
+while True:
+    torch_index = int(input("torch index <- "))
+    if (torch_index == -1):
+            break
+    barWidth = 0.25
+    torch_data = torch_logits[torch_index]
+
+    br1 = np.arange(len(torch_data))
+    br2 = [x + barWidth for x in br1]
+    br3 = [x + barWidth for x in br2]
+    plt.bar(br1, torch_data, width=barWidth, label="torch")
+    plt.xticks([r + barWidth for r in range(len(torch_data))], vocab)
+    plt.xlabel('next token', fontsize = 12)
+    plt.legend()
+    plt.savefig('torch_' + "".join(doc) + "_seed_" + str(seed) + "_index_" + str(torch_index) + "_iter_" + str(num_steps) + '_.png')
+    plt.show()
+
+
+# torch_probs = np.array([softmax(logits) for logits in torch_logits])

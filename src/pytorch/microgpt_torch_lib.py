@@ -2,20 +2,19 @@
 A PyTorch equivalent of microgpt.py: train and run inference for a character-level GPT.
 """
 
-import os
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
-import random
 
 # Hyperparameters
+# const = 0.6
 n_layer = 1
 n_embd = 16
 block_size = 16
 n_head = 4
 head_dim = n_embd // n_head
+learning_rate = 0.01
 vocab_size = 27
-# learning_rate = 0.01
 
 class Head(nn.Module):
     def __init__(self):
@@ -68,8 +67,8 @@ class Block(nn.Module):
         self.ffwd = FeedForward()
 
     def forward(self, x):
-        x = x + self.sa_heads(F.rms_norm(x, (n_embd,)))
-        x = x + self.ffwd(F.rms_norm(x, (n_embd,)))
+        x = x + self.sa_heads(F.rms_norm(x, (n_embd,), eps=1e-5))
+        x = x + self.ffwd(F.rms_norm(x, (n_embd,), eps=1e-5))
         return x
 
 class GPT(nn.Module):
@@ -85,18 +84,18 @@ class GPT(nn.Module):
 
     def _init_weights(self, module):
         if isinstance(module, nn.Linear):
-            # torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
-            torch.nn.init.constant_(module.weight, 0.5)
+            torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
+            # torch.nn.init.constant_(module.weight, self.const)
         elif isinstance(module, nn.Embedding):
-            # torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
-            torch.nn.init.constant_(module.weight, 0.5)
+            torch.nn.init.normal_(module.weight, mean=0.0, std=0.08)
+            # torch.nn.init.constant_(module.weight, self.const)
 
     def forward(self, idx, targets=None):
         B, T = idx.shape
         tok_emb = self.token_embedding_table(idx) # (B, T, n_embd)
         pos_emb = self.position_embedding_table(torch.arange(T, device=idx.device)) # (T, n_embd)
         x = tok_emb + pos_emb # (B, T, n_embd)
-        x = F.rms_norm(x, (n_embd,))
+        x = F.rms_norm(x, (n_embd,), eps=1e-5)
         x = self.blocks(x) # (B, T, n_embd)
         logits = self.lm_head(x) # (B, T, vocab_size)
 
@@ -106,6 +105,7 @@ class GPT(nn.Module):
             B, T, C = logits.shape
             logits = logits.view(B*T, C)
             targets = targets.view(B*T)
-            loss = F.cross_entropy(logits, targets, reduction= 'sum')
+            losses = F.cross_entropy(logits, targets, reduction='none')
+            loss = loss = torch.sum(losses)/block_size
 
         return logits, loss
