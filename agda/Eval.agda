@@ -7,7 +7,7 @@ open import Data.Nat using (ℕ; zero; suc)
 open import Data.Fin as F using (Fin; zero; suc)
 open import Data.List as L using (List; []; _∷_)
 open import Data.List.Relation.Unary.All as All using (All; []; _∷_)
-open import Relation.Binary.PropositionalEquality
+open import Relation.Binary.PropositionalEquality hiding ([_])
 open import Relation.Nullary
 open import Data.Product.Properties
 open import Function

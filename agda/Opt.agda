@@ -352,7 +352,7 @@ module Opt (r : Real) (rp : RealProp r) where
   ... | (⊟ e₂ , p) | (i , q) = (⊟ (sels e₂ i)) , λ ρ j → (p _ _) ∙ cong (λ x → - (eval e₂ ρ x)) (q _)
   ... | (𝟙/ e₂ , p) | (i , q) = (𝟙/ (sels e₂ i)) , λ ρ j → (p _ _) ∙ cong (λ x → fromℕ 1 ÷  (eval e₂ ρ x)) (q _)
   ... | a , p | i , q = sels a i , λ ρ j → p ρ (eval e₁ ρ) ∙ cong (eval a ρ) (q ρ)
-  opt (sel′ {s = s} {p = p} {q = .(s ⊗ p)} refl e e₁) with opt e | opt e₁
+  opt (sel′ {s = .(p ⊗ q)} {p = p} {q = q} refl e e₁) with opt e | opt e₁
   ... | 𝟘 , pf | i , qf = 𝟘 , λ ρ j → pf ρ (eval e₁ ρ ++ j)
   ... | 𝟙 , pf | i , qf = 𝟙 , λ ρ j → pf ρ (eval e₁ ρ ++ j)
   ... | (zero-but j k e₂) , pf | i , qf = zero-but j k (sel e₂ i) , go
@@ -368,18 +368,21 @@ module Opt (r : Real) (rp : RealProp r) where
           ∙ sym (cong (λ x → eval d _ (x ++ j)) (eval-wk (skip ⊆-eq) i _
           ∙ eval-cong i wk-env-id
           ∙ sym (qf _)))
-  ... | (imap′ {s = s′} {p = p′} {q = .(s ⊗ p)} eq u) , pf | i , qf = foo where
+  ... | (imap′ {s = s′} {p = p′} {q = .(p ⊗ q)} eq u) , pf | i , qf = foo where
     a = imap′ eq u
     foo : _
-    foo with s ≟ˢ s′
-    ... | no _ = sel a i , λ ρ j → pf ρ (eval e₁ ρ ++ j) ∙ cong (eval a ρ) (cong (_++ j) (qf ρ))
-    ... | yes refl with (++-inj₂ {s = s} eq)
-    ... | refl rewrite eq = sub u (sub-id ▹ i) , go
+    foo with p ≟ˢ s′
+    ... | no _ = (sel a i)
+      , λ ρ j → pf ρ (eval e₁ ρ ++ j) ∙ cong (eval a ρ) (cong (_++ j) (qf ρ))
+    ... | yes refl with (++-inj₂ {s = p} eq)
+    ... | refl rewrite eq = (sub u (sub-id ▹ i)) , go
         where go : (ρ : ⟦ _ ⟧ᶜ) (j : P p′) → eval e ρ (eval e₁ ρ ++ j) ≡ eval (sub u (sub-id ▹ _)) ρ _
-              go ρ j rewrite qf ρ  = pf ρ (eval i ρ ++ j)
-                                     ∙ sym (eval-sub u ρ (sub-id ▹ i) j
-                                            ∙ eval-cong u (sub-env-id ▹ (sym $ splitP-proj₁ {j = j})) j
-                                            ∙ cong (eval u _) (sym $ splitP-proj₂ {i = eval i ρ}))
+              go ρ j rewrite qf ρ  =
+                pf ρ (eval i ρ ++ j)
+                ∙ sym (eval-sub u ρ (sub-id ▹ i) j
+                      ∙ eval-cong u
+                        (sub-env-id ▹ (sym $ splitP-proj₁ {j = j})) j
+                      ∙ cong (eval u _) (sym $ splitP-proj₂ {i = eval i ρ}))
   ... | a , pf | i , qf = sel a i , λ ρ j → pf ρ (eval e₁ ρ ++ j) ∙ cong (eval a ρ) (cong (_++ j) (qf ρ))
   opt (selb x e e₁) with opt e | opt e₁
   ... | a , p | i , q = Lang.selb x a i
