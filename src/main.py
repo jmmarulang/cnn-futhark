@@ -34,7 +34,7 @@ vocab_size = len(uchars) + 1
 vocab = uchars + ["end"]
 
 # Initialize the parameters, to store the knowledge of the model
-num_steps = 30_000
+num_steps = 10_000
 matrix_type = 'rand'
 ed = 16     # width of the network (embedding dimension)
 sl = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
@@ -274,10 +274,11 @@ plt.plot(futhark_data, label="futhark")
 plt.plot(torch_data, '--', label="torch")
 plt.xlabel('log losses', fontsize = 12)
 plt.legend()
-# plt.savefig('figures/main_' + "".join(doc) + "_losses_" + "_seed_" + str(seed) + "_iter_" + str(num_steps) + "_matrix_" + str(matrix_type) +  '_.png')
+plt.savefig('figures/main_' + "".join(doc) + "_losses_" + "_seed_" + str(seed) + "_iter_" + str(num_steps) + "_matrix_" + str(matrix_type) +  '_.png')
 plt.show()
 
 # # loss errors
+print("average error", np.mean(np.abs(futhark_losses - torch_losses)))
 last = 100
 n = min(last, num_steps)
 futhark_data = np.log(futhark_losses[-n:])
@@ -321,5 +322,5 @@ while True:
     plt.xticks([r + barWidth for r in range(len(futhark_data))], vocab)
     plt.xlabel('next token probability', fontsize = 12)
     plt.legend()
-    # plt.savefig('figures/main_' + "".join(doc) + "_index_" + str(index) + "_seed_" + str(seed) + "_iter_" + str(num_steps) + "_matrix_" + str(matrix_type) +  '_.png')
+    plt.savefig('figures/main_' + "".join(doc) + "_index_" + str(index) + "_seed_" + str(seed) + "_iter_" + str(num_steps) + "_matrix_" + str(matrix_type) +  '_.png')
     plt.show()
