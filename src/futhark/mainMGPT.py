@@ -65,7 +65,7 @@ pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
 ones = np.ones((sl,sl))
 cau_mask = (ones - np.tril(ones))
 
-num_steps = 500
+num_steps = 10_000
 
 # -------------------------------------
 # TRAINING FUT
@@ -80,6 +80,7 @@ seqs = np.zeros((num_steps, sl)).astype(np.int64, copy=False)
 for step in range(num_steps):
     # doc lengths
     doc = docs[step % len(docs)]
+    doc = doc[:sl-2]
     dl = len(doc) + 2
     dls[step] = dl
     # Masking
@@ -106,6 +107,7 @@ with futhark_server.Server(futhark) as server:
     # Tokenization
     for step in range(num_steps):
         doc = docs[step % len(docs)]
+        doc = doc[:sl-2]
         dl = len(doc) + 2
         tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
         # Padding
@@ -134,42 +136,42 @@ except :
 # -------------------------------------
 # TRAINING PY
 
-start = time.time()
+# start = time.time()
 
-pdwdic = {}
-for step in range(num_steps):
-    print(step)
-    doc = list(docs[step % len(docs)])
-    tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
+# pdwdic = {}
+# for step in range(num_steps):
+#     print(step)
+#     doc = list(docs[step % len(docs)])
+#     tokens = [BOS] + [uchars.index(ch) for ch in doc] + [BOS]
 
-    plossV, plossesV = mp.cal_loss(pwdic, tokens)
-    plossV.backward()
+#     plossV, plossesV = mp.cal_loss(pwdic, tokens)
+#     plossV.backward()
 
-    pdwdic = \
-        { k :
-            np.array(
-            [[v[j][i].grad for i in range(len(v[0]))] for j in range(len(v))])
-        for k, v in pwdic.items()}
+#     pdwdic = \
+#         { k :
+#             np.array(
+#             [[v[j][i].grad for i in range(len(v[0]))] for j in range(len(v))])
+#         for k, v in pwdic.items()}
 
-    mp.update(pwdic, pdwdic, pmdic, pvdic, step, num_steps)
+#     mp.update(pwdic, pdwdic, pmdic, pvdic, step, num_steps)
 
-    for k , data in pdwdic.items():
-        for j in range(len(data)):
-            for i in range(len(data[0])):
-                pwdic[k][j][i].grad = 0
+#     for k , data in pdwdic.items():
+#         for j in range(len(data)):
+#             for i in range(len(data[0])):
+#                 pwdic[k][j][i].grad = 0
 
-end = time.time()
-print("pgrad time", end - start)
+# end = time.time()
+# print("pgrad time", end - start)
 
-pwdic_data = {k : np.vectorize(mp.to_data)(p) for k , p in pwdic.items()}
+# pwdic_data = {k : np.vectorize(mp.to_data)(p) for k , p in pwdic.items()}
 
-try:
-    np.save("pwdic.npy", pwdic_data, allow_pickle=True)
-    file = open('pdwdic.txt', 'wt')
-    file.write(str(pwdic_data))
-    file.close()
-except :
-    print("It refused")
+# try:
+#     np.save("pwdic.npy", pwdic_data, allow_pickle=True)
+#     file = open('pdwdic.txt', 'wt')
+#     file.write(str(pwdic_data))
+#     file.close()
+# except :
+#     print("It refused")
 
 #-------------------------------------
 # PROBS
