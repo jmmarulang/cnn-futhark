@@ -510,25 +510,25 @@ instance
 infixl 5 _,,_
 _,,_ = _,′_
 
-test-e : E _ _
-test-e = Lcon (ar (5 ∷ []) ∷ []) (ar (5 ∷ 5 ∷ [])) ε
-         λ e → Imap {5 ∷ []}{5 ∷ []} λ i → Let x := 𝟘 {s = unit} In Imaps λ j → x
+-- test-e : E _ _
+-- test-e = Lcon (ar (5 ∷ []) ∷ []) (ar (5 ∷ 5 ∷ [])) ε
+--          λ e → Imap {5 ∷ []}{5 ∷ []} λ i → Let x := 𝟘 {s = unit} In Imaps λ j → x
 
-test-s : String
-test-s = proj₂ (runState (to-str test-e (_ , plain (mkar "f"))) 0)
+-- test-s : String
+-- test-s = proj₂ (runState (to-str test-e (_ , plain (mkar "f"))) 0)
 
-test₂-e : E _ _
-test₂-e = Lcon (ar (5 ∷ []) ∷ ix (5 ∷ []) ∷ []) (ar (5 ∷ [])) ε
-         λ e i → sel (Let y := 𝟘 {s = unit} In Imap {5 ∷ []}{5 ∷ []} λ i → Let x := 𝟘 {s = unit} In Imaps λ j → x) i
+-- test₂-e : E _ _
+-- test₂-e = Lcon (ar (5 ∷ []) ∷ ix (5 ∷ []) ∷ []) (ar (5 ∷ [])) ε
+--          λ e i → sel (Let y := 𝟘 {s = unit} In Imap {5 ∷ []}{5 ∷ []} λ i → Let x := 𝟘 {s = unit} In Imaps λ j → x) i
 
-test₂-s : String
-test₂-s = proj₂ (runState (to-str test₂-e ((_ , (plain (mkar "f"))) , index (val "j1" ∷ []))) 0)
+-- test₂-s : String
+-- test₂-s = proj₂ (runState (to-str test₂-e ((_ , (plain (mkar "f"))) , index (val "j1" ∷ []))) 0)
 
-test₃-e : E _ _ -- Is this what we want?
-test₃-e = Lcon (ar (5 ∷ []) ∷ []) (ar (_)) ε
-         λ e → Imap {5 ∷ []} (λ i →
-          zero-but i i (
-            Imap {5 ∷ []}{5 ∷ []} λ j → Let x := 𝟘 {s = unit} In Imaps λ k → x))
+-- test₃-e : E _ _ -- Is this what we want?
+-- test₃-e = Lcon (ar (5 ∷ []) ∷ []) (ar (_)) ε
+--          λ e → Imap {5 ∷ []} (λ i →
+--           zero-but i i (
+--             Imap {5 ∷ []}{5 ∷ []} λ j → Let x := 𝟘 {s = unit} In Imaps λ k → x))
 
-test₃-s : String
-test₃-s = proj₂ (runState (to-str test₃-e (_ , plain (mkar "f"))) 0)
+-- test₃-s : String
+-- test₃-s = proj₂ (runState (to-str test₃-e (_ , plain (mkar "f"))) 0)

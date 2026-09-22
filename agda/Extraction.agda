@@ -214,10 +214,17 @@ module Extract where
     seed-pretty : E Γ (ar s) → E Γ (ar s) → NamedEnv Γ → String
     seed-pretty e s ρ = ee-pretty ({- env-norm-lets $ -} grad e s zero-ee) ρ
 
-  sum-let : E _ _
-  sum-let = Lcon (ar (5 ∷ []) ∷ ar (5 ∷ []) ∷ []) (ar []) ε
-            λ a b → Sum λ i → (Let x := sels a i ⊞ sels b i In x ⊠ x)
-  sum-let-s = pp sum-let (ε ▹ "a" ▹ "b")
+  -- sum-let : E _ _
+  -- sum-let = Lcon (ar (5 ∷ []) ∷ ar (5 ∷ []) ∷ []) (ar []) ε
+  --           λ a b → Sum λ i → (Let x := sels a i ⊞ sels b i In x ⊠ x)
+  -- sum-let-s = pp sum-let (ε ▹ "a" ▹ "b")
+
+  test-e : E _ _
+  test-e = Lcon (ar [] ∷ ar [] ∷ ix (2 ∷ []) ∷ []) (ar (2 ∷ [])) ε λ x y j → Imaps (λ i → zero-but i j x)
+
+  test-pp : String --wrong
+  -- test-pp = Pretty.seed-pretty test-e (Imaps (λ i → zero-but (var v₁) i 𝟙)) (ε ▹ "x" ▹ "y" ▹ "j")
+  test-pp = Pretty.seed-pretty test-e 𝟙 (ε ▹ "x" ▹ "y" ▹ "j")
 
   mgpt-loss-s : String
   mgpt-loss-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.mgpt-loss-e OPT) ((from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target")))) 0)
