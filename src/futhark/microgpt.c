@@ -12593,7 +12593,7 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
         return 1;
     if (memblock_set(ctx, &mem_param_70979, &wvoc_mem_70868, "wvoc_mem_70868") != 0)
         return 1;
-    for (int64_t step_64196 = 0; step_64196 < (int64_t) 30000; step_64196++) {
+    for (int64_t step_64196 = 0; step_64196 < (int64_t) 500; step_64196++) {
         // futhark/microgpt.fut:500:16-25
         
         int64_t dl_64224 = ((int64_t *) dls_mem_70870.mem)[step_64196];
@@ -12769,11 +12769,11 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
             
             double zs_res_66114 = defunc_0_lifted_lambda_res_66108 / 16.0;
             
-            // futhark/microgpt.fut:267:23-53
+            // futhark/microgpt.fut:267:23-50
             
-            double zp_res_66115 = 3.3333333333333333e-6 + zs_res_66114;
+            double zp_res_66115 = 2.0e-3 + zs_res_66114;
             
-            // futhark/microgpt.fut:267:15-53
+            // futhark/microgpt.fut:267:15-50
             
             double sqrt_res_66116 = futrts_sqrt64(zp_res_66115);
             
@@ -12829,11 +12829,11 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
             
             double zs_res_66222 = defunc_0_lifted_lambda_res_66216 / 16.0;
             
-            // futhark/microgpt.fut:270:24-55
+            // futhark/microgpt.fut:270:24-52
             
-            double zp_res_66223 = 3.3333333333333333e-6 + zs_res_66222;
+            double zp_res_66223 = 2.0e-3 + zs_res_66222;
             
-            // futhark/microgpt.fut:270:16-55
+            // futhark/microgpt.fut:270:16-52
             
             double sqrt_res_66224 = futrts_sqrt64(zp_res_66223);
             
@@ -12996,11 +12996,11 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
             
             double zp_lhs_66625 = ((double *) mem_71076)[i_70064];
             
-            // futhark/microgpt.fut:342:41-79
+            // futhark/microgpt.fut:342:41-76
             
-            double zp_res_66626 = 3.3333333333333333e-6 + zp_lhs_66625;
+            double zp_res_66626 = 2.0e-3 + zp_lhs_66625;
             
-            // futhark/microgpt.fut:342:33-79
+            // futhark/microgpt.fut:342:33-76
             
             double sqrt_res_66627 = futrts_sqrt64(zp_res_66626);
             
@@ -13335,11 +13335,11 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
             
             double zp_lhs_66952 = ((double *) mem_71116)[i_70163];
             
-            // futhark/microgpt.fut:335:41-79
+            // futhark/microgpt.fut:335:41-76
             
-            double zp_res_66953 = 3.3333333333333333e-6 + zp_lhs_66952;
+            double zp_res_66953 = 2.0e-3 + zp_lhs_66952;
             
-            // futhark/microgpt.fut:335:33-79
+            // futhark/microgpt.fut:335:33-76
             
             double sqrt_res_66954 = futrts_sqrt64(zp_res_66953);
             
@@ -13428,11 +13428,11 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
             
             double zs_res_66978 = defunc_0_lifted_lambda_res_66972 / 16.0;
             
-            // futhark/microgpt.fut:287:24-55
+            // futhark/microgpt.fut:287:24-52
             
-            double zp_res_66979 = 3.3333333333333333e-6 + zs_res_66978;
+            double zp_res_66979 = 2.0e-3 + zs_res_66978;
             
-            // futhark/microgpt.fut:287:16-55
+            // futhark/microgpt.fut:287:16-52
             
             double sqrt_res_66980 = futrts_sqrt64(zp_res_66979);
             
@@ -13535,11 +13535,11 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
             
             double zp_lhs_67081 = ((double *) mem_71461)[i_70215];
             
-            // futhark/microgpt.fut:310:41-79
+            // futhark/microgpt.fut:310:41-76
             
-            double zp_res_67082 = 3.3333333333333333e-6 + zp_lhs_67081;
+            double zp_res_67082 = 2.0e-3 + zp_lhs_67081;
             
-            // futhark/microgpt.fut:310:33-79
+            // futhark/microgpt.fut:310:33-76
             
             double sqrt_res_67083 = futrts_sqrt64(zp_res_67082);
             
@@ -14063,23 +14063,23 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
             
             double zp_lhs_65064 = ((double *) mem_71461)[i_70329];
             
-            // futhark/microgpt.fut:312:85-123
+            // futhark/microgpt.fut:312:85-120
             
-            double zp_res_65065 = 3.3333333333333333e-6 + zp_lhs_65064;
+            double zp_res_65065 = 2.0e-3 + zp_lhs_65064;
             
-            // futhark/microgpt.fut:312:77-123
+            // futhark/microgpt.fut:312:77-120
             
             double sqrt_res_65066 = futrts_sqrt64(zp_res_65065);
             
-            // futhark/microgpt.fut:312:63-125
+            // futhark/microgpt.fut:312:63-122
             
             double zt_res_65067 = 2.0 * sqrt_res_65066;
             
-            // futhark/microgpt.fut:312:49-125
+            // futhark/microgpt.fut:312:49-122
             
             double zs_res_65068 = 1.0 / zt_res_65067;
             
-            // futhark/microgpt.fut:312:33-125
+            // futhark/microgpt.fut:312:33-122
             
             double zt_res_65069 = zt_lhs_65063 * zs_res_65068;
             
@@ -14910,23 +14910,23 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
             
             double zp_lhs_65630 = ((double *) mem_71116)[i_70537];
             
-            // futhark/microgpt.fut:337:85-123
+            // futhark/microgpt.fut:337:85-120
             
-            double zp_res_65631 = 3.3333333333333333e-6 + zp_lhs_65630;
+            double zp_res_65631 = 2.0e-3 + zp_lhs_65630;
             
-            // futhark/microgpt.fut:337:77-123
+            // futhark/microgpt.fut:337:77-120
             
             double sqrt_res_65632 = futrts_sqrt64(zp_res_65631);
             
-            // futhark/microgpt.fut:337:63-125
+            // futhark/microgpt.fut:337:63-122
             
             double zt_res_65633 = 2.0 * sqrt_res_65632;
             
-            // futhark/microgpt.fut:337:49-125
+            // futhark/microgpt.fut:337:49-122
             
             double zs_res_65634 = 1.0 / zt_res_65633;
             
-            // futhark/microgpt.fut:337:33-125
+            // futhark/microgpt.fut:337:33-122
             
             double zt_res_65635 = zt_lhs_65629 * zs_res_65634;
             
@@ -15059,23 +15059,23 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
             
             double zp_lhs_65737 = ((double *) mem_71076)[i_70557];
             
-            // futhark/microgpt.fut:344:85-123
+            // futhark/microgpt.fut:344:85-120
             
-            double zp_res_65738 = 3.3333333333333333e-6 + zp_lhs_65737;
+            double zp_res_65738 = 2.0e-3 + zp_lhs_65737;
             
-            // futhark/microgpt.fut:344:77-123
+            // futhark/microgpt.fut:344:77-120
             
             double sqrt_res_65739 = futrts_sqrt64(zp_res_65738);
             
-            // futhark/microgpt.fut:344:63-125
+            // futhark/microgpt.fut:344:63-122
             
             double zt_res_65740 = 2.0 * sqrt_res_65739;
             
-            // futhark/microgpt.fut:344:49-125
+            // futhark/microgpt.fut:344:49-122
             
             double zs_res_65741 = 1.0 / zt_res_65740;
             
-            // futhark/microgpt.fut:344:33-125
+            // futhark/microgpt.fut:344:33-122
             
             double zt_res_65742 = zt_lhs_65736 * zs_res_65741;
             
@@ -15261,15 +15261,15 @@ FUTHARK_FUN_ATTR int futrts_entry_train(struct futhark_context *ctx, struct memb
         
         double i64_res_65972 = sitofp_i64_f64(step_64196);
         
-        // futhark/microgpt.fut:431:46-67
+        // futhark/microgpt.fut:431:46-65
         
-        double zm_rhs_65973 = i64_res_65972 / 30000.0;
+        double zm_rhs_65973 = i64_res_65972 / 500.0;
         
-        // futhark/microgpt.fut:431:24-67
+        // futhark/microgpt.fut:431:24-65
         
         double zt_rhs_65974 = 1.0 - zm_rhs_65973;
         
-        // futhark/microgpt.fut:431:19-67
+        // futhark/microgpt.fut:431:19-65
         
         double lt_r_65975 = 1.0e-2 * zt_rhs_65974;
         
@@ -16986,7 +16986,7 @@ int futhark_entry_train(struct futhark_context *ctx, struct futhark_opaque_tup3_
     masks_mem_70869 = in3->mem;
     dls_mem_70870 = in4->mem;
     seqs_mem_70871 = in5->mem;
-    if (!(((int64_t) 16 == in0->v0->shape[0] && ((int64_t) 64 == in0->v0->shape[1] && ((int64_t) 16 == in0->v1->shape[0] && ((int64_t) 16 == in0->v1->shape[1] && ((int64_t) 16 == in0->v2->shape[0] && ((int64_t) 16 == in0->v2->shape[1] && ((int64_t) 16 == in0->v3->shape[0] && ((int64_t) 16 == in0->v3->shape[1] && ((int64_t) 16 == in0->v4->shape[0] && ((int64_t) 16 == in0->v4->shape[1] && ((int64_t) 27 == in0->v5->shape[0] && ((int64_t) 16 == in0->v5->shape[1] && ((int64_t) 64 == in0->v6->shape[0] && ((int64_t) 16 == in0->v6->shape[1] && ((int64_t) 16 == in0->v7->shape[0] && ((int64_t) 16 == in0->v7->shape[1] && ((int64_t) 27 == in0->v8->shape[0] && (int64_t) 16 == in0->v8->shape[1]))))))))))))))))) && (((int64_t) 16 == in1->v0->shape[0] && ((int64_t) 64 == in1->v0->shape[1] && ((int64_t) 16 == in1->v1->shape[0] && ((int64_t) 16 == in1->v1->shape[1] && ((int64_t) 16 == in1->v2->shape[0] && ((int64_t) 16 == in1->v2->shape[1] && ((int64_t) 16 == in1->v3->shape[0] && ((int64_t) 16 == in1->v3->shape[1] && ((int64_t) 16 == in1->v4->shape[0] && ((int64_t) 16 == in1->v4->shape[1] && ((int64_t) 27 == in1->v5->shape[0] && ((int64_t) 16 == in1->v5->shape[1] && ((int64_t) 64 == in1->v6->shape[0] && ((int64_t) 16 == in1->v6->shape[1] && ((int64_t) 16 == in1->v7->shape[0] && ((int64_t) 16 == in1->v7->shape[1] && ((int64_t) 27 == in1->v8->shape[0] && (int64_t) 16 == in1->v8->shape[1]))))))))))))))))) && (((int64_t) 16 == in2->v0->shape[0] && ((int64_t) 64 == in2->v0->shape[1] && ((int64_t) 16 == in2->v1->shape[0] && ((int64_t) 16 == in2->v1->shape[1] && ((int64_t) 16 == in2->v2->shape[0] && ((int64_t) 16 == in2->v2->shape[1] && ((int64_t) 16 == in2->v3->shape[0] && ((int64_t) 16 == in2->v3->shape[1] && ((int64_t) 16 == in2->v4->shape[0] && ((int64_t) 16 == in2->v4->shape[1] && ((int64_t) 27 == in2->v5->shape[0] && ((int64_t) 16 == in2->v5->shape[1] && ((int64_t) 64 == in2->v6->shape[0] && ((int64_t) 16 == in2->v6->shape[1] && ((int64_t) 16 == in2->v7->shape[0] && ((int64_t) 16 == in2->v7->shape[1] && ((int64_t) 27 == in2->v8->shape[0] && (int64_t) 16 == in2->v8->shape[1]))))))))))))))))) && (((int64_t) 30000 == in3->shape[0] && ((int64_t) 16 == in3->shape[1] && (int64_t) 16 == in3->shape[2])) && ((int64_t) 30000 == in4->shape[0] && ((int64_t) 30000 == in5->shape[0] && (int64_t) 16 == in5->shape[1]))))))) {
+    if (!(((int64_t) 16 == in0->v0->shape[0] && ((int64_t) 64 == in0->v0->shape[1] && ((int64_t) 16 == in0->v1->shape[0] && ((int64_t) 16 == in0->v1->shape[1] && ((int64_t) 16 == in0->v2->shape[0] && ((int64_t) 16 == in0->v2->shape[1] && ((int64_t) 16 == in0->v3->shape[0] && ((int64_t) 16 == in0->v3->shape[1] && ((int64_t) 16 == in0->v4->shape[0] && ((int64_t) 16 == in0->v4->shape[1] && ((int64_t) 27 == in0->v5->shape[0] && ((int64_t) 16 == in0->v5->shape[1] && ((int64_t) 64 == in0->v6->shape[0] && ((int64_t) 16 == in0->v6->shape[1] && ((int64_t) 16 == in0->v7->shape[0] && ((int64_t) 16 == in0->v7->shape[1] && ((int64_t) 27 == in0->v8->shape[0] && (int64_t) 16 == in0->v8->shape[1]))))))))))))))))) && (((int64_t) 16 == in1->v0->shape[0] && ((int64_t) 64 == in1->v0->shape[1] && ((int64_t) 16 == in1->v1->shape[0] && ((int64_t) 16 == in1->v1->shape[1] && ((int64_t) 16 == in1->v2->shape[0] && ((int64_t) 16 == in1->v2->shape[1] && ((int64_t) 16 == in1->v3->shape[0] && ((int64_t) 16 == in1->v3->shape[1] && ((int64_t) 16 == in1->v4->shape[0] && ((int64_t) 16 == in1->v4->shape[1] && ((int64_t) 27 == in1->v5->shape[0] && ((int64_t) 16 == in1->v5->shape[1] && ((int64_t) 64 == in1->v6->shape[0] && ((int64_t) 16 == in1->v6->shape[1] && ((int64_t) 16 == in1->v7->shape[0] && ((int64_t) 16 == in1->v7->shape[1] && ((int64_t) 27 == in1->v8->shape[0] && (int64_t) 16 == in1->v8->shape[1]))))))))))))))))) && (((int64_t) 16 == in2->v0->shape[0] && ((int64_t) 64 == in2->v0->shape[1] && ((int64_t) 16 == in2->v1->shape[0] && ((int64_t) 16 == in2->v1->shape[1] && ((int64_t) 16 == in2->v2->shape[0] && ((int64_t) 16 == in2->v2->shape[1] && ((int64_t) 16 == in2->v3->shape[0] && ((int64_t) 16 == in2->v3->shape[1] && ((int64_t) 16 == in2->v4->shape[0] && ((int64_t) 16 == in2->v4->shape[1] && ((int64_t) 27 == in2->v5->shape[0] && ((int64_t) 16 == in2->v5->shape[1] && ((int64_t) 64 == in2->v6->shape[0] && ((int64_t) 16 == in2->v6->shape[1] && ((int64_t) 16 == in2->v7->shape[0] && ((int64_t) 16 == in2->v7->shape[1] && ((int64_t) 27 == in2->v8->shape[0] && (int64_t) 16 == in2->v8->shape[1]))))))))))))))))) && (((int64_t) 500 == in3->shape[0] && ((int64_t) 16 == in3->shape[1] && (int64_t) 16 == in3->shape[2])) && ((int64_t) 500 == in4->shape[0] && ((int64_t) 500 == in5->shape[0] && (int64_t) 16 == in5->shape[1]))))))) {
         ret = 1;
         set_error(ctx, msgprintf("Error: entry point arguments have invalid sizes.\n"));
     }

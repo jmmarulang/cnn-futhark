@@ -34,7 +34,7 @@ vocab_size = len(uchars) + 1
 vocab = uchars + ["end"]
 
 # Initialize the parameters, to store the knowledge of the model
-num_steps = 30_000
+num_steps = 500
 matrix_type = 'rand'
 ed = 16     # width of the network (embedding dimension)
 sl = 16 # maximum context length of the attention window (note: the longest name is 15 characters)
@@ -95,18 +95,6 @@ pwdic = { k : np.vectorize(mp.to_val)(v) for k, v in fwdic.items()}
 
 ones = np.ones((sl,sl))
 cau_mask = (ones - np.tril(ones))
-
-# # # # -------------------------------------
-# # TRAINING PY
-
-# print("Training Python")
-
-# start = time.time()
-# python_losses = mp.train(docs, uchars, BOS, num_steps, pwdic)
-# end = time.time()
-
-# print("python training time", end - start)
-# print("python final loss", python_losses[-1])
 
 # -------------------------------------
 # TRAINING FUT
