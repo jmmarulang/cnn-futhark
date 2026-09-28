@@ -28,6 +28,8 @@ record Real : Set₁ where
   1/_ : R → R
   1/_ = fromℕ 1 ÷_
 
+  -- syntax I-< a b = I[ a < b ]
+
 record RealProp (r : Real) : Set where
   open Real r
   field
@@ -40,7 +42,7 @@ record RealProp (r : Real) : Set where
     minus-*-pushʳ : ∀ {x y} → (x * (- y)) ≡ - (x * y)
     minus-invʳ : ∀ {x} → (- (- x)) ≡ x
     minus-idʳ : - fromℕ 0 ≡ fromℕ 0
-    ÷-nul : ∀ {x} → fromℕ 0 ÷ x ≡ fromℕ 0
+    ÷-nul : ∀ {x} → (x ≡ fromℕ 0 → ⊥) → fromℕ 0 ÷ x ≡ fromℕ 0
     *-÷-cut : ∀ {x y} → (x * (fromℕ 1 ÷ (x * y))) ≡ fromℕ 1 ÷ y -- wrong for x = 0
     fromℕ-inj : ∀ {x y} → (fromℕ x ≡ fromℕ y) → (x ≡ y)
     +-medial : ∀ {x y z w } → x + y + (z + w) ≡ x + z + (y + w)
@@ -48,4 +50,3 @@ record RealProp (r : Real) : Set where
 
   _≤ᵣ?_ : ∀ (a b : R) → Dec (b ≡ (a ∨ b))
   a ≤ᵣ? b = _ ≡ᵣ? _
-
