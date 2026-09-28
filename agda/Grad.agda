@@ -1,4 +1,5 @@
 -- {-# OPTIONS --warn=noUserWarning #-}
+{-# OPTIONS  --backtracking-instance-search #-}
 module _ where
 
 module _ where
@@ -10,6 +11,8 @@ module _ where
   open import Function
   open import Ar
   open import Lang
+  open Syntax
+  open Primitives
   open import Data.Maybe
   open WkSub
 
@@ -190,8 +193,8 @@ module _ where
   grad 𝟘 s δ = δ
   grad 𝟙 s δ = δ
 
-  grad (imaps e)              s δ = grad-sum e (sels     (s ↑) (var v₀)) δ -- why?
-  grad (imap′ refl e)         s δ = grad-sum e (sel (s ↑) (var v₀)) δ
+  grad (imaps e)              s δ = grad-sum e (sels (s ↑) (var v₀)) δ -- why?
+  grad (imap′ refl e)         s δ = grad-sum e (sel  (s ↑) (var v₀)) δ
   grad (Lang.imapb m e)       s δ = grad-sum e (Lang.selb m (s ↑) (var v₀)) δ
 
   grad (sels e i)             s δ = grad e (imaps     (zero-but (var v₀) (i ↑) (s ↑))) δ
@@ -213,14 +216,26 @@ module _ where
   grad (𝟙/ e)                 s δ = grad e (⊟ (( 𝟙/ e) ⊠ (s // e))) δ
   grad (ln e)                 s δ = grad e (s // e) δ
   grad (ℙ e)                  s δ =
-    let
-      w = (skip (skip (skip ⊆-eq)))
-      δ' = ee-wk-zero (ee-wk w δ) w
-      tails = ee-tail ∘ ee-tail ∘ ee-tail
-      lets = λ x → let′ (ℙ e) (
-                let′ (s ↑) (
-                let′ (Lang.sum $ sels (var v₁ ⊠ var v₂) (var v₀)) x))
-    in (tails ∘ lets) $ grad (wk w e) (var v₂ ⊠ (var v₁ ⊟ (imaps $ var v₁))) δ'
+    let w = skip (skip ⊆-eq) in
+    ee-tail ∘ ee-tail $
+    let′ (ℙ e) ( -- v₁
+    let′ (Sum λ i → sels (⟨ s ⟩ ⊠ (var v₁)) i) -- v₀
+    (grad (wk w e) (var v₁ ⊠ (⟨ s ⟩ ⊟ imaps (var v₁))) (ee-wk-zero (ee-wk w δ) w)))
+    {-
+    Let sf := softmax e In
+    Let sm := Sum λ i → sels (⟨ s ⟩ ⊠ sf) i In
+    grad ⟨ e ⟩ (sf ⊠ (⟨ s ⟩ ⊟ imaps sm)) δ
+    -}
+
+  -- let
+  --     w = (skip (skip (skip ⊆-eq)))
+  --     δ' = ee-wk-zero (ee-wk w δ) w
+  --     tails = ee-tail ∘ ee-tail ∘ ee-tail
+  --     lets = λ x → let′ (ℙ e) (
+  --               let′ (s ↑) (
+  --               let′ (Lang.sum $ sels (var v₁ ⊠ var v₂) (var v₀)) x))
+  --   in (tails ∘ lets) $ grad (wk w e) (var v₂ ⊠ (var v₁ ⊟ (imaps $ var v₁))) δ'
+
   grad (let′ e e₁) s δ =
     let
       r = grad e₁ (s ↑) (ee-push-zero $′ ee-wk (skip ⊆-eq) δ)

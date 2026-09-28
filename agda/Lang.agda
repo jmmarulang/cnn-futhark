@@ -475,7 +475,7 @@ module Primitives where
   open import Data.Nat as ℕ using (ℕ; zero; suc)
   open import Function using (_$_; it; _∋_)
   open import Relation.Binary.PropositionalEquality hiding ([_])
-  open import Ar hiding (slide; selb; swap; sum)
+  open import Ar hiding (slide; selb; swap; sum; imapb)
   open Syntax
   open WkSub
 
@@ -692,26 +692,11 @@ module Primitives where
     PF : suc ([ 15 ]) ≈ SL
     PF = cons
 
-    -- rmsnorm-e : E _ _
-    -- rmsnorm-e = Lcon (ar ([ 5 ] ⊗ [ 6 ]) ∷ []) (ar ([ 5 ] ⊗ [ 6 ])) ε
-    --   (λ x → rmsnorm {s = [ 5 ] ⊗ [ 6 ]} x)
+    -- example1 : E ε (ar [ 3 ])
+    -- example1 = let′ (imaps (sel 𝟙 (var v₀))) (imap 𝟘)
 
-    -- div-e : E _ _
-    -- div-e = Lcon (ar ([ 6 ]) ∷ ar ([ 6 ]) ∷ []) (ar ([ 6 ])) ε
-    --   (λ x y → (x ⊞ y) // (x ⊞ y))
-
-    -- softmax-e : E _ _
-    -- softmax-e = Lcon (ar ([ 2 ]) ∷ ar ([ 2 ]) ∷ []) (ar ([ 2 ])) ε (λ i x → ℙ x)
-
-    -- test : ∀ {Γ} → E Γ (ar $ [ 5 ] ⊗ [ 3 ]) → E Γ (ar $ [ 5 ] ⊗ [ 3 ])
-    -- test x = ℙ x
-
-    -- test-e : E _ _
-    -- test-e = Lcon (ar ([ 5 ] ⊗ [ 3 ]) ∷ []) (ar ([ 5 ] ⊗ [ 3 ])) ε
-    --   (λ x → test x)
-
-    -- id-e : E _ _
-    -- id-e = Lcon (ar ([ 5 ] ⊗ [ 6 ]) ∷ []) (ar ([ 5 ] ⊗ [ 6 ])) ε (λ x → x)
+    -- example2 : E ε (ar [ 3 ])
+    -- example2 = Let x := Imaps (λ i → sel 𝟙 i) In Imap (λ _ → 𝟘)
 
     mgpt-forward-e : E _ _
     mgpt-forward-e = Lcon (ar (SL ⊗ SL) ∷ ar (SL ⊗ ED) ∷ ar (ED ⊗ ED) ∷

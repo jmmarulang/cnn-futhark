@@ -1,0 +1,172 @@
+elet x0 = wpe + wseq
+
+elet x1 = imap λ x2 → let x3 = scaledown 16 (sum λ x4 → sels ((sel x0 x2 * sel x0 x2)) x4) in
+let x5 = (sqrt (x3 + scaledown 100000 1)) in
+(imaps λ x6 → (sels (sel x0 x2) x6 * (inv x5)))
+
+elet x7 = imap λ x8 → let x9 = scaledown 16 (sum λ x10 → sels ((sel x1 x8 * sel x1 x8)) x10) in
+let x11 = (sqrt (x9 + scaledown 100000 1)) in
+(imaps λ x12 → (sels (sel x1 x8) x12 * (inv x11)))
+
+elet x13 = imap λ x14 → imaps λ x15 → sum λ x16 → sels ((sel wqry x15 * sel x7 x14)) x16
+
+elet x17 = imap λ x18 → imaps λ x19 → sum λ x20 → sels ((sel wkey x19 * sel x7 x18)) x20
+
+elet x21 = imap λ x22 → imaps λ x23 → sum λ x24 → sels ((sel wval x23 * sel x7 x22)) x24
+
+elet x25 = imap λ x26 → imap λ x27 → sel (sel (imap λ x28 → imap λ x29 → selb (sel x13 x28) x29) x27) x26
+
+elet x30 = imap λ x31 → imap λ x32 → sel (sel (imap λ x33 → imap λ x34 → selb (sel x17 x33) x34) x32) x31
+
+elet x35 = imap λ x36 → imap λ x37 → sel (sel (imap λ x38 → imap λ x39 → selb (sel x21 x38) x39) x37) x36
+
+elet x40 = imap λ x41 → let x42 = (imap λ x43 → imaps λ x44 → sum λ x45 → sels ((sel (sel x25 x41) x43 * sel (sel x30 x41) x44)) x45) in
+let x46 = scaledown 2 x42 + mask in
+let x47 = (imap λ x48 → (softmax (sel x46 x48))) in
+(imap λ x49 → imaps λ x50 → sum λ x51 → (sels (sel x47 x49) x51 * sels (sel (sel x35 x41) x51) x50))
+
+elet x52 = imap λ x53 → imapb λ x54 → sel (sel (imap λ x55 → imap λ x56 → sel (sel x40 x56) x55) x53) x54
+
+elet x57 = imap λ x58 → imaps λ x59 → sum λ x60 → sels ((sel wout x59 * sel x52 x58)) x60
+
+elet x61 = x57 + x1
+
+elet x62 = imap λ x63 → let x64 = scaledown 16 (sum λ x65 → sels ((sel x61 x63 * sel x61 x63)) x65) in
+let x66 = (sqrt (x64 + scaledown 100000 1)) in
+(imaps λ x67 → (sels (sel x61 x63) x67 * (inv x66)))
+
+elet x68 = imap λ x69 → imaps λ x70 → sum λ x71 → sels ((sel wup x70 * sel x62 x69)) x71
+
+elet x72 = (relu x68)
+
+elet x73 = imap λ x74 → imaps λ x75 → sum λ x76 → sels ((sel wdown x75 * sel x72 x74)) x76
+
+elet x77 = x73 + x61
+
+elet x78 = imap λ x79 → imaps λ x80 → sum λ x81 → sels ((sel wvoc x80 * sel x77 x79)) x81
+
+elet x82 = 0 + (sum λ x83 → 0 + (imaps λ x84 → (zero-but x84 x83 (scaledown 16 1))))
+
+elet x85 = imap λ x86 → (ln ((softmax (sel x78 x86))))
+
+elet x87 = imap λ x88 → 0 + (sum λ x89 → 0 + (imaps λ x90 → (zero-but x90 x89 (((- (sels x82 x88)) * sels (sel target x88) x89)))))
+
+elet x91 = imap λ x92 → (softmax (sel x78 x92))
+
+elet x93 = imap λ x94 → (sel x87 x94 * (inv ((softmax (sel x78 x94)))))
+
+elet x95 = imap λ x96 → sum λ x97 → sels ((sel x93 x96 * sel x91 x96)) x97
+
+elet x98 = 0 + (sum λ x99 → 0) + (sum λ x100 → 0 + (sum λ x101 → 0) + (imap λ x102 → (zero-but x102 x100 ((sel x91 x100 * (sel x93 x100 + (- (imaps λ x103 → sel x95 x100))))))))
+
+elet x104 = 0 + (sum λ x105 → 0) + (sum λ x106 → 0 + (sum λ x107 → 0)) + (sum λ x108 → 0 + (sum λ x109 → 0 + (sum λ x110 → 0 + (imap λ x111 → (zero-but x111 x108 ((sel wvoc x109 * (imaps λ x112 → (zero-but x112 x110 (sels (sel x98 x108) x109))))))))))
+
+elet x113 = 0 + (sum λ x114 → 0) + (sum λ x115 → 0 + (sum λ x116 → 0)) + (sum λ x117 → 0 + (sum λ x118 → 0 + (sum λ x119 → 0))) + x104
+
+elet x120 = 0 + (sum λ x121 → 0) + (sum λ x122 → 0 + (sum λ x123 → 0)) + (sum λ x124 → 0 + (sum λ x125 → 0 + (sum λ x126 → 0))) + (sum λ x127 → 0 + (sum λ x128 → 0 + (sum λ x129 → 0 + (imap λ x130 → (zero-but x130 x127 ((sel wdown x128 * (imaps λ x131 → (zero-but x131 x129 (sels (sel x113 x127) x128))))))))))
+
+elet x132 = 0 + (sum λ x133 → 0) + (sum λ x134 → 0 + (sum λ x135 → 0)) + (sum λ x136 → 0 + (sum λ x137 → 0 + (sum λ x138 → 0))) + (sum λ x139 → 0 + (sum λ x140 → 0 + (sum λ x141 → 0))) + ((ind-positive x68) * x120)
+
+elet x142 = 0 + (sum λ x143 → 0) + (sum λ x144 → 0 + (sum λ x145 → 0)) + (sum λ x146 → 0 + (sum λ x147 → 0 + (sum λ x148 → 0))) + (sum λ x149 → 0 + (sum λ x150 → 0 + (sum λ x151 → 0))) + (sum λ x152 → 0 + (sum λ x153 → 0 + (sum λ x154 → 0 + (imap λ x155 → (zero-but x155 x152 ((sel wup x153 * (imaps λ x156 → (zero-but x156 x154 (sels (sel x132 x152) x153))))))))))
+
+elet x157 = imap λ x158 → (sel x61 x158 * sel x61 x158)
+
+elet x159 = imap λ x160 → scaledown 16 (sum λ x161 → sels (sel x157 x160) x161)
+
+elet x162 = imap λ x163 → (sqrt (sel x159 x163 + scaledown 100000 1))
+
+elet x164 = imap λ x165 → 0 + (sum λ x166 → 0 + (- (((inv (sel x162 x165)) * ((sels (sel x61 x165) x166 * sels (sel x142 x165) x166) * (inv (sel x162 x165)))))))
+
+elet x167 = imap λ x168 → 0 + (sum λ x169 → 0) + (sel x164 x168 * (inv (((1 + 1) * (sqrt (sel x159 x168 + scaledown 100000 1))))))
+
+elet x170 = imap λ x171 → 0 + (sum λ x172 → 0) + (sum λ x173 → 0 + (imaps λ x174 → (zero-but x174 x173 (scaledown 16 (sel x167 x171)))))
+
+elet x175 = x113 + (sum λ x176 → 0 + (sum λ x177 → 0 + (sum λ x178 → 0))) + (sum λ x179 → 0 + (sum λ x180 → 0 + (sum λ x181 → 0))) + (sum λ x182 → 0 + (sum λ x183 → 0 + (imap λ x184 → (zero-but x184 x182 (imaps λ x185 → (zero-but x185 x183 ((sels (sel x142 x182) x183 * (inv (sel x162 x182))))))))) + (sum λ x186 → 0) + (imap λ x187 → (zero-but x187 x182 ((sel x61 x182 * sel x170 x182)))) + (imap λ x188 → (zero-but x188 x182 ((sel x170 x182 * sel x61 x182)))))
+
+elet x189 = 0 + (sum λ x190 → 0) + (sum λ x191 → 0 + (sum λ x192 → 0)) + (sum λ x193 → 0 + (sum λ x194 → 0 + (sum λ x195 → 0))) + (sum λ x196 → 0 + (sum λ x197 → 0 + (sum λ x198 → 0))) + (sum λ x199 → 0 + (sum λ x200 → 0 + (sum λ x201 → 0))) + (sum λ x202 → 0 + (sum λ x203 → 0) + (sum λ x204 → 0)) + x175
+
+elet x205 = 0 + (sum λ x206 → 0) + (sum λ x207 → 0 + (sum λ x208 → 0)) + (sum λ x209 → 0 + (sum λ x210 → 0 + (sum λ x211 → 0))) + (sum λ x212 → 0 + (sum λ x213 → 0 + (sum λ x214 → 0))) + (sum λ x215 → 0 + (sum λ x216 → 0 + (sum λ x217 → 0))) + (sum λ x218 → 0 + (sum λ x219 → 0) + (sum λ x220 → 0)) + (sum λ x221 → 0 + (sum λ x222 → 0 + (sum λ x223 → 0 + (imap λ x224 → (zero-but x224 x221 ((sel wout x222 * (imaps λ x225 → (zero-but x225 x223 (sels (sel x189 x221) x222))))))))))
+
+elet x226 = 0 + (sum λ x227 → 0) + (sum λ x228 → 0 + (sum λ x229 → 0)) + (sum λ x230 → 0 + (sum λ x231 → 0 + (sum λ x232 → 0))) + (sum λ x233 → 0 + (sum λ x234 → 0 + (sum λ x235 → 0))) + (sum λ x236 → 0 + (sum λ x237 → 0 + (sum λ x238 → 0))) + (sum λ x239 → 0 + (sum λ x240 → 0) + (sum λ x241 → 0)) + (sum λ x242 → 0 + (sum λ x243 → 0 + (sum λ x244 → 0))) + (sum λ x245 → 0 + (sum λ x246 → 0 + (sum λ x247 → 0 + (sum λ x248 → 0 + (imap λ x249 → (zero-but x249 x248 (imap λ x250 → (zero-but x250 x247 (sel (sel (imap λ x251 → (zero-but x251 x245 (imap λ x252 → (zero-but x252 x246 (selb (sel x205 x245) x246))))) x247) x248)))))))))
+
+elet x253 = imap λ x254 → imap λ x255 → imaps λ x256 → sum λ x257 → sels ((sel (sel x25 x254) x255 * sel (sel x30 x254) x256)) x257
+
+elet x258 = imap λ x259 → scaledown 2 (sel x253 x259) + mask
+
+elet x260 = imap λ x261 → imap λ x262 → (softmax (sel (sel x258 x261) x262))
+
+elet x263 = imap λ x264 → 0 + (sum λ x265 → 0 + (sum λ x266 → 0 + (sum λ x267 → 0 + (imap λ x268 → (zero-but x268 x265 (imaps λ x269 → (zero-but x269 x267 ((sels (sel (sel x226 x264) x265) x266 * sels (sel (sel x35 x264) x267) x266)))))))))
+
+elet x270 = imap λ x271 → imap λ x272 → sel (sel x263 x271) x272
+
+elet x273 = imap λ x274 → imap λ x275 → sum λ x276 → sels ((sel (sel x270 x274) x275 * sel (sel x260 x274) x275)) x276
+
+elet x277 = imap λ x278 → 0 + (sum λ x279 → 0 + (sum λ x280 → 0 + (sum λ x281 → 0))) + (sum λ x282 → 0 + (imap λ x283 → (zero-but x283 x282 ((sel (sel x260 x278) x282 * (sel (sel x270 x278) x282 + (- (imaps λ x284 → sel (sel x273 x278) x282))))))))
+
+elet x285 = imap λ x286 → 0 + (sum λ x287 → 0 + (sum λ x288 → 0 + (sum λ x289 → 0))) + (sum λ x290 → 0) + scaledown 2 (sel x277 x286)
+
+elet x291 = 0 + (sum λ x292 → 0) + (sum λ x293 → 0 + (sum λ x294 → 0)) + (sum λ x295 → 0 + (sum λ x296 → 0 + (sum λ x297 → 0))) + (sum λ x298 → 0 + (sum λ x299 → 0 + (sum λ x300 → 0))) + (sum λ x301 → 0 + (sum λ x302 → 0 + (sum λ x303 → 0))) + (sum λ x304 → 0 + (sum λ x305 → 0) + (sum λ x306 → 0)) + (sum λ x307 → 0 + (sum λ x308 → 0 + (sum λ x309 → 0))) + (sum λ x310 → 0 + (sum λ x311 → 0 + (sum λ x312 → 0 + (sum λ x313 → 0)))) + (sum λ x314 → 0 + (sum λ x315 → 0 + (sum λ x316 → 0 + (sum λ x317 → 0 + (imap λ x318 → (zero-but x318 x314 (imap λ x319 → (zero-but x319 x317 (imaps λ x320 → (zero-but x320 x316 ((sels (sel (sel x260 x314) x315) x317 * sels (sel (sel x226 x314) x315) x316))))))))))) + (sum λ x321 → 0) + (sum λ x322 → 0 + (sum λ x323 → 0 + (sum λ x324 → 0))))
+
+elet x325 = 0 + (sum λ x326 → 0) + (sum λ x327 → 0 + (sum λ x328 → 0)) + (sum λ x329 → 0 + (sum λ x330 → 0 + (sum λ x331 → 0))) + (sum λ x332 → 0 + (sum λ x333 → 0 + (sum λ x334 → 0))) + (sum λ x335 → 0 + (sum λ x336 → 0 + (sum λ x337 → 0))) + (sum λ x338 → 0 + (sum λ x339 → 0) + (sum λ x340 → 0)) + (sum λ x341 → 0 + (sum λ x342 → 0 + (sum λ x343 → 0))) + (sum λ x344 → 0 + (sum λ x345 → 0 + (sum λ x346 → 0 + (sum λ x347 → 0)))) + (sum λ x348 → 0 + (sum λ x349 → 0 + (sum λ x350 → 0 + (sum λ x351 → 0))) + (sum λ x352 → 0) + (sum λ x353 → 0 + (sum λ x354 → 0 + (sum λ x355 → 0 + (imap λ x356 → (zero-but x356 x348 (imap λ x357 → (zero-but x357 x354 ((sel (sel x25 x348) x353 * (imaps λ x358 → (zero-but x358 x355 (sels (sel (sel x285 x348) x353) x354))))))))))))) + (sum λ x359 → 0 + (sum λ x360 → 0 + (sum λ x361 → 0 + (sum λ x362 → 0))))
+
+elet x363 = 0 + (sum λ x364 → 0) + (sum λ x365 → 0 + (sum λ x366 → 0)) + (sum λ x367 → 0 + (sum λ x368 → 0 + (sum λ x369 → 0))) + (sum λ x370 → 0 + (sum λ x371 → 0 + (sum λ x372 → 0))) + (sum λ x373 → 0 + (sum λ x374 → 0 + (sum λ x375 → 0))) + (sum λ x376 → 0 + (sum λ x377 → 0) + (sum λ x378 → 0)) + (sum λ x379 → 0 + (sum λ x380 → 0 + (sum λ x381 → 0))) + (sum λ x382 → 0 + (sum λ x383 → 0 + (sum λ x384 → 0 + (sum λ x385 → 0)))) + (sum λ x386 → 0 + (sum λ x387 → 0 + (sum λ x388 → 0 + (sum λ x389 → 0))) + (sum λ x390 → 0) + (sum λ x391 → 0 + (sum λ x392 → 0 + (sum λ x393 → 0 + (imap λ x394 → (zero-but x394 x386 (imap λ x395 → (zero-but x395 x391 (((imaps λ x396 → (zero-but x396 x393 (sels (sel (sel x285 x386) x391) x392))) * sel (sel x30 x386) x392)))))))))) + (sum λ x397 → 0 + (sum λ x398 → 0 + (sum λ x399 → 0 + (sum λ x400 → 0)))) + (sum λ x401 → 0 + (sum λ x402 → 0 + (sum λ x403 → 0 + (sum λ x404 → 0))))
+
+elet x405 = 0 + (sum λ x406 → 0) + (sum λ x407 → 0 + (sum λ x408 → 0)) + (sum λ x409 → 0 + (sum λ x410 → 0 + (sum λ x411 → 0))) + (sum λ x412 → 0 + (sum λ x413 → 0 + (sum λ x414 → 0))) + (sum λ x415 → 0 + (sum λ x416 → 0 + (sum λ x417 → 0))) + (sum λ x418 → 0 + (sum λ x419 → 0) + (sum λ x420 → 0)) + (sum λ x421 → 0 + (sum λ x422 → 0 + (sum λ x423 → 0))) + (sum λ x424 → 0 + (sum λ x425 → 0 + (sum λ x426 → 0 + (sum λ x427 → 0)))) + (sum λ x428 → 0 + (sum λ x429 → 0 + (sum λ x430 → 0 + (sum λ x431 → 0))) + (sum λ x432 → 0) + (sum λ x433 → 0 + (sum λ x434 → 0 + (sum λ x435 → 0)))) + (sum λ x436 → 0 + (sum λ x437 → 0 + (sum λ x438 → 0 + (sum λ x439 → 0 + (imap λ x440 → (zero-but x440 x438 (imapb λ x441 → (zero-but x441 x439 (sel (sel (imap λ x442 → (zero-but x442 x437 (imap λ x443 → (zero-but x443 x436 (sel (sel x291 x436) x437))))) x438) x439))))))))) + (sum λ x444 → 0 + (sum λ x445 → 0 + (sum λ x446 → 0 + (sum λ x447 → 0)))) + (sum λ x448 → 0 + (sum λ x449 → 0 + (sum λ x450 → 0 + (sum λ x451 → 0))))
+
+elet x452 = 0 + (sum λ x453 → 0) + (sum λ x454 → 0 + (sum λ x455 → 0)) + (sum λ x456 → 0 + (sum λ x457 → 0 + (sum λ x458 → 0))) + (sum λ x459 → 0 + (sum λ x460 → 0 + (sum λ x461 → 0))) + (sum λ x462 → 0 + (sum λ x463 → 0 + (sum λ x464 → 0))) + (sum λ x465 → 0 + (sum λ x466 → 0) + (sum λ x467 → 0)) + (sum λ x468 → 0 + (sum λ x469 → 0 + (sum λ x470 → 0))) + (sum λ x471 → 0 + (sum λ x472 → 0 + (sum λ x473 → 0 + (sum λ x474 → 0)))) + (sum λ x475 → 0 + (sum λ x476 → 0 + (sum λ x477 → 0 + (sum λ x478 → 0))) + (sum λ x479 → 0) + (sum λ x480 → 0 + (sum λ x481 → 0 + (sum λ x482 → 0)))) + (sum λ x483 → 0 + (sum λ x484 → 0 + (sum λ x485 → 0 + (sum λ x486 → 0)))) + (sum λ x487 → 0 + (sum λ x488 → 0 + (sum λ x489 → 0 + (sum λ x490 → 0 + (imap λ x491 → (zero-but x491 x489 (imapb λ x492 → (zero-but x492 x490 (sel (sel (imap λ x493 → (zero-but x493 x488 (imap λ x494 → (zero-but x494 x487 (sel (sel x325 x487) x488))))) x489) x490))))))))) + (sum λ x495 → 0 + (sum λ x496 → 0 + (sum λ x497 → 0 + (sum λ x498 → 0)))) + (sum λ x499 → 0 + (sum λ x500 → 0 + (sum λ x501 → 0)))
+
+elet x502 = 0 + (sum λ x503 → 0) + (sum λ x504 → 0 + (sum λ x505 → 0)) + (sum λ x506 → 0 + (sum λ x507 → 0 + (sum λ x508 → 0))) + (sum λ x509 → 0 + (sum λ x510 → 0 + (sum λ x511 → 0))) + (sum λ x512 → 0 + (sum λ x513 → 0 + (sum λ x514 → 0))) + (sum λ x515 → 0 + (sum λ x516 → 0) + (sum λ x517 → 0)) + (sum λ x518 → 0 + (sum λ x519 → 0 + (sum λ x520 → 0))) + (sum λ x521 → 0 + (sum λ x522 → 0 + (sum λ x523 → 0 + (sum λ x524 → 0)))) + (sum λ x525 → 0 + (sum λ x526 → 0 + (sum λ x527 → 0 + (sum λ x528 → 0))) + (sum λ x529 → 0) + (sum λ x530 → 0 + (sum λ x531 → 0 + (sum λ x532 → 0)))) + (sum λ x533 → 0 + (sum λ x534 → 0 + (sum λ x535 → 0 + (sum λ x536 → 0)))) + (sum λ x537 → 0 + (sum λ x538 → 0 + (sum λ x539 → 0 + (sum λ x540 → 0)))) + (sum λ x541 → 0 + (sum λ x542 → 0 + (sum λ x543 → 0 + (sum λ x544 → 0 + (imap λ x545 → (zero-but x545 x543 (imapb λ x546 → (zero-but x546 x544 (sel (sel (imap λ x547 → (zero-but x547 x542 (imap λ x548 → (zero-but x548 x541 (sel (sel x363 x541) x542))))) x543) x544))))))))) + (sum λ x549 → 0 + (sum λ x550 → 0 + (sum λ x551 → 0))) + (sum λ x552 → 0 + (sum λ x553 → 0 + (sum λ x554 → 0)))
+
+elet x555 = 0 + (sum λ x556 → 0) + (sum λ x557 → 0 + (sum λ x558 → 0)) + (sum λ x559 → 0 + (sum λ x560 → 0 + (sum λ x561 → 0))) + (sum λ x562 → 0 + (sum λ x563 → 0 + (sum λ x564 → 0))) + (sum λ x565 → 0 + (sum λ x566 → 0 + (sum λ x567 → 0))) + (sum λ x568 → 0 + (sum λ x569 → 0) + (sum λ x570 → 0)) + (sum λ x571 → 0 + (sum λ x572 → 0 + (sum λ x573 → 0))) + (sum λ x574 → 0 + (sum λ x575 → 0 + (sum λ x576 → 0 + (sum λ x577 → 0)))) + (sum λ x578 → 0 + (sum λ x579 → 0 + (sum λ x580 → 0 + (sum λ x581 → 0))) + (sum λ x582 → 0) + (sum λ x583 → 0 + (sum λ x584 → 0 + (sum λ x585 → 0)))) + (sum λ x586 → 0 + (sum λ x587 → 0 + (sum λ x588 → 0 + (sum λ x589 → 0)))) + (sum λ x590 → 0 + (sum λ x591 → 0 + (sum λ x592 → 0 + (sum λ x593 → 0)))) + (sum λ x594 → 0 + (sum λ x595 → 0 + (sum λ x596 → 0 + (sum λ x597 → 0)))) + (sum λ x598 → 0 + (sum λ x599 → 0 + (sum λ x600 → 0 + (imap λ x601 → (zero-but x601 x598 ((sel wval x599 * (imaps λ x602 → (zero-but x602 x600 (sels (sel x405 x598) x599)))))))))) + (sum λ x603 → 0 + (sum λ x604 → 0 + (sum λ x605 → 0 + (imap λ x606 → (zero-but x606 x603 ((sel wkey x604 * (imaps λ x607 → (zero-but x607 x605 (sels (sel x452 x603) x604)))))))))) + (sum λ x608 → 0 + (sum λ x609 → 0 + (sum λ x610 → 0 + (imap λ x611 → (zero-but x611 x608 ((sel wqry x609 * (imaps λ x612 → (zero-but x612 x610 (sels (sel x502 x608) x609))))))))))
+
+elet x613 = imap λ x614 → (sel x1 x614 * sel x1 x614)
+
+elet x615 = imap λ x616 → scaledown 16 (sum λ x617 → sels (sel x613 x616) x617)
+
+elet x618 = imap λ x619 → (sqrt (sel x615 x619 + scaledown 100000 1))
+
+elet x620 = imap λ x621 → 0 + (sum λ x622 → 0 + (- (((inv (sel x618 x621)) * ((sels (sel x1 x621) x622 * sels (sel x555 x621) x622) * (inv (sel x618 x621)))))))
+
+elet x623 = imap λ x624 → 0 + (sum λ x625 → 0) + (sel x620 x624 * (inv (((1 + 1) * (sqrt (sel x615 x624 + scaledown 100000 1))))))
+
+elet x626 = imap λ x627 → 0 + (sum λ x628 → 0) + (sum λ x629 → 0 + (imaps λ x630 → (zero-but x630 x629 (scaledown 16 (sel x623 x627)))))
+
+elet x631 = x189 + (sum λ x632 → 0 + (sum λ x633 → 0 + (sum λ x634 → 0))) + (sum λ x635 → 0 + (sum λ x636 → 0 + (sum λ x637 → 0 + (sum λ x638 → 0)))) + (sum λ x639 → 0 + (sum λ x640 → 0 + (sum λ x641 → 0 + (sum λ x642 → 0))) + (sum λ x643 → 0) + (sum λ x644 → 0 + (sum λ x645 → 0 + (sum λ x646 → 0)))) + (sum λ x647 → 0 + (sum λ x648 → 0 + (sum λ x649 → 0 + (sum λ x650 → 0)))) + (sum λ x651 → 0 + (sum λ x652 → 0 + (sum λ x653 → 0 + (sum λ x654 → 0)))) + (sum λ x655 → 0 + (sum λ x656 → 0 + (sum λ x657 → 0 + (sum λ x658 → 0)))) + (sum λ x659 → 0 + (sum λ x660 → 0 + (sum λ x661 → 0))) + (sum λ x662 → 0 + (sum λ x663 → 0 + (sum λ x664 → 0))) + (sum λ x665 → 0 + (sum λ x666 → 0 + (sum λ x667 → 0))) + (sum λ x668 → 0 + (sum λ x669 → 0 + (imap λ x670 → (zero-but x670 x668 (imaps λ x671 → (zero-but x671 x669 ((sels (sel x555 x668) x669 * (inv (sel x618 x668))))))))) + (sum λ x672 → 0) + (imap λ x673 → (zero-but x673 x668 ((sel x1 x668 * sel x626 x668)))) + (imap λ x674 → (zero-but x674 x668 ((sel x626 x668 * sel x1 x668)))))
+
+elet x675 = imap λ x676 → (sel x0 x676 * sel x0 x676)
+
+elet x677 = imap λ x678 → scaledown 16 (sum λ x679 → sels (sel x675 x678) x679)
+
+elet x680 = imap λ x681 → (sqrt (sel x677 x681 + scaledown 100000 1))
+
+elet x682 = imap λ x683 → 0 + (sum λ x684 → 0 + (- (((inv (sel x680 x683)) * ((sels (sel x0 x683) x684 * sels (sel x631 x683) x684) * (inv (sel x680 x683)))))))
+
+elet x685 = imap λ x686 → 0 + (sum λ x687 → 0) + (sel x682 x686 * (inv (((1 + 1) * (sqrt (sel x677 x686 + scaledown 100000 1))))))
+
+elet x688 = imap λ x689 → 0 + (sum λ x690 → 0) + (sum λ x691 → 0 + (imaps λ x692 → (zero-but x692 x691 (scaledown 16 (sel x685 x689)))))
+
+elet x693 = 0 + (sum λ x694 → 0) + (sum λ x695 → 0 + (sum λ x696 → 0)) + (sum λ x697 → 0 + (sum λ x698 → 0 + (sum λ x699 → 0))) + (sum λ x700 → 0 + (sum λ x701 → 0 + (sum λ x702 → 0))) + (sum λ x703 → 0 + (sum λ x704 → 0 + (sum λ x705 → 0))) + (sum λ x706 → 0 + (sum λ x707 → 0) + (sum λ x708 → 0)) + (sum λ x709 → 0 + (sum λ x710 → 0 + (sum λ x711 → 0))) + (sum λ x712 → 0 + (sum λ x713 → 0 + (sum λ x714 → 0 + (sum λ x715 → 0)))) + (sum λ x716 → 0 + (sum λ x717 → 0 + (sum λ x718 → 0 + (sum λ x719 → 0))) + (sum λ x720 → 0) + (sum λ x721 → 0 + (sum λ x722 → 0 + (sum λ x723 → 0)))) + (sum λ x724 → 0 + (sum λ x725 → 0 + (sum λ x726 → 0 + (sum λ x727 → 0)))) + (sum λ x728 → 0 + (sum λ x729 → 0 + (sum λ x730 → 0 + (sum λ x731 → 0)))) + (sum λ x732 → 0 + (sum λ x733 → 0 + (sum λ x734 → 0 + (sum λ x735 → 0)))) + (sum λ x736 → 0 + (sum λ x737 → 0 + (sum λ x738 → 0))) + (sum λ x739 → 0 + (sum λ x740 → 0 + (sum λ x741 → 0))) + (sum λ x742 → 0 + (sum λ x743 → 0 + (sum λ x744 → 0))) + (sum λ x745 → 0 + (sum λ x746 → 0) + (sum λ x747 → 0)) + (sum λ x748 → 0 + (sum λ x749 → 0 + (imap λ x750 → (zero-but x750 x748 (imaps λ x751 → (zero-but x751 x749 ((sels (sel x631 x748) x749 * (inv (sel x680 x748))))))))) + (sum λ x752 → 0) + (imap λ x753 → (zero-but x753 x748 ((sel x0 x748 * sel x688 x748)))) + (imap λ x754 → (zero-but x754 x748 ((sel x688 x748 * sel x0 x748)))))
+
+
+
+let dmask = 0 + (sum λ x755 → 0) + (sum λ x756 → 0 + (sum λ x757 → 0)) + (sum λ x758 → 0 + (sum λ x759 → 0 + (sum λ x760 → 0))) + (sum λ x761 → 0 + (sum λ x762 → 0 + (sum λ x763 → 0))) + (sum λ x764 → 0 + (sum λ x765 → 0 + (sum λ x766 → 0))) + (sum λ x767 → 0 + (sum λ x768 → 0) + (sum λ x769 → 0)) + (sum λ x770 → 0 + (sum λ x771 → 0 + (sum λ x772 → 0))) + (sum λ x773 → 0 + (sum λ x774 → 0 + (sum λ x775 → 0 + (sum λ x776 → 0)))) + (sum λ x777 → 0 + (sum λ x778 → 0 + (sum λ x779 → 0 + (sum λ x780 → 0))) + (sum λ x781 → 0) + sel x277 x777 + (sum λ x782 → 0 + (sum λ x783 → 0 + (sum λ x784 → 0)))) + (sum λ x785 → 0 + (sum λ x786 → 0 + (sum λ x787 → 0 + (sum λ x788 → 0)))) + (sum λ x789 → 0 + (sum λ x790 → 0 + (sum λ x791 → 0 + (sum λ x792 → 0)))) + (sum λ x793 → 0 + (sum λ x794 → 0 + (sum λ x795 → 0 + (sum λ x796 → 0)))) + (sum λ x797 → 0 + (sum λ x798 → 0 + (sum λ x799 → 0))) + (sum λ x800 → 0 + (sum λ x801 → 0 + (sum λ x802 → 0))) + (sum λ x803 → 0 + (sum λ x804 → 0 + (sum λ x805 → 0))) + (sum λ x806 → 0 + (sum λ x807 → 0) + (sum λ x808 → 0)) + (sum λ x809 → 0 + (sum λ x810 → 0) + (sum λ x811 → 0))
+
+let dwpe = 0 + (sum λ x812 → 0) + (sum λ x813 → 0 + (sum λ x814 → 0)) + (sum λ x815 → 0 + (sum λ x816 → 0 + (sum λ x817 → 0))) + (sum λ x818 → 0 + (sum λ x819 → 0 + (sum λ x820 → 0))) + (sum λ x821 → 0 + (sum λ x822 → 0 + (sum λ x823 → 0))) + (sum λ x824 → 0 + (sum λ x825 → 0) + (sum λ x826 → 0)) + (sum λ x827 → 0 + (sum λ x828 → 0 + (sum λ x829 → 0))) + (sum λ x830 → 0 + (sum λ x831 → 0 + (sum λ x832 → 0 + (sum λ x833 → 0)))) + (sum λ x834 → 0 + (sum λ x835 → 0 + (sum λ x836 → 0 + (sum λ x837 → 0))) + (sum λ x838 → 0) + (sum λ x839 → 0 + (sum λ x840 → 0 + (sum λ x841 → 0)))) + (sum λ x842 → 0 + (sum λ x843 → 0 + (sum λ x844 → 0 + (sum λ x845 → 0)))) + (sum λ x846 → 0 + (sum λ x847 → 0 + (sum λ x848 → 0 + (sum λ x849 → 0)))) + (sum λ x850 → 0 + (sum λ x851 → 0 + (sum λ x852 → 0 + (sum λ x853 → 0)))) + (sum λ x854 → 0 + (sum λ x855 → 0 + (sum λ x856 → 0))) + (sum λ x857 → 0 + (sum λ x858 → 0 + (sum λ x859 → 0))) + (sum λ x860 → 0 + (sum λ x861 → 0 + (sum λ x862 → 0))) + (sum λ x863 → 0 + (sum λ x864 → 0) + (sum λ x865 → 0)) + (sum λ x866 → 0 + (sum λ x867 → 0) + (sum λ x868 → 0)) + x693
+
+let dwqry = 0 + (sum λ x869 → 0) + (sum λ x870 → 0 + (sum λ x871 → 0)) + (sum λ x872 → 0 + (sum λ x873 → 0 + (sum λ x874 → 0))) + (sum λ x875 → 0 + (sum λ x876 → 0 + (sum λ x877 → 0))) + (sum λ x878 → 0 + (sum λ x879 → 0 + (sum λ x880 → 0))) + (sum λ x881 → 0 + (sum λ x882 → 0) + (sum λ x883 → 0)) + (sum λ x884 → 0 + (sum λ x885 → 0 + (sum λ x886 → 0))) + (sum λ x887 → 0 + (sum λ x888 → 0 + (sum λ x889 → 0 + (sum λ x890 → 0)))) + (sum λ x891 → 0 + (sum λ x892 → 0 + (sum λ x893 → 0 + (sum λ x894 → 0))) + (sum λ x895 → 0) + (sum λ x896 → 0 + (sum λ x897 → 0 + (sum λ x898 → 0)))) + (sum λ x899 → 0 + (sum λ x900 → 0 + (sum λ x901 → 0 + (sum λ x902 → 0)))) + (sum λ x903 → 0 + (sum λ x904 → 0 + (sum λ x905 → 0 + (sum λ x906 → 0)))) + (sum λ x907 → 0 + (sum λ x908 → 0 + (sum λ x909 → 0 + (sum λ x910 → 0)))) + (sum λ x911 → 0 + (sum λ x912 → 0 + (sum λ x913 → 0))) + (sum λ x914 → 0 + (sum λ x915 → 0 + (sum λ x916 → 0))) + (sum λ x917 → 0 + (sum λ x918 → 0 + (sum λ x919 → 0 + (imap λ x920 → (zero-but x920 x918 (((imaps λ x921 → (zero-but x921 x919 (sels (sel x502 x917) x918))) * sel x7 x917))))))) + (sum λ x922 → 0 + (sum λ x923 → 0) + (sum λ x924 → 0)) + (sum λ x925 → 0 + (sum λ x926 → 0) + (sum λ x927 → 0))
+
+let dwkey = 0 + (sum λ x928 → 0) + (sum λ x929 → 0 + (sum λ x930 → 0)) + (sum λ x931 → 0 + (sum λ x932 → 0 + (sum λ x933 → 0))) + (sum λ x934 → 0 + (sum λ x935 → 0 + (sum λ x936 → 0))) + (sum λ x937 → 0 + (sum λ x938 → 0 + (sum λ x939 → 0))) + (sum λ x940 → 0 + (sum λ x941 → 0) + (sum λ x942 → 0)) + (sum λ x943 → 0 + (sum λ x944 → 0 + (sum λ x945 → 0))) + (sum λ x946 → 0 + (sum λ x947 → 0 + (sum λ x948 → 0 + (sum λ x949 → 0)))) + (sum λ x950 → 0 + (sum λ x951 → 0 + (sum λ x952 → 0 + (sum λ x953 → 0))) + (sum λ x954 → 0) + (sum λ x955 → 0 + (sum λ x956 → 0 + (sum λ x957 → 0)))) + (sum λ x958 → 0 + (sum λ x959 → 0 + (sum λ x960 → 0 + (sum λ x961 → 0)))) + (sum λ x962 → 0 + (sum λ x963 → 0 + (sum λ x964 → 0 + (sum λ x965 → 0)))) + (sum λ x966 → 0 + (sum λ x967 → 0 + (sum λ x968 → 0 + (sum λ x969 → 0)))) + (sum λ x970 → 0 + (sum λ x971 → 0 + (sum λ x972 → 0))) + (sum λ x973 → 0 + (sum λ x974 → 0 + (sum λ x975 → 0 + (imap λ x976 → (zero-but x976 x974 (((imaps λ x977 → (zero-but x977 x975 (sels (sel x452 x973) x974))) * sel x7 x973))))))) + (sum λ x978 → 0 + (sum λ x979 → 0 + (sum λ x980 → 0))) + (sum λ x981 → 0 + (sum λ x982 → 0) + (sum λ x983 → 0)) + (sum λ x984 → 0 + (sum λ x985 → 0) + (sum λ x986 → 0))
+
+let dwval = 0 + (sum λ x987 → 0) + (sum λ x988 → 0 + (sum λ x989 → 0)) + (sum λ x990 → 0 + (sum λ x991 → 0 + (sum λ x992 → 0))) + (sum λ x993 → 0 + (sum λ x994 → 0 + (sum λ x995 → 0))) + (sum λ x996 → 0 + (sum λ x997 → 0 + (sum λ x998 → 0))) + (sum λ x999 → 0 + (sum λ x1000 → 0) + (sum λ x1001 → 0)) + (sum λ x1002 → 0 + (sum λ x1003 → 0 + (sum λ x1004 → 0))) + (sum λ x1005 → 0 + (sum λ x1006 → 0 + (sum λ x1007 → 0 + (sum λ x1008 → 0)))) + (sum λ x1009 → 0 + (sum λ x1010 → 0 + (sum λ x1011 → 0 + (sum λ x1012 → 0))) + (sum λ x1013 → 0) + (sum λ x1014 → 0 + (sum λ x1015 → 0 + (sum λ x1016 → 0)))) + (sum λ x1017 → 0 + (sum λ x1018 → 0 + (sum λ x1019 → 0 + (sum λ x1020 → 0)))) + (sum λ x1021 → 0 + (sum λ x1022 → 0 + (sum λ x1023 → 0 + (sum λ x1024 → 0)))) + (sum λ x1025 → 0 + (sum λ x1026 → 0 + (sum λ x1027 → 0 + (sum λ x1028 → 0)))) + (sum λ x1029 → 0 + (sum λ x1030 → 0 + (sum λ x1031 → 0 + (imap λ x1032 → (zero-but x1032 x1030 (((imaps λ x1033 → (zero-but x1033 x1031 (sels (sel x405 x1029) x1030))) * sel x7 x1029))))))) + (sum λ x1034 → 0 + (sum λ x1035 → 0 + (sum λ x1036 → 0))) + (sum λ x1037 → 0 + (sum λ x1038 → 0 + (sum λ x1039 → 0))) + (sum λ x1040 → 0 + (sum λ x1041 → 0) + (sum λ x1042 → 0)) + (sum λ x1043 → 0 + (sum λ x1044 → 0) + (sum λ x1045 → 0))
+
+let dwout = 0 + (sum λ x1046 → 0) + (sum λ x1047 → 0 + (sum λ x1048 → 0)) + (sum λ x1049 → 0 + (sum λ x1050 → 0 + (sum λ x1051 → 0))) + (sum λ x1052 → 0 + (sum λ x1053 → 0 + (sum λ x1054 → 0))) + (sum λ x1055 → 0 + (sum λ x1056 → 0 + (sum λ x1057 → 0))) + (sum λ x1058 → 0 + (sum λ x1059 → 0) + (sum λ x1060 → 0)) + (sum λ x1061 → 0 + (sum λ x1062 → 0 + (sum λ x1063 → 0 + (imap λ x1064 → (zero-but x1064 x1062 (((imaps λ x1065 → (zero-but x1065 x1063 (sels (sel x189 x1061) x1062))) * sel x52 x1061))))))) + (sum λ x1066 → 0 + (sum λ x1067 → 0 + (sum λ x1068 → 0 + (sum λ x1069 → 0)))) + (sum λ x1070 → 0 + (sum λ x1071 → 0 + (sum λ x1072 → 0 + (sum λ x1073 → 0))) + (sum λ x1074 → 0) + (sum λ x1075 → 0 + (sum λ x1076 → 0 + (sum λ x1077 → 0)))) + (sum λ x1078 → 0 + (sum λ x1079 → 0 + (sum λ x1080 → 0 + (sum λ x1081 → 0)))) + (sum λ x1082 → 0 + (sum λ x1083 → 0 + (sum λ x1084 → 0 + (sum λ x1085 → 0)))) + (sum λ x1086 → 0 + (sum λ x1087 → 0 + (sum λ x1088 → 0 + (sum λ x1089 → 0)))) + (sum λ x1090 → 0 + (sum λ x1091 → 0 + (sum λ x1092 → 0))) + (sum λ x1093 → 0 + (sum λ x1094 → 0 + (sum λ x1095 → 0))) + (sum λ x1096 → 0 + (sum λ x1097 → 0 + (sum λ x1098 → 0))) + (sum λ x1099 → 0 + (sum λ x1100 → 0) + (sum λ x1101 → 0)) + (sum λ x1102 → 0 + (sum λ x1103 → 0) + (sum λ x1104 → 0))
+
+let dwup = 0 + (sum λ x1105 → 0) + (sum λ x1106 → 0 + (sum λ x1107 → 0)) + (sum λ x1108 → 0 + (sum λ x1109 → 0 + (sum λ x1110 → 0))) + (sum λ x1111 → 0 + (sum λ x1112 → 0 + (sum λ x1113 → 0))) + (sum λ x1114 → 0 + (sum λ x1115 → 0 + (sum λ x1116 → 0 + (imap λ x1117 → (zero-but x1117 x1115 (((imaps λ x1118 → (zero-but x1118 x1116 (sels (sel x132 x1114) x1115))) * sel x62 x1114))))))) + (sum λ x1119 → 0 + (sum λ x1120 → 0) + (sum λ x1121 → 0)) + (sum λ x1122 → 0 + (sum λ x1123 → 0 + (sum λ x1124 → 0))) + (sum λ x1125 → 0 + (sum λ x1126 → 0 + (sum λ x1127 → 0 + (sum λ x1128 → 0)))) + (sum λ x1129 → 0 + (sum λ x1130 → 0 + (sum λ x1131 → 0 + (sum λ x1132 → 0))) + (sum λ x1133 → 0) + (sum λ x1134 → 0 + (sum λ x1135 → 0 + (sum λ x1136 → 0)))) + (sum λ x1137 → 0 + (sum λ x1138 → 0 + (sum λ x1139 → 0 + (sum λ x1140 → 0)))) + (sum λ x1141 → 0 + (sum λ x1142 → 0 + (sum λ x1143 → 0 + (sum λ x1144 → 0)))) + (sum λ x1145 → 0 + (sum λ x1146 → 0 + (sum λ x1147 → 0 + (sum λ x1148 → 0)))) + (sum λ x1149 → 0 + (sum λ x1150 → 0 + (sum λ x1151 → 0))) + (sum λ x1152 → 0 + (sum λ x1153 → 0 + (sum λ x1154 → 0))) + (sum λ x1155 → 0 + (sum λ x1156 → 0 + (sum λ x1157 → 0))) + (sum λ x1158 → 0 + (sum λ x1159 → 0) + (sum λ x1160 → 0)) + (sum λ x1161 → 0 + (sum λ x1162 → 0) + (sum λ x1163 → 0))
+
+let dwdown = 0 + (sum λ x1164 → 0) + (sum λ x1165 → 0 + (sum λ x1166 → 0)) + (sum λ x1167 → 0 + (sum λ x1168 → 0 + (sum λ x1169 → 0))) + (sum λ x1170 → 0 + (sum λ x1171 → 0 + (sum λ x1172 → 0 + (imap λ x1173 → (zero-but x1173 x1171 (((imaps λ x1174 → (zero-but x1174 x1172 (sels (sel x113 x1170) x1171))) * sel x72 x1170))))))) + (sum λ x1175 → 0 + (sum λ x1176 → 0 + (sum λ x1177 → 0))) + (sum λ x1178 → 0 + (sum λ x1179 → 0) + (sum λ x1180 → 0)) + (sum λ x1181 → 0 + (sum λ x1182 → 0 + (sum λ x1183 → 0))) + (sum λ x1184 → 0 + (sum λ x1185 → 0 + (sum λ x1186 → 0 + (sum λ x1187 → 0)))) + (sum λ x1188 → 0 + (sum λ x1189 → 0 + (sum λ x1190 → 0 + (sum λ x1191 → 0))) + (sum λ x1192 → 0) + (sum λ x1193 → 0 + (sum λ x1194 → 0 + (sum λ x1195 → 0)))) + (sum λ x1196 → 0 + (sum λ x1197 → 0 + (sum λ x1198 → 0 + (sum λ x1199 → 0)))) + (sum λ x1200 → 0 + (sum λ x1201 → 0 + (sum λ x1202 → 0 + (sum λ x1203 → 0)))) + (sum λ x1204 → 0 + (sum λ x1205 → 0 + (sum λ x1206 → 0 + (sum λ x1207 → 0)))) + (sum λ x1208 → 0 + (sum λ x1209 → 0 + (sum λ x1210 → 0))) + (sum λ x1211 → 0 + (sum λ x1212 → 0 + (sum λ x1213 → 0))) + (sum λ x1214 → 0 + (sum λ x1215 → 0 + (sum λ x1216 → 0))) + (sum λ x1217 → 0 + (sum λ x1218 → 0) + (sum λ x1219 → 0)) + (sum λ x1220 → 0 + (sum λ x1221 → 0) + (sum λ x1222 → 0))
+
+let dwvoc = 0 + (sum λ x1223 → 0) + (sum λ x1224 → 0 + (sum λ x1225 → 0)) + (sum λ x1226 → 0 + (sum λ x1227 → 0 + (sum λ x1228 → 0 + (imap λ x1229 → (zero-but x1229 x1227 (((imaps λ x1230 → (zero-but x1230 x1228 (sels (sel x98 x1226) x1227))) * sel x77 x1226))))))) + (sum λ x1231 → 0 + (sum λ x1232 → 0 + (sum λ x1233 → 0))) + (sum λ x1234 → 0 + (sum λ x1235 → 0 + (sum λ x1236 → 0))) + (sum λ x1237 → 0 + (sum λ x1238 → 0) + (sum λ x1239 → 0)) + (sum λ x1240 → 0 + (sum λ x1241 → 0 + (sum λ x1242 → 0))) + (sum λ x1243 → 0 + (sum λ x1244 → 0 + (sum λ x1245 → 0 + (sum λ x1246 → 0)))) + (sum λ x1247 → 0 + (sum λ x1248 → 0 + (sum λ x1249 → 0 + (sum λ x1250 → 0))) + (sum λ x1251 → 0) + (sum λ x1252 → 0 + (sum λ x1253 → 0 + (sum λ x1254 → 0)))) + (sum λ x1255 → 0 + (sum λ x1256 → 0 + (sum λ x1257 → 0 + (sum λ x1258 → 0)))) + (sum λ x1259 → 0 + (sum λ x1260 → 0 + (sum λ x1261 → 0 + (sum λ x1262 → 0)))) + (sum λ x1263 → 0 + (sum λ x1264 → 0 + (sum λ x1265 → 0 + (sum λ x1266 → 0)))) + (sum λ x1267 → 0 + (sum λ x1268 → 0 + (sum λ x1269 → 0))) + (sum λ x1270 → 0 + (sum λ x1271 → 0 + (sum λ x1272 → 0))) + (sum λ x1273 → 0 + (sum λ x1274 → 0 + (sum λ x1275 → 0))) + (sum λ x1276 → 0 + (sum λ x1277 → 0) + (sum λ x1278 → 0)) + (sum λ x1279 → 0 + (sum λ x1280 → 0) + (sum λ x1281 → 0))
+
+let dwseq = 0 + (sum λ x1282 → 0) + (sum λ x1283 → 0 + (sum λ x1284 → 0)) + (sum λ x1285 → 0 + (sum λ x1286 → 0 + (sum λ x1287 → 0))) + (sum λ x1288 → 0 + (sum λ x1289 → 0 + (sum λ x1290 → 0))) + (sum λ x1291 → 0 + (sum λ x1292 → 0 + (sum λ x1293 → 0))) + (sum λ x1294 → 0 + (sum λ x1295 → 0) + (sum λ x1296 → 0)) + (sum λ x1297 → 0 + (sum λ x1298 → 0 + (sum λ x1299 → 0))) + (sum λ x1300 → 0 + (sum λ x1301 → 0 + (sum λ x1302 → 0 + (sum λ x1303 → 0)))) + (sum λ x1304 → 0 + (sum λ x1305 → 0 + (sum λ x1306 → 0 + (sum λ x1307 → 0))) + (sum λ x1308 → 0) + (sum λ x1309 → 0 + (sum λ x1310 → 0 + (sum λ x1311 → 0)))) + (sum λ x1312 → 0 + (sum λ x1313 → 0 + (sum λ x1314 → 0 + (sum λ x1315 → 0)))) + (sum λ x1316 → 0 + (sum λ x1317 → 0 + (sum λ x1318 → 0 + (sum λ x1319 → 0)))) + (sum λ x1320 → 0 + (sum λ x1321 → 0 + (sum λ x1322 → 0 + (sum λ x1323 → 0)))) + (sum λ x1324 → 0 + (sum λ x1325 → 0 + (sum λ x1326 → 0))) + (sum λ x1327 → 0 + (sum λ x1328 → 0 + (sum λ x1329 → 0))) + (sum λ x1330 → 0 + (sum λ x1331 → 0 + (sum λ x1332 → 0))) + (sum λ x1333 → 0 + (sum λ x1334 → 0) + (sum λ x1335 → 0)) + (sum λ x1336 → 0 + (sum λ x1337 → 0) + (sum λ x1338 → 0)) + x693
+
+let dtarget = 0 + (sum λ x1339 → 0) + (sum λ x1340 → 0 + (sum λ x1341 → 0 + (imap λ x1342 → (zero-but x1342 x1340 (imaps λ x1343 → (zero-but x1343 x1341 ((sels (sel x85 x1340) x1341 * (- (sels x82 x1340)))))))))) + (sum λ x1344 → 0 + (sum λ x1345 → 0 + (sum λ x1346 → 0))) + (sum λ x1347 → 0 + (sum λ x1348 → 0 + (sum λ x1349 → 0))) + (sum λ x1350 → 0 + (sum λ x1351 → 0 + (sum λ x1352 → 0))) + (sum λ x1353 → 0 + (sum λ x1354 → 0) + (sum λ x1355 → 0)) + (sum λ x1356 → 0 + (sum λ x1357 → 0 + (sum λ x1358 → 0))) + (sum λ x1359 → 0 + (sum λ x1360 → 0 + (sum λ x1361 → 0 + (sum λ x1362 → 0)))) + (sum λ x1363 → 0 + (sum λ x1364 → 0 + (sum λ x1365 → 0 + (sum λ x1366 → 0))) + (sum λ x1367 → 0) + (sum λ x1368 → 0 + (sum λ x1369 → 0 + (sum λ x1370 → 0)))) + (sum λ x1371 → 0 + (sum λ x1372 → 0 + (sum λ x1373 → 0 + (sum λ x1374 → 0)))) + (sum λ x1375 → 0 + (sum λ x1376 → 0 + (sum λ x1377 → 0 + (sum λ x1378 → 0)))) + (sum λ x1379 → 0 + (sum λ x1380 → 0 + (sum λ x1381 → 0 + (sum λ x1382 → 0)))) + (sum λ x1383 → 0 + (sum λ x1384 → 0 + (sum λ x1385 → 0))) + (sum λ x1386 → 0 + (sum λ x1387 → 0 + (sum λ x1388 → 0))) + (sum λ x1389 → 0 + (sum λ x1390 → 0 + (sum λ x1391 → 0))) + (sum λ x1392 → 0 + (sum λ x1393 → 0) + (sum λ x1394 → 0)) + (sum λ x1395 → 0 + (sum λ x1396 → 0) + (sum λ x1397 → 0))

@@ -63,7 +63,7 @@ module Extract where
   open Primitives
   open WkSub
 
-  OPT = 20
+  OPT = 0
 
   -- Show Env (e.g. after running grad) where optimisations are applied
   -- to every expression in the list.
@@ -219,12 +219,12 @@ module Extract where
   --           λ a b → Sum λ i → (Let x := sels a i ⊞ sels b i In x ⊠ x)
   -- sum-let-s = pp sum-let (ε ▹ "a" ▹ "b")
 
-  test-e : E _ _
-  test-e = Lcon (ar [] ∷ ar [] ∷ ix (2 ∷ []) ∷ []) (ar (2 ∷ [])) ε λ x y j → Imaps (λ i → zero-but i j x)
+  -- test-e : E _ _
+  -- test-e = Lcon (ar [] ∷ ar [] ∷ ix (2 ∷ []) ∷ []) (ar (2 ∷ [])) ε λ x y j → Imaps (λ i → zero-but i j x)
 
-  test-pp : String --wrong
-  -- test-pp = Pretty.seed-pretty test-e (Imaps (λ i → zero-but (var v₁) i 𝟙)) (ε ▹ "x" ▹ "y" ▹ "j")
-  test-pp = Pretty.seed-pretty test-e 𝟙 (ε ▹ "x" ▹ "y" ▹ "j")
+  -- test-pp : String --wrong
+  -- -- test-pp = Pretty.seed-pretty test-e (Imaps (λ i → zero-but (var v₁) i 𝟙)) (ε ▹ "x" ▹ "y" ▹ "j")
+  -- test-pp = Pretty.seed-pretty test-e 𝟙 (ε ▹ "x" ▹ "y" ▹ "j")
 
   mgpt-loss-s : String
   mgpt-loss-s = proj₂ (runState (to-str (multiopt Primitives.Microgpt.mgpt-loss-e OPT) ((from-named (ε ▹ "mask" ▹ "wpe" ▹ "wqry" ▹ "wkey" ▹ "wval" ▹ "wout" ▹ "wup" ▹ "wdown" ▹ "wvoc" ▹ "wseq" ▹ "target")))) 0)
